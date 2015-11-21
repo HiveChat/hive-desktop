@@ -1,0 +1,69 @@
+QTreeView {
+    background: transparent;
+    show-decoration-selected: 1;
+}
+
+QTreeView::item {
+    border: 0px solid #FFC329;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+QTreeView::item:hover {
+    background: transparent;
+    border: 2px solid #FFC329;
+    border-radius: 5px;
+}
+
+QTreeView::item:selected {
+    background: transparent;
+    border: 2px solid #F69500;
+    border-radius: 5px;
+}
+
+QTreeView::item:selected:active{
+    background: transparent;
+}
+
+QTreeView::item:selected:!active {
+    background: transparent;
+}
+
+
+
+QTreeView::branch {
+	image:none;
+        /*background: palette(base);*/
+}
+
+QTreeView::branch:selected {
+	background: transparent;
+}
+
+QTreeView::branch:has-siblings:!adjoins-item {
+        background: cyan;
+}
+
+QTreeView::branch:has-siblings:adjoins-item {
+        background: url(/Users/Echo/Desktop/HiveUI/TreeWidget/TreeWidget-mid.png);
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+        background: url(/Users/Echo/Desktop/HiveUI/TreeWidget/TreeWidget-end.png);
+}
+
+QTreeView::branch:closed:has-children:has-siblings {
+        background: pink;
+}
+
+QTreeView::branch:has-children:!has-siblings:closed {
+        background-image: url(/Users/Echo/Desktop/HiveUI/TreeWidget/TreeWidget-closed.png);
+}
+
+QTreeView::branch:open:has-children:has-siblings {
+        background: magenta;
+}
+
+QTreeView::branch:open:has-children:!has-siblings {
+        background: url(/Users/Echo/Desktop/HiveUI/TreeWidget/TreeWidget-opened.png);
+}
