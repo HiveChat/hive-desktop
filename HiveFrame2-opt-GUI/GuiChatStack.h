@@ -8,7 +8,8 @@
 #include <QTextEdit>
 #include <QScrollArea>
 
-#include "GuiTabLabel.h"
+#include "GuiLabelButton.h"
+#include "GuiAvatarButton.h"
 
 class GuiChatStack_top_bar : public QWidget
 {
@@ -20,7 +21,7 @@ public:
 
 private:
   QHBoxLayout *main_layout;
-  GuiTabLabel *avatar_label;
+  GuiAvatarButton *avatar_label;
 
 };
 
@@ -50,7 +51,12 @@ private:
   QTextEdit *text_editor;
   QVBoxLayout *edit_layout;
   QHBoxLayout *tool_layout;
-  QHBoxLayout *main_layout;
+
+  GuiLabelButton *expression_label;
+  GuiLabelButton *image_label;
+  GuiLabelButton *file_label;
+
+  QVBoxLayout *main_layout;
 
 };
 
@@ -73,6 +79,7 @@ private:
 
   GuiChatStack_top_bar *top_bar;
   GuiChatStack_chat_widget *chat_widget;
+  GuiChatStack_message_editor *message_editor;
 
   QScrollArea *chat_scroll_area;
 

@@ -3,10 +3,10 @@
 
 GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 {
-  welcome_label = new GuiTabLabel(" welcome page");
-  issues_label = new GuiTabLabel(" issues");
-  files_label = new GuiTabLabel(" files received");
-  settings_label = new GuiTabLabel(" settings");
+  welcome_label = new GuiTextButton(" welcome page");
+  issues_label = new GuiTextButton(" issues");
+  files_label = new GuiTextButton(" files received");
+  settings_label = new GuiTextButton(" settings");
 
   ////main layout
   main_layout = new QVBoxLayout(this);

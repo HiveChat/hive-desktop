@@ -17,20 +17,26 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     GuiCentralWidget.cpp \
     GuiTabBlock.cpp \
-    GuiTabLabel.cpp \
     GuiHomeTab.cpp \
     GuiMainBlock.cpp \
     GuiChatTab.cpp \
-    GuiChatStack.cpp
+    GuiChatStack.cpp \
+    GuiLabelButton.cpp \
+    GuiTextButton.cpp \
+    GuiCombWidget.cpp \
+    GuiAvatarButton.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
     GuiTabBlock.h \
-    GuiTabLabel.h \
     GuiHomeTab.h \
     GuiMainBlock.h \
     GuiChatTab.h \
-    GuiChatStack.h
+    GuiChatStack.h \
+    GuiLabelButton.h \
+    GuiTextButton.h \
+    GuiCombWidget.h \
+    GuiAvatarButton.h
 
 RESOURCES += \
     qss.qrc \

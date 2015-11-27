@@ -8,7 +8,21 @@
 #include <QTreeWidgetItem>
 #include <QLineEdit>
 #include <QPalette>
+#include <QScrollArea>
 
+#include "GuiCombWidget.h"
+
+class GuiChatTab_comb_scroll_widget : public QWidget
+{
+  Q_OBJECT
+
+public:
+  explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
+
+private:
+  QVBoxLayout *main_layout;
+
+};
 
 class GuiChatTab : public QWidget
 {
@@ -16,7 +30,6 @@ class GuiChatTab : public QWidget
 
 public:
   explicit GuiChatTab(QWidget *parent = 0);
-  ~GuiChatTab();
 
   void addNewComb(QString);
   void addNewGroup(QString);
@@ -27,8 +40,11 @@ public slots:
 
 private:
   QVBoxLayout *main_layout;
-  QTreeWidget *comb_treewidget;
-  QTreeWidgetItem *comb_treewidget_item;
+  QVBoxLayout *comb_layout;
+  QScrollArea *comb_scrollarea;
+
+  //QTreeWidget *comb_treewidget;
+  //QTreeWidgetItem *comb_treewidget_item;
 
 private slots:
   void onItemClicked(QTreeWidgetItem *item, int column);

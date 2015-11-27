@@ -4,9 +4,10 @@
 
 GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 {
-  this->setFixedWidth(200);
+  this->setFixedWidth(250);
 
   ////label test
+  /// QFileDialog Example
   /*QString fileName = QFileDialog::getOpenFileName(this,"Choose Image","x:/image",("Image File(*.*)")) ;
       QImage image ;
       image.load(fileName) ;
@@ -16,27 +17,39 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
       label->resize(QSize(40,5));*/
 
   ////window btn
-  exit_hint = new GuiTabLabel();
-  min_hint = new GuiTabLabel();
-  max_hint = new GuiTabLabel();
+  exit_hint = new GuiLabelButton();
+  min_hint = new GuiLabelButton();
+  max_hint = new GuiLabelButton();
 
-  exit_hint_img0.load(":/img/img/exit_hint_0.png");
-  exit_hint_img0.setDevicePixelRatio(2.0);
-  exit_hint_img1.load(":/img/img/exit_hint_1.png");
-  exit_hint_img1.setDevicePixelRatio(2.0);
-  exit_hint->setPixmap(exit_hint_img0);
+  exit_hint->setState0Pixmap(":/img/img/exit_hint_0.png");
+  exit_hint->setState1Pixmap(":/img/img/exit_hint_1.png");
+  /*exit_hint0.load(":/img/img/exit_hint_0.png");
+  exit_hint0.setDevicePixelRatio(2.0);
+  exit_hint1.load(":/img/img/exit_hint_1.png");
+  exit_hint1.setDevicePixelRatio(2.0);
+  exit_hint->setPixmap(exit_hint0);*/
+  //for GuiLabelButton::setHDPixmap(QString path)
+  //exit_hint->setHDPixmap(exit_hint0);
 
-  min_hint_img0.load(":/img/img/min_hint_0.png");
-  min_hint_img0.setDevicePixelRatio(2.0);
-  min_hint_img1.load(":/img/img/min_hint_1.png");
-  min_hint_img1.setDevicePixelRatio(2.0);
-  min_hint->setPixmap(min_hint_img0);
+  min_hint->setState0Pixmap(":/img/img/min_hint_0.png");
+  min_hint->setState1Pixmap(":/img/img/min_hint_1.png");
+  /*min_hint0.load(":/img/img/min_hint_0.png");
+  min_hint0.setDevicePixelRatio(2.0);
+  min_hint1.load(":/img/img/min_hint_1.png");
+  min_hint1.setDevicePixelRatio(2.0);
+  min_hint->setPixmap(min_hint0);*/
+  //for GuiLabelButton::setHDPixmap(QString path)
+  //min_hint->setHDPixmap(min_hint0);
 
-  max_hint_img0.load(":/img/img/max_hint_0.png");
-  max_hint_img0.setDevicePixelRatio(2.0);
-  max_hint_img1.load(":/img/img/max_hint_1.png");
-  max_hint_img1.setDevicePixelRatio(2.0);
-  max_hint->setPixmap(max_hint_img0);
+  max_hint->setState0Pixmap(":/img/img/max_hint_0.png");
+  max_hint->setState1Pixmap(":/img/img/max_hint_1.png");
+  /*max_hint0.load(":/img/img/max_hint_0.png");
+  max_hint0.setDevicePixelRatio(2.0);
+  max_hint1.load(":/img/img/max_hint_1.png");
+  max_hint1.setDevicePixelRatio(2.0);
+  max_hint->setPixmap(max_hint0);*/
+  //for GuiLabelButton::setHDPixmap(QString path)
+  //max_hint->setHDPixmap(max_hint0);
 
   connect(exit_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
   connect(exit_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
@@ -56,25 +69,31 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   window_btn_layout->addWidget(max_hint);
 
   ////tab label
-  left_tab_label = new GuiTabLabel();
-  mid_tab_label = new GuiTabLabel();
-  right_tab_label = new GuiTabLabel();
+  left_tab_label = new GuiLabelButton();
+  mid_tab_label = new GuiLabelButton();
+  right_tab_label = new GuiLabelButton();
 
-  QPixmap left_label_img("/Users/Echo/Desktop/pp.png");//pp
+  left_tab_label->setState0Pixmap("/Users/Echo/Desktop/pp.png");
+  left_tab_label->setState1Pixmap("/Users/Echo/Desktop/pp.png");
+  /*QPixmap left_label_img("/Users/Echo/Desktop/pp.png");//pp
   left_label_img.setDevicePixelRatio(2.0);
-  left_tab_label->setPixmap(left_label_img);
+  left_tab_label->setPixmap(left_label_img);*/
   //left_tab_label->setScaledContents(true);
   //left_tab_label->resize(QSize(50,50));
 
-  QPixmap mid_label_img("/Users/Echo/Desktop/t.png");//t
+  mid_tab_label->setState0Pixmap("/Users/Echo/Desktop/t.png");
+  mid_tab_label->setState1Pixmap("/Users/Echo/Desktop/t.png");
+  /*QPixmap mid_label_img("/Users/Echo/Desktop/t.png");//t
   mid_label_img.setDevicePixelRatio(2.0);
-  mid_tab_label->setPixmap(mid_label_img);
+  mid_tab_label->setPixmap(mid_label_img);*/
   //mid_tab_label->setScaledContents(true);
   //mid_tab_label->resize(QSize(50,50));
 
-  QPixmap right_label_img("/Users/Echo/Desktop/s.png");//s
+  right_tab_label->setState0Pixmap("/Users/Echo/Desktop/s.png");
+  right_tab_label->setState1Pixmap("/Users/Echo/Desktop/s.png");
+  /*QPixmap right_label_img("/Users/Echo/Desktop/s.png");//s
   right_label_img.setDevicePixelRatio(2.0);
-  right_tab_label->setPixmap(right_label_img);
+  right_tab_label->setPixmap(right_label_img);*/
   //right_tab_label->setScaledContents(true);
   //right_tab_label->resize(QSize(50,50));
 
@@ -89,18 +108,18 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
   left_btn_line_label0.load(":/img/img/left_btn_line_label0.png");
   left_btn_line_label1.load(":/img/img/left_btn_line_label1.png");
-  left_btn_line_label->setPixmap(QPixmap::fromImage(left_btn_line_label1));
-  left_btn_line_label->resize(QSize(left_btn_line_label1.size()));
+  left_btn_line_label->setPixmap(left_btn_line_label1);
+  //left_btn_line_label->resize(QSize(left_btn_line_label1.size()));
 
   mid_btn_line_label0.load(":/img/img/mid_btn_line_label0.png");
   mid_btn_line_label1.load(":/img/img/mid_btn_line_label1.png");
-  mid_btn_line_label->setPixmap(QPixmap::fromImage(mid_btn_line_label0));
-  mid_btn_line_label->resize(QSize(mid_btn_line_label0.size()));
+  mid_btn_line_label->setPixmap(mid_btn_line_label0);
+  //mid_btn_line_label->resize(QSize(mid_btn_line_label0.size()));
 
   right_btn_line_label0.load(":/img/img/right_btn_line_label0.png");
   right_btn_line_label1.load(":/img/img/right_btn_line_label1.png");
-  right_btn_line_label->setPixmap(QPixmap::fromImage(right_btn_line_label0));
-  right_btn_line_label->resize(QSize(right_btn_line_label0.size()));
+  right_btn_line_label->setPixmap(right_btn_line_label0);
+  //right_btn_line_label->resize(QSize(right_btn_line_label0.size()));
 
 
   ////tab label layout
@@ -154,40 +173,40 @@ void GuiTabBlock::changeBtnLine()
   if(sender() == left_tab_label)
     {
       current_tab_index = 1;
-      left_btn_line_label->setPixmap(QPixmap::fromImage(left_btn_line_label1));
-      mid_btn_line_label->setPixmap(QPixmap::fromImage(mid_btn_line_label0));
-      right_btn_line_label->setPixmap(QPixmap::fromImage(right_btn_line_label0));
+      left_btn_line_label->setPixmap(left_btn_line_label1);
+      mid_btn_line_label->setPixmap(mid_btn_line_label0);
+      right_btn_line_label->setPixmap(right_btn_line_label0);
       tab_stacked_widget->setCurrentWidget(gui_home_tab);
     }
   if(sender() == mid_tab_label)
     {
       current_tab_index = 2;
-      left_btn_line_label->setPixmap(QPixmap::fromImage(left_btn_line_label0));
-      mid_btn_line_label->setPixmap(QPixmap::fromImage(mid_btn_line_label1));
-      right_btn_line_label->setPixmap(QPixmap::fromImage(right_btn_line_label0));
+      left_btn_line_label->setPixmap(left_btn_line_label0);
+      mid_btn_line_label->setPixmap(mid_btn_line_label1);
+      right_btn_line_label->setPixmap(right_btn_line_label0);
       tab_stacked_widget->setCurrentWidget(gui_chat_tab);
     }
   if(sender() == right_tab_label)
     {
       current_tab_index = 3;
-      left_btn_line_label->setPixmap(QPixmap::fromImage(left_btn_line_label0));
-      mid_btn_line_label->setPixmap(QPixmap::fromImage(mid_btn_line_label0));
-      right_btn_line_label->setPixmap(QPixmap::fromImage(right_btn_line_label1));
+      left_btn_line_label->setPixmap(left_btn_line_label0);
+      mid_btn_line_label->setPixmap(mid_btn_line_label0);
+      right_btn_line_label->setPixmap(right_btn_line_label1);
     }
 }
 
 void GuiTabBlock::changeWindowBtn()
 {
-  exit_hint->setPixmap(exit_hint_img1);
-  min_hint->setPixmap(min_hint_img1);
-  max_hint->setPixmap(max_hint_img1);
+  exit_hint->setState1();
+  min_hint->setState1();
+  max_hint->setState1();
 }
 
 void GuiTabBlock::recoverWindowBtn()
 {
-  exit_hint->setPixmap(exit_hint_img0);
-  min_hint->setPixmap(min_hint_img0);
-  max_hint->setPixmap(max_hint_img0);
+  exit_hint->setState0();
+  min_hint->setState0();
+  max_hint->setState0();
 }
 
 int GuiTabBlock::currentIndex()

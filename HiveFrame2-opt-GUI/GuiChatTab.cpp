@@ -5,10 +5,20 @@
 
 GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 {
-  comb_treewidget = new QTreeWidget(this);
+  comb_scrollarea = new QScrollArea(this);
+
+  comb_scrollarea->setFrameShape(QFrame::NoFrame);
+  /*QPalette comb_scrollarea_palette;
+  comb_scrollarea_palette.setColor(QPalette::Background, Qt::white);
+  comb_scrollarea->setPalette(comb_scrollarea_palette);*/
+  GuiChatTab_comb_scroll_widget *sssa = new GuiChatTab_comb_scroll_widget();
+  comb_scrollarea->setWidget(sssa);
+
+  /*comb_treewidget = new QTreeWidget(this);
   comb_treewidget->setHeaderHidden(true);
   comb_treewidget->setAnimated(true);
   comb_treewidget->setAlternatingRowColors(false);
+  comb_treewidget->setFrameStyle(QFrame::NoFrame);
 
   connect(comb_treewidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(onItemClicked(QTreeWidgetItem*, int)));
 
@@ -22,18 +32,20 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
       item->addChild(item1);
     }
   //comb_treewidget->setFixedWidth(100);
-
+*/
   ////main layout
+
+
+
   main_layout = new QVBoxLayout(this);
-  //main_layout->setMargin(0);
-  main_layout->addWidget(comb_treewidget);
+  main_layout->addWidget(comb_scrollarea);
+
+
+
+
 
 }
 
-GuiChatTab::~GuiChatTab()
-{
-
-}
 
 void GuiChatTab::addNewComb(QString title)
 {
@@ -76,8 +88,8 @@ void GuiChatTab::onItemClicked(QTreeWidgetItem *item, int column)
 
 void GuiChatTab::showMenu()
 {
-    QPoint pos;
-    QMenu menu(comb_treewidget);
+    /*QPoint pos;
+    //QMenu menu(comb_treewidget);
     QIcon myIcon(":/GuiTabBlock/right_btn_line_label1.png");
     menu.addAction(myIcon,tr("菜单_1"));
     menu.addAction(myIcon,tr("菜单_2"));
@@ -85,5 +97,26 @@ void GuiChatTab::showMenu()
     menu.addAction(myIcon,tr("菜单_4"));
     menu.addAction(myIcon,tr("菜单_5"));
     menu.addAction(myIcon,tr("菜单_6"));
-    menu.exec(QCursor::pos());
+    menu.exec(QCursor::pos());*/
+}
+
+
+//////////////////////////////////////
+GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : QWidget(parent)
+{
+
+  this->setParent(parent);
+
+  ///main layout
+  main_layout = new QVBoxLayout(this);
+  main_layout->setContentsMargins(0,0,0,0);
+  main_layout->setSpacing(0);
+  GuiCombWidget *hahaha;
+
+  for(int i = 0; i < 9; i++)
+    {
+      hahaha = new GuiCombWidget("/Users/Echo/Desktop/squirrel.jpg", "@Echo", QString("192.168.1."), this);
+      main_layout->addWidget(hahaha);
+
+    }
 }

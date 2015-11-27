@@ -18,8 +18,6 @@ MainWindow::MainWindow(QWidget *parent)
   this->setWindowFlags(Qt::FramelessWindowHint);
   this->setWindowState(Qt::WindowNoState);
   //this->setWindowFlags(Qt::CustomizeWindowHint);
-
-
 }
 
 MainWindow::~MainWindow()
@@ -43,7 +41,7 @@ void MainWindow::paintEvent(QPaintEvent*)
   ///color
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillRect(rect(), QColor(255,204,0,255));
+  painter.fillRect(rect(), QColor(255,255,255,255));//(255,204,0,255));
 }
 
 
