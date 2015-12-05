@@ -1,5 +1,5 @@
 # Hive!
-<p>Hive! is a LAN chatting software. This is a free software(GPL v3).</p>
+<p>Hive! is a LAN chatting software. This is a free software.</p>
 ##Download:
 <p>This programme is not finished yet. if you are interested in the progress, you can compile with Qt Creator (an IDE for Qt, the cross platform GUI library)</p>
 <p>I'm apologetic for the inconveniency!</p>
