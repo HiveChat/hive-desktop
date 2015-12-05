@@ -13,5 +13,14 @@
         <file>img/right_btn_line_label0.png</file>
         <file>img/right_btn_line_label1.png</file>
         <file>img/icon.png</file>
+        <file>img/expression_label_0.png</file>
+        <file>img/expression_label_1.png</file>
+        <file>img/file_label_0.png</file>
+        <file>img/file_label_1.png</file>
+        <file>img/image_label_0.png</file>
+        <file>img/image_label_1.png</file>
+        <file>img/chat_tab.png</file>
+        <file>img/contact_tab.png</file>
+        <file>img/home_tab.png</file>
     </qresource>
 </RCC>

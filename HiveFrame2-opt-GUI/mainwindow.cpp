@@ -5,14 +5,18 @@
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
+  QPalette palette;
+  palette.setColor(QPalette::Base, QColor(255,204,0,255));
+  this->setPalette(palette);
+
   gui_central_widget = new GuiCentralWidget(this);
   connect(gui_central_widget->gui_tab_block->exit_hint, SIGNAL(clicked()), this, SLOT(close()));
   connect(gui_central_widget->gui_tab_block->min_hint, SIGNAL(clicked()), this, SLOT(showMinimized()));
   connect(gui_central_widget->gui_tab_block->max_hint, SIGNAL(clicked()), this, SLOT(setWindowMaximized()));
 
   //this->setWindowIcon(QIcon(":/img/img/icon.png"));
-  this->setMinimumHeight(500);
-  this->setMinimumWidth(800);
+  this->setMinimumHeight(600);
+  this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowFlags(Qt::FramelessWindowHint);
@@ -29,19 +33,20 @@ void MainWindow::paintEvent(QPaintEvent*)
 {
   ///rounded frame     //scroll bug here!
   QBitmap bmp(this->size());
-  bmp.setDevicePixelRatio(1.0);
+  //bmp.setDevicePixelRatio(1.0);
   bmp.fill();
   QPainter p(&bmp);
   p.setPen(Qt::NoPen);
   p.setBrush(Qt::black);
   p.setRenderHint(QPainter::Antialiasing, true);
+  p.setRenderHint(QPainter::SmoothPixmapTransform);
   p.drawRoundedRect(bmp.rect(), 10, 10);
   this->setMask(bmp);
 
   ///color
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillRect(rect(), QColor(255,255,255,255));//(255,204,0,255));
+  painter.fillRect(rect(), QColor(255,255,255,255));
 }
 
 

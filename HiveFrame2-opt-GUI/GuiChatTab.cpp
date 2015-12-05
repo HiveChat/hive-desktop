@@ -8,9 +8,10 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   comb_scrollarea = new QScrollArea(this);
 
   comb_scrollarea->setFrameShape(QFrame::NoFrame);
-  /*QPalette comb_scrollarea_palette;
+  QPalette comb_scrollarea_palette;
   comb_scrollarea_palette.setColor(QPalette::Background, Qt::white);
-  comb_scrollarea->setPalette(comb_scrollarea_palette);*/
+  comb_scrollarea->setPalette(comb_scrollarea_palette);
+
   GuiChatTab_comb_scroll_widget *sssa = new GuiChatTab_comb_scroll_widget();
   comb_scrollarea->setWidget(sssa);
 

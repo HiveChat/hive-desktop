@@ -128,16 +128,16 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   image_label = new GuiLabelButton(this);
   file_label = new GuiLabelButton(this);
 
-  expression_label->setState0Pixmap("/Users/Echo/Desktop/HiveUI/Message\ Editor/expression_label.png");
-  expression_label->setState1Pixmap("/Users/Echo/Desktop/HiveUI/Message\ Editor/expression_label1.png");
+  expression_label->setState0Pixmap(":/img/img/expression_label_0.png");
+  expression_label->setState1Pixmap(":/img/img/expression_label_1.png");
   //expression_label->setAlignment(Qt::AlignLeft);
 
-  image_label->setState0Pixmap("/Users/Echo/Desktop/HiveUI/Message\ Editor/image_label.png");
-  image_label->setState1Pixmap("/Users/Echo/Desktop/HiveUI/Message\ Editor/image_label1.png");
+  image_label->setState0Pixmap(":/img/img/image_label_0.png");
+  image_label->setState1Pixmap(":/img/img/image_label_1.png");
   //image_label->setAlignment(Qt::AlignLeft);
 
-  file_label->setState0Pixmap("/Users/Echo/Desktop/HiveUI/Message\ Editor/file_label.png");
-  file_label->setState1Pixmap("/Users/Echo/Desktop/HiveUI/Message\ Editor/file_label1.png");
+  file_label->setState0Pixmap(":/img/img/file_label_0.png");
+  file_label->setState1Pixmap(":/img/img/file_label_1.png");
   //file_label->setAlignment(Qt::AlignLeft);
 
 

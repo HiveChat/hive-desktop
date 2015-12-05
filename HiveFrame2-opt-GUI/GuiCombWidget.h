@@ -6,7 +6,7 @@
 #include <GuiLabelButton.h>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-
+#include <QPalette>
 #include <GuiAvatarButton.h>
 
 class GuiCombWidget : public QWidget
@@ -30,6 +30,10 @@ private:
   QVBoxLayout *usr_info_layout;
   QHBoxLayout *ip_status_layout;
   QHBoxLayout *main_layout;
+
+  QPalette hover_palette;
+  QColor default_window_color = QColor(255,255,255);
+  QColor hovered_window_color = QColor(255,232,166);
 
   bool selected = false;
   bool hovered  = false;

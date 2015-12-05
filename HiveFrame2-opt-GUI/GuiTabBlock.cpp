@@ -73,24 +73,24 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   mid_tab_label = new GuiLabelButton();
   right_tab_label = new GuiLabelButton();
 
-  left_tab_label->setState0Pixmap("/Users/Echo/Desktop/pp.png");
-  left_tab_label->setState1Pixmap("/Users/Echo/Desktop/pp.png");
+  left_tab_label->setState0Pixmap(":/img/img/home_tab.png");
+  left_tab_label->setState1Pixmap(":/img/img/home_tab.png");
   /*QPixmap left_label_img("/Users/Echo/Desktop/pp.png");//pp
   left_label_img.setDevicePixelRatio(2.0);
   left_tab_label->setPixmap(left_label_img);*/
   //left_tab_label->setScaledContents(true);
   //left_tab_label->resize(QSize(50,50));
 
-  mid_tab_label->setState0Pixmap("/Users/Echo/Desktop/t.png");
-  mid_tab_label->setState1Pixmap("/Users/Echo/Desktop/t.png");
+  mid_tab_label->setState0Pixmap(":/img/img/chat_tab.png");
+  mid_tab_label->setState1Pixmap(":/img/img/chat_tab.png");
   /*QPixmap mid_label_img("/Users/Echo/Desktop/t.png");//t
   mid_label_img.setDevicePixelRatio(2.0);
   mid_tab_label->setPixmap(mid_label_img);*/
   //mid_tab_label->setScaledContents(true);
   //mid_tab_label->resize(QSize(50,50));
 
-  right_tab_label->setState0Pixmap("/Users/Echo/Desktop/s.png");
-  right_tab_label->setState1Pixmap("/Users/Echo/Desktop/s.png");
+  right_tab_label->setState0Pixmap(":/img/img/contact_tab.png");
+  right_tab_label->setState1Pixmap(":/img/img/contact_tab.png");
   /*QPixmap right_label_img("/Users/Echo/Desktop/s.png");//s
   right_label_img.setDevicePixelRatio(2.0);
   right_tab_label->setPixmap(right_label_img);*/

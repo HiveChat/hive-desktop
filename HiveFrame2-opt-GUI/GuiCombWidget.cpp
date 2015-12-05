@@ -1,4 +1,6 @@
 #include "GuiCombWidget.h"
+#include <QDebug>
+
 
 GuiCombWidget::GuiCombWidget(QString avatarPath, QString usrName, QString ipAddr, QWidget *parent) : QWidget(parent)
 {
@@ -32,6 +34,11 @@ GuiCombWidget::GuiCombWidget(QString avatarPath, QString usrName, QString ipAddr
   main_layout->addWidget(avatar);
   main_layout->addLayout(usr_info_layout);
 
+  hover_palette.setColor(QPalette::Window, default_window_color);
+
+  this->setPalette(hover_palette);
+  this->setAutoFillBackground(true);
+
 }
 
 GuiCombWidget::~GuiCombWidget()
@@ -39,19 +46,26 @@ GuiCombWidget::~GuiCombWidget()
 
 }
 
-
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 {
+  QPalette palette;
+  palette.setColor(QPalette::Window,hovered_window_color);
+  this->setPalette(palette);
+  qDebug()<<"yes";
   selected != selected;
 }
 
 void GuiCombWidget::enterEvent(QEvent *)
 {
+  hover_palette.setColor(QPalette::Window, hovered_window_color);
+  this->setPalette(hover_palette);
   hovered = true;
 }
 
 void GuiCombWidget::leaveEvent(QEvent *)
 {
+  hover_palette.setColor(QPalette::Window, default_window_color);
+  this->setPalette(hover_palette);
   hovered = false;
 }
 
