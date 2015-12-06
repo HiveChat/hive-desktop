@@ -17,10 +17,14 @@ public:
   explicit GuiCombWidget(QString avatarPath, QString usrName, QString ipAddr, QWidget *parent = 0);
   ~GuiCombWidget();
 
+  void setEntered(bool entered);
+
 protected:
-    void mouseReleaseEvent(QMouseEvent *);
-    void enterEvent(QEvent *);
-    void leaveEvent(QEvent *);
+  void paintEvent(QPaintEvent*);
+
+  void mouseReleaseEvent(QMouseEvent *);
+  void enterEvent(QEvent *);
+  void leaveEvent(QEvent *);
 
 private:
   GuiAvatarButton *avatar;
@@ -32,6 +36,7 @@ private:
   QHBoxLayout *main_layout;
 
   QPalette hover_palette;
+  QColor window_color = QColor(255,255,255);
   QColor default_window_color = QColor(255,255,255);
   QColor hovered_window_color = QColor(255,232,166);
 
@@ -40,6 +45,10 @@ private:
 
   //QFont usr_name_font;
   //QFont ip_addr_font;
+
+signals:
+  void entered();
+
 
 };
 

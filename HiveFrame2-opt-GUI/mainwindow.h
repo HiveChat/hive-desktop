@@ -24,7 +24,7 @@ protected:
 
   QPoint move_point; //移动的距离
 
-  bool mouse_press; //鼠标按下
+  bool mouse_pressed; //鼠标按下
   //鼠标按下事件
   void mousePressEvent(QMouseEvent *event);
  //鼠标释放事件

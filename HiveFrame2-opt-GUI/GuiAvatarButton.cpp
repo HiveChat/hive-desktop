@@ -14,7 +14,8 @@ GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, int borderWid
   painter.drawRoundedRect(0, 0, Diameter, Diameter, 99, 99);
 
   QPixmap avatar_pixmap(path);
-  avatar_pixmap = avatar_pixmap.scaled(Diameter,Diameter,Qt::KeepAspectRatio);
+  avatar_pixmap = avatar_pixmap.scaled(Diameter,Diameter,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+
   avatar_pixmap.setDevicePixelRatio(2.0);
   avatar_pixmap.setMask(mask);
 

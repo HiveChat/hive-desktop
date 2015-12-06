@@ -36,6 +36,7 @@ GuiCombWidget::GuiCombWidget(QString avatarPath, QString usrName, QString ipAddr
 
   hover_palette.setColor(QPalette::Window, default_window_color);
 
+  this->setMinimumWidth(200);
   this->setPalette(hover_palette);
   this->setAutoFillBackground(true);
 
@@ -46,26 +47,40 @@ GuiCombWidget::~GuiCombWidget()
 
 }
 
+
+//////events
+
+void GuiCombWidget::paintEvent(QPaintEvent *)
+{
+  QRectF rectangle(0, 0, this->width(), this->height());
+  QPainter paint;
+  paint.begin(this);
+  paint.setPen(QPen(Qt::NoPen));
+  paint.setBrush(QBrush(window_color,Qt::SolidPattern));
+
+  paint.drawRoundedRect(rectangle,5,5);
+  paint.end();
+}
+
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 {
-  QPalette palette;
-  palette.setColor(QPalette::Window,hovered_window_color);
-  this->setPalette(palette);
-  qDebug()<<"yes";
+  window_color = hovered_window_color;
+  repaint();
   selected != selected;
 }
 
 void GuiCombWidget::enterEvent(QEvent *)
 {
-  hover_palette.setColor(QPalette::Window, hovered_window_color);
-  this->setPalette(hover_palette);
+  window_color = hovered_window_color;
+  repaint();
   hovered = true;
 }
 
 void GuiCombWidget::leaveEvent(QEvent *)
 {
-  hover_palette.setColor(QPalette::Window, default_window_color);
-  this->setPalette(hover_palette);
+  window_color = default_window_color;
+  repaint();
   hovered = false;
 }
+
 

@@ -116,7 +116,7 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
 
   for(int i = 0; i < 9; i++)
     {
-      hahaha = new GuiCombWidget("/Users/Echo/Desktop/squirrel.jpg", "@Echo", QString("192.168.1."), this);
+      hahaha = new GuiCombWidget("/Users/Echo/Desktop/squirrel.jpg", "@Echo", QString("192.168.1."+QString::number(i)), this);
       main_layout->addWidget(hahaha);
 
     }

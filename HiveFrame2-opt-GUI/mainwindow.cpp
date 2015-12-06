@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include <QBitmap>
+#include <QPainter>
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
@@ -14,7 +15,6 @@ MainWindow::MainWindow(QWidget *parent)
   connect(gui_central_widget->gui_tab_block->min_hint, SIGNAL(clicked()), this, SLOT(showMinimized()));
   connect(gui_central_widget->gui_tab_block->max_hint, SIGNAL(clicked()), this, SLOT(setWindowMaximized()));
 
-  //this->setWindowIcon(QIcon(":/img/img/icon.png"));
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);
@@ -32,50 +32,53 @@ MainWindow::~MainWindow()
 void MainWindow::paintEvent(QPaintEvent*)
 {
   ///rounded frame     //scroll bug here!
-  QBitmap bmp(this->size());
-  //bmp.setDevicePixelRatio(1.0);
+  /*QBitmap bmp(this->size());
   bmp.fill();
   QPainter p(&bmp);
   p.setPen(Qt::NoPen);
   p.setBrush(Qt::black);
   p.setRenderHint(QPainter::Antialiasing, true);
   p.setRenderHint(QPainter::SmoothPixmapTransform);
-  p.drawRoundedRect(bmp.rect(), 10, 10);
+  p.drawRoundedRect(bmp.rect(), 8, 8);
   this->setMask(bmp);
 
   ///color
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillRect(rect(), QColor(255,255,255,255));
+  painter.fillRect(rect(), QColor(255,255,255,255));*/
+
+  QRectF rectangle(0, 0, this->width(), this->height());
+  QPainter paint;
+  paint.begin(this);
+  paint.setPen(QPen(Qt::NoPen));
+  paint.setBrush(QBrush(Qt::white,Qt::SolidPattern));
+  paint.drawRoundedRect(rectangle,5,5);
+  paint.end();
 }
 
 
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
- if(event->button() == Qt::LeftButton)
- {
-      mouse_press = true;
+  if(event->button() == Qt::LeftButton)
+    {
+      mouse_pressed = true;
       //鼠标相对于窗体的位置（或者使用event->globalPos() - this->pos()）
-      move_point = event->pos();;
- }
+      move_point = event->pos();
+    }
 }
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    //若鼠标左键被按下
-    if(mouse_press)
+  if(mouse_pressed)
     {
-        //鼠标相对于屏幕的位置
-        QPoint move_pos = event->globalPos();
-
-       //移动主窗体位置
-       this->move(move_pos - move_point);
+      //鼠标相对于屏幕的位置
+      QPoint move_pos = event->globalPos();
+      this->move(move_pos - move_point);
     }
 }
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
-    //设置鼠标为未被按下
-    mouse_press = false;
+    mouse_pressed = false;
 }
 
 void MainWindow::setWindowMaximized()
