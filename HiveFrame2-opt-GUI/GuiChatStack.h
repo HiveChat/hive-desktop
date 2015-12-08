@@ -56,7 +56,9 @@ private:
   GuiLabelButton *image_label;
   GuiLabelButton *file_label;
 
-  QVBoxLayout *main_layout;
+  GuiLabelButton *send_btn;
+
+  QHBoxLayout *main_layout;
 
 };
 

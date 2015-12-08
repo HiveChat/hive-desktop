@@ -54,7 +54,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
 ///from baidu
 */
 
-  avatar_label = new GuiAvatarButton("/Users/Echo/Desktop/Screen Shot 2015-11-27 at 15.23.39.png", 90, 90, this);
+  avatar_label = new GuiAvatarButton("/Users/Echo/Desktop/squirrel.jpg", 90, 90, this);
   avatar_label->setFixedHeight(50);
   avatar_label->setAlignment(Qt::AlignLeft);
 
@@ -96,8 +96,8 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
-  QPushButton *pbtn;
-  /*for(int i = 0; i < 20; i++)
+  /*QPushButton *pbtn;
+  for(int i = 0; i < 20; i++)
     {
       pbtn = new QPushButton(QString::number(i));
       main_layout->addWidget(pbtn);
@@ -128,18 +128,17 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   image_label = new GuiLabelButton(this);
   file_label = new GuiLabelButton(this);
 
-  expression_label->setState0Pixmap(":/img/img/expression_label_0.png");
-  expression_label->setState1Pixmap(":/img/img/expression_label_1.png");
+  expression_label->setDefaultPixmap(":/img/img/expression_label_0.png");
+  expression_label->setHoveredPixmap(":/img/img/expression_label_1.png");
   //expression_label->setAlignment(Qt::AlignLeft);
 
-  image_label->setState0Pixmap(":/img/img/image_label_0.png");
-  image_label->setState1Pixmap(":/img/img/image_label_1.png");
+  image_label->setDefaultPixmap(":/img/img/image_label_0.png");
+  image_label->setHoveredPixmap(":/img/img/image_label_1.png");
   //image_label->setAlignment(Qt::AlignLeft);
 
-  file_label->setState0Pixmap(":/img/img/file_label_0.png");
-  file_label->setState1Pixmap(":/img/img/file_label_1.png");
+  file_label->setDefaultPixmap(":/img/img/file_label_0.png");
+  file_label->setHoveredPixmap(":/img/img/file_label_1.png");
   //file_label->setAlignment(Qt::AlignLeft);
-
 
   tool_layout = new QHBoxLayout();
   tool_layout->setAlignment(Qt::AlignLeft);
@@ -151,16 +150,24 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);
-  edit_layout->setContentsMargins(10,5,5,5);
+  edit_layout->setContentsMargins(10,0,15,5);
   edit_layout->setSpacing(5);
   edit_layout->addLayout(tool_layout);
   edit_layout->addWidget(text_editor);
 
-  main_layout = new QVBoxLayout(this);
+  /////////////////////////////////////////////////===============//////////////
+  send_btn = new GuiLabelButton();
+  send_btn->setDefaultPixmap("/Users/Echo/Desktop/send.png");
+  send_btn->setHoveredPixmap("/Users/Echo/Desktop/send.png");
+  send_btn->setPressedPixmap("/Users/Echo/Desktop/send1.png");
+  send_btn->setAlignment(Qt::AlignRight);
+
+  main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignBottom);
-  main_layout->setMargin(0);
+  main_layout->setContentsMargins(0,0,20,0);
   main_layout->setSpacing(0);
   main_layout->addLayout(edit_layout);
+  main_layout->addWidget(send_btn);
 
 }
 

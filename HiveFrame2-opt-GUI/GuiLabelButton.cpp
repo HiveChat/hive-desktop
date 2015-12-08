@@ -5,36 +5,53 @@ GuiLabelButton::GuiLabelButton(QWidget *parent)
   this->setParent(parent);
 }
 
-void GuiLabelButton::setState0Pixmap(QString path)
+void GuiLabelButton::setDefaultPixmap(QString path)
 {
-  state0_pixmap.load(path);
-  state0_pixmap.setDevicePixelRatio(2.0);
-  this->setPixmap(state0_pixmap);
+  default_pixmap.load(path);
+  default_pixmap.setDevicePixelRatio(2.0);
+  this->setPixmap(default_pixmap);
 }
 
-void GuiLabelButton::setState1Pixmap(QString path)
+void GuiLabelButton::setHoveredPixmap(QString path)
 {
-  state1_pixmap.load(path);
-  state1_pixmap.setDevicePixelRatio(2.0);
+  hovered_pixmap.load(path);
+  hovered_pixmap.setDevicePixelRatio(2.0);
+}
+
+void GuiLabelButton::setPressedPixmap(QString path)
+{
+  pressed_pixmap.load(path);
+  pressed_pixmap.setDevicePixelRatio(2.0);
 }
 
 void GuiLabelButton::setState0()
 {
-  this->setPixmap(state0_pixmap);
+  this->setPixmap(default_pixmap);
 }
 
 void GuiLabelButton::setState1()
 {
-  this->setPixmap(state1_pixmap);
+  this->setPixmap(hovered_pixmap);
 }
 
 
 ////////////events
+void GuiLabelButton::mousePressEvent(QMouseEvent *ev)
+{
+  if (ev->button() == Qt::LeftButton)
+    {
+      this->setPixmap(pressed_pixmap);
+    }
+
+}
 
 void GuiLabelButton::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
-  emit clicked();
+    {
+      this->setPixmap(default_pixmap);
+      emit clicked();
+    }
 }
 
 void GuiLabelButton::enterEvent(QEvent * )

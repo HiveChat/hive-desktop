@@ -11,8 +11,9 @@ class GuiLabelButton : public QLabel
  public:
      explicit GuiLabelButton(QWidget *parent = 0);
 
-     void setState0Pixmap(QString path);
-     void setState1Pixmap(QString path);
+     void setDefaultPixmap(QString path);
+     void setHoveredPixmap(QString path);
+     void setPressedPixmap(QString path);
 
      void setState0();
      void setState1();
@@ -23,13 +24,15 @@ class GuiLabelButton : public QLabel
      void left();
 
  protected:
+     void mousePressEvent(QMouseEvent *);
      void mouseReleaseEvent(QMouseEvent *);
      void enterEvent(QEvent *);
      void leaveEvent(QEvent *);
 
 private:
-     QPixmap state0_pixmap;
-     QPixmap state1_pixmap;
+     QPixmap default_pixmap;
+     QPixmap hovered_pixmap;
+     QPixmap pressed_pixmap;
 
 };
 

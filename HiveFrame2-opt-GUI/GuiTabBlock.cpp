@@ -21,8 +21,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   min_hint = new GuiLabelButton();
   max_hint = new GuiLabelButton();
 
-  exit_hint->setState0Pixmap(":/img/img/exit_hint_0.png");
-  exit_hint->setState1Pixmap(":/img/img/exit_hint_1.png");
+  exit_hint->setDefaultPixmap(":/img/img/exit_hint_0.png");
+  exit_hint->setHoveredPixmap(":/img/img/exit_hint_1.png");
   /*exit_hint0.load(":/img/img/exit_hint_0.png");
   exit_hint0.setDevicePixelRatio(2.0);
   exit_hint1.load(":/img/img/exit_hint_1.png");
@@ -31,8 +31,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   //for GuiLabelButton::setHDPixmap(QString path)
   //exit_hint->setHDPixmap(exit_hint0);
 
-  min_hint->setState0Pixmap(":/img/img/min_hint_0.png");
-  min_hint->setState1Pixmap(":/img/img/min_hint_1.png");
+  min_hint->setDefaultPixmap(":/img/img/min_hint_0.png");
+  min_hint->setHoveredPixmap(":/img/img/min_hint_1.png");
   /*min_hint0.load(":/img/img/min_hint_0.png");
   min_hint0.setDevicePixelRatio(2.0);
   min_hint1.load(":/img/img/min_hint_1.png");
@@ -41,8 +41,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   //for GuiLabelButton::setHDPixmap(QString path)
   //min_hint->setHDPixmap(min_hint0);
 
-  max_hint->setState0Pixmap(":/img/img/max_hint_0.png");
-  max_hint->setState1Pixmap(":/img/img/max_hint_1.png");
+  max_hint->setDefaultPixmap(":/img/img/max_hint_0.png");
+  max_hint->setHoveredPixmap(":/img/img/max_hint_1.png");
   /*max_hint0.load(":/img/img/max_hint_0.png");
   max_hint0.setDevicePixelRatio(2.0);
   max_hint1.load(":/img/img/max_hint_1.png");
@@ -73,24 +73,24 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   mid_tab_label = new GuiLabelButton();
   right_tab_label = new GuiLabelButton();
 
-  left_tab_label->setState0Pixmap(":/img/img/home_tab.png");
-  left_tab_label->setState1Pixmap(":/img/img/home_tab.png");
+  left_tab_label->setDefaultPixmap(":/img/img/home_tab.png");
+  left_tab_label->setHoveredPixmap(":/img/img/home_tab.png");
   /*QPixmap left_label_img("/Users/Echo/Desktop/pp.png");//pp
   left_label_img.setDevicePixelRatio(2.0);
   left_tab_label->setPixmap(left_label_img);*/
   //left_tab_label->setScaledContents(true);
   //left_tab_label->resize(QSize(50,50));
 
-  mid_tab_label->setState0Pixmap(":/img/img/chat_tab.png");
-  mid_tab_label->setState1Pixmap(":/img/img/chat_tab.png");
+  mid_tab_label->setDefaultPixmap(":/img/img/chat_tab.png");
+  mid_tab_label->setHoveredPixmap(":/img/img/chat_tab.png");
   /*QPixmap mid_label_img("/Users/Echo/Desktop/t.png");//t
   mid_label_img.setDevicePixelRatio(2.0);
   mid_tab_label->setPixmap(mid_label_img);*/
   //mid_tab_label->setScaledContents(true);
   //mid_tab_label->resize(QSize(50,50));
 
-  right_tab_label->setState0Pixmap(":/img/img/contact_tab.png");
-  right_tab_label->setState1Pixmap(":/img/img/contact_tab.png");
+  right_tab_label->setDefaultPixmap(":/img/img/contact_tab.png");
+  right_tab_label->setHoveredPixmap(":/img/img/contact_tab.png");
   /*QPixmap right_label_img("/Users/Echo/Desktop/s.png");//s
   right_label_img.setDevicePixelRatio(2.0);
   right_tab_label->setPixmap(right_label_img);*/
