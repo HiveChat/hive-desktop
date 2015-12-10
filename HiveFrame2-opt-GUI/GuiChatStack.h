@@ -10,6 +10,9 @@
 
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
+#include "GuiChatBubble.h"
+
+//////////////////////////top//////////////////////////////////////
 
 class GuiChatStack_top_bar : public QWidget
 {
@@ -25,6 +28,8 @@ private:
 
 };
 
+//////////////////////////mid//////////////////////////////////////
+
 class GuiChatStack_chat_widget : public QWidget
 {
   Q_OBJECT
@@ -36,8 +41,11 @@ public:
 private:
 
   QVBoxLayout *main_layout;
+  GuiChatBubble *gui_chat_bubble;
 
 };
+
+//////////////////////////bottom//////////////////////////////////////
 
 class GuiChatStack_message_editor : public QWidget
 {
@@ -62,7 +70,7 @@ private:
 
 };
 
-
+//////////////////////////main//////////////////////////////////////
 
 class GuiChatStack : public QWidget
 {

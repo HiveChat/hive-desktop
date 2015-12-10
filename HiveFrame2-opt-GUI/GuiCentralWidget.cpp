@@ -13,6 +13,9 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(gui_tab_block);
   main_layout->addWidget(gui_main_block);
 
+  data_manager = new DataManager(this);
+  data_manager->addUsr("Tim","192.168.1.1","buzhidao");
+
 }
 
 GuiCentralWidget::~GuiCentralWidget()

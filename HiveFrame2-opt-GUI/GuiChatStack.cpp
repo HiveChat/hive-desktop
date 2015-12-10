@@ -9,36 +9,7 @@
 #include <QBitmap>
 #include <QPainter>
 
-GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
-{
-  top_bar = new GuiChatStack_top_bar(this);
-  chat_widget = new GuiChatStack_chat_widget(this);
-  chat_scroll_area = new QScrollArea(this);
-  chat_scroll_area->setWidget(chat_widget);
-  QPalette palette = chat_scroll_area->palette();
-  palette.setColor(QPalette::Base, QColor(255,255,255,255));
-  chat_scroll_area->setPalette(palette);
-  chat_scroll_area->setFrameStyle(0);
-
-  message_editor = new GuiChatStack_message_editor(this);
-
-  ////main layout
-  main_layout = new QVBoxLayout(this);
-  main_layout->setAlignment(Qt::AlignCenter);
-  main_layout->addWidget(top_bar);
-  main_layout->addWidget(chat_scroll_area);
-  main_layout->addWidget(message_editor);
-  main_layout->setMargin(0);
-  main_layout->setSpacing(0);
-
-}
-
-GuiChatStack::~GuiChatStack()
-{
-
-}
-
-//////////////////////////////////////////
+//////////////////////////top//////////////////////////////////////
 
 GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
 {
@@ -91,17 +62,20 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 
 }
 
-//////////////////////////////////////////
+//////////////////////////mid//////////////////////////////////////
 
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
-  /*QPushButton *pbtn;
+
+
+
+
   for(int i = 0; i < 20; i++)
     {
-      pbtn = new QPushButton(QString::number(i));
-      main_layout->addWidget(pbtn);
-    }*/
+      gui_chat_bubble = new GuiChatBubble("hello",true,this);
+      main_layout->addWidget(gui_chat_bubble);
+    }
 
 }
 
@@ -110,7 +84,7 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 }
 
-//////////////////////////////////////////
+//////////////////////////bottom//////////////////////////////////////
 
 GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
 {
@@ -150,16 +124,16 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);
-  edit_layout->setContentsMargins(10,0,15,5);
+  edit_layout->setContentsMargins(10,5,15,10);
   edit_layout->setSpacing(5);
   edit_layout->addLayout(tool_layout);
   edit_layout->addWidget(text_editor);
 
-  /////////////////////////////////////////////////===============//////////////
+  ///send button
   send_btn = new GuiLabelButton();
-  send_btn->setDefaultPixmap("/Users/Echo/Desktop/send.png");
-  send_btn->setHoveredPixmap("/Users/Echo/Desktop/send.png");
-  send_btn->setPressedPixmap("/Users/Echo/Desktop/send1.png");
+  send_btn->setDefaultPixmap(":/img/img/send_button_0.png");
+  send_btn->setHoveredPixmap(":/img/img/send_button_0.png");
+  send_btn->setPressedPixmap(":/img/img/send_button_1.png");
   send_btn->setAlignment(Qt::AlignRight);
 
   main_layout = new QHBoxLayout(this);
@@ -172,6 +146,37 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 }
 
 GuiChatStack_message_editor::~GuiChatStack_message_editor()
+{
+
+}
+
+//////////////////////////main//////////////////////////////////////
+
+GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
+{
+  top_bar = new GuiChatStack_top_bar(this);
+  chat_widget = new GuiChatStack_chat_widget(this);
+  chat_scroll_area = new QScrollArea(this);
+  chat_scroll_area->setWidget(chat_widget);
+  QPalette palette = chat_scroll_area->palette();
+  palette.setColor(QPalette::Base, QColor(255,255,255,255));
+  chat_scroll_area->setPalette(palette);
+  chat_scroll_area->setFrameStyle(0);
+
+  message_editor = new GuiChatStack_message_editor(this);
+
+  ////main layout
+  main_layout = new QVBoxLayout(this);
+  main_layout->setAlignment(Qt::AlignCenter);
+  main_layout->addWidget(top_bar);
+  main_layout->addWidget(chat_scroll_area);
+  main_layout->addWidget(message_editor);
+  main_layout->setMargin(0);
+  main_layout->setSpacing(0);
+
+}
+
+GuiChatStack::~GuiChatStack()
 {
 
 }

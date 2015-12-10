@@ -3,6 +3,7 @@
 
 #include "GuiTabBlock.h"
 #include "GuiMainBlock.h"
+#include "DataManager.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -22,6 +23,8 @@ public:
   QHBoxLayout *main_layout;
   GuiTabBlock *gui_tab_block;
   GuiMainBlock *gui_main_block;
+
+  DataManager *data_manager;
 };
 
 #endif // GUICENTRALWIDGET_H

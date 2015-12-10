@@ -19,10 +19,14 @@ class GuiChatTab_comb_scroll_widget : public QWidget
 public:
   explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
 
+  void addComb();
+
 private:
   QVBoxLayout *main_layout;
 
 };
+
+///////////
 
 class GuiChatTab : public QWidget
 {
@@ -30,9 +34,6 @@ class GuiChatTab : public QWidget
 
 public:
   explicit GuiChatTab(QWidget *parent = 0);
-
-  void addNewComb(QString);
-  void addNewGroup(QString);
 
 signals:
 

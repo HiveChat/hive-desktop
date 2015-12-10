@@ -15,6 +15,8 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   GuiChatTab_comb_scroll_widget *sssa = new GuiChatTab_comb_scroll_widget();
   comb_scrollarea->setWidget(sssa);
 
+
+
   /*comb_treewidget = new QTreeWidget(this);
   comb_treewidget->setHeaderHidden(true);
   comb_treewidget->setAnimated(true);
@@ -34,6 +36,7 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
     }
   //comb_treewidget->setFixedWidth(100);
 */
+
   ////main layout
 
 
@@ -41,49 +44,13 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   main_layout = new QVBoxLayout(this);
   main_layout->addWidget(comb_scrollarea);
 
-
-
-
-
 }
-
-
-void GuiChatTab::addNewComb(QString title)
-{
-  /*comb_treewidget_item = new QTreeWidgetItem();
-  comb_treewidget_item->setText(1,title);
-  comb_treewidget_item->setIcon(0,QIcon(":/GuiTabBlock/right_btn_line_label0.png"));
-
-  comb_treewidget->addTopLevelItem(comb_treewidget_item);*/
-}
-
-void addNewGroup(QString title)
-{
-
-}
-
-
 
 
 
 void GuiChatTab::onItemClicked(QTreeWidgetItem *item, int column)
 {
-  qDebug()<<"sss";
-    if (qApp->mouseButtons() == Qt::LeftButton)
-    {
-        return;
-        qDebug()<<"hhh";
-    }
 
-    if (qApp->mouseButtons() == Qt::RightButton)
-    {
-        if (item->childCount() > 0)
-        {
-            return;
-        }
-        qDebug()<<"halo";
-        showMenu();
-    }
 }
 
 
@@ -102,22 +69,32 @@ void GuiChatTab::showMenu()
 }
 
 
-//////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
 GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : QWidget(parent)
 {
-
-  this->setParent(parent);
-
   ///main layout
   main_layout = new QVBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
+
+
+  ////delete this test
+  addComb();
+  addComb();
+  addComb();
+
+  ////
+
+  this->setParent(parent);
+}
+
+
+void GuiChatTab_comb_scroll_widget::addComb()
+{
   GuiCombWidget *hahaha;
+  hahaha = new GuiCombWidget("/Users/Echo/Desktop/squirrel.jpg", "@Echo", QString("192.168.1."+QString::number(1)), this);
+  main_layout->addWidget(hahaha);
 
-  for(int i = 0; i < 9; i++)
-    {
-      hahaha = new GuiCombWidget("/Users/Echo/Desktop/squirrel.jpg", "@Echo", QString("192.168.1."+QString::number(i)), this);
-      main_layout->addWidget(hahaha);
 
-    }
 }

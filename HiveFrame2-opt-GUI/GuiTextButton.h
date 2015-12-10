@@ -32,9 +32,6 @@ private:
      QColor text_color = QColor(106,74,0,255);
      QColor hovered_text_color = QColor(255,188,0,255);
 
-     QPixmap state0_pixmap;
-     QPixmap state1_pixmap;
-
 };
 
 #endif // GUITEXTBUTTON_H

@@ -48,12 +48,10 @@ void MainWindow::paintEvent(QPaintEvent*)
   painter.fillRect(rect(), QColor(255,255,255,255));*/
 
   QRectF rectangle(0, 0, this->width(), this->height());
-  QPainter paint;
-  paint.begin(this);
+  QPainter paint(this);
   paint.setPen(QPen(Qt::NoPen));
   paint.setBrush(QBrush(Qt::white,Qt::SolidPattern));
   paint.drawRoundedRect(rectangle,5,5);
-  paint.end();
 }
 
 

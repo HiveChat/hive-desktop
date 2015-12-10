@@ -22,5 +22,7 @@
         <file>img/chat_tab.png</file>
         <file>img/contact_tab.png</file>
         <file>img/home_tab.png</file>
+        <file>img/send_button_0.png</file>
+        <file>img/send_button_1.png</file>
     </qresource>
 </RCC>
