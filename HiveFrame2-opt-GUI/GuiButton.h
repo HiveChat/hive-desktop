@@ -5,24 +5,25 @@
 #include <QPainter>
 #include <QRect>
 #include <QHBoxLayout>
+#include <QDebug>
 
 class GuiButton : public QLabel
 {
 public:
-  explicit GuiButton(QString text, int maximumWidth, QWidget *parent);
-  
+  explicit GuiButton(QString text, int maxWidth, QWidget *parent = 0);
+
 protected:
   void paintEvent(QPaintEvent *);
-  
+
 private:
   QHBoxLayout *main_layout;
 
   QPixmap background_pixmap;
   QLabel *label;
-  QRect rect;
+  QRect mrect;
 
-  int width;
-  int height;
+  int rect_width;
+  int rect_height;
 
 };
 

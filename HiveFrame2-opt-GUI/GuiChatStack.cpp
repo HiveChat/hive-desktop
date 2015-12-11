@@ -9,6 +9,8 @@
 #include <QBitmap>
 #include <QPainter>
 
+#include <GuiButton.h>
+
 //////////////////////////top//////////////////////////////////////
 
 GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
@@ -67,14 +69,15 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
+  //main_layout->setContentsMargins(0,0,0,0);
 
 
+  GuiButton *buttonf;
 
-
-  for(int i = 0; i < 20; i++)
+  for(int i = 0; i < 2; i++)
     {
-      gui_chat_bubble = new GuiChatBubble("hello",true,this);
-      main_layout->addWidget(gui_chat_bubble);
+      buttonf = new GuiButton("  this->setFixedWidth(maxWidth)在使用Qt进行界面设计的时候,拖动QLabel控件到界面上后,由于QLabel的大小此时是固定的,所以在程序中要更改QLabel里面文字的时候,如果文字比较长,就会发生文字被截断的...在使用Qt进行界面设计的时候,拖动QLabel控件到界面上后,由于QLabel的大小此时是固定的,所以在程序中要更改QLabel里面文字的时候,如果文字比较长,就会发生文字被截断的...在使用Qt进行界面设计的时候,拖动QLabel控件到界面上后,由于QLabel的大小此时是固定的到界面上后,由于QLabel的大小此时是固定的,所以在程序中要更改QLabel里面文字的时候,如果文字比较长,就会发生文字被截断的...",300,this);
+      main_layout->addWidget(buttonf);
     }
 
 }
@@ -155,12 +158,15 @@ GuiChatStack_message_editor::~GuiChatStack_message_editor()
 GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
 {
   top_bar = new GuiChatStack_top_bar(this);
+
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
   chat_scroll_area->setWidget(chat_widget);
+
   QPalette palette = chat_scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   chat_scroll_area->setPalette(palette);
+
   chat_scroll_area->setFrameStyle(0);
 
   message_editor = new GuiChatStack_message_editor(this);

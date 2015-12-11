@@ -1,22 +1,23 @@
 #include "GuiButton.h"
 
-GuiButton::GuiButton(QString text, int maximumWidth, QWidget *parent)
+GuiButton::GuiButton(QString text, int maxWidth, QWidget *parent)
 {
-  label = new QLabel("text");
-  label->setWordWrap(true);
-  label->setMaximumWidth(maximumWidth);
-  width = label->width()+10;
-  height = label->height()+10;
 
-  rect.setX(0);
-  rect.setY(0);
-  rect.setWidth(100);
-  rect.setHeight(70);
+  label = new QLabel();
+  //label->setFixedWidth(maxWidth);
+  label->setWordWrap(true);
+  label->setText(text);
+  //label->setAlignment(Qt::AlignTop);
 
   main_layout = new QHBoxLayout(this);
+  main_layout->setContentsMargins(10,10,10,10);
   main_layout->addWidget(label);
-  
+
   this->setParent(parent);
+  this->setFixedWidth(maxWidth);
+
+  qDebug()<<label->width();
+  qDebug()<<label->height();
 }
 
 void GuiButton::paintEvent(QPaintEvent *)
@@ -24,6 +25,6 @@ void GuiButton::paintEvent(QPaintEvent *)
   QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
   painter.setBrush(QBrush(QColor(255,181,0),Qt::SolidPattern));
-  painter.drawRect(0,0,100,100);
+  painter.drawRoundedRect(0,0,label->rect().width()+20,label->rect().height()+20,10,10);
 }
 
