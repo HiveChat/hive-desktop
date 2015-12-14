@@ -12,62 +12,104 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 void DataManager::addUsr(QString usrName, QString ipAddr, QString macAddr)
 {
-  ///JSon
-
-  QJsonObject usr_list_json_obj;
-  usr_list_json_obj.insert("usrName", usrName);
-  usr_list_json_obj.insert("ipAddr", ipAddr);
-  usr_list_json_obj.insert("macAddr", macAddr);
-
-  QJsonDocument usr_list_json_doc;
-  usr_list_json_doc.setObject(usr_list_json_obj);
-
-  QByteArray byte_array = usr_list_json_doc.toJson(QJsonDocument::Compact);
-
-  ///file
   QFile file(usr_list_file_path);
-  qDebug()<<byte_array;
-  if(!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append))
+  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
   {
     return;
   }
 
+  QTextStream in(&file);
   QTextStream out(&file);
 
-  out<<usr_list_json_doc.toJson(QJsonDocument::Compact)<<endl;
+  QByteArray in_byte_array = in.readAll().toUtf8();
+
+  ///JSon
+  QJsonParseError json_error;
+  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  if(json_error.error == QJsonParseError::NoError)
+    {
+      if(read_json_doucment.isObject())
+        {
+          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          if(!usr_list_json_obj.contains(macAddr))
+            {
+              QJsonObject usr_info_json_obj;
+              usr_info_json_obj.insert("usrName", usrName);
+              usr_info_json_obj.insert("ipAddr", ipAddr);
+              usr_info_json_obj.insert("macAddr", macAddr);
+
+              usr_list_json_obj.insert(macAddr, usr_info_json_obj);
+
+              QJsonDocument write_json_doucment;
+              write_json_doucment.setObject(usr_list_json_obj);
+
+              out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
+            }
+        }
+
+    }
+  else
+    {
+      QJsonObject usr_info_json_obj;
+      usr_info_json_obj.insert("usrName", usrName);
+      usr_info_json_obj.insert("ipAddr", ipAddr);
+      usr_info_json_obj.insert("macAddr", macAddr);
+
+      QJsonObject usr_list_json_obj;
+      usr_list_json_obj.insert(macAddr, usr_info_json_obj);
+
+      QJsonDocument write_json_doucment;
+      write_json_doucment.setObject(usr_list_json_obj);
+
+      out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
+      qDebug()<<write_json_doucment.toJson(QJsonDocument::Compact);
+
+    }
+
+
   file.close();
   file.flush();
+
+
 
 }
 
 void DataManager::deleteUsr(QString usrName, QString ipAddr, QString macAddr)
 {
   QFile file(usr_list_file_path);
+  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+  {
+    return;
+  }
 
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text | QIODevice::Append))
-    {
-      qDebug()<<"usr_list_file_path NOT OPENED";
-      return;
-    }
   QTextStream in(&file);
   QTextStream out(&file);
 
-  /*QJsonArray temp_json_array;
-  QStringList temp_str_list;
-  while(!file.atEnd())
+  QByteArray in_byte_array = in.readAll().toUtf8();
+
+  ///JSon
+  QJsonParseError json_error;
+  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  if(json_error.error == QJsonParseError::NoError)
     {
-      temp_str_list.append(in.readLine());
-
-      temp_json_array = QJsonArray::fromStringList(temp_str_list);
-      if(temp_json_array.contains(usrName)
-         &&temp_json_array.contains(ipAddr)
-         &&temp_json_array.contains(macAddr))
+      if(read_json_doucment.isObject())
         {
-          continue;
-        }
+          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          usr_list_json_obj.erase(usr_list_json_obj.find(macAddr));
 
-      out<<temp_str_list.first()<<endl;
-    }*/
+          QJsonDocument write_json_doucment;
+          write_json_doucment.setObject(usr_list_json_obj);
+          out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
+          qDebug()<<write_json_doucment.toJson(QJsonDocument::Compact);
+
+        }
+    }
+  else
+    {
+      qDebug()<<"Contact delete failed, is file empty?";
+
+    }
+
 
   file.close();
   file.flush();
@@ -88,6 +130,7 @@ bool DataManager::checkDir(QString directory)
     }
   return true;
 }
+
 
 /*
 

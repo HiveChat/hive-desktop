@@ -69,15 +69,15 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
-  //main_layout->setContentsMargins(0,0,0,0);
+  main_layout->setContentsMargins(0,10,10,10);
 
 
   GuiButton *buttonf;
 
   for(int i = 0; i < 2; i++)
     {
-      buttonf = new GuiButton("  this->setFixedWidth(maxWidth)在使用Qt进行界面设计的时候,拖动QLabel控件到界面上后,由于QLabel的大小此时是固定的,所以在程序中要更改QLabel里面文字的时候,如果文字比较长,就会发生文字被截断的...在使用Qt进行界面设计的时候,拖动QLabel控件到界面上后,由于QLabel的大小此时是固定的,所以在程序中要更改QLabel里面文字的时候,如果文字比较长,就会发生文字被截断的...在使用Qt进行界面设计的时候,拖动QLabel控件到界面上后,由于QLabel的大小此时是固定的到界面上后,由于QLabel的大小此时是固定的,所以在程序中要更改QLabel里面文字的时候,如果文字比较长,就会发生文字被截断的...",300,this);
-      main_layout->addWidget(buttonf);
+      gui_chat_bubble = new GuiChatBubble("Copyright (C) 2007 Free Software Foundation, Inc. [http://fsf.org/]Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.",300,this);
+      main_layout->addWidget(gui_chat_bubble);
     }
 
 }

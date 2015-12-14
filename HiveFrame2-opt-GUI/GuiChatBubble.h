@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QPixmap>
 
 #include "GuiButton.h"
 
@@ -14,7 +15,8 @@ public:
   explicit GuiChatBubble(QString text, bool alignLeft, QWidget *parent = 0);
 
 private:
-  QVBoxLayout *main_layout;
+  QHBoxLayout *main_layout;
+  QPixmap strip_pixmap;
   QLabel *strip;
   GuiButton *button;
 

@@ -3,14 +3,16 @@
 GuiButton::GuiButton(QString text, int maxWidth, QWidget *parent)
 {
 
+  QFont font("Verdana");
+  font.setPixelSize(14);
+
   label = new QLabel();
-  //label->setFixedWidth(maxWidth);
   label->setWordWrap(true);
   label->setText(text);
-  //label->setAlignment(Qt::AlignTop);
+  label->setFont(font);
 
   main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(10,10,10,10);
+  main_layout->setContentsMargins(15,15,15,15);
   main_layout->addWidget(label);
 
   this->setParent(parent);
@@ -25,6 +27,6 @@ void GuiButton::paintEvent(QPaintEvent *)
   QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
   painter.setBrush(QBrush(QColor(255,181,0),Qt::SolidPattern));
-  painter.drawRoundedRect(0,0,label->rect().width()+20,label->rect().height()+20,10,10);
+  painter.drawRoundedRect(0,0,label->rect().width()+30,label->rect().height()+30,10,10);
 }
 
