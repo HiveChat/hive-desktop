@@ -27,8 +27,7 @@ SOURCES += main.cpp\
     GuiAvatarButton.cpp \
     DataManager.cpp \
     GuiChatBubble.cpp \
-    GuiButton.cpp \
-    GuiWelcomeStack.cpp
+    GuiButton.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -43,8 +42,7 @@ HEADERS  += mainwindow.h \
     GuiAvatarButton.h \
     DataManager.h \
     GuiChatBubble.h \
-    GuiButton.h \
-    GuiWelcomeStack.h
+    GuiButton.h
 
 RESOURCES += \
     qss.qrc \

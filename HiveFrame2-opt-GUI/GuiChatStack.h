@@ -8,8 +8,6 @@
 #include <QTextEdit>
 #include <QScrollArea>
 
-//#include <QKeyEvent>
-
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
 #include "GuiChatBubble.h"
@@ -45,9 +43,6 @@ private:
   QVBoxLayout *main_layout;
   GuiChatBubble *gui_chat_bubble;
 
-public slots:
-  void addChatBubble(QString message);
-
 };
 
 //////////////////////////bottom//////////////////////////////////////
@@ -59,10 +54,6 @@ class GuiChatStack_message_editor : public QWidget
 public:
   explicit GuiChatStack_message_editor(QWidget *parent = 0);
   ~GuiChatStack_message_editor();
-
-protected:
-  void keyPressEvent(QKeyEvent *event);
-  void keyReleaseEvent(QKeyEvent *event);
 
 private:
   QTextEdit *text_editor;
@@ -89,6 +80,9 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
+signals:
+
+public slots:
 
 private:
   QVBoxLayout *main_layout;
@@ -98,7 +92,6 @@ private:
   GuiChatStack_message_editor *message_editor;
 
   QScrollArea *chat_scroll_area;
-
 
 };
 

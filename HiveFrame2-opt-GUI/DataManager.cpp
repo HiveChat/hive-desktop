@@ -10,9 +10,8 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
   this->setParent(parent);
 }
 
-void DataManager::addUsr(QStringList usrInfoStrList)
+void DataManager::addUsr(QString usrName, QString ipAddr, QString macAddr)
 {
-  ///macAddr<<usrName<<ipAddr<<avatarPath
   QFile file(usr_list_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
   {
@@ -32,14 +31,14 @@ void DataManager::addUsr(QStringList usrInfoStrList)
       if(read_json_doucment.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_doucment.object();
-          if(!usr_list_json_obj.contains(usrInfoStrList.at(1)))
+          if(!usr_list_json_obj.contains(macAddr))
             {
               QJsonObject usr_info_json_obj;
-              usr_info_json_obj.insert("usrName", usrInfoStrList.at(2));
-              usr_info_json_obj.insert("ipAddr", usrInfoStrList.at(3));
-              usr_info_json_obj.insert("macAddr", usrInfoStrList.at(1));
+              usr_info_json_obj.insert("usrName", usrName);
+              usr_info_json_obj.insert("ipAddr", ipAddr);
+              usr_info_json_obj.insert("macAddr", macAddr);
 
-              usr_list_json_obj.insert(usrInfoStrList.at(1), usr_info_json_obj);
+              usr_list_json_obj.insert(macAddr, usr_info_json_obj);
 
               QJsonDocument write_json_doucment;
               write_json_doucment.setObject(usr_list_json_obj);
@@ -52,25 +51,30 @@ void DataManager::addUsr(QStringList usrInfoStrList)
   else
     {
       QJsonObject usr_info_json_obj;
-      usr_info_json_obj.insert("usrName", usrInfoStrList.at(2));
-      usr_info_json_obj.insert("ipAddr", usrInfoStrList.at(3));
-      usr_info_json_obj.insert("macAddr", usrInfoStrList.at(1));
+      usr_info_json_obj.insert("usrName", usrName);
+      usr_info_json_obj.insert("ipAddr", ipAddr);
+      usr_info_json_obj.insert("macAddr", macAddr);
 
       QJsonObject usr_list_json_obj;
-      usr_list_json_obj.insert(usrInfoStrList.at(1), usr_info_json_obj);
+      usr_list_json_obj.insert(macAddr, usr_info_json_obj);
 
       QJsonDocument write_json_doucment;
       write_json_doucment.setObject(usr_list_json_obj);
 
       out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
       qDebug()<<write_json_doucment.toJson(QJsonDocument::Compact);
+
     }
+
 
   file.close();
   file.flush();
+
+
+
 }
 
-void DataManager::deleteUsr(QStringList usrInfoStrList)
+void DataManager::deleteUsr(QString usrName, QString ipAddr, QString macAddr)
 {
   QFile file(usr_list_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -91,7 +95,7 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
       if(read_json_doucment.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_doucment.object();
-          usr_list_json_obj.erase(usr_list_json_obj.find(usrInfoStrList.at(1)));
+          usr_list_json_obj.erase(usr_list_json_obj.find(macAddr));
 
           QJsonDocument write_json_doucment;
           write_json_doucment.setObject(usr_list_json_obj);
@@ -106,23 +110,9 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
 
     }
 
+
   file.close();
   file.flush();
-}
-
-void DataManager::refreshUsrForm()
-{
-  QFile file(usr_list_file_path);
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
-  {
-    return;
-  }
-
-}
-
-QList<QStringList> DataManager::import_usr_form()
-{
-  return usr_form;
 }
 
 bool DataManager::checkDir(QString directory)

@@ -14,12 +14,10 @@ class GuiCombWidget : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiCombWidget(QStringList usrInfoStrList, QWidget *parent = 0);
+  explicit GuiCombWidget(QString avatarPath, QString usrName, QString ipAddr, QWidget *parent = 0);
   ~GuiCombWidget();
 
   void setEntered(bool entered);
-
-  QStringList usrInfo();
 
 protected:
   void paintEvent(QPaintEvent*);
@@ -45,13 +43,11 @@ private:
   bool selected = false;
   bool hovered  = false;
 
-  ///data
-  QStringList usr_info_str_list;
-
+  //QFont usr_name_font;
+  //QFont ip_addr_font;
 
 signals:
-  void clicked();
-
+  void entered();
 
 
 };

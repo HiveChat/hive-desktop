@@ -80,6 +80,9 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
 
 
   ////delete this test
+  addComb();
+  addComb();
+  addComb();
 
   ////
 
@@ -87,10 +90,10 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
 }
 
 
-void GuiChatTab_comb_scroll_widget::addComb(QStringList usrInfoStrList)
+void GuiChatTab_comb_scroll_widget::addComb()
 {
   GuiCombWidget *hahaha;
-  hahaha = new GuiCombWidget(usrInfoStrList, this);
+  hahaha = new GuiCombWidget("/Users/Echo/Desktop/squirrel.jpg", "@Echo", QString("192.168.1."+QString::number(1)), this);
   main_layout->addWidget(hahaha);
 
 

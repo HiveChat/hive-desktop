@@ -2,13 +2,11 @@
 #include <QDebug>
 
 
-GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
+GuiCombWidget::GuiCombWidget(QString avatarPath, QString usrName, QString ipAddr, QWidget *parent) : QWidget(parent)
 {
-  usr_info_str_list = usrInfoStrList;
-  ///macAddr<<usrName<<ipAddr<<avatarPath
-  avatar = new GuiAvatarButton(usrInfoStrList.at(4), 80, 0, this);
-  usr_name_label = new QLabel(usrInfoStrList.at(2));
-  ip_addr_label = new QLabel(usrInfoStrList.at(3));
+  avatar = new GuiAvatarButton(avatarPath, 80, 0, this);
+  usr_name_label = new QLabel(usrName);
+  ip_addr_label = new QLabel(ipAddr);
   status_label = new QLabel("·");
 
   QPalette usr_name_palette;
@@ -49,11 +47,6 @@ GuiCombWidget::~GuiCombWidget()
 
 }
 
-QStringList GuiCombWidget::usrInfo()
-{
-  return usr_info_str_list;
-}
-
 
 //////events
 
@@ -71,7 +64,9 @@ void GuiCombWidget::paintEvent(QPaintEvent *)
 
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 {
-  emit clicked();
+  window_color = hovered_window_color;
+  repaint();
+  selected != selected;
 }
 
 void GuiCombWidget::enterEvent(QEvent *)
