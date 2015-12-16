@@ -19,10 +19,11 @@ class GuiChatTab_comb_scroll_widget : public QWidget
 public:
   explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
 
-  void addComb();
-
 private:
   QVBoxLayout *main_layout;
+
+public slots:
+  void addComb(QStringList usrInfoStrList);
 
 };
 
