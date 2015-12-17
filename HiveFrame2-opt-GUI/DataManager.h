@@ -19,7 +19,7 @@ public:
 
   void addUsr(QString usrName, QString ipAddr, QString macAddr);
   void deleteUsr(QString usrName, QString ipAddr, QString macAddr);
-
+  void loadUsrForm();
   //void addChatHistory();
 
 signals:
