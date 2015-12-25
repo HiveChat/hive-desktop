@@ -14,6 +14,8 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(gui_main_block);
 
   data_manager = new DataManager(this);
+  //data_manager->addUsr();
+
 }
 
 GuiCentralWidget::~GuiCentralWidget()
@@ -21,3 +23,7 @@ GuiCentralWidget::~GuiCentralWidget()
 
 }
 
+/*void GuiCentralWidget::initUsrData()
+{
+
+}*/

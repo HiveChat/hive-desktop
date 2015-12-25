@@ -17,16 +17,17 @@ class DataManager : public QObject
 public:
   explicit DataManager(QObject *parent = 0);
 
-  void addUsr(QString usrName, QString ipAddr, QString macAddr);
-  void deleteUsr(QString usrName, QString ipAddr, QString macAddr);
-  void loadUsrForm();
+
+  void addUsr(QStringList usrInfoStrList);
+  void deleteUsr(QStringList usrInfoStrList);
+
   //void addChatHistory();
 
 signals:
 
 public slots:
 
-private:
+private:  
   bool checkDir(QString dir);
 
   QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
@@ -34,6 +35,12 @@ private:
   QString log_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/log/";
 
   QString usr_list_file_path = app_data_local_path + "/usr_list.json";
+
+
+
+  ///usrData
+  QStringList usr_info_str_list;
+
 };
 
 #endif // DATAMANAGER_H

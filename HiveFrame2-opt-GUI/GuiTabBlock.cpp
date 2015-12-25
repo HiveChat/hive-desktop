@@ -197,16 +197,16 @@ void GuiTabBlock::changeBtnLine()
 
 void GuiTabBlock::changeWindowBtn()
 {
-  exit_hint->setState1();
-  min_hint->setState1();
-  max_hint->setState1();
+  exit_hint->setHovered();
+  min_hint->setHovered();
+  max_hint->setHovered();
 }
 
 void GuiTabBlock::recoverWindowBtn()
 {
-  exit_hint->setState0();
-  min_hint->setState0();
-  max_hint->setState0();
+  exit_hint->setDefault();
+  min_hint->setDefault();
+  max_hint->setDefault();
 }
 
 int GuiTabBlock::currentIndex()

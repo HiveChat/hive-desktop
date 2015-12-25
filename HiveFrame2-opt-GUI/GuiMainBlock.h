@@ -7,6 +7,7 @@
 #include <QStackedWidget>
 
 #include "GuiChatStack.h"
+#include "GuiWelcomeStack.h"
 
 class GuiMainBlock : public QWidget
 {
@@ -26,6 +27,8 @@ private:
   QVBoxLayout *main_layout;
   QStackedWidget *main_stacked_widget;
   GuiChatStack *gui_chat_stack;
+  GuiWelcomeStack *gui_welcome_stack;
+
 };
 
 #endif // GUIMAINBLOCK_H

@@ -40,6 +40,7 @@ void MainWindow::paintEvent(QPaintEvent*)
   p.setRenderHint(QPainter::Antialiasing, true);
   p.setRenderHint(QPainter::SmoothPixmapTransform);
   p.drawRoundedRect(bmp.rect(), 8, 8);
+  bmp.setDevicePixelRatio(2.0);
   this->setMask(bmp);
 
   ///color

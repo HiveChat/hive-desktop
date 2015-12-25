@@ -24,12 +24,12 @@ void GuiLabelButton::setPressedPixmap(QString path)
   pressed_pixmap.setDevicePixelRatio(2.0);
 }
 
-void GuiLabelButton::setState0()
+void GuiLabelButton::setDefault()
 {
   this->setPixmap(default_pixmap);
 }
 
-void GuiLabelButton::setState1()
+void GuiLabelButton::setHovered()
 {
   this->setPixmap(hovered_pixmap);
 }
@@ -56,12 +56,12 @@ void GuiLabelButton::mouseReleaseEvent(QMouseEvent *ev)
 
 void GuiLabelButton::enterEvent(QEvent * )
 {
-  setState1();
+  setHovered();
   emit entered();
 }
 
 void GuiLabelButton::leaveEvent(QEvent *)
 {
-  setState0();
+  setDefault();
   emit left();
 }

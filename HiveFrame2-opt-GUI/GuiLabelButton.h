@@ -8,31 +8,31 @@ class GuiLabelButton : public QLabel
 {
   Q_OBJECT
 
- public:
-     explicit GuiLabelButton(QWidget *parent = 0);
+public:
+  explicit GuiLabelButton(QWidget *parent = 0);
 
-     void setDefaultPixmap(QString path);
-     void setHoveredPixmap(QString path);
-     void setPressedPixmap(QString path);
+  void setDefaultPixmap(QString path);
+  void setHoveredPixmap(QString path);
+  void setPressedPixmap(QString path);
 
-     void setState0();
-     void setState1();
+  void setDefault();
+  void setHovered();
 
- signals:
-     void clicked();
-     void entered();
-     void left();
+signals:
+  void clicked();
+  void entered();
+  void left();
 
- protected:
-     void mousePressEvent(QMouseEvent *);
-     void mouseReleaseEvent(QMouseEvent *);
-     void enterEvent(QEvent *);
-     void leaveEvent(QEvent *);
+protected:
+  void mousePressEvent(QMouseEvent *);
+  void mouseReleaseEvent(QMouseEvent *);
+  void enterEvent(QEvent *);
+  void leaveEvent(QEvent *);
 
 private:
-     QPixmap default_pixmap;
-     QPixmap hovered_pixmap;
-     QPixmap pressed_pixmap;
+  QPixmap default_pixmap;
+  QPixmap hovered_pixmap;
+  QPixmap pressed_pixmap;
 
 };
 

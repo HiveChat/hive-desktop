@@ -69,22 +69,19 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
-  main_layout->setContentsMargins(0,10,10,10);
-
-
-  GuiButton *buttonf;
-
-  for(int i = 0; i < 2; i++)
-    {
-      gui_chat_bubble = new GuiChatBubble("Copyright (C) 2007 Free Software Foundation, Inc. [http://fsf.org/]Everyone is permitted to copy and distribute verbatim copies of this license document, but changing it is not allowed.",300,this);
-      main_layout->addWidget(gui_chat_bubble);
-    }
+  main_layout->setContentsMargins(0,10,10,50);
 
 }
 
 GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 {
 
+}
+
+void GuiChatStack_chat_widget::addChatBubble(QString message)
+{
+  gui_chat_bubble = new GuiChatBubble(message,300,this);
+  main_layout->addWidget(gui_chat_bubble);
 }
 
 //////////////////////////bottom//////////////////////////////////////
@@ -153,6 +150,24 @@ GuiChatStack_message_editor::~GuiChatStack_message_editor()
 
 }
 
+void GuiChatStack_message_editor::keyPressEvent(QKeyEvent *event)
+{
+  if(event->key() == Qt::Key_Enter)
+    {
+      send_btn->setHovered();
+      ////emit send!
+    }
+
+}
+
+void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
+{
+  if(event->key() == Qt::Key_Enter)
+    {
+      send_btn->setDefault();
+      ////emit send!
+    }
+}
 //////////////////////////main//////////////////////////////////////
 
 GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
@@ -186,3 +201,5 @@ GuiChatStack::~GuiChatStack()
 {
 
 }
+
+
