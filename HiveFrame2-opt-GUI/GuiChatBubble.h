@@ -6,11 +6,37 @@
 #include <QLabel>
 #include <QPixmap>
 
-#include "GuiButton.h"
+#include <QLabel>
+#include <QPainter>
+#include <QRect>
+#include <QHBoxLayout>
+#include <QDebug>
+
+class GuiChatBubble_text_area : public QLabel
+{
+public:
+  explicit GuiChatBubble_text_area(QString text, int maxWidth, QWidget *parent = 0);
+
+protected:
+  void paintEvent(QPaintEvent *);
+
+private:
+  QHBoxLayout *main_layout;
+
+  QPixmap background_pixmap;
+  QLabel *label;
+  QRect mrect;
+
+  int rect_width;
+  int rect_height;
+
+};
+
 
 class GuiChatBubble : public QWidget
 {
   Q_OBJECT
+
 public:
   explicit GuiChatBubble(QString text, bool alignLeft, QWidget *parent = 0);
 
@@ -18,7 +44,7 @@ private:
   QHBoxLayout *main_layout;
   QPixmap strip_pixmap;
   QLabel *strip;
-  GuiButton *button;
+  GuiChatBubble_text_area *text_area;
 
 
 };

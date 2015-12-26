@@ -9,7 +9,6 @@
 #include <QBitmap>
 #include <QPainter>
 
-#include <GuiButton.h>
 
 //////////////////////////top//////////////////////////////////////
 
@@ -69,8 +68,22 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
+  main_layout->addStretch();
   main_layout->setContentsMargins(0,10,10,50);
 
+  ///test point2015-12-26
+
+  gui_chat_bubble = new GuiChatBubble("Once the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.",300,this);
+  main_layout->addWidget(gui_chat_bubble);
+
+
+
+
+  gui_chat_bubble = new GuiChatBubble("hi",300,this);
+  main_layout->addWidget(gui_chat_bubble);
+
+  addChatBubble("Once the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.");
+  addChatBubble("hello!");
 }
 
 GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
@@ -80,7 +93,7 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 void GuiChatStack_chat_widget::addChatBubble(QString message)
 {
-  gui_chat_bubble = new GuiChatBubble(message,300,this);
+  GuiChatBubble *gui_chat_bubble = new GuiChatBubble(message,300,this);
   main_layout->addWidget(gui_chat_bubble);
 }
 
@@ -185,6 +198,7 @@ GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
   chat_scroll_area->setFrameStyle(0);
 
   message_editor = new GuiChatStack_message_editor(this);
+
 
   ////main layout
   main_layout = new QVBoxLayout(this);

@@ -36,7 +36,9 @@ private:
 
   QString usr_list_file_path = app_data_local_path + "/usr_list.json";
 
+  void loadUsrForm();
 
+  void GenUsr();
 
   ///usrData
   QStringList usr_info_str_list;

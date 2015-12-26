@@ -17,6 +17,9 @@ public:
   explicit GuiMainBlock(QWidget *parent = 0);
   ~GuiMainBlock();
 
+  GuiChatStack *gui_chat_stack;
+  GuiWelcomeStack *gui_welcome_stack;
+
 signals:
 
 protected:
@@ -26,8 +29,7 @@ public slots:
 private:
   QVBoxLayout *main_layout;
   QStackedWidget *main_stacked_widget;
-  GuiChatStack *gui_chat_stack;
-  GuiWelcomeStack *gui_welcome_stack;
+
 
 };
 

@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     GuiAvatarButton.cpp \
     DataManager.cpp \
     GuiChatBubble.cpp \
-    GuiButton.cpp \
     GuiWelcomeStack.cpp
 
 HEADERS  += mainwindow.h \
@@ -43,7 +42,6 @@ HEADERS  += mainwindow.h \
     GuiAvatarButton.h \
     DataManager.h \
     GuiChatBubble.h \
-    GuiButton.h \
     GuiWelcomeStack.h
 
 RESOURCES += \

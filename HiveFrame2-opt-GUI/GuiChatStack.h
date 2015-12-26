@@ -45,7 +45,7 @@ private:
   QVBoxLayout *main_layout;
   GuiChatBubble *gui_chat_bubble;
 
-public slots:
+public:
   void addChatBubble(QString message);
 
 };
@@ -89,13 +89,14 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
+  GuiChatStack_top_bar *top_bar;
+  GuiChatStack_chat_widget *chat_widget;
+  GuiChatStack_message_editor *message_editor;
 
 private:
   QVBoxLayout *main_layout;
 
-  GuiChatStack_top_bar *top_bar;
-  GuiChatStack_chat_widget *chat_widget;
-  GuiChatStack_message_editor *message_editor;
+
 
   QScrollArea *chat_scroll_area;
 
