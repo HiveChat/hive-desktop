@@ -68,6 +68,7 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   main_layout = new QVBoxLayout(this);
+  main_layout->setAlignment(Qt::AlignTop);
   main_layout->addStretch();
   main_layout->setContentsMargins(0,10,10,50);
 
@@ -93,6 +94,7 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 void GuiChatStack_chat_widget::addChatBubble(QString message)
 {
+
   GuiChatBubble *gui_chat_bubble = new GuiChatBubble(message,300,this);
   main_layout->addWidget(gui_chat_bubble);
 }
@@ -189,8 +191,8 @@ GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
 
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
+  chat_scroll_area->setWidgetResizable(true);
   chat_scroll_area->setWidget(chat_widget);
-
   QPalette palette = chat_scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   chat_scroll_area->setPalette(palette);

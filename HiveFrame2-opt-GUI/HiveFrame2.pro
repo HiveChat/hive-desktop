@@ -26,8 +26,8 @@ SOURCES += main.cpp\
     GuiCombWidget.cpp \
     GuiAvatarButton.cpp \
     DataManager.cpp \
-    GuiChatBubble.cpp \
-    GuiWelcomeStack.cpp
+    GuiWelcomeStack.cpp \
+    GuiChatBubble.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -41,8 +41,8 @@ HEADERS  += mainwindow.h \
     GuiCombWidget.h \
     GuiAvatarButton.h \
     DataManager.h \
-    GuiChatBubble.h \
-    GuiWelcomeStack.h
+    GuiWelcomeStack.h \
+    GuiChatBubble.h
 
 RESOURCES += \
     qss.qrc \

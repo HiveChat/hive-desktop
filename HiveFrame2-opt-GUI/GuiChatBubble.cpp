@@ -25,10 +25,10 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, QWi
 
 void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
 {
-  /*QPainter painter(this);
+  QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
   painter.setBrush(QBrush(QColor(255,181,0),Qt::SolidPattern));
-  painter.drawRoundedRect(0,0,label->rect().width()+20,label->rect().height()+20,12,12);*/
+  painter.drawRoundedRect(0,0,label->rect().width()+20,label->rect().height()+20,12,12);
 }
 
 
@@ -44,6 +44,7 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
   text_area = new GuiChatBubble_text_area(text, 400,this);
 
   main_layout = new QHBoxLayout(this);
+  main_layout->setAlignment(Qt::AlignLeft);
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
   main_layout->addWidget(strip);
@@ -54,4 +55,3 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
   //this->setFixedHeight(button->height()+20);
 
 }
-

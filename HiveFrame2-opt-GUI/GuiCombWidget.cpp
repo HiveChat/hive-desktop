@@ -5,10 +5,10 @@
 GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
   usr_info_str_list = usrInfoStrList;
-  ///macAddr<<usrName<<ipAddr<<avatarPath
-  avatar = new GuiAvatarButton(usrInfoStrList.at(4), 80, 0, this);
-  usr_name_label = new QLabel(usrInfoStrList.at(2));
-  ip_addr_label = new QLabel(usrInfoStrList.at(3));
+  ///macAddr<<usrName<<ipAddr
+  avatar = new GuiAvatarButton("/Users/Echo/Desktop/zLjJv8.png.jpeg", 80, 0, this);
+  usr_name_label = new QLabel(usrInfoStrList[1]);
+  ip_addr_label = new QLabel(usrInfoStrList[2]);
   status_label = new QLabel("·");
 
   QPalette usr_name_palette;

@@ -17,7 +17,7 @@ public:
   explicit GuiCombWidget(QStringList usrInfoStrList, QWidget *parent = 0);
   ~GuiCombWidget();
 
-  void setEntered(bool entered);
+  //void setEntered(bool entered);
 
   QStringList usrInfo();
 

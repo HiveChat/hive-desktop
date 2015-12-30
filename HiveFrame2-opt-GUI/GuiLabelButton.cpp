@@ -40,7 +40,10 @@ void GuiLabelButton::mousePressEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
     {
-      this->setPixmap(pressed_pixmap);
+      if(!pressed_pixmap.isNull())
+        {
+          this->setPixmap(pressed_pixmap);
+        }
     }
 
 }

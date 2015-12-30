@@ -20,12 +20,12 @@ public:
 
   void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);
+  void loadUsrProfile();
 
   //void addChatHistory();
 
 signals:
-
-public slots:
+  void onUsrProfileLoaded(QStringList usrInfoStrList);
 
 private:  
   bool checkDir(QString dir);
@@ -36,12 +36,10 @@ private:
 
   QString usr_list_file_path = app_data_local_path + "/usr_list.json";
 
-  void loadUsrForm();
 
-  void GenUsr();
 
   ///usrData
-  QStringList usr_info_str_list;
+  //QStringList usr_info_str_list;
 
 };
 

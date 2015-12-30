@@ -21,6 +21,7 @@ public:
 
 private:
   QVBoxLayout *main_layout;
+  GuiCombWidget *gui_comb_widget;
 
 public slots:
   void addComb(QStringList usrInfoStrList);
@@ -35,6 +36,8 @@ class GuiChatTab : public QWidget
 
 public:
   explicit GuiChatTab(QWidget *parent = 0);
+  QScrollArea *comb_scrollarea;
+  GuiChatTab_comb_scroll_widget *comb_scroll_widget;
 
 signals:
 
@@ -43,7 +46,7 @@ public slots:
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *comb_layout;
-  QScrollArea *comb_scrollarea;
+
 
   //QTreeWidget *comb_treewidget;
   //QTreeWidgetItem *comb_treewidget_item;

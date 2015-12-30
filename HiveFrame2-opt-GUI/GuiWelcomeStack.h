@@ -9,6 +9,7 @@
 class GuiWelcomeStack : public QWidget
 {
   Q_OBJECT
+
 public:
   explicit GuiWelcomeStack(QWidget *parent = 0);
 

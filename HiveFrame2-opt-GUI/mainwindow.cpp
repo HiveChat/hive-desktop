@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);
-  //this->setAttribute(Qt::WA_TranslucentBackground);
+  this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowFlags(Qt::FramelessWindowHint);
   this->setWindowState(Qt::WindowNoState);
   //this->setWindowFlags(Qt::CustomizeWindowHint);
