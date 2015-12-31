@@ -70,7 +70,7 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addStretch();
-  main_layout->setContentsMargins(0,10,10,50);
+  main_layout->setContentsMargins(0,10,0,50);
 
   ///test point2015-12-26
 
@@ -94,8 +94,7 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 void GuiChatStack_chat_widget::addChatBubble(QString message)
 {
-
-  GuiChatBubble *gui_chat_bubble = new GuiChatBubble(message,300,this);
+  GuiChatBubble *gui_chat_bubble = new GuiChatBubble(message,false,this);
   main_layout->addWidget(gui_chat_bubble);
 }
 

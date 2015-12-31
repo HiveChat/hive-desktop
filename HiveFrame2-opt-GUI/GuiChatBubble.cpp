@@ -34,7 +34,15 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
 
 GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
-  strip_pixmap.load("/Users/Echo/Desktop/asp.png");
+  if(alignLeft)
+    {
+      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
+    }
+  else
+    {
+      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
+    }
+
   strip_pixmap.setDevicePixelRatio(2.0);
   strip = new QLabel();
   strip->setPixmap(strip_pixmap);
@@ -44,7 +52,6 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
   text_area = new GuiChatBubble_text_area(text, 400,this);
 
   main_layout = new QHBoxLayout(this);
-  main_layout->setAlignment(Qt::AlignLeft);
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
   main_layout->addWidget(strip);
@@ -52,6 +59,17 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
 
 
   this->setParent(parent);
-  //this->setFixedHeight(button->height()+20);
 
+  if(alignLeft)
+    {
+      main_layout->setAlignment(Qt::AlignLeft);
+      main_layout->addWidget(strip);
+      main_layout->addWidget(text_area);
+    }
+  else
+    {
+      main_layout->setAlignment(Qt::AlignRight);
+      main_layout->addWidget(text_area);
+      main_layout->addWidget(strip);
+    }
 }

@@ -7,6 +7,7 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 {
   comb_scrollarea = new QScrollArea(this);
 
+  comb_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   comb_scrollarea->setFrameShape(QFrame::NoFrame);
   comb_scrollarea->setWidgetResizable(true);
   QPalette comb_scrollarea_palette;

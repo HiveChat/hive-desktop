@@ -12,7 +12,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
     usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob";
     addUsr(usrInfoStrList);
     usrInfoStrList.clear();
-    usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim";
+    usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim";
     addUsr(usrInfoStrList);
     usrInfoStrList.clear();
     usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob";
@@ -30,13 +30,13 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
     usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter";
     addUsr(usrInfoStrList);
     usrInfoStrList.clear();
-    usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin";
+    usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin";
     addUsr(usrInfoStrList);
     usrInfoStrList.clear();
-    usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo";
+    usrInfoStrList<<"45:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo";
     addUsr(usrInfoStrList);
     usrInfoStrList.clear();
-    usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn";
+    usrInfoStrList<<"87:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn";
     addUsr(usrInfoStrList);
     usrInfoStrList.clear();
     usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim";
@@ -217,8 +217,6 @@ void DataManager::loadUsrProfile()
                   << temp_usr_profile_json_obj["usrName"].toString()
                   << temp_usr_profile_json_obj["ipAddr"].toString();
 
-
-
               emit onUsrProfileLoaded(usr_info_str_list);
               usr_info_str_list.clear();
             }
@@ -228,7 +226,6 @@ void DataManager::loadUsrProfile()
   else
     {
       qDebug()<<"Contact parse failed, is file empty?******";
-
     }
 
 }
