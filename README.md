@@ -1,4 +1,7 @@
 # Hive!
+
+![](http://7xphp7.com1.z0.glb.clouddn.com/1024(6).png)
+
 <p>Hive! is a LAN chatting software. This is a free software.</p>
 ##Download:
 <p>This programme is not finished yet. if you are interested in the progress, you can compile with Qt Creator (an IDE for Qt, the cross platform GUI library)</p>
