@@ -6,6 +6,9 @@
 #include <QString>
 #include <QDataStream>
 #include <QUdpSocket>
+#include <QDateTime>
+#include <QNetworkInterface>
+
 
 enum BroadcastType{Message, UsrEnter, UsrLeft, FileName, Refuse};
 
@@ -23,6 +26,9 @@ public:
   ~NetManager();
 
   void sendMessage(QString ip_addr, QString message);
+
+public slots:
+  void processPendingDatagrams();
 
 private:
   qint16 udp_port = 23232;

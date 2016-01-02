@@ -15,7 +15,7 @@
 class GuiChatBubble_text_area : public QLabel
 {
 public:
-  explicit GuiChatBubble_text_area(QString text, int maxWidth, QWidget *parent = 0);
+  explicit GuiChatBubble_text_area(QString text, int maxWidth, bool alignLeft, QWidget *parent = 0);
 
 protected:
   void paintEvent(QPaintEvent *);

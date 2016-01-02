@@ -1,6 +1,6 @@
 #include "GuiChatBubble.h"
 
-GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, QWidget *parent)
+GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, bool alignLeft = true, QWidget *parent)
 {
 
   QFont font("Verdana");
@@ -17,6 +17,11 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, QWi
   main_layout->setContentsMargins(10,10,10,15);
   main_layout->addWidget(label);
 
+  if(!alignLeft)
+    {
+      main_layout->setAlignment(Qt::AlignRight);
+    }
+
   this->setParent(parent);
   this->setFixedWidth(maxWidth);
   qDebug()<<label->width();
@@ -27,8 +32,11 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
 {
   QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
-  painter.setBrush(QBrush(QColor(255,181,0),Qt::SolidPattern));
-  painter.drawRoundedRect(0,0,label->rect().width()+20,label->rect().height()+20,12,12);
+  //color options:
+  //255,197,28,100
+  //255,215,126
+  painter.setBrush(QBrush(QColor(255,215,126),Qt::SolidPattern));
+  painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
 }
 
 
@@ -49,13 +57,11 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
   strip->setAlignment(Qt::AlignTop);
   strip->setContentsMargins(0,10,0,0);
 
-  text_area = new GuiChatBubble_text_area(text, 400,this);
+  text_area = new GuiChatBubble_text_area(text, 400, alignLeft, this);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
-  main_layout->addWidget(strip);
-  main_layout->addWidget(text_area);
 
 
   this->setParent(parent);
@@ -63,13 +69,13 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
   if(alignLeft)
     {
       main_layout->setAlignment(Qt::AlignLeft);
-      main_layout->addWidget(strip);
+      //main_layout->addWidget(strip);
       main_layout->addWidget(text_area);
     }
   else
     {
       main_layout->setAlignment(Qt::AlignRight);
       main_layout->addWidget(text_area);
-      main_layout->addWidget(strip);
+      //main_layout->addWidget(strip);
     }
 }

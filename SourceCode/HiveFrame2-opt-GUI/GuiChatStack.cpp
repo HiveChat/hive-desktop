@@ -16,7 +16,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
 {
   setAutoFillBackground(true);
   QPalette palette = this->palette();
-  palette.setColor(QPalette::Window, QColor(255,197,28,100));
+  palette.setColor(QPalette::Window, QColor(255,255,255,0));//(255,181,0));
   this->setPalette(palette);
 
   /*QPalette palette;
@@ -26,7 +26,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
 ///from baidu
 */
 
-  avatar_label = new GuiAvatarButton("/Users/Echo/Desktop/squirrel.jpg", 90, 90, this);
+  avatar_label = new GuiAvatarButton("/Users/Echo/Desktop/e.png", 90, 90, this);
   avatar_label->setFixedHeight(50);
   avatar_label->setAlignment(Qt::AlignLeft);
 
@@ -67,6 +67,11 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 
 GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
+  setAutoFillBackground(true);
+  QPalette palette = this->palette();
+  palette.setColor(QPalette::Window, QColor(255,255,255));
+  this->setPalette(palette);
+
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addStretch();
@@ -74,7 +79,7 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
 
   ///test point2015-12-26
 
-  gui_chat_bubble = new GuiChatBubble("Once the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.",300,this);
+  gui_chat_bubble = new GuiChatBubble("Once 😋the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.",300,this);
   main_layout->addWidget(gui_chat_bubble);
 
 

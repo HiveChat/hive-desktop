@@ -4,8 +4,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 {
   checkDir(app_data_local_path);
     checkDir(usr_path);
-    checkDir(usr_path);
-
+    checkDir(log_path);
 
     QStringList usrInfoStrList;
 

@@ -1,5 +1,13 @@
 #include "GuiLabelButton.h"
 
+/*
+ * Try to use:
+ *  qreal dpr = App::app()->devicePixelRatio();
+ * To get suitable pixel ratio in different devices
+ *
+ */
+
+
 GuiLabelButton::GuiLabelButton(QWidget *parent)
 {
   this->setParent(parent);
@@ -7,6 +15,7 @@ GuiLabelButton::GuiLabelButton(QWidget *parent)
 
 void GuiLabelButton::setDefaultPixmap(QString path)
 {
+
   default_pixmap.load(path);
   default_pixmap.setDevicePixelRatio(2.0);
   this->setPixmap(default_pixmap);
@@ -52,7 +61,7 @@ void GuiLabelButton::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
     {
-      this->setPixmap(default_pixmap);
+      //this->setPixmap(default_pixmap);
       emit clicked();
     }
 }
