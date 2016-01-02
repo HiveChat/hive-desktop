@@ -4,6 +4,10 @@
 
 GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 {
+  /*this->setAutoFillBackground(true);
+  QPalette palette;
+  palette.setColor(QPalette::Window, QColor(255,255,255));
+  this->setPalette(palette);*/
   this->setFixedWidth(250);
 
   ////label test
@@ -157,7 +161,6 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
   main_layout->setAlignment(Qt::AlignTop);
-  //main_layout->setSizeConstraint(QLayout::SetFixedSize);
   main_layout->addLayout(window_btn_layout);
   main_layout->addLayout(tab_label_layout);
   main_layout->addWidget(tab_stacked_widget);

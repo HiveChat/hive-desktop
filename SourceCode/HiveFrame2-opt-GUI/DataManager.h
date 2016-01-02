@@ -26,19 +26,25 @@ public:
 
 signals:
   void onUsrProfileLoaded(QStringList usrInfoStrList);
+  void onFirstLaunch();
 
 private:  
   bool checkDir(QString dir);
+  QString makeUsrKey();
 
   QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-  QString usr_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/usr/";
-  QString log_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/log/";
+  QString usr_path = app_data_local_path+ "/usr/";
+  QString log_path = app_data_local_path + "/log/";
 
   QString usr_list_file_path = app_data_local_path + "/usr_list.json";
+  QString my_profile_file_path = app_data_local_path + "/my_profile.json";
 
 
 
   ///usrData
+  const char alphabet_char[63] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  QChar usr_key_char[32];
+  QString usr_key_str;
   //QStringList usr_info_str_list;
 
 };

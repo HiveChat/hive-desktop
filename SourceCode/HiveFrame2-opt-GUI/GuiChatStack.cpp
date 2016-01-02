@@ -72,12 +72,32 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setPalette(palette);
 
-  main_layout = new QVBoxLayout(this);
+  main_layout = new QVBoxLayout();
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addStretch();
-  main_layout->setContentsMargins(0,10,0,50);
+  main_layout->setContentsMargins(5,30,5,30);
 
-  ///test point2015-12-26
+  ///lines
+  QFrame *bottom_line = new QFrame(this);
+  bottom_line->setFrameShape(QFrame::HLine);
+  bottom_line->setFrameShadow(QFrame::Plain);
+  bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
+
+  QFrame *top_line = new QFrame(this);
+  top_line->setFrameShape(QFrame::HLine);
+  top_line->setFrameShadow(QFrame::Plain);
+  top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+
+  QVBoxLayout *main_layout1 = new QVBoxLayout(this);
+  main_layout1->setAlignment(Qt::AlignTop);
+  //main_layout1->addStretch();
+  main_layout1->setSpacing(5);
+  main_layout1->setContentsMargins(0,0,0,0);
+  main_layout1->addWidget(top_line);
+  main_layout1->addLayout(main_layout);
+  main_layout1->addWidget(bottom_line);
+
+  ///test 2015-12-26
 
   gui_chat_bubble = new GuiChatBubble("Once 😋the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.",300,this);
   main_layout->addWidget(gui_chat_bubble);
@@ -90,6 +110,8 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
 
   addChatBubble("Once the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.");
   addChatBubble("hello!");
+
+  ///!test
 }
 
 GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
@@ -107,7 +129,7 @@ void GuiChatStack_chat_widget::addChatBubble(QString message)
 
 GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
 {
-  this->setMaximumHeight(150);
+
   text_editor = new QTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
@@ -162,6 +184,9 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   main_layout->addLayout(edit_layout);
   main_layout->addWidget(send_btn);
 
+
+  this->setMaximumHeight(130);
+  this->setParent(parent);
 }
 
 GuiChatStack_message_editor::~GuiChatStack_message_editor()
@@ -193,6 +218,8 @@ GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
 {
   top_bar = new GuiChatStack_top_bar(this);
 
+
+
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
   chat_scroll_area->setWidgetResizable(true);
@@ -200,8 +227,9 @@ GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
   QPalette palette = chat_scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   chat_scroll_area->setPalette(palette);
-
   chat_scroll_area->setFrameStyle(0);
+
+
 
   message_editor = new GuiChatStack_message_editor(this);
 

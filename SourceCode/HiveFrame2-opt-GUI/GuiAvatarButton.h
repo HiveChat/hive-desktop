@@ -22,10 +22,11 @@ protected:
   void leaveEvent(QEvent *);
 
 private:
-
-
   int diameter;
   int border_width;
+
+signals:
+  void clicked();
 
 
 };

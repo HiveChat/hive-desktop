@@ -6,7 +6,8 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, boo
   QFont font("Verdana");
   font.setPixelSize(14);
 
-  label =  new QLabel(text);
+  QString message = "<p style=\"line-height:80%\">" + text + "</p>";
+  label =  new QLabel(message);
   label->setFont(font);
   label->adjustSize();
   label->setWordWrap(true);
@@ -19,7 +20,13 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, boo
 
   if(!alignLeft)
     {
+      color = QColor(255,181,0);
       main_layout->setAlignment(Qt::AlignRight);
+    }
+  else
+    {
+      color = QColor(255,215,126);
+      main_layout->setAlignment(Qt::AlignLeft);
     }
 
   this->setParent(parent);
@@ -35,7 +42,7 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
   //color options:
   //255,197,28,100
   //255,215,126
-  painter.setBrush(QBrush(QColor(255,215,126),Qt::SolidPattern));
+  painter.setBrush(QBrush(color,Qt::SolidPattern));
   painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
 }
 

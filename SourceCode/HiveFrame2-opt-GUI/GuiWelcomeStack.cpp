@@ -3,7 +3,8 @@
 GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Base, QColor(255,204,0,255));
+  //255,204,0,255
+  palette.setColor(QPalette::Window, QColor(255,255,255,0));
   this->setAutoFillBackground(true);
   this->setPalette(palette);
 

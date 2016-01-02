@@ -30,6 +30,8 @@ private:
   int rect_width;
   int rect_height;
 
+  QColor color;
+
 };
 
 

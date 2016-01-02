@@ -2,6 +2,8 @@
 
 GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, int borderWidth, QWidget *parent)
 {
+
+
   diameter = Diameter;
   border_width = borderWidth;
 
@@ -29,7 +31,7 @@ GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, int borderWid
 void GuiAvatarButton::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton);
-  //emit clicked();
+  emit clicked();
 }
 
 void GuiAvatarButton::enterEvent(QEvent * )
@@ -43,3 +45,38 @@ void GuiAvatarButton::leaveEvent(QEvent *)
   //setState0();
   //emit left();
 }
+
+
+/*
+void getRoundPixmap(QPixmap& src,QSize size)
+
+{
+
+  QImage resultImage(size,QImage::Format_ARGB32_Premultiplied);
+
+  QPixmap head_mask("mask.png");
+
+  QPainter painter(&resultImage);
+
+  painter.setCompositionMode(QPainter::CompositionMode_Source);
+
+  painter.fillRect(resultImage.rect(), Qt::transparent);
+
+  painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+
+  painter.drawPixmap(0, 0, head_mask);
+
+  painter.setCompositionMode(QPainter::CompositionMode_SourceOut);
+
+  painter.drawPixmap(0, 0, src.scaled(size));
+
+  painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
+
+  painter.end();
+
+
+
+  src = QPixmap::fromImage(resultImage);
+
+}
+*/
