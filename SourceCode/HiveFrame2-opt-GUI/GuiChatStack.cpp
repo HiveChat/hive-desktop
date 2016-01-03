@@ -69,7 +69,7 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
 {
   setAutoFillBackground(true);
   QPalette palette = this->palette();
-  palette.setColor(QPalette::Window, QColor(255,255,255));
+  palette.setColor(QPalette::Window, QColor(245,245,245));
   this->setPalette(palette);
 
   main_layout = new QVBoxLayout();

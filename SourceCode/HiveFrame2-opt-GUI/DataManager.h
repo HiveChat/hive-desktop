@@ -3,12 +3,16 @@
 
 #include <QDebug>
 #include <QObject>
+
 #include <QJsonDocument>
 #include <QJsonObject>
+
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
 #include <QStandardPaths>
+
+#include <QTime>
 
 class DataManager : public QObject
 {
@@ -30,6 +34,8 @@ signals:
 
 private:  
   bool checkDir(QString dir);
+  QStringList parseMyProfile(QJsonObject my_profile_json_obj);
+  QJsonObject makeMyProfile(QStringList my_profile_str_list);
   QString makeUsrKey();
 
   QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
@@ -42,7 +48,7 @@ private:
 
 
   ///usrData
-  const char alphabet_char[63] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   QChar usr_key_char[32];
   QString usr_key_str;
   //QStringList usr_info_str_list;

@@ -23,7 +23,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
       if(read_json_doucment.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_doucment.object();
-          if(!usr_list_json_obj.contains("usr_key"))
+          if(usr_list_json_obj.contains("usr_key") && usr_list_json_obj.contains("usr_name") && usr_list_json_obj.contains("avatar_path"))
             {
               usr_key_str = usr_list_json_obj["usr_key"].toString();
               for(int i = 0; i < usr_key_str.count(); i++)
@@ -95,6 +95,10 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
   usrInfoStrList.clear();
   usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim";
   deleteUsr(usrInfoStrList);
+
+  makeUsrKey();
+  makeUsrKey();
+  makeUsrKey();
 
   this->setParent(parent);
 }
@@ -235,9 +239,27 @@ bool DataManager::checkDir(QString directory)
   return true;
 }
 
-QString DataManager::makeUsrKey()
+QStringList DataManager::parseMyProfile(QJsonObject my_profile_json_obj)
 {
 
+}
+
+QJsonObject DataManager::makeMyProfile(QStringList my_profile_str_list)
+{
+
+}
+
+QString DataManager::makeUsrKey()
+{
+  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+
+  usr_key_str.clear();
+  for(int i = 0; i < 32; i ++)
+    {
+      usr_key_str.append(alphabet_char[qrand()%64]);
+    }
+  qDebug()<<usr_key_str;
+  return usr_key_str;
 }
 
 void DataManager::loadUsrProfile()

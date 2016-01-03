@@ -25,6 +25,8 @@ NetManager::NetManager(QObject *parent) : QObject(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
+
+  this->setParent(parent);
 }
 
 NetManager::~NetManager()

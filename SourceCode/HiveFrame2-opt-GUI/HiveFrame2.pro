@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT	 += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,7 +28,8 @@ SOURCES += main.cpp\
     GuiAvatarButton.cpp \
     DataManager.cpp \
     GuiWelcomeStack.cpp \
-    GuiChatBubble.cpp
+    GuiChatBubble.cpp \
+    NetManager.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -42,7 +44,8 @@ HEADERS  += mainwindow.h \
     GuiAvatarButton.h \
     DataManager.h \
     GuiWelcomeStack.h \
-    GuiChatBubble.h
+    GuiChatBubble.h \
+    NetManager.h
 
 RESOURCES += \
     qss.qrc \

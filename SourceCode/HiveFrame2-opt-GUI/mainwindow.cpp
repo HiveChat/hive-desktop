@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Base, QColor(255,204,0,255));
+  palette.setColor(QPalette::Window, QColor(245,245,245));
   this->setPalette(palette);
 
   gui_central_widget = new GuiCentralWidget(this);

@@ -6,7 +6,7 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 {
   /*this->setAutoFillBackground(true);
   QPalette palette;
-  palette.setColor(QPalette::Window, QColor(255,255,255));
+  palette.setColor(QPalette::Window, QColor(245,245,245,0));
   this->setPalette(palette);*/
   this->setFixedWidth(250);
 
@@ -152,9 +152,6 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   tab_stacked_widget = new QStackedWidget(this);
   tab_stacked_widget->addWidget(gui_home_tab);
   tab_stacked_widget->addWidget(gui_chat_tab);
-
-  //addWidget(QWidget*,int row,int column,int rowStretch,int columnStretch,Qt::Alignment)
-
 
   //// main layout
   main_layout = new QVBoxLayout(this);
