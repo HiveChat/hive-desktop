@@ -1,6 +1,6 @@
 # Hive!
 
-![](http://7xpqkc.dl1.z0.glb.clouddn.com/HiveIcon.png)
+![](http://7xpqkc.dl1.z0.glb.clouddn.com/HiveIcon_small.png)
 
 <p>Hive! is a LAN chatting software. This is a free software.</p>
 ##Download:
