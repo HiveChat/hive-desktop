@@ -71,7 +71,7 @@ void GuiCombWidget::paintEvent(QPaintEvent *)
 
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 {
-  emit clicked();
+  emit clicked(usr_info_str_list[0]);
 }
 
 void GuiCombWidget::enterEvent(QEvent *)

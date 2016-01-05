@@ -49,8 +49,9 @@ private:
   QStringList usr_info_str_list;
 
 
+
 signals:
-  void clicked();
+  void clicked(QString usrKey);
 
 
 

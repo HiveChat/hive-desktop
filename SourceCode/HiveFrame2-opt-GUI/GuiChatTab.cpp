@@ -90,9 +90,18 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
 
 }
 
+void GuiChatTab_comb_scroll_widget::onCombWidgetClicked(QString usrKey)
+{
+  emit combWidgetClicked(usrKey);
+}
+
+
+
 void GuiChatTab_comb_scroll_widget::addComb(QStringList usrInfoStrList)
 {
   qDebug()<<"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
-  GuiCombWidget *gui_comb_widget = new GuiCombWidget(usrInfoStrList, this);
+  gui_comb_widget = new GuiCombWidget(usrInfoStrList, this);
   main_layout->addWidget(gui_comb_widget);
+
+  connect(gui_comb_widget, SIGNAL(clicked(QString)), this, SLOT(onCombWidgetClicked(QString)));
 }

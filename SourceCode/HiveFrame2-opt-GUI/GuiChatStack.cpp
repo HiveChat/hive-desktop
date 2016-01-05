@@ -26,7 +26,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
 ///from baidu
 */
 
-  avatar_label = new GuiAvatarButton("/Users/Echo/Desktop/e.png", 90, 90, this);
+  avatar_label = new GuiAvatarButton(":/img/img/icon.png", 90, 90, this);
   avatar_label->setFixedHeight(50);
   avatar_label->setAlignment(Qt::AlignLeft);
 

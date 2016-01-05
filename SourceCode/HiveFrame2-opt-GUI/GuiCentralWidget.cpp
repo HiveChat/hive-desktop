@@ -21,7 +21,18 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   ////data manager
   data_manager = new DataManager(this);
-  connect(data_manager, SIGNAL(onUsrProfileLoaded(QStringList)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(QStringList)));
+
+  connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(QStringList)));
+  connect(data_manager, SIGNAL(messageLoaded(QString)), gui_main_block->gui_chat_stack->chat_widget, SLOT(addChatBubble(QString)));
+
+  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), data_manager, SLOT(readMessage(QString)));
+
+
+
+  data_manager->checkData();
+  data_manager->loadMyProfile();
+  //data_manager->loadUsrProfile();
+
 
   data_manager->loadUsrProfile();
 

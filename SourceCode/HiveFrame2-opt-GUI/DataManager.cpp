@@ -2,67 +2,17 @@
 
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
-  checkDir(app_data_local_path);
-  checkDir(usr_path);
-  checkDir(log_path);
 
-  QFile file(my_profile_file_path);
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-      return;
-    }
 
-  QTextStream in(&file);
-  QTextStream out(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
+  this->setParent(parent);
+}
 
-  QJsonParseError json_error;
-  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
-  if(json_error.error == QJsonParseError::NoError)
-    {
-      if(read_json_doucment.isObject())
-        {
-          QJsonObject usr_list_json_obj = read_json_doucment.object();
-          if(usr_list_json_obj.contains("usr_key") && usr_list_json_obj.contains("usr_name") && usr_list_json_obj.contains("avatar_path"))
-            {
-              usr_key_str = usr_list_json_obj["usr_key"].toString();
-              for(int i = 0; i < usr_key_str.count(); i++)
-                {
-                  usr_key_char[i] = usr_key_str[i];
-                }
-            }
-          else
-            {
-              //erase
-              QJsonObject my_profile_json_obj;
-              my_profile_json_obj.insert("usrKey", "usr_key");
-              my_profile_json_obj.insert("usrName", "usr_name");
-              my_profile_json_obj.insert("avatarPath", "avatar_path");
+void DataManager::TEST_SECTION()
+{
 
-              QJsonDocument write_json_doucment;
-              write_json_doucment.setObject(my_profile_json_obj);
-
-              file.resize(0);
-              out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
-            }
-        }
-      else
-        {
-          //erase
-          file.resize(0);
-        }
-    }
-  else
-    {
-      //erase
-      file.resize(0);
-    }
-
-  file.flush();
-  file.close();
-
+  ///////////JOSN DATA
   QStringList usrInfoStrList;
-
+  ////this cannot be MAC address Keep in mind!
   usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
@@ -95,12 +45,8 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
   usrInfoStrList.clear();
   usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim";
   deleteUsr(usrInfoStrList);
+  ///////////!JSON DATA
 
-  makeUsrKey();
-  makeUsrKey();
-  makeUsrKey();
-
-  this->setParent(parent);
 }
 
 void DataManager::addUsr(QStringList usrInfoStrList)
@@ -223,6 +169,15 @@ QList<QStringList> DataManager::import_usr_form()
   return usr_form;
 }
 */
+
+void DataManager::checkData()
+{
+  checkDir(app_data_local_path);
+  checkDir(usr_path);
+  checkDir(log_path);
+}
+
+
 bool DataManager::checkDir(QString directory)
 {
   QDir dir(directory);
@@ -244,12 +199,22 @@ QStringList DataManager::parseMyProfile(QJsonObject my_profile_json_obj)
 
 }
 
-QJsonObject DataManager::makeMyProfile(QStringList my_profile_str_list)
+QJsonDocument DataManager::makeDefaultProfile()
 {
+  makeUsrKey();
+
+  QJsonObject my_profile_json_obj;
+  my_profile_json_obj.insert("usrKey", usr_key_str);
+  my_profile_json_obj.insert("usrName", QHostInfo::localHostName());
+  my_profile_json_obj.insert("avatarPath", ":/img/img/icon.png");
+  ////these default data will be integrated in a class
+
+  QJsonDocument write_json_doucment;
+  write_json_doucment.setObject(my_profile_json_obj);
 
 }
 
-QString DataManager::makeUsrKey()
+void DataManager::makeUsrKey()
 {
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
@@ -259,7 +224,59 @@ QString DataManager::makeUsrKey()
       usr_key_str.append(alphabet_char[qrand()%64]);
     }
   qDebug()<<usr_key_str;
-  return usr_key_str;
+}
+
+
+void DataManager::loadMyProfile()
+{
+
+  QFile file(my_profile_file_path);
+  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+      return;
+    }
+
+  QTextStream in(&file);
+  QTextStream out(&file);
+  QByteArray in_byte_array = in.readAll().toUtf8();
+
+  QJsonParseError json_error;
+  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  if(json_error.error == QJsonParseError::NoError)
+    {
+      if(read_json_doucment.isObject())
+        {
+          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          if(usr_list_json_obj.contains("usrKey") && usr_list_json_obj.contains("usrName") && usr_list_json_obj.contains("avatarPath"))
+            {
+              usr_key_str = usr_list_json_obj["usr_key"].toString();
+              //give to char value, not necessary at all but just reserve it.
+              /*
+              for(int i = 0; i < usr_key_str.count(); i++)
+                {
+                  usr_key_char[i] = usr_key_str[i];
+                }*/
+            }
+          else
+            {
+              file.resize(0);
+              out<<makeDefaultProfile().toJson(QJsonDocument::Compact)<<endl;
+            }
+        }
+      else
+        {
+          file.resize(0);
+          out<<makeDefaultProfile().toJson(QJsonDocument::Compact)<<endl;
+        }
+    }
+  else
+    {
+      file.resize(0);
+      out<<makeDefaultProfile().toJson(QJsonDocument::Compact)<<endl;
+    }
+
+  file.flush();
+  file.close();
 }
 
 void DataManager::loadUsrProfile()
@@ -274,7 +291,7 @@ void DataManager::loadUsrProfile()
   QByteArray in_byte_array = in.readAll().toUtf8();
   file.close();
 
-  QStringList usr_name_str_list;
+  QStringList usr_key_str_list;
   QStringList usr_info_str_list;
 
   ///JSon
@@ -285,20 +302,25 @@ void DataManager::loadUsrProfile()
       if(read_json_doucment.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_doucment.object();
-          usr_name_str_list = usr_list_json_obj.keys();
-          for(int i = 0; i <usr_name_str_list.count(); i++)
+          //get usr_key as a string list
+          usr_key_str_list = usr_list_json_obj.keys();
+          for(int i = 0; i < usr_key_str_list.count(); i++)
             {
               QJsonObject temp_usr_profile_json_obj;
-              QString temp_usr_name_str = usr_name_str_list[i];
-              temp_usr_profile_json_obj = usr_list_json_obj[temp_usr_name_str].toObject();
+              //for each usr_key
+              QString temp_usr_key_str = usr_key_str_list[i];
+              temp_usr_profile_json_obj = usr_list_json_obj[temp_usr_key_str].toObject();
               ///usrKey<<usrName<<ipAddr
-              qDebug()<<usr_name_str_list[i]<<endl;
+              qDebug()<<usr_key_str_list[i]<<endl;
               usr_info_str_list << temp_usr_profile_json_obj["usrKey"].toString()
                   << temp_usr_profile_json_obj["usrName"].toString()
                   << temp_usr_profile_json_obj["ipAddr"].toString();
 
-              emit onUsrProfileLoaded(usr_info_str_list);
+              emit usrProfileLoaded(usr_info_str_list);
               usr_info_str_list.clear();
+
+              //check dir
+              checkDir(usr_path+temp_usr_key_str);
             }
 
         }
@@ -306,21 +328,11 @@ void DataManager::loadUsrProfile()
   else
     {
       qDebug()<<"Contact parse failed, is file empty?******";
+      return;
     }
 
 }
-/*
 
-{
-    "usr_list" : {
-      ["Tim", "192.168.1.1", "aa:bb:cc:dd:ee:ff"]
-      ["Doge", "192.168.1.2", "aa:bb:cc:dd:ee:ff"]
-      ["Bob", "192.168.1.3", "aa:bb:cc:dd:ee:ff"]
-      ["Pat", "192.168.1.4", "aa:bb:cc:dd:ee:ff"]
-      ["Steve", "192.168.1.5", "aa:bb:cc:dd:ee:ff"]}
-  }
-
-  */
 
 /*
 void encode(QString filename)
@@ -378,3 +390,12 @@ void decode(QString filename)
     file.close();
 }
 */
+
+
+
+//////slots
+void DataManager::readMessage(QString usrKey)
+{
+
+
+}

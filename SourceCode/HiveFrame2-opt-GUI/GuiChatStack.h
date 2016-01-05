@@ -45,7 +45,7 @@ private:
   QVBoxLayout *main_layout;
   GuiChatBubble *gui_chat_bubble;
 
-public:
+public slots:
   void addChatBubble(QString message);
 
 };

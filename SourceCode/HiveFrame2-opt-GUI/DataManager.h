@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QHostInfo>
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -21,22 +22,23 @@ class DataManager : public QObject
 public:
   explicit DataManager(QObject *parent = 0);
 
+  void checkData();
+  void loadMyProfile();
+  void loadUsrProfile();
 
   void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);
-  void loadUsrProfile();
+
 
   //void addChatHistory();
+  void TEST_SECTION();
 
-signals:
-  void onUsrProfileLoaded(QStringList usrInfoStrList);
-  void onFirstLaunch();
 
-private:  
+private:
   bool checkDir(QString dir);
   QStringList parseMyProfile(QJsonObject my_profile_json_obj);
-  QJsonObject makeMyProfile(QStringList my_profile_str_list);
-  QString makeUsrKey();
+  QJsonDocument makeDefaultProfile();
+  void makeUsrKey();
 
   QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   QString usr_path = app_data_local_path+ "/usr/";
@@ -52,6 +54,15 @@ private:
   QChar usr_key_char[32];
   QString usr_key_str;
   //QStringList usr_info_str_list;
+
+signals:
+  void usrProfileLoaded(QStringList usrInfoStrList);
+  void onFirstLaunch();
+  void messageLoaded(QString message);
+
+
+public slots:
+  void readMessage(QString usrKey);
 
 };
 
