@@ -4,6 +4,12 @@
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
+//  QPalette palette;
+//  //255,204,0,255
+//  palette.setColor(QPalette::Window, QColor(245,245,245));
+//  this->setAutoFillBackground(true);
+//  this->setPalette(palette);
+
   gui_chat_stack = new GuiChatStack(this);
   gui_welcome_stack = new GuiWelcomeStack(this);
 

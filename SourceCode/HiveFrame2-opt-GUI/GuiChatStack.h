@@ -1,6 +1,12 @@
 #ifndef GUICHATSTACK_H
 #define GUICHATSTACK_H
 
+#include "GuiLabelButton.h"
+#include "GuiAvatarButton.h"
+#include "GuiChatBubble.h"
+#include "GlobalData.h"
+
+
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -8,11 +14,7 @@
 #include <QTextEdit>
 #include <QScrollArea>
 
-//#include <QKeyEvent>
 
-#include "GuiLabelButton.h"
-#include "GuiAvatarButton.h"
-#include "GuiChatBubble.h"
 
 //////////////////////////top//////////////////////////////////////
 
@@ -46,7 +48,7 @@ private:
   GuiChatBubble *gui_chat_bubble;
 
 public slots:
-  void addChatBubble(QString message);
+  void addChatBubble(QStringList messageStrList);
 
 };
 

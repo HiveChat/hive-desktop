@@ -30,6 +30,9 @@ private:
   DataManager *data_manager;
   NetManager *net_manager;
 
+  QString usr_key_str;
+  QString usr_name_str;
+  QString avatar_path_str;
 
   QStringList my_profile_str_list;
 };

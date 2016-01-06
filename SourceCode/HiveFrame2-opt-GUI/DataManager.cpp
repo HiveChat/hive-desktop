@@ -163,6 +163,7 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
   file.flush();
 }
 
+
 /*
 QList<QStringList> DataManager::import_usr_form()
 {
@@ -204,7 +205,7 @@ QJsonDocument DataManager::makeDefaultProfile()
   makeUsrKey();
 
   QJsonObject my_profile_json_obj;
-  my_profile_json_obj.insert("usrKey", usr_key_str);
+  my_profile_json_obj.insert("usrKey", GlobalData::g_myKeyStr);
   my_profile_json_obj.insert("usrName", QHostInfo::localHostName());
   my_profile_json_obj.insert("avatarPath", ":/img/img/icon.png");
   ////these default data will be integrated in a class
@@ -212,18 +213,20 @@ QJsonDocument DataManager::makeDefaultProfile()
   QJsonDocument write_json_doucment;
   write_json_doucment.setObject(my_profile_json_obj);
 
+
+
 }
 
 void DataManager::makeUsrKey()
 {
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
-  usr_key_str.clear();
   for(int i = 0; i < 32; i ++)
     {
-      usr_key_str.append(alphabet_char[qrand()%64]);
+      GlobalData::g_myKeyStr.append(alphabet_char[qrand()%64]);
     }
-  qDebug()<<usr_key_str;
+
+  qDebug()<<GlobalData::g_myKeyStr;
 }
 
 
@@ -247,21 +250,10 @@ void DataManager::loadMyProfile()
       if(read_json_doucment.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_doucment.object();
-          if(usr_list_json_obj.contains("usrKey") && usr_list_json_obj.contains("usrName") && usr_list_json_obj.contains("avatarPath"))
-            {
-              usr_key_str = usr_list_json_obj["usr_key"].toString();
-              //give to char value, not necessary at all but just reserve it.
-              /*
-              for(int i = 0; i < usr_key_str.count(); i++)
-                {
-                  usr_key_char[i] = usr_key_str[i];
-                }*/
-            }
-          else
-            {
-              file.resize(0);
-              out<<makeDefaultProfile().toJson(QJsonDocument::Compact)<<endl;
-            }
+
+          GlobalData::g_myKeyStr = usr_list_json_obj["usrKey"].toString();
+          GlobalData::g_myNameStr = usr_list_json_obj["usrName"].toString();
+          GlobalData::g_avatarPathStr = usr_list_json_obj["avatarPath"].toString();
         }
       else
         {
@@ -396,6 +388,8 @@ void decode(QString filename)
 //////slots
 void DataManager::readMessage(QString usrKey)
 {
+
+  qDebug()<<usrKey;
 
 
 }

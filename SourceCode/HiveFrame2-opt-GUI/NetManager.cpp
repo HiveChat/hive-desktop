@@ -2,6 +2,9 @@
 
 NetManager::NetManager(QObject *parent) : QObject(parent)
 {
+
+  /////test
+
   QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
       foreach(QNetworkInterface interface,list)
       {
@@ -25,6 +28,12 @@ NetManager::NetManager(QObject *parent) : QObject(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
+  /////!test
+
+
+  sendUsrEnter();
+
+  sendMessage(GlobalData::g_myKeyStr,"fffffff");
 
   this->setParent(parent);
 }
@@ -36,7 +45,7 @@ NetManager::~NetManager()
 
 
 
-void NetManager::sendMessage(QString ip_addr, QString message = "")
+void NetManager::sendMessage(QString usr_key_str, QString message = "")
 {
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
@@ -47,64 +56,89 @@ void NetManager::sendMessage(QString ip_addr, QString message = "")
         return;
       }
 
-    out << Message << ip_addr << message;
+    out << Message << usr_key_str << message;
     udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
+}
+
+void NetManager::sendUsrEnter()
+{
+  QByteArray data;
+  QDataStream out(&data, QIODevice::WriteOnly);
+
+  QString ip_addr = localHostIP();
+  out << UsrEnter << ip_addr << GlobalData::g_myKeyStr << GlobalData::g_myNameStr;
+}
+
+QString NetManager::localHostIP()
+{
+  QString localHostName = QHostInfo::localHostName();
+  QHostInfo info = QHostInfo::fromName(localHostName);
+  return info.addresses().first().toString();
+
 }
 
 void NetManager::processPendingDatagrams()
 {
-  /*while(udp_socket->hasPendingDatagrams())
+  while(udp_socket->hasPendingDatagrams())
     {
       QByteArray datagram;
       datagram.resize(udp_socket->pendingDatagramSize());
       udp_socket->readDatagram(datagram.data(), datagram.size());
       QDataStream in(&datagram, QIODevice::ReadOnly);
+
       int msgType;
       in >> msgType;
+
       QString usrName,ipAddr,msg;
       QString time = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
 
       switch(msgType)
       {
         case Message:
-            in >> usrName >> ipAddr >> msg;
-            ui->msgBrowser->setTextColor(Qt::blue);
-            ui->msgBrowser->setCurrentFont(QFont("Times New Roman",12));
-            ui->msgBrowser->append("[ " +usrName+" ] "+ time);
-            ui->msgBrowser->append(msg);
-            break;
+          {
+            QStringList message_str_list;
+            in >> message_str_list[0] >> message_str_list[1] >> message_str_list[2];
 
-        case UsrEnter:
-            in >>usrName >>ipAddr;
-            usrEnter(usrName,ipAddr);
+            emit messageRecieved(message_str_list);
             break;
+          }
 
-        case UsrLeft:
-            in >>usrName;
-            usrLeft(usrName,time);
-            break;
+//        case UsrEnter:
+//          {
 
-        case FileName: {
-            in >> usrName >> ipAddr;
-            QString clntAddr, fileName;
-            in >> clntAddr >> fileName;
-            hasPendingFile(usrName, ipAddr, clntAddr, fileName);
-            break;
-        }
+//            in >>usrName >>ipAddr;
+//            usrEnter(usrName,ipAddr);
+//            break;
+//          }
 
-        case Refuse: {
-            in >> usrName;
-            QString srvAddr;
-            in >> srvAddr;
-            QString ipAddr = getIP();
+//        case UsrLeft:
+//            in >>usrName;
+//            usrLeft(usrName,time);
+//            break;
 
-            if(ipAddr == srvAddr)
-            {
-                srv->refused();
-            }
-            break;
-        }
+//        case FileName:
+//          {
+//            in >> usrName >> ipAddr;
+//            QString clntAddr, fileName;
+//            in >> clntAddr >> fileName;
+//            hasPendingFile(usrName, ipAddr, clntAddr, fileName);
+//            break;
+//          }
+
+//        case Refuse:
+//          {
+//            /*in >> usrName;
+//            QString srvAddr;
+//            in >> srvAddr;
+//            QString ipAddr = getIP();
+
+//            if(ipAddr == srvAddr)
+//            {
+//                srv->refused();
+//            }
+//            break;*/
+//          }
       }
-    }*/
+    }
 }
 

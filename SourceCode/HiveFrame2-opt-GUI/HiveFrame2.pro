@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     DataManager.cpp \
     GuiWelcomeStack.cpp \
     GuiChatBubble.cpp \
-    NetManager.cpp
+    NetManager.cpp \
+    GlobalData.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -45,7 +46,8 @@ HEADERS  += mainwindow.h \
     DataManager.h \
     GuiWelcomeStack.h \
     GuiChatBubble.h \
-    NetManager.h
+    NetManager.h \
+    GlobalData.h
 
 RESOURCES += \
     qss.qrc \

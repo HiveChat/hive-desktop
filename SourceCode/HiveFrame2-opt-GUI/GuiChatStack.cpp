@@ -1,13 +1,6 @@
 #include "GuiChatStack.h"
-#include <QLabel>
-#include <QDebug>
-#include <QPixmap>
-#include <QLabel>
-#include <QPushButton>
 
-#include <QScrollBar>
-#include <QBitmap>
-#include <QPainter>
+
 
 
 //////////////////////////top//////////////////////////////////////
@@ -97,21 +90,7 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   main_layout1->addLayout(main_layout);
   main_layout1->addWidget(bottom_line);
 
-  ///test 2015-12-26
 
-  gui_chat_bubble = new GuiChatBubble("Once 😋the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.",300,this);
-  main_layout->addWidget(gui_chat_bubble);
-
-
-
-
-  gui_chat_bubble = new GuiChatBubble("hi",300,this);
-  main_layout->addWidget(gui_chat_bubble);
-
-  addChatBubble("Once the  to be inflated to open the root,the  on the non-breaking is not to squeeze,and this is a tragedy.Found in Hamlet,the vulnerability of people and the environment is so brutal and contrary to each other,as well as the unique aspects of the character appears in the connotations of dense and thick,it is also in the extension of broad and deep.By doing so,some experts have claimed that Hamlet is not an objective of the role of out-of-date,but each of us own.");
-  addChatBubble("hello!");
-
-  ///!test
 }
 
 GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
@@ -119,9 +98,20 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 }
 
-void GuiChatStack_chat_widget::addChatBubble(QString message)
+void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList)
 {
-  GuiChatBubble *gui_chat_bubble = new GuiChatBubble(message,false,this);
+
+  if(messageStrList[1] == GlobalData::g_myKeyStr)
+    {
+      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[2], false, this);
+      gui_chat_bubble = new GuiChatBubble(messageStrList[2], false, this);
+    }
+  else
+    {
+      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[2], true, this);
+      gui_chat_bubble = new GuiChatBubble(messageStrList[2], true, this);
+    }
+
   main_layout->addWidget(gui_chat_bubble);
 }
 

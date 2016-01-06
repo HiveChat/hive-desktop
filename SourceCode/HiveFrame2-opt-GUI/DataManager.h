@@ -1,6 +1,8 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
+#include "GlobalData.h"
+
 #include <QDebug>
 #include <QObject>
 #include <QHostInfo>
@@ -14,6 +16,10 @@
 #include <QStandardPaths>
 
 #include <QTime>
+
+
+
+
 
 class DataManager : public QObject
 {
@@ -29,10 +35,8 @@ public:
   void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);
 
-
   //void addChatHistory();
   void TEST_SECTION();
-
 
 private:
   bool checkDir(QString dir);
@@ -40,24 +44,25 @@ private:
   QJsonDocument makeDefaultProfile();
   void makeUsrKey();
 
-  QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-  QString usr_path = app_data_local_path+ "/usr/";
-  QString log_path = app_data_local_path + "/log/";
+  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+  const QString usr_path = app_data_local_path+ "/usr/";
+  const QString log_path = app_data_local_path + "/log/";
 
-  QString usr_list_file_path = app_data_local_path + "/usr_list.json";
-  QString my_profile_file_path = app_data_local_path + "/my_profile.json";
+  const QString usr_list_file_path = app_data_local_path + "/usr_list.json";
+  const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
 
 
 
   ///usrData
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-  QChar usr_key_char[32];
-  QString usr_key_str;
+
+
+
   //QStringList usr_info_str_list;
 
 signals:
   void usrProfileLoaded(QStringList usrInfoStrList);
-  void onFirstLaunch();
+  //void onFirstLaunch();
   void messageLoaded(QString message);
 
 

@@ -1,6 +1,8 @@
 #ifndef NETMANAGER_H
 #define NETMANAGER_H
 
+#include "GlobalData.h"
+
 #include <QObject>
 #include <QHostInfo>
 #include <QString>
@@ -28,16 +30,19 @@ public:
   void sendMessage(QString ip_addr, QString message);
   void sendUsrEnter();
 
-public slots:
-  void processPendingDatagrams();
+  static QString localHostIP();
 
 private:
   qint16 udp_port = 23232;
   QUdpSocket *udp_socket;
 
-signals:
 
 public slots:
+  void processPendingDatagrams();
+
+signals:
+  void messageRecieved(QStringList messageStrList);
+
 };
 
 #endif // NETMANAGER_H
