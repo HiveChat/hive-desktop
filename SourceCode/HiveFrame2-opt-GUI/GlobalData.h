@@ -1,13 +1,24 @@
 #ifndef GLOBALDATA_H
 #define GLOBALDATA_H
-#include <QString>
+#include <QStringList>
+#include <QDatetime>
 
 class GlobalData
 {
 public:
+  ///data
   static QString g_myKeyStr;
   static QString g_myNameStr;
   static QString g_avatarPathStr;
+
+  //static QJsonObject
+
+  ///net
+  static QString g_localHostIP;
+
+  ///other
+  static QString g_currentTime();
+
 };
 
 #endif // GLOBALDATA_H

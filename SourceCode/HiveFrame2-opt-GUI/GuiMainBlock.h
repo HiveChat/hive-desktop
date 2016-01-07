@@ -19,16 +19,13 @@ public:
 
   GuiChatStack *gui_chat_stack;
   GuiWelcomeStack *gui_welcome_stack;
-
-signals:
-
-protected:
-
-public slots:
+  QStackedWidget *main_stacked_widget;
 
 private:
   QVBoxLayout *main_layout;
-  QStackedWidget *main_stacked_widget;
+
+public slots:
+  void setCurrentStack(QWidget *widget);
 
 
 };

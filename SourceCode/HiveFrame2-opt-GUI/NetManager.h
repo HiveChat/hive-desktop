@@ -30,7 +30,7 @@ public:
   void sendMessage(QString ip_addr, QString message);
   void sendUsrEnter();
 
-  static QString localHostIP();
+  static void localHostIP();
 
 private:
   qint16 udp_port = 23232;

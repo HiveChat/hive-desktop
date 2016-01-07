@@ -5,7 +5,7 @@ NetManager::NetManager(QObject *parent) : QObject(parent)
 
   /////test
 
-  QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
+  /*QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
       foreach(QNetworkInterface interface,list)
       {
           qDebug() <<"Device:"<<interface.name();
@@ -20,10 +20,10 @@ NetManager::NetManager(QObject *parent) : QObject(parent)
               qDebug()<<"Netmask: "  <<entry.netmask().toString();
               qDebug()<<"Broadcast:" <<entry.broadcast().toString();
           }
-  }
+  }*/
 
   //qDebug()<<QNetworkInterface::allAddresses().at(0).toString()<<endl;
-  qDebug()<<QDateTime::currentDateTime().toString("yyyy_MM_dd-hh_mm_ss");
+  qDebug()<<QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
@@ -33,7 +33,10 @@ NetManager::NetManager(QObject *parent) : QObject(parent)
 
   sendUsrEnter();
 
-  sendMessage(GlobalData::g_myKeyStr,"fffffff");
+  sendMessage(GlobalData::g_myKeyStr,"fffffff1");
+  sendMessage(GlobalData::g_myKeyStr,"fffffff2");
+  sendMessage(GlobalData::g_myKeyStr,"fffffff3");
+  sendMessage(GlobalData::g_myKeyStr,"fffffff4");
 
   this->setParent(parent);
 }
@@ -65,16 +68,14 @@ void NetManager::sendUsrEnter()
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  QString ip_addr = localHostIP();
-  out << UsrEnter << ip_addr << GlobalData::g_myKeyStr << GlobalData::g_myNameStr;
+  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr;
 }
 
-QString NetManager::localHostIP()
+void NetManager::localHostIP()
 {
   QString localHostName = QHostInfo::localHostName();
   QHostInfo info = QHostInfo::fromName(localHostName);
-  return info.addresses().first().toString();
-
+  GlobalData::g_localHostIP = info.addresses().first().toString();
 }
 
 void NetManager::processPendingDatagrams()
@@ -97,11 +98,20 @@ void NetManager::processPendingDatagrams()
         case Message:
           {
             QStringList message_str_list;
-            in >> message_str_list[0] >> message_str_list[1] >> message_str_list[2];
+            QString message_000;
+            QString usrKey_000;
 
+            in >> usrKey_000 >> message_000;
+
+            message_str_list.append(usrKey_000);
+            message_str_list.append(message_000);
+
+            qDebug()<<"message sent by:"<<usrKey_000<<" content:"<<message_000;
             emit messageRecieved(message_str_list);
             break;
           }
+
+        ////////////problem2016-01-06
 
 //        case UsrEnter:
 //          {

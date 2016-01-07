@@ -31,8 +31,6 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, boo
 
   this->setParent(parent);
   this->setFixedWidth(maxWidth);
-  qDebug()<<label->width();
-  qDebug()<<label->height();
 }
 
 void GuiChatBubble_text_area::paintEvent(QPaintEvent *)

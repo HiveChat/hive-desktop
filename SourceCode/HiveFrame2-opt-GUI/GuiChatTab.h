@@ -20,13 +20,14 @@ public:
   explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
   GuiCombWidget *gui_comb_widget;
 
-private:
   QVBoxLayout *main_layout;
+
+
 
 signals:
   void combWidgetClicked(QString usrKey);
 
-private slots:
+public slots:
   void onCombWidgetClicked(QString usrKey);
 
 public slots:

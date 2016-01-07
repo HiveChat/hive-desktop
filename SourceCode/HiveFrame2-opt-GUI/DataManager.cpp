@@ -2,6 +2,8 @@
 
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
+  checkData();
+  loadMyProfile();
 
 
   this->setParent(parent);
@@ -10,42 +12,43 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 void DataManager::TEST_SECTION()
 {
 
-  ///////////JOSN DATA
-  QStringList usrInfoStrList;
-  ////this cannot be MAC address Keep in mind!
-  usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"45:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"87:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn";
-  addUsr(usrInfoStrList);
-  usrInfoStrList.clear();
-  usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim";
-  deleteUsr(usrInfoStrList);
-  ///////////!JSON DATA
+
+//  ///////////JOSN DATA
+//  QStringList usrInfoStrList;
+//  ////this cannot be MAC address Keep in mind!
+//  usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"45:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"87:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn";
+//  addUsr(usrInfoStrList);
+//  usrInfoStrList.clear();
+//  usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim";
+//  deleteUsr(usrInfoStrList);
+//  ///////////!JSON DATA
 
 }
 
@@ -195,12 +198,9 @@ bool DataManager::checkDir(QString directory)
   return true;
 }
 
-QStringList DataManager::parseMyProfile(QJsonObject my_profile_json_obj)
-{
 
-}
 
-QJsonDocument DataManager::makeDefaultProfile()
+QJsonDocument DataManager::defaultProfile()
 {
   makeUsrKey();
 
@@ -212,9 +212,6 @@ QJsonDocument DataManager::makeDefaultProfile()
 
   QJsonDocument write_json_doucment;
   write_json_doucment.setObject(my_profile_json_obj);
-
-
-
 }
 
 void DataManager::makeUsrKey()
@@ -258,13 +255,13 @@ void DataManager::loadMyProfile()
       else
         {
           file.resize(0);
-          out<<makeDefaultProfile().toJson(QJsonDocument::Compact)<<endl;
+          out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      out<<makeDefaultProfile().toJson(QJsonDocument::Compact)<<endl;
+      out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
     }
 
   file.flush();
@@ -391,5 +388,10 @@ void DataManager::readMessage(QString usrKey)
 
   qDebug()<<usrKey;
 
+
+}
+
+void DataManager::saveMessage(QStringList messageStrList)
+{
 
 }

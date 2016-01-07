@@ -35,6 +35,11 @@ private:
   QString avatar_path_str;
 
   QStringList my_profile_str_list;
+
+public slots:
+  void addComb(QString usrKey);
+
+
 };
 
 #endif // GUICENTRALWIDGET_H

@@ -40,8 +40,7 @@ public:
 
 private:
   bool checkDir(QString dir);
-  QStringList parseMyProfile(QJsonObject my_profile_json_obj);
-  QJsonDocument makeDefaultProfile();
+  QJsonDocument defaultProfile();
   void makeUsrKey();
 
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
@@ -56,18 +55,17 @@ private:
   ///usrData
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 
-
-
   //QStringList usr_info_str_list;
 
 signals:
   void usrProfileLoaded(QStringList usrInfoStrList);
   //void onFirstLaunch();
-  void messageLoaded(QString message);
+  void messageLoaded(QStringList messageStrList);
 
 
 public slots:
   void readMessage(QString usrKey);
+  void saveMessage(QStringList messageStrList);
 
 };
 

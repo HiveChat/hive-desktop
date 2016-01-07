@@ -23,18 +23,18 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   data_manager = new DataManager(this);
 
   connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(QStringList)));
-  connect(data_manager, SIGNAL(messageLoaded(QString)), gui_main_block->gui_chat_stack->chat_widget, SLOT(addChatBubble(QString)));
+  //connect(data_manager, SIGNAL(messageLoaded(QStringList)), gui_main_block->gui_chat_stack->chat_widget, SLOT(addChatBubble(QStringList)));
 
   connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), data_manager, SLOT(readMessage(QString)));
 
-  data_manager->checkData();
-  data_manager->loadMyProfile();
+
   data_manager->loadUsrProfile();
+
 
   ////net manager
   net_manager = new NetManager(this);
 
-  connect(net_manager, SIGNAL(messageRecieved(QStringList)), gui_main_block->gui_chat_stack->chat_widget, SLOT(addChatBubble(QStringList)));
+  //connect(net_manager, SIGNAL(messageRecieved(QStringList)), gui_main_block->gui_chat_stack->chat_widget, SLOT(addChatBubble(QStringList)));
 
 
 
@@ -45,6 +45,22 @@ GuiCentralWidget::~GuiCentralWidget()
 {
 
 }
+
+
+void GuiCentralWidget::addComb(QString usrKey)
+{
+  gui_main_block->gui_chat_stack = new GuiChatStack(usrKey, this);
+  gui_main_block->main_stacked_widget->addWidget(gui_main_block->gui_chat_stack);
+
+
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->gui_comb_widget = new GuiCombWidget(usrInfoStrList, this);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->main_layout->addWidget(gui_tab_block->gui_chat_tab->comb_scroll_widget->gui_comb_widget);
+
+  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget->gui_comb_widget, SIGNAL(clicked(QString)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(onCombWidgetClicked(QString)));
+
+}
+
+
 
 /*void GuiCentralWidget::initUsrData()
 {

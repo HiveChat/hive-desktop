@@ -101,15 +101,15 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList)
 {
 
-  if(messageStrList[1] == GlobalData::g_myKeyStr)
+  if(messageStrList[0] == GlobalData::g_myKeyStr)
     {
-      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[2], false, this);
-      gui_chat_bubble = new GuiChatBubble(messageStrList[2], false, this);
+      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[1], false, this);
+      gui_chat_bubble = new GuiChatBubble(messageStrList[1], false, this);
     }
   else
     {
-      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[2], true, this);
-      gui_chat_bubble = new GuiChatBubble(messageStrList[2], true, this);
+      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[1], true, this);
+      gui_chat_bubble = new GuiChatBubble(messageStrList[1], true, this);
     }
 
   main_layout->addWidget(gui_chat_bubble);
@@ -204,11 +204,11 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
 }
 //////////////////////////main//////////////////////////////////////
 
-GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
+GuiChatStack::GuiChatStack(QString usrKey, QWidget *parent) : QWidget(parent)
 {
+  usr_key = usrKey;
+
   top_bar = new GuiChatStack_top_bar(this);
-
-
 
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
@@ -218,8 +218,6 @@ GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   chat_scroll_area->setPalette(palette);
   chat_scroll_area->setFrameStyle(0);
-
-
 
   message_editor = new GuiChatStack_message_editor(this);
 
@@ -238,6 +236,18 @@ GuiChatStack::GuiChatStack(QWidget *parent) : QWidget(parent)
 GuiChatStack::~GuiChatStack()
 {
 
+}
+
+
+///slots
+
+
+void GuiChatStack::checkIdentity(QString usrKey)
+{
+  if(usrKey == usr_key)
+    {
+      emit chosen(this);
+    }
 }
 
 
