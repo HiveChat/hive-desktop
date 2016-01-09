@@ -21,4 +21,9 @@ public:
 
 };
 
+struct a
+{
+
+};
+
 #endif // GLOBALDATA_H

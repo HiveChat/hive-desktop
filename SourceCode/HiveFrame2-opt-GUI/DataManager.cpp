@@ -102,6 +102,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
     }
   else
     {
+
       qDebug()<<"else";
       QJsonObject usr_info_json_obj;
       usr_info_json_obj.insert("ipAddr", ip_addr);
@@ -115,6 +116,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
       QJsonDocument write_json_doucment;
       write_json_doucment.setObject(usr_list_json_obj);
 
+      file.resize(0); //clear all
       out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
       qDebug()<<write_json_doucment.toJson(QJsonDocument::Compact);
     }

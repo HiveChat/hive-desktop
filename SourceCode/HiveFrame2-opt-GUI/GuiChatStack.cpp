@@ -204,9 +204,9 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
 }
 //////////////////////////main//////////////////////////////////////
 
-GuiChatStack::GuiChatStack(QString usrKey, QWidget *parent) : QWidget(parent)
+GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
-  usr_key = usrKey;
+  usr_info_str_list = usrInfoStrList;
 
   top_bar = new GuiChatStack_top_bar(this);
 
@@ -242,9 +242,9 @@ GuiChatStack::~GuiChatStack()
 ///slots
 
 
-void GuiChatStack::checkIdentity(QString usrKey)
+void GuiChatStack::checkIdentity(QStringList identity)
 {
-  if(usrKey == usr_key)
+  if(identity == usr_info_str_list)
     {
       emit chosen(this);
     }

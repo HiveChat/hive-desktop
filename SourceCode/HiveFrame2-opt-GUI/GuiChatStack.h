@@ -88,7 +88,7 @@ class GuiChatStack : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack(QString usrKey, QWidget *parent = 0);
+  explicit GuiChatStack(QStringList usrInfoStrList, QWidget *parent = 0);
   ~GuiChatStack();
 
   GuiChatStack_top_bar *top_bar;
@@ -99,10 +99,10 @@ private:
   QVBoxLayout *main_layout;
   QScrollArea *chat_scroll_area;
 
-  QString usr_key;
+  QStringList usr_info_str_list;
 
 public slots:
-  void checkIdentity(QString usrKey);
+  void checkIdentity(QStringList identity);
 
 signals:
   void chosen(QWidget *);

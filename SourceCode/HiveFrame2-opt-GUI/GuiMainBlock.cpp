@@ -29,6 +29,11 @@ GuiMainBlock::~GuiMainBlock()
 
 }
 
+void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
+{
+  gui_chat_stack = new GuiChatStack(usrInfoStrList, this);
+}
+
 void GuiMainBlock::setCurrentStack(QWidget *widget)
 {
   main_stacked_widget->setCurrentWidget(widget);

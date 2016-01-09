@@ -25,7 +25,9 @@ private:
   QVBoxLayout *main_layout;
 
 public slots:
+  void addChatStack(QStringList usrInfoStrList);
   void setCurrentStack(QWidget *widget);
+
 
 
 };

@@ -44,7 +44,7 @@ private:
   void makeUsrKey();
 
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-  const QString usr_path = app_data_local_path+ "/usr/";
+  const QString usr_path = app_data_local_path + "/usr/";
   const QString log_path = app_data_local_path + "/log/";
 
   const QString usr_list_file_path = app_data_local_path + "/usr_list.json";

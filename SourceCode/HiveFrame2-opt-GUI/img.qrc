@@ -25,4 +25,10 @@
         <file>img/send_button_0.png</file>
         <file>img/send_button_1.png</file>
     </qresource>
+    <qresource prefix="/avatar">
+        <file>avatar/bee.png</file>
+        <file>avatar/ladybug.png</file>
+        <file>avatar/sunflower.png</file>
+        <file>avatar/worm.png</file>
+    </qresource>
 </RCC>
