@@ -5,6 +5,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
   checkData();
   loadMyProfile();
 
+  TEST_SECTION();
 
   this->setParent(parent);
 }
@@ -13,42 +14,42 @@ void DataManager::TEST_SECTION()
 {
 
 
-//  ///////////JOSN DATA
-//  QStringList usrInfoStrList;
-//  ////this cannot be MAC address Keep in mind!
-//  usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"45:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"87:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn";
-//  addUsr(usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim";
-//  deleteUsr(usrInfoStrList);
-//  ///////////!JSON DATA
+  ///////////JOSN DATA
+  QStringList usrInfoStrList;
+  ////this cannot be MAC address Keep in mind!
+  usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob"<<":/avatar/avatar/bee.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim"<<":/avatar/avatar/ladybug.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/bee.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/ladybug.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin"<<":/avatar/avatar/worm.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"45:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo"<<":/avatar/avatar/worm.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"87:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn"<<":/avatar/avatar/ladybug.png";
+  addUsr(usrInfoStrList);
+  usrInfoStrList.clear();
+  usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim"<<":/avatar/avatar/sunflower.png";
+  deleteUsr(usrInfoStrList);
+  ///////////!JSON DATA
 
 }
 
@@ -57,6 +58,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
   QString usr_key = usrInfoStrList.at(0);
   QString ip_addr = usrInfoStrList.at(1);
   QString usr_name = usrInfoStrList.at(2);
+  QString avatar_path = usrInfoStrList.at(3);
 
 
 
@@ -90,6 +92,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
               usr_info_json_obj.insert("usrName", usr_name);
 
 
+
               usr_list_json_obj.insert(usr_key, usr_info_json_obj);
 
               QJsonDocument write_json_doucment;
@@ -108,7 +111,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
       usr_info_json_obj.insert("ipAddr", ip_addr);
       usr_info_json_obj.insert("usrKey", usr_key);
       usr_info_json_obj.insert("usrName", usr_name);
-
+      usr_info_json_obj.insert("avatarPath", avatar_path);
 
       QJsonObject usr_list_json_obj;
       usr_list_json_obj.insert(usr_key, usr_info_json_obj);
@@ -303,9 +306,12 @@ void DataManager::loadUsrProfile()
               temp_usr_profile_json_obj = usr_list_json_obj[temp_usr_key_str].toObject();
               ///usrKey<<usrName<<ipAddr
               qDebug()<<usr_key_str_list[i]<<endl;
+              qDebug()<<temp_usr_profile_json_obj["avatarPath"].toString()<<endl;
               usr_info_str_list << temp_usr_profile_json_obj["usrKey"].toString()
                   << temp_usr_profile_json_obj["usrName"].toString()
-                  << temp_usr_profile_json_obj["ipAddr"].toString();
+                  << temp_usr_profile_json_obj["ipAddr"].toString()
+                  << temp_usr_profile_json_obj["avatarPath"].toString();
+
 
               emit usrProfileLoaded(usr_info_str_list);
               usr_info_str_list.clear();

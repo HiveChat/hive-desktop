@@ -6,7 +6,8 @@ GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWid
 {
   usr_info_str_list = usrInfoStrList;
   ///usrKey<<usrName<<ipAddr
-  avatar = new GuiAvatarButton(":/avatar/avatar/worm.png", 80, 0, this);
+  qDebug()<<"ava"<<usrInfoStrList[3]<<endl;
+  avatar = new GuiAvatarButton(usrInfoStrList[3], 80, 0, this);
   usr_name_label = new QLabel(usrInfoStrList[1]);
   ip_addr_label = new QLabel(usrInfoStrList[2]);
   status_label = new QLabel("·");
