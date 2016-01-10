@@ -23,7 +23,7 @@ void DataManager::TEST_SECTION()
   usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim"<<":/avatar/avatar/ladybug.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/bee.png";
+  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/bee.png";///r
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
@@ -35,7 +35,7 @@ void DataManager::TEST_SECTION()
   usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";
+  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";///r
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin"<<":/avatar/avatar/worm.png";
@@ -90,6 +90,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
               usr_info_json_obj.insert("ipAddr", ip_addr);
               usr_info_json_obj.insert("usrKey", usr_key);
               usr_info_json_obj.insert("usrName", usr_name);
+              usr_info_json_obj.insert("avatarPath", avatar_path);
 
 
 

@@ -1,8 +1,7 @@
 #include "GuiAvatarButton.h"
 #include <QDebug>
-GuiAvatarButton::GuiAvatarButton(QString pa7th, const int Diameter, int borderWidth, QWidget *parent)
+GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, int borderWidth, QWidget *parent)
 {
-  qDebug()<<"final ava"<<pa7th;
 
   diameter = Diameter;
   border_width = borderWidth;
@@ -15,7 +14,8 @@ GuiAvatarButton::GuiAvatarButton(QString pa7th, const int Diameter, int borderWi
   painter.setBrush(QColor(0, 0, 0));
   painter.drawRoundedRect(0, 0, Diameter, Diameter, 99, 99);
 
-  QPixmap avatar_pixmap(pa7th);
+
+  QPixmap avatar_pixmap(path);
   avatar_pixmap = avatar_pixmap.scaled(Diameter,Diameter,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
 
   avatar_pixmap.setDevicePixelRatio(2.0);
