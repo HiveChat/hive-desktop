@@ -23,7 +23,7 @@ class GuiChatStack_top_bar : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_top_bar(QWidget *parent = 0);
+  explicit GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent = 0);
   ~GuiChatStack_top_bar();
 
 private:

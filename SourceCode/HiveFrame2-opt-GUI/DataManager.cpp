@@ -306,8 +306,7 @@ void DataManager::loadUsrProfile()
               QString temp_usr_key_str = usr_key_str_list[i];
               temp_usr_profile_json_obj = usr_list_json_obj[temp_usr_key_str].toObject();
               ///usrKey<<usrName<<ipAddr
-              qDebug()<<usr_key_str_list[i]<<endl;
-              qDebug()<<temp_usr_profile_json_obj["avatarPath"].toString()<<endl;
+              qDebug()<<usr_key_str_list[i];
               usr_info_str_list << temp_usr_profile_json_obj["usrKey"].toString()
                   << temp_usr_profile_json_obj["usrName"].toString()
                   << temp_usr_profile_json_obj["ipAddr"].toString()

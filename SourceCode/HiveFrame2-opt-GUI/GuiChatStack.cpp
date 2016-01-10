@@ -5,8 +5,9 @@
 
 //////////////////////////top//////////////////////////////////////
 
-GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
+GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
+  ///usrKey<<usrName<<ipAddr<<avatarPathr
   setAutoFillBackground(true);
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, QColor(255,255,255,0));//(255,181,0));
@@ -19,13 +20,13 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QWidget *parent) : QWidget(parent)
 ///from baidu
 */
 
-  avatar_label = new GuiAvatarButton(":/img/img/icon.png", 90, 90, this);
+  avatar_label = new GuiAvatarButton(usrInfoStrList[3], 90, 90, this);
   avatar_label->setFixedHeight(50);
   avatar_label->setAlignment(Qt::AlignLeft);
 
   //
-  QLabel *usr_name_label = new QLabel("@Echo Zheng");
-  QLabel *usr_ip_label = new QLabel("192.168.1.1");
+  QLabel *usr_name_label = new QLabel(usrInfoStrList[1]);
+  QLabel *usr_ip_label = new QLabel(usrInfoStrList[2]);
 
   QFont usr_name_font("Verdana");
   usr_name_font.setPixelSize(15);
@@ -208,7 +209,7 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
 {
   usr_info_str_list = usrInfoStrList;
 
-  top_bar = new GuiChatStack_top_bar(this);
+  top_bar = new GuiChatStack_top_bar(usr_info_str_list, this);
 
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);

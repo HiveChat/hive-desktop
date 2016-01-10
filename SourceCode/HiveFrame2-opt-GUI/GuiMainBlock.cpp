@@ -22,6 +22,8 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
+
+  //connect(gui_chat_stack, SIGNAL(chosen(QWidget*)), this, SLOT(setCurrentStack(QWidget*)));
 }
 
 GuiMainBlock::~GuiMainBlock()
@@ -32,6 +34,7 @@ GuiMainBlock::~GuiMainBlock()
 void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
 {
   gui_chat_stack = new GuiChatStack(usrInfoStrList, this);
+  main_stacked_widget->addWidget(gui_chat_stack);
 }
 
 void GuiMainBlock::setCurrentStack(QWidget *widget)
