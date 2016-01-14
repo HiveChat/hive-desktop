@@ -23,13 +23,13 @@ void DataManager::TEST_SECTION()
   usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim"<<":/avatar/avatar/ladybug.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/bee.png";///r
+  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/fat.png";///r
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/ladybug.png";
+  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/disk.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";

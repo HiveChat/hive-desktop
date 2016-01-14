@@ -30,5 +30,7 @@
         <file>avatar/ladybug.png</file>
         <file>avatar/sunflower.png</file>
         <file>avatar/worm.png</file>
+        <file>avatar/disk.png</file>
+        <file>avatar/fat.png</file>
     </qresource>
 </RCC>
