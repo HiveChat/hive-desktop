@@ -36,8 +36,6 @@ private:
 
   QStringList my_profile_str_list;
 
-public slots:
-  //void addComb(QString usrKey);
 
 
 };

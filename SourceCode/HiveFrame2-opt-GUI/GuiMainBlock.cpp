@@ -31,10 +31,17 @@ GuiMainBlock::~GuiMainBlock()
 
 }
 
+void GuiMainBlock::displayChatStack(QString usrKey)
+{
+  emit whoIs(usrKey);
+}
+
 void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
 {
   gui_chat_stack = new GuiChatStack(usrInfoStrList, this);
   main_stacked_widget->addWidget(gui_chat_stack);
+  connect(this, SIGNAL(whoIs(QString)), gui_chat_stack, SLOT(checkIdentity(QString)));
+  connect(gui_chat_stack, SIGNAL(chosen(QWidget*)), this, SLOT(setCurrentStack(QWidget*)));
 }
 
 void GuiMainBlock::setCurrentStack(QWidget *widget)

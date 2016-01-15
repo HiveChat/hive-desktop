@@ -50,6 +50,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   main_layout->addLayout(usr_info_layout);
 
 
+
 }
 
 GuiChatStack_top_bar::~GuiChatStack_top_bar()
@@ -243,9 +244,9 @@ GuiChatStack::~GuiChatStack()
 ///slots
 
 
-void GuiChatStack::checkIdentity(QStringList identity)
+void GuiChatStack::checkIdentity(QString usrKey)
 {
-  if(identity == usr_info_str_list)
+  if(usrKey == usr_info_str_list[0])
     {
       emit chosen(this);
     }

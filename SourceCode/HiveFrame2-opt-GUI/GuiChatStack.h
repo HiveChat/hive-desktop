@@ -102,7 +102,7 @@ private:
   QStringList usr_info_str_list;
 
 public slots:
-  void checkIdentity(QStringList identity);
+  void checkIdentity(QString usrKey);
 
 signals:
   void chosen(QWidget *);

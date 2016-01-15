@@ -28,6 +28,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   //connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), data_manager, SLOT(readMessage(QString)));
   //connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block->gui_chat_stack, SLOT(checkIdentity(QStringList)));
+  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block, SLOT(displayChatStack(QString)));
 
 
   data_manager->loadUsrProfile();
@@ -51,18 +52,7 @@ GuiCentralWidget::~GuiCentralWidget()
 }
 
 
-//void GuiCentralWidget::addComb(QString usrKey)
-//{
-//  gui_main_block->gui_chat_stack = new GuiChatStack(usrKey, this);
-//  gui_main_block->main_stacked_widget->addWidget(gui_main_block->gui_chat_stack);
 
-
-//  gui_tab_block->gui_chat_tab->comb_scroll_widget->gui_comb_widget = new GuiCombWidget(usrInfoStrList, this);
-//  gui_tab_block->gui_chat_tab->comb_scroll_widget->main_layout->addWidget(gui_tab_block->gui_chat_tab->comb_scroll_widget->gui_comb_widget);
-
-//  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget->gui_comb_widget, SIGNAL(clicked(QString)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(onCombWidgetClicked(QString)));
-
-//}
 
 
 
