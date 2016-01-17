@@ -59,10 +59,10 @@ void MainWindow::paintEvent(QPaintEvent*)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-  if(event->button() == Qt::LeftButton)
+  if(event->button() == Qt::LeftButton && event->pos().y() <= 40)
     {
       mouse_pressed = true;
-      //鼠标相对于窗体的位置（或者使用event->globalPos() - this->pos()）
+      //mouse position to the main window the same as: event->globalPos() - this->pos()
       move_point = event->pos();
     }
 }
@@ -70,7 +70,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
   if(mouse_pressed)
     {
-      //鼠标相对于屏幕的位置
       QPoint move_pos = event->globalPos();
       this->move(move_pos - move_point);
     }

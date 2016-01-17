@@ -10,12 +10,10 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 //  this->setAutoFillBackground(true);
 //  this->setPalette(palette);
 
-  //gui_chat_stack = new GuiChatStack(this);
   gui_welcome_stack = new GuiWelcomeStack(this);
 
   main_stacked_widget = new QStackedWidget(this);
   main_stacked_widget->addWidget(gui_welcome_stack);
-  //main_stacked_widget->addWidget(gui_chat_stack);
   main_stacked_widget->setCurrentWidget(gui_welcome_stack);
 
   main_layout = new QVBoxLayout(this);
@@ -23,7 +21,7 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
 
-  //connect(gui_chat_stack, SIGNAL(chosen(QWidget*)), this, SLOT(setCurrentStack(QWidget*)));
+
 }
 
 GuiMainBlock::~GuiMainBlock()

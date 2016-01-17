@@ -9,7 +9,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   /*QFrame *line = new QFrame(this);
   line->setFrameShape(QFrame::VLine);
   line->setFrameShadow(QFrame::Plain);
-  line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");*/
+  line->setStyleSheet("QFrame{  background: #ffb500; border: 0px transparent;  }");*/
 
   ////main_layout
   main_layout = new QHBoxLayout(this);
