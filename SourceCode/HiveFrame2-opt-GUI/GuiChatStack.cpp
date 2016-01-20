@@ -122,6 +122,14 @@ void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList)
 GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
 {
 
+  text_editor = new QTextEdit(this);
+  text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  text_editor->setFrameStyle(QFrame::NoFrame);
+
+  QFont text_font("Gill Sans", 34);
+  text_font.setPixelSize(16);
+  text_editor->setFont(text_font);
+
   ///tools
   expression_label = new GuiLabelButton(this);
   image_label = new GuiLabelButton(this);
@@ -129,12 +137,15 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 
   expression_label->setDefaultPixmap(":/img/img/expression_label_0.png");
   expression_label->setHoveredPixmap(":/img/img/expression_label_1.png");
+  //expression_label->setAlignment(Qt::AlignLeft);
 
   image_label->setDefaultPixmap(":/img/img/image_label_0.png");
   image_label->setHoveredPixmap(":/img/img/image_label_1.png");
+  //image_label->setAlignment(Qt::AlignLeft);
 
   file_label->setDefaultPixmap(":/img/img/file_label_0.png");
   file_label->setHoveredPixmap(":/img/img/file_label_1.png");
+  //file_label->setAlignment(Qt::AlignLeft);
 
   tool_layout = new QHBoxLayout();
   tool_layout->setAlignment(Qt::AlignLeft);
@@ -143,16 +154,6 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   tool_layout->addWidget(expression_label);
   tool_layout->addWidget(image_label);
   tool_layout->addWidget(file_label);
-
-  ///text editor
-  text_editor = new QTextEdit(this);
-
-  text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  text_editor->setFrameStyle(QFrame::NoFrame);
-
-  QFont text_font("Gill Sans", 34);
-  text_font.setPixelSize(16);
-  text_editor->setFont(text_font);
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);

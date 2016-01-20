@@ -59,6 +59,7 @@ void MainWindow::paintEvent(QPaintEvent*)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+  ///drag area!
   if(event->button() == Qt::LeftButton && event->pos().y() <= 40)
     {
       mouse_pressed = true;
