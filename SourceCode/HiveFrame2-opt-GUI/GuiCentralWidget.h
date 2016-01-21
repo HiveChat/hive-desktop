@@ -9,6 +9,7 @@
 
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QStackedLayout>
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QStackedWidget>

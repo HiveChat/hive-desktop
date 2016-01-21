@@ -1,10 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <GuiCentralWidget.h>
+#include "GuiCentralWidget.h"
+
 #include <QMainWindow>
 #include <QApplication>
 #include <QPainter>
+
 
 class MainWindow : public QMainWindow
 {
@@ -33,6 +35,7 @@ protected:
   void mouseMoveEvent(QMouseEvent *event);
 
 private:
+
   bool maximized = false;
   GuiCentralWidget *gui_central_widget;
 

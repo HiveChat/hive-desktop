@@ -9,8 +9,8 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
   this->setPalette(palette);
 
   icon_label = new GuiLabelButton(this);
-  icon_label->setHoveredPixmap("/Users/Echo/Desktop/add_1_0.png");
-  icon_label->setDefaultPixmap("/Users/Echo/Desktop/add_1_1.png");
+  icon_label->setHoveredPixmap("/Users/Echo/Desktop/add.png");
+  icon_label->setDefaultPixmap("/Users/Echo/Desktop/add.png");
   icon_label->setAlignment(Qt::AlignBottom);
 
   bottom_layout = new QHBoxLayout();
@@ -20,7 +20,7 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignRight);
-  main_layout->setContentsMargins(50,50,60,50);
+  main_layout->setContentsMargins(0,0,0,0);
   main_layout->addLayout(bottom_layout);
 
 

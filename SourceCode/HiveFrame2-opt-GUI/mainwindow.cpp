@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent)
   connect(gui_central_widget->gui_tab_block->min_hint, SIGNAL(clicked()), this, SLOT(showMinimized()));
   connect(gui_central_widget->gui_tab_block->max_hint, SIGNAL(clicked()), this, SLOT(setWindowMaximized()));
 
+
+
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);

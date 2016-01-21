@@ -1,7 +1,17 @@
 #include "mainwindow.h"
 #include <QApplication>
 #include <QPropertyAnimation>
+#include <QSharedMemory>
 
+bool checkSingleInstance(const char* program)
+{
+    static QSharedMemory shm(program);
+    if(!shm.create(100))
+    {
+        return false;
+    }
+    return true;
+}
 
 int load_my_style()
 {
@@ -18,6 +28,13 @@ int load_my_style()
 int main(int argc, char *argv[])
 {
 
+  ///Check single instance.
+  if(!checkSingleInstance("topo-client.lock"))
+    {
+      return 1;
+    }
+
+  ///Construction
   QApplication a(argc, argv);
 
   load_my_style();
