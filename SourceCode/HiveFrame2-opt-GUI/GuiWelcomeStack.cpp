@@ -2,26 +2,47 @@
 
 GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 {
-  QPalette palette;
-  //255,204,0,255
-  palette.setColor(QPalette::Window, QColor(255,255,255,0));
-  this->setAutoFillBackground(true);
-  this->setPalette(palette);
 
-  icon_label = new GuiLabelButton(this);
-  icon_label->setHoveredPixmap("/Users/Echo/Desktop/add.png");
-  icon_label->setDefaultPixmap("/Users/Echo/Desktop/add.png");
-  icon_label->setAlignment(Qt::AlignBottom);
+  profile_widget = new QWidget(this);
 
-  bottom_layout = new QHBoxLayout();
-  bottom_layout->setStretch(0,0);
-  bottom_layout->setAlignment(Qt::AlignBottom);
-  bottom_layout->addWidget(icon_label);
+  my_avatar = new GuiAvatarButton("/Users/Echo/Desktop/AVATAR2.png",175,this);
 
-  main_layout = new QVBoxLayout(this);
-  main_layout->setAlignment(Qt::AlignRight);
-  main_layout->setContentsMargins(0,0,0,0);
-  main_layout->addLayout(bottom_layout);
+  usr_name_label = new QLabel("User Name", this);
+  welcome_label = new QLabel("Good Morning", this);
+  ip_label = new QLabel("IP Address", this);
+  host_name_label = new QLabel("Host Name", this);
+
+  profile_layout = new QVBoxLayout(profile_widget);
+  profile_layout->setAlignment(Qt::AlignCenter);
+  profile_layout->addWidget(my_avatar);
+  profile_layout->addWidget(usr_name_label);
+  profile_layout->addWidget(welcome_label);
+  profile_layout->addWidget(ip_label);
+  profile_layout->addWidget(host_name_label);
+
+
+
+
+
+
+
+  background_label = new GuiLabelButton(this);
+  background_label->setHoveredPixmap("/Users/Echo/Desktop/add1.png");
+  background_label->setDefaultPixmap("/Users/Echo/Desktop/add0.png");
+  background_label->setAlignment(Qt::AlignRight|Qt::AlignBottom);
+
+//  bottom_layout = new QHBoxLayout(this);
+//  bottom_layout->setContentsMargins(0,0,0,0);
+//  bottom_layout->setAlignment(Qt::AlignBottom);
+//  bottom_layout->addWidget(background_label);
+
+  QStackedLayout *dd = new QStackedLayout(this);
+  dd->setAlignment(Qt::AlignCenter);
+  dd->setStackingMode(QStackedLayout::StackAll);
+  dd->addWidget(background_label);
+  dd->addWidget(profile_widget);
+
+
 
 
 }

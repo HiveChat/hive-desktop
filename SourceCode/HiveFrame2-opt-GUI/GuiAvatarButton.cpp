@@ -1,11 +1,7 @@
 #include "GuiAvatarButton.h"
 #include <QDebug>
-GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, int borderWidth, QWidget *parent)
+GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, QWidget *parent)
 {
-
-  diameter = Diameter;
-  border_width = borderWidth;
-
   QBitmap mask(QSize(Diameter,Diameter));
   QPainter painter(&mask);
   painter.setRenderHint(QPainter::Antialiasing);

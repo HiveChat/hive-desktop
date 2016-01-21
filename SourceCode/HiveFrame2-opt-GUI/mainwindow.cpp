@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Window, QColor(245,245,245));
+  palette.setColor(QPalette::Window, QColor(250,250,250));
   this->setPalette(palette);
 
   gui_central_widget = new GuiCentralWidget(this);
@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
   this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);
   this->setAttribute(Qt::WA_TranslucentBackground);
+  this->setStyleSheet("border-radius:50px;");
   this->setWindowFlags(Qt::FramelessWindowHint);
   this->setWindowState(Qt::WindowNoState);
   //this->setWindowFlags(Qt::CustomizeWindowHint);
