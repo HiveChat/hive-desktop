@@ -67,10 +67,10 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   palette.setColor(QPalette::Window, QColor(245,245,245));
   this->setPalette(palette);
 
-  main_layout = new QVBoxLayout();
-  main_layout->setAlignment(Qt::AlignTop);
-  main_layout->addStretch();
-  main_layout->setContentsMargins(5,30,5,30);
+  chat_bubble_layout = new QVBoxLayout();
+  chat_bubble_layout->setAlignment(Qt::AlignTop);
+  chat_bubble_layout->addStretch();
+  chat_bubble_layout->setContentsMargins(5,30,5,30);
 
   ///lines
   QFrame *bottom_line = new QFrame(this);
@@ -83,14 +83,14 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   top_line->setFrameShadow(QFrame::Plain);
   top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
-  QVBoxLayout *main_layout1 = new QVBoxLayout(this);
-  main_layout1->setAlignment(Qt::AlignTop);
+  main_layout = new QVBoxLayout(this);
+  main_layout->setAlignment(Qt::AlignTop);
   //main_layout1->addStretch();
-  main_layout1->setSpacing(5);
-  main_layout1->setContentsMargins(0,0,0,0);
-  main_layout1->addWidget(top_line);
-  main_layout1->addLayout(main_layout);
-  main_layout1->addWidget(bottom_line);
+  main_layout->setSpacing(5);
+  main_layout->setContentsMargins(0,0,0,0);
+  main_layout->addWidget(top_line);
+  main_layout->addLayout(chat_bubble_layout);
+  main_layout->addWidget(bottom_line);
 
 
 }
@@ -114,7 +114,7 @@ void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList)
       gui_chat_bubble = new GuiChatBubble(messageStrList[1], true, this);
     }
 
-  main_layout->addWidget(gui_chat_bubble);
+  chat_bubble_layout->addWidget(gui_chat_bubble);
 }
 
 //////////////////////////bottom//////////////////////////////////////

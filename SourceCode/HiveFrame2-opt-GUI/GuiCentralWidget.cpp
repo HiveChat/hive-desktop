@@ -48,6 +48,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
 GuiCentralWidget::~GuiCentralWidget()
 {
+  qDebug()<<"\n@Hive is destructed";
 
 }
 

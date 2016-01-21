@@ -62,7 +62,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
 
 
 
-  ///usrKey<<usrName<<ipAddr
+  ///usrKey<<usrName<<ipAddr<<avatarPath
   QFile file(usr_list_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -78,12 +78,12 @@ void DataManager::addUsr(QStringList usrInfoStrList)
 
   ///JSon
   QJsonParseError json_error;
-  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
   if(json_error.error == QJsonParseError::NoError)
     {
-      if(read_json_doucment.isObject())
+      if(read_json_document.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          QJsonObject usr_list_json_obj = read_json_document.object();
           if(!usr_list_json_obj.contains(usr_key))
             {
               QJsonObject usr_info_json_obj;
@@ -96,11 +96,11 @@ void DataManager::addUsr(QStringList usrInfoStrList)
 
               usr_list_json_obj.insert(usr_key, usr_info_json_obj);
 
-              QJsonDocument write_json_doucment;
-              write_json_doucment.setObject(usr_list_json_obj);
+              QJsonDocument write_json_document;
+              write_json_document.setObject(usr_list_json_obj);
 
               file.resize(0);
-              out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
+              out<<write_json_document.toJson(QJsonDocument::Compact)<<endl;
             }
         }
     }
@@ -117,12 +117,12 @@ void DataManager::addUsr(QStringList usrInfoStrList)
       QJsonObject usr_list_json_obj;
       usr_list_json_obj.insert(usr_key, usr_info_json_obj);
 
-      QJsonDocument write_json_doucment;
-      write_json_doucment.setObject(usr_list_json_obj);
+      QJsonDocument write_json_document;
+      write_json_document.setObject(usr_list_json_obj);
 
       file.resize(0); //clear all
-      out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
-      qDebug()<<write_json_doucment.toJson(QJsonDocument::Compact);
+      out<<write_json_document.toJson(QJsonDocument::Compact)<<endl;
+      qDebug()<<write_json_document.toJson(QJsonDocument::Compact);
     }
 
 
@@ -146,19 +146,19 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
 
   ///JSon
   QJsonParseError json_error;
-  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
   if(json_error.error == QJsonParseError::NoError)
     {
-      if(read_json_doucment.isObject())
+      if(read_json_document.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          QJsonObject usr_list_json_obj = read_json_document.object();
           usr_list_json_obj.erase(usr_list_json_obj.find(usrInfoStrList.at(0)));
 
-          QJsonDocument write_json_doucment;
-          write_json_doucment.setObject(usr_list_json_obj);
+          QJsonDocument write_json_document;
+          write_json_document.setObject(usr_list_json_obj);
           file.resize(0);
-          out<<write_json_doucment.toJson(QJsonDocument::Compact)<<endl;
-          qDebug()<<write_json_doucment.toJson(QJsonDocument::Compact);
+          out<<write_json_document.toJson(QJsonDocument::Compact)<<endl;
+          qDebug()<<write_json_document.toJson(QJsonDocument::Compact);
 
         }
     }
@@ -170,6 +170,11 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
 
   file.close();
   file.flush();
+}
+
+bool DataManager::writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj)
+{
+
 }
 
 
@@ -216,8 +221,8 @@ QJsonDocument DataManager::defaultProfile()
   my_profile_json_obj.insert("avatarPath", ":/img/img/icon.png");
   ////these default data will be integrated in a class
 
-  QJsonDocument write_json_doucment;
-  write_json_doucment.setObject(my_profile_json_obj);
+  QJsonDocument write_json_document;
+  write_json_document.setObject(my_profile_json_obj);
 }
 
 void DataManager::makeUsrKey()
@@ -247,12 +252,12 @@ void DataManager::loadMyProfile()
   QByteArray in_byte_array = in.readAll().toUtf8();
 
   QJsonParseError json_error;
-  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
   if(json_error.error == QJsonParseError::NoError)
     {
-      if(read_json_doucment.isObject())
+      if(read_json_document.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          QJsonObject usr_list_json_obj = read_json_document.object();
 
           GlobalData::g_myKeyStr = usr_list_json_obj["usrKey"].toString();
           GlobalData::g_myNameStr = usr_list_json_obj["usrName"].toString();
@@ -291,12 +296,12 @@ void DataManager::loadUsrProfile()
 
   ///JSon
   QJsonParseError json_error;
-  QJsonDocument read_json_doucment = QJsonDocument::fromJson(in_byte_array, &json_error);
+  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
   if(json_error.error == QJsonParseError::NoError)
     {
-      if(read_json_doucment.isObject())
+      if(read_json_document.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_doucment.object();
+          QJsonObject usr_list_json_obj = read_json_document.object();
           //get usr_key as a string list
           usr_key_str_list = usr_list_json_obj.keys();
           for(int i = 0; i < usr_key_str_list.count(); i++)

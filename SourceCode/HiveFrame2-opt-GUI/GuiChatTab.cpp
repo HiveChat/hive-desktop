@@ -92,7 +92,7 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
 
 void GuiChatTab_comb_scroll_widget::addComb(QStringList usrInfoStrList)
 {
-  qDebug()<<"hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";
+  qDebug()<<"Comb Added";
   gui_comb_widget = new GuiCombWidget(usrInfoStrList, this);
   main_layout->addWidget(gui_comb_widget);
 

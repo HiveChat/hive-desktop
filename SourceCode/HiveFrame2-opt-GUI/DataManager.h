@@ -35,6 +35,8 @@ public:
   void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);
 
+  static bool writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj);
+
   //void addChatHistory();
   void TEST_SECTION();
 

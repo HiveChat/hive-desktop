@@ -43,8 +43,8 @@ public:
   ~GuiChatStack_chat_widget();
 
 private:
-
   QVBoxLayout *main_layout;
+  QVBoxLayout *chat_bubble_layout;
   GuiChatBubble *gui_chat_bubble;
 
 public slots:
