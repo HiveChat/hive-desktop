@@ -28,11 +28,11 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   QLabel *usr_name_label = new QLabel(usrInfoStrList[1]);
   QLabel *usr_ip_label = new QLabel(usrInfoStrList[2]);
 
-  QFont usr_name_font("Verdana");
+  QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPixelSize(15);
   usr_name_label->setFont(usr_name_font);
 
-  QFont usr_ip_font("Gill Sans");
+  QFont usr_ip_font("Futura");//Gill Sans
   usr_ip_font.setPixelSize(11);
   usr_ip_label->setFont(usr_ip_font);
 

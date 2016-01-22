@@ -51,4 +51,5 @@ HEADERS  += mainwindow.h \
 
 RESOURCES += \
     qss.qrc \
-    img.qrc
+    img.qrc \
+    font.qrc

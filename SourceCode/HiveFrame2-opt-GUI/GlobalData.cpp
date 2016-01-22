@@ -4,6 +4,7 @@
 QString GlobalData::g_myKeyStr;
 QString GlobalData::g_myNameStr;
 QString GlobalData::g_avatarPathStr;
+QFont GlobalData::g_font;
 
 ///net
 QString GlobalData::g_localHostIP;

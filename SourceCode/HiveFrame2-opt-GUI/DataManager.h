@@ -14,6 +14,7 @@
 #include <QDir>
 #include <QTextStream>
 #include <QStandardPaths>
+#include <QFontDatabase>
 
 #include <QTime>
 
@@ -31,6 +32,7 @@ public:
   void checkData();
   void loadMyProfile();
   void loadUsrProfile();
+  void loadFonts();
 
   void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);

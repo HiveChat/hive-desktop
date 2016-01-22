@@ -13,12 +13,12 @@ GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWid
 
   QPalette usr_name_palette;
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
-  QFont usr_name_font("Verdana");
+  QFont usr_name_font("futura");//verdana
   usr_name_font.setPixelSize(15);
   usr_name_label->setPalette(usr_name_palette);
   usr_name_label->setFont(usr_name_font);
 
-  QFont ip_addr_font("Gill Sans");
+  QFont ip_addr_font("futura");//Gill Sans
   ip_addr_font.setPixelSize(11);
   ip_addr_label->setFont(ip_addr_font);
 

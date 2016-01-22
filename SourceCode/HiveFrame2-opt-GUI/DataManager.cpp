@@ -4,6 +4,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 {
   checkData();
   loadMyProfile();
+  loadFonts();
 
   TEST_SECTION();
 
@@ -332,6 +333,14 @@ void DataManager::loadUsrProfile()
       qDebug()<<"Contact parse failed, is file empty?******";
       return;
     }
+
+}
+
+void DataManager::loadFonts()
+{
+  int fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
+  QString msyh = QFontDatabase::applicationFontFamilies ( fontId ).at(0);
+  GlobalData::g_font = QFont(msyh,10);
 
 }
 
