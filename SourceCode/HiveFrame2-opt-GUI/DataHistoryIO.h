@@ -3,10 +3,6 @@
 
 #include "DataManager.h"
 
-#include <QObject>
-
-
-
 
 class DataHistoryIO : public QObject
 {
@@ -18,8 +14,6 @@ public:
 
 private:
   QString usr_key;
-
-  bool checkDir(QString dir);
 };
 
 #endif // DATAHISTORYIO_H

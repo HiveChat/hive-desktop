@@ -4,6 +4,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 {
   usr_key = usrKey;
 
+  DataManager::checkData();
 
 
   this->setParent(parent);
