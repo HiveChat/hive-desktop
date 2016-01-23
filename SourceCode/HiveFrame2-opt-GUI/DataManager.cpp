@@ -405,18 +405,6 @@ void decode(QString filename)
 
 
 //////slots
-void DataManager::readMessage(QString usrKey)
-{
-
-  qDebug()<<usrKey;
-
-
-}
-
-void DataManager::saveMessage(QStringList messageStrList)
-{
-
-}
 
 
 

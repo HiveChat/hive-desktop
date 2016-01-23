@@ -37,13 +37,14 @@ public:
   void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);
 
-  static bool writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj);
+  static bool writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj);//what happened?
+  static bool checkDir(QString dir);
 
   //void addChatHistory();
   void TEST_SECTION();
 
 private:
-  bool checkDir(QString dir);
+
   QJsonDocument defaultProfile();
   void makeUsrKey();
 
@@ -67,9 +68,6 @@ signals:
   void messageLoaded(QStringList messageStrList);
 
 
-public slots:
-  void readMessage(QString usrKey);
-  void saveMessage(QStringList messageStrList);
 
 };
 
