@@ -1,6 +1,5 @@
 #include "GuiChatStack.h"
 
-
 //////////////////////////top//////////////////////////////////////
 GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
@@ -82,7 +81,6 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
 
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
-  //main_layout1->addStretch();
   main_layout->setSpacing(5);
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->addWidget(top_line);
@@ -215,6 +213,7 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
   chat_scroll_area = new QScrollArea(this);
   chat_scroll_area->setWidgetResizable(true);
   chat_scroll_area->setWidget(chat_widget);
+  //chat_scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   QPalette palette = chat_scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   chat_scroll_area->setPalette(palette);
@@ -248,6 +247,14 @@ void GuiChatStack::checkIdentity(QString usrKey)
   if(usrKey == usr_info_str_list[0])
     {
       emit chosen(this);
+    }
+}
+
+void GuiChatStack::checkMessage(QStringList message_str_list)
+{
+  if(message_str_list[0] == usr_info_str_list[0])
+    {
+      chat_widget->addChatBubble(message_str_list);
     }
 }
 

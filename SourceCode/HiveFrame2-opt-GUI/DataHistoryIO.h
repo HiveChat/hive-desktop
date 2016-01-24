@@ -12,6 +12,12 @@ public:
   explicit DataHistoryIO(QString usrKey, QObject *parent = 0);
   ~DataHistoryIO();
 
+  void readMessage(int index);
+
+public slots:
+  void wirteMessage(QString message, bool fromMe);
+
+
 private:
 
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
@@ -19,6 +25,8 @@ private:
 
   QString history_path;
   QString usr_key;
+
+  int currentIndex;
 
 
 

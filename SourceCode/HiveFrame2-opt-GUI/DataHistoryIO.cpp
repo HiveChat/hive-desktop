@@ -50,6 +50,17 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
 DataHistoryIO::~DataHistoryIO()
 {
+
+}
+
+void DataHistoryIO::readMessage(int index)
+{
+
+}
+
+void DataHistoryIO::wirteMessage(QString message, bool fromMe)
+{
+
 }
 
 void DataHistoryIO::makeHistoryFile(int num)
@@ -66,7 +77,7 @@ void DataHistoryIO::makeHistoryFile(int num)
 
   QJsonObject history_info_json_obj;
   history_info_json_obj.insert("full", false);
-  history_info_json_obj.insert("date", GlobalData::g_currentTime());
+  history_info_json_obj.insert("num", num);
 
   QJsonDocument history_info_json_doc;
   history_info_json_doc.setObject(history_info_json_obj);
