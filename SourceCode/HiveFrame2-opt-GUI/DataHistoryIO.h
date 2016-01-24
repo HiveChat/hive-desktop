@@ -13,7 +13,18 @@ public:
   ~DataHistoryIO();
 
 private:
+
+  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+  const QString usr_path = app_data_local_path + "/usr/";
+
+  QString history_path;
   QString usr_key;
+
+
+
+  void makeHistoryFile(int num);
+
+
 };
 
 #endif // DATAHISTORYIO_H

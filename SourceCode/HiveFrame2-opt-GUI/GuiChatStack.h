@@ -1,6 +1,7 @@
 #ifndef GUICHATSTACK_H
 #define GUICHATSTACK_H
 
+#include "DataHistoryIO.h"
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
 #include "GuiChatBubble.h"
@@ -96,6 +97,8 @@ public:
   GuiChatStack_message_editor *message_editor;
 
 private:
+  DataHistoryIO *data_history_io;
+
   QVBoxLayout *main_layout;
   QScrollArea *chat_scroll_area;
 

@@ -13,42 +13,40 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 void DataManager::TEST_SECTION()
 {
-
-
   ///////////JOSN DATA
   QStringList usrInfoStrList;
   ////this cannot be MAC address Keep in mind!
-  usrInfoStrList<<"90:00:4E:9A:A4:FD"<<"192.168.1.1"<<"Bob"<<":/avatar/avatar/bee.png";
+  usrInfoStrList<<"90-00-4E-9A-A4-FD"<<"192.168.1.1"<<"Bob"<<":/avatar/avatar/bee.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"44:00:9E:9A:A4:FD"<<"192.168.1.2"<<"Tim"<<":/avatar/avatar/ladybug.png";
+  usrInfoStrList<<"44-00-9E-9A-A4-FD"<<"192.168.1.2"<<"Tim"<<":/avatar/avatar/ladybug.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/fat.png";///r
+  usrInfoStrList<<"20-00-9E-9A-A4-FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/fat.png";///r
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"0?:00:9E:9A:A4:FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
+  usrInfoStrList<<"0?-00-9E-9A-A4-FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"30:00:9E:9A:A4:FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/disk.png";
+  usrInfoStrList<<"30-00-9E-9A-A4-FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/disk.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"40:00:9E:9A:A4:FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";
+  usrInfoStrList<<"40-00-9E-9A-A4-FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"20:00:9E:9A:A4:FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";///r
+  usrInfoStrList<<"20-00-9E-9A-A4-FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";///r
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"11:00:9E:9A:A4:FD"<<"192.168.1.8"<<"Justin"<<":/avatar/avatar/worm.png";
+  usrInfoStrList<<"11-00-9E-9A-A4-FD"<<"192.168.1.8"<<"Justin"<<":/avatar/avatar/worm.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"45:00:9E:9A:A4:FD"<<"192.168.1.9"<<"Nemo"<<":/avatar/avatar/worm.png";
+  usrInfoStrList<<"45-00-9E-9A-A4-FD"<<"192.168.1.9"<<"Nemo"<<":/avatar/avatar/worm.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"87:00:9E:9A:A4:FD"<<"192.168.1.10"<<"Lynn"<<":/avatar/avatar/ladybug.png";
+  usrInfoStrList<<"87-00-9E-9A-A4-FD"<<"192.168.1.10"<<"Lynn"<<":/avatar/avatar/ladybug.png";
   addUsr(usrInfoStrList);
   usrInfoStrList.clear();
-  usrInfoStrList<<"90:00:9E:9A:A4:FD"<<"192.168.1.11"<<"Tim"<<":/avatar/avatar/sunflower.png";
+  usrInfoStrList<<"90-00-9E-9A-A4-FD"<<"192.168.1.11"<<"Tim"<<":/avatar/avatar/sunflower.png";
   deleteUsr(usrInfoStrList);
   ///////////!JSON DATA
 
@@ -210,7 +208,10 @@ bool DataManager::checkDir(QString directory)
   return true;
 }
 
-
+QString DataManager::appDataLocalPath()
+{
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+}
 
 QJsonDocument DataManager::defaultProfile()
 {
@@ -224,6 +225,8 @@ QJsonDocument DataManager::defaultProfile()
 
   QJsonDocument write_json_document;
   write_json_document.setObject(my_profile_json_obj);
+
+  return write_json_document;
 }
 
 void DataManager::makeUsrKey()
@@ -273,6 +276,7 @@ void DataManager::loadMyProfile()
   else
     {
       file.resize(0);
+      qDebug()<<defaultProfile().toJson(QJsonDocument::Compact);
       out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
     }
 

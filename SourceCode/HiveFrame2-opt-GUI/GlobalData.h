@@ -3,6 +3,7 @@
 #include <QStringList>
 #include <QDatetime>
 #include <QFont>
+#include <QStandardPaths>
 
 class GlobalData
 {
@@ -13,6 +14,7 @@ public:
   static QString g_avatarPathStr;
   static QFont g_font;
 
+
   //static QJsonObject
 
   ///net
@@ -20,11 +22,6 @@ public:
 
   ///other
   static QString g_currentTime();
-
-};
-
-struct a
-{
 
 };
 

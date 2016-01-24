@@ -1,10 +1,7 @@
 #include "GuiChatStack.h"
 
 
-
-
 //////////////////////////top//////////////////////////////////////
-
 GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
   ///usrKey<<usrName<<ipAddr<<avatarPathr
@@ -209,6 +206,8 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
 GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
   usr_info_str_list = usrInfoStrList;
+
+  data_history_io = new DataHistoryIO(usrInfoStrList[0], this);
 
   top_bar = new GuiChatStack_top_bar(usr_info_str_list, this);
 

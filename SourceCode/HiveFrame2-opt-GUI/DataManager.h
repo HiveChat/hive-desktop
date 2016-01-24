@@ -13,6 +13,7 @@
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
+#include <QFileInfo>
 #include <QStandardPaths>
 #include <QFontDatabase>
 
@@ -39,6 +40,8 @@ public:
 
   static bool writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj);//what happened?
   static bool checkDir(QString dir);
+
+  static QString appDataLocalPath();
 
   //void addChatHistory();
   void TEST_SECTION();

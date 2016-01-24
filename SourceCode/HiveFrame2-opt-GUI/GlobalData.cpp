@@ -6,12 +6,14 @@ QString GlobalData::g_myNameStr;
 QString GlobalData::g_avatarPathStr;
 QFont GlobalData::g_font;
 
+
+
 ///net
 QString GlobalData::g_localHostIP;
 
 QString GlobalData::g_currentTime()
 {
-  QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
+  return QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 }
 
 

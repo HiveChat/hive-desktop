@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
   ///Check single instance.
   if(!checkSingleInstance("topo-client.lock"))
     {
-      return 1;
+      //return 1;
     }
 
   ///Construction
