@@ -35,6 +35,7 @@ void GuiMainBlock::displayChatStack(QString usrKey)
 
 void GuiMainBlock::displayWelcomeStack()
 {
+  gui_welcome_stack->refreshTime();
   main_stacked_widget->setCurrentWidget(gui_welcome_stack);
 }
 

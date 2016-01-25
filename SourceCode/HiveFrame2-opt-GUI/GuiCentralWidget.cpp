@@ -4,7 +4,11 @@
 GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 {
 
+  ////data manager
+  data_manager = new DataManager(this);
 
+  ////net manager
+  net_manager = new NetManager(this);
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);
@@ -32,9 +36,9 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
 
 
-  ////data manager
-  data_manager = new DataManager(this);
 
+
+  ///data:
   connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(QStringList)));
   connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_main_block, SLOT(addChatStack(QStringList)));
 
@@ -43,8 +47,6 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
 
   ////net manager
-  net_manager = new NetManager(this);
-
   connect(net_manager, SIGNAL(messageRecieved(QStringList)), gui_main_block, SLOT(onMessageRecieved(QStringList)));
 
 

@@ -3,6 +3,7 @@
 
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
+#include "GlobalData.h"
 
 #include <QWidget>
 #include <QLabel>
@@ -10,6 +11,9 @@
 #include <QHBoxLayout>
 #include <QStackedLayout>
 #include <QPixmap>
+#include <QTime>
+
+#include <QDebug>
 
 class GuiWelcomeStack : public QWidget
 {
@@ -17,6 +21,8 @@ class GuiWelcomeStack : public QWidget
 
 public:
   explicit GuiWelcomeStack(QWidget *parent = 0);
+
+  void refreshTime();
 
 private:
   QHBoxLayout *bottom_layout;
