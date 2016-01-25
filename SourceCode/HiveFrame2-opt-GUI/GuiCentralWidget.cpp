@@ -61,13 +61,3 @@ GuiCentralWidget::~GuiCentralWidget()
   qDebug()<<"\n@Hive is destructed";
 
 }
-
-
-
-
-
-
-/*void GuiCentralWidget::initUsrData()
-{
-
-}*/

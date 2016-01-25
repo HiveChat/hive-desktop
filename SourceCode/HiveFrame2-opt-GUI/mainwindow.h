@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "GuiCentralWidget.h"
+#include "GlobalData.h"
 
 #include <QMainWindow>
 #include <QApplication>

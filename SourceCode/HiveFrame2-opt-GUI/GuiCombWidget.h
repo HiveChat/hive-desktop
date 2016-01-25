@@ -1,6 +1,8 @@
 #ifndef GUICOMBWIDGET_H
 #define GUICOMBWIDGET_H
 
+#include "GlobalData.h"
+
 #include <QWidget>
 #include <QLabel>
 #include <GuiLabelButton.h>
@@ -38,8 +40,8 @@ private:
   QHBoxLayout *main_layout;
 
   QPalette hover_palette;
-  QColor window_color = QColor(255,255,255);
-  QColor default_window_color = QColor(255,255,255);
+  QColor window_color = GlobalData::g_windowColor;
+  QColor default_window_color = GlobalData::g_windowColor;
   QColor hovered_window_color = QColor(255,232,166);
 
   bool selected = false;

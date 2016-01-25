@@ -13,6 +13,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp
+        widget.cpp \
+    GuiLabelButton.cpp
 
-HEADERS  += widget.h
+HEADERS  += widget.h \
+    GuiLabelButton.h
+
+RESOURCES += \
+    img.qrc

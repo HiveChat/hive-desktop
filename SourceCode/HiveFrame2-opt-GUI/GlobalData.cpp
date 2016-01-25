@@ -5,7 +5,7 @@ QString GlobalData::g_myKeyStr;
 QString GlobalData::g_myNameStr;
 QString GlobalData::g_avatarPathStr;
 QFont GlobalData::g_font;
-
+QColor GlobalData::g_windowColor = QColor(250,250,250);
 
 
 ///net

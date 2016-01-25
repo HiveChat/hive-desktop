@@ -213,7 +213,6 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
   chat_scroll_area = new QScrollArea(this);
   chat_scroll_area->setWidgetResizable(true);
   chat_scroll_area->setWidget(chat_widget);
-  chat_scroll_area->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   QPalette palette = chat_scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   chat_scroll_area->setPalette(palette);
