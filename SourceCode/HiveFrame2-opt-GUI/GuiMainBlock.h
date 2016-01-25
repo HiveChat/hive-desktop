@@ -26,6 +26,7 @@ private:
 
 public slots:
   void displayChatStack(QString usrKey);
+  void displayWelcomeStack();
   void addChatStack(QStringList usrInfoStrList);
   void setCurrentStack(QWidget *widget);
   void onMessageRecieved(QStringList message_str_list);

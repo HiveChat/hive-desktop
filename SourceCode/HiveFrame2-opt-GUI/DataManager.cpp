@@ -345,7 +345,6 @@ void DataManager::loadFonts()
   int fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
   QString msyh = QFontDatabase::applicationFontFamilies ( fontId ).at(0);
   GlobalData::g_font = QFont(msyh,10);
-
 }
 
 

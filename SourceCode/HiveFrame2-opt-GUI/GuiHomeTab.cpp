@@ -3,10 +3,18 @@
 
 GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 {
-  welcome_label = new GuiTextButton(" welcome page");
+  QFont label_font("Futura");
+  label_font.setPixelSize(20);
+
+  welcome_label = new GuiTextButton(" welcome");
   issues_label = new GuiTextButton(" issues");
-  files_label = new GuiTextButton(" files received");
+  files_label = new GuiTextButton(" files");
   settings_label = new GuiTextButton(" settings");
+
+  welcome_label->setFont(label_font);
+  issues_label->setFont(label_font);
+  files_label->setFont(label_font);
+  settings_label->setFont(label_font);
 
   ////main layout
   main_layout = new QVBoxLayout(this);
@@ -18,6 +26,7 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(files_label);
   main_layout->addWidget(settings_label);
 
+  this->setParent(parent);
 
 }
 

@@ -23,7 +23,7 @@ QString GlobalData::g_currentTime()
 /*
 usrInfoStrList:
 usrKey<<usrName<<ipAddr<<avatarPath
-
+l
 myProfile:
 usrKey<<usrName<<avatarPath
 

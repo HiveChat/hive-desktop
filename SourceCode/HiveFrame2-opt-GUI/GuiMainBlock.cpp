@@ -33,6 +33,11 @@ void GuiMainBlock::displayChatStack(QString usrKey)
   emit whoIs(usrKey);
 }
 
+void GuiMainBlock::displayWelcomeStack()
+{
+  main_stacked_widget->setCurrentWidget(gui_welcome_stack);
+}
+
 void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
 {
   gui_chat_stack = new GuiChatStack(usrInfoStrList, this);
