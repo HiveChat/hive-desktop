@@ -65,7 +65,7 @@ void DataHistoryIO::wirteMessage(QString message, bool fromMe)
 
 void DataHistoryIO::makeHistoryFile(int num)
 {
-  QString make_file_path = QString(history_path+"/%0.json").arg(QString::number(num));
+  QString make_file_path = QString(history_path+"/%1.json").arg(QString::number(num));
   qDebug()<<make_file_path;
   QFile file(make_file_path);
 

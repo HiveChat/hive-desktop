@@ -185,6 +185,7 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
   if(event->key() == Qt::Key_Enter)
     {
       send_btn->setDefault();
+
       ////emit send!
     }
 }
