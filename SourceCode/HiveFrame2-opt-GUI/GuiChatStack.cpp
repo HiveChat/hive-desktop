@@ -95,20 +95,9 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 }
 
-void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList)
+void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList, bool fromMe)
 {
-
-  if(messageStrList[0] == GlobalData::g_myKeyStr)
-    {
-      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[1], false, this);
-      gui_chat_bubble = new GuiChatBubble(messageStrList[1], false, this);
-    }
-  else
-    {
-      //GuiChatBubble *gui_chat_bubble = new GuiChatBubble(messageStrList[1], true, this);
-      gui_chat_bubble = new GuiChatBubble(messageStrList[1], true, this);
-    }
-
+  gui_chat_bubble = new GuiChatBubble(messageStrList[2], fromMe, this);
   chat_bubble_layout->addWidget(gui_chat_bubble);
 }
 
@@ -253,7 +242,8 @@ void GuiChatStack::checkMessage(QStringList message_str_list)
 {
   if(message_str_list[0] == usr_info_str_list[0])
     {
-      chat_widget->addChatBubble(message_str_list);
+
+      chat_widget->addChatBubble(message_str_list, false);
     }
 }
 

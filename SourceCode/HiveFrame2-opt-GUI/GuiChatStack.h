@@ -49,7 +49,7 @@ private:
   GuiChatBubble *gui_chat_bubble;
 
 public slots:
-  void addChatBubble(QStringList messageStrList);
+  void addChatBubble(QStringList messageStrList, bool fromMe);
 
 };
 

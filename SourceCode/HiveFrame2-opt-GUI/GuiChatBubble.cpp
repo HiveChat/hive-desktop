@@ -47,20 +47,22 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
 
 GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
-  if(alignLeft)
-    {
-      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
-    }
-  else
-    {
-      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
-    }
 
-  strip_pixmap.setDevicePixelRatio(2.0);
-  strip = new QLabel();
-  strip->setPixmap(strip_pixmap);
-  strip->setAlignment(Qt::AlignTop);
-  strip->setContentsMargins(0,10,0,0);
+  ////recently not consider the strip, it's ugly.
+//  if(alignLeft)
+//    {
+//      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
+//    }
+//  else
+//    {
+//      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
+//    }
+
+//  strip_pixmap.setDevicePixelRatio(2.0);
+//  strip = new QLabel();
+//  strip->setPixmap(strip_pixmap);
+//  strip->setAlignment(Qt::AlignTop);
+//  strip->setContentsMargins(0,10,0,0);
 
   text_area = new GuiChatBubble_text_area(text, 400, alignLeft, this);
 

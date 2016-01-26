@@ -13,7 +13,8 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
   welcome_label = new QLabel(this);
   welcome_label->setAlignment(Qt::AlignHCenter);
   welcome_label->setFont(profile_font);
-  ip_label = new QLabel("Your IP is: 192.168.1.1\n\n\n", this);
+
+  ip_label = new QLabel(this);
   ip_label->setAlignment(Qt::AlignHCenter);
   ip_label->setFont(profile_font);
 
@@ -44,19 +45,19 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 void GuiWelcomeStack::refreshTime()
 {
   int current_hour = QTime::currentTime().toString("hh").toInt();
-  if(current_hour >= 4 && current_hour <= 11)
+  if(current_hour >= 4 && current_hour <= 12)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("What A Nice Day!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("Good Morning!"));
     }
-  else if(current_hour >= 12 && current_hour <= 14)
+  else if(current_hour >= 13 && current_hour <= 15)
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("sleepy noon~"));
     }
-  else if(current_hour >= 15 && current_hour <= 17)
+  else if(current_hour >= 16 && current_hour <= 18)
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("Good Afternoon!"));
     }
-  else if(current_hour >= 18 && current_hour <= 23)
+  else if(current_hour >= 19 && current_hour <= 23)
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("Good Evening!"));
     }
@@ -64,6 +65,7 @@ void GuiWelcomeStack::refreshTime()
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("It's late at night :)"));
     }
+  ip_label->setText(QString("Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
 }
 
 

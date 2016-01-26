@@ -27,10 +27,11 @@ public:
   explicit NetManager(QObject *parent = 0);
   ~NetManager();
 
-  void sendMessage(QString ip_addr, QString message);
   void sendUsrEnter();
 
-  static void localHostIP();
+  static QString localHostIP();
+
+  void TEST();
 
 private:
   qint16 udp_port = 23232;
@@ -38,7 +39,10 @@ private:
 
 
 public slots:
+  void sendMessage(QString ip_addr, QString message);
   void processPendingDatagrams();
+
+  void TEST_sendMessage(QString to, QString from, QString message);
 
 signals:
   void messageRecieved(QStringList messageStrList);

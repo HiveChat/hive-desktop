@@ -1,6 +1,8 @@
 #ifndef GUICHATTAB_H
 #define GUICHATTAB_H
 
+#include "GuiCombWidget.h"
+
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -10,7 +12,6 @@
 #include <QPalette>
 #include <QScrollArea>
 
-#include "GuiCombWidget.h"
 
 class GuiChatTab_comb_scroll_widget : public QWidget
 {

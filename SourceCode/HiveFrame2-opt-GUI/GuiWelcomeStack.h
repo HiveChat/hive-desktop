@@ -4,6 +4,7 @@
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
 #include "GlobalData.h"
+#include "NetManager.h"
 
 #include <QWidget>
 #include <QLabel>

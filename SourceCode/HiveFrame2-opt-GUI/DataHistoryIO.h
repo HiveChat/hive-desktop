@@ -27,7 +27,7 @@ private:
   QString usr_key;
 
   int currentIndex;
-
+  QList<QJsonObject> history_var_list;
 
 
   void makeHistoryFile(int num);
