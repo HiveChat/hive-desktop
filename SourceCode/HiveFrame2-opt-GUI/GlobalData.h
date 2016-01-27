@@ -9,15 +9,16 @@
 class GlobalData
 {
 public:
+  ///UI
+  static QFont g_font;
+  static QColor g_windowColor;
+  static QColor g_alphaTabColor;
+  static QColor g_tabColor;
+
   ///data
   static QString g_myKeyStr;
   static QString g_myNameStr;
   static QString g_avatarPathStr;
-  static QFont g_font;
-  static QColor g_windowColor;
-
-
-  //static QJsonObject
 
   ///net
   static QString g_localHostIP;

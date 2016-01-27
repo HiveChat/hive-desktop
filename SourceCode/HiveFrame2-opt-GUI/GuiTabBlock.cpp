@@ -4,10 +4,10 @@
 
 GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 {
-  /*this->setAutoFillBackground(true);
+  this->setAutoFillBackground(true);
   QPalette palette;
-  palette.setColor(QPalette::Window, QColor(245,245,245,0));
-  this->setPalette(palette);*/
+  palette.setColor(QPalette::Window, GlobalData::g_alphaTabColor);
+  this->setPalette(palette);
   this->setFixedWidth(250);
 
   ////label test

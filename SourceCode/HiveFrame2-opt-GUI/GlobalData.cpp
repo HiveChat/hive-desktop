@@ -1,12 +1,16 @@
 #include "GlobalData.h"
 
+///UI
+QFont GlobalData::g_font;
+QColor GlobalData::g_windowColor = QColor(255,255,255);
+QColor GlobalData::g_alphaTabColor = QColor(0,0,0,15);
+QColor GlobalData::g_tabColor = QColor(240,240,240);
+
+
 ///data
 QString GlobalData::g_myKeyStr;
 QString GlobalData::g_myNameStr;
 QString GlobalData::g_avatarPathStr;
-QFont GlobalData::g_font;
-QColor GlobalData::g_windowColor = QColor(250,250,250);
-
 
 ///net
 QString GlobalData::g_localHostIP;

@@ -18,15 +18,15 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, boo
   main_layout->setContentsMargins(10,10,10,15);
   main_layout->addWidget(label);
 
-  if(!alignLeft)
+  if(alignLeft)
     {
-      color = QColor(255,181,0);
-      main_layout->setAlignment(Qt::AlignRight);
+      color = QColor(255,215,126);//255,181,0
+      main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = QColor(255,215,126);
-      main_layout->setAlignment(Qt::AlignLeft);
+      color = QColor(225,225,225);//255,215,126
+      main_layout->setAlignment(Qt::AlignRight);
     }
 
   this->setParent(parent);

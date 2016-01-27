@@ -6,20 +6,11 @@
 GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 {
   comb_scrollarea = new QScrollArea(this);
-
   comb_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   comb_scrollarea->setFrameShape(QFrame::NoFrame);
   comb_scrollarea->setWidgetResizable(true);
-//  QPalette comb_scrollarea_palette;
-//  comb_scrollarea_palette.setColor(QPalette::Background, QColor(240,240,240));
-//  comb_scrollarea->setPalette(comb_scrollarea_palette);
-
   comb_scroll_widget = new GuiChatTab_comb_scroll_widget();
   comb_scrollarea->setWidget(comb_scroll_widget);
-
-
-
-
 
   /*comb_treewidget = new QTreeWidget(this);
   comb_treewidget->setHeaderHidden(true);
@@ -46,6 +37,7 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   main_layout = new QVBoxLayout(this);
   main_layout->addWidget(comb_scrollarea);
 
+  this->setParent(parent);
 }
 
 
@@ -75,9 +67,9 @@ void GuiChatTab::showMenu()
 
 GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : QWidget(parent)
 {
-  QPalette comb_scroll_widget_palette;
-  comb_scroll_widget_palette.setColor(QPalette::Background, Qt::white);
-  this->setPalette(comb_scroll_widget_palette);
+  QPalette palette;
+  palette.setColor(QPalette::Background, GlobalData::g_tabColor);
+  this->setPalette(palette);
 
   ///main layout
   main_layout = new QVBoxLayout(this);
@@ -86,6 +78,8 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
   main_layout->setSpacing(0);
 
   this->setParent(parent);
+  this->setAutoFillBackground(true);
+
 
 
 }

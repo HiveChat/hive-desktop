@@ -19,8 +19,6 @@ public:
   explicit GuiCombWidget(QStringList usrInfoStrList, QWidget *parent = 0);
   ~GuiCombWidget();
 
-  //void setEntered(bool entered);
-
   QStringList usrInfo();
 
 protected:
@@ -40,9 +38,9 @@ private:
   QHBoxLayout *main_layout;
 
   QPalette hover_palette;
-  QColor window_color = GlobalData::g_windowColor;
-  QColor default_window_color = GlobalData::g_windowColor;
-  QColor hovered_window_color = QColor(255,232,166);
+  QColor window_color = GlobalData::g_tabColor;
+  QColor default_window_color = GlobalData::g_tabColor;
+  QColor hovered_window_color = QColor(255,194,44);
 
   bool selected = false;
   bool hovered  = false;

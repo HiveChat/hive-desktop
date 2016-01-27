@@ -7,24 +7,26 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   ////data manager
   data_manager = new DataManager(this);
 
+
   ////net manager
   net_manager = new NetManager(this);
+
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);
   gui_main_block = new GuiMainBlock(this);
 
-  QFrame *line = new QFrame(this);
-  line->setFrameShape(QFrame::VLine);
-  line->setFrameShadow(QFrame::Plain);
-  line->setStyleSheet ("QFrame{  background: #efefef; border: 1px transparent;  }");
+//  QFrame *line = new QFrame(this);
+//  line->setFrameShape(QFrame::VLine);
+//  line->setFrameShadow(QFrame::Plain);
+//  line->setStyleSheet ("QFrame{  background: #efefef; border: 1px transparent;  }");
 
   //main_layout
   main_layout = new QHBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(gui_tab_block);
-  main_layout->addWidget(line);
+//  main_layout->addWidget(line);
   main_layout->addWidget(gui_main_block);
 
   //connect
