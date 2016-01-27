@@ -97,6 +97,10 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList, bool fromMe)
 {
+  //  message_str_list.append(object_key_str);
+  //  message_str_list.append(subject_key_str);
+  //  message_str_list.append(message_str);
+  //  message_str_list.append(GlobalData::g_currentTime());
   gui_chat_bubble = new GuiChatBubble(messageStrList[2], fromMe, this);
   chat_bubble_layout->addWidget(gui_chat_bubble);
 }
@@ -185,7 +189,6 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
   if(event->key() == Qt::Key_Enter)
     {
       send_btn->setDefault();
-
       ////emit send!
     }
 }
@@ -241,10 +244,18 @@ void GuiChatStack::checkIdentity(QString usrKey)
 
 void GuiChatStack::checkMessage(QStringList message_str_list)
 {
+//  message_str_list.append(object_key_str);
+//  message_str_list.append(subject_key_str);
+//  message_str_list.append(message_str);
+//  message_str_list.append(GlobalData::g_currentTime());
   if(message_str_list[0] == usr_info_str_list[0])
     {
 
       chat_widget->addChatBubble(message_str_list, false);
+    }
+  else
+    {
+      chat_widget->addChatBubble(message_str_list, true);
     }
 }
 

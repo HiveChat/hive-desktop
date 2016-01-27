@@ -7,8 +7,8 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
   DataManager::checkDir(history_path);
 
-  ///Qt 5.5.0 bug here! put it back to the class def as soon a possible! pointer is better.
-  ///QList<QJsonObject> history_var_list;
+  ///Qt 5.5.0 bug here! put it back to the class def as soon a possible!
+
 
   QDir history_dir(history_path);
   int history_file_num = 0;
@@ -65,7 +65,7 @@ void DataHistoryIO::wirteMessage(QString message, bool fromMe)
 
 void DataHistoryIO::makeHistoryFile(int num)
 {
-  QString make_file_path = QString(history_path+"/%1.json").arg(QString::number(num));
+  QString make_file_path = QString(history_path+"/%0.json").arg(QString::number(num));
   qDebug()<<make_file_path;
   QFile file(make_file_path);
 
