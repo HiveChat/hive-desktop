@@ -27,8 +27,8 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
   ////!profile widget
 
   background_label = new GuiLabelButton(this);
-  background_label->setHoveredPixmap("/Users/Echo/Desktop/add1.png");
-  background_label->setDefaultPixmap("/Users/Echo/Desktop/add0.png");
+  background_label->setHoveredPixmap(":/img/img/welcome_stack_background.png");
+  background_label->setDefaultPixmap(":/img/img/welcome_stack_background.png");
   background_label->setAlignment(Qt::AlignRight|Qt::AlignBottom);
 
 
@@ -49,15 +49,15 @@ void GuiWelcomeStack::refreshTime()
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("Good Morning!"));
     }
-  else if(current_hour >= 13 && current_hour <= 15)
+  else if(current_hour >= 13 && current_hour <= 14)
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("sleepy noon~"));
     }
-  else if(current_hour >= 16 && current_hour <= 18)
+  else if(current_hour >= 15 && current_hour <= 17)
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("Good Afternoon!"));
     }
-  else if(current_hour >= 19 && current_hour <= 23)
+  else if(current_hour >= 18 && current_hour <= 23)
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("Good Evening!"));
     }

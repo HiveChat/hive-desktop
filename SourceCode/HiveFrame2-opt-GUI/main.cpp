@@ -46,12 +46,9 @@ int main(int argc, char *argv[])
   animation.setStartValue(QRect(120, 80, 0, 0));
   animation.setEndValue(QRect(140, 100, 0, 0));
   animation.setEasingCurve(QEasingCurve::OutBounce);
-
-
   animation.start();
+
   w.show();
-
-
 
   return a.exec();
 }

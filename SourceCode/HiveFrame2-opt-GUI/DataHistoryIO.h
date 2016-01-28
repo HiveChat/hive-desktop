@@ -15,7 +15,7 @@ public:
   void readMessage(int index);
 
 public slots:
-  void wirteMessage(QString message, bool fromMe);
+  void wirteMessage(QStringList message, bool fromMe);
 
 
 private:
@@ -27,10 +27,13 @@ private:
   QString usr_key;
 
   int currentIndex;
-  QList<QJsonObject> history_var_list;
+  QList<QJsonObject> history_list;
+
+  QList<QJsonObject> message_list;
 
 
   void makeHistoryFile(int num);
+  void saveMessage(QList<QJsonObject> *messageList);
 
 
 };

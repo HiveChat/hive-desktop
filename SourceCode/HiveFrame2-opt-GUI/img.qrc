@@ -24,6 +24,7 @@
         <file>img/home_tab.png</file>
         <file>img/send_button_0.png</file>
         <file>img/send_button_1.png</file>
+        <file>img/welcome_stack_background.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>

@@ -33,7 +33,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
             {
               if(json_document.isObject())
                 {
-                  history_var_list << json_document.object();
+                  message_list << json_document.object();
                 }
               history_file_num ++;
             }
@@ -58,9 +58,26 @@ void DataHistoryIO::readMessage(int index)
 
 }
 
-void DataHistoryIO::wirteMessage(QString message, bool fromMe)
+void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
 {
+//  message_str_list.append(object_key_str);
+//  message_str_list.append(subject_key_str);
+//  message_str_list.append(message_str);
+//  message_str_list.append(GlobalData::g_currentTime());
 
+  if(message_list.count() <= 10)
+    {
+      QJsonObject message_json_obj;
+      message_json_obj.insert("message", message[2]);
+      message_json_obj.insert("fromMe", fromMe);
+      message_json_obj.insert("time", GlobalData::g_currentTime());
+
+      message_list<<message_json_obj;
+    }
+  else
+    {
+
+    }
 }
 
 void DataHistoryIO::makeHistoryFile(int num)
@@ -86,6 +103,11 @@ void DataHistoryIO::makeHistoryFile(int num)
 
   file.flush();
   file.close();
+}
+
+void DataHistoryIO::saveMessage(QList<QJsonObject> *messageList)
+{
+
 }
 
 
