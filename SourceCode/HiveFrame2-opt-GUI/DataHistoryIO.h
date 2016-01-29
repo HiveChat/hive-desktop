@@ -27,13 +27,14 @@ private:
   QString usr_key;
 
   int currentIndex;
-  QList<QJsonObject> history_list;
+  QList<QJsonObject> full_history_list;
+  QJsonObject active_history_json_obj;
 
   QList<QJsonObject> message_list;
 
 
   void makeHistoryFile(int num);
-  void saveMessage(QList<QJsonObject> *messageList);
+  void saveMessage();
 
 
 };

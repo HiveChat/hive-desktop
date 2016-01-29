@@ -10,20 +10,12 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
   ///Qt 5.5.0 bug here! put it back to the class def as soon a possible!
 
 
-  QDir history_dir(history_path);
-  int history_file_num = 0;
-  foreach (QFileInfo temp_file_info, history_dir.entryInfoList())
+  for(int i = 1;; i++)
     {
-      if(temp_file_info.isFile())
+      QString tmp_file_path = QString(history_path+"/%1.json").arg(i);
+      QFile file(tmp_file_path);
+      if(file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
-          qDebug()<<"file"<<temp_file_info.absoluteFilePath();
-
-          QFile file(temp_file_info.absoluteFilePath());
-          if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-            {
-              return;
-            }
-
           QTextStream in(&file);
           QByteArray in_byte_array = in.readAll().toUtf8();
 
@@ -31,16 +23,68 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
           QJsonDocument json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
           if(json_error.error == QJsonParseError::NoError)
             {
+              ///the last check
               if(json_document.isObject())
                 {
-                  message_list << json_document.object();
-                }
-              history_file_num ++;
+                  QJsonObject temp_history_json_obj;
+                  temp_history_json_obj = json_document.object();
+                  if(temp_history_json_obj.value("full").toBool())
+                    {
+                      ///delete and remain histories
+                      temp_history_json_obj.remove("full");
+                      temp_history_json_obj.remove("num");
+                      full_history_list.append(temp_history_json_obj);
+                    }
+                  else
+                    {
+                      ///delete and remain histories
+                      temp_history_json_obj.remove("full");
+                      temp_history_json_obj.remove("num");
+                      active_history_json_obj = temp_history_json_obj;
+                    }
+                }///the last check
             }
+        }
+      else
+        {
+          break;
         }
     }
 
-  if(history_file_num == 0)
+//  QDir history_dir(history_path);
+//  int history_file_num = 0;
+//  foreach (QFileInfo temp_file_info, history_dir.entryInfoList())
+//    {
+//      if(temp_file_info.isFile())
+//        {
+//          qDebug()<<"file"<<temp_file_info.absoluteFilePath();
+
+//          QFile file(temp_file_info.absoluteFilePath());
+//          if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+//            {
+//              continue;
+//            }
+
+//          QTextStream in(&file);
+//          QByteArray in_byte_array = in.readAll().toUtf8();
+
+//          QJsonParseError json_error;
+//          QJsonDocument json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
+//          if(json_error.error == QJsonParseError::NoError)
+//            {
+//              if(json_document.isObject())
+//                {
+//                  QJsonObject temp_history_json_obj;
+//                  temp_history_json_obj = json_document.object();
+//                  temp_history_json_obj.value("num").toInt();
+//                  temp_history_json_obj.value("full").toBool();
+//                }
+//              history_file_num ++;
+//            }
+//        }
+//    }
+
+  if(full_history_list.isEmpty() && active_history_json_obj.isEmpty())
     {
       makeHistoryFile(1);
     }
@@ -56,6 +100,7 @@ DataHistoryIO::~DataHistoryIO()
 void DataHistoryIO::readMessage(int index)
 {
 
+
 }
 
 void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
@@ -65,7 +110,7 @@ void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
 //  message_str_list.append(message_str);
 //  message_str_list.append(GlobalData::g_currentTime());
 
-  if(message_list.count() <= 10)
+  if(message_list.count() < 10)
     {
       QJsonObject message_json_obj;
       message_json_obj.insert("message", message[2]);
@@ -76,7 +121,7 @@ void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
     }
   else
     {
-
+      saveMessage();
     }
 }
 
@@ -105,8 +150,26 @@ void DataHistoryIO::makeHistoryFile(int num)
   file.close();
 }
 
-void DataHistoryIO::saveMessage(QList<QJsonObject> *messageList)
+void DataHistoryIO::saveMessage()
 {
+  //QList<QJsonObject> message_list;
+
+  foreach (QJsonObject temp_message_json_obj, message_list)
+    {
+      int current_key_num = active_history_json_obj.count();
+      if(current_key_num < 100)
+        {
+          active_history_json_obj.insert(QString::number(current_key_num), temp_message_json_obj);
+        }
+      else
+        {
+          //write full
+          //add new file change data in class
+          //clear active_history_json_obj
+          //clear message_list (right? I'm too tired to think, sorry!)
+          //active_history_json_obj.insert(QString::number(current_key_num), temp_message_json_obj);
+        }
+    }
 
 }
 
