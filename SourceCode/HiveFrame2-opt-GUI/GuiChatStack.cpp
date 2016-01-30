@@ -248,6 +248,7 @@ void GuiChatStack::checkMessage(QStringList message_str_list)
      && message_str_list[1] == usr_info_str_list[0])
     {
       chat_widget->addChatBubble(message_str_list, false);
+      data_history_io->wirteMessage(message_str_list, false);
       qDebug()<<message_str_list[0]<<message_str_list[2];
       //to me
     }
@@ -255,6 +256,7 @@ void GuiChatStack::checkMessage(QStringList message_str_list)
      && message_str_list[1] == GlobalData::g_myKeyStr)
     {
       chat_widget->addChatBubble(message_str_list, true);
+      data_history_io->wirteMessage(message_str_list, true);
       //from me
     }
 }

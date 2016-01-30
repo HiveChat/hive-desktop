@@ -31,8 +31,7 @@ private:
   QJsonObject active_history_json_obj;
   QJsonArray active_history_json_array;
 
-  QList<QJsonObject> message_list;
-
+  int save_cout_down = 0;
 
   void makeHistoryFile(int num);
   void saveMessage();
