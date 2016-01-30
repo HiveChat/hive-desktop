@@ -9,6 +9,9 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
   ///Qt 5.5.0 bug here! put it back to the class def as soon a possible!
 
+  //debug
+  int debug_active_mun = 0;
+  //-debug
 
   for(int i = 1;; i++)
     {
@@ -28,19 +31,22 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
                 {
                   QJsonObject temp_history_json_obj;
                   temp_history_json_obj = json_document.object();
+                  ///if full
                   if(temp_history_json_obj.value("full").toBool())
                     {
-                      ///delete and remain histories
-                      temp_history_json_obj.remove("full");
-                      temp_history_json_obj.remove("num");
                       full_history_list.append(temp_history_json_obj);
                     }
                   else
                     {
-                      ///delete and remain histories
-                      temp_history_json_obj.remove("full");
-                      temp_history_json_obj.remove("num");
-                      active_history_json_obj = temp_history_json_obj;
+                      //debug
+                      debug_active_mun ++;
+                      //-debug
+
+                      //mock the file
+                      //active_history_json_obj.insert("full")
+                      active_history_json_array = active_history_json_obj["history"].toArray();
+                          //= temp_history_json_obj;
+                      current_index = i;
                     }
                 }///the last check
             }
@@ -49,6 +55,11 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
         {
           break;
         }
+    }
+
+  if(debug_active_mun > 1)
+    {
+      qDebug()<<"\nseems too active history files! fix it!!!!!!!!!!\n";
     }
 
 //  QDir history_dir(history_path);
@@ -110,14 +121,14 @@ void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
 //  message_str_list.append(message_str);
 //  message_str_list.append(GlobalData::g_currentTime());
 
-  if(message_list.count() < 10)
+  if(active_history_json_array.count() < 100)
     {
       QJsonObject message_json_obj;
       message_json_obj.insert("message", message[2]);
       message_json_obj.insert("fromMe", fromMe);
       message_json_obj.insert("time", GlobalData::g_currentTime());
 
-      message_list<<message_json_obj;
+      active_history_json_array.append(message_json_obj);
     }
   else
     {
@@ -130,7 +141,6 @@ void DataHistoryIO::makeHistoryFile(int num)
   QString make_file_path = QString(history_path+"/%0.json").arg(QString::number(num));
   qDebug()<<make_file_path;
   QFile file(make_file_path);
-
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -139,11 +149,9 @@ void DataHistoryIO::makeHistoryFile(int num)
 
   QJsonObject history_info_json_obj;
   history_info_json_obj.insert("full", false);
-  history_info_json_obj.insert("num", num);
 
   QJsonDocument history_info_json_doc;
   history_info_json_doc.setObject(history_info_json_obj);
-
   out<<history_info_json_doc.toJson();
 
   file.flush();
@@ -152,24 +160,51 @@ void DataHistoryIO::makeHistoryFile(int num)
 
 void DataHistoryIO::saveMessage()
 {
-  //QList<QJsonObject> message_list;
-
-  foreach (QJsonObject temp_message_json_obj, message_list)
+  //write to the file
+  QString file_path = QString(history_path+"/%1.json").arg(current_index);
+  QFile file(file_path);
+  if(file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
-      int current_key_num = active_history_json_obj.count();
-      if(current_key_num < 100)
-        {
-          active_history_json_obj.insert(QString::number(current_key_num), temp_message_json_obj);
-        }
-      else
-        {
-          //write full
-          //add new file change data in class
-          //clear active_history_json_obj
-          //clear message_list (right? I'm too tired to think, sorry!)
-          //active_history_json_obj.insert(QString::number(current_key_num), temp_message_json_obj);
-        }
+      return;
     }
+  QTextStream out(&file);
+
+  if(active_history_json_array.count() < 100)
+    {
+      active_history_json_obj.insert("full", false);
+      active_history_json_obj.insert("history", active_history_json_array);
+
+      QJsonDocument active_history_json_doc;
+      active_history_json_doc.setObject(active_history_json_obj);
+
+      out << active_history_json_doc.toJson();
+    }
+  else
+    {
+      active_history_json_obj.insert("full", true);
+      active_history_json_obj.insert("history", active_history_json_array);
+
+      full_history_list.append(active_history_json_obj);
+
+      QJsonDocument active_history_json_doc;
+      active_history_json_doc.setObject(active_history_json_obj);
+
+      out << active_history_json_doc.toJson();
+
+      //clear active things
+      active_history_json_obj.remove("full");
+      active_history_json_obj.remove("history");
+
+      while(!active_history_json_array.isEmpty())
+        {
+          active_history_json_array.removeLast();
+        }
+
+    }
+
+  file.flush();
+  file.close();
+
 
 }
 

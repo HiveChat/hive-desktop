@@ -26,9 +26,10 @@ private:
   QString history_path;
   QString usr_key;
 
-  int currentIndex;
+  int current_index;
   QList<QJsonObject> full_history_list;
   QJsonObject active_history_json_obj;
+  QJsonArray active_history_json_array;
 
   QList<QJsonObject> message_list;
 
