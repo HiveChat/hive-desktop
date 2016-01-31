@@ -51,7 +51,6 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   ////net manager
   connect(net_manager, SIGNAL(messageRecieved(QStringList)), gui_main_block, SLOT(onMessageRecieved(QStringList)));
 
-
   ////dynamic widgets
 
 

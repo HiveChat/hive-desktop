@@ -95,10 +95,19 @@ GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
 
 }
 
+void GuiChatStack_chat_widget::clearChatBubbles()
+{
+  foreach (GuiChatBubble *temp_chat_bubble_pointer, chat_bubble_list)
+    {
+      temp_chat_bubble_pointer->deleteLater();
+    }
+}
+
 void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList, bool fromMe)
 {
   gui_chat_bubble = new GuiChatBubble(messageStrList[2], !fromMe, this);
   chat_bubble_layout->addWidget(gui_chat_bubble);
+  chat_bubble_list.append(gui_chat_bubble);
 }
 
 //////////////////////////bottom//////////////////////////////////////

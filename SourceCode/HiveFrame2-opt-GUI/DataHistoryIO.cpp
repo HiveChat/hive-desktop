@@ -49,7 +49,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
                   //active_history_json_obj.insert("full")
                   active_history_json_array = temp_history_json_obj["history"].toArray();
                       //= temp_history_json_obj;
-                  current_index = i;
+                  current_active_index = i;
                 }
             }///the last check if
         }
@@ -62,8 +62,8 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
   if(full_history_list.isEmpty() && active_history_json_obj.isEmpty())
     {
-      current_index = 1;
-      makeHistoryFile(current_index);
+      current_active_index = 1;
+      makeHistoryFile(current_active_index);
     }
 
   this->setParent(parent);
@@ -74,8 +74,15 @@ DataHistoryIO::~DataHistoryIO()
 
 }
 
-void DataHistoryIO::readMessage(int index)
+int DataHistoryIO::readMessage(int index)
 {
+  if(index > current_active_index)
+    {
+      //out
+      return 1;
+    }
+
+
 
 
 }
@@ -127,7 +134,7 @@ void DataHistoryIO::makeHistoryFile(int num)
 void DataHistoryIO::saveMessage()
 {
   //write to the file
-  QString file_path = QString(history_path+"/%1.json").arg(current_index);
+  QString file_path = QString(history_path+"/%1.json").arg(current_active_index);
   QFile file(file_path);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -167,9 +174,8 @@ void DataHistoryIO::saveMessage()
           active_history_json_array.removeLast();
         }
 
-      current_index ++;
-      makeHistoryFile(current_index);
-
+      current_active_index ++;
+      makeHistoryFile(current_active_index);
     }
 
   file.flush();

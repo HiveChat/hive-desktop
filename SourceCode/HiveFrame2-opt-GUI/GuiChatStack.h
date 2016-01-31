@@ -43,10 +43,14 @@ public:
   explicit GuiChatStack_chat_widget(QWidget *parent = 0);
   ~GuiChatStack_chat_widget();
 
+  void clearChatBubbles();
+
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *chat_bubble_layout;
   GuiChatBubble *gui_chat_bubble;
+
+  QList<GuiChatBubble*> chat_bubble_list;
 
 public slots:
   void addChatBubble(QStringList messageStrList, bool fromMe);

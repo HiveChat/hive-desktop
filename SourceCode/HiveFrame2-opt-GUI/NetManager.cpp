@@ -22,7 +22,7 @@ NetManager::~NetManager()
 
 
 
-void NetManager::sendMessage(QString usr_key_str, QString message = "")
+void NetManager::sendMessage(QString usrKeyStr, QString message = "")
 {
     QByteArray data;
     QDataStream out(&data, QIODevice::WriteOnly);
@@ -33,7 +33,7 @@ void NetManager::sendMessage(QString usr_key_str, QString message = "")
         return;
       }
 
-    out << Message << usr_key_str << GlobalData::g_myKeyStr << message;
+    out << Message << usrKeyStr << GlobalData::g_myKeyStr << message;
     udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 

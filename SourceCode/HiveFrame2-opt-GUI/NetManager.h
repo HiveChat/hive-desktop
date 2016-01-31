@@ -39,7 +39,7 @@ private:
 
 
 public slots:
-  void sendMessage(QString ip_addr, QString message);
+  void sendMessage(QString usrKeyStr, QString message);
   void processPendingDatagrams();
 
   void TEST_sendMessage(QString to, QString from, QString message);
