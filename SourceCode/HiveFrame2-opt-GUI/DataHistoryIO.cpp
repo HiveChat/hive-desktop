@@ -45,8 +45,6 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
                   debug_active_mun ++;
                   //-debug
 
-                  //mock the file
-                  //active_history_json_obj.insert("full")
                   active_history_json_array = temp_history_json_obj["history"].toArray();
                       //= temp_history_json_obj;
                   current_active_index = i;

@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     GuiChatBubble.cpp \
     NetManager.cpp \
     GlobalData.cpp \
-    DataHistoryIO.cpp
+    DataHistoryIO.cpp \
+    frameless_helper.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -49,7 +50,8 @@ HEADERS  += mainwindow.h \
     GuiChatBubble.h \
     NetManager.h \
     GlobalData.h \
-    DataHistoryIO.h
+    DataHistoryIO.h \
+    frameless_helper.h
 
 RESOURCES += \
     qss.qrc \

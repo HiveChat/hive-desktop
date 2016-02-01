@@ -37,9 +37,9 @@ public:
   GuiLabelButton *mid_tab_label;
   GuiLabelButton *right_tab_label;
 
-  QLabel *left_btn_line_label;
-  QLabel *mid_btn_line_label;
-  QLabel *right_btn_line_label;
+  QFrame *left_btn_line_label;
+  QFrame *mid_btn_line_label;
+  QFrame *right_btn_line_label;
 
   QStackedWidget *tab_stacked_widget;
   GuiHomeTab *gui_home_tab;

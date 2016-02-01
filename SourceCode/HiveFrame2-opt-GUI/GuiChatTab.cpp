@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QMenu>
 #include <QDebug>
+#include <QScrollBar>
 
 GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 {

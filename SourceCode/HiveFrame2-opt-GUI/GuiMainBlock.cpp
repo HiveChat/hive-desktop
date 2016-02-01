@@ -30,7 +30,7 @@ GuiMainBlock::~GuiMainBlock()
 
 void GuiMainBlock::displayChatStack(QString usrKey)
 {
-  emit whoIs(usrKey);
+  main_stacked_widget->setCurrentWidget(gui_chat_stack_map.find(usrKey).value());
 }
 
 void GuiMainBlock::displayWelcomeStack()
@@ -43,19 +43,15 @@ void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
 {
   gui_chat_stack = new GuiChatStack(usrInfoStrList, this);
   main_stacked_widget->addWidget(gui_chat_stack);
+  gui_chat_stack_map.insert(usrInfoStrList[0], gui_chat_stack);
 
-  connect(this, SIGNAL(whoIs(QString)), gui_chat_stack, SLOT(checkIdentity(QString)));
   connect(this, SIGNAL(whoseMessage(QStringList)), gui_chat_stack, SLOT(checkMessage(QStringList)));
-  connect(gui_chat_stack, SIGNAL(chosen(QWidget*)), this, SLOT(setCurrentStack(QWidget*)));
-}
-
-void GuiMainBlock::setCurrentStack(QWidget *widget)
-{
-  main_stacked_widget->setCurrentWidget(widget);
 }
 
 void GuiMainBlock::onMessageRecieved(QStringList message_str_list)
 {
+  //problem here
+  //gui_chat_stack_map.find(message_str_list[0]).value()->checkMessage(message_str_list);
   emit whoseMessage(message_str_list);
 }
 

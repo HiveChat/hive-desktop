@@ -3,8 +3,10 @@
 ///UI
 QFont GlobalData::g_font;
 QColor GlobalData::g_windowColor = QColor(255,255,255);
-QColor GlobalData::g_alphaTabColor = QColor(0,0,0,15);
-QColor GlobalData::g_tabColor = QColor(240,240,240);
+//QColor GlobalData::g_alphaTabColor = QColor(0,0,0,15);
+//QColor GlobalData::g_tabColor = QColor(240,240,240);
+QColor GlobalData::g_alphaTabColor = QColor(0,0,0,0);
+QColor GlobalData::g_tabColor = QColor(255,255,255);
 
 
 ///data

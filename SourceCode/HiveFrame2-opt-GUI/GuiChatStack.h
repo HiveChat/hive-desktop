@@ -109,11 +109,8 @@ private:
   QStringList usr_info_str_list;
 
 public slots:
-  void checkIdentity(QString usrKey);
   void checkMessage(QStringList message_str_list);
 
-signals:
-  void chosen(QWidget *);
 };
 
 

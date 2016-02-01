@@ -45,6 +45,8 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   main_layout->addWidget(avatar_label);
   main_layout->addLayout(usr_info_layout);
 
+  this->setFixedHeight(67);
+
 
 
 }
@@ -72,11 +74,13 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);
   bottom_line->setFrameShadow(QFrame::Plain);
+  bottom_line->setFixedHeight(4);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
   QFrame *top_line = new QFrame(this);
   top_line->setFrameShape(QFrame::HLine);
   top_line->setFrameShadow(QFrame::Plain);
+  top_line->setFixedHeight(4);
   top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   main_layout = new QVBoxLayout(this);
@@ -183,10 +187,9 @@ void GuiChatStack_message_editor::keyPressEvent(QKeyEvent *event)
 {
   if(event->key() == Qt::Key_Enter)
     {
-      send_btn->setHovered();
+      //send_btn->setHovered();
       ////emit send!
     }
-
 }
 
 void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
@@ -238,14 +241,6 @@ GuiChatStack::~GuiChatStack()
 
 ///slots
 
-
-void GuiChatStack::checkIdentity(QString usrKey)
-{
-  if(usrKey == usr_info_str_list[0])
-    {
-      emit chosen(this);
-    }
-}
 
 void GuiChatStack::checkMessage(QStringList message_str_list)
 {
