@@ -21,7 +21,6 @@ NetManager::~NetManager()
 }
 
 
-
 void NetManager::sendMessage(QString usrKeyStr, QString message = "")
 {
     QByteArray data;

@@ -118,12 +118,12 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   mid_btn_line_label->setFrameShape(QFrame::HLine);
   mid_btn_line_label->setFrameShadow(QFrame::Plain);
   mid_btn_line_label->setFixedSize(80,2);
-  mid_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+  mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   right_btn_line_label->setFrameShape(QFrame::HLine);
   right_btn_line_label->setFrameShadow(QFrame::Plain);
   right_btn_line_label->setFixedSize(80,2);
-  right_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+  right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
 //  left_btn_line_label0.load(":/img/img/left_btn_line_label0.png");
 //  left_btn_line_label1.load(":/img/img/left_btn_line_label1.png");
@@ -192,8 +192,8 @@ void GuiTabBlock::changeBtnLine()
 //      mid_btn_line_label->setPixmap(mid_btn_line_label0);
 //      right_btn_line_label->setPixmap(right_btn_line_label0);
       left_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
-      mid_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
-      right_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+      mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(gui_home_tab);
     }
   if(sender() == mid_tab_label)
@@ -202,9 +202,9 @@ void GuiTabBlock::changeBtnLine()
 //      left_btn_line_label->setPixmap(left_btn_line_label0);
 //      mid_btn_line_label->setPixmap(mid_btn_line_label1);
 //      right_btn_line_label->setPixmap(right_btn_line_label0);
-      left_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+      left_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       mid_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
-      right_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+      right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(gui_chat_tab);
     }
   if(sender() == right_tab_label)
@@ -213,8 +213,8 @@ void GuiTabBlock::changeBtnLine()
 //      left_btn_line_label->setPixmap(left_btn_line_label0);
 //      mid_btn_line_label->setPixmap(mid_btn_line_label0);
 //      right_btn_line_label->setPixmap(right_btn_line_label1);
-      left_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
-      mid_btn_line_label->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+      left_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
     }
 }

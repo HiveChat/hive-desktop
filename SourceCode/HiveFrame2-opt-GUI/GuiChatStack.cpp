@@ -231,6 +231,8 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
 
+  connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
+
 }
 
 GuiChatStack::~GuiChatStack()
@@ -263,6 +265,12 @@ void GuiChatStack::checkMessage(QStringList message_str_list)
       data_history_io->wirteMessage(message_str_list, true);
       //from me
     }
+}
+
+void GuiChatStack::onSendButtonClicked()
+{
+  emit sendMessage(usr_info_str_list[0], message_editor->text_editor->toHtml());
+  message_editor->text_editor->clear();
 }
 
 

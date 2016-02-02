@@ -38,6 +38,8 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   main_layout = new QVBoxLayout(this);
   main_layout->addWidget(comb_scrollarea);
 
+  main_layout->setContentsMargins(5,5,5,5);
+
   this->setParent(parent);
 }
 

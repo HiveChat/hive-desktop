@@ -57,12 +57,12 @@ private slots:
 private:
   int current_tab_index = 0;
 
-  QPixmap left_btn_line_label0;
-  QPixmap left_btn_line_label1;
-  QPixmap mid_btn_line_label0;
-  QPixmap mid_btn_line_label1;
-  QPixmap right_btn_line_label0;
-  QPixmap right_btn_line_label1;
+//  QPixmap left_btn_line_label0;
+//  QPixmap left_btn_line_label1;
+//  QPixmap mid_btn_line_label0;
+//  QPixmap mid_btn_line_label1;
+//  QPixmap right_btn_line_label0;
+//  QPixmap right_btn_line_label1;
 
   QPixmap exit_hint0;
   QPixmap exit_hint1;
@@ -70,7 +70,6 @@ private:
   QPixmap min_hint1;
   QPixmap max_hint0;
   QPixmap max_hint1;
-
 
   //for GuiLabelButton::setHDPixmap(QString path)
   /*QString exit_hint0 = ":/img/img/exit_hint_0.png";

@@ -178,8 +178,6 @@ void DataHistoryIO::saveMessage()
 
   file.flush();
   file.close();
-
-
 }
 
 

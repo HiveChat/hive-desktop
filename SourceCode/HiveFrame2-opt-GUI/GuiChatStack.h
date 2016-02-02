@@ -67,20 +67,20 @@ public:
   explicit GuiChatStack_message_editor(QWidget *parent = 0);
   ~GuiChatStack_message_editor();
 
+  GuiLabelButton *send_btn;
+  QTextEdit *text_editor;
+
 protected:
   void keyPressEvent(QKeyEvent *event);
   void keyReleaseEvent(QKeyEvent *event);
 
 private:
-  QTextEdit *text_editor;
   QVBoxLayout *edit_layout;
   QHBoxLayout *tool_layout;
 
   GuiLabelButton *expression_label;
   GuiLabelButton *image_label;
   GuiLabelButton *file_label;
-
-  GuiLabelButton *send_btn;
 
   QHBoxLayout *main_layout;
 
@@ -110,6 +110,10 @@ private:
 
 public slots:
   void checkMessage(QStringList message_str_list);
+  void onSendButtonClicked();
+
+signals:
+  void sendMessage(QString usrKey, QString message);
 
 };
 

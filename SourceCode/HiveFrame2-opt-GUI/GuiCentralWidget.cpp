@@ -20,7 +20,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   line->setFrameShape(QFrame::VLine);
   line->setFrameShadow(QFrame::Plain);
   line->setFixedWidth(1);
-  line->setStyleSheet ("QFrame{  background: #dfdfdf; border: transparent;  }");
+  line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   //main_layout
   main_layout = new QHBoxLayout(this);
@@ -50,10 +50,13 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
 
   ////net manager
-  ///
-  /// signal-slot broad cast
   connect(net_manager, SIGNAL(messageRecieved(QStringList)), gui_main_block, SLOT(onMessageRecieved(QStringList)));
 
+  foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
+    {
+
+      connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
+    }
   ////dynamic widgets
 
 
