@@ -11,7 +11,7 @@
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-
+#include <QScrollBar>
 #include <QTextEdit>
 #include <QScrollArea>
 

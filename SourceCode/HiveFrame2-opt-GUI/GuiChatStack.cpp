@@ -4,10 +4,10 @@
 GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
   ///usrKey<<usrName<<ipAddr<<avatarPathr
-  setAutoFillBackground(true);
-  QPalette palette = this->palette();
-  palette.setColor(QPalette::Window, QColor(255,255,255,0));//(255,181,0));
+  QPalette palette;
+  palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setPalette(palette);
+  this->setAutoFillBackground(true);
 
   /*QPalette palette;
   palette.setColor(QPalette::Background, QColor(192,253,123));
@@ -118,6 +118,10 @@ void GuiChatStack_chat_widget::addChatBubble(QStringList messageStrList, bool fr
 
 GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
 {
+  QPalette palette;
+  palette.setColor(QPalette::Window, QColor(255,255,255));
+  this->setPalette(palette);
+  this->setAutoFillBackground(true);
 
   text_editor = new QTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);

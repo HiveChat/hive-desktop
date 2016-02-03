@@ -27,15 +27,12 @@ public:
 protected:
   void paintEvent(QPaintEvent*);
 
-  QPoint move_point; //移动的距离
+//  QPoint move_point;
 
-  bool mouse_pressed; //鼠标按下
-  //鼠标按下事件
-  void mousePressEvent(QMouseEvent *event);
- //鼠标释放事件
-  void mouseReleaseEvent(QMouseEvent *event);
- //鼠标移动事件
-  void mouseMoveEvent(QMouseEvent *event);
+//  bool mouse_pressed;
+//  void mousePressEvent(QMouseEvent *event);
+//  void mouseReleaseEvent(QMouseEvent *event);
+//  void mouseMoveEvent(QMouseEvent *event);
 
 private:
 

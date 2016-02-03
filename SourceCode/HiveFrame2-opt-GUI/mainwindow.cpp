@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
   this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);
   this->setWindowTitle("Hive");
-  //this->setAttribute(Qt::WA_TranslucentBackground);
+  this->setAttribute(Qt::WA_TranslucentBackground);
   //this->setWindowFlags(Qt::FramelessWindowHint);
   //this->setWindowState(Qt::WindowNoState);
 
@@ -52,12 +52,12 @@ void MainWindow::paintEvent(QPaintEvent*)
   p.setRenderHint(QPainter::SmoothPixmapTransform);
   p.drawRoundedRect(bmp.rect(), 8, 8);
   bmp.setDevicePixelRatio(2.0);
-  this->setMask(bmp);
+  this->setMask(bmp);*/
 
   ///color
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillRect(rect(), QColor(255,255,255,255));*/
+  painter.fillRect(rect(), QColor(0,0,0,0));
 
 //  QRectF rectangle(0, 0, this->width(), this->height());
 //  QPainter paint(this);
@@ -68,28 +68,28 @@ void MainWindow::paintEvent(QPaintEvent*)
 
 
 
-void MainWindow::mousePressEvent(QMouseEvent *event)
-{
-  ///drag area!
-  if(event->button() == Qt::LeftButton && event->pos().y() <= 40)
-    {
-      mouse_pressed = true;
-      //mouse position to the main window the same as: event->globalPos() - this->pos()
-      move_point = event->pos();
-    }
-}
-void MainWindow::mouseMoveEvent(QMouseEvent *event)
-{
-  if(mouse_pressed)
-    {
-      QPoint move_pos = event->globalPos();
-      this->move(move_pos - move_point);
-    }
-}
-void MainWindow::mouseReleaseEvent(QMouseEvent *event)
-{
-    mouse_pressed = false;
-}
+//void MainWindow::mousePressEvent(QMouseEvent *event)
+//{
+//  ///drag area!
+//  if(event->button() == Qt::LeftButton && event->pos().y() <= 40)
+//    {
+//      mouse_pressed = true;
+//      //mouse position to the main window the same as: event->globalPos() - this->pos()
+//      move_point = event->pos();
+//    }
+//}
+//void MainWindow::mouseMoveEvent(QMouseEvent *event)
+//{
+//  if(mouse_pressed)
+//    {
+//      QPoint move_pos = event->globalPos();
+//      this->move(move_pos - move_point);
+//    }
+//}
+//void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+//{
+//    mouse_pressed = false;
+//}
 
 void MainWindow::setWindowMaximized()
 {

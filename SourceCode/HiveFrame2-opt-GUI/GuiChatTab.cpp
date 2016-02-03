@@ -6,6 +6,14 @@
 
 GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 {
+
+  this->setAutoFillBackground(true);
+  QPalette palette;
+  palette.setColor(QPalette::Window, GlobalData::g_tabColor);
+  this->setPalette(palette);
+  this->setFixedWidth(250);
+
+
   comb_scrollarea = new QScrollArea(this);
   comb_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   comb_scrollarea->setFrameShape(QFrame::NoFrame);
@@ -71,8 +79,9 @@ void GuiChatTab::showMenu()
 GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Background, GlobalData::g_tabColor);
+  palette.setColor(QPalette::Window, GlobalData::g_tabColor);
   this->setPalette(palette);
+  this->setAutoFillBackground(true);
 
   ///main layout
   main_layout = new QVBoxLayout(this);
@@ -81,7 +90,7 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
   main_layout->setSpacing(0);
 
   this->setParent(parent);
-  this->setAutoFillBackground(true);
+
 
 
 

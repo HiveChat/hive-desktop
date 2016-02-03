@@ -13,7 +13,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
   int debug_active_mun = 0;
   //-debug
 
-  for(int i = 1;; i++)
+  for(int i = 1;;i++)
     {
       QString tmp_file_path = QString(history_path+"/%1.json").arg(i);
       QFile file(tmp_file_path);

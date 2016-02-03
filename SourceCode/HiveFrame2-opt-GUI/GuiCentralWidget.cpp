@@ -38,9 +38,6 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   //connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block->gui_chat_stack, SLOT(checkIdentity(QStringList)));
 
 
-
-
-
   ///data:
   connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(QStringList)));
   connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_main_block, SLOT(addChatStack(QStringList)));
@@ -54,7 +51,6 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
     {
-
       connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
     }
   ////dynamic widgets

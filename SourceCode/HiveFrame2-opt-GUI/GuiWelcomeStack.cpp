@@ -2,6 +2,11 @@
 
 GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 {
+  QPalette palette;
+  palette.setColor(QPalette::Window, QColor(255,255,255));
+  this->setPalette(palette);
+  this->setAutoFillBackground(true);
+
   ////profile widget
   profile_widget = new QWidget(this);
 
