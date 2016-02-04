@@ -83,3 +83,7 @@ QTreeView::branch:open:has-children:has-siblings {
 QTreeView::branch:open:has-children:!has-siblings {
         background: url(/Users/Echo/Desktop/HiveUI/TreeWidget/TreeWidget-opened.png);
 }
+
+QScrollArea{
+	background: transparent
+}

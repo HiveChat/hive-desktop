@@ -112,17 +112,17 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
   left_btn_line_label->setFrameShape(QFrame::HLine);
   left_btn_line_label->setFrameShadow(QFrame::Plain);
-  left_btn_line_label->setFixedSize(80,2);
+  left_btn_line_label->setFixedSize(83,2);
   left_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
 
   mid_btn_line_label->setFrameShape(QFrame::HLine);
   mid_btn_line_label->setFrameShadow(QFrame::Plain);
-  mid_btn_line_label->setFixedSize(80,2);
+  mid_btn_line_label->setFixedSize(84,2);
   mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   right_btn_line_label->setFrameShape(QFrame::HLine);
   right_btn_line_label->setFrameShadow(QFrame::Plain);
-  right_btn_line_label->setFixedSize(80,2);
+  right_btn_line_label->setFixedSize(83,2);
   right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
 //  left_btn_line_label0.load(":/img/img/left_btn_line_label0.png");
@@ -145,8 +145,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   tab_label_layout = new QGridLayout();
 
   tab_label_layout->setContentsMargins(0,10,0,10);
-  tab_label_layout->setHorizontalSpacing(20);
-  tab_label_layout->setVerticalSpacing(5);
+  tab_label_layout->setHorizontalSpacing(0);
+  tab_label_layout->setVerticalSpacing(7);
   tab_label_layout->setAlignment(Qt::AlignTop);
   tab_label_layout->setSizeConstraint(QLayout::SetFixedSize);
 
@@ -155,8 +155,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   tab_label_layout->addWidget(right_tab_label,0,2,Qt::AlignCenter);
 
   tab_label_layout->addWidget(left_btn_line_label,1,0,Qt::AlignLeft);
-  tab_label_layout->addWidget(mid_btn_line_label,1,1,Qt::AlignLeft);
-  tab_label_layout->addWidget(right_btn_line_label,1,2,Qt::AlignLeft);
+  tab_label_layout->addWidget(mid_btn_line_label,1,1,Qt::AlignCenter);
+  tab_label_layout->addWidget(right_btn_line_label,1,2,Qt::AlignRight);
 
 
 

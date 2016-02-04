@@ -79,7 +79,9 @@ void GuiChatTab::showMenu()
 GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Window, GlobalData::g_tabColor);
+
+  ///color problem here !!!!!!!!!!!
+  palette.setColor(QPalette::Window,QColor(0,0,0,0));// GlobalData::g_tabColor);
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 

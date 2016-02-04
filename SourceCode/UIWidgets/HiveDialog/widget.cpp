@@ -30,7 +30,7 @@ Widget::Widget(QString title, QString content, QSize size, QWidget *parent)
 
 
   ////window btn layout
-  window_btn_layout = new QHBoxLayout();
+  window_btn_layout = new QHBoxLayout(this);
   window_btn_layout->setMargin(10);
   window_btn_layout->setSpacing(8);
   window_btn_layout->setSizeConstraint(QLayout::SetFixedSize);
@@ -41,11 +41,11 @@ Widget::Widget(QString title, QString content, QSize size, QWidget *parent)
 
 
 
-
+  this->setMinimumSize(300,150);
+  this->setMinimumSize(300,150);
   this->setParent(parent);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowFlags(Qt::FramelessWindowHint);
-  this->setFixedSize(size);
 
 }
 

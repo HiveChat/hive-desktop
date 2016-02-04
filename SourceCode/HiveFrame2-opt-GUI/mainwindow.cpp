@@ -3,9 +3,14 @@
 #include <QBitmap>
 #include <QPainter>
 
+#include <GuiOSXNotification.h>
+
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
+  GuiOSXNotification *go = new GuiOSXNotification();
+  go->show();
+
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(250,250,250));
   this->setPalette(palette);

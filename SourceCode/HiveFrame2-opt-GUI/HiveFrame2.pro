@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     NetManager.cpp \
     GlobalData.cpp \
     DataHistoryIO.cpp \
-    frameless_helper.cpp
+    frameless_helper.cpp \
+    GuiOSXNotification.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     NetManager.h \
     GlobalData.h \
     DataHistoryIO.h \
-    frameless_helper.h
+    frameless_helper.h \
+    GuiOSXNotification.h
 
 RESOURCES += \
     qss.qrc \

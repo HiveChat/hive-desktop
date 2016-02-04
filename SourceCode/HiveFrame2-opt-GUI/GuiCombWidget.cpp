@@ -65,7 +65,7 @@ void GuiCombWidget::paintEvent(QPaintEvent *)
   paint.setPen(QPen(Qt::NoPen));
   paint.setBrush(QBrush(window_color,Qt::SolidPattern));
 
-  paint.drawRoundedRect(rectangle,5,5);
+  paint.drawRoundedRect(rectangle,10,10);
   paint.end();
 }
 

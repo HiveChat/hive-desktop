@@ -40,7 +40,7 @@ private:
   QPalette hover_palette;
   QColor window_color = GlobalData::g_tabColor;
   QColor default_window_color = GlobalData::g_tabColor;
-  QColor hovered_window_color = QColor(255,194,44);
+  QColor hovered_window_color = QColor(255,175,0,161);
 
   bool selected = false;
   bool hovered  = false;

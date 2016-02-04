@@ -2,16 +2,10 @@
     <qresource prefix="/img">
         <file>img/exit_hint_0.png</file>
         <file>img/exit_hint_1.png</file>
-        <file>img/left_btn_line_label0.png</file>
-        <file>img/left_btn_line_label1.png</file>
         <file>img/max_hint_0.png</file>
         <file>img/max_hint_1.png</file>
-        <file>img/mid_btn_line_label0.png</file>
-        <file>img/mid_btn_line_label1.png</file>
         <file>img/min_hint_0.png</file>
         <file>img/min_hint_1.png</file>
-        <file>img/right_btn_line_label0.png</file>
-        <file>img/right_btn_line_label1.png</file>
         <file>img/icon.png</file>
         <file>img/expression_label_0.png</file>
         <file>img/expression_label_1.png</file>
