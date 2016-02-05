@@ -53,7 +53,7 @@ private:
   QList<GuiChatBubble*> chat_bubble_list;
 
 public slots:
-  void addChatBubble(QStringList messageStrList, bool fromMe);
+  void addChatBubble(QString message, bool fromMe);
 
 };
 
@@ -102,15 +102,19 @@ public:
 
 private:
   DataHistoryIO *data_history_io;
+  int current_active_index;
 
   QVBoxLayout *main_layout;
   QScrollArea *chat_scroll_area;
 
   QStringList usr_info_str_list;
 
+  void refreshCurrentActiveIndex();
+
 public slots:
   void checkMessage(QStringList message_str_list);
   void onSendButtonClicked();
+  void loadHistory(int index);
 
 signals:
   void sendMessage(QString usrKey, QString message);

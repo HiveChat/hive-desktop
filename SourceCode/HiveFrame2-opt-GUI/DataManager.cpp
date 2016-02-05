@@ -13,6 +13,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 
 void DataManager::TEST_SECTION()
 {
+
   ///////////JOSN DATA
   QStringList usrInfoStrList;
   ////this cannot be MAC address Keep in mind!

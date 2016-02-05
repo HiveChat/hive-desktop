@@ -72,17 +72,9 @@ DataHistoryIO::~DataHistoryIO()
 
 }
 
-int DataHistoryIO::readMessage(int index)
+QJsonArray DataHistoryIO::readMessage(int index)
 {
-  if(index > current_active_index)
-    {
-      //out
-      return 1;
-    }
-
-
-
-
+  return active_history_json_array;
 }
 
 void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
@@ -178,6 +170,11 @@ void DataHistoryIO::saveMessage()
 
   file.flush();
   file.close();
+}
+
+int DataHistoryIO::currentActiveIndex()
+{
+  return current_active_index;
 }
 
 

@@ -3,6 +3,7 @@
 #include <QPropertyAnimation>
 #include <QSharedMemory>
 
+
 bool checkSingleInstance(const char* program)
 {
     static QSharedMemory shm(program);
@@ -49,6 +50,8 @@ int main(int argc, char *argv[])
   animation.start();
 
   w.show();
+
+
 
   return a.exec();
 }

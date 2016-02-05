@@ -6,7 +6,7 @@
 
 QT       += core gui
 QT	 += network
-
+QT	 += macextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = HiveFrame2
@@ -32,7 +32,6 @@ SOURCES += main.cpp\
     NetManager.cpp \
     GlobalData.cpp \
     DataHistoryIO.cpp \
-    frameless_helper.cpp \
     GuiOSXNotification.cpp
 
 HEADERS  += mainwindow.h \
@@ -52,7 +51,6 @@ HEADERS  += mainwindow.h \
     NetManager.h \
     GlobalData.h \
     DataHistoryIO.h \
-    frameless_helper.h \
     GuiOSXNotification.h
 
 RESOURCES += \

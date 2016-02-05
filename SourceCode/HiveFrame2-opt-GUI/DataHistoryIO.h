@@ -12,7 +12,8 @@ public:
   explicit DataHistoryIO(QString usrKey, QObject *parent = 0);
   ~DataHistoryIO();
 
-  int readMessage(int index);
+  QJsonArray readMessage(int index);
+  int currentActiveIndex();
 
 public slots:
   void wirteMessage(QStringList message, bool fromMe);
@@ -35,6 +36,7 @@ private:
 
   void makeHistoryFile(int num);
   void saveMessage();
+
 
 
 };

@@ -4,8 +4,10 @@
 GuiOSXNotification::GuiOSXNotification(QWidget *parent) :
     QWidget(parent)
 {
+  this->setAttribute(Qt::WA_TranslucentBackground);
   this->setFixedHeight(65);
   this->setFixedWidth(325);
+  this->setAttribute(Qt::WA_DontCreateNativeAncestors);
 
   startPoint = QPoint(desktop.availableGeometry().width()+this->width(), 40);
   endPoint = QPoint(desktop.availableGeometry().width()-this->width()-20, 40);
@@ -14,7 +16,7 @@ GuiOSXNotification::GuiOSXNotification(QWidget *parent) :
   this->move(startPoint);
   showAnimation();
 
-  this->setAttribute(Qt::WA_TranslucentBackground);
+
 
 
 

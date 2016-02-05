@@ -8,8 +8,9 @@
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
-  GuiOSXNotification *go = new GuiOSXNotification();
-  go->show();
+  QtMac::setBadgeLabelText("1");
+
+
 
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(250,250,250));
@@ -19,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
   connect(gui_central_widget->gui_tab_block->exit_hint, SIGNAL(clicked()), this, SLOT(close()));
   connect(gui_central_widget->gui_tab_block->min_hint, SIGNAL(clicked()), this, SLOT(showMinimized()));
   connect(gui_central_widget->gui_tab_block->max_hint, SIGNAL(clicked()), this, SLOT(setWindowMaximized()));
-
 
 
   this->setMinimumHeight(600);
@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
 //  pHelper->setWidgetResizable(true);  //设置窗体可缩放
 //  pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
 //  pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
+
 }
 
 MainWindow::~MainWindow()

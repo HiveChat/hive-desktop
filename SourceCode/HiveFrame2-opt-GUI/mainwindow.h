@@ -5,6 +5,8 @@
 #include "GlobalData.h"
 
 #include <QMainWindow>
+#include <QtMac>
+#include <qmacfunctions.h>
 #include <QApplication>
 #include <QPainter>
 

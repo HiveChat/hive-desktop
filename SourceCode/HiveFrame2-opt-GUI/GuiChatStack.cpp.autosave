@@ -219,8 +219,6 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
 
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
-  chat_scroll_area->verticalScrollBar()->setMinimum(0);
-  chat_scroll_area->verticalScrollBar()->setMaximum(500);
   chat_scroll_area->setWidgetResizable(true);
   chat_scroll_area->setWidget(chat_widget);
   QPalette palette = chat_scroll_area->palette();
@@ -244,7 +242,7 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
 
   loadHistory(current_active_index);
 
-  chat_scroll_area->verticalScrollBar()->setValue(500);
+
 
 }
 
@@ -285,7 +283,7 @@ void GuiChatStack::checkMessage(QStringList message_str_list)
     }
   refreshCurrentActiveIndex();
 
-  chat_scroll_area->verticalScrollBar()->setValue(500);
+
 
 }
 
@@ -307,7 +305,7 @@ void GuiChatStack::loadHistory(int index)
           QJsonObject history_json_obj = history_json_array[i].toObject();
           chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
         }
-      chat_scroll_area->verticalScrollBar()->setValue(500);
+    
 
     }
   else
