@@ -11,7 +11,7 @@
 #include <QDateTime>
 #include <QFile>
 #include <QNetworkInterface>
-
+#include <QPixmap>
 
 enum BroadcastType{Message, UsrEnter, UsrLeft, FileName, Refuse};
 

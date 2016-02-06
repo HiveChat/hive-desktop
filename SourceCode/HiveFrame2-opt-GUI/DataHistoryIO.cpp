@@ -24,6 +24,8 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
       QTextStream in(&file);
       QByteArray in_byte_array = in.readAll().toUtf8();
+      file.flush();
+      file.close();
 
       QJsonParseError json_error;
       QJsonDocument json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
@@ -37,6 +39,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
               ///if full
               if(temp_history_json_obj.value("full").toBool())
                 {
+                  debug_active_mun ++;
                   full_history_list.append(temp_history_json_obj);
                 }
               else
@@ -53,13 +56,10 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
         }
     }///for
 
-  if(debug_active_mun > 1)
+  if(debug_active_mun == 0)
     {
-      qDebug()<<"\nseems too active history files! fix it!!!!!!!!!!\n";
-    }
-
-  if(full_history_list.isEmpty() && active_history_json_obj.isEmpty())
-    {
+      qDebug()<<"\nno history\n";
+      qDebug()<<"\nmake new history \n";
       current_active_index = 1;
       makeHistoryFile(current_active_index);
     }
