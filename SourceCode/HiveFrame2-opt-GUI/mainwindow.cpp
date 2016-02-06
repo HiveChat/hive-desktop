@@ -25,19 +25,10 @@ MainWindow::MainWindow(QWidget *parent)
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setCentralWidget(gui_central_widget);
-  this->setWindowTitle("Hive");
+  this->setWindowTitle("Hive!");
   this->setAttribute(Qt::WA_TranslucentBackground);
   //this->setWindowFlags(Qt::FramelessWindowHint);
   //this->setWindowState(Qt::WindowNoState);
-
-
-//  FramelessHelper *pHelper = new FramelessHelper(this);
-//  pHelper->activateOn(this);  //激活当前窗体
-//  pHelper->setTitleHeight(20);  //设置窗体的标题栏高度
-//  pHelper->setWidgetMovable(true);  //设置窗体可移动
-//  pHelper->setWidgetResizable(true);  //设置窗体可缩放
-//  pHelper->setRubberBandOnMove(true);  //设置橡皮筋效果-可移动
-//  pHelper->setRubberBandOnResize(true);  //设置橡皮筋效果-可缩放
 
 }
 
@@ -46,31 +37,31 @@ MainWindow::~MainWindow()
 
 }
 
-void MainWindow::paintEvent(QPaintEvent*)
-{
-  ///rounded frame     //scroll bug here!
-  /*QBitmap bmp(this->size());
-  bmp.fill();
-  QPainter p(&bmp);
-  p.setPen(Qt::NoPen);
-  p.setBrush(Qt::black);
-  p.setRenderHint(QPainter::Antialiasing, true);
-  p.setRenderHint(QPainter::SmoothPixmapTransform);
-  p.drawRoundedRect(bmp.rect(), 8, 8);
-  bmp.setDevicePixelRatio(2.0);
-  this->setMask(bmp);*/
+//void MainWindow::paintEvent(QPaintEvent*)
+//{
+//  ///rounded frame     //scroll bug here!
+//  /*QBitmap bmp(this->size());
+//  bmp.fill();
+//  QPainter p(&bmp);
+//  p.setPen(Qt::NoPen);
+//  p.setBrush(Qt::black);
+//  p.setRenderHint(QPainter::Antialiasing, true);
+//  p.setRenderHint(QPainter::SmoothPixmapTransform);
+//  p.drawRoundedRect(bmp.rect(), 8, 8);
+//  bmp.setDevicePixelRatio(2.0);
+//  this->setMask(bmp);*/
 
-  ///color
-  QPainter painter(this);
-  painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillRect(rect(), QColor(0,0,0,0));
+//  ///color
+//  QPainter painter(this);
+//  painter.setRenderHint(QPainter::Antialiasing, true);
+//  painter.fillRect(rect(), QColor(0,0,0,0));
 
-//  QRectF rectangle(0, 0, this->width(), this->height());
-//  QPainter paint(this);
-//  paint.setPen(QPen(Qt::NoPen));
-//  paint.setBrush(QBrush(GlobalData::g_windowColor,Qt::SolidPattern));
-//  paint.drawRoundedRect(rectangle,5,5);
-}
+////  QRectF rectangle(0, 0, this->width(), this->height());
+////  QPainter paint(this);
+////  paint.setPen(QPen(Qt::NoPen));
+////  paint.setBrush(QBrush(GlobalData::g_windowColor,Qt::SolidPattern));
+////  paint.drawRoundedRect(rectangle,5,5);
+//}
 
 
 

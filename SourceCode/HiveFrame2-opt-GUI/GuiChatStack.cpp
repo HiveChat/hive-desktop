@@ -25,11 +25,11 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   QLabel *usr_ip_label = new QLabel(usrInfoStrList[2]);
 
   QFont usr_name_font("Futura");//Verdana
-  usr_name_font.setPixelSize(15);
+  usr_name_font.setPointSize(15);
   usr_name_label->setFont(usr_name_font);
 
   QFont usr_ip_font("Futura");//Gill Sans
-  usr_ip_font.setPixelSize(11);
+  usr_ip_font.setPointSize(11);
   usr_ip_label->setFont(usr_ip_font);
 
   QVBoxLayout *usr_info_layout = new QVBoxLayout();
@@ -128,7 +128,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   text_editor->setFrameStyle(QFrame::NoFrame);
 
   QFont text_font("Gill Sans", 34);
-  text_font.setPixelSize(16);
+  text_font.setPointSize(16);
   text_editor->setFont(text_font);
 
   ///tools
@@ -219,8 +219,6 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
 
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
-  chat_scroll_area->verticalScrollBar()->setMinimum(0);
-  chat_scroll_area->verticalScrollBar()->setMaximum(500);
   chat_scroll_area->setWidgetResizable(true);
   chat_scroll_area->setWidget(chat_widget);
   QPalette palette = chat_scroll_area->palette();
@@ -244,7 +242,7 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
 
   loadHistory(current_active_index);
 
-  chat_scroll_area->verticalScrollBar()->setValue(500);
+
 
 }
 
@@ -285,7 +283,7 @@ void GuiChatStack::checkMessage(QStringList message_str_list)
     }
   refreshCurrentActiveIndex();
 
-  chat_scroll_area->verticalScrollBar()->setValue(500);
+
 
 }
 
@@ -307,7 +305,7 @@ void GuiChatStack::loadHistory(int index)
           QJsonObject history_json_obj = history_json_array[i].toObject();
           chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
         }
-      chat_scroll_area->verticalScrollBar()->setValue(500);
+    
 
     }
   else

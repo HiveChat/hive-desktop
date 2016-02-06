@@ -30,7 +30,7 @@ void GuiAvatarButton::mouseReleaseEvent(QMouseEvent *ev)
   emit clicked();
 }
 
-void GuiAvatarButton::enterEvent(QEvent * )
+void GuiAvatarButton::enterEvent(QEvent *)
 {
   //setState1();
   //emit entered();

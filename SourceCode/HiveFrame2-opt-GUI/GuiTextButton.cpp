@@ -15,7 +15,7 @@ GuiTextButton::GuiTextButton(const QString &text)
   this->setPalette(palette);
 
   QFont font;
-  font.setPixelSize(font_pixel_size);
+  font.setPointSize(font_pixel_size);
   this->setFont(font);
 
   this->setText(text);
@@ -25,7 +25,7 @@ void GuiTextButton::setFontPixelSize(int size)
 {
   font_pixel_size = size;
   QFont font;
-  font.setPixelSize(font_pixel_size);
+  font.setPointSize(font_pixel_size);
   this->setFont(font);
 }
 

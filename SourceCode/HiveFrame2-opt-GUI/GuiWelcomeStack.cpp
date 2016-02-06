@@ -70,7 +70,16 @@ void GuiWelcomeStack::refreshTime()
     {
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("It's late at night :)"));
     }
-  ip_label->setText(QString("Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
+
+  NetManager::localHostIP();
+  if(GlobalData::g_localHostIP == "")
+    {
+      ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
+    }
+  else
+    {
+      ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
+    }
 }
 
 

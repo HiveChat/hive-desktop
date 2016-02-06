@@ -56,7 +56,14 @@ void NetManager::sendUsrEnter()
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr;
+  QFile file(GlobalData::g_avatarPathStr);
+  if(!file.open(QFile::ReadOnly))
+    {
+      return;
+    }
+  QByteArray in_byte_array = file.readAll();
+
+  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << in_byte_array;
 }
 
 void NetManager::processPendingDatagrams()
@@ -161,7 +168,7 @@ QString NetManager::localHostIP()
     }
   else
     {
-      GlobalData::g_localHostIP = "offline";
+      GlobalData::g_localHostIP = "";
     }
 
   return GlobalData::g_localHostIP;

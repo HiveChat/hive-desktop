@@ -27,7 +27,7 @@ public:
   int countRow(QPoint p);
 
 protected:
-  void paintEvent(QPaintEvent*);
+//void paintEvent(QPaintEvent*);
 
 //  QPoint move_point;
 

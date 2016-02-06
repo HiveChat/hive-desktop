@@ -9,6 +9,7 @@
 #include <QDataStream>
 #include <QUdpSocket>
 #include <QDateTime>
+#include <QFile>
 #include <QNetworkInterface>
 
 
