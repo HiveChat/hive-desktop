@@ -47,7 +47,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
 
   ////net manager
-  connect(net_manager, SIGNAL(messageRecieved(QStringList)), gui_main_block, SLOT(onMessageRecieved(QStringList)));
+  connect(net_manager, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)));
 
   foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
     {

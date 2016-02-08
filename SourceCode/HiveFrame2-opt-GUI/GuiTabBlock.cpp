@@ -79,6 +79,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
   left_tab_label->setDefaultPixmap(":/img/img/home_tab.png");
   left_tab_label->setHoveredPixmap(":/img/img/home_tab.png");
+  left_tab_label->setToolTipDuration(1000);
+  left_tab_label->setToolTip("home");
   /*QPixmap left_label_img("/Users/Echo/Desktop/pp.png");//pp
   left_label_img.setDevicePixelRatio(2.0);
   left_tab_label->setPixmap(left_label_img);*/
@@ -87,6 +89,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
   mid_tab_label->setDefaultPixmap(":/img/img/chat_tab.png");
   mid_tab_label->setHoveredPixmap(":/img/img/chat_tab.png");
+  mid_tab_label->setToolTipDuration(1000);
+  mid_tab_label->setToolTip("chat");
   /*QPixmap mid_label_img("/Users/Echo/Desktop/t.png");//t
   mid_label_img.setDevicePixelRatio(2.0);
   mid_tab_label->setPixmap(mid_label_img);*/
@@ -95,6 +99,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
   right_tab_label->setDefaultPixmap(":/img/img/contact_tab.png");
   right_tab_label->setHoveredPixmap(":/img/img/contact_tab.png");
+  right_tab_label->setToolTipDuration(1000);
+  right_tab_label->setToolTip("others");
   /*QPixmap right_label_img("/Users/Echo/Desktop/s.png");//s
   right_label_img.setDevicePixelRatio(2.0);
   right_tab_label->setPixmap(right_label_img);*/

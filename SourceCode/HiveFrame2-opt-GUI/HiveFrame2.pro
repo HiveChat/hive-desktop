@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     NetManager.cpp \
     GlobalData.cpp \
     DataHistoryIO.cpp \
-    GuiOSXNotification.cpp
+    GuiOSXNotification.cpp \
+    GuiSettingsStack.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -51,7 +52,8 @@ HEADERS  += mainwindow.h \
     NetManager.h \
     GlobalData.h \
     DataHistoryIO.h \
-    GuiOSXNotification.h
+    GuiOSXNotification.h \
+    GuiSettingsStack.h
 
 RESOURCES += \
     qss.qrc \

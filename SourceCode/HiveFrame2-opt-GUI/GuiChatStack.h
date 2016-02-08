@@ -29,7 +29,7 @@ public:
 
 private:
   QHBoxLayout *main_layout;
-  GuiAvatarButton *avatar_label;
+  GuiAvatarButton *avatar_button;
 
 };
 
@@ -112,7 +112,7 @@ private:
   void refreshCurrentActiveIndex();
 
 public slots:
-  void checkMessage(QStringList message_str_list);
+  void checkMessage(QStringList message_str_list, bool fromMe);
   void onSendButtonClicked();
   void loadHistory(int index);
 

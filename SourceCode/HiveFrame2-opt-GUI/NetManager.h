@@ -46,7 +46,7 @@ public slots:
   void TEST_sendMessage(QString to, QString from, QString message);
 
 signals:
-  void messageRecieved(QStringList messageStrList);
+  void messageRecieved(QStringList messageStrList, bool fromMe);
 
 };
 

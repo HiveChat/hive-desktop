@@ -7,11 +7,7 @@
 GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 {
 
-  this->setAutoFillBackground(true);
-  QPalette palette;
-  palette.setColor(QPalette::Window, GlobalData::g_tabColor);
-  this->setPalette(palette);
-  this->setFixedWidth(250);
+
 
 
   comb_scrollarea = new QScrollArea(this);
@@ -48,6 +44,12 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 
   main_layout->setContentsMargins(5,5,5,5);
 
+  QPalette palette;
+  palette.setColor(QPalette::Window, GlobalData::g_tabColor);
+
+  this->setAutoFillBackground(true);
+  this->setPalette(palette);
+  this->setFixedWidth(250);
   this->setParent(parent);
 }
 

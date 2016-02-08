@@ -16,9 +16,9 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
 ///from baidu
 */
 
-  avatar_label = new GuiAvatarButton(usrInfoStrList[3], 90, this);
-  avatar_label->setFixedHeight(50);
-  avatar_label->setAlignment(Qt::AlignLeft);
+  avatar_button = new GuiAvatarButton(usrInfoStrList[3], 90, this);
+  avatar_button->setFixedHeight(50);
+  avatar_button->setAlignment(Qt::AlignLeft);
 
   //
   QLabel *usr_name_label = new QLabel(usrInfoStrList[1]);
@@ -42,7 +42,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   main_layout->setAlignment(Qt::AlignLeft);
   main_layout->setContentsMargins(15,10,10,0);
   main_layout->setSpacing(10);
-  main_layout->addWidget(avatar_label);
+  main_layout->addWidget(avatar_button);
   main_layout->addLayout(usr_info_layout);
 
   this->setFixedHeight(67);
@@ -260,38 +260,26 @@ void GuiChatStack::refreshCurrentActiveIndex()
 ///slots
 
 
-void GuiChatStack::checkMessage(QStringList message_str_list)
+void GuiChatStack::checkMessage(QStringList message_str_list, bool fromMe)
 {
 //  QString object_key_str;//0收人
 //  QString subject_key_str;//1发人
 //  QString message_str;//2
+  chat_widget->addChatBubble(message_str_list[2], fromMe);
+  data_history_io->wirteMessage(message_str_list, fromMe);
 
-  if(message_str_list[0] == GlobalData::g_myKeyStr
-     && message_str_list[1] == usr_info_str_list[0])
-    {
-      chat_widget->addChatBubble(message_str_list[2], false);
-      data_history_io->wirteMessage(message_str_list, false);
-      //qDebug()<<message_str_list[0]<<message_str_list[2];
-      //to me
-    }
-  if(message_str_list[0] == usr_info_str_list[0]
-     && message_str_list[1] == GlobalData::g_myKeyStr)
-    {
-      chat_widget->addChatBubble(message_str_list[2], true);
-      data_history_io->wirteMessage(message_str_list, true);
-      //from me
-    }
   refreshCurrentActiveIndex();
 
+  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 
-
+  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 }
 
 void GuiChatStack::onSendButtonClicked()
 {
-  emit sendMessage(usr_info_str_list[0], message_editor->text_editor->toHtml());
+  emit sendMessage(usr_info_str_list[0], message_editor->text_editor->toPlainText());
   message_editor->text_editor->clear();
-  chat_scroll_area->verticalScrollBar()->setValue(5000);
+
 
 }
 
@@ -305,8 +293,6 @@ void GuiChatStack::loadHistory(int index)
           QJsonObject history_json_obj = history_json_array[i].toObject();
           chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
         }
-    
-
     }
   else
     {

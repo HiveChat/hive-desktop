@@ -32,7 +32,7 @@ public slots:
   void displayChatStack(QString usrKey);
   void displayWelcomeStack();
   void addChatStack(QStringList usrInfoStrList);
-  void onMessageRecieved(QStringList message_str_list);
+  void onMessageRecieved(QStringList message_str_list, bool fromMe);
 
 signals:
   void whoseMessage(QStringList message_str_list);

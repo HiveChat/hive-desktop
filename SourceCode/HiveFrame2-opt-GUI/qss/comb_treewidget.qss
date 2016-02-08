@@ -84,6 +84,13 @@ QTreeView::branch:open:has-children:!has-siblings {
         background: url(/Users/Echo/Desktop/HiveUI/TreeWidget/TreeWidget-opened.png);
 }
 
+
+QToolTip {
+    padding: 0px;
+    border-radius: 5px;
+    opacity: 150;
+}
+
 QScrollArea{
 	background: transparent
 }
