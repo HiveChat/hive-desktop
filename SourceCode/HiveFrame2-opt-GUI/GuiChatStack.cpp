@@ -166,8 +166,8 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   ///send button
   send_btn = new GuiLabelButton();
   send_btn->setDefaultPixmap(":/img/img/send_button_0.png");
-  send_btn->setHoveredPixmap(":/img/img/send_button_0.png");
-  send_btn->setPressedPixmap(":/img/img/send_button_1.png");
+  send_btn->setHoveredPixmap(":/img/img/send_button_1.png");
+  //send_btn->setPressedPixmap(":/img/img/send_button_1.png");
   send_btn->setAlignment(Qt::AlignRight);
 
   main_layout = new QHBoxLayout(this);

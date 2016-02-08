@@ -1,4 +1,5 @@
 #include "NetManager.h"
+#include <QLabel>
 
 NetManager::NetManager(QObject *parent) : QObject(parent)
 {
@@ -62,6 +63,7 @@ void NetManager::sendUsrEnter()
     {
       return;
     }
+
   QByteArray in_byte_array = file.readAll();
   file.flush();
   file.close();
@@ -110,6 +112,7 @@ void NetManager::processPendingDatagrams()
                     message_str_list.append(GlobalData::g_currentTime());
                     qDebug()<<message_str_list[2];
                     emit messageRecieved(message_str_list, true);
+                    break;
                   }
               }
             else
@@ -128,15 +131,17 @@ void NetManager::processPendingDatagrams()
                     qDebug()<<"notfromme))))))))))))))))"<<message_str_list[2];
 
                     emit messageRecieved(message_str_list, false);
+                    break;
                   }
               }
+            break;
           }//case
 
         ////////////problem2016-01-06
 
         case UsrEnter:
           {
-            qDebug()<<"££££££££££££££££££££££££££££££££££";
+            qDebug()<<"££££££££££££££ usr enter ££££££££££££££££££££";
             //out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << in_byte_array;
             QString subject_ip_str;
             QString subject_key_str;
@@ -148,7 +153,15 @@ void NetManager::processPendingDatagrams()
               }
             QByteArray subject_byte_array;
             in >> subject_byte_array;
-            //QPixmap subject_avatar_pixmap = QPixmap.loadFromData(subject_byte_array);
+
+
+            QPixmap subject_avatar_pixmap;
+            subject_avatar_pixmap.loadFromData(subject_byte_array);
+
+            QLabel *label = new QLabel();
+            label->setPixmap(subject_avatar_pixmap);
+            label->show();
+
             break;
           }
 
@@ -243,11 +256,11 @@ void NetManager::TEST()
 
   //qDebug()<<QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 
-//  TEST_sendMessage("90-00-4E-9A-A4-FD",GlobalData::g_myKeyStr,"But one hundred years later, the Negro still is not free. One hundred years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination. One hundred years later, the Negro lives on a lonely island of poverty in the midst of a vast ocean of material prosperity. One hundred years later, the Negro is still languished in the corners of American society and finds himself an exile in his own land. So we’ve come here today to dramatize a shameful condition.");
+  TEST_sendMessage("90-00-4E-9A-A4-FD",GlobalData::g_myKeyStr,"But one hundred years later, the Negro still is not free. One hundred years later, the life of the Negro is still sadly crippled by the manacles of segregation and the chains of discrimination. One hundred years later, the Negro lives on a lonely island of poverty in the midst of a vast ocean of material prosperity. One hundred years later, the Negro is still languished in the corners of American society and finds himself an exile in his own land. So we’ve come here today to dramatize a shameful condition.");
   TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来r。");
-//  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
+  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
   TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
   TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
-//  TEST_sendMessage("45-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"fffffff3");
-//  TEST_sendMessage("44-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"fffffff4");
+  TEST_sendMessage("45-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"fffffff3");
+  TEST_sendMessage("44-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"fffffff4");
 }

@@ -32,7 +32,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   //connect
   connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block, SLOT(displayChatStack(QString)));
-  connect(gui_tab_block->gui_home_tab->welcome_label, SIGNAL(clicked()), gui_main_block, SLOT(displayWelcomeStack()));
+  connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked()), gui_main_block, SLOT(displayWelcomeStack()));
 
   //connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), data_manager, SLOT(readMessage(QString)));
   //connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block->gui_chat_stack, SLOT(checkIdentity(QStringList)));

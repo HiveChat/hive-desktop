@@ -3,8 +3,7 @@
 
 #include <QWidget>
 
-#include "GuiTextButton.h"
-#include "GuiLabelButton.h"
+#include "GuiMenuButton.h"
 
 #include <QVBoxLayout>
 #include <QGridLayout>
@@ -17,22 +16,16 @@ public:
   explicit GuiHomeTab(QWidget *parent = 0);
   ~GuiHomeTab();
 
-  GuiLabelButton *welcome_btn;
-  GuiLabelButton *issues_btn;
-  GuiLabelButton *files_btn;
-  GuiLabelButton *settings_btn;
+  GuiMenuButton *welcome_btn;
+  GuiMenuButton *settings_btn;
 
-  GuiTextButton *welcome_label;
-  GuiTextButton *issues_label;
-  GuiTextButton *files_label;
-  GuiTextButton *settings_label;
 
 
 public slots:
 
 private:
 
-  QGridLayout *main_layout;
+  QVBoxLayout *main_layout;
 
 
 };

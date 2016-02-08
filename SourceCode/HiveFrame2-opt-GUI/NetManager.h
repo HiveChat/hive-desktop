@@ -13,7 +13,6 @@
 #include <QNetworkInterface>
 #include <QPixmap>
 
-enum BroadcastType{Message, UsrEnter, UsrLeft, FileName, Refuse};
 
 /*
 
@@ -38,6 +37,7 @@ private:
   qint16 udp_port = 23232;
   QUdpSocket *udp_socket;
 
+  enum BroadcastType{Message, UsrEnter, UsrLeft, FileName, Refuse};
 
 public slots:
   void sendMessage(QString usrKeyStr, QString message);
