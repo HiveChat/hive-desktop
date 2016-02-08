@@ -34,7 +34,8 @@ SOURCES += main.cpp\
     DataHistoryIO.cpp \
     GuiOSXNotification.cpp \
     GuiSettingsStack.cpp \
-    GuiMenuButton.cpp
+    GuiMenuButton.cpp \
+    GuiScrollStack.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     DataHistoryIO.h \
     GuiOSXNotification.h \
     GuiSettingsStack.h \
-    GuiMenuButton.h
+    GuiMenuButton.h \
+    GuiScrollStack.h
 
 RESOURCES += \
     qss.qrc \

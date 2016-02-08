@@ -19,15 +19,8 @@ public:
   GuiMenuButton *welcome_btn;
   GuiMenuButton *settings_btn;
 
-
-
-public slots:
-
 private:
-
   QVBoxLayout *main_layout;
-
-
 };
 
 #endif // GUIHOMETAB_H

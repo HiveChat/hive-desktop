@@ -70,7 +70,7 @@ void NetManager::sendUsrEnter()
 
   out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << in_byte_array;
   qint64 f = udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
-  qDebug()<<f;
+  //qDebug()<<f;
 }
 
 void NetManager::processPendingDatagrams()

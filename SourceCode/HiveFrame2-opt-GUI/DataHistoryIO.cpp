@@ -141,7 +141,7 @@ void DataHistoryIO::saveMessage()
       active_history_json_doc.setObject(active_history_json_obj);
 
       out << active_history_json_doc.toJson();
-      qDebug()<<active_history_json_doc.toJson();
+      //qDebug()<<active_history_json_doc.toJson();
     }
   else
     {

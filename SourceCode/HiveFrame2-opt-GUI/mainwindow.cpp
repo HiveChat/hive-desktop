@@ -8,9 +8,7 @@
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
-  QtMac::setBadgeLabelText("1");
-
-
+  QtMac::setBadgeLabelText("贺");
 
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(250,250,250));

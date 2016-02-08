@@ -18,7 +18,8 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 
   ////main layout
   main_layout = new QVBoxLayout(this);
-  main_layout->setSpacing(10);
+  main_layout->setContentsMargins(30,20,20,0);
+  main_layout->setSpacing(20);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addWidget(welcome_btn);
   main_layout->addWidget(settings_btn);

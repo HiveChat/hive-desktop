@@ -13,6 +13,7 @@ GuiMenuButton::GuiMenuButton(QString text, QWidget *parent) : QWidget(parent)
   text_label->setFont(font);
 
   main_layout = new QHBoxLayout(this);
+  main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(20);
   main_layout->setAlignment(Qt::AlignLeft);
   main_layout->addWidget(icon_label);
