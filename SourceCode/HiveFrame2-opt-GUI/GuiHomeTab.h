@@ -17,7 +17,7 @@ public:
   ~GuiHomeTab();
 
   GuiMenuButton *welcome_btn;
-  GuiMenuButton *settings_btn;
+  GuiMenuButton *storage_btn;
 
 private:
   QVBoxLayout *main_layout;

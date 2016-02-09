@@ -15,9 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
   this->setPalette(palette);
 
   gui_central_widget = new GuiCentralWidget(this);
-  connect(gui_central_widget->gui_tab_block->exit_hint, SIGNAL(clicked()), this, SLOT(close()));
-  connect(gui_central_widget->gui_tab_block->min_hint, SIGNAL(clicked()), this, SLOT(showMinimized()));
-  connect(gui_central_widget->gui_tab_block->max_hint, SIGNAL(clicked()), this, SLOT(setWindowMaximized()));
+//  connect(gui_central_widget->gui_tab_block->exit_hint, SIGNAL(clicked()), this, SLOT(close()));
+//  connect(gui_central_widget->gui_tab_block->min_hint, SIGNAL(clicked()), this, SLOT(showMinimized()));
+//  connect(gui_central_widget->gui_tab_block->max_hint, SIGNAL(clicked()), this, SLOT(setWindowMaximized()));
 
 
   this->setMinimumHeight(600);

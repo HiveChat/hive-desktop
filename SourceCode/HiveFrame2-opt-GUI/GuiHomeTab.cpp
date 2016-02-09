@@ -8,13 +8,13 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
   label_font.setPointSize(20);
 
   welcome_btn = new GuiMenuButton("welcome", this);
-  settings_btn = new GuiMenuButton("settings", this);
+  storage_btn = new GuiMenuButton("file storage", this);
 
-  welcome_btn->setDefaultPixmap("/Users/Echo/Desktop/welcome_0.png");
-  welcome_btn->setHoveredPixmap("/Users/Echo/Desktop/welcome_1.png");
+  welcome_btn->setDefaultPixmap(":/img/img/welcome_0.png");
+  welcome_btn->setHoveredPixmap(":/img/img/welcome_1.png");
 
-  settings_btn->setDefaultPixmap("/Users/Echo/Desktop/settings_0.png");
-  settings_btn->setHoveredPixmap("/Users/Echo/Desktop/settings_1.png");
+  storage_btn->setDefaultPixmap(":/img/img/storage_0.png");
+  storage_btn->setHoveredPixmap(":/img/img/storage_1.png");
 
   ////main layout
   main_layout = new QVBoxLayout(this);
@@ -22,8 +22,7 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(20);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addWidget(welcome_btn);
-  main_layout->addWidget(settings_btn);
-
+  main_layout->addWidget(storage_btn);
 
   this->setParent(parent);
 

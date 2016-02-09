@@ -12,140 +12,84 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
   ////label test
   /// QFileDialog Example
-  /*QString fileName = QFileDialog::getOpenFileName(this,"Choose Image","x:/image",("Image File(*.*)")) ;
-      QImage image ;
-      image.load(fileName) ;
-
-      QLabel *label = new QLabel();
-      label->setPixmap(QPixmap::fromImage(image));
-      label->resize(QSize(40,5));*/
+//  QString fileName = QFileDialog::getOpenFileName(this,"Choose Image","/",("Image File(*.*)")) ;
+//      QImage image ;
+//      image.load(fileName) ;
 
   ////window btn
-  exit_hint = new GuiLabelButton();
-  min_hint = new GuiLabelButton();
-  max_hint = new GuiLabelButton();
+//  exit_hint = new GuiLabelButton(this);
+//  min_hint = new GuiLabelButton(this);
+//  max_hint = new GuiLabelButton(this);
 
-  exit_hint->setDefaultPixmap(":/img/img/exit_hint_0.png");
-  exit_hint->setHoveredPixmap(":/img/img/exit_hint_1.png");
-  /*exit_hint0.load(":/img/img/exit_hint_0.png");
-  exit_hint0.setDevicePixelRatio(2.0);
-  exit_hint1.load(":/img/img/exit_hint_1.png");
-  exit_hint1.setDevicePixelRatio(2.0);
-  exit_hint->setPixmap(exit_hint0);*/
-  //for GuiLabelButton::setHDPixmap(QString path)
-  //exit_hint->setHDPixmap(exit_hint0);
+//  exit_hint->setDefaultPixmap(":/img/img/exit_hint_0.png");
+//  exit_hint->setHoveredPixmap(":/img/img/exit_hint_1.png");
 
-  min_hint->setDefaultPixmap(":/img/img/min_hint_0.png");
-  min_hint->setHoveredPixmap(":/img/img/min_hint_1.png");
-  /*min_hint0.load(":/img/img/min_hint_0.png");
-  min_hint0.setDevicePixelRatio(2.0);
-  min_hint1.load(":/img/img/min_hint_1.png");
-  min_hint1.setDevicePixelRatio(2.0);
-  min_hint->setPixmap(min_hint0);*/
-  //for GuiLabelButton::setHDPixmap(QString path)
-  //min_hint->setHDPixmap(min_hint0);
+//  min_hint->setDefaultPixmap(":/img/img/min_hint_0.png");
+//  min_hint->setHoveredPixmap(":/img/img/min_hint_1.png");
 
-  max_hint->setDefaultPixmap(":/img/img/max_hint_0.png");
-  max_hint->setHoveredPixmap(":/img/img/max_hint_1.png");
-  /*max_hint0.load(":/img/img/max_hint_0.png");
-  max_hint0.setDevicePixelRatio(2.0);
-  max_hint1.load(":/img/img/max_hint_1.png");
-  max_hint1.setDevicePixelRatio(2.0);
-  max_hint->setPixmap(max_hint0);*/
-  //for GuiLabelButton::setHDPixmap(QString path)
-  //max_hint->setHDPixmap(max_hint0);
+//  max_hint->setDefaultPixmap(":/img/img/max_hint_0.png");
+//  max_hint->setHoveredPixmap(":/img/img/max_hint_1.png");
 
-  connect(exit_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-  connect(exit_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
-  connect(min_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-  connect(min_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
-  connect(max_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-  connect(max_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
+//  connect(exit_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
+//  connect(exit_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
+//  connect(min_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
+//  connect(min_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
+//  connect(max_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
+//  connect(max_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
 
-  ////window btn layout
-  window_btn_layout = new QHBoxLayout();
-  window_btn_layout->setMargin(10);
-  window_btn_layout->setSpacing(8);
-  window_btn_layout->setSizeConstraint(QLayout::SetFixedSize);
-  window_btn_layout->setAlignment(Qt::AlignLeft);
-  window_btn_layout->addWidget(exit_hint);
-  window_btn_layout->addWidget(min_hint);
-  window_btn_layout->addWidget(max_hint);
+//  ////window btn layout
+//  window_btn_layout = new QHBoxLayout();
+//  window_btn_layout->setMargin(10);
+//  window_btn_layout->setSpacing(8);
+//  window_btn_layout->setSizeConstraint(QLayout::SetFixedSize);
+//  window_btn_layout->setAlignment(Qt::AlignLeft);
+//  window_btn_layout->addWidget(exit_hint);
+//  window_btn_layout->addWidget(min_hint);
+//  window_btn_layout->addWidget(max_hint);
 
   ////tab label
-  left_tab_label = new GuiLabelButton();
-  mid_tab_label = new GuiLabelButton();
-  right_tab_label = new GuiLabelButton();
+  left_tab_label = new GuiLabelButton(this);
+  mid_tab_label = new GuiLabelButton(this);
+  right_tab_label = new GuiLabelButton(this);
 
   left_tab_label->setDefaultPixmap(":/img/img/home_tab.png");
   left_tab_label->setHoveredPixmap(":/img/img/home_tab.png");
   left_tab_label->setToolTipDuration(1000);
   left_tab_label->setToolTip("home");
-  /*QPixmap left_label_img("/Users/Echo/Desktop/pp.png");//pp
-  left_label_img.setDevicePixelRatio(2.0);
-  left_tab_label->setPixmap(left_label_img);*/
-  //left_tab_label->setScaledContents(true);
-  //left_tab_label->resize(QSize(50,50));
 
   mid_tab_label->setDefaultPixmap(":/img/img/chat_tab.png");
   mid_tab_label->setHoveredPixmap(":/img/img/chat_tab.png");
   mid_tab_label->setToolTipDuration(1000);
   mid_tab_label->setToolTip("chat");
-  /*QPixmap mid_label_img("/Users/Echo/Desktop/t.png");//t
-  mid_label_img.setDevicePixelRatio(2.0);
-  mid_tab_label->setPixmap(mid_label_img);*/
-  //mid_tab_label->setScaledContents(true);
-  //mid_tab_label->resize(QSize(50,50));
 
-  right_tab_label->setDefaultPixmap(":/img/img/contact_tab.png");
-  right_tab_label->setHoveredPixmap(":/img/img/contact_tab.png");
+  right_tab_label->setDefaultPixmap(":/img/img/settings_tab.png");
+  right_tab_label->setHoveredPixmap(":/img/img/settings_tab.png");
   right_tab_label->setToolTipDuration(1000);
-  right_tab_label->setToolTip("others");
-  /*QPixmap right_label_img("/Users/Echo/Desktop/s.png");//s
-  right_label_img.setDevicePixelRatio(2.0);
-  right_tab_label->setPixmap(right_label_img);*/
-  //right_tab_label->setScaledContents(true);
-  //right_tab_label->resize(QSize(50,50));
+  right_tab_label->setToolTip("settings");
 
   connect(left_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
   connect(mid_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
   connect(right_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
 
   ////tab line
-  left_btn_line_label  = new QFrame();
-  mid_btn_line_label   = new QFrame();
-  right_btn_line_label = new QFrame();
+  left_btn_line  = new QFrame(this);
+  mid_btn_line   = new QFrame(this);
+  right_btn_line = new QFrame(this);
 
-  left_btn_line_label->setFrameShape(QFrame::HLine);
-  left_btn_line_label->setFrameShadow(QFrame::Plain);
-  left_btn_line_label->setFixedSize(83,2);
-  left_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+  left_btn_line->setFrameShape(QFrame::HLine);
+  left_btn_line->setFrameShadow(QFrame::Plain);
+  left_btn_line->setFixedSize(83,3);
+  left_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
 
-  mid_btn_line_label->setFrameShape(QFrame::HLine);
-  mid_btn_line_label->setFrameShadow(QFrame::Plain);
-  mid_btn_line_label->setFixedSize(84,2);
-  mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+  mid_btn_line->setFrameShape(QFrame::HLine);
+  mid_btn_line->setFrameShadow(QFrame::Plain);
+  mid_btn_line->setFixedSize(84,2);
+  mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
-  right_btn_line_label->setFrameShape(QFrame::HLine);
-  right_btn_line_label->setFrameShadow(QFrame::Plain);
-  right_btn_line_label->setFixedSize(83,2);
-  right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-
-//  left_btn_line_label0.load(":/img/img/left_btn_line_label0.png");
-//  left_btn_line_label1.load(":/img/img/left_btn_line_label1.png");
-//  left_btn_line_label->setPixmap(left_btn_line_label1);
-//  //left_btn_line_label->resize(QSize(left_btn_line_label1.size()));
-
-//  mid_btn_line_label0.load(":/img/img/mid_btn_line_label0.png");
-//  mid_btn_line_label1.load(":/img/img/mid_btn_line_label1.png");
-//  mid_btn_line_label->setPixmap(mid_btn_line_label0);
-//  //mid_btn_line_label->resize(QSize(mid_btn_line_label0.size()));
-
-//  right_btn_line_label0.load(":/img/img/right_btn_line_label0.png");
-//  right_btn_line_label1.load(":/img/img/right_btn_line_label1.png");
-//  right_btn_line_label->setPixmap(right_btn_line_label0);
-//  //right_btn_line_label->resize(QSize(right_btn_line_label0.size()));
-
+  right_btn_line->setFrameShape(QFrame::HLine);
+  right_btn_line->setFrameShadow(QFrame::Plain);
+  right_btn_line->setFixedSize(83,2);
+  right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   ////tab label layout
   tab_label_layout = new QGridLayout();
@@ -160,19 +104,21 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   tab_label_layout->addWidget(mid_tab_label,0,1,Qt::AlignCenter);
   tab_label_layout->addWidget(right_tab_label,0,2,Qt::AlignCenter);
 
-  tab_label_layout->addWidget(left_btn_line_label,1,0,Qt::AlignLeft);
-  tab_label_layout->addWidget(mid_btn_line_label,1,1,Qt::AlignCenter);
-  tab_label_layout->addWidget(right_btn_line_label,1,2,Qt::AlignRight);
+  tab_label_layout->addWidget(left_btn_line,1,0,Qt::AlignLeft);
+  tab_label_layout->addWidget(mid_btn_line,1,1,Qt::AlignCenter);
+  tab_label_layout->addWidget(right_btn_line,1,2,Qt::AlignRight);
 
 
 
   ////tab stacked widget
   gui_home_tab = new GuiHomeTab();
   gui_chat_tab = new GuiChatTab();
+  gui_settings_tab = new GuiSettingsTab();
 
   tab_stacked_widget = new QStackedWidget(this);
   tab_stacked_widget->addWidget(gui_home_tab);
   tab_stacked_widget->addWidget(gui_chat_tab);
+  tab_stacked_widget->addWidget(gui_settings_tab);
 
   //// main layout
   main_layout = new QVBoxLayout(this);
@@ -194,50 +140,52 @@ void GuiTabBlock::changeBtnLine()
   if(sender() == left_tab_label)
     {
       current_tab_index = 1;
-//      left_btn_line_label->setPixmap(left_btn_line_label1);
-//      mid_btn_line_label->setPixmap(mid_btn_line_label0);
-//      right_btn_line_label->setPixmap(right_btn_line_label0);
-      left_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
-      mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-      right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      left_btn_line->setFixedHeight(3);
+      left_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      mid_btn_line->setFixedHeight(2);
+      mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line->setFixedHeight(2);
+      right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(gui_home_tab);
     }
   if(sender() == mid_tab_label)
     {
       current_tab_index = 2;
-//      left_btn_line_label->setPixmap(left_btn_line_label0);
-//      mid_btn_line_label->setPixmap(mid_btn_line_label1);
-//      right_btn_line_label->setPixmap(right_btn_line_label0);
-      left_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-      mid_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
-      right_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      left_btn_line->setFixedHeight(2);
+      left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line->setFixedHeight(3);
+      mid_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      right_btn_line->setFixedHeight(2);
+      right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(gui_chat_tab);
     }
   if(sender() == right_tab_label)
     {
       current_tab_index = 3;
-//      left_btn_line_label->setPixmap(left_btn_line_label0);
-//      mid_btn_line_label->setPixmap(mid_btn_line_label0);
-//      right_btn_line_label->setPixmap(right_btn_line_label1);
-      left_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-      mid_btn_line_label->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-      right_btn_line_label->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      left_btn_line->setFixedHeight(2);
+      left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line->setFixedHeight(2);
+      mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line->setFixedHeight(3);
+      right_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      tab_stacked_widget->setCurrentWidget(gui_settings_tab);
+
     }
 }
 
-void GuiTabBlock::changeWindowBtn()
-{
-  exit_hint->setHovered();
-  min_hint->setHovered();
-  max_hint->setHovered();
-}
+//void GuiTabBlock::changeWindowBtn()
+//{
+//  exit_hint->setHovered();
+//  min_hint->setHovered();
+//  max_hint->setHovered();
+//}
 
-void GuiTabBlock::recoverWindowBtn()
-{
-  exit_hint->setDefault();
-  min_hint->setDefault();
-  max_hint->setDefault();
-}
+//void GuiTabBlock::recoverWindowBtn()
+//{
+//  exit_hint->setDefault();
+//  min_hint->setDefault();
+//  max_hint->setDefault();
+//}
 
 int GuiTabBlock::currentIndex()
 {

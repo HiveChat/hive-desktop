@@ -1,13 +1,10 @@
 #ifndef GUITABBLOCK_H
 #define GUITABBLOCK_H
 
-#include <QWidget>
-
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGridLayout>
 
-#include <QLabel>
 #include <QPixmap>
 #include <QStackedWidget>
 
@@ -15,6 +12,8 @@
 
 #include "GuiChatTab.h"
 #include "GuiHomeTab.h"
+#include "GuiSettingsTab.h"
+
 
 class GuiTabBlock : public QWidget
 {
@@ -26,24 +25,25 @@ public:
   ~GuiTabBlock();
 
   QVBoxLayout *main_layout;
-  QHBoxLayout *window_btn_layout;
+//  QHBoxLayout *window_btn_layout;
   QGridLayout *tab_label_layout;
 
-  GuiLabelButton *exit_hint;
-  GuiLabelButton *min_hint;
-  GuiLabelButton *max_hint;
+//  GuiLabelButton *exit_hint;
+//  GuiLabelButton *min_hint;
+//  GuiLabelButton *max_hint;
 
   GuiLabelButton *left_tab_label;
   GuiLabelButton *mid_tab_label;
   GuiLabelButton *right_tab_label;
 
-  QFrame *left_btn_line_label;
-  QFrame *mid_btn_line_label;
-  QFrame *right_btn_line_label;
+  QFrame *left_btn_line;
+  QFrame *mid_btn_line;
+  QFrame *right_btn_line;
 
   QStackedWidget *tab_stacked_widget;
   GuiHomeTab *gui_home_tab;
   GuiChatTab *gui_chat_tab;
+  GuiSettingsTab *gui_settings_tab;
 
 
   int currentIndex();
@@ -51,8 +51,8 @@ public:
 
 private slots:
   void changeBtnLine();
-  void changeWindowBtn();
-  void recoverWindowBtn();
+//  void changeWindowBtn();
+//  void recoverWindowBtn();
 
 private:
   int current_tab_index = 0;
@@ -64,12 +64,12 @@ private:
 //  QPixmap right_btn_line_label0;
 //  QPixmap right_btn_line_label1;
 
-  QPixmap exit_hint0;
-  QPixmap exit_hint1;
-  QPixmap min_hint0;
-  QPixmap min_hint1;
-  QPixmap max_hint0;
-  QPixmap max_hint1;
+//  QPixmap exit_hint0;
+//  QPixmap exit_hint1;
+//  QPixmap min_hint0;
+//  QPixmap min_hint1;
+//  QPixmap max_hint0;
+//  QPixmap max_hint1;
 
   //for GuiLabelButton::setHDPixmap(QString path)
   /*QString exit_hint0 = ":/img/img/exit_hint_0.png";

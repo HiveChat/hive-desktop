@@ -35,7 +35,8 @@ SOURCES += main.cpp\
     GuiOSXNotification.cpp \
     GuiSettingsStack.cpp \
     GuiMenuButton.cpp \
-    GuiScrollStack.cpp
+    GuiScrollStack.cpp \
+    GuiSettingsTab.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -57,7 +58,8 @@ HEADERS  += mainwindow.h \
     GuiOSXNotification.h \
     GuiSettingsStack.h \
     GuiMenuButton.h \
-    GuiScrollStack.h
+    GuiScrollStack.h \
+    GuiSettingsTab.h
 
 RESOURCES += \
     qss.qrc \
