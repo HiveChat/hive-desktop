@@ -21,8 +21,8 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   avatar_button->setAlignment(Qt::AlignLeft);
 
   //
-  QLabel *usr_name_label = new QLabel(usrInfoStrList[1]);
-  QLabel *usr_ip_label = new QLabel(usrInfoStrList[2]);
+  QLabel *usr_name_label = new QLabel(usrInfoStrList[1], this);
+  QLabel *usr_ip_label = new QLabel(usrInfoStrList[2], this);
 
   QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPointSize(15);
