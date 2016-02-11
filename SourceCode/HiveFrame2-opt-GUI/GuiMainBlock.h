@@ -1,14 +1,12 @@
 #ifndef GUIMAINBLOCK_H
 #define GUIMAINBLOCK_H
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QLabel>
 #include <QStackedWidget>
 #include <QList>
 #include <QMap>
 
 #include "GuiChatStack.h"
+#include "GuiScrollStack.h"
 #include "GuiWelcomeStack.h"
 
 class GuiMainBlock : public QWidget
@@ -21,12 +19,16 @@ public:
 
   GuiChatStack *gui_chat_stack;
   GuiWelcomeStack *gui_welcome_stack;
+  GuiScrollStack *gui_settings_stack;
   QStackedWidget *main_stacked_widget;
 
   QMap<QString ,GuiChatStack*> gui_chat_stack_map;
 
 private:
   QVBoxLayout *main_layout;
+
+  void setSettings_profile();
+  void setSettings_messaging();
 
 public slots:
   void displayChatStack(QString usrKey);

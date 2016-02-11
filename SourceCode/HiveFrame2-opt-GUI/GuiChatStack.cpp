@@ -17,7 +17,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
 */
 
   avatar_button = new GuiAvatarButton(usrInfoStrList[3], 90, this);
-  avatar_button->setFixedHeight(50);
+  //avatar_button->setFixedHeight(50);
   avatar_button->setAlignment(Qt::AlignLeft);
 
   //
@@ -45,7 +45,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   main_layout->addWidget(avatar_button);
   main_layout->addLayout(usr_info_layout);
 
-  this->setFixedHeight(67);
+  //this->setFixedHeight(68);
 
 
 

@@ -2,23 +2,29 @@
 #include <QDebug>
 GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, QWidget *parent)
 {
-  QBitmap mask(QSize(Diameter,Diameter));
+  diameter = Diameter;
+  setAvatar(path);
+  this->setParent(parent);
+}
+
+void GuiAvatarButton::setAvatar(QString path)
+{
+  QBitmap mask(QSize(diameter,diameter));
   QPainter painter(&mask);
   painter.setRenderHint(QPainter::Antialiasing);
   painter.setRenderHint(QPainter::SmoothPixmapTransform);
-  painter.fillRect(0, 0, Diameter, Diameter, Qt::white);
+  painter.fillRect(0, 0, diameter, diameter, Qt::white);
   painter.setBrush(QColor(0, 0, 0));
-  painter.drawRoundedRect(0, 0, Diameter, Diameter, 99, 99);
+  painter.drawRoundedRect(0, 0, diameter, diameter, 99, 99);
 
 
   QPixmap avatar_pixmap(path);
-  avatar_pixmap = avatar_pixmap.scaled(Diameter,Diameter,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
+  avatar_pixmap = avatar_pixmap.scaled(diameter,diameter,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
 
   avatar_pixmap.setDevicePixelRatio(2.0);
   avatar_pixmap.setMask(mask);
 
   this->setPixmap(avatar_pixmap);
-  this->setParent(parent);
 }
 
 
@@ -26,7 +32,7 @@ GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, QWidget *pare
 
 void GuiAvatarButton::mouseReleaseEvent(QMouseEvent *ev)
 {
-  if (ev->button() == Qt::LeftButton);
+  if (ev->button() == Qt::LeftButton)
   emit clicked();
 }
 

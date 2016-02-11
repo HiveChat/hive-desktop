@@ -14,12 +14,15 @@ class GuiAvatarButton : public QLabel
 
 public:
   GuiAvatarButton(QString path, int Diameter, QWidget *parent);
-
+  void setAvatar(QString path);
 
 protected:
   void mouseReleaseEvent(QMouseEvent *);
   void enterEvent(QEvent *);
   void leaveEvent(QEvent *);
+
+private:
+  int diameter;
 
 signals:
   void clicked();

@@ -33,7 +33,6 @@ SOURCES += main.cpp\
     GlobalData.cpp \
     DataHistoryIO.cpp \
     GuiOSXNotification.cpp \
-    GuiSettingsStack.cpp \
     GuiMenuButton.cpp \
     GuiScrollStack.cpp \
     GuiSettingsTab.cpp
@@ -56,7 +55,6 @@ HEADERS  += mainwindow.h \
     GlobalData.h \
     DataHistoryIO.h \
     GuiOSXNotification.h \
-    GuiSettingsStack.h \
     GuiMenuButton.h \
     GuiScrollStack.h \
     GuiSettingsTab.h

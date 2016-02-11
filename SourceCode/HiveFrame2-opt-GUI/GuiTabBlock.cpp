@@ -79,7 +79,7 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   left_btn_line->setFrameShape(QFrame::HLine);
   left_btn_line->setFrameShadow(QFrame::Plain);
   left_btn_line->setFixedSize(83,3);
-  left_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+  left_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
 
   mid_btn_line->setFrameShape(QFrame::HLine);
   mid_btn_line->setFrameShadow(QFrame::Plain);
@@ -141,7 +141,7 @@ void GuiTabBlock::changeBtnLine()
     {
       current_tab_index = 1;
       left_btn_line->setFixedHeight(3);
-      left_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      left_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
       mid_btn_line->setFixedHeight(2);
       mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line->setFixedHeight(2);
@@ -154,7 +154,7 @@ void GuiTabBlock::changeBtnLine()
       left_btn_line->setFixedHeight(2);
       left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       mid_btn_line->setFixedHeight(3);
-      mid_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
       right_btn_line->setFixedHeight(2);
       right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(gui_chat_tab);
@@ -167,7 +167,7 @@ void GuiTabBlock::changeBtnLine()
       mid_btn_line->setFixedHeight(2);
       mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line->setFixedHeight(3);
-      right_btn_line->setStyleSheet ("QFrame{  background: #FDC800; border: transparent;  }");
+      right_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(gui_settings_tab);
 
     }
