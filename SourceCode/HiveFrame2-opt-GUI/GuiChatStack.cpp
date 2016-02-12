@@ -45,7 +45,7 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   main_layout->addWidget(avatar_button);
   main_layout->addLayout(usr_info_layout);
 
-  //this->setFixedHeight(68);
+  this->setFixedHeight(69);
 
 
 
@@ -71,17 +71,17 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   chat_bubble_layout->setContentsMargins(5,30,5,30);
 
   ///lines
+  QFrame *top_line = new QFrame(this);
+  top_line->setFrameShape(QFrame::HLine);
+  top_line->setFrameShadow(QFrame::Plain);
+  top_line->setFixedHeight(2);
+  top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);
   bottom_line->setFrameShadow(QFrame::Plain);
   bottom_line->setFixedHeight(4);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
-
-  QFrame *top_line = new QFrame(this);
-  top_line->setFrameShape(QFrame::HLine);
-  top_line->setFrameShadow(QFrame::Plain);
-  top_line->setFixedHeight(4);
-  top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
@@ -217,6 +217,12 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
   ///UI
   top_bar = new GuiChatStack_top_bar(usr_info_str_list, this);
 
+  QFrame *top_bar_line = new QFrame(this);
+  top_bar_line->setFrameShape(QFrame::HLine);
+  top_bar_line->setFrameShadow(QFrame::Plain);
+  top_bar_line->setFixedHeight(2);
+  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
   chat_scroll_area->setWidgetResizable(true);
@@ -233,6 +239,7 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignCenter);
   main_layout->addWidget(top_bar);
+  main_layout->addWidget(top_bar_line);
   main_layout->addWidget(chat_scroll_area);
   main_layout->addWidget(message_editor);
   main_layout->setMargin(0);

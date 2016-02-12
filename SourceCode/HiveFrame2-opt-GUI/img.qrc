@@ -29,6 +29,7 @@
         <file>img/profile_1.png</file>
         <file>img/style_0.png</file>
         <file>img/style_1.png</file>
+        <file>img/storage.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>

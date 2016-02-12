@@ -1,7 +1,7 @@
 #ifndef GUISCROLLSTACK_H
 #define GUISCROLLSTACK_H
 
-#include <QVBoxLayout>
+#include <QFormLayout>
 #include <QScrollArea>
 #include <GuiAvatarButton.h>
 
@@ -14,7 +14,7 @@ public:
   explicit GuiScrollStack(QWidget *parent = 0);
   ~GuiScrollStack();
 
-  QVBoxLayout *central_layout;
+  QFormLayout *central_layout;
 
   void setTitle(QString text);
   void setSubTitle(QString text);

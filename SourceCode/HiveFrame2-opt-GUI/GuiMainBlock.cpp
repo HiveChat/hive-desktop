@@ -1,6 +1,10 @@
 #include "GuiMainBlock.h"
 #include <QPalette>
+#include <QProgressBar>
+#include <QFormLayout>
 #include <QPainter>
+#include <QGroupBox>
+
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
@@ -18,7 +22,7 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
 
-  setSettings_profile();
+  setHome_storage();
 }
 
 GuiMainBlock::~GuiMainBlock()
@@ -36,6 +40,34 @@ void GuiMainBlock::setSettings_profile()
 
 void GuiMainBlock::setSettings_messaging()
 {
+
+}
+
+void GuiMainBlock::setHome_storage()
+{
+  gui_settings_stack->setIcon(":/img/img/storage.png");
+  gui_settings_stack->setTitle("Home");
+  gui_settings_stack->setSubTitle("Storage");
+
+  QFrame *top_line = new QFrame(this);
+  top_line->setFrameShape(QFrame::HLine);
+  top_line->setFrameShadow(QFrame::Plain);
+  top_line->setFixedHeight(1);
+  top_line->setFixedWidth(450);
+  top_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
+
+  gui_settings_stack->central_layout->addRow(new QLabel("Text Bubble",this),top_line);
+
+//  QProgressBar {
+//      border: 1px solid #FFB500;
+//      border-radius: 3px;
+//      text-align: center;
+//  }
+
+//  QProgressBar::chunk {
+//      background-color: #FFB500;
+
+//  }
 
 }
 

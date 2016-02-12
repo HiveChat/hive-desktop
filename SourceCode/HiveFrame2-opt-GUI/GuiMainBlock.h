@@ -30,6 +30,8 @@ private:
   void setSettings_profile();
   void setSettings_messaging();
 
+  void setHome_storage();
+
 public slots:
   void displayChatStack(QString usrKey);
   void displayWelcomeStack();

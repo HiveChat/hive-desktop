@@ -9,7 +9,6 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
   QWidget *top_widget = new QWidget(this);
 
   icon_btn = new GuiAvatarButton("", 90, this);
-  icon_btn->setFixedHeight(50);
   icon_btn->setAlignment(Qt::AlignLeft);
 
   title_label = new QLabel("", this);
@@ -20,7 +19,7 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
   title_label->setFont(usr_name_font);
 
   QFont usr_ip_font("Futura");//Gill Sans
-  usr_ip_font.setPointSize(11);
+  usr_ip_font.setPointSize(12);
   sub_title_label->setFont(usr_ip_font);
 
   QVBoxLayout *title_layout = new QVBoxLayout();
@@ -37,17 +36,22 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
 
   top_widget->setPalette(palette);
   top_widget->setAutoFillBackground(true);
-  top_widget->setFixedHeight(67);
+  top_widget->setFixedHeight(69);
 
   ///!top widget
 
   ///central widget
   QWidget *mid_widget = new QWidget(this);
 
-  central_layout = new QVBoxLayout();
-  central_layout->setAlignment(Qt::AlignTop);
-  central_layout->addStretch();
-  central_layout->setContentsMargins(5,30,5,30);
+  central_layout = new QFormLayout();
+  central_layout->setAlignment(Qt::AlignTop |Qt::AlignLeft);
+  central_layout->setContentsMargins(10,30,10,30);
+
+  QFrame *top_line = new QFrame(this);
+  top_line->setFrameShape(QFrame::HLine);
+  top_line->setFrameShadow(QFrame::Plain);
+  top_line->setFixedHeight(2);
+  top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);
@@ -55,18 +59,13 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
   bottom_line->setFixedHeight(4);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
-  QFrame *top_line = new QFrame(this);
-  top_line->setFrameShape(QFrame::HLine);
-  top_line->setFrameShadow(QFrame::Plain);
-  top_line->setFixedHeight(4);
-  top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
-
   QVBoxLayout *mid_widget_layout = new QVBoxLayout(this);
   mid_widget_layout->setAlignment(Qt::AlignTop);
   mid_widget_layout->setSpacing(5);
   mid_widget_layout->setContentsMargins(0,0,0,0);
   mid_widget_layout->addWidget(top_line);
   mid_widget_layout->addLayout(central_layout);
+  mid_widget_layout->addStretch();
   mid_widget_layout->addWidget(bottom_line);
 
   mid_widget->setPalette(palette);
