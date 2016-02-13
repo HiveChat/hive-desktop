@@ -3,11 +3,11 @@
 ///UI
 QFont GlobalData::g_font;
 QColor GlobalData::g_windowColor = QColor(255,255,255);
-//QColor GlobalData::g_alphaTabColor = QColor(0,0,0,15);
-//QColor GlobalData::g_tabColor = QColor(240,240,240);
 QColor GlobalData::g_alphaTabColor = QColor(255,255,255,240);
 QColor GlobalData::g_tabColor = QColor(0,0,0,0);
 
+QColor GlobalData::g_chatBubbleColorI = QColor(255,215,126);
+QColor GlobalData::g_chatBubbleColorO = QColor(225,225,225);
 
 ///data
 QString GlobalData::g_myKeyStr;

@@ -43,7 +43,7 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
   ///central widget
   QWidget *mid_widget = new QWidget(this);
 
-  central_layout = new QFormLayout();
+  central_layout = new QVBoxLayout();
   central_layout->setAlignment(Qt::AlignTop |Qt::AlignLeft);
   central_layout->setContentsMargins(10,30,10,30);
 

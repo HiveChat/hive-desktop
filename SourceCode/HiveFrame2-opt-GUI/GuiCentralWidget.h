@@ -7,14 +7,6 @@
 #include "DataManager.h"
 #include "NetManager.h"
 
-#include <QWidget>
-#include <QHBoxLayout>
-#include <QStackedLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QStackedWidget>
-#include <QTabWidget>
-
 class GuiCentralWidget : public QWidget
 {
   Q_OBJECT

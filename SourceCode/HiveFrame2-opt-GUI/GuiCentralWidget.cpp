@@ -1,5 +1,4 @@
 #include "GuiCentralWidget.h"
-#include <QIcon>
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 {
@@ -54,7 +53,6 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
       connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
     }
   ////dynamic widgets
-
 
   this->setParent(parent);
 }

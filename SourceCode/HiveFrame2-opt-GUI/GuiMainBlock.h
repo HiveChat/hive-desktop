@@ -1,13 +1,14 @@
 #ifndef GUIMAINBLOCK_H
 #define GUIMAINBLOCK_H
 
-#include <QStackedWidget>
-#include <QList>
-#include <QMap>
-
 #include "GuiChatStack.h"
 #include "GuiScrollStack.h"
 #include "GuiWelcomeStack.h"
+
+#include <QStackedWidget>
+#include <QList>
+#include <QMap>
+#include <QColorDialog>
 
 class GuiMainBlock : public QWidget
 {
@@ -26,6 +27,7 @@ public:
 
 private:
   QVBoxLayout *main_layout;
+  QPalette text_palette;
 
   void setSettings_profile();
   void setSettings_messaging();

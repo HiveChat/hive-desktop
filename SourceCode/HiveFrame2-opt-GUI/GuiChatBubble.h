@@ -1,16 +1,11 @@
 #ifndef GUICHATBUBBLE_H
 #define GUICHATBUBBLE_H
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QPixmap>
+#include "GlobalData.h"
 
 #include <QLabel>
 #include <QPainter>
-#include <QRect>
 #include <QHBoxLayout>
-#include <QDebug>
 
 class GuiChatBubble_text_area : public QLabel
 {
@@ -45,10 +40,8 @@ public:
 private:
   QHBoxLayout *main_layout;
   QPixmap strip_pixmap;
-  QLabel *strip;
+  QLabel *strip;////this hurts my heart!
   GuiChatBubble_text_area *text_area;
-
-
 };
 
 #endif // GUICHATBUBBLE_H

@@ -14,7 +14,7 @@ public:
   explicit GuiScrollStack(QWidget *parent = 0);
   ~GuiScrollStack();
 
-  QFormLayout *central_layout;
+  QVBoxLayout *central_layout;
 
   void setTitle(QString text);
   void setSubTitle(QString text);

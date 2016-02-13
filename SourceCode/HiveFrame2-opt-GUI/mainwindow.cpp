@@ -1,8 +1,6 @@
 #include "mainwindow.h"
 #include <QDebug>
-#include <QBitmap>
 #include <QPainter>
-
 #include <GuiOSXNotification.h>
 
 MainWindow::MainWindow(QWidget *parent)

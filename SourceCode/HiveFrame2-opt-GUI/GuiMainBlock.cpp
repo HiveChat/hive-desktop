@@ -8,6 +8,8 @@
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
+  text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
+
   gui_welcome_stack = new GuiWelcomeStack(this);
   gui_settings_stack = new GuiScrollStack(this);
 
@@ -22,7 +24,7 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
 
-  setHome_storage();
+  setSettings_messaging();
 }
 
 GuiMainBlock::~GuiMainBlock()
@@ -36,11 +38,31 @@ void GuiMainBlock::setSettings_profile()
   gui_settings_stack->setIcon(":/img/img/profile_0.png");
   gui_settings_stack->setTitle("Settings");
   gui_settings_stack->setSubTitle("Profile");
+
+
 }
 
 void GuiMainBlock::setSettings_messaging()
 {
+  gui_settings_stack->setIcon(":/img/img/messaging.png");
+  gui_settings_stack->setTitle("Settings");
+  gui_settings_stack->setSubTitle("Messaging");
 
+  QLabel *text_bubble_label = new QLabel("Text Bubble", this);
+  QFont font("Futura");//Verdana
+  text_bubble_label->setFont(font);
+  text_bubble_label->setPalette(text_palette);
+
+  QFrame *top_line = new QFrame(this);
+  top_line->setFrameShape(QFrame::HLine);
+  top_line->setFrameShadow(QFrame::Plain);
+  top_line->setFixedHeight(1);
+  top_line->setFixedWidth(550);
+  top_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
+
+  gui_settings_stack->central_layout->setAlignment(Qt::AlignCenter);
+  gui_settings_stack->central_layout->addWidget(text_bubble_label);
+  gui_settings_stack->central_layout->addWidget(top_line);
 }
 
 void GuiMainBlock::setHome_storage()
@@ -49,14 +71,6 @@ void GuiMainBlock::setHome_storage()
   gui_settings_stack->setTitle("Home");
   gui_settings_stack->setSubTitle("Storage");
 
-  QFrame *top_line = new QFrame(this);
-  top_line->setFrameShape(QFrame::HLine);
-  top_line->setFrameShadow(QFrame::Plain);
-  top_line->setFixedHeight(1);
-  top_line->setFixedWidth(450);
-  top_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
-
-  gui_settings_stack->central_layout->addRow(new QLabel("Text Bubble",this),top_line);
 
 //  QProgressBar {
 //      border: 1px solid #FFB500;
@@ -114,4 +128,5 @@ void GuiMainBlock::onMessageRecieved(QStringList message_str_list, bool fromMe)
 
 
 
+//QColor color = QColorDialog::getColor(Qt::white, this);
 

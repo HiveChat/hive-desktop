@@ -15,6 +15,9 @@ public:
   static QColor g_alphaTabColor;
   static QColor g_tabColor;
 
+  static QColor g_chatBubbleColorI;
+  static QColor g_chatBubbleColorO;
+
   ///data
   static QString g_myKeyStr;
   static QString g_myNameStr;
