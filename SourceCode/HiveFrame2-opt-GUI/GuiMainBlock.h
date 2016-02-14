@@ -28,6 +28,7 @@ public:
 private:
   QVBoxLayout *main_layout;
   QPalette text_palette;
+  QPalette sub_text_palette;
 
   void setSettings_profile();
   void setSettings_messaging();
@@ -39,6 +40,10 @@ public slots:
   void displayWelcomeStack();
   void addChatStack(QStringList usrInfoStrList);
   void onMessageRecieved(QStringList message_str_list, bool fromMe);
+
+private slots:
+  void onColorDialogTriggered();
+
 
 signals:
   void whoseMessage(QStringList message_str_list);

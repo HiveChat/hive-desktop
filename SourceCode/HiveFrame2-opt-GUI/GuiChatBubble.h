@@ -6,14 +6,18 @@
 #include <QLabel>
 #include <QPainter>
 #include <QHBoxLayout>
+#include <QMouseEvent>
 
 class GuiChatBubble_text_area : public QLabel
 {
+  Q_OBJECT
+
 public:
   explicit GuiChatBubble_text_area(QString text, int maxWidth, bool alignLeft, QWidget *parent = 0);
 
 protected:
   void paintEvent(QPaintEvent *);
+  void mouseReleaseEvent(QMouseEvent *);
 
 private:
   QHBoxLayout *main_layout;
@@ -27,6 +31,9 @@ private:
 
   QColor color;
 
+signals:
+  void clicked();
+
 };
 
 
@@ -36,12 +43,13 @@ class GuiChatBubble : public QWidget
 
 public:
   explicit GuiChatBubble(QString text, bool alignLeft, QWidget *parent = 0);
+  GuiChatBubble_text_area *text_area;
+
 
 private:
   QHBoxLayout *main_layout;
   QPixmap strip_pixmap;
   QLabel *strip;////this hurts my heart!
-  GuiChatBubble_text_area *text_area;
 };
 
 #endif // GUICHATBUBBLE_H

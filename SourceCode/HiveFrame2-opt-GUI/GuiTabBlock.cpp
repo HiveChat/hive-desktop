@@ -33,7 +33,7 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 //  connect(exit_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
 //  connect(exit_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
 //  connect(min_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-//  connect(min_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
+//  connect(min_hintr, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
 //  connect(max_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
 //  connect(max_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
 

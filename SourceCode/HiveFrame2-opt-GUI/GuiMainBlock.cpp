@@ -9,6 +9,7 @@
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
   text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
+  sub_text_palette.setColor(QPalette::WindowText, QColor(130, 130, 130));
 
   gui_welcome_stack = new GuiWelcomeStack(this);
   gui_settings_stack = new GuiScrollStack(this);
@@ -50,6 +51,7 @@ void GuiMainBlock::setSettings_messaging()
 
   QLabel *text_bubble_label = new QLabel("Text Bubble", this);
   QFont font("Futura");//Verdana
+  font.setPointSize(15);
   text_bubble_label->setFont(font);
   text_bubble_label->setPalette(text_palette);
 
@@ -57,12 +59,32 @@ void GuiMainBlock::setSettings_messaging()
   top_line->setFrameShape(QFrame::HLine);
   top_line->setFrameShadow(QFrame::Plain);
   top_line->setFixedHeight(1);
-  top_line->setFixedWidth(550);
+  top_line->setFixedWidth(580);
   top_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
+
+  QLabel *bubble_background_label = new QLabel("\tBubble colour:", this);
+  QFont sub_font("Futura");//Verdana
+  bubble_background_label->setFont(sub_font);
+  bubble_background_label->setPalette(sub_text_palette);
+
+  GuiChatBubble *in_chat_bubble = new GuiChatBubble("Message to me!", true, this);
+  GuiChatBubble *out_chat_bubble = new GuiChatBubble("From me~", false, this);
+
+  QVBoxLayout *chat_bubble_layout = new QVBoxLayout();
+  chat_bubble_layout->setContentsMargins(55,20,55,20);
+  chat_bubble_layout->addWidget(in_chat_bubble);
+  chat_bubble_layout->addWidget(out_chat_bubble);
 
   gui_settings_stack->central_layout->setAlignment(Qt::AlignCenter);
   gui_settings_stack->central_layout->addWidget(text_bubble_label);
   gui_settings_stack->central_layout->addWidget(top_line);
+  gui_settings_stack->central_layout->addSpacing(15);
+  gui_settings_stack->central_layout->addWidget(bubble_background_label);
+  gui_settings_stack->central_layout->addLayout(chat_bubble_layout);
+
+  connect(in_chat_bubble->text_area, SIGNAL(clicked()), this, SLOT(onColorDialogTriggered()));
+
+
 }
 
 void GuiMainBlock::setHome_storage()
@@ -124,9 +146,11 @@ void GuiMainBlock::onMessageRecieved(QStringList message_str_list, bool fromMe)
   //emit whoseMessage(message_str_list);
 }
 
+void GuiMainBlock::onColorDialogTriggered()
+{
 
-
-
+  QColor color = QColorDialog::getColor(Qt::white, this);
+}
 
 //QColor color = QColorDialog::getColor(Qt::white, this);
 

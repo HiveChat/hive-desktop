@@ -31,7 +31,7 @@ private:
   QPixmap default_pixmap;
   QPixmap hovered_pixmap;
   QPalette text_palette;
-  QColor default_text_color = QColor(150,150,150);
+  QColor default_text_color = QColor(100,100,100);
   QColor hovered_text_color = QColor(255,181,0);
 
   void setDefault();
