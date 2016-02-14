@@ -47,7 +47,7 @@ void GuiMainBlock::setSettings_messaging()
 {
   gui_settings_stack->setIcon(":/img/img/messaging.png");
   gui_settings_stack->setTitle("Settings");
-  gui_settings_stack->setSubTitle("Messaging");
+  gui_settings_stack->setSubTitle("messaging");
 
   QLabel *text_bubble_label = new QLabel("Text Bubble", this);
   QFont font("Futura");//Verdana
@@ -62,28 +62,20 @@ void GuiMainBlock::setSettings_messaging()
   top_line->setFixedWidth(580);
   top_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
 
-  QLabel *bubble_background_label = new QLabel("\tBubble colour:", this);
+  QLabel *bubble_background_label = new QLabel("\tReceived message bubble colour:", this);
   QFont sub_font("Futura");//Verdana
   bubble_background_label->setFont(sub_font);
   bubble_background_label->setPalette(sub_text_palette);
 
-  GuiChatBubble *in_chat_bubble = new GuiChatBubble("Message to me!", true, this);
-  GuiChatBubble *out_chat_bubble = new GuiChatBubble("From me~", false, this);
+  GuiColorPicker *aa = new GuiColorPicker(GlobalData::g_chatBubbleColorI, this);
 
-  QVBoxLayout *chat_bubble_layout = new QVBoxLayout();
-  chat_bubble_layout->setContentsMargins(55,20,55,20);
-  chat_bubble_layout->addWidget(in_chat_bubble);
-  chat_bubble_layout->addWidget(out_chat_bubble);
 
   gui_settings_stack->central_layout->setAlignment(Qt::AlignCenter);
   gui_settings_stack->central_layout->addWidget(text_bubble_label);
   gui_settings_stack->central_layout->addWidget(top_line);
   gui_settings_stack->central_layout->addSpacing(15);
   gui_settings_stack->central_layout->addWidget(bubble_background_label);
-  gui_settings_stack->central_layout->addLayout(chat_bubble_layout);
-
-  connect(in_chat_bubble->text_area, SIGNAL(clicked()), this, SLOT(onColorDialogTriggered()));
-
+  gui_settings_stack->central_layout->addWidget(aa);
 
 }
 

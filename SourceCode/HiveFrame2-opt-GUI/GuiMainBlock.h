@@ -4,6 +4,8 @@
 #include "GuiChatStack.h"
 #include "GuiScrollStack.h"
 #include "GuiWelcomeStack.h"
+#include "GuiColorPicker.h"
+
 
 #include <QStackedWidget>
 #include <QList>

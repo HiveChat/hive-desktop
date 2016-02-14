@@ -21,9 +21,11 @@ public:
   void setIcon(QString path);
 
 private:
+  QString title_qstr;
+  QString sub_title_qstr;
+
   GuiAvatarButton *icon_btn;
   QLabel *title_label;
-  QLabel *sub_title_label;
   QHBoxLayout *top_widget_main_layout;
 
 

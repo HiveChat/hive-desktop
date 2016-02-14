@@ -12,27 +12,17 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
   icon_btn->setAlignment(Qt::AlignLeft);
 
   title_label = new QLabel("", this);
-  sub_title_label = new QLabel("", this);
 
   QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPointSize(15);
   title_label->setFont(usr_name_font);
 
-  QFont usr_ip_font("Futura");//Gill Sans
-  usr_ip_font.setPointSize(12);
-  sub_title_label->setFont(usr_ip_font);
-
-  QVBoxLayout *title_layout = new QVBoxLayout();
-  title_layout->setContentsMargins(0,0,10,10);
-  title_layout->addWidget(title_label);
-  title_layout->addWidget(sub_title_label);
-
   top_widget_main_layout = new QHBoxLayout(top_widget);
-  top_widget_main_layout->setAlignment(Qt::AlignLeft);
-  top_widget_main_layout->setContentsMargins(15,10,10,0);
+  top_widget_main_layout->setAlignment(Qt::AlignLeft |Qt::AlignVCenter);
+  top_widget_main_layout->setContentsMargins(15,5,10,0);
   top_widget_main_layout->setSpacing(10);
   top_widget_main_layout->addWidget(icon_btn);
-  top_widget_main_layout->addLayout(title_layout);
+  top_widget_main_layout->addWidget(title_label);
 
   top_widget->setPalette(palette);
   top_widget->setAutoFillBackground(true);
@@ -96,12 +86,14 @@ GuiScrollStack::~GuiScrollStack()
 
 void GuiScrollStack::setTitle(QString text)
 {
-  title_label->setText(text);
+  title_qstr = text;
+  title_label->setText(title_qstr+" - "+sub_title_qstr);
 }
 
 void GuiScrollStack::setSubTitle(QString text)
 {
-  sub_title_label->setText(text);
+  sub_title_qstr = text;
+  title_label->setText(title_qstr+" - "+sub_title_qstr);
 }
 
 void GuiScrollStack::setIcon(QString path)

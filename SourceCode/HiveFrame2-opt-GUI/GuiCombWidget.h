@@ -1,15 +1,12 @@
 #ifndef GUICOMBWIDGET_H
 #define GUICOMBWIDGET_H
 
-#include "GlobalData.h"
-
-#include <QWidget>
-#include <QLabel>
-#include <GuiLabelButton.h>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPalette>
-#include <GuiAvatarButton.h>
+#include <QHBoxLayout>
+
+#include "GlobalData.h"
+#include "GuiLabelButton.h"
+#include "GuiAvatarButton.h"
 
 class GuiCombWidget : public QWidget
 {

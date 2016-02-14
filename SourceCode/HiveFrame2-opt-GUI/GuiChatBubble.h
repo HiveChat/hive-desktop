@@ -6,7 +6,6 @@
 #include <QLabel>
 #include <QPainter>
 #include <QHBoxLayout>
-#include <QMouseEvent>
 
 class GuiChatBubble_text_area : public QLabel
 {
@@ -17,7 +16,6 @@ public:
 
 protected:
   void paintEvent(QPaintEvent *);
-  void mouseReleaseEvent(QMouseEvent *);
 
 private:
   QHBoxLayout *main_layout;
@@ -30,9 +28,6 @@ private:
   int rect_height;
 
   QColor color;
-
-signals:
-  void clicked();
 
 };
 

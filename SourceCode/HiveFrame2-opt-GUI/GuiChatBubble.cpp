@@ -44,14 +44,6 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
   painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
 }
 
-void GuiChatBubble_text_area::mouseReleaseEvent(QMouseEvent *ev)
-{
-  if (ev->button() == Qt::LeftButton)
-    {
-      //this->setPixmap(default_pixmap);
-      emit clicked();
-    }
-}
 
 GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
