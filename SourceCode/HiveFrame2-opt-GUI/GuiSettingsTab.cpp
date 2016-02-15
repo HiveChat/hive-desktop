@@ -6,16 +6,15 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
   //label_font.setPointSize(20);
   label_font.setPointSize(20);
 
-  messaging_btn = new GuiMenuButton("messaging", this);
-  profile_btn = new GuiMenuButton("profile", this);
-  style_btn = new GuiMenuButton("style", this);
-
+  messaging_btn = new GuiMenuButton("messaging", Settings_Messaging, this);
   messaging_btn->setDefaultPixmap(":/img/img/messaging_0.png");
   messaging_btn->setHoveredPixmap(":/img/img/messaging_1.png");
 
+  profile_btn = new GuiMenuButton("profile", Settings_Profile, this);
   profile_btn->setDefaultPixmap(":/img/img/profile_0.png");
   profile_btn->setHoveredPixmap(":/img/img/profile_1.png");
 
+  style_btn = new GuiMenuButton("style", Settings_Style, this);
   style_btn->setDefaultPixmap(":/img/img/style_0.png");
   style_btn->setHoveredPixmap(":/img/img/style_1.png");
 

@@ -1,8 +1,8 @@
 #include "GuiMenuButton.h"
 
-GuiMenuButton::GuiMenuButton(QString text, QWidget *parent) : QWidget(parent)
+GuiMenuButton::GuiMenuButton(QString text, StaticStackType staticStackType, QWidget *parent) : QWidget(parent)
 {
-
+  static_stack_type = staticStackType;
 
   icon_label = new QLabel(this);
 
@@ -49,7 +49,7 @@ void GuiMenuButton::setHoveredPixmap(QString path)
 
 void GuiMenuButton::mousePressEvent(QMouseEvent *)
 {
-  emit clicked();
+  emit clicked(static_stack_type);
 }
 
 void GuiMenuButton::mouseReleaseEvent(QMouseEvent *)

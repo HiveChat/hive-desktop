@@ -1,5 +1,5 @@
 #include "GlobalData.h"
-
+#include <QPalette>
 ///UI
 QFont GlobalData::g_font;
 QColor GlobalData::g_windowColor = QColor(255,255,255);

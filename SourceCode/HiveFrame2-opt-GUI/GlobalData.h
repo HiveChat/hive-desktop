@@ -18,6 +18,7 @@ public:
   static QColor g_chatBubbleColorI;
   static QColor g_chatBubbleColorO;
 
+
   ///data
   static QString g_myKeyStr;
   static QString g_myNameStr;
@@ -30,5 +31,15 @@ public:
   static QString g_currentTime();
 
 };
+
+enum StaticStackType
+{
+  Home_Welcome,
+  Home_Storage,
+  Settings_Messaging,
+  Settings_Profile,
+  Settings_Style
+};
+
 
 #endif // GLOBALDATA_H

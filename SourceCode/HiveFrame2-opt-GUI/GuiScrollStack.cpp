@@ -2,6 +2,37 @@
 
 GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
 {
+  setUpUI();
+  this->setParent(parent);
+}
+
+GuiScrollStack::~GuiScrollStack()
+{
+
+}
+
+void GuiScrollStack::setTitle(QString text)
+{
+  title_qstr = text;
+  title_label->setText(title_qstr+" - "+sub_title_qstr);
+}
+
+void GuiScrollStack::setSubTitle(QString text)
+{
+  sub_title_qstr = text;
+  title_label->setText(title_qstr+" - "+sub_title_qstr);
+}
+
+void GuiScrollStack::setIcon(QString path)
+{
+  icon_btn->setAvatar(path);
+}
+
+void GuiScrollStack::setUpUI()
+{
+  text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
+  sub_text_palette.setColor(QPalette::WindowText, QColor(130, 130, 130));
+
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
 
@@ -76,29 +107,6 @@ GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
 
-  this->setParent(parent);
-}
-
-GuiScrollStack::~GuiScrollStack()
-{
-
-}
-
-void GuiScrollStack::setTitle(QString text)
-{
-  title_qstr = text;
-  title_label->setText(title_qstr+" - "+sub_title_qstr);
-}
-
-void GuiScrollStack::setSubTitle(QString text)
-{
-  sub_title_qstr = text;
-  title_label->setText(title_qstr+" - "+sub_title_qstr);
-}
-
-void GuiScrollStack::setIcon(QString path)
-{
-  icon_btn->setAvatar(path);
 }
 
 

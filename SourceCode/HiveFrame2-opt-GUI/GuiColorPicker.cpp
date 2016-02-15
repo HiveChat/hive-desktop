@@ -18,13 +18,13 @@ QColor GuiColorPicker::color()
 
 void GuiColorPicker::paintEvent(QPaintEvent *)
 {
-  QRectF rectangle(0, 0, this->width(), this->height());
+  QRectF rectangle(1, 1, 18, 18);
   QPainter paint;
   paint.begin(this);
-  paint.setPen(QPen(Qt::NoPen));
+  paint.setPen(QColor(my_color.red()*0.8,my_color.green()*0.8,my_color.blue()*0.8));
   paint.setBrush(QBrush(my_color,Qt::SolidPattern));
   paint.setRenderHint(QPainter::Antialiasing,true);
-  paint.drawRoundedRect(rectangle,10,10);
+  paint.drawRoundedRect(rectangle,5,5);
   paint.end();
 }
 

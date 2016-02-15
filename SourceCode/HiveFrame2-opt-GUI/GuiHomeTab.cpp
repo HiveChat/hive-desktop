@@ -7,8 +7,8 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
   //label_font.setPointSize(20);
   label_font.setPointSize(20);
 
-  welcome_btn = new GuiMenuButton("welcome", this);
-  storage_btn = new GuiMenuButton("file storage", this);
+  welcome_btn = new GuiMenuButton("welcome", Home_Welcome, this);
+  storage_btn = new GuiMenuButton("file storage", Home_Storage, this);
 
   welcome_btn->setDefaultPixmap(":/img/img/welcome_0.png");
   welcome_btn->setHoveredPixmap(":/img/img/welcome_1.png");

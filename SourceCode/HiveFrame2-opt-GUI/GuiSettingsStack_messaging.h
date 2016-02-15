@@ -1,18 +1,20 @@
 #ifndef GUISETTINGSSTACK_MESSAGING_H
 #define GUISETTINGSSTACK_MESSAGING_H
 
-#include <QWidget>
+#include "GuiScrollStack.h"
+#include "GuiColorPicker.h"
+#include "GlobalData.h"
 
-class GuiSettingsStack_messaging : public QWidget
+class GuiSettingsStack_messaging : public GuiScrollStack
 {
   Q_OBJECT
+
 public:
   explicit GuiSettingsStack_messaging(QWidget *parent = 0);
   ~GuiSettingsStack_messaging();
 
-signals:
-
-public slots:
+private:
+  GuiScrollStack *gui_settings_stack;
 };
 
 #endif // GUISETTINGSSTACK_MESSAGING_H

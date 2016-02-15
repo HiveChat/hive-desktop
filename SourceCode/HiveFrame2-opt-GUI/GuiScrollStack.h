@@ -20,7 +20,12 @@ public:
   void setSubTitle(QString text);
   void setIcon(QString path);
 
-private:
+protected:
+  void setUpUI();
+
+  QPalette text_palette;
+  QPalette sub_text_palette;
+
   QString title_qstr;
   QString sub_title_qstr;
 
