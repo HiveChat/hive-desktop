@@ -34,6 +34,7 @@ public:
 
 enum StaticStackType
 {
+  NULL_Stack,
   Home_Welcome,
   Home_Storage,
   Settings_Messaging,

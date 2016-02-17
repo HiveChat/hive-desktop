@@ -1,38 +1,22 @@
 #include "GuiMainBlock.h"
-#include <QPalette>
-#include <QProgressBar>
-#include <QFormLayout>
-#include <QPainter>
-#include <QGroupBox>
-
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
-  gui_welcome_stack = new GuiWelcomeStack(this);
-  gui_settings_stack = new GuiSettingsStack_messaging(this);
 
   main_stacked_widget = new QStackedWidget(this);
-  main_stacked_widget->addWidget(gui_welcome_stack);
-  main_stacked_widget->addWidget(gui_settings_stack);
-  main_stacked_widget->setCurrentWidget(gui_welcome_stack);
 
   main_layout = new QVBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
 
+  displayStaticStack(Home_Welcome);
 }
 
 GuiMainBlock::~GuiMainBlock()
 {
 
 }
-
-/////////settings
-
-
-
-/////////!settings
 
 
 void GuiMainBlock::displayChatStack(QString usrKey)
@@ -44,33 +28,70 @@ void GuiMainBlock::displayChatStack(QString usrKey)
 
 void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 {
-  switch (staticStackType) {
-    case Home_Welcome:
-      {
-        gui_welcome_stack->refreshTime();
-        main_stacked_widget->setCurrentWidget(gui_welcome_stack);
+  ///2016-02-16 LAZY SOLUTION HINT make a QMap to match each static stacks to the enum value, this means static stacks should be in the class definition. This must works, but might not be the best algorithm.
 
-        break;
-      }
-    case Home_Storage:
+  ///is not current stack || is the first stack, which means is not current stack
+  if(staticStackType != current_static_stack)
+    {
+      ///static_stack_list is not nullptr
+      ///MEANS this is not the first stack
+      if(!static_stack_widget)
+        {
+          static_stack_widget->deleteLater();
+        }
 
-      break;
+      switch (staticStackType) {
+        case Home_Welcome:
+          {
+            GuiWelcomeStack *gui_welcome_stack = new GuiWelcomeStack(this);
+            gui_welcome_stack->refreshTime();
 
+            static_stack_widget = gui_welcome_stack;
+            main_stacked_widget->addWidget(gui_welcome_stack);
+            main_stacked_widget->setCurrentWidget(gui_welcome_stack);
 
-    case Settings_Messaging:
-      {
-        main_stacked_widget->setCurrentWidget(gui_settings_stack);
-        break;
-      }
-    case Settings_Profile:
+            break;
+          }
 
-      break;
-    case Settings_Style:
+        case Home_Storage:
+          {
 
-      break;
+            break;
+          }
 
-    default:
-      break;
+        case Settings_Messaging:
+          {
+            GuiSettingsStack_messaging *gui_settings_stack = new GuiSettingsStack_messaging(this);
+            static_stack_widget = gui_settings_stack;
+            main_stacked_widget->addWidget(gui_settings_stack);
+            main_stacked_widget->setCurrentWidget(gui_settings_stack);
+
+            break;
+          }
+        case Settings_Profile:
+          {
+
+            break;
+          }
+
+        case Settings_Style:
+          {
+
+            break;
+          }
+
+        default:
+          {
+            break;
+          }
+        }
+
+      current_static_stack = staticStackType;
+    }
+  else
+    {
+      qDebug()<<"else";
+      main_stacked_widget->setCurrentWidget(static_stack_widget);
     }
 }
 

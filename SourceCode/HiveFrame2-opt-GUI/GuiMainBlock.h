@@ -9,7 +9,6 @@
 #include <QStackedWidget>
 #include <QList>
 #include <QMap>
-#include <QColorDialog>
 
 class GuiMainBlock : public QWidget
 {
@@ -20,13 +19,13 @@ public:
   ~GuiMainBlock();
 
   GuiChatStack *gui_chat_stack;
-  GuiWelcomeStack *gui_welcome_stack;
-  GuiSettingsStack_messaging *gui_settings_stack;
   QStackedWidget *main_stacked_widget;
 
   QMap<QString ,GuiChatStack*> gui_chat_stack_map;
 
 private:
+  QWidget *static_stack_widget;
+  StaticStackType current_static_stack = NULL_Stack;
   QVBoxLayout *main_layout;
 
 public slots:
