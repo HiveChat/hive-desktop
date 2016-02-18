@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     GuiScrollStack.cpp \
     GuiSettingsTab.cpp \
     GuiColorPicker.cpp \
-    GuiSettingsStack_messaging.cpp
+    GuiSettingsStack_messaging.cpp \
+    GuiSettingsStack_profile.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -61,7 +62,8 @@ HEADERS  += mainwindow.h \
     GuiScrollStack.h \
     GuiSettingsTab.h \
     GuiColorPicker.h \
-    GuiSettingsStack_messaging.h
+    GuiSettingsStack_messaging.h \
+    GuiSettingsStack_profile.h
 
 RESOURCES += \
     qss.qrc \

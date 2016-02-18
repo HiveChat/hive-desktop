@@ -5,6 +5,7 @@
 #include "GuiWelcomeStack.h"
 #include "GuiColorPicker.h"
 #include "GuiSettingsStack_messaging.h"
+#include "GuiSettingsStack_profile.h"
 
 #include <QStackedWidget>
 #include <QList>

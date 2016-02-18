@@ -70,6 +70,10 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
           }
         case Settings_Profile:
           {
+            GuiSettingsStack_profile *gui_settings_stack = new GuiSettingsStack_profile(this);
+            static_stack_widget = gui_settings_stack;
+            main_stacked_widget->addWidget(gui_settings_stack);
+            main_stacked_widget->setCurrentWidget(gui_settings_stack);
 
             break;
           }
