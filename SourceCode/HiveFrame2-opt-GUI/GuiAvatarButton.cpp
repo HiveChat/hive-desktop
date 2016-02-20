@@ -1,9 +1,15 @@
 #include "GuiAvatarButton.h"
 #include <QDebug>
-GuiAvatarButton::GuiAvatarButton(QString path, const int Diameter, QWidget *parent)
+GuiAvatarButton::GuiAvatarButton(const QString path, const int Diameter, QWidget *parent)
 {
   diameter = Diameter;
   setAvatar(path);
+  this->setParent(parent);
+}
+
+GuiAvatarButton::GuiAvatarButton(const int Diameter, QWidget *parent)
+{
+  diameter = Diameter;
   this->setParent(parent);
 }
 

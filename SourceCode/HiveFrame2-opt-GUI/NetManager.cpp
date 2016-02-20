@@ -58,17 +58,9 @@ void NetManager::sendUsrEnter()
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  QFile file(GlobalData::g_avatarPathStr);
-  if(!file.open(QIODevice::ReadOnly))
-    {
-      return;
-    }
 
-  QByteArray in_byte_array = file.readAll();
-  file.flush();
-  file.close();
 
-  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << in_byte_array;
+  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << GlobalData::g_avatarPathStr;
   qint64 f = udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
   //qDebug()<<f;
 }
@@ -137,8 +129,6 @@ void NetManager::processPendingDatagrams()
             break;
           }//case
 
-        ////////////problem2016-01-06
-
         case UsrEnter:
           {
             qDebug()<<"££££££££££££££ usr enter ££££££££££££££££££££";
@@ -146,21 +136,17 @@ void NetManager::processPendingDatagrams()
             QString subject_ip_str;
             QString subject_key_str;
             QString subject_name_str;
+            QString subject_avatar_path;
             in >> subject_ip_str >> subject_key_str >> subject_name_str;
             if(subject_key_str == GlobalData::g_myKeyStr)
               {
-                //break;
+                break;
               }
-            QByteArray subject_byte_array;
-            in >> subject_byte_array;
+            //  usrKey<<usrName<<ipAddr<<avatarPath
 
-
-            QPixmap subject_avatar_pixmap;
-            subject_avatar_pixmap.loadFromData(subject_byte_array);
-
-            QLabel *label = new QLabel();
-            label->setPixmap(subject_avatar_pixmap);
-            label->show();
+            QStringList usr_info_str_list;
+            usr_info_str_list << subject_key_str << subject_name_str << subject_ip_str << subject_avatar_path;
+            emit usrEnter(usr_info_str_list);
 
             break;
           }

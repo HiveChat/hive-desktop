@@ -23,7 +23,7 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)// : QWid
   QFont sub_font("Futura");//Verdana
   in_bubble_label->setFont(sub_font);
   in_bubble_label->setPalette(sub_text_palette);
-  GuiColorPicker *in_bubble_picker = new GuiColorPicker(GlobalData::g_chatBubbleColorI, this);
+  GuiColorPicker *in_bubble_picker = new GuiColorPicker(GlobalData::g_mChatBubbleColorI, this);
   QHBoxLayout *in_bubble_layout = new QHBoxLayout();
   in_bubble_layout->setContentsMargins(0,30,200,0);
   in_bubble_layout->setSpacing(30);

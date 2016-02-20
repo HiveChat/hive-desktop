@@ -13,7 +13,8 @@ class GuiAvatarButton : public QLabel
   Q_OBJECT
 
 public:
-  GuiAvatarButton(QString path, int Diameter, QWidget *parent);
+  GuiAvatarButton(const QString path, const int Diameter, QWidget *parent);
+  GuiAvatarButton(const int Diameter, QWidget *parent);
   void setAvatar(QString path);
 
 protected:

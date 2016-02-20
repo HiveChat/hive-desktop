@@ -20,12 +20,12 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, boo
 
   if(alignLeft)
     {
-      color = GlobalData::g_chatBubbleColorI;//255,181,0
+      color = GlobalData::g_mChatBubbleColorI;//255,181,0
       main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = GlobalData::g_chatBubbleColorO;//255,215,126
+      color = GlobalData::g_mChatBubbleColorO;//255,215,126
       main_layout->setAlignment(Qt::AlignRight);
     }
 

@@ -25,7 +25,7 @@ public:
   QMap<QString ,GuiChatStack*> gui_chat_stack_map;
 
 private:
-  QWidget *static_stack_widget;
+  QWidget *static_stack_widget = NULL;
   StaticStackType current_static_stack = NULL_Stack;
   QVBoxLayout *main_layout;
 

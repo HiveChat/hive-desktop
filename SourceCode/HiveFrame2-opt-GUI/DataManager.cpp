@@ -222,7 +222,20 @@ QJsonDocument DataManager::defaultProfile()
   my_profile_json_obj.insert("usrKey", GlobalData::g_myKeyStr);
   my_profile_json_obj.insert("usrName", QHostInfo::localHostName());
   my_profile_json_obj.insert("avatarPath", ":/img/img/icon.png");
-  ////these default data will be integrated in a class
+
+  QJsonArray bubblr_color_i_json_array;
+  bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.red());
+  bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.green());
+  bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.blue());
+  my_profile_json_obj.insert("BubbleColorI", bubblr_color_i_json_array);
+
+  QJsonArray bubblr_color_o_json_array;
+  bubblr_color_o_json_array.append(GlobalData::g_chatBubbleColorO.red());
+  bubblr_color_o_json_array.append(GlobalData::g_chatBubbleColorO.green());
+  bubblr_color_o_json_array.append(GlobalData::g_chatBubbleColorO.blue());
+  my_profile_json_obj.insert("BubbleColorO", bubblr_color_o_json_array);
+
+  ////these default data will be integrated in a class[I don't know what I meat.]
 
   QJsonDocument write_json_document;
   write_json_document.setObject(my_profile_json_obj);
@@ -267,6 +280,14 @@ void DataManager::loadMyProfile()
           GlobalData::g_myKeyStr = usr_list_json_obj["usrKey"].toString();
           GlobalData::g_myNameStr = usr_list_json_obj["usrName"].toString();
           GlobalData::g_avatarPathStr = usr_list_json_obj["avatarPath"].toString();
+
+          QJsonArray bubble_color_i_json_array = usr_list_json_obj["BubbleColorI"].toArray();
+          GlobalData::g_mChatBubbleColorI = QColor(bubble_color_i_json_array[0].toInt(), bubble_color_i_json_array[1].toInt(), bubble_color_i_json_array[2].toInt());
+          QJsonArray bubble_color_o_json_array = usr_list_json_obj["BubbleColorO"].toArray();
+          GlobalData::g_mChatBubbleColorO = QColor(bubble_color_o_json_array[0].toInt(), bubble_color_o_json_array[1].toInt(), bubble_color_o_json_array[2].toInt());
+
+//          my_profile_json_obj.insert("BubbleColorI", "255,215,126");
+//          my_profile_json_obj.insert("BubbleColorO", "225,225,225");
         }
       else
         {

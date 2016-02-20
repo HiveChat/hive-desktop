@@ -35,7 +35,7 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
     {
       ///static_stack_list is not nullptr
       ///MEANS this is not the first stack
-      if(!static_stack_widget)
+      if(static_stack_widget != NULL)
         {
           static_stack_widget->deleteLater();
         }

@@ -8,6 +8,8 @@ QColor GlobalData::g_tabColor = QColor(0,0,0,0);
 
 QColor GlobalData::g_chatBubbleColorI = QColor(255,215,126);
 QColor GlobalData::g_chatBubbleColorO = QColor(225,225,225);
+QColor GlobalData::g_mChatBubbleColorI = QColor(255,215,126);
+QColor GlobalData::g_mChatBubbleColorO = QColor(225,225,225);
 
 ///data
 QString GlobalData::g_myKeyStr;

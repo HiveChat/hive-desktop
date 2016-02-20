@@ -17,6 +17,8 @@ public:
 
   static QColor g_chatBubbleColorI;
   static QColor g_chatBubbleColorO;
+  static QColor g_mChatBubbleColorI;
+  static QColor g_mChatBubbleColorO;
 
 
   ///data
@@ -40,6 +42,16 @@ enum StaticStackType
   Settings_Messaging,
   Settings_Profile,
   Settings_Style
+};
+
+enum BuiltInAvatarType
+{
+  Bee,
+  Disk,
+  Fat,
+  Ladybug,
+  sunflower,
+  worm
 };
 
 
