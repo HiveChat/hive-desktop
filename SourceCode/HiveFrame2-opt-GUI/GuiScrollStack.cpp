@@ -39,7 +39,7 @@ void GuiScrollStack::setUpUI()
   ///top widget
   QWidget *top_widget = new QWidget(this);
 
-  icon_btn = new GuiAvatarButton("", 90, this);
+  icon_btn = new GuiAvatarButton(90, this);
   icon_btn->setAlignment(Qt::AlignLeft);
 
   title_label = new QLabel("", this);
@@ -50,8 +50,7 @@ void GuiScrollStack::setUpUI()
 
   top_widget_main_layout = new QHBoxLayout(top_widget);
   top_widget_main_layout->setAlignment(Qt::AlignLeft |Qt::AlignVCenter);
-  top_widget_main_layout->setContentsMargins(15,5,10,0);
-  top_widget_main_layout->setSpacing(10);
+  top_widget_main_layout->setContentsMargins(15,0,10,0);
   top_widget_main_layout->addWidget(icon_btn);
   top_widget_main_layout->addWidget(title_label);
 

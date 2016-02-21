@@ -9,18 +9,9 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
-  /*QPalette palette;
-  palette.setColor(QPalette::Background, QColor(192,253,123));
-  //palette.setBrush(QPalette::Background, QBrush(QPixmap(":/background.png")));
-  setPalette(palette);
-///from baidu
-*/
-
   avatar_button = new GuiAvatarButton(usrInfoStrList[3], 90, this);
-  //avatar_button->setFixedHeight(50);
   avatar_button->setAlignment(Qt::AlignLeft);
 
-  //
   QLabel *usr_name_label = new QLabel(usrInfoStrList[1], this);
   QLabel *usr_ip_label = new QLabel(usrInfoStrList[2], this);
 
@@ -138,15 +129,12 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 
   expression_label->setDefaultPixmap(":/img/img/expression_label_0.png");
   expression_label->setHoveredPixmap(":/img/img/expression_label_1.png");
-  //expression_label->setAlignment(Qt::AlignLeft);
 
   image_label->setDefaultPixmap(":/img/img/image_label_0.png");
   image_label->setHoveredPixmap(":/img/img/image_label_1.png");
-  //image_label->setAlignment(Qt::AlignLeft);
 
   file_label->setDefaultPixmap(":/img/img/file_label_0.png");
   file_label->setHoveredPixmap(":/img/img/file_label_1.png");
-  //file_label->setAlignment(Qt::AlignLeft);
 
   tool_layout = new QHBoxLayout();
   tool_layout->setAlignment(Qt::AlignLeft);
@@ -269,8 +257,8 @@ void GuiChatStack::refreshCurrentActiveIndex()
 
 void GuiChatStack::checkMessage(QStringList message_str_list, bool fromMe)
 {
-//  QString object_key_str;//0收人
-//  QString subject_key_str;//1发人
+//  QString object_key_str;//0 receiver
+//  QString subject_key_str;//1 sender
 //  QString message_str;//2
   chat_widget->addChatBubble(message_str_list[2], fromMe);
   data_history_io->wirteMessage(message_str_list, fromMe);
@@ -286,7 +274,6 @@ void GuiChatStack::onSendButtonClicked()
 {
   emit sendMessage(usr_info_str_list[0], message_editor->text_editor->toPlainText());
   message_editor->text_editor->clear();
-
 
 }
 

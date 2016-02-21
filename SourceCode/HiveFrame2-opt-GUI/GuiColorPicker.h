@@ -11,7 +11,7 @@ class GuiColorPicker : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiColorPicker(QColor color, QWidget *parent = 0);
+  explicit GuiColorPicker(QColor *color, QWidget *parent = 0);
   ~GuiColorPicker();
 
   QColor color();
@@ -21,7 +21,7 @@ protected:
   void mouseReleaseEvent(QMouseEvent *);
 
 private:
-  QColor my_color;
+  QColor *my_color;
 
 signals:
   void clicked();

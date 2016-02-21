@@ -20,12 +20,12 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, boo
 
   if(alignLeft)
     {
-      color = GlobalData::g_mChatBubbleColorI;//255,181,0
+      color = &GlobalData::g_mChatBubbleColorI;//255,181,0
       main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = GlobalData::g_mChatBubbleColorO;//255,215,126
+      color = &GlobalData::g_mChatBubbleColorO;//255,215,126
       main_layout->setAlignment(Qt::AlignRight);
     }
 
@@ -40,7 +40,7 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
   //color options:
   //255,197,28,100
   //255,215,126
-  painter.setBrush(QBrush(color,Qt::SolidPattern));
+  painter.setBrush(QBrush(*color,Qt::SolidPattern));
   painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
 }
 

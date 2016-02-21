@@ -58,7 +58,6 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
   if(debug_active_mun == 0)
     {
-      qDebug()<<"\nno history\n";
       qDebug()<<"\nmake new history \n";
       current_active_index = 1;
       makeHistoryFile(current_active_index);
@@ -69,7 +68,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
 DataHistoryIO::~DataHistoryIO()
 {
-
+  saveMessage();
 }
 
 QJsonArray DataHistoryIO::readMessage(int index)
@@ -96,7 +95,7 @@ void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
 
   active_history_json_array.append(message_json_obj);
 
-  saveMessage();
+  //saveMessage();
 }
 
 void DataHistoryIO::makeHistoryFile(int num)
@@ -132,6 +131,7 @@ void DataHistoryIO::saveMessage()
     }
   QTextStream out(&file);
 
+  ///max num of messages allowed in each file.
   if(active_history_json_array.count() < 100)
     {
       active_history_json_obj.insert("full", false);
