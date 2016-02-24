@@ -43,17 +43,26 @@ QTreeView::branch:selected {
 
 
 QListView::item:selected {
-     border: 1px solid #6a6ea9;
+     border: 2px solid #FFC329;
  }
 
- QListView::item:selected:!active {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #ABAFE5, stop: 1 #8588B2);
- }
 
- QListView::item:selected:active {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                 stop: 0 #6a6ea9, stop: 1 #888dd9);
+QListView::item:hover {
+    background: #ffd77e
+}
+
+QListView::item:selected:!active {
+    background: #FFFFF;
+
+}
+
+QListView {
+    show-decoration-selected: 1; /* make the selection span the entire width of the view */
+}
+
+QListView::item:selected:active {
+     background: #FFC329;
+
  }
 
 QTreeView::branch:has-siblings:!adjoins-item {

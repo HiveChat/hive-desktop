@@ -5,6 +5,10 @@
 #include "GuiColorPicker.h"
 #include "GlobalData.h"
 
+#include <QListWidget>
+#include <QAbstractButton>
+#include <QButtonGroup>
+#include <QRadioButton>
 
 
 class GuiSettingsStack_profile : public GuiScrollStack
@@ -15,9 +19,13 @@ public:
   explicit GuiSettingsStack_profile(QWidget *parent = 0);
   ~GuiSettingsStack_profile();
 
-signals:
+private:
+  QMap<QString , QString> avatar_map;
+  QList<QRadioButton *> avatar_radio_btn_list;
+  GuiAvatarButton *avatar_btn;
 
-public slots:
+private slots:
+  void onRadioClicked(QAbstractButton *abstractButton);
 };
 
 #endif // GUISETTINGSSTACK_PROFILE_H

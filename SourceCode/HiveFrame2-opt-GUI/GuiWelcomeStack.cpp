@@ -12,7 +12,7 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 
   QFont profile_font("Futura");
 
-  my_avatar = new GuiAvatarButton("/Users/Echo/Desktop/AVATAR2.png",175,this);
+  my_avatar = new GuiAvatarButton(GlobalData::g_avatarPathStr,175,this);
   my_avatar->setAlignment(Qt::AlignHCenter);
 
   welcome_label = new QLabel(this);
@@ -31,9 +31,10 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 
   ////!profile widget
 
-  background_label = new GuiLabelButton(this);
-  background_label->setHoveredPixmap(":/img/img/welcome_stack_background.png");
-  background_label->setDefaultPixmap(":/img/img/welcome_stack_background.png");
+  background_label = new QLabel(this);
+  QPixmap background_pixmap(":/img/img/welcome_stack_background.png");
+  background_pixmap.setDevicePixelRatio(2.0);
+  background_label->setPixmap(background_pixmap);
   background_label->setAlignment(Qt::AlignRight|Qt::AlignBottom);
 
 

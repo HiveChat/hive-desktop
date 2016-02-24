@@ -221,7 +221,7 @@ QJsonDocument DataManager::defaultProfile()
   QJsonObject my_profile_json_obj;
   my_profile_json_obj.insert("usrKey", GlobalData::g_myKeyStr);
   my_profile_json_obj.insert("usrName", QHostInfo::localHostName());
-  my_profile_json_obj.insert("avatarPath", ":/img/img/icon.png");
+  my_profile_json_obj.insert("avatarPath", ":/avatar/avatar/default.png");
 
   QJsonArray bubblr_color_i_json_array;
   bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.red());

@@ -34,9 +34,9 @@ private:
   QLabel *welcome_label;
   QLabel *ip_label;
   QLabel *host_name_label;
+  QLabel *background_label;
 
   GuiAvatarButton *my_avatar;
-  GuiLabelButton *background_label;
 
   QPixmap icon_pixmap;
 

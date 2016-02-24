@@ -1,11 +1,5 @@
 <RCC>
     <qresource prefix="/img">
-        <file>img/exit_hint_0.png</file>
-        <file>img/exit_hint_1.png</file>
-        <file>img/max_hint_0.png</file>
-        <file>img/max_hint_1.png</file>
-        <file>img/min_hint_0.png</file>
-        <file>img/min_hint_1.png</file>
         <file>img/icon.png</file>
         <file>img/expression_label_0.png</file>
         <file>img/expression_label_1.png</file>
@@ -20,7 +14,6 @@
         <file>img/welcome_stack_background.png</file>
         <file>img/settings_tab.png</file>
         <file>img/welcome_0.png</file>
-        <file>img/welcome_1.png</file>
         <file>img/storage_0.png</file>
         <file>img/storage_1.png</file>
         <file>img/messaging_0.png</file>
@@ -31,6 +24,7 @@
         <file>img/style_1.png</file>
         <file>img/storage.png</file>
         <file>img/messaging.png</file>
+        <file>img/welcome_1.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>
@@ -39,5 +33,6 @@
         <file>avatar/worm.png</file>
         <file>avatar/disk.png</file>
         <file>avatar/fat.png</file>
+        <file>avatar/default.png</file>
     </qresource>
 </RCC>
