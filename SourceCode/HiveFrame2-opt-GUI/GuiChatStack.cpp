@@ -101,7 +101,14 @@ void GuiChatStack_chat_widget::clearChatBubbles()
 void GuiChatStack_chat_widget::addChatBubble(QString message, bool fromMe)
 {
   gui_chat_bubble = new GuiChatBubble(message, !fromMe, this);
-  chat_bubble_layout->addWidget(gui_chat_bubble);
+  if(fromMe)
+    {
+      chat_bubble_layout->addWidget(gui_chat_bubble, Qt::AlignRight);
+    }
+  else
+    {
+      chat_bubble_layout->addWidget(gui_chat_bubble, Qt::AlignLeft);
+    }
   chat_bubble_list.append(gui_chat_bubble);
 }
 

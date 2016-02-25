@@ -9,6 +9,7 @@
 #include <QAbstractButton>
 #include <QButtonGroup>
 #include <QRadioButton>
+#include <QLineEdit>
 
 
 class GuiSettingsStack_profile : public GuiScrollStack
@@ -26,6 +27,7 @@ private:
 
 private slots:
   void onRadioClicked(QAbstractButton *abstractButton);
+  void onUsrNameChanged(QString usr_name);
 };
 
 #endif // GUISETTINGSSTACK_PROFILE_H

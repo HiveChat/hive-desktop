@@ -286,8 +286,6 @@ void DataManager::loadMyProfile()
           QJsonArray bubble_color_o_json_array = usr_list_json_obj["BubbleColorO"].toArray();
           GlobalData::g_mChatBubbleColorO = QColor(bubble_color_o_json_array[0].toInt(), bubble_color_o_json_array[1].toInt(), bubble_color_o_json_array[2].toInt());
 
-//          my_profile_json_obj.insert("BubbleColorI", "255,215,126");
-//          my_profile_json_obj.insert("BubbleColorO", "225,225,225");
         }
       else
         {

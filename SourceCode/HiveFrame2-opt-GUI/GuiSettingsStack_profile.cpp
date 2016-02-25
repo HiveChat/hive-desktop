@@ -51,31 +51,56 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
 
 
   QHBoxLayout *avatar_layout = new QHBoxLayout();
-  avatar_layout->setAlignment(Qt::AlignTop);
+//  avatar_layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
   avatar_layout->setContentsMargins(0,30,200,0);
   avatar_layout->setSpacing(30);
   avatar_layout->addWidget(avatar_label);
   avatar_layout->addLayout(avatar_option_layout);
 
+  //usrname
+  QLabel *usr_name_label = new QLabel("\tUser Name:", this);
+  usr_name_label->setFont(sub_font);
+  usr_name_label->setPalette(sub_text_palette);
+
+  QLineEdit *usr_name_line_edit = new QLineEdit(GlobalData::g_myNameStr,this);
+  usr_name_line_edit->setMaximumWidth(200);
+
+  QHBoxLayout *usr_name_layout = new QHBoxLayout();
+//  usr_name_layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  usr_name_layout->setContentsMargins(0,10,200,0);
+  usr_name_layout->setSpacing(30);
+  usr_name_layout->addWidget(usr_name_label);
+  usr_name_layout->addWidget(usr_name_line_edit);
+
   central_layout->setAlignment(Qt::AlignCenter);
   central_layout->addWidget(usr_info_label);
   central_layout->addWidget(top_line);
   central_layout->addLayout(avatar_layout);
+  central_layout->addLayout(usr_name_layout);
 //  central_layout->addSpacing(15);
 
   connect(avatar_option_group, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onRadioClicked(QAbstractButton*)));
+  connect(usr_name_line_edit, SIGNAL(textEdited(QString)), this, SLOT(onUsrNameChanged(QString)));
 
   this->setParent(parent);
 }
 
 GuiSettingsStack_profile::~GuiSettingsStack_profile()
 {
-
+  foreach (QRadioButton *object, avatar_radio_btn_list)
+    {
+      object->deleteLater();
+    }
 }
 
 void GuiSettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
   GlobalData::g_avatarPathStr = avatar_map.value(abstractButton->text());
   avatar_btn->setAvatar(GlobalData::g_avatarPathStr);
+}
+
+void GuiSettingsStack_profile::onUsrNameChanged(QString usr_name)
+{
+  GlobalData::g_myNameStr = usr_name;
 }
 

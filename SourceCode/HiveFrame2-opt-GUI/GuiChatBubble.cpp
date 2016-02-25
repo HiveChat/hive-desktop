@@ -1,7 +1,8 @@
 #include "GuiChatBubble.h"
 
-GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, int maxWidth, bool alignLeft = true, QWidget *parent)
+GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = true, QWidget *parent)
 {
+  int maxWidth = 400;
 
   QFont font("Verdana");
   font.setPointSize(14);
@@ -64,7 +65,7 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
 //  strip->setAlignment(Qt::AlignTop);
 //  strip->setContentsMargins(0,10,0,0);
 
-  text_area = new GuiChatBubble_text_area(text, 400, alignLeft, this);
+  text_area = new GuiChatBubble_text_area(text, alignLeft, this);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);
