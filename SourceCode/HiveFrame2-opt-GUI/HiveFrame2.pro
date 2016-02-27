@@ -9,7 +9,7 @@ QT	 += network
 QT	 += macextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = HiveFrame2
+TARGET = Hive!
 TEMPLATE = app
 
 ICON = hive.icns

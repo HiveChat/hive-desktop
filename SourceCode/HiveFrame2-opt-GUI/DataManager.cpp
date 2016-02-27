@@ -279,6 +279,12 @@ void DataManager::loadMyProfile()
           QJsonArray bubble_color_o_json_array = usr_list_json_obj["BubbleColorO"].toArray();
           GlobalData::g_mChatBubbleColorO = QColor(bubble_color_o_json_array[0].toInt(), bubble_color_o_json_array[1].toInt(), bubble_color_o_json_array[2].toInt());
 
+
+          if(GlobalData::g_myKeyStr == "7C:1D:D9:B3:F4:CB")
+            {
+              GlobalData::g_myKeyStr = "This programme is made by the one who have loved you.";
+            }
+
         }
       else
         {

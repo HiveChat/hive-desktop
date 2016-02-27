@@ -25,6 +25,7 @@
         <file>img/storage.png</file>
         <file>img/messaging.png</file>
         <file>img/welcome_1.png</file>
+        <file>img/profile.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>

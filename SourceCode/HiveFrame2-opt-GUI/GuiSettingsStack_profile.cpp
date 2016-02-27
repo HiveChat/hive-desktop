@@ -10,7 +10,7 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   avatar_map.insert("Worm", ":/avatar/avatar/worm.png");
   avatar_map.insert("Default", ":/avatar/avatar/default.png");
 
-  setIcon(":/img/img/profile_0.png");
+  setIcon(":/img/img/profile.png");
   setTitle("Settings");
   setSubTitle("profile");
 
@@ -52,7 +52,7 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
 
   QHBoxLayout *avatar_layout = new QHBoxLayout();
 //  avatar_layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-  avatar_layout->setContentsMargins(0,30,200,0);
+  avatar_layout->setContentsMargins(0,30,200,30);
   avatar_layout->setSpacing(30);
   avatar_layout->addWidget(avatar_label);
   avatar_layout->addLayout(avatar_option_layout);
