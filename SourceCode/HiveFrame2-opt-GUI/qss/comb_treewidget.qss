@@ -52,7 +52,7 @@ QListView::item:hover {
 }
 
 QListView::item:selected:!active {
-    background: #FFFFF;
+    background: #FFFFFF;
 
 }
 

@@ -72,11 +72,31 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   usr_name_layout->addWidget(usr_name_label);
   usr_name_layout->addWidget(usr_name_line_edit);
 
+  //usrkey
+  QLabel *usr_key_label = new QLabel("\tUser Key:", this);
+  usr_key_label->setFont(sub_font);
+  usr_key_label->setPalette(sub_text_palette);
+
+  QLineEdit *usr_key_line_edit = new QLineEdit(GlobalData::g_myNameStr,this);
+  usr_key_line_edit->setText(GlobalData::g_myKeyStr);
+  usr_key_line_edit->setCursor(QCursor(Qt::IBeamCursor));
+  usr_key_line_edit->setReadOnly(true);
+  usr_key_line_edit->setMaximumWidth(200);
+
+  QHBoxLayout *usr_key_layout = new QHBoxLayout();
+//  usr_name_layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  usr_key_layout->setContentsMargins(0,10,200,0);
+  usr_key_layout->setSpacing(30);
+  usr_key_layout->addWidget(usr_key_label);
+  usr_key_layout->addWidget(usr_key_line_edit);
+
   central_layout->setAlignment(Qt::AlignCenter);
+  central_layout->setContentsMargins(30,30,0,50);
   central_layout->addWidget(usr_info_label);
   central_layout->addWidget(top_line);
   central_layout->addLayout(avatar_layout);
   central_layout->addLayout(usr_name_layout);
+  central_layout->addLayout(usr_key_layout);
 //  central_layout->addSpacing(15);
 
   connect(avatar_option_group, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onRadioClicked(QAbstractButton*)));

@@ -44,6 +44,7 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)// : QWid
   out_bubble_layout->addWidget(out_bubble_picker);
 
   central_layout->setAlignment(Qt::AlignCenter);
+  central_layout->setContentsMargins(0,30,0,50);
   central_layout->addWidget(text_bubble_label);
   central_layout->addWidget(top_line);
 //  central_layout->addSpacing(15);

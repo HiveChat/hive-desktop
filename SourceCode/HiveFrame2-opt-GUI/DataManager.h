@@ -31,20 +31,10 @@ class DataManager : public QObject
 public:
   explicit DataManager(QObject *parent = 0);
 
-  void checkData();
-  void loadMyProfile();
+
   void loadUsrProfile();
-  void loadFonts();
-
-  void addUsr(QStringList usrInfoStrList);
-  void deleteUsr(QStringList usrInfoStrList);
-
-  static bool writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj);//what happened?
   static bool checkDir(QString dir);
-
   static QString appDataLocalPath();
-
-  //void addChatHistory();
   void TEST_SECTION();
 
 private:
@@ -59,16 +49,20 @@ private:
   const QString usr_list_file_path = app_data_local_path + "/usr_list.json";
   const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
 
+  void checkData();
+  void loadDefaultGlobalData();
+  void loadMyProfile();
+  void loadFonts();
+
+  void addUsr(QStringList usrInfoStrList);
+  void deleteUsr(QStringList usrInfoStrList);
 
 
   ///usrData
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 
-  //QStringList usr_info_str_list;
-
 signals:
   void usrProfileLoaded(QStringList usrInfoStrList);
-  //void onFirstLaunch();
   void messageLoaded(QStringList messageStrList);
 
 

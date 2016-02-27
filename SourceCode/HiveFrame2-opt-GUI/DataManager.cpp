@@ -172,24 +172,18 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
   file.flush();
 }
 
-bool DataManager::writeChatHistory(QString usrKey, QJsonObject chayHistoryJsonObj)
-{
-
-}
-
-
-/*
-QList<QStringList> DataManager::import_usr_form()
-{
-  return usr_form;
-}
-*/
-
 void DataManager::checkData()
 {
   checkDir(app_data_local_path);
   checkDir(usr_path);
   checkDir(log_path);
+}
+
+void DataManager::loadDefaultGlobalData()
+{
+  makeUsrKey();
+  GlobalData::g_avatarPathStr = ":/avatar/avatar/default.png";
+  GlobalData::g_myNameStr = QHostInfo::localHostName();
 }
 
 
@@ -216,12 +210,11 @@ QString DataManager::appDataLocalPath()
 
 QJsonDocument DataManager::defaultProfile()
 {
-  makeUsrKey();
 
   QJsonObject my_profile_json_obj;
   my_profile_json_obj.insert("usrKey", GlobalData::g_myKeyStr);
-  my_profile_json_obj.insert("usrName", QHostInfo::localHostName());
-  my_profile_json_obj.insert("avatarPath", ":/avatar/avatar/default.png");
+  my_profile_json_obj.insert("usrName", GlobalData::g_myNameStr);
+  my_profile_json_obj.insert("avatarPath", GlobalData::g_avatarPathStr);
 
   QJsonArray bubblr_color_i_json_array;
   bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.red());
@@ -290,13 +283,14 @@ void DataManager::loadMyProfile()
       else
         {
           file.resize(0);
+          loadDefaultGlobalData();
           out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      qDebug()<<defaultProfile().toJson(QJsonDocument::Compact);
+      loadDefaultGlobalData();
       out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
     }
 
