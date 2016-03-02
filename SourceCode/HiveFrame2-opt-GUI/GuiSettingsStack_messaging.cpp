@@ -7,8 +7,6 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)// : QWid
   setSubTitle("messaging");
 
   QLabel *text_bubble_label = new QLabel("Text Bubble", this);
-  QFont font("Futura");//Verdana
-  font.setPointSize(15);
   text_bubble_label->setFont(font);
   text_bubble_label->setPalette(text_palette);
 
@@ -20,7 +18,6 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)// : QWid
   top_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
 
   QLabel *in_bubble_label = new QLabel("\tReceived message bubble colour:", this);
-  QFont sub_font("Futura");//Verdana
   in_bubble_label->setFont(sub_font);
   in_bubble_label->setPalette(sub_text_palette);
   GuiColorPicker *in_bubble_picker = new GuiColorPicker(&GlobalData::g_mChatBubbleColorI, this);

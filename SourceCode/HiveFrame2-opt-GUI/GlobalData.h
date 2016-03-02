@@ -41,7 +41,8 @@ enum StaticStackType
   Home_Storage,
   Settings_Messaging,
   Settings_Profile,
-  Settings_Style
+  Settings_Style,
+  Settings_Questions
 };
 
 enum BuiltInAvatarType

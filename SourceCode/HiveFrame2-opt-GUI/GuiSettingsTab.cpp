@@ -18,6 +18,10 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
   style_btn->setDefaultPixmap(":/img/img/style_0.png");
   style_btn->setHoveredPixmap(":/img/img/style_1.png");
 
+  questions_btn = new GuiMenuButton("questions", Settings_Questions, this);
+  questions_btn->setDefaultPixmap(":/img/img/question_0.png");
+  questions_btn->setHoveredPixmap(":/img/img/question_1.png");
+
   ////main layout
   main_layout = new QVBoxLayout(this);
   main_layout->setContentsMargins(30,20,20,0);
@@ -26,6 +30,7 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(messaging_btn);
   main_layout->addWidget(profile_btn);
   main_layout->addWidget(style_btn);
+  main_layout->addWidget(questions_btn);
 
   this->setParent(parent);
 

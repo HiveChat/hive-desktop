@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     GuiColorPicker.cpp \
     GuiSettingsStack_messaging.cpp \
     GuiSettingsStack_profile.cpp \
-    ThreadInfo.cpp
+    ThreadInfo.cpp \
+    GuiSettingsStack_questions.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -65,7 +66,8 @@ HEADERS  += mainwindow.h \
     GuiColorPicker.h \
     GuiSettingsStack_messaging.h \
     GuiSettingsStack_profile.h \
-    ThreadInfo.h
+    ThreadInfo.h \
+    GuiSettingsStack_questions.h
 
 RESOURCES += \
     qss.qrc \

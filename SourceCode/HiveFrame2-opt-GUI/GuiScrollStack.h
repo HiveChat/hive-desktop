@@ -23,6 +23,8 @@ public:
 protected:
   void setUpUI();
 
+  QFont sub_font;
+  QFont font;
   QPalette text_palette;
   QPalette sub_text_palette;
 

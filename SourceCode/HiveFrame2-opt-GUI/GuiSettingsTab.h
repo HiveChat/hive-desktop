@@ -18,6 +18,7 @@ public:
   GuiMenuButton *profile_btn;
   GuiMenuButton *messaging_btn;
   GuiMenuButton *style_btn;
+  GuiMenuButton *questions_btn;
 
 private:
   QVBoxLayout *main_layout;

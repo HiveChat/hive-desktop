@@ -83,6 +83,16 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 
             break;
           }
+        case Settings_Questions:
+          {
+            GuiSettingsStack_questions *gui_settings_stack = new GuiSettingsStack_questions(this);
+            static_stack_widget = gui_settings_stack;
+            main_stacked_widget->addWidget(gui_settings_stack);
+            main_stacked_widget->setCurrentWidget(gui_settings_stack);
+            qDebug()<<"dsfhusdhfdskjfkhdshfk";
+
+            break;
+          }
 
         default:
           {

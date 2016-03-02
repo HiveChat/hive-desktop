@@ -13,8 +13,6 @@ public:
   explicit GuiSettingsStack_messaging(QWidget *parent = 0);
   ~GuiSettingsStack_messaging();
 
-private:
-  GuiScrollStack *gui_settings_stack;
 };
 
 #endif // GUISETTINGSSTACK_MESSAGING_H

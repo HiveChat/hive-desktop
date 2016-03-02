@@ -15,8 +15,6 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   setSubTitle("profile");
 
   QLabel *usr_info_label = new QLabel("User information", this);
-  QFont font("Futura");//Verdana
-  font.setPointSize(15);
   usr_info_label->setFont(font);
   usr_info_label->setPalette(text_palette);
 
@@ -30,7 +28,6 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
 
   QLabel *avatar_label = new QLabel("\tAvatar:", this);
   avatar_label->setAlignment(Qt::AlignTop);
-  QFont sub_font("Futura");//Verdana
   avatar_label->setFont(sub_font);
   avatar_label->setPalette(sub_text_palette);
 
