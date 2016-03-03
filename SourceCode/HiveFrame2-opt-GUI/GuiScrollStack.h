@@ -22,6 +22,11 @@ public:
 
 protected:
   void setUpUI();
+  void setTag(QString text);
+
+  void addItem(QString text, QString string);
+  void addItem(QString text, QWidget *widget);
+  void addItem(QString text, QLayout *widgetLayout);
 
   QFont sub_font;
   QFont font;
@@ -34,7 +39,6 @@ protected:
   GuiAvatarButton *icon_btn;
   QLabel *title_label;
   QHBoxLayout *top_widget_main_layout;
-
 
 };
 

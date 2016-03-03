@@ -67,8 +67,10 @@ void GuiScrollStack::setUpUI()
   QWidget *mid_widget = new QWidget(this);
 
   central_layout = new QVBoxLayout();
-  central_layout->setAlignment(Qt::AlignTop |Qt::AlignLeft);
-  central_layout->setContentsMargins(10,30,10,30);
+//  central_layout->setAlignment(Qt::AlignTop |Qt::AlignLeft);
+//  central_layout->setContentsMargins(10,30,10,30);
+  central_layout->setAlignment(Qt::AlignCenter);
+  central_layout->setContentsMargins(30,30,0,50);
 
   QFrame *top_line = new QFrame(this);
   top_line->setFrameShape(QFrame::HLine);
@@ -108,6 +110,82 @@ void GuiScrollStack::setUpUI()
   main_layout->addWidget(scroll_area);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
+
+}
+
+void GuiScrollStack::setTag(QString text)
+{
+  QLabel *tag_labe = new QLabel(text, this);
+  tag_labe->setFont(font);
+  tag_labe->setPalette(text_palette);
+
+  QFrame *line = new QFrame(this);
+  line->setFrameShape(QFrame::HLine);
+  line->setFrameShadow(QFrame::Plain);
+  line->setFixedHeight(1);
+  line->setFixedWidth(580);
+  line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
+
+  central_layout->addWidget(tag_labe);
+  central_layout->addWidget(line);
+  central_layout->addSpacing(30);
+}
+
+void GuiScrollStack::addItem(QString text, QString string)
+{
+  QLabel *text_label = new QLabel(text, this);
+  text_label->setFont(sub_font);
+  text_label->setPalette(sub_text_palette);
+
+  QLabel *string_label = new QLabel(string, this);
+
+  QHBoxLayout *layout = new QHBoxLayout();
+  //layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  layout->setContentsMargins(0,10,200,0);
+  layout->setSpacing(30);
+  layout->setStretch(0,0);
+  layout->addWidget(text_label);
+  layout->addWidget(string_label);
+
+  central_layout->addLayout(layout);
+  central_layout->addSpacing(10);
+}
+
+void GuiScrollStack::addItem(QString text, QWidget *widget)
+{
+  QLabel *text_label = new QLabel(text, this);
+  text_label->setFont(sub_font);
+  text_label->setPalette(sub_text_palette);
+
+  QHBoxLayout *layout = new QHBoxLayout();
+  //layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  layout->setContentsMargins(0,10,200,0);
+  layout->setSpacing(30);
+  layout->setStretch(0,0);
+  layout->addWidget(text_label);
+  layout->addWidget(widget);
+
+  central_layout->addLayout(layout);
+  central_layout->addSpacing(10);
+
+}
+
+void GuiScrollStack::addItem(QString text, QLayout *widgetLayout)
+{
+  QLabel *text_label = new QLabel(text, this);
+  text_label->setFont(sub_font);
+  text_label->setPalette(sub_text_palette);
+
+  QHBoxLayout *layout = new QHBoxLayout();
+  //layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  layout->setContentsMargins(0,10,200,0);
+  layout->setSpacing(30);
+  layout->setStretch(0,0);
+  layout->addWidget(text_label);
+  layout->addLayout(widgetLayout);
+
+  central_layout->addLayout(layout);
+  central_layout->addSpacing(10);
 
 }
 

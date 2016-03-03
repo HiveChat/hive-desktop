@@ -7,8 +7,8 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = 
   QFont font("Verdana");
   font.setPointSize(14);
 
-  //QString message = "<p style=\"line-height:100%\">" + text + "</p>";
-  label =  new QLabel(text, this);
+  QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
+  label =  new QLabel(message, this);
   label->setFont(font);
   label->adjustSize();
   label->setWordWrap(true);
@@ -71,9 +71,6 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
 
-
-  this->setParent(parent);
-
   if(alignLeft)
     {
       main_layout->setAlignment(Qt::AlignLeft);
@@ -86,5 +83,7 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
       main_layout->addWidget(text_area);
       //main_layout->addWidget(strip);
     }
+
+  this->setParent(parent);
 }
 
