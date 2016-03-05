@@ -2,8 +2,10 @@
 #define GUIMAINBLOCK_H
 
 #include "GuiChatStack.h"
-#include "GuiWelcomeStack.h"
 #include "GuiColorPicker.h"
+
+#include "GuiWelcomeStack.h"
+#include "GuiHomeStack_storage.h"
 #include "GuiSettingsStack_messaging.h"
 #include "GuiSettingsStack_profile.h"
 #include "GuiSettingsStack_questions.h"

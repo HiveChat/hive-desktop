@@ -133,17 +133,22 @@ void GuiScrollStack::setTag(QString text)
 
 void GuiScrollStack::addItem(QString text, QString string)
 {
-  QLabel *text_label = new QLabel(text, this);
+  QLabel *text_label = new QLabel("\t" + text, this);
   text_label->setFont(sub_font);
   text_label->setPalette(sub_text_palette);
 
   QLabel *string_label = new QLabel(string, this);
+  string_label->setWordWrap(true);
+//  string_label->setSizePolicy(QSizePolicy::Fixed);
+  //string_label->setSizePolicy(QSizePolicy::Fixed);
+  string_label->adjustSize();
 
   QHBoxLayout *layout = new QHBoxLayout();
-  //layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  layout->setSizeConstraint(QLayout::SetFixedSize);
   layout->setContentsMargins(0,10,200,0);
   layout->setSpacing(30);
-  layout->setStretch(0,0);
+//  layout->setStretch(0,0);
   layout->addWidget(text_label);
   layout->addWidget(string_label);
 
@@ -158,7 +163,7 @@ void GuiScrollStack::addItem(QString text, QWidget *widget)
   text_label->setPalette(sub_text_palette);
 
   QHBoxLayout *layout = new QHBoxLayout();
-  //layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+//  layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
   layout->setContentsMargins(0,10,200,0);
   layout->setSpacing(30);
   layout->setStretch(0,0);
