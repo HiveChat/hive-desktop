@@ -5,6 +5,7 @@ GuiAvatarButton::GuiAvatarButton(const QString path, const int Diameter, QWidget
 {
   diameter = Diameter;
   setAvatar(path);
+
   this->setParent(parent);
 }
 

@@ -244,8 +244,7 @@ GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidge
 
   loadHistory(current_active_index);
 
-
-
+  this->setParent(parent);
 }
 
 GuiChatStack::~GuiChatStack()

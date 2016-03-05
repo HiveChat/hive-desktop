@@ -4,8 +4,10 @@
 
 GuiColorPicker::GuiColorPicker(QColor *color, QWidget *parent) : QWidget(parent)
 {
-  this->setFixedSize(20,20);
   my_color = color;
+
+  this->setFixedSize(20,20);
+  this->setParent(parent);
 }
 
 GuiColorPicker::~GuiColorPicker()

@@ -7,8 +7,8 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = 
   QFont font("Verdana");
   font.setPointSize(14);
 
-  QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
-  label =  new QLabel(message, this);
+  //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
+  label =  new QLabel(text, this);
   label->setFont(font);
   label->adjustSize();
   label->setWordWrap(true);

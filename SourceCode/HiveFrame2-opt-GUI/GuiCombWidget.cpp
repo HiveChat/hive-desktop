@@ -9,8 +9,7 @@ GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWid
   avatar = new GuiAvatarButton(usrInfoStrList[3], 80,  this);
   usr_name_label = new QLabel(usrInfoStrList[1]);
   ip_addr_label = new QLabel(usrInfoStrList[2]);
-  status_label = new QLabel("·");
-
+  status_label = new QLabel("<span style=\" color:#39c828;\">●</span>");
   QPalette usr_name_palette;
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
   QFont usr_name_font("futura");//verdana
@@ -41,6 +40,7 @@ GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWid
   this->setMinimumWidth(200);
   this->setPalette(hover_palette);
   this->setAutoFillBackground(true);
+  this->setParent(parent);
 }
 
 GuiCombWidget::~GuiCombWidget()
