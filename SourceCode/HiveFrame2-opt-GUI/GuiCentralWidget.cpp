@@ -53,13 +53,17 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
     {
       connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
     }
-  ////dynamic widgets
+
+  ////threads
+  thread_info = new ThreadInfo(this);
+
+  connect(thread_info, SIGNAL(globalDataChanged()), data_manager, SLOT());
 
   this->setParent(parent);
 }
 
 GuiCentralWidget::~GuiCentralWidget()
 {
+  thread_info->quit();
   qDebug()<<"\n@Hive is destructed";
-
 }

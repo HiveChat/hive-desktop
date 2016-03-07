@@ -1,8 +1,16 @@
 #include "ThreadInfo.h"
 
-ThreadInfo::ThreadInfo(QThread *parent) : QThread(parent)
-{
 
+ThreadInfo::ThreadInfo(QObject *parent) : QThread(parent)
+{
+  this->start(QThread::LowestPriority);
+
+  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
+  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
+  b_myNameStr = GlobalData::g_myNameStr;
+  b_avatarPathStr = GlobalData::g_avatarPathStr;
+
+  this->setParent(parent);
 }
 
 ThreadInfo::~ThreadInfo()
@@ -12,6 +20,25 @@ ThreadInfo::~ThreadInfo()
 
 void ThreadInfo::run()
 {
+  int a = 0;
+  while(true)
+    {
+      globalDataChanged();
+
+      QCoreApplication::processEvents();
+      msleep(1000);
+    }
+}
+
+void ThreadInfo::checkGlobalData()
+{
+  if(b_mChatBubbleColorI == GlobalData::g_mChatBubbleColorI ||
+     b_mChatBubbleColorO == GlobalData::g_mChatBubbleColorO ||
+     b_myNameStr == GlobalData::g_myNameStr ||
+     b_avatarPathStr == GlobalData::g_avatarPathStr)
+    {
+      emit globalDataChanged();
+    }
 
 }
 

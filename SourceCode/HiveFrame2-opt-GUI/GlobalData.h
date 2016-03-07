@@ -3,6 +3,7 @@
 #include <QStringList>
 #include <QDatetime>
 #include <QFont>
+#include <QMap>
 #include <QColor>
 #include <QStandardPaths>
 

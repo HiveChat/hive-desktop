@@ -1,5 +1,7 @@
 #include "GlobalData.h"
 #include <QPalette>
+
+
 ///UI
 QFont GlobalData::g_font;
 QColor GlobalData::g_windowColor = QColor(255,255,255);
@@ -8,8 +10,8 @@ QColor GlobalData::g_tabColor = QColor(0,0,0,0);
 
 QColor GlobalData::g_chatBubbleColorI = QColor(255,215,126);
 QColor GlobalData::g_chatBubbleColorO = QColor(225,225,225);
-QColor GlobalData::g_mChatBubbleColorI = QColor(255,215,126);
-QColor GlobalData::g_mChatBubbleColorO = QColor(225,225,225);
+QColor GlobalData::g_mChatBubbleColorI = GlobalData::g_chatBubbleColorI;
+QColor GlobalData::g_mChatBubbleColorO = GlobalData::g_chatBubbleColorO;
 
 ///data
 QString GlobalData::g_myKeyStr;

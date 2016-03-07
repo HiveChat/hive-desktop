@@ -2,7 +2,6 @@
 #define GUICHATBUBBLE_H
 
 #include "GlobalData.h"
-
 #include <QLabel>
 #include <QPainter>
 #include <QHBoxLayout>

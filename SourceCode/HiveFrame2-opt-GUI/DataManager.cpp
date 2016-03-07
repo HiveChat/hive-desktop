@@ -2,6 +2,16 @@
 
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
+
+  myConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
+  myConfigJsonMap.insert("usrName", &GlobalData::g_myNameStr);
+  myConfigJsonMap.insert("avatarPath", &GlobalData::g_avatarPathStr);
+  myConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
+  myConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
+  myConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
+  myConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
+
+
   checkData();
   loadMyProfile();
   loadFonts();
@@ -279,12 +289,6 @@ void DataManager::loadMyProfile()
           QJsonArray bubble_color_o_json_array = usr_list_json_obj["BubbleColorO"].toArray();
           GlobalData::g_mChatBubbleColorO = QColor(bubble_color_o_json_array[0].toInt(), bubble_color_o_json_array[1].toInt(), bubble_color_o_json_array[2].toInt());
 
-
-          if(GlobalData::g_myKeyStr == "7C:1D:D9:B3:F4:CB")
-            {
-              GlobalData::g_myKeyStr = "This programme is made by the one who have loved you.";
-            }
-
         }
       else
         {
@@ -357,6 +361,11 @@ void DataManager::loadUsrProfile()
       qDebug()<<"Contact parse failed, is file empty?******";
       return;
     }
+
+}
+
+void DataManager::writeCurrentConfiguration()
+{
 
 }
 
