@@ -33,7 +33,6 @@ public:
 
 
   void loadUsrProfile();
-  void writeCurrentConfig();
   static bool checkDir(QString dir);
   static QString appDataLocalPath();
   void TEST_SECTION();
@@ -58,10 +57,15 @@ private:
   const QString usr_list_file_path = app_data_local_path + "/usr_list.json";
   const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
 
-  QMap<QString, QVariant *> myConfigJsonMap;
+  QMap<QString, QColor*> myColorConfigJsonMap;
+  QMap<QString, QString*> myProfileConfigJsonMap;
 
   ///usrData
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+
+public slots:
+  void writeCurrentConfig();
+
 
 signals:
   void usrProfileLoaded(QStringList usrInfoStrList);

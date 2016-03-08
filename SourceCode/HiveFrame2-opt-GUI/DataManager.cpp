@@ -3,13 +3,11 @@
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
 
-  myConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
-  myConfigJsonMap.insert("usrName", &GlobalData::g_myNameStr);
-  myConfigJsonMap.insert("avatarPath", &GlobalData::g_avatarPathStr);
-  myConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
-  myConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
-  myConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
-  myConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
+  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
+  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_myNameStr);
+  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_avatarPathStr);
+  myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
+  myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
 
 
   checkData();
@@ -220,25 +218,18 @@ QString DataManager::appDataLocalPath()
 
 QJsonDocument DataManager::defaultProfile()
 {
+  loadDefaultGlobalData();
 
   QJsonObject my_profile_json_obj;
-  my_profile_json_obj.insert("usrKey", GlobalData::g_myKeyStr);
-  my_profile_json_obj.insert("usrName", GlobalData::g_myNameStr);
-  my_profile_json_obj.insert("avatarPath", GlobalData::g_avatarPathStr);
+  foreach (QString attribute, myProfileConfigJsonMap.keys())
+    {
+      my_profile_json_obj.insert(attribute, *myProfileConfigJsonMap.value(attribute));
+    }
 
-  QJsonArray bubblr_color_i_json_array;
-  bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.red());
-  bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.green());
-  bubblr_color_i_json_array.append(GlobalData::g_chatBubbleColorI.blue());
-  my_profile_json_obj.insert("BubbleColorI", bubblr_color_i_json_array);
+  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_chatBubbleColorI.name());
+  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_chatBubbleColorO.name());
 
-  QJsonArray bubblr_color_o_json_array;
-  bubblr_color_o_json_array.append(GlobalData::g_chatBubbleColorO.red());
-  bubblr_color_o_json_array.append(GlobalData::g_chatBubbleColorO.green());
-  bubblr_color_o_json_array.append(GlobalData::g_chatBubbleColorO.blue());
-  my_profile_json_obj.insert("BubbleColorO", bubblr_color_o_json_array);
-
-  ////these default data will be integrated in a class[I don't know what I meat.]
+  ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
   QJsonDocument write_json_document;
   write_json_document.setObject(my_profile_json_obj);
@@ -280,27 +271,27 @@ void DataManager::loadMyProfile()
         {
           QJsonObject usr_list_json_obj = read_json_document.object();
 
-          GlobalData::g_myKeyStr = usr_list_json_obj["usrKey"].toString();
-          GlobalData::g_myNameStr = usr_list_json_obj["usrName"].toString();
-          GlobalData::g_avatarPathStr = usr_list_json_obj["avatarPath"].toString();
+          foreach(QString *global_data_ptr, myProfileConfigJsonMap.values())
+            {
+              *global_data_ptr = usr_list_json_obj[myProfileConfigJsonMap.key(global_data_ptr)].toString();
+            }
 
-          QJsonArray bubble_color_i_json_array = usr_list_json_obj["BubbleColorI"].toArray();
-          GlobalData::g_mChatBubbleColorI = QColor(bubble_color_i_json_array[0].toInt(), bubble_color_i_json_array[1].toInt(), bubble_color_i_json_array[2].toInt());
-          QJsonArray bubble_color_o_json_array = usr_list_json_obj["BubbleColorO"].toArray();
-          GlobalData::g_mChatBubbleColorO = QColor(bubble_color_o_json_array[0].toInt(), bubble_color_o_json_array[1].toInt(), bubble_color_o_json_array[2].toInt());
+          foreach(QColor *global_data_ptr, myColorConfigJsonMap.values())
+            {
+              qDebug()<<usr_list_json_obj[myColorConfigJsonMap.key(global_data_ptr)].toString();
+              *global_data_ptr = QColor(usr_list_json_obj[myColorConfigJsonMap.key(global_data_ptr)].toString());
+            }
 
         }
       else
         {
           file.resize(0);
-          loadDefaultGlobalData();
           out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      loadDefaultGlobalData();
       out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
     }
 
@@ -364,7 +355,7 @@ void DataManager::loadUsrProfile()
 
 }
 
-void DataManager::writeCurrentConfiguration()
+void DataManager::writeCurrentConfig()
 {
 
 }

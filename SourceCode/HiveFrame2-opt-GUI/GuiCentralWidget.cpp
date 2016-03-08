@@ -57,13 +57,13 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   ////threads
   thread_info = new ThreadInfo(this);
 
-  connect(thread_info, SIGNAL(globalDataChanged()), data_manager, SLOT());
+  connect(thread_info, SIGNAL(globalDataChanged()), data_manager, SLOT(writeCurrentConfig()));
 
   this->setParent(parent);
 }
 
 GuiCentralWidget::~GuiCentralWidget()
 {
-  thread_info->quit();
+  thread_info->terminate();
   qDebug()<<"\n@Hive is destructed";
 }
