@@ -377,7 +377,7 @@ void DataManager::writeCurrentConfig()
   my_profile_json_obj.insert("BubbleColorO", GlobalData::g_mChatBubbleColorO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
-
+  
   QJsonDocument write_json_document;
   write_json_document.setObject(my_profile_json_obj);
 

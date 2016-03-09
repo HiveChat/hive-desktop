@@ -23,7 +23,7 @@ void ThreadInfo::run()
   int a = 0;
   while(true)
     {
-      globalDataChanged();
+      checkGlobalData();
 
       QCoreApplication::processEvents();
       msleep(1000);
@@ -32,11 +32,15 @@ void ThreadInfo::run()
 
 void ThreadInfo::checkGlobalData()
 {
-  if(b_mChatBubbleColorI == GlobalData::g_mChatBubbleColorI ||
-     b_mChatBubbleColorO == GlobalData::g_mChatBubbleColorO ||
-     b_myNameStr == GlobalData::g_myNameStr ||
-     b_avatarPathStr == GlobalData::g_avatarPathStr)
+  if(b_mChatBubbleColorI != GlobalData::g_mChatBubbleColorI ||
+     b_mChatBubbleColorO != GlobalData::g_mChatBubbleColorO ||
+     b_myNameStr != GlobalData::g_myNameStr ||
+     b_avatarPathStr != GlobalData::g_avatarPathStr)
     {
+      b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
+      b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
+      b_myNameStr = GlobalData::g_myNameStr;
+      b_avatarPathStr = GlobalData::g_avatarPathStr;
       emit globalDataChanged();
     }
 
