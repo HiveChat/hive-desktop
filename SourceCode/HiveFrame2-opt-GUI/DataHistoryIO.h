@@ -3,7 +3,6 @@
 
 #include "DataManager.h"
 
-
 class DataHistoryIO : public QObject
 {
   Q_OBJECT

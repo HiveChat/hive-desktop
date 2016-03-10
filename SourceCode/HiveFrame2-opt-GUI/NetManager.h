@@ -29,7 +29,7 @@ public:
 
   void sendUsrEnter();
 
-  static QString localHostIP();
+  static void refreshLocalHostIP();
 
   void TEST();
 

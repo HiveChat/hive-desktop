@@ -72,7 +72,6 @@ void GuiWelcomeStack::refreshTime()
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_myNameStr).arg("It's late at night :)"));
     }
 
-  NetManager::localHostIP();
   if(GlobalData::g_localHostIP == "")
     {
       ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");

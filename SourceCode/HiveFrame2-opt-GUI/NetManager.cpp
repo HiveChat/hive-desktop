@@ -9,9 +9,7 @@ NetManager::NetManager(QObject *parent) : QObject(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
-  localHostIP();
-
-
+  refreshLocalHostIP();
 
   sendUsrEnter();
   TEST();
@@ -184,8 +182,9 @@ void NetManager::processPendingDatagrams()
 
 
 
-QString NetManager::localHostIP()
+void NetManager::refreshLocalHostIP()
 {
+  qDebug()<<"invoke: void NetManager::refreshLocalHostIP()";
   QList<QHostAddress> AddressList = QNetworkInterface::allAddresses();
   QHostAddress result;
   foreach(QHostAddress address, AddressList)
@@ -211,8 +210,6 @@ QString NetManager::localHostIP()
     {
       GlobalData::g_localHostIP = "";
     }
-
-  return GlobalData::g_localHostIP;
 }
 
 void NetManager::TEST()
@@ -220,7 +217,7 @@ void NetManager::TEST()
 
   /////test
 
-  /*QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
+  QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
       foreach(QNetworkInterface interface,list)
       {
           qDebug() <<"Device:"<<interface.name();
@@ -235,7 +232,7 @@ void NetManager::TEST()
               qDebug()<<"Netmask: "  <<entry.netmask().toString();
               qDebug()<<"Broadcast:" <<entry.broadcast().toString();
           }
-  }*/
+  }
 
   //qDebug()<<QNetworkInterface::allAddresses().at(0).toString()<<endl;
   /////!test

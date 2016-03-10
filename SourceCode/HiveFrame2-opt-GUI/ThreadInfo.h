@@ -2,6 +2,7 @@
 #define THREADINFO_H
 
 #include "GlobalData.h"
+#include "NetManager.h"
 
 #include <QThread>
 #include <QDebug>
@@ -20,6 +21,7 @@ protected:
 
 private:
   void checkGlobalData();
+  void checkNetConnection();
 
   QColor b_mChatBubbleColorI;
   QColor b_mChatBubbleColorO;

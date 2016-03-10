@@ -20,10 +20,10 @@ ThreadInfo::~ThreadInfo()
 
 void ThreadInfo::run()
 {
-  int a = 0;
   while(true)
     {
       checkGlobalData();
+      checkNetConnection();
 
       QCoreApplication::processEvents();
       msleep(1000);
@@ -32,6 +32,7 @@ void ThreadInfo::run()
 
 void ThreadInfo::checkGlobalData()
 {
+  qDebug()<<"invoke: void ThreadInfo::checkGlobalData()";
   if(b_mChatBubbleColorI != GlobalData::g_mChatBubbleColorI ||
      b_mChatBubbleColorO != GlobalData::g_mChatBubbleColorO ||
      b_myNameStr != GlobalData::g_myNameStr ||
@@ -43,6 +44,10 @@ void ThreadInfo::checkGlobalData()
       b_avatarPathStr = GlobalData::g_avatarPathStr;
       emit globalDataChanged();
     }
+}
 
+void ThreadInfo::checkNetConnection()
+{
+  NetManager::refreshLocalHostIP();
 }
 
