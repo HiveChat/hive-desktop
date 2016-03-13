@@ -1,7 +1,7 @@
 #include "GuiChatStack.h"
 
 //////////////////////////top//////////////////////////////////////
-GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
+GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList *usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
   ///usrKey<<usrName<<ipAddr<<avatarPathr
   QPalette palette;
@@ -9,11 +9,11 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
-  avatar_button = new GuiAvatarButton(usrInfoStrList[3], 90, this);
+  avatar_button = new GuiAvatarButton(usrInfoStrList->at(3), 90, this);
   avatar_button->setAlignment(Qt::AlignLeft);
 
-  QLabel *usr_name_label = new QLabel(usrInfoStrList[1], this);
-  QLabel *usr_ip_label = new QLabel(usrInfoStrList[2], this);
+  QLabel *usr_name_label = new QLabel(usrInfoStrList->at(1), this);
+  QLabel *usr_ip_label = new QLabel(usrInfoStrList->at(2), this);
 
   QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPointSize(15);
@@ -201,16 +201,16 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
 }
 //////////////////////////main//////////////////////////////////////
 
-GuiChatStack::GuiChatStack(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
+GuiChatStack::GuiChatStack(QStringList *usrInfoStrList, QWidget *parent) : QWidget(parent)
 {
   ///Data
-  usr_info_str_list = usrInfoStrList;
+  usr_info_str_list = *usrInfoStrList;
 
-  data_history_io = new DataHistoryIO(usrInfoStrList[0], this);
+  data_history_io = new DataHistoryIO(usr_info_str_list[0], this);
   refreshCurrentActiveIndex();
 
   ///UI
-  top_bar = new GuiChatStack_top_bar(usr_info_str_list, this);
+  top_bar = new GuiChatStack_top_bar(&usr_info_str_list, this);
 
   QFrame *top_bar_line = new QFrame(this);
   top_bar_line->setFrameShape(QFrame::HLine);

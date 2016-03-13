@@ -24,7 +24,7 @@ class GuiChatStack_top_bar : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_top_bar(QStringList usrInfoStrList, QWidget *parent = 0);
+  explicit GuiChatStack_top_bar(QStringList *usrInfoStrList, QWidget *parent = 0);
   ~GuiChatStack_top_bar();
 
 private:
@@ -93,7 +93,7 @@ class GuiChatStack : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack(QStringList usrInfoStrList, QWidget *parent = 0);
+  explicit GuiChatStack(QStringList *usrInfoStrList, QWidget *parent = 0);
   ~GuiChatStack();
 
   GuiChatStack_top_bar *top_bar;

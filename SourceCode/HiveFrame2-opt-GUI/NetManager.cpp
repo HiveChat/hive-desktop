@@ -193,12 +193,11 @@ void NetManager::refreshLocalHostIP()
          && address != QHostAddress::Null
          && address != QHostAddress::LocalHost)
         {
-          if (address.toString().contains("127.0."))
+          if (!address.toString().contains("127.0."))
             {
-            continue;
+              result = address;
+              break;
             }
-          result = address;
-          break;
         }
     }
 
@@ -239,12 +238,12 @@ void NetManager::TEST()
 
   //qDebug()<<QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 
-  TEST_sendMessage(GlobalData::g_myKeyStr,"0?-00-9E-9A-A4-FD", "Hello?");
-  TEST_sendMessage("0?-00-9E-9A-A4-FD",GlobalData::g_myKeyStr, "Yes? ");
-  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来r。");
-  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
-  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
-  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","如果美国要成为一个伟大的国家，这个梦想必须实现。让自由之声从新罕布什尔州的巍峨峰巅响起来！让自由之声从纽约州的崇山峻岭响起来！让自由之声从之声从密西西比州的每一座丘陵响起来！让自由之声从每一片山坡响起来。");
+  TEST_sendMessage(GlobalData::g_myKeyStr,"0?-00-9E-9A-A4-FD", "Have dinner together?");
+  TEST_sendMessage("0?-00-9E-9A-A4-FD",GlobalData::g_myKeyStr, "No way! ");
+  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","Why do you write Hive?");
+  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"Why do you ask?");
+  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","Why can't I ask?");
+  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","Yes you can, but you may ask James. I'm busy now debuging, sorry for that.");
 
 //  for(int i = 0; i < 500; i++)
 //  {

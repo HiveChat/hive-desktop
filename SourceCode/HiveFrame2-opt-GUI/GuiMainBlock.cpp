@@ -44,7 +44,6 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
         case Home_Welcome:
           {
             GuiWelcomeStack *gui_welcome_stack = new GuiWelcomeStack(this);
-            gui_welcome_stack->refreshTime();
 
             static_stack_widget = gui_welcome_stack;
             main_stacked_widget->addWidget(gui_welcome_stack);
@@ -114,7 +113,7 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
 {
-  gui_chat_stack = new GuiChatStack(usrInfoStrList, this);
+  gui_chat_stack = new GuiChatStack(&usrInfoStrList, this);
   main_stacked_widget->addWidget(gui_chat_stack);
   gui_chat_stack_map.insert(usrInfoStrList[0], gui_chat_stack);
 
