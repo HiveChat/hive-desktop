@@ -48,6 +48,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   ////net manager
   connect(net_manager, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)));
+  connect(net_manager, SIGNAL(usrEnter(UsrProfileStruct*)), this, SLOT(onUsrEnter(UsrProfileStruct*)));
 
   foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
     {
@@ -66,4 +67,13 @@ GuiCentralWidget::~GuiCentralWidget()
 {
   thread_info->terminate();
   qDebug()<<"\n@Hive is destructed";
+}
+
+void GuiCentralWidget::onUsrEnter(UsrProfileStruct *usrProfileStruct)
+{
+  data_manager->addUsr(usrKeyStr);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(*usrKeyStr);
+  GuiChatStack *temp_gui_chat_stack_pointer = gui_main_block->addChatStack(*usrKeyStr);
+  connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
+
 }

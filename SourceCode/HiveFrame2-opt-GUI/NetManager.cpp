@@ -32,7 +32,7 @@ void NetManager::sendMessage(QString usrKeyStr, QString message = "")
         return;
       }
 
-    out << Message << usrKeyStr << GlobalData::g_myKeyStr << message;
+    out << Message << usrKeyStr << GlobalData::g_my_profile.key_str << message;
     udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
@@ -56,11 +56,11 @@ void NetManager::sendUsrEnter()
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-
-
-  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << GlobalData::g_avatarPathStr;
+  out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_my_profile.key_str << GlobalData::g_my_profile.name_str << GlobalData::g_my_profile.avatar_str;
   qint64 f = udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
-  //qDebug()<<f;
+
+  qDebug()<<"finished$ void NetManager::sendUsrEnter()";
+  return;
 }
 
 void NetManager::processPendingDatagrams()
@@ -87,9 +87,9 @@ void NetManager::processPendingDatagrams()
 
             in >> object_key_str >> subject_key_str >> message_str;
 
-            if(object_key_str != GlobalData::g_myKeyStr)
+            if(object_key_str != GlobalData::g_my_profile.key_str)
               {
-                if(subject_key_str != GlobalData::g_myKeyStr)
+                if(subject_key_str != GlobalData::g_my_profile.key_str)
                   {
                     qDebug()<<"nope";
                     break;
@@ -100,6 +100,7 @@ void NetManager::processPendingDatagrams()
                     message_str_list.append(subject_key_str);
                     message_str_list.append(message_str);
                     message_str_list.append(GlobalData::g_currentTime());
+
                     qDebug()<<message_str_list[2];
                     emit messageRecieved(message_str_list, true);
                     break;
@@ -107,7 +108,7 @@ void NetManager::processPendingDatagrams()
               }
             else
               {
-                if(subject_key_str == GlobalData::g_myKeyStr)
+                if(subject_key_str == GlobalData::g_my_profile.key_str)
                   {
                     qDebug()<<"what?";
                     break;
@@ -118,7 +119,7 @@ void NetManager::processPendingDatagrams()
                     message_str_list.append(subject_key_str);
                     message_str_list.append(message_str);
                     message_str_list.append(GlobalData::g_currentTime());
-                    qDebug()<<"notfromme))))))))))))))))"<<message_str_list[2];
+//                    qDebug()<<"notfromme))))))))))))))))"<<message_str_list[2];
 
                     emit messageRecieved(message_str_list, false);
                     break;
@@ -129,22 +130,29 @@ void NetManager::processPendingDatagrams()
 
         case UsrEnter:
           {
-            qDebug()<<"££££££££££££££ usr enter ££££££££££££££££££££";
-            //out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::g_myNameStr << in_byte_array;
-            QString subject_ip_str;
-            QString subject_key_str;
-            QString subject_name_str;
-            QString subject_avatar_path;
-            in >> subject_ip_str >> subject_key_str >> subject_name_str;
-            if(subject_key_str == GlobalData::g_myKeyStr)
+            //out << UsrEnter << GlobalData::g_localHostIP << GlobalData::g_myKeyStr << GlobalData::my_info.usr_name << in_byte_array;
+            UsrProfileStruct temp_usr_profile;
+
+            in >> temp_usr_profile.ip_str;
+            in >> temp_usr_profile.key_str;
+            in >> temp_usr_profile.name_str;
+            in >> temp_usr_profile.avatar_str;
+
+            if(temp_usr_profile.key_str == GlobalData::g_my_profile.key_str)
               {
+//                QStringList usr_info_str_list;
+//                usr_info_str_list << temp_usr_profile.usr_key << temp_usr_profile.ip_addr << temp_usr_profile.usr_name << temp_usr_profile.avatar_path;
+                emit usrEnter(&temp_usr_profile);
+
+                qDebug()<<"UDP receive# Myself entered.";
                 break;
               }
-            //  usrKey<<usrName<<ipAddr<<avatarPath
 
-            QStringList usr_info_str_list;
-            usr_info_str_list << subject_key_str << subject_name_str << subject_ip_str << subject_avatar_path;
-            emit usrEnter(usr_info_str_list);
+            qDebug()<<"UDP receive# Someone entered.";
+
+//            QStringList usr_info_str_list;
+//            usr_info_str_list << temp_usr_profile.usr_key << temp_usr_profile.ip_addr << temp_usr_profile.usr_name << temp_usr_profile.avatar_path;
+            emit usrEnter(&temp_usr_profile);
 
             break;
           }
@@ -184,7 +192,6 @@ void NetManager::processPendingDatagrams()
 
 void NetManager::refreshLocalHostIP()
 {
-  qDebug()<<"invoke: void NetManager::refreshLocalHostIP()";
   QList<QHostAddress> AddressList = QNetworkInterface::allAddresses();
   QHostAddress result;
   foreach(QHostAddress address, AddressList)
@@ -216,39 +223,39 @@ void NetManager::TEST()
 
   /////test
 
-  QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
-      foreach(QNetworkInterface interface,list)
-      {
-          qDebug() <<"Device:"<<interface.name();
-          qDebug() << "HardwareAddress:"<<interface.hardwareAddress();
+//  QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
+//  foreach(QNetworkInterface interface,list)
+//  {
+//      qDebug() <<"Device:"<<interface.name();
+//      qDebug() << "HardwareAddress:"<<interface.hardwareAddress();
 
 
-          QList<QNetworkAddressEntry> entryList = interface.addressEntries();
-       //获取IP地址条目列表，每个条目中包含一个IP地址，一个子网掩码和一个广播地址
-          foreach(QNetworkAddressEntry entry,entryList)
-          {
-              qDebug()<<"IP Address:"<<entry.ip().toString();
-              qDebug()<<"Netmask: "  <<entry.netmask().toString();
-              qDebug()<<"Broadcast:" <<entry.broadcast().toString();
-          }
-  }
+//      QList<QNetworkAddressEntry> entryList = interface.addressEntries();
+//   //获取IP地址条目列表，每个条目中包含一个IP地址，一个子网掩码和一个广播地址
+//      foreach(QNetworkAddressEntry entry,entryList)
+//      {
+//          qDebug()<<"IP Address:"<<entry.ip().toString();
+//          qDebug()<<"Netmask: "  <<entry.netmask().toString();
+//          qDebug()<<"Broadcast:" <<entry.broadcast().toString();
+//      }
+//  }
 
   //qDebug()<<QNetworkInterface::allAddresses().at(0).toString()<<endl;
   /////!test
 
   //qDebug()<<QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 
-  TEST_sendMessage(GlobalData::g_myKeyStr,"0?-00-9E-9A-A4-FD", "Have dinner together?");
-  TEST_sendMessage("0?-00-9E-9A-A4-FD",GlobalData::g_myKeyStr, "No way! ");
-  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","Why do you write Hive?");
-  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"Why do you ask?");
-  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","Why can't I ask?");
-  TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","Yes you can, but you may ask James. I'm busy now debuging, sorry for that.");
+  TEST_sendMessage(GlobalData::g_my_profile.key_str,"0?-00-9E-9A-A4-FD", "Have dinner together?");
+  TEST_sendMessage("0?-00-9E-9A-A4-FD",GlobalData::g_my_profile.key_str, "No way! ");
+  TEST_sendMessage(GlobalData::g_my_profile.key_str,"87-00-9E-9A-A4-FD","Why write Hive?");
+  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_my_profile.key_str,"Why do you ask?");
+  TEST_sendMessage(GlobalData::g_my_profile.key_str,"87-00-9E-9A-A4-FD","Why can't I ask?");
+  TEST_sendMessage("87-00-9E-9A-A4-FD",GlobalData::g_my_profile.key_str,"Yes you can, but you'd better ask James. I'm now debuging, sorry for that😂.\n\n");
 
 //  for(int i = 0; i < 500; i++)
 //  {
 //      TEST_sendMessage(GlobalData::g_myKeyStr,"87-00-9E-9A-A4-FD","让自由之声从纽约州的崇山峻岭响起来！让自由之声从宾夕法尼亚州阿勒格尼山的顶峰响起！让自由之声从科罗拉多州冰雪覆盖的落矶山响起来！让自由之声从加利福尼亚州蜿蜒的群峰响起来！不仅如此，还要让自由之声从佐治亚州的石岭响起来！让自由之声从田纳西州的了望山响起来！让自由之声从密西西比州的每一座丘陵响起来！让自由之家，这个梦想必须实现。");
 //  }
-  TEST_sendMessage("45-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"fffffff3");
-  TEST_sendMessage("44-00-9E-9A-A4-FD",GlobalData::g_myKeyStr,"fffffff4");
+  TEST_sendMessage("45-00-9E-9A-A4-FD",GlobalData::g_my_profile.key_str,"fffffff3");
+  TEST_sendMessage("44-00-9E-9A-A4-FD",GlobalData::g_my_profile.key_str,"fffffff4");
 }

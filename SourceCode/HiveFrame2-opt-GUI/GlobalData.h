@@ -7,33 +7,6 @@
 #include <QColor>
 #include <QStandardPaths>
 
-class GlobalData
-{
-public:
-  ///UI
-  static QFont g_font;
-  static QColor g_windowColor;
-  static QColor g_alphaTabColor;
-  static QColor g_tabColor;
-
-  static QColor g_chatBubbleColorI;
-  static QColor g_chatBubbleColorO;
-  static QColor g_mChatBubbleColorI;
-  static QColor g_mChatBubbleColorO;
-
-
-  ///data
-  static QString g_myKeyStr;
-  static QString g_myNameStr;
-  static QString g_avatarPathStr;
-
-  ///net
-  static QString g_localHostIP;
-
-  ///other
-  static QString g_currentTime();
-
-};
 
 enum StaticStackType
 {
@@ -55,6 +28,42 @@ enum BuiltInAvatarType
   sunflower,
   worm
 };
+
+struct UsrProfileStruct
+{
+  QString key_str;
+  QString name_str;
+  QString avatar_str;
+  QString ip_str;
+};
+
+class GlobalData
+{
+public:
+  ///UI
+  static QFont g_font;
+  static QColor g_windowColor;
+  static QColor g_alphaTabColor;
+  static QColor g_tabColor;
+
+  static QColor g_chatBubbleColorI;
+  static QColor g_chatBubbleColorO;
+  static QColor g_mChatBubbleColorI;
+  static QColor g_mChatBubbleColorO;
+
+
+  ///data
+  static UsrProfileStruct g_my_profile;
+
+  ///net
+  static QString g_localHostIP;
+
+  ///other
+  static QString g_currentTime();
+
+};
+
+
 
 
 #endif // GLOBALDATA_H

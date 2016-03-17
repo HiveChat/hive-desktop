@@ -111,11 +111,13 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
     }
 }
 
-void GuiMainBlock::addChatStack(QStringList usrInfoStrList)
+GuiChatStack* GuiMainBlock::addChatStack(QStringList usrInfoStrList)
 {
   gui_chat_stack = new GuiChatStack(&usrInfoStrList, this);
   main_stacked_widget->addWidget(gui_chat_stack);
   gui_chat_stack_map.insert(usrInfoStrList[0], gui_chat_stack);
+
+  return gui_chat_stack;
 
   //connect(this, SIGNAL(whoseMessage(QStringList)), gui_chat_stack, SLOT(checkMessage(QStringList)));
 }

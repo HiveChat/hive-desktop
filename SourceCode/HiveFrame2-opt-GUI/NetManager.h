@@ -47,7 +47,7 @@ public slots:
 
 signals:
   void messageRecieved(QStringList messageStrList, bool fromMe);
-  void usrEnter(QStringList usrInfoStrList);
+  void usrEnter(UsrProfileStruct *usrProfileStruct);
 
 //  usrKey<<usrName<<ipAddr<<avatarPath
 

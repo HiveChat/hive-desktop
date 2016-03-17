@@ -31,6 +31,9 @@ private:
 
   QStringList my_profile_str_list;
 
+private slots:
+  void onUsrEnter(UsrProfileStruct *usrProfileStruct);
+
 
 
 };

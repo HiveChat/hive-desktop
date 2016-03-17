@@ -31,6 +31,7 @@ class DataManager : public QObject
 public:
   explicit DataManager(QObject *parent = 0);
 
+  void addUsr(UsrProfileStruct *usrProfileStruct);
 
   void loadUsrProfile();
   static bool checkDir(QString dir);
@@ -47,7 +48,6 @@ private:
   void loadMyProfile();
   void loadFonts();
 
-  void addUsr(QStringList usrInfoStrList);
   void deleteUsr(QStringList usrInfoStrList);
 
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
@@ -61,7 +61,7 @@ private:
   QMap<QString, QString*> myProfileConfigJsonMap;
 
   ///usrData
-  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+  const char alphabet_char[63] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 public slots:
   void writeCurrentConfig();

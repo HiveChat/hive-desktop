@@ -3,9 +3,9 @@
 DataManager::DataManager(QObject *parent) : QObject(parent)
 {
 
-  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_myKeyStr);
-  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_myNameStr);
-  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_avatarPathStr);
+  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_my_profile.key_str);
+  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_my_profile.name_str);
+  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_my_profile.avatar_str);
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
 
@@ -29,19 +29,19 @@ void DataManager::TEST_SECTION()
 //  addUsr(usrInfoStrList);
 //  usrInfoStrList.clear();
   usrInfoStrList<<"44-00-9E-9A-A4-FD"<<"192.168.1.2"<<"James"<<":/avatar/avatar/ladybug.png";
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"20-00-9E-9A-A4-FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/fat.png";///r
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"0?-00-9E-9A-A4-FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"30-00-9E-9A-A4-FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/disk.png";
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"40-00-9E-9A-A4-FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
 //  usrInfoStrList<<"20-00-9E-9A-A4-FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";///r
 //  addUsr(usrInfoStrList);
@@ -50,10 +50,10 @@ void DataManager::TEST_SECTION()
 //  addUsr(usrInfoStrList);
 //  usrInfoStrList.clear();
   usrInfoStrList<<"45-00-9E-9A-A4-FD"<<"192.168.1.9"<<"Nemo"<<":/avatar/avatar/worm.png";
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"87-00-9E-9A-A4-FD"<<"192.168.1.10"<<"Lynn"<<":/avatar/avatar/ladybug.png";
-  addUsr(usrInfoStrList);
+  addUsr(&usrInfoStrList);
   usrInfoStrList.clear();
   usrInfoStrList<<"90-00-9E-9A-A4-FD"<<"192.168.1.11"<<"Timm"<<":/avatar/avatar/sunflower.png";
   deleteUsr(usrInfoStrList);
@@ -61,14 +61,14 @@ void DataManager::TEST_SECTION()
 
 }
 
-void DataManager::addUsr(QStringList usrInfoStrList)
+void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
 {
-  QString usr_key = usrInfoStrList.at(0);
-  QString ip_addr = usrInfoStrList.at(1);
-  QString usr_name = usrInfoStrList.at(2);
-  QString avatar_path = usrInfoStrList.at(3);
+  QString usr_key = usrProfileStruct->key_str;
+  QString ip_addr = usrProfileStruct->ip_str;
+  QString usr_name = usrProfileStruct->name_str;
+  QString avatar_path = usrProfileStruct->avatar_str;
 
-
+  qDebug()<<ip_addr;
 
   ///usrKey<<usrName<<ipAddr<<avatarPath
   QFile file(usr_list_file_path);
@@ -108,7 +108,7 @@ void DataManager::addUsr(QStringList usrInfoStrList)
               write_json_document.setObject(usr_list_json_obj);
 
               file.resize(0);
-              out<<write_json_document.toJson(QJsonDocument::Compact)<<endl;
+              out<<write_json_document.toJson()<<endl;
             }
         }
     }
@@ -129,8 +129,9 @@ void DataManager::addUsr(QStringList usrInfoStrList)
       write_json_document.setObject(usr_list_json_obj);
 
       file.resize(0); //clear all
-      out<<write_json_document.toJson(QJsonDocument::Compact)<<endl;
-      qDebug()<<write_json_document.toJson(QJsonDocument::Compact);
+      ///QJsonDocument::Compact
+      out<<write_json_document.toJson(QJsonDocument::Indented);
+//      qDebug()<<write_json_document.toJson(QJsonDocument::Compact);
     }
 
 
@@ -165,8 +166,8 @@ void DataManager::deleteUsr(QStringList usrInfoStrList)
           QJsonDocument write_json_document;
           write_json_document.setObject(usr_list_json_obj);
           file.resize(0);
-          out<<write_json_document.toJson(QJsonDocument::Compact)<<endl;
-          qDebug()<<write_json_document.toJson(QJsonDocument::Compact);
+          out<<write_json_document.toJson(QJsonDocument::Indented)<<endl;
+//          qDebug()<<write_json_document.toJson(QJsonDocument::Indented);
 
         }
     }
@@ -190,8 +191,8 @@ void DataManager::checkData()
 void DataManager::loadDefaultGlobalData()
 {
   makeUsrKey();
-  GlobalData::g_avatarPathStr = ":/avatar/avatar/default.png";
-  GlobalData::g_myNameStr = QHostInfo::localHostName();
+  GlobalData::g_my_profile.avatar_str = ":/avatar/avatar/default.png";
+  GlobalData::g_my_profile.name_str = QHostInfo::localHostName();
 }
 
 
@@ -200,11 +201,11 @@ bool DataManager::checkDir(QString directory)
   QDir dir(directory);
   if(!dir.exists())
     {
-      qDebug()<<"bool DataManager::ckeckDir(QString directory) NOT EXIST~";
+//      qDebug()<<"bool DataManager::ckeckDir(QString directory) NOT EXIST~";
 
       if(!dir.mkdir(directory))
         {
-          qDebug()<<"bool DataManager::ckeckDir(QString directory) CANT MAKE DIR!";
+//          qDebug()<<"bool DataManager::ckeckDir(QString directory) CANT MAKE DIR!";
           return false;
         }
     }
@@ -243,10 +244,10 @@ void DataManager::makeUsrKey()
 
   for(int i = 0; i < 32; i ++)
     {
-      GlobalData::g_myKeyStr.append(alphabet_char[qrand()%64]);
+      GlobalData::g_my_profile.key_str.append(alphabet_char[qrand()%63]);
     }
 
-  qDebug()<<GlobalData::g_myKeyStr;
+  qDebug()<<GlobalData::g_my_profile.key_str;
 }
 
 
@@ -286,13 +287,13 @@ void DataManager::loadMyProfile()
       else
         {
           file.resize(0);
-          out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
+          out<<defaultProfile().toJson(QJsonDocument::Indented)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      out<<defaultProfile().toJson(QJsonDocument::Compact)<<endl;
+      out<<defaultProfile().toJson(QJsonDocument::Indented)<<endl;
     }
 
   file.flush();
@@ -383,7 +384,7 @@ void DataManager::writeCurrentConfig()
 
   file.resize(0);
   out << write_json_document.toJson();
-  qDebug()<<write_json_document.toJson();
+//  qDebug()<<write_json_document.toJson();
   file.flush();
   file.close();
 }
