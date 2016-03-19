@@ -1,7 +1,7 @@
 #include "GuiChatStack.h"
 
 //////////////////////////top//////////////////////////////////////
-GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList *usrInfoStrList, QWidget *parent) : QWidget(parent)
+GuiChatStack_top_bar::GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
   ///usrKey<<usrName<<ipAddr<<avatarPathr
   QPalette palette;
@@ -9,11 +9,11 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(QStringList *usrInfoStrList, QWidget 
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
-  avatar_button = new GuiAvatarButton(usrInfoStrList->at(3), 90, this);
+  avatar_button = new GuiAvatarButton(usrProfileStruct->avatar_str, 90, this);
   avatar_button->setAlignment(Qt::AlignLeft);
 
-  QLabel *usr_name_label = new QLabel(usrInfoStrList->at(1), this);
-  QLabel *usr_ip_label = new QLabel(usrInfoStrList->at(2), this);
+  QLabel *usr_name_label = new QLabel(usrProfileStruct->name_str, this);
+  QLabel *usr_ip_label = new QLabel(usrProfileStruct->ip_str, this);
 
   QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPointSize(15);
@@ -201,16 +201,16 @@ void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
 }
 //////////////////////////main//////////////////////////////////////
 
-GuiChatStack::GuiChatStack(QStringList *usrInfoStrList, QWidget *parent) : QWidget(parent)
+GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
   ///Data
-  usr_info_str_list = *usrInfoStrList;
+  usr_profile = *usrProfileStruct;
 
-  data_history_io = new DataHistoryIO(usr_info_str_list[0], this);
+  data_history_io = new DataHistoryIO(usr_profile.key_str, this);
   refreshCurrentActiveIndex();
 
   ///UI
-  top_bar = new GuiChatStack_top_bar(&usr_info_str_list, this);
+  top_bar = new GuiChatStack_top_bar(&usr_profile, this);
 
   QFrame *top_bar_line = new QFrame(this);
   top_bar_line->setFrameShape(QFrame::HLine);
@@ -245,6 +245,10 @@ GuiChatStack::GuiChatStack(QStringList *usrInfoStrList, QWidget *parent) : QWidg
   loadHistory(current_active_index);
 
   this->setParent(parent);
+
+
+
+  chat_widget->addChatBubble("mou", true);
 }
 
 GuiChatStack::~GuiChatStack()
@@ -266,7 +270,9 @@ void GuiChatStack::checkMessage(QStringList message_str_list, bool fromMe)
 //  QString object_key_str;//0 receiver
 //  QString subject_key_str;//1 sender
 //  QString message_str;//2
+  qDebug()<<"wait!!here!!!";
   chat_widget->addChatBubble(message_str_list[2], fromMe);
+
   data_history_io->wirteMessage(message_str_list, fromMe);
 
   refreshCurrentActiveIndex();
@@ -278,7 +284,7 @@ void GuiChatStack::checkMessage(QStringList message_str_list, bool fromMe)
 
 void GuiChatStack::onSendButtonClicked()
 {
-  emit sendMessage(usr_info_str_list[0], message_editor->text_editor->toPlainText());
+  emit sendMessage(usr_profile.key_str, message_editor->text_editor->toPlainText());
   message_editor->text_editor->clear();
 
 }

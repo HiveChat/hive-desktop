@@ -68,7 +68,7 @@ public slots:
 
 
 signals:
-  void usrProfileLoaded(QStringList usrInfoStrList);
+  void usrProfileLoaded(UsrProfileStruct *usrProfileStruct);
   void messageLoaded(QStringList messageStrList);
 
 

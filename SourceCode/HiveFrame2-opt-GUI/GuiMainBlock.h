@@ -35,7 +35,7 @@ private:
 public slots:
   void displayStaticStack(StaticStackType staticStackType);
   void displayChatStack(QString usrKey);
-  GuiChatStack *addChatStack(QStringList usrInfoStrList);
+  GuiChatStack *addChatStack(UsrProfileStruct *usrProfileStruct);
   void onMessageRecieved(QStringList message_str_list, bool fromMe);
 
 private slots:

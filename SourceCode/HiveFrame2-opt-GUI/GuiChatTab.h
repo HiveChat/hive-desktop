@@ -32,7 +32,7 @@ public slots:
   void onCombWidgetClicked(QString usrKey);
 
 public slots:
-  void addComb(QStringList usrInfoStrList);
+  void addComb(UsrProfileStruct *usrProfileStruct);
 
 };
 

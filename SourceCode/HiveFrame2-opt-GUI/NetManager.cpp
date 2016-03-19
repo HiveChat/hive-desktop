@@ -91,7 +91,7 @@ void NetManager::processPendingDatagrams()
               {
                 if(subject_key_str != GlobalData::g_my_profile.key_str)
                   {
-                    qDebug()<<"nope";
+                    qDebug()<<"人家的事情我不管";
                     break;
                   }
                 else
@@ -101,7 +101,7 @@ void NetManager::processPendingDatagrams()
                     message_str_list.append(message_str);
                     message_str_list.append(GlobalData::g_currentTime());
 
-                    qDebug()<<message_str_list[2];
+                    qDebug()<<"我发了消息："<<message_str_list[2];
                     emit messageRecieved(message_str_list, true);
                     break;
                   }
@@ -110,7 +110,7 @@ void NetManager::processPendingDatagrams()
               {
                 if(subject_key_str == GlobalData::g_my_profile.key_str)
                   {
-                    qDebug()<<"what?";
+                    qDebug()<<"我发给自己的消息";
                     break;
                   }
                 else
@@ -119,7 +119,7 @@ void NetManager::processPendingDatagrams()
                     message_str_list.append(subject_key_str);
                     message_str_list.append(message_str);
                     message_str_list.append(GlobalData::g_currentTime());
-//                    qDebug()<<"notfromme))))))))))))))))"<<message_str_list[2];
+                    qDebug()<<"别人发给我的："<<message_str_list.at(2);
 
                     emit messageRecieved(message_str_list, false);
                     break;

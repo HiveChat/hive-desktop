@@ -13,10 +13,12 @@ class GuiCombWidget : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiCombWidget(QStringList usrInfoStrList, QWidget *parent = 0);
+  explicit GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiCombWidget();
 
-  QStringList usrInfo();
+  UsrProfileStruct usrProfile();
+  void setProfile(UsrProfileStruct *usrProfile);
+
 
 protected:
   void paintEvent(QPaintEvent*);
@@ -32,8 +34,12 @@ private:
   QLabel *ip_addr_label;
   QLabel *status_label;
   QVBoxLayout *usr_info_layout;
-  QHBoxLayout *ip_status_layout;
+  QHBoxLayout *net_status_layout;
   QHBoxLayout *main_layout;
+
+  QString online_str = "<span style=\" color:#39c828;\">●</span>";
+  QString offline_str = "<span style=\" color:#ed403f;\">●</span>";
+
 
   QPalette hover_palette;
   QColor window_color = GlobalData::g_tabColor;
@@ -44,7 +50,7 @@ private:
   bool hovered  = false;
 
   ///data
-  QStringList usr_info_str_list;
+  UsrProfileStruct usr_profile;
 
 
 

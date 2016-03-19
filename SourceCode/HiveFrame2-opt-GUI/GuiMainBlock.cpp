@@ -111,11 +111,11 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
     }
 }
 
-GuiChatStack* GuiMainBlock::addChatStack(QStringList usrInfoStrList)
+GuiChatStack* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
 {
-  gui_chat_stack = new GuiChatStack(&usrInfoStrList, this);
+  gui_chat_stack = new GuiChatStack(usrProfileStruct, this);
   main_stacked_widget->addWidget(gui_chat_stack);
-  gui_chat_stack_map.insert(usrInfoStrList[0], gui_chat_stack);
+  gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
 
   return gui_chat_stack;
 

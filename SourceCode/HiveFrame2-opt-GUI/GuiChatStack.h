@@ -24,7 +24,7 @@ class GuiChatStack_top_bar : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_top_bar(QStringList *usrInfoStrList, QWidget *parent = 0);
+  explicit GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiChatStack_top_bar();
 
 private:
@@ -93,7 +93,7 @@ class GuiChatStack : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack(QStringList *usrInfoStrList, QWidget *parent = 0);
+  explicit GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiChatStack();
 
   GuiChatStack_top_bar *top_bar;
@@ -107,7 +107,7 @@ private:
   QVBoxLayout *main_layout;
   QScrollArea *chat_scroll_area;
 
-  QStringList usr_info_str_list;
+  UsrProfileStruct usr_profile;
 
   void refreshCurrentActiveIndex();
 

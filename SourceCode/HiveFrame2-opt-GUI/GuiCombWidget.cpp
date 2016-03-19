@@ -2,33 +2,34 @@
 #include <QDebug>
 
 
-GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWidget(parent)
+GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
-  usr_info_str_list = usrInfoStrList;
-  ///usrKey<<usrName<<ipAddr<<avatarPathr
-  avatar = new GuiAvatarButton(usrInfoStrList[3], 80,  this);
-  usr_name_label = new QLabel(usrInfoStrList[1]);
-  ip_addr_label = new QLabel(usrInfoStrList[2]);
-  status_label = new QLabel("<span style=\" color:#39c828;\">●</span>");
   QPalette usr_name_palette;
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
   QFont usr_name_font("futura");//verdana
   usr_name_font.setPointSize(15);
+  QFont ip_addr_font("futura");//Gill Sans
+  ip_addr_font.setPointSize(11);
+
+  ///usrKey<<usrName<<ipAddr<<avatarPathr
+  avatar = new GuiAvatarButton(80,  this);
+  usr_name_label = new QLabel(this);
+  ip_addr_label = new QLabel(this);
+  status_label = new QLabel(offline_str, this);
+
   usr_name_label->setPalette(usr_name_palette);
   usr_name_label->setFont(usr_name_font);
 
-  QFont ip_addr_font("futura");//Gill Sans
-  ip_addr_font.setPointSize(11);
   ip_addr_label->setFont(ip_addr_font);
 
-  ip_status_layout = new QHBoxLayout();
-  ip_status_layout->addWidget(status_label);
-  ip_status_layout->addWidget(ip_addr_label);
+  net_status_layout = new QHBoxLayout();
+  net_status_layout->addWidget(status_label);
+  net_status_layout->addWidget(ip_addr_label);
 
   usr_info_layout = new QVBoxLayout();
   usr_info_layout->setSpacing(0);
   usr_info_layout->addWidget(usr_name_label);
-  usr_info_layout->addLayout(ip_status_layout);
+  usr_info_layout->addLayout(net_status_layout);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeft);
@@ -36,6 +37,8 @@ GuiCombWidget::GuiCombWidget(QStringList usrInfoStrList, QWidget *parent) : QWid
   main_layout->addLayout(usr_info_layout);
 
   hover_palette.setColor(QPalette::Window, default_window_color);
+
+  setProfile(usrProfileStruct);
 
   this->setMinimumWidth(200);
   this->setPalette(hover_palette);
@@ -48,9 +51,29 @@ GuiCombWidget::~GuiCombWidget()
 
 }
 
-QStringList GuiCombWidget::usrInfo()
+UsrProfileStruct GuiCombWidget::usrProfile()
 {
-  return usr_info_str_list;
+  return usr_profile;
+}
+
+void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
+{
+  usr_profile = *usrProfile;
+  avatar->setAvatar(usr_profile.avatar_str);
+  usr_name_label->setText(usr_profile.name_str);
+
+  if(usr_profile.ip_str == "")
+    {
+      status_label->setText(offline_str);
+      ip_addr_label->setText("offline");
+    }
+  else
+    {
+      status_label->setText(online_str);
+      ip_addr_label->setText(usr_profile.ip_str);
+    }
+
+  return;
 }
 
 
@@ -70,7 +93,7 @@ void GuiCombWidget::paintEvent(QPaintEvent *)
 
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 {
-  emit clicked(usr_info_str_list[0]);
+  emit clicked(usr_profile.key_str);
 }
 
 void GuiCombWidget::enterEvent(QEvent *)

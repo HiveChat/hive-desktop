@@ -31,6 +31,8 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   //connect
   connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block, SLOT(displayChatStack(QString)));
+
+  ///buttons~~
   connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
   connect(gui_tab_block->gui_home_tab->storage_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
   connect(gui_tab_block->gui_settings_tab->messaging_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
@@ -39,21 +41,21 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
 
   ///data:
-  connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(QStringList)));
-  connect(data_manager, SIGNAL(usrProfileLoaded(QStringList)), gui_main_block, SLOT(addChatStack(QStringList)));
+  connect(data_manager, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(UsrProfileStruct*)));
+  connect(data_manager, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_main_block, SLOT(addChatStack(UsrProfileStruct*)));
 
   data_manager->loadUsrProfile();
 
-
-
-  ////net manager
-  connect(net_manager, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)));
-  connect(net_manager, SIGNAL(usrEnter(UsrProfileStruct*)), this, SLOT(onUsrEnter(UsrProfileStruct*)));
 
   foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
     {
       connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
     }
+
+  ////net manager
+  connect(net_manager, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)));
+  connect(net_manager, SIGNAL(usrEnter(UsrProfileStruct*)), this, SLOT(onUsrEnter(UsrProfileStruct*)));
+
 
   ////threads
   thread_info = new ThreadInfo(this);
@@ -71,9 +73,9 @@ GuiCentralWidget::~GuiCentralWidget()
 
 void GuiCentralWidget::onUsrEnter(UsrProfileStruct *usrProfileStruct)
 {
-  data_manager->addUsr(usrKeyStr);
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(*usrKeyStr);
-  GuiChatStack *temp_gui_chat_stack_pointer = gui_main_block->addChatStack(*usrKeyStr);
+  data_manager->addUsr(usrProfileStruct);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(usrProfileStruct);
+  GuiChatStack *temp_gui_chat_stack_pointer = gui_main_block->addChatStack(usrProfileStruct);
   connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), net_manager, SLOT(sendMessage(QString,QString)));
 
 }
