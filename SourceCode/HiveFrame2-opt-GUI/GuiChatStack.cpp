@@ -12,8 +12,8 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, Q
   avatar_button = new GuiAvatarButton(usrProfileStruct->avatar_str, 90, this);
   avatar_button->setAlignment(Qt::AlignLeft);
 
-  QLabel *usr_name_label = new QLabel(usrProfileStruct->name_str, this);
-  QLabel *usr_ip_label = new QLabel(usrProfileStruct->ip_str, this);
+  usr_name_label = new QLabel(usrProfileStruct->name_str, this);
+  usr_ip_label = new QLabel(usrProfileStruct->ip_str, this);
 
   QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPointSize(15);
@@ -37,14 +37,18 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, Q
   main_layout->addLayout(usr_info_layout);
 
   this->setFixedHeight(69);
-
-
-
 }
 
 GuiChatStack_top_bar::~GuiChatStack_top_bar()
 {
 
+}
+
+void GuiChatStack_top_bar::set_profile(UsrProfileStruct *usrProfileStruct)
+{
+  avatar_button->setAvatar(usrProfileStruct->avatar_str);
+  usr_name_label->setText(usrProfileStruct->name_str);
+  usr_ip_label->setText(usrProfileStruct->ip_str);
 }
 
 //////////////////////////mid//////////////////////////////////////

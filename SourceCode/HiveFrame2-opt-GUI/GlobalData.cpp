@@ -15,6 +15,8 @@ QColor GlobalData::g_mChatBubbleColorO = GlobalData::g_chatBubbleColorO;
 
 ///data
 UsrProfileStruct GlobalData::g_my_profile;
+QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
+QMap<QString, UsrProfileStruct> GlobalData::online_usr_profile_map;
 
 ///net
 QString GlobalData::g_localHostIP;

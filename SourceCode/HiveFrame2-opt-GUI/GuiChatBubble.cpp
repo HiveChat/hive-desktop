@@ -2,7 +2,7 @@
 
 GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = true, QWidget *parent)
 {
-  int maxWidth = 400;
+  int maxWidth = 500;
 
   QFont font("Verdana");
   font.setPointSize(14);
@@ -36,13 +36,16 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = 
 
 void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
 {
+  label->adjustSize();
+
   QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
   //color options:
   //255,197,28,100
   //255,215,126
-  painter.setBrush(QBrush(*color,Qt::SolidPattern));
+  painter.setBrush(QBrush(*color, Qt::SolidPattern));
   painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
+
 }
 
 
@@ -69,7 +72,7 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
 
   main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);
-  main_layout->setSpacing(0);
+  main_layout->setSpacing(10);
 
   if(alignLeft)
     {

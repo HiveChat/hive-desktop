@@ -34,7 +34,7 @@ struct UsrProfileStruct
   QString key_str;
   QString name_str;
   QString avatar_str;
-  QString ip_str;
+  QString ip_str = "Offline";
 };
 
 class GlobalData
@@ -54,6 +54,8 @@ public:
 
   ///data
   static UsrProfileStruct g_my_profile;
+  static QMap<QString, UsrProfileStruct> saved_usr_profile_map;
+  static QMap<QString, UsrProfileStruct> online_usr_profile_map;
 
   ///net
   static QString g_localHostIP;

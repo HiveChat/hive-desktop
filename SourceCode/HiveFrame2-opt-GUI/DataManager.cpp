@@ -95,7 +95,7 @@ void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
           if(!usr_list_json_obj.contains(usr_key))
             {
               QJsonObject usr_info_json_obj;
-              usr_info_json_obj.insert("ipAddr", ip_addr);
+//              usr_info_json_obj.insert("ipAddr", ip_addr);
               usr_info_json_obj.insert("usrKey", usr_key);
               usr_info_json_obj.insert("usrName", usr_name);
               usr_info_json_obj.insert("avatarPath", avatar_path);
@@ -117,7 +117,7 @@ void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
 
       qDebug()<<"else";
       QJsonObject usr_info_json_obj;
-      usr_info_json_obj.insert("ipAddr", ip_addr);
+//      usr_info_json_obj.insert("ipAddr", ip_addr);
       usr_info_json_obj.insert("usrKey", usr_key);
       usr_info_json_obj.insert("usrName", usr_name);
       usr_info_json_obj.insert("avatarPath", avatar_path);
@@ -335,7 +335,7 @@ void DataManager::loadUsrProfile()
               qDebug()<<usr_key_str_list[i];
               usr_profile_struct.key_str = temp_usr_profile_json_obj["usrKey"].toString();
               usr_profile_struct.name_str = temp_usr_profile_json_obj["usrName"].toString();
-              usr_profile_struct.ip_str = temp_usr_profile_json_obj["ipAddr"].toString();
+//              usr_profile_struct.ip_str = temp_usr_profile_json_obj["ipAddr"].toString();
               usr_profile_struct.avatar_str = temp_usr_profile_json_obj["avatarPath"].toString();
 
 

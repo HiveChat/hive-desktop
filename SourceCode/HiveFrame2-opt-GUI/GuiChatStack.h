@@ -27,8 +27,12 @@ public:
   explicit GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiChatStack_top_bar();
 
+  void set_profile(UsrProfileStruct *usrProfileStruct);
+
 private:
   QHBoxLayout *main_layout;
+  QLabel *usr_name_label;
+  QLabel *usr_ip_label;
   GuiAvatarButton *avatar_button;
 
 };

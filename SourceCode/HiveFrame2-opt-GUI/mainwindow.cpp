@@ -23,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
   this->setCentralWidget(gui_central_widget);
   this->setWindowTitle("Hive!");
   this->setAttribute(Qt::WA_TranslucentBackground);
+
+  QApplication::setQuitOnLastWindowClosed(false);
   //this->setWindowFlags(Qt::FramelessWindowHint);
   //this->setWindowState(Qt::WindowNoState);
 

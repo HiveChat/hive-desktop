@@ -23,6 +23,7 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   ip_addr_label->setFont(ip_addr_font);
 
   net_status_layout = new QHBoxLayout();
+  net_status_layout->setAlignment(Qt::AlignLeft);
   net_status_layout->addWidget(status_label);
   net_status_layout->addWidget(ip_addr_label);
 
@@ -61,16 +62,15 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
   usr_profile = *usrProfile;
   avatar->setAvatar(usr_profile.avatar_str);
   usr_name_label->setText(usr_profile.name_str);
+  ip_addr_label->setText(usr_profile.ip_str);
 
-  if(usr_profile.ip_str == "")
+  if(usr_profile.ip_str == "" || usr_profile.ip_str == "Offline")
     {
       status_label->setText(offline_str);
-      ip_addr_label->setText("offline");
     }
   else
     {
       status_label->setText(online_str);
-      ip_addr_label->setText(usr_profile.ip_str);
     }
 
   return;
