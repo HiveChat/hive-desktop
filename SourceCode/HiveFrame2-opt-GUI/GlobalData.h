@@ -37,6 +37,13 @@ struct UsrProfileStruct
   QString ip_str = "Offline";
 };
 
+struct MessageStruct
+{
+  QString obj_key_str;
+  QString subj_key_str;
+  QString message_str;
+};
+
 class GlobalData
 {
 public:

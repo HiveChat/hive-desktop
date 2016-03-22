@@ -41,7 +41,8 @@ SOURCES += main.cpp\
     GuiSettingsStack_profile.cpp \
     ThreadInfo.cpp \
     GuiSettingsStack_questions.cpp \
-    GuiHomeStack_storage.cpp
+    GuiHomeStack_storage.cpp \
+    ThreadNet.cpp
 
 HEADERS  += mainwindow.h \
     GuiCentralWidget.h \
@@ -69,7 +70,8 @@ HEADERS  += mainwindow.h \
     GuiSettingsStack_profile.h \
     ThreadInfo.h \
     GuiSettingsStack_questions.h \
-    GuiHomeStack_storage.h
+    GuiHomeStack_storage.h \
+    ThreadNet.h
 
 RESOURCES += \
     qss.qrc \

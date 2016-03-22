@@ -22,27 +22,9 @@ public:
   ~MainWindow();
 
 
-  int countFlag(QPoint p, int row);
-  void setCursorType(int flag);
-  int countRow(QPoint p);
-
-protected:
-//void paintEvent(QPaintEvent*);
-
-//  QPoint move_point;
-
-//  bool mouse_pressed;
-//  void mousePressEvent(QMouseEvent *event);
-//  void mouseReleaseEvent(QMouseEvent *event);
-//  void mouseMoveEvent(QMouseEvent *event);
-
 private:
-
-  bool maximized = false;
   GuiCentralWidget *gui_central_widget;
 
-private slots:
-  void setWindowMaximized();
 
 };
 
