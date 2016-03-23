@@ -49,6 +49,5 @@ void ThreadInfo::checkGlobalData()
 void ThreadInfo::checkNetConnection()
 {
 //  qDebug()<<"invoke: void NetManager::refreshLocalHostIP()";
-  NetManager::refreshLocalHostIP();
 }
 
