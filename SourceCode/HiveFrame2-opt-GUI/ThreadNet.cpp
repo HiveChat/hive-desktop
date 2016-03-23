@@ -6,7 +6,6 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
-  this->setPriority(QThread::NormalPriority);
   this->setParent(parent);
 }
 
@@ -19,6 +18,8 @@ ThreadNet::~ThreadNet()
 ////////run
 void ThreadNet::run()
 {
+  this->setPriority(QThread::NormalPriority);
+
   while(status)
     {
       refreshLocalHostIP();

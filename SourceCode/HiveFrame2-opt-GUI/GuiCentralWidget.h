@@ -5,8 +5,8 @@
 #include "GuiMainBlock.h"
 
 #include "DataManager.h"
-#include "NetManager.h"
 #include "ThreadInfo.h"
+#include "ThreadNet.h"
 
 class GuiCentralWidget : public QWidget
 {
@@ -22,8 +22,8 @@ public:
 
 private:
   DataManager *data_manager;
-  NetManager *net_manager;
   ThreadInfo *thread_info;
+  ThreadNet *thread_net;
 
   QString usr_key_str;
   QString usr_name_str;

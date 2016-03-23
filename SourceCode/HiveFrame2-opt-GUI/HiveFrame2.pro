@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     DataManager.cpp \
     GuiWelcomeStack.cpp \
     GuiChatBubble.cpp \
-    NetManager.cpp \
     GlobalData.cpp \
     DataHistoryIO.cpp \
     GuiOSXNotification.cpp \
@@ -58,7 +57,6 @@ HEADERS  += mainwindow.h \
     DataManager.h \
     GuiWelcomeStack.h \
     GuiChatBubble.h \
-    NetManager.h \
     GlobalData.h \
     DataHistoryIO.h \
     GuiOSXNotification.h \
