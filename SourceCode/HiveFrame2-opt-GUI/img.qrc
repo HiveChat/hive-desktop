@@ -38,5 +38,6 @@
         <file>avatar/disk.png</file>
         <file>avatar/fat.png</file>
         <file>avatar/default.png</file>
+        <file>avatar/spider.png</file>
     </qresource>
 </RCC>

@@ -6,8 +6,12 @@
 
 QT       += core gui
 QT	 += network
-QT	 += macextras
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+macx{
+    QT	 += macextras
+}
+
 
 TARGET = Hive!
 TEMPLATE = app
@@ -41,7 +45,8 @@ SOURCES += main.cpp\
     ThreadInfo.cpp \
     GuiSettingsStack_questions.cpp \
     GuiHomeStack_storage.cpp \
-    ThreadNet.cpp
+    ThreadNet.cpp \
+    ThreadData.cpp
     #ThreadData.cpp
 
 HEADERS  += mainwindow.h \
@@ -70,7 +75,8 @@ HEADERS  += mainwindow.h \
     ThreadInfo.h \
     GuiSettingsStack_questions.h \
     GuiHomeStack_storage.h \
-    ThreadNet.h
+    ThreadNet.h \
+    ThreadData.h
     #ThreadData.h
 
 RESOURCES += \

@@ -59,6 +59,7 @@ void ThreadNet::refreshLocalHostIP()
     {
       GlobalData::g_localHostIP = "";
     }
+  qDebug()<<"@refreshLocalHostIP(): finished!";
 }
 
 /////process packet

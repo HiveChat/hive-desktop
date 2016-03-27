@@ -31,6 +31,12 @@ private:
 
   QStringList my_profile_str_list;
 
+signals:
+
+public slots:
+  void addUsr(UsrProfileStruct *usrProfileStruct);
+  void delUsr(UsrProfileStruct *usrProfileStruct);
+
 private slots:
   void onUsrEnter(UsrProfileStruct *usrProfileStruct);
 

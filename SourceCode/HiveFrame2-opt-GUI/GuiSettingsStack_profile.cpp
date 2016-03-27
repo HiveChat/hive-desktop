@@ -2,13 +2,15 @@
 
 GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
 {
-  avatar_map.insert("Bee", ":/img/img/icon.png");
-  avatar_map.insert("Fat Bee", ":/avatar/avatar/bee.png");
+  avatar_map.insert("Flying Bee", ":/avatar/avatar/bee.png");
+  avatar_map.insert("Hive", ":/img/img/icon.png");
+  avatar_map.insert("Fat Bee", ":/avatar/avatar/fat.png");
   avatar_map.insert("Lady Bug", ":/avatar/avatar/ladybug.png");
   avatar_map.insert("Disk", ":/avatar/avatar/disk.png");
   avatar_map.insert("Sunflower", ":/avatar/avatar/sunflower.png");
   avatar_map.insert("Worm", ":/avatar/avatar/worm.png");
   avatar_map.insert("Default", ":/avatar/avatar/default.png");
+  avatar_map.insert("Spider", ":/avatar/avatar/spider.png");
 
   setIcon(":/img/img/profile.png");
   setTitle("Settings");

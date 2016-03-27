@@ -10,9 +10,6 @@
 #include <QApplication>
 #include <QPainter>
 
-//#include "frameless_helper.h"
-
-
 class MainWindow : public QMainWindow
 {
   Q_OBJECT
