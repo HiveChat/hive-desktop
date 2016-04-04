@@ -8,7 +8,6 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
 
-
   checkData();
   loadMyProfile();
   loadFonts();
@@ -240,7 +239,9 @@ QJsonDocument DataManager::defaultProfile()
 
 void DataManager::makeUsrKey()
 {
+  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+  GlobalData::g_my_profile.key_str.clear();
 
   for(int i = 0; i < 32; i ++)
     {

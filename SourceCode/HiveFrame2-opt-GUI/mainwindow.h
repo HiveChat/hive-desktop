@@ -5,10 +5,11 @@
 #include "GlobalData.h"
 
 #include <QMainWindow>
-#include <QtMac>
-#include <qmacfunctions.h>
-#include <QApplication>
 #include <QPainter>
+
+#ifdef Q_OS_MAC
+//#include <QtMacExtras>
+#endif
 
 class MainWindow : public QMainWindow
 {

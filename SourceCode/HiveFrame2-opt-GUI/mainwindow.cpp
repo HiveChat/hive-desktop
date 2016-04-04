@@ -2,16 +2,13 @@
 #include <QDebug>
 #include <QPainter>
 
-#ifdef Q_OS_MAC
-#include <QtMacExtras>
-#endif
-
 #include "GuiOSXNotification.h"
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
 #ifdef Q_OS_MAC
+  QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
 #endif
 
@@ -27,13 +24,12 @@ MainWindow::MainWindow(QWidget *parent)
   this->setWindowTitle("Hive!");
   this->setAttribute(Qt::WA_TranslucentBackground);
 
-  QApplication::setQuitOnLastWindowClosed(false);
   QApplication::setWindowIcon(QIcon(":/img/img/icon.png"));
   //this->setWindowFlags(Qt::FramelessWindowHint);
   //this->setWindowState(Qt::WindowNoState);
 
 #ifdef Q_OS_MAC
-  QtMac::setBadgeLabelText("");
+//  QtMac::setBadgeLabelText("");
 #endif
 }
 

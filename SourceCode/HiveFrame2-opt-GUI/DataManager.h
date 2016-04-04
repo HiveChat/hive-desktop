@@ -60,9 +60,6 @@ private:
   QMap<QString, QColor*> myColorConfigJsonMap;
   QMap<QString, QString*> myProfileConfigJsonMap;
 
-  ///usrData
-  const char alphabet_char[63] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
 public slots:
   void writeCurrentConfig();
 
