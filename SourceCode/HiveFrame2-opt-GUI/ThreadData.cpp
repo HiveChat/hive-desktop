@@ -204,6 +204,11 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
+void ThreadData::onUsrEnter()
+{
+
+}
+
 void ThreadData::checkData()
 {
   checkDir(app_data_local_path);

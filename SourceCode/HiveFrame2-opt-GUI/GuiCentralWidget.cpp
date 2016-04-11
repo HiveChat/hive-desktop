@@ -2,14 +2,18 @@
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 {
+  QPalette palette;
+  palette.setColor(QPalette::Window, QColor(250,250,250));
 
-  ////data manager
-  data_manager = new ThreadData(this);
+  this->setPalette(palette);
+  this->setMinimumHeight(600);
+  this->setMinimumWidth(900);
+  this->setWindowTitle("Hive!");
+  this->setAttribute(Qt::WA_TranslucentBackground);
+  this->setParent(parent);
 
 
-  ////net manager
-  thread_net = new ThreadNet(this);
-  thread_net->start();
+
 
 
   ////Gui
@@ -42,34 +46,33 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   connect(gui_tab_block->gui_settings_tab->questions_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
 
 
-  ///data:
-  connect(data_manager, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(UsrProfileStruct*)));
-  connect(data_manager, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_main_block, SLOT(addChatStack(UsrProfileStruct*)));
+//  ///data:
+//  connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(UsrProfileStruct*)));
+//  connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_main_block, SLOT(addChatStack(UsrProfileStruct*)));
 
-  data_manager->loadUsrList();
-
-
-  foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
-    {
-      connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
-    }
-
-  ////thread net
-  connect(thread_net, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)), Qt::QueuedConnection);
-  connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), this, SLOT(onUsrEnter(UsrProfileStruct*)), Qt::QueuedConnection);
+//  thread_data->loadUsrList();
 
 
-  ////thread info
-  thread_info = new ThreadInfo(this);
+//  foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
+//    {
+//      connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
+//    }
 
-  connect(thread_info, SIGNAL(globalDataChanged()), data_manager, SLOT(writeCurrentConfig()));
+//  ////thread net
+//  connect(thread_net, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)), Qt::QueuedConnection);
+//  connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), this, SLOT(onUsrEnter(UsrProfileStruct*)), Qt::QueuedConnection);
 
-  this->setParent(parent);
+
+//  ////thread info
+//  thread_info = new ThreadInfo(this);
+
+//  connect(thread_info, SIGNAL(globalDataChanged()), thread_data, SLOT(writeCurrentConfig()));
+
 }
 
 GuiCentralWidget::~GuiCentralWidget()
 {
-  thread_info->terminate();
+//  thread_info->terminate();
   qDebug()<<"\n@Hive is destructed";
 }
 
@@ -77,7 +80,7 @@ void GuiCentralWidget::addUsr(UsrProfileStruct *usrProfileStruct)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(usrProfileStruct);
   GuiChatStack *temp_gui_chat_stack_pointer = gui_main_block->addChatStack(usrProfileStruct);
-  connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
+//  connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
 }
 
 void GuiCentralWidget::delUsr(UsrProfileStruct *usrProfileStruct)
@@ -87,8 +90,8 @@ void GuiCentralWidget::delUsr(UsrProfileStruct *usrProfileStruct)
 
 void GuiCentralWidget::onUsrEnter(UsrProfileStruct *usrProfileStruct)
 {
-  data_manager->addUsr(usrProfileStruct);
+//  thread_data->addUsr(usrProfileStruct);
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(usrProfileStruct);
   GuiChatStack *temp_gui_chat_stack_pointer = gui_main_block->addChatStack(usrProfileStruct);
-  connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
+//  connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
 }

@@ -1,8 +1,6 @@
 #ifndef GUIHOMETAB_H
 #define GUIHOMETAB_H
 
-#include <QWidget>
-
 #include "GuiMenuButton.h"
 
 #include <QVBoxLayout>

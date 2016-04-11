@@ -4,25 +4,26 @@
 #include "GuiCentralWidget.h"
 #include "GlobalData.h"
 
-#include <QMainWindow>
-#include <QPainter>
+#include "ThreadData.h"
+#include "ThreadInfo.h"
+#include "ThreadNet.h"
 
 #ifdef Q_OS_MAC
 //#include <QtMacExtras>
 #endif
 
-class MainWindow : public QMainWindow
+class Hive : public QObject
 {
   Q_OBJECT
 
 public:
-  MainWindow(QWidget *parent = 0);
-  ~MainWindow();
+  Hive(QObject *parent = 0);
+  ~Hive();
 
-
-private:
   GuiCentralWidget *gui_central_widget;
-
+  ThreadData *thread_data;
+  ThreadInfo *thread_info;
+  ThreadNet *thread_net;
 
 };
 

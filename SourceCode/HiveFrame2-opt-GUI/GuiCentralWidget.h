@@ -4,10 +4,6 @@
 #include "GuiTabBlock.h"
 #include "GuiMainBlock.h"
 
-#include "ThreadData.h"
-#include "ThreadInfo.h"
-#include "ThreadNet.h"
-
 class GuiCentralWidget : public QWidget
 {
   Q_OBJECT
@@ -21,9 +17,6 @@ public:
   GuiMainBlock *gui_main_block;
 
 private:
-  ThreadData *data_manager;
-  ThreadInfo *thread_info;
-  ThreadNet *thread_net;
 
   QString usr_key_str;
   QString usr_name_str;

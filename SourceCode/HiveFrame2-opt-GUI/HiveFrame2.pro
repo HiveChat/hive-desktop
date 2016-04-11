@@ -19,7 +19,6 @@ TEMPLATE = app
 ICON = hive.icns
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
     GuiCentralWidget.cpp \
     GuiTabBlock.cpp \
     GuiHomeTab.cpp \
@@ -45,10 +44,11 @@ SOURCES += main.cpp\
     GuiSettingsStack_questions.cpp \
     GuiHomeStack_storage.cpp \
     ThreadNet.cpp \
-    ThreadData.cpp
+    ThreadData.cpp \
+    Hive.cpp
     #ThreadData.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += \
     GuiCentralWidget.h \
     GuiTabBlock.h \
     GuiHomeTab.h \
@@ -74,7 +74,8 @@ HEADERS  += mainwindow.h \
     GuiSettingsStack_questions.h \
     GuiHomeStack_storage.h \
     ThreadNet.h \
-    ThreadData.h
+    ThreadData.h \
+    Hive.h
     #ThreadData.h
 
 RESOURCES += \

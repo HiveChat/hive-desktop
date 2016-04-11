@@ -1,4 +1,4 @@
-#include "mainwindow.h"
+#include "Hive.h"
 #include <QApplication>
 #include <QPropertyAnimation>
 #include <QSharedMemory>
@@ -40,16 +40,15 @@ int main(int argc, char *argv[])
 
   load_my_style();
 
-  MainWindow w;
+  Hive w;
+  w.gui_central_widget->show();
 
-  QPropertyAnimation animation(&w, "geometry");
+  QPropertyAnimation animation(w.gui_central_widget, "geometry");
   animation.setDuration(300);
   animation.setStartValue(QRect(120, 80, 0, 0));
   animation.setEndValue(QRect(140, 100, 0, 0));
   animation.setEasingCurve(QEasingCurve::OutBounce);
   animation.start();
-
-  w.show();
 
 
 

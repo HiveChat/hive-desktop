@@ -66,6 +66,8 @@ private:
   QMap<QString, QString*> myProfileConfigJsonMap;
 
 public slots:
+  void onUsrEnter();
+
   void writeCurrentConfig();
 
 
