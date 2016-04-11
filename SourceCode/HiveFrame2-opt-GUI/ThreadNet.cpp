@@ -228,7 +228,7 @@ void ThreadNet::processPendingDatagrams()
             in >> usr_profile.avatar_str;
 
             processUsrEnter(&usr_profile);
-
+            break;
           }
         case UsrLeft:
           {

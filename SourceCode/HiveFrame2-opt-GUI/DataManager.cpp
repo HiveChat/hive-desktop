@@ -301,20 +301,15 @@ void DataManager::loadMyProfile()
   file.close();
 }
 
-void DataManager::loadUsrProfile()
+void DataManager::loadUsrList()
 {
   QFile file(usr_list_file_path);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;
     }
-
   QTextStream in(&file);
   QByteArray in_byte_array = in.readAll().toUtf8();
-  file.close();
-
-  QStringList usr_key_str_list;
-  UsrProfileStruct usr_profile_struct;
 
   ///JSon
   QJsonParseError json_error;
@@ -324,37 +319,32 @@ void DataManager::loadUsrProfile()
       if(read_json_document.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_document.object();
-          //get usr_key as a string list
-          usr_key_str_list = usr_list_json_obj.keys();
+          QStringList usr_key_str_list = usr_list_json_obj.keys();  //get usr_key as a string list
+
           for(int i = 0; i < usr_key_str_list.count(); i++)
             {
-              QJsonObject temp_usr_profile_json_obj;
-              //for each usr_key
-              QString temp_usr_key_str = usr_key_str_list[i];
-              temp_usr_profile_json_obj = usr_list_json_obj[temp_usr_key_str].toObject();
-              ///usrKey<<usrName<<ipAddr
-              qDebug()<<usr_key_str_list[i];
+              QString *temp_usr_key_str = &usr_key_str_list[i];
+              QJsonObject temp_usr_profile_json_obj = usr_list_json_obj[*temp_usr_key_str].toObject();
+
+              UsrProfileStruct usr_profile_struct;
               usr_profile_struct.key_str = temp_usr_profile_json_obj["usrKey"].toString();
               usr_profile_struct.name_str = temp_usr_profile_json_obj["usrName"].toString();
-//              usr_profile_struct.ip_str = temp_usr_profile_json_obj["ipAddr"].toString();
               usr_profile_struct.avatar_str = temp_usr_profile_json_obj["avatarPath"].toString();
 
-
+              localUsrProfileMap.insert(*temp_usr_key_str, usr_profile_struct);
               emit usrProfileLoaded(&usr_profile_struct);
-
-
-              //check dir
-              checkDir(usr_path+temp_usr_key_str);
             }
-
         }
     }
   else
     {
-      qDebug()<<"Contact parse failed, is file empty?******";
+      qDebug()<<"@loadUsrList(): Usr list file broken... Resize to 0.";
+      file.resize(0);
       return;
     }
 
+  file.flush();
+  file.close();
 }
 
 void DataManager::writeCurrentConfig()

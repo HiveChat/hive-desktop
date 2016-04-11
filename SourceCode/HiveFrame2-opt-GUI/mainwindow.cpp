@@ -1,16 +1,17 @@
 #include "mainwindow.h"
 #include <QDebug>
 #include <QPainter>
+#include <QApplication>
 
 #include "GuiOSXNotification.h"
 
 MainWindow::MainWindow(QWidget *parent)
   : QMainWindow(parent)
 {
-#ifdef Q_OS_MAC
-  QApplication::setQuitOnLastWindowClosed(false);
-  QtMac::setBadgeLabelText("Hi");
-#endif
+//#ifdef Q_OS_MAC
+//  QApplication::setQuitOnLastWindowClosed(false);
+//  QtMac::setBadgeLabelText("Hi");
+//#endif
 
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(250,250,250));
@@ -28,9 +29,9 @@ MainWindow::MainWindow(QWidget *parent)
   //this->setWindowFlags(Qt::FramelessWindowHint);
   //this->setWindowState(Qt::WindowNoState);
 
-#ifdef Q_OS_MAC
-//  QtMac::setBadgeLabelText("");
-#endif
+//#ifdef Q_OS_MAC
+////  QtMac::setBadgeLabelText("");
+//#endif
 }
 
 MainWindow::~MainWindow()

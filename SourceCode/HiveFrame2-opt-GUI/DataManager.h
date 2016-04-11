@@ -33,7 +33,7 @@ public:
 
   void addUsr(UsrProfileStruct *usrProfileStruct);
 
-  void loadUsrProfile();
+  void loadUsrList();
   static bool checkDir(QString dir);
   static QString appDataLocalPath();
   void TEST_SECTION();
@@ -56,6 +56,8 @@ private:
 
   const QString usr_list_file_path = app_data_local_path + "/usr_list.json";
   const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
+
+  QMap<QString, UsrProfileStruct> localUsrProfileMap;
 
   QMap<QString, QColor*> myColorConfigJsonMap;
   QMap<QString, QString*> myProfileConfigJsonMap;

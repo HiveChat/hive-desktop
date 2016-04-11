@@ -46,7 +46,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   connect(data_manager, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_tab_block->gui_chat_tab->comb_scroll_widget, SLOT(addComb(UsrProfileStruct*)));
   connect(data_manager, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_main_block, SLOT(addChatStack(UsrProfileStruct*)));
 
-  data_manager->loadUsrProfile();
+  data_manager->loadUsrList();
 
 
   foreach(GuiChatStack *temp_gui_chat_stack_pointer, gui_main_block->gui_chat_stack_map.values())
