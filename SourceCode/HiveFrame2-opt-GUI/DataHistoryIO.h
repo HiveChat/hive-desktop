@@ -1,7 +1,7 @@
 #ifndef DATAHISTORYIO_H
 #define DATAHISTORYIO_H
 
-#include "DataManager.h"
+#include "ThreadData.h"
 
 class DataHistoryIO : public QObject
 {

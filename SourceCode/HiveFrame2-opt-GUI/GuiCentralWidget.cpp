@@ -4,7 +4,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 {
 
   ////data manager
-  data_manager = new DataManager(this);
+  data_manager = new ThreadData(this);
 
 
   ////net manager

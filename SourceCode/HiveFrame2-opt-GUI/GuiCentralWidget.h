@@ -4,7 +4,7 @@
 #include "GuiTabBlock.h"
 #include "GuiMainBlock.h"
 
-#include "DataManager.h"
+#include "ThreadData.h"
 #include "ThreadInfo.h"
 #include "ThreadNet.h"
 
@@ -21,7 +21,7 @@ public:
   GuiMainBlock *gui_main_block;
 
 private:
-  DataManager *data_manager;
+  ThreadData *data_manager;
   ThreadInfo *thread_info;
   ThreadNet *thread_net;
 

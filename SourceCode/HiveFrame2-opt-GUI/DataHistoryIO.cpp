@@ -5,7 +5,7 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
   usr_key = usrKey;
   history_path = usr_path+usr_key;
 
-  DataManager::checkDir(history_path);
+  ThreadData::checkDir(history_path);
 
   ///Qt 5.5.0 bug here! put it back to the class def as soon a possible!
 
