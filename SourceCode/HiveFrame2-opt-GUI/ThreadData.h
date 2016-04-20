@@ -60,13 +60,17 @@ private:
   const QString usr_list_file_path = app_data_local_path + "/usr_list.json";
   const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
 
+  //data map
   QMap<QString, UsrProfileStruct> localUsrProfileMap;
+  QMap<QString, UsrProfileStruct> onlineUsrProfileMap;
 
+  //config map
   QMap<QString, QColor*> myColorConfigJsonMap;
   QMap<QString, QString*> myProfileConfigJsonMap;
 
 public slots:
-  void onUsrEnter();
+  void onUsrEnter(UsrProfileStruct *usrProfileStruct);
+  void onUsrLeft(QString *usrKey);
 
   void writeCurrentConfig();
 

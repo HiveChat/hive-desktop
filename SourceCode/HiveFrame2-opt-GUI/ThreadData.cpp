@@ -204,7 +204,22 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
-void ThreadData::onUsrEnter()
+void ThreadData::onUsrEnter(UsrProfileStruct *usrProfileStruct)
+{
+  if(onlineUsrProfileMap.keys().contains(usrProfileStruct->key_str))
+    {
+      return;
+    }
+  else
+    {
+      onlineUsrProfileMap.insert(usrProfileStruct->key_str, *usrProfileStruct);
+      emit usrProfileLoaded(usrProfileStruct);
+
+      return;
+    }
+}
+
+void ThreadData::onUsrLeft(QString *usrKey)
 {
 
 }

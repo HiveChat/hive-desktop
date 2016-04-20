@@ -33,7 +33,7 @@ private:
     Refuse
   };
 
-  bool status;
+  bool running = true;
   void setStatus(bool running);
   void refreshLocalHostIP();
 

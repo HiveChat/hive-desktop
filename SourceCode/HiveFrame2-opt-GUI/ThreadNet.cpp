@@ -6,21 +6,20 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
+  this->sendUsrEnter();
   this->setParent(parent);
 }
 
 ThreadNet::~ThreadNet()
 {
-  status = false;
+  running = false;
   emit usrLeft(&GlobalData::g_my_profile.key_str);
 }
 
 ////////run
 void ThreadNet::run()
 {
-  this->setPriority(QThread::NormalPriority);
-
-  while(status)
+  while(running)
     {
       refreshLocalHostIP();
 
@@ -30,7 +29,7 @@ void ThreadNet::run()
 
 void ThreadNet::setStatus(bool running)
 {
-  status = running;
+  running = running;
 }
 
 void ThreadNet::refreshLocalHostIP()
@@ -114,8 +113,11 @@ void ThreadNet::processUsrEnter(UsrProfileStruct *usrProfileStruct)
 
       qDebug()<<"UDP receive# Myself entered.";
     }
+  else
+    {
+      qDebug()<<"UDP receive# Someone entered.";
+    }
 
-  qDebug()<<"UDP receive# Someone entered.";
   emit usrEnter(usrProfileStruct);
 }
 
@@ -232,6 +234,7 @@ void ThreadNet::processPendingDatagrams()
           }
         case UsrLeft:
           {
+
 
           }
         case Refuse:

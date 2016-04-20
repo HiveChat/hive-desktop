@@ -20,9 +20,14 @@ Hive::Hive(QObject *parent) : QObject(parent)
   ////net manager
   thread_net = new ThreadNet(this);
 
+  ////gui
   gui_central_widget = new GuiCentralWidget();
-  QApplication::setWindowIcon(QIcon(":/img/img/icon.png"));
 
+  ////connect
+  connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEnter(UsrProfileStruct*)));
+  connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_central_widget, SLOT(onUsrEnter(UsrProfileStruct*)));
+
+  thread_net->start(QThread::NormalPriority);
 #ifdef Q_OS_MAC
   QtMac::setBadgeLabelText("");
 #endif
