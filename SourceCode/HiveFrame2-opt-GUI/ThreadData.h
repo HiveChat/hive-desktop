@@ -40,8 +40,15 @@ protected:
 
 private:
 
-  bool status;
-  void setStatus(const bool running);
+  bool running = true;
+  void checkSettings();
+
+  QColor b_mChatBubbleColorI;
+  QColor b_mChatBubbleColorO;
+  QString b_myNameStr;
+  QString b_avatarPathStr;
+
+
 
   QJsonDocument defaultProfile();
   void makeUsrKey();
@@ -62,14 +69,14 @@ private:
 
   //data map
   QMap<QString, UsrProfileStruct> localUsrProfileMap;
-  QMap<QString, UsrProfileStruct> onlineUsrProfileMap;
+  QMap<QString, UsrProfileStruct> online_usr_profile_map;
 
   //config map
   QMap<QString, QColor*> myColorConfigJsonMap;
   QMap<QString, QString*> myProfileConfigJsonMap;
 
 public slots:
-  void onUsrEnter(UsrProfileStruct *usrProfileStruct);
+  void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
 
   void writeCurrentConfig();
@@ -77,7 +84,9 @@ public slots:
 
 signals:
   void usrProfileLoaded(UsrProfileStruct *usrProfileStruct);
+  void usrProfileChanged(UsrProfileStruct *usrProfileStruct);
   void messageLoaded(QStringList messageStrList);
+
 
 };
 

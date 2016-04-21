@@ -34,8 +34,10 @@ private:
   };
 
   bool running = true;
+
   void setStatus(bool running);
   void refreshLocalHostIP();
+  void sendOnlineStatus();
 
   qint16 udp_port = 23232;
   QUdpSocket *udp_socket;

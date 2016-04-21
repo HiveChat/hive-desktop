@@ -8,8 +8,11 @@
 #include "ThreadInfo.h"
 #include "ThreadNet.h"
 
+#include <QApplication>
+
 #ifdef Q_OS_MAC
 //#include <QtMacExtras>
+#include <QtMac>
 #endif
 
 class Hive : public QObject

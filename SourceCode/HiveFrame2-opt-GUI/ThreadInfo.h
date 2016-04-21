@@ -20,16 +20,12 @@ protected:
   void run();
 
 private:
-  void checkGlobalData();
+  bool running = true;
+
   void checkNetConnection();
 
-  QColor b_mChatBubbleColorI;
-  QColor b_mChatBubbleColorO;
-  QString b_myNameStr;
-  QString b_avatarPathStr;
-
 signals:
-  void globalDataChanged();
+  void settingsChanged();
 
 };
 

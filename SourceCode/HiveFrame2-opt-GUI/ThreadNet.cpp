@@ -6,7 +6,6 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
-  this->sendUsrEnter();
   this->setParent(parent);
 }
 
@@ -21,6 +20,7 @@ void ThreadNet::run()
 {
   while(running)
     {
+      sendOnlineStatus();
       refreshLocalHostIP();
 
       msleep(1000);
@@ -59,6 +59,14 @@ void ThreadNet::refreshLocalHostIP()
       GlobalData::g_localHostIP = "";
     }
   qDebug()<<"@refreshLocalHostIP(): finished!";
+}
+
+void ThreadNet::sendOnlineStatus()
+{
+  if(GlobalData::g_localHostIP != "")
+    {
+      sendUsrEnter();
+    }
 }
 
 /////process packet
@@ -110,15 +118,14 @@ void ThreadNet::processUsrEnter(UsrProfileStruct *usrProfileStruct)
   if(usrProfileStruct->key_str == GlobalData::g_my_profile.key_str)
     {
       emit usrEnter(usrProfileStruct);
-
       qDebug()<<"UDP receive# Myself entered.";
     }
   else
     {
       qDebug()<<"UDP receive# Someone entered.";
+      emit usrEnter(usrProfileStruct);
     }
 
-  emit usrEnter(usrProfileStruct);
 }
 
 void ThreadNet::processUsrLeft(QString *usrKey)

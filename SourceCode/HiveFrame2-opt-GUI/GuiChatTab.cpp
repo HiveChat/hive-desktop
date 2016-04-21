@@ -52,11 +52,6 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 
 
 
-void GuiChatTab::onItemClicked(QTreeWidgetItem *item, int column)
-{
-
-}
-
 
 void GuiChatTab::showMenu()
 {
@@ -91,21 +86,22 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
   main_layout->setSpacing(0);
 
   this->setParent(parent);
-
-
-
-
 }
 
 void GuiChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 {
   qDebug()<<"Comb Added";
-  gui_comb_widget = new GuiCombWidget(usrProfileStruct, this);
-  main_layout->addWidget(gui_comb_widget);
+  GuiCombWidget *comb_widget = new GuiCombWidget(usrProfileStruct, this);
+  comb_widget_list.insert(usrProfileStruct->key_str, comb_widget);
+  main_layout->addWidget(comb_widget);
 
-  connect(gui_comb_widget, SIGNAL(clicked(QString)), this, SLOT(onCombWidgetClicked(QString)));
+  connect(comb_widget, SIGNAL(clicked(QString)), this, SLOT(onCombWidgetClicked(QString)));
 }
 
+void GuiChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)
+{
+  comb_widget_list.value(usrProfileStruct->key_str)->setProfile(usrProfileStruct);
+}
 
 void GuiChatTab_comb_scroll_widget::onCombWidgetClicked(QString usrKey)
 {

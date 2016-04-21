@@ -8,6 +8,11 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
 
+  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
+  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
+  b_myNameStr = GlobalData::g_my_profile.name_str;
+  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
+
   checkData();
   loadMyProfile();
   loadFonts();
@@ -20,24 +25,35 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
 /////////////thread
 ThreadData::~ThreadData()
 {
-  status = false;
+  running = false;
 }
 
 void ThreadData::run()
 {
-  this->setPriority(QThread::NormalPriority);
-
-  while(status)
+  while(running)
     {
+      checkSettings();
 
       msleep(1000);
     }
 }
 
-void ThreadData::setStatus(const bool running)
+void ThreadData::checkSettings()
 {
-  status = running;
+  if(b_mChatBubbleColorI != GlobalData::g_mChatBubbleColorI ||
+     b_mChatBubbleColorO != GlobalData::g_mChatBubbleColorO ||
+     b_myNameStr != GlobalData::g_my_profile.name_str ||
+     b_avatarPathStr != GlobalData::g_my_profile.avatar_str)
+    {
+      b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
+      b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
+      b_myNameStr = GlobalData::g_my_profile.name_str;
+      b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
+
+      writeCurrentConfig();
+    }
 }
+
 
 ///////////!thread
 
@@ -204,16 +220,22 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
-void ThreadData::onUsrEnter(UsrProfileStruct *usrProfileStruct)
+void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
-  if(onlineUsrProfileMap.keys().contains(usrProfileStruct->key_str))
+  if(online_usr_profile_map.keys().contains(usrProfileStruct->key_str))
     {
+      if(*usrProfileStruct != online_usr_profile_map.value(usrProfileStruct->key_str))
+        {
+          qDebug()<<"Avatar Changed to be"<<usrProfileStruct->avatar_str;
+          online_usr_profile_map.remove(usrProfileStruct->key_str);
+          emit usrProfileChanged(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
+        }
       return;
     }
   else
     {
-      onlineUsrProfileMap.insert(usrProfileStruct->key_str, *usrProfileStruct);
-      emit usrProfileLoaded(usrProfileStruct);
+      online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct);
+      emit usrProfileLoaded(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
 
       return;
     }

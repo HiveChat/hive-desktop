@@ -3,14 +3,8 @@
 
 #include "GuiCombWidget.h"
 
-#include <QWidget>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QTreeWidget>
-#include <QTreeWidgetItem>
-#include <QLineEdit>
-#include <QPalette>
 #include <QScrollArea>
+#include <QMap>
 
 
 class GuiChatTab_comb_scroll_widget : public QWidget
@@ -19,20 +13,19 @@ class GuiChatTab_comb_scroll_widget : public QWidget
 
 public:
   explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
-  GuiCombWidget *gui_comb_widget;
+  void refreshComb(UsrProfileStruct *usrProfileStruct);
 
+private:
   QVBoxLayout *main_layout;
-
-
+  QMap<QString, GuiCombWidget *> comb_widget_list;
 
 signals:
   void combWidgetClicked(QString usrKey);
 
 public slots:
   void onCombWidgetClicked(QString usrKey);
-
-public slots:
   void addComb(UsrProfileStruct *usrProfileStruct);
+
 
 };
 
@@ -56,11 +49,7 @@ private:
   QVBoxLayout *comb_layout;
 
 
-  //QTreeWidget *comb_treewidget;
-  //QTreeWidgetItem *comb_treewidget_item;
-
 private slots:
-  void onItemClicked(QTreeWidgetItem *item, int column);
   void showMenu();
 
 };

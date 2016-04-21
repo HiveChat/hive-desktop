@@ -32,6 +32,7 @@ public slots:
 
 private slots:
   void onUsrEnter(UsrProfileStruct *usrProfileStruct);
+  void onUsrProfileChanged(UsrProfileStruct *usrProfileStruct);
 
 
 

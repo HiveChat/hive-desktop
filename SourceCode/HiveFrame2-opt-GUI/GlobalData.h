@@ -36,6 +36,9 @@ struct UsrProfileStruct
   QString avatar_str;
   QString ip_str = "Offline";
 };
+bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
+bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
+
 
 struct MessageStruct
 {

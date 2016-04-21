@@ -5,24 +5,20 @@ ThreadInfo::ThreadInfo(QObject *parent) : QThread(parent)
 {
   this->start(QThread::LowestPriority);
 
-  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
-  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
-  b_myNameStr = GlobalData::g_my_profile.name_str;
-  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
+
 
   this->setParent(parent);
 }
 
 ThreadInfo::~ThreadInfo()
 {
-
+  running = false;
 }
 
 void ThreadInfo::run()
 {
-  while(true)
+  while(running)
     {
-      checkGlobalData();
       checkNetConnection();
 
       QCoreApplication::processEvents();
@@ -30,21 +26,7 @@ void ThreadInfo::run()
     }
 }
 
-void ThreadInfo::checkGlobalData()
-{
-//  qDebug()<<"invoke: void ThreadInfo::checkGlobalData()";
-  if(b_mChatBubbleColorI != GlobalData::g_mChatBubbleColorI ||
-     b_mChatBubbleColorO != GlobalData::g_mChatBubbleColorO ||
-     b_myNameStr != GlobalData::g_my_profile.name_str ||
-     b_avatarPathStr != GlobalData::g_my_profile.avatar_str)
-    {
-      b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
-      b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
-      b_myNameStr = GlobalData::g_my_profile.name_str;
-      b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
-      emit globalDataChanged();
-    }
-}
+
 
 void ThreadInfo::checkNetConnection()
 {

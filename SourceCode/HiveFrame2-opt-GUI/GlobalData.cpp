@@ -2,6 +2,37 @@
 #include <QPalette>
 
 
+bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2)
+{
+  if(arg1.key_str == arg2.key_str
+     && arg1.ip_str == arg2.ip_str
+     && arg1.name_str == arg2.name_str
+     && arg1.avatar_str == arg2.avatar_str)
+    {
+      return false;
+    }
+  else
+    {
+      return true;
+    }
+}
+
+bool operator ==(const UsrProfileStruct &arg1, const UsrProfileStruct &arg2)
+{
+  if(arg1.key_str == arg2.key_str
+     && arg1.ip_str == arg2.ip_str
+     && arg1.name_str == arg2.name_str
+     && arg1.avatar_str == arg2.avatar_str)
+    {
+      return true;
+    }
+  else
+    {
+      return false;
+    }
+}
+
+
 ///UI
 QFont GlobalData::g_font;
 QColor GlobalData::g_windowColor = QColor(255,255,255);
@@ -39,3 +70,4 @@ usrKey<<usrName<<avatarPath
 
 
 */
+
