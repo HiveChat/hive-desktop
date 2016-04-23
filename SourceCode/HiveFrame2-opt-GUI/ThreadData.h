@@ -78,6 +78,7 @@ private:
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
+  void onMessageCome();
 
   void writeCurrentConfig();
 

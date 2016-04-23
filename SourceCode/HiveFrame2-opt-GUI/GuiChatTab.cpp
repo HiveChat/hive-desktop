@@ -32,7 +32,7 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
       item->addChild(item1);
     }
   //comb_treewidget->setFixedWidth(100);
-*/
+  */
 
   ////main layout
 
@@ -49,7 +49,6 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   this->setFixedWidth(250);
   this->setParent(parent);
 }
-
 
 
 

@@ -39,11 +39,10 @@ struct UsrProfileStruct
 bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 
-
 struct MessageStruct
 {
-  QString obj_key_str;
-  QString subj_key_str;
+  QString reciever_key;
+  QString sender_key;
   QString message_str;
 };
 

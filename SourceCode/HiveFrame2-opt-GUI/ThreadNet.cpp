@@ -72,9 +72,9 @@ void ThreadNet::sendOnlineStatus()
 /////process packet
 void ThreadNet::processMessage(MessageStruct *messageStruct)
 {
-  if(messageStruct->obj_key_str != GlobalData::g_my_profile.key_str)
+  if(messageStruct->reciever_key != GlobalData::g_my_profile.key_str)
     {
-      if(messageStruct->subj_key_str != GlobalData::g_my_profile.key_str)
+      if(messageStruct->sender_key != GlobalData::g_my_profile.key_str)
         {
           qDebug()<<"人家的事情我不管";
         }
@@ -82,8 +82,8 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
         {
           ////delete this!!2016-03-22
           QStringList message_str_list;
-          message_str_list.append(messageStruct->obj_key_str);
-          message_str_list.append(messageStruct->subj_key_str);
+          message_str_list.append(messageStruct->reciever_key);
+          message_str_list.append(messageStruct->sender_key);
           message_str_list.append(messageStruct->message_str);
           message_str_list.append(GlobalData::g_currentTime());
 
@@ -93,15 +93,15 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
     }
   else
     {
-      if(messageStruct->subj_key_str == GlobalData::g_my_profile.key_str)
+      if(messageStruct->sender_key == GlobalData::g_my_profile.key_str)
         {
           qDebug()<<"我发给自己的消息";
         }
       else
         {
           QStringList message_str_list;
-          message_str_list.append(messageStruct->obj_key_str);
-          message_str_list.append(messageStruct->subj_key_str);
+          message_str_list.append(messageStruct->reciever_key);
+          message_str_list.append(messageStruct->sender_key);
           message_str_list.append(messageStruct->message_str);
           message_str_list.append(GlobalData::g_currentTime());
           qDebug()<<"别人发给我的："<<message_str_list.at(2);
@@ -221,8 +221,8 @@ void ThreadNet::processPendingDatagrams()
         case Message:
           {
             MessageStruct message;
-            in >> message.obj_key_str;
-            in >> message.subj_key_str;
+            in >> message.reciever_key;
+            in >> message.sender_key;
             in >> message.message_str;
 
             processMessage(&message);
