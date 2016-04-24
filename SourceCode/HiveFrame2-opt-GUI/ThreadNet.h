@@ -50,7 +50,7 @@ private:
 
 
 signals:
-  void messageRecieved(QStringList messageStrList, bool fromMe);
+  void messageRecieved(MessageStruct *messageStruct, bool fromMe);
   void usrEnter(UsrProfileStruct *usrProfileStruct);
   void usrLeft(QString *usrKey);
 

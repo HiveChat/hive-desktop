@@ -80,15 +80,8 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
         }
       else
         {
-          ////delete this!!2016-03-22
-          QStringList message_str_list;
-          message_str_list.append(messageStruct->reciever_key);
-          message_str_list.append(messageStruct->sender_key);
-          message_str_list.append(messageStruct->message_str);
-          message_str_list.append(GlobalData::g_currentTime());
-
-          qDebug()<<"我发了消息："<<message_str_list[2];
-          emit messageRecieved(message_str_list, true);
+          qDebug()<<"我发了消息："<<messageStruct->message_str;
+          emit messageRecieved(messageStruct, true);
         }
     }
   else
@@ -96,17 +89,12 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
       if(messageStruct->sender_key == GlobalData::g_my_profile.key_str)
         {
           qDebug()<<"我发给自己的消息";
+          emit messageRecieved(messageStruct, true);
         }
       else
         {
-          QStringList message_str_list;
-          message_str_list.append(messageStruct->reciever_key);
-          message_str_list.append(messageStruct->sender_key);
-          message_str_list.append(messageStruct->message_str);
-          message_str_list.append(GlobalData::g_currentTime());
-          qDebug()<<"别人发给我的："<<message_str_list.at(2);
-
-          emit messageRecieved(message_str_list, false);
+          qDebug()<<"别人发给我的："<<messageStruct->message_str;
+          emit messageRecieved(messageStruct, false);
         }
     }
 }

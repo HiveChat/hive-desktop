@@ -2,18 +2,8 @@
 
 ThreadData::ThreadData(QObject *parent) : QThread(parent)
 {
-  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_my_profile.key_str);
-  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_my_profile.name_str);
-  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_my_profile.avatar_str);
-  myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
-  myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
-
-  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
-  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
-  b_myNameStr = GlobalData::g_my_profile.name_str;
-  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
-
-  checkData();
+  initVariable();
+  checkFiles();
   loadMyProfile();
   loadFonts();
 
@@ -40,16 +30,8 @@ void ThreadData::run()
 
 void ThreadData::checkSettings()
 {
-  if(b_mChatBubbleColorI != GlobalData::g_mChatBubbleColorI ||
-     b_mChatBubbleColorO != GlobalData::g_mChatBubbleColorO ||
-     b_myNameStr != GlobalData::g_my_profile.name_str ||
-     b_avatarPathStr != GlobalData::g_my_profile.avatar_str)
+  if(written_settings_struct != GlobalData::g_settings_struct)
     {
-      b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
-      b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
-      b_myNameStr = GlobalData::g_my_profile.name_str;
-      b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
-
       writeCurrentConfig();
     }
 }
@@ -59,45 +41,7 @@ void ThreadData::checkSettings()
 
 void ThreadData::TEST_SECTION()
 {
-
   addUsr(&GlobalData::g_my_profile);
-//  ///////////JOSN DATA
-//  QStringList usrInfoStrList;
-//  ////this cannot be MAC address Keep in mind!
-////  usrInfoStrList<<"90-00-4E-9A-A4-FD"<<"192.168.1.1"<<"Bob"<<":/avatar/avatar/bee.png";
-////  addUsr(usrInfoStrList);
-////  usrInfoStrList.clear();
-//  usrInfoStrList<<"44-00-9E-9A-A4-FD"<<"192.168.1.2"<<"James"<<":/avatar/avatar/ladybug.png";
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"20-00-9E-9A-A4-FD"<<"192.168.1.3"<<"Rob"<<":/avatar/avatar/fat.png";///r
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"0?-00-9E-9A-A4-FD"<<"192.168.1.4"<<"Paul"<<":/avatar/avatar/sunflower.png";
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"30-00-9E-9A-A4-FD"<<"192.168.1.5"<<"Tom"<<":/avatar/avatar/disk.png";
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"40-00-9E-9A-A4-FD"<<"192.168.1.6"<<"Levi"<<":/avatar/avatar/bee.png";
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-////  usrInfoStrList<<"20-00-9E-9A-A4-FD"<<"192.168.1.7"<<"Peter"<<":/avatar/avatar/sunflower.png";///r
-////  addUsr(usrInfoStrList);
-////  usrInfoStrList.clear();
-////  usrInfoStrList<<"11-00-9E-9A-A4-FD"<<"192.168.1.8"<<"Justin"<<":/avatar/avatar/worm.png";
-////  addUsr(usrInfoStrList);
-////  usrInfoStrList.clear();
-//  usrInfoStrList<<"45-00-9E-9A-A4-FD"<<"192.168.1.9"<<"Nemo"<<":/avatar/avatar/worm.png";
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"87-00-9E-9A-A4-FD"<<"192.168.1.10"<<"Lynn"<<":/avatar/avatar/ladybug.png";
-//  addUsr(&usrInfoStrList);
-//  usrInfoStrList.clear();
-//  usrInfoStrList<<"90-00-9E-9A-A4-FD"<<"192.168.1.11"<<"Timm"<<":/avatar/avatar/sunflower.png";
-//  deleteUsr(usrInfoStrList);
-//  ///////////!JSON DATA
-
 }
 
 void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
@@ -246,7 +190,13 @@ void ThreadData::onUsrLeft(QString *usrKey)
 
 }
 
-void ThreadData::checkData()
+void ThreadData::onMessageCome(MessageStruct *messageStruct, bool fromMe)
+{
+
+
+}
+
+void ThreadData::checkFiles()
 {
   checkDir(app_data_local_path);
   checkDir(usr_path);
@@ -315,6 +265,20 @@ void ThreadData::makeUsrKey()
     }
 
   qDebug()<<GlobalData::g_my_profile.key_str;
+}
+
+void ThreadData::initVariable()
+{
+  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_my_profile.key_str);
+  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_my_profile.name_str);
+  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_my_profile.avatar_str);
+  myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
+  myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
+
+  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
+  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
+  b_myNameStr = GlobalData::g_my_profile.name_str;
+  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
 }
 
 

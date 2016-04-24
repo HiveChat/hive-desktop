@@ -43,6 +43,7 @@ private:
   bool running = true;
   void checkSettings();
 
+  SettingStruct written_settings_struct;
   QColor b_mChatBubbleColorI;
   QColor b_mChatBubbleColorO;
   QString b_myNameStr;
@@ -53,7 +54,8 @@ private:
   QJsonDocument defaultProfile();
   void makeUsrKey();
 
-  void checkData();
+  void initVariable();
+  void checkFiles();
   void loadDefaultGlobalData();
   void loadMyProfile();
   void loadFonts();
@@ -78,7 +80,7 @@ private:
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
-  void onMessageCome();
+  void onMessageCome(MessageStruct *messageStruct, bool fromMe);
 
   void writeCurrentConfig();
 
