@@ -39,7 +39,7 @@ bool operator ==(const SettingStruct &arg1, const SettingStruct &arg2)
 }
 bool operator !=(const SettingStruct &arg1, const SettingStruct &arg2)
 {
-  return !(arg1 == arg2)
+  return !(arg1 == arg2);
 }
 
 

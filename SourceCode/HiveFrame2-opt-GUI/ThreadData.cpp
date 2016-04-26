@@ -192,8 +192,7 @@ void ThreadData::onUsrLeft(QString *usrKey)
 
 void ThreadData::onMessageCome(MessageStruct *messageStruct, bool fromMe)
 {
-
-
+  emit messageLoaded(*messageStruct, fromMe);
 }
 
 void ThreadData::checkFiles()

@@ -17,14 +17,11 @@ public:
   GuiMainBlock *gui_main_block;
 
 private:
-
   QString usr_key_str;
   QString usr_name_str;
   QString avatar_path_str;
 
   QStringList my_profile_str_list;
-
-signals:
 
 public slots:
   void addUsr(UsrProfileStruct *usrProfileStruct);
@@ -33,7 +30,7 @@ public slots:
 private slots:
   void onUsrEnter(UsrProfileStruct *usrProfileStruct);
   void onUsrProfileChanged(UsrProfileStruct *usrProfileStruct);
-  //void onMessageCome();
+  void onMessageCome(MessageStruct *messageStruct, bool fromMe);
 
 
 

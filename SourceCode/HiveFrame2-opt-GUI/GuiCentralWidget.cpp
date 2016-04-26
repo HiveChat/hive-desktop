@@ -100,3 +100,10 @@ void GuiCentralWidget::onUsrProfileChanged(UsrProfileStruct *usrProfileStruct)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(usrProfileStruct);
 }
+
+void GuiCentralWidget::onMessageCome(MessageStruct *messageStruct, bool fromMe)
+{
+
+
+
+}
