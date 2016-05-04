@@ -116,7 +116,7 @@ private:
   void refreshCurrentActiveIndex();
 
 public slots:
-  void checkMessage(QStringList message_str_list, bool fromMe);
+  void checkMessage(MessageStruct messageStruct, bool fromMe);
   void onSendButtonClicked();
   void loadHistory(int index);
 

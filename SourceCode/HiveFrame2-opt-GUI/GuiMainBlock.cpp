@@ -43,8 +43,7 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
       switch (staticStackType) {
         case Home_Welcome:
           {
-            GuiWelcomeStack *gui_welcome_stack = new GuiWelcomeStack(this);
-
+            gui_welcome_stack = new GuiWelcomeStack(this);
             static_stack_widget = gui_welcome_stack;
             main_stacked_widget->addWidget(gui_welcome_stack);
             main_stacked_widget->setCurrentWidget(gui_welcome_stack);
@@ -118,30 +117,19 @@ GuiChatStack* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
   gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
 
   return gui_chat_stack;
-
-  //connect(this, SIGNAL(whoseMessage(QStringList)), gui_chat_stack, SLOT(checkMessage(QStringList)));
 }
 
-void GuiMainBlock::onMessageRecieved(QStringList message_str_list, bool fromMe)
+void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
 {
-  //0to,1from
   if(fromMe)
     {
-      gui_chat_stack_map.find(message_str_list[0]).value()->checkMessage(message_str_list, fromMe);
+      gui_chat_stack_map.find(messageStruct.reciever_key).value()->checkMessage(messageStruct, fromMe);
     }
   else
     {
-      gui_chat_stack_map.find(message_str_list[1]).value()->checkMessage(message_str_list, fromMe);
+      gui_chat_stack_map.find(messageStruct.sender_key).value()->checkMessage(messageStruct, fromMe);
     }
-  //emit whoseMessage(message_str_list);
 }
-
-void GuiMainBlock::onColorDialogTriggered()
-{
-
-  QColor color = QColorDialog::getColor(Qt::white, this);
-}
-
 
 //  QProgressBar {
 //      border: 1px solid #FFB500;

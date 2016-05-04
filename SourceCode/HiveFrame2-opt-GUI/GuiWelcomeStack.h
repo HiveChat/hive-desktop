@@ -23,8 +23,6 @@ class GuiWelcomeStack : public QWidget
 public:
   explicit GuiWelcomeStack(QWidget *parent = 0);
 
-  void refreshTime();
-
 private:
   QHBoxLayout *bottom_layout;
   QVBoxLayout *profile_layout;
@@ -39,6 +37,9 @@ private:
   GuiAvatarButton *my_avatar;
 
   QPixmap icon_pixmap;
+
+public slots:
+  void refresh();
 
 };
 

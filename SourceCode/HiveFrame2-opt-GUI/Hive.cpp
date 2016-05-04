@@ -25,7 +25,9 @@ Hive::Hive(QObject *parent) : QObject(parent)
   connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_central_widget, SLOT(onUsrEnter(UsrProfileStruct*)));
   connect(thread_data, SIGNAL(usrProfileChanged(UsrProfileStruct*)), gui_central_widget, SLOT(onUsrProfileChanged(UsrProfileStruct*)));
   connect(thread_net, SIGNAL(messageRecieved(MessageStruct*,bool)), thread_data, SLOT(onMessageCome(MessageStruct*,bool)));
-  connect(thread_data, SIGNAL(messageLoaded(QStringList,bool)), gui_central_widget, SLOT(onMessageCome(MessageStruct*,bool)));
+  connect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)));
+
+  connect(thread_data, SIGNAL(refreshWS()), gui_central_widget->gui_main_block->gui_welcome_stack, SLOT(refresh()));
 
   thread_info->start(QThread::LowestPriority);
   thread_data->start(QThread::NormalPriority);

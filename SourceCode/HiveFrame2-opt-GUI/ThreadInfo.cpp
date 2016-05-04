@@ -21,7 +21,6 @@ void ThreadInfo::run()
     {
       checkNetConnection();
 
-      QCoreApplication::processEvents();
       msleep(1000);
     }
 }

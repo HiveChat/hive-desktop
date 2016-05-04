@@ -76,26 +76,28 @@ QJsonArray DataHistoryIO::readMessage(int index)
   return active_history_json_array;
 }
 
-void DataHistoryIO::wirteMessage(QStringList message, bool fromMe)
+void DataHistoryIO::wirteMessage(MessageStruct messageStruct, bool fromMe)
 {
-//  message_str_list.append(object_key_str);
-//  message_str_list.append(subject_key_str);
-//  message_str_list.append(message_str);
-//  message_str_list.append(GlobalData::g_currentTime());
+  //  message_str_list.append(object_key_str);
+  //  message_str_list.append(subject_key_str);
+  //  message_str_list.append(message_str);
+  //  message_str_list.append(GlobalData::g_currentTime());
+    if(active_history_json_array.count() == 100)
+      {
+        saveMessage();
+      }
 
-  if(active_history_json_array.count() == 100)
-    {
-      saveMessage();
-    }
+  //  QJsonObject message_json_obj;
+  //  message_json_obj.insert("message", message[2]);
+  //  message_json_obj.insert("fromMe", fromMe);
+  //  message_json_obj.insert("time", message[3]);
+    QJsonObject message_json_obj;
+    message_json_obj.insert("message", messageStruct.message_str);
+    message_json_obj.insert("fromMe", fromMe);
+    message_json_obj.insert("time", messageStruct.time_str);
 
-  QJsonObject message_json_obj;
-  message_json_obj.insert("message", message[2]);
-  message_json_obj.insert("fromMe", fromMe);
-  message_json_obj.insert("time", message[3]);
+    active_history_json_array.append(message_json_obj);
 
-  active_history_json_array.append(message_json_obj);
-
-  //saveMessage();
 }
 
 void DataHistoryIO::makeHistoryFile(int num)

@@ -45,10 +45,10 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
   dd->addWidget(background_label);
 
 
-  this->refreshTime();
+  this->refresh();
 }
 
-void GuiWelcomeStack::refreshTime()
+void GuiWelcomeStack::refresh()
 {
   int current_hour = QTime::currentTime().toString("hh").toInt();
   if(current_hour >= 4 && current_hour <= 12)
@@ -72,6 +72,8 @@ void GuiWelcomeStack::refreshTime()
       welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_my_profile.name_str).arg("It's late at night :)"));
     }
 
+  my_avatar->setAvatar(GlobalData::g_my_profile.avatar_str);
+
   if(GlobalData::g_localHostIP == "")
     {
       ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
@@ -80,6 +82,7 @@ void GuiWelcomeStack::refreshTime()
     {
       ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
     }
+  qDebug()<<"rrrrrrrrrrrrrrrrrrrrrrrre";
 }
 
 

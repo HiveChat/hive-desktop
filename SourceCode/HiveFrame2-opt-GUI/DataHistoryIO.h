@@ -15,7 +15,7 @@ public:
   int currentActiveIndex();
 
 public slots:
-  void wirteMessage(QStringList message, bool fromMe);
+  void wirteMessage(MessageStruct messageStruct, bool fromMe);
 
 
 private:

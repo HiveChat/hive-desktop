@@ -23,6 +23,7 @@ void ThreadData::run()
   while(running)
     {
       checkSettings();
+      refreshGui();
 
       msleep(1000);
     }
@@ -30,10 +31,13 @@ void ThreadData::run()
 
 void ThreadData::checkSettings()
 {
-  if(written_settings_struct != GlobalData::g_settings_struct)
-    {
-      writeCurrentConfig();
-    }
+  qDebug()<<"ThreadData::checkSettings():    written!!!!";
+  writeCurrentConfig();
+}
+
+void ThreadData::refreshGui()
+{
+  emit refreshWS();
 }
 
 
@@ -274,10 +278,10 @@ void ThreadData::initVariable()
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
 
-  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
-  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
-  b_myNameStr = GlobalData::g_my_profile.name_str;
-  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
+//  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
+//  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
+//  b_myNameStr = GlobalData::g_my_profile.name_str;
+//  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
 }
 
 

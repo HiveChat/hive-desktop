@@ -269,15 +269,15 @@ void GuiChatStack::refreshCurrentActiveIndex()
 ///slots
 
 
-void GuiChatStack::checkMessage(QStringList message_str_list, bool fromMe)
+void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
 {
 //  QString object_key_str;//0 receiver
 //  QString subject_key_str;//1 sender
 //  QString message_str;//2
   qDebug()<<"wait!!here!!!";
-  chat_widget->addChatBubble(message_str_list[2], fromMe);
+  chat_widget->addChatBubble(messageStruct.message_str, fromMe);
 
-  data_history_io->wirteMessage(message_str_list, fromMe);
+  data_history_io->wirteMessage(messageStruct, fromMe);
 
   refreshCurrentActiveIndex();
 

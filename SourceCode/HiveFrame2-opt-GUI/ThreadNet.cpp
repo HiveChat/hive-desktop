@@ -20,7 +20,7 @@ void ThreadNet::run()
 {
   while(running)
     {
-      sendOnlineStatus();
+//      sendOnlineStatus();
       refreshLocalHostIP();
 
       msleep(1000);
@@ -81,6 +81,7 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
       else
         {
           qDebug()<<"我发了消息："<<messageStruct->message_str;
+          messageStruct->time_str =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, true);
         }
     }
@@ -89,11 +90,13 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
       if(messageStruct->sender_key == GlobalData::g_my_profile.key_str)
         {
           qDebug()<<"我发给自己的消息";
+          messageStruct->time_str =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, true);
         }
       else
         {
           qDebug()<<"别人发给我的："<<messageStruct->message_str;
+          messageStruct->time_str =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, false);
         }
     }

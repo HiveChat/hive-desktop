@@ -44,6 +44,7 @@ struct MessageStruct
   QString reciever_key;
   QString sender_key;
   QString message_str;
+  QString time_str;
 };
 
 struct SettingStruct

@@ -59,7 +59,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 //    }
 
 //  ////thread net
-//  connect(thread_net, SIGNAL(messageRecieved(QStringList, bool)), gui_main_block, SLOT(onMessageRecieved(QStringList, bool)), Qt::QueuedConnection);
+
 //  connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), this, SLOT(onUsrEnter(UsrProfileStruct*)), Qt::QueuedConnection);
 
 

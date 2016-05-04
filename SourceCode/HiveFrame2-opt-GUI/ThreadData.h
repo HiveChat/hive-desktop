@@ -42,6 +42,7 @@ private:
 
   bool running = true;
   void checkSettings();
+  void refreshGui();
 
   SettingStruct written_settings_struct;
   QColor b_mChatBubbleColorI;
@@ -86,9 +87,10 @@ public slots:
 
 
 signals:
+  void refreshWS();
   void usrProfileLoaded(UsrProfileStruct *usrProfileStruct);
   void usrProfileChanged(UsrProfileStruct *usrProfileStruct);
-  void messageLoaded(QStringList messageStrList, bool fromMe);
+  void messageLoaded(MessageStruct messageStrList, bool fromMe);
 
 
 };
