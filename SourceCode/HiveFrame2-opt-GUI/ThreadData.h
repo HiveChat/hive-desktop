@@ -45,12 +45,6 @@ private:
   void refreshGui();
 
   SettingStruct written_settings_struct;
-  QColor b_mChatBubbleColorI;
-  QColor b_mChatBubbleColorO;
-  QString b_myNameStr;
-  QString b_avatarPathStr;
-
-
 
   QJsonDocument defaultProfile();
   void makeUsrKey();

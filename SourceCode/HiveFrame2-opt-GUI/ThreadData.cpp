@@ -31,8 +31,12 @@ void ThreadData::run()
 
 void ThreadData::checkSettings()
 {
-  qDebug()<<"ThreadData::checkSettings():    written!!!!";
-  writeCurrentConfig();
+  if(written_settings_struct != GlobalData::g_settings_struct)
+    {
+      qDebug()<<"ThreadData::checkSettings():    written!!!!";
+      writeCurrentConfig();
+      written_settings_struct = GlobalData::g_settings_struct;
+    }
 }
 
 void ThreadData::refreshGui()
@@ -45,7 +49,7 @@ void ThreadData::refreshGui()
 
 void ThreadData::TEST_SECTION()
 {
-  addUsr(&GlobalData::g_my_profile);
+  //addUsr(&GlobalData::g_settings_struct);
 }
 
 void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
@@ -209,8 +213,8 @@ void ThreadData::checkFiles()
 void ThreadData::loadDefaultGlobalData()
 {
   makeUsrKey();
-  GlobalData::g_my_profile.avatar_str = ":/avatar/avatar/default.png";
-  GlobalData::g_my_profile.name_str = QHostInfo::localHostName();
+  GlobalData::g_settings_struct.avatar_str = ":/avatar/avatar/default.png";
+  GlobalData::g_settings_struct.name_str = QHostInfo::localHostName();
 }
 
 
@@ -245,8 +249,8 @@ QJsonDocument ThreadData::defaultProfile()
       my_profile_json_obj.insert(attribute, *myProfileConfigJsonMap.value(attribute));
     }
 
-  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_chatBubbleColorI.name());
-  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_chatBubbleColorO.name());
+  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_defaultChatBubbleColorI.name());
+  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_defaultChatBubbleColorO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
@@ -260,23 +264,23 @@ void ThreadData::makeUsrKey()
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-  GlobalData::g_my_profile.key_str.clear();
+  GlobalData::g_settings_struct.key_str.clear();
 
   for(int i = 0; i < 32; i ++)
     {
-      GlobalData::g_my_profile.key_str.append(alphabet_char[qrand()%63]);
+      GlobalData::g_settings_struct.key_str.append(alphabet_char[qrand()%63]);
     }
 
-  qDebug()<<GlobalData::g_my_profile.key_str;
+  qDebug()<<GlobalData::g_settings_struct.key_str;
 }
 
 void ThreadData::initVariable()
 {
-  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_my_profile.key_str);
-  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_my_profile.name_str);
-  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_my_profile.avatar_str);
-  myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_mChatBubbleColorI);
-  myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_mChatBubbleColorO);
+  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_settings_struct.key_str);
+  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_settings_struct.name_str);
+  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_settings_struct.avatar_str);
+  myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_settings_struct.chat_bubble_color_i);
+  myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_settings_struct.chat_bubble_color_o);
 
 //  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
 //  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
@@ -328,6 +332,8 @@ void ThreadData::loadMyProfile()
       file.resize(0);
       out<<defaultProfile().toJson(QJsonDocument::Indented)<<endl;
     }
+
+  written_settings_struct = GlobalData::g_settings_struct;
 
   file.flush();
   file.close();
@@ -397,8 +403,8 @@ void ThreadData::writeCurrentConfig()
       my_profile_json_obj.insert(attribute, *myProfileConfigJsonMap.value(attribute));
     }
 
-  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_mChatBubbleColorI.name());
-  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_mChatBubbleColorO.name());
+  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_settings_struct.chat_bubble_color_i.name());
+  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_settings_struct.chat_bubble_color_o.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 

@@ -51,9 +51,9 @@ struct SettingStruct
 {
   QColor chat_bubble_color_i;
   QColor chat_bubble_color_o;
-  QString avatar_path;
-  QString usr_key;
-  QString usr_name;
+  QString avatar_str;
+  QString key_str;
+  QString name_str;
 };
 bool operator !=(const SettingStruct &arg1 , const SettingStruct &arg2);
 bool operator ==(const SettingStruct &arg1 , const SettingStruct &arg2);
@@ -67,15 +67,14 @@ public:
   static QColor g_alphaTabColor;
   static QColor g_tabColor;
 
-  static QColor g_chatBubbleColorI;
-  static QColor g_chatBubbleColorO;
+  static QColor g_defaultChatBubbleColorI;
+  static QColor g_defaultChatBubbleColorO;
   static QColor g_mChatBubbleColorI;
   static QColor g_mChatBubbleColorO;
 
 
   ///data
   static SettingStruct g_settings_struct;
-  static UsrProfileStruct g_my_profile;
   static QMap<QString, UsrProfileStruct> saved_usr_profile_map;
   static QMap<QString, UsrProfileStruct> online_usr_profile_map;
 

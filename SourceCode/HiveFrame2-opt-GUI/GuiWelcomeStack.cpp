@@ -12,7 +12,7 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
 
   QFont profile_font("Futura");
 
-  my_avatar = new GuiAvatarButton(GlobalData::g_my_profile.avatar_str,175,this);
+  my_avatar = new GuiAvatarButton(GlobalData::g_settings_struct.avatar_str,175,this);
   my_avatar->setAlignment(Qt::AlignHCenter);
 
   welcome_label = new QLabel(this);
@@ -53,26 +53,26 @@ void GuiWelcomeStack::refresh()
   int current_hour = QTime::currentTime().toString("hh").toInt();
   if(current_hour >= 4 && current_hour <= 12)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_my_profile.name_str).arg("Good Morning!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_settings_struct.name_str).arg("Good Morning!"));
     }
   else if(current_hour >= 13 && current_hour <= 14)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_my_profile.name_str).arg("sleepy noon~"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_settings_struct.name_str).arg("sleepy noon~"));
     }
   else if(current_hour >= 15 && current_hour <= 17)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_my_profile.name_str).arg("Good Afternoon!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_settings_struct.name_str).arg("Good Afternoon!"));
     }
   else if(current_hour >= 18 && current_hour <= 23)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_my_profile.name_str).arg("Good Evening!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_settings_struct.name_str).arg("Good Evening!"));
     }
   else if(current_hour >= 24 || current_hour <=3)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_my_profile.name_str).arg("It's late at night :)"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::g_settings_struct.name_str).arg("It's late at night :)"));
     }
 
-  my_avatar->setAvatar(GlobalData::g_my_profile.avatar_str);
+  my_avatar->setAvatar(GlobalData::g_settings_struct.avatar_str);
 
   if(GlobalData::g_localHostIP == "")
     {
