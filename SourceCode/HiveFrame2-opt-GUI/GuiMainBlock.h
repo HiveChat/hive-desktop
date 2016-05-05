@@ -41,10 +41,6 @@ public slots:
   void onMessageRecieved(MessageStruct messageStruct, bool fromMe);
 
 
-signals:
-  void whoseMessage(QStringList message_str_list);
-
-
 };
 
 #endif // GUIMAINBLOCK_H

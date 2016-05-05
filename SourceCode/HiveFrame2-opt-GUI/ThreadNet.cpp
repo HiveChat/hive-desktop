@@ -6,6 +6,8 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
+  sendUsrEnter();
+
   this->setParent(parent);
 }
 
@@ -20,7 +22,7 @@ void ThreadNet::run()
 {
   while(running)
     {
-//      sendOnlineStatus();
+      sendOnlineStatus();
       refreshLocalHostIP();
 
       msleep(1000);
@@ -171,6 +173,8 @@ void ThreadNet::sendMessage(QString usrKeyStr, QString message)
       qDebug()<<"@sendMessage(): Message content empty!";
       return;
     }
+
+  qDebug()<<"@sendMessage(): Message Sent!";
 
   out << Message << usrKeyStr << GlobalData::g_settings_struct.key_str << message;
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
