@@ -121,7 +121,7 @@ public slots:
   void loadHistory(int index);
 
 signals:
-  void sendMessage(QString usrKey, QString message);
+  void sendMessage(QString *usrKey, QString *message);
 
 };
 

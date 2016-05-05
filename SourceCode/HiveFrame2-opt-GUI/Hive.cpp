@@ -29,6 +29,8 @@ Hive::Hive(QObject *parent) : QObject(parent)
 
   connect(thread_data, SIGNAL(refreshWS()), gui_central_widget->gui_main_block->gui_welcome_stack, SLOT(refresh()));
 
+  connect(gui_central_widget->gui_main_block, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
+
   thread_info->start(QThread::LowestPriority);
   thread_data->start(QThread::NormalPriority);
   thread_net->start(QThread::NormalPriority);

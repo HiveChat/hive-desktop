@@ -115,6 +115,7 @@ GuiChatStack* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
   gui_chat_stack = new GuiChatStack(usrProfileStruct, this);
   main_stacked_widget->addWidget(gui_chat_stack);
   gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
+  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
 
   return gui_chat_stack;
 }
@@ -129,6 +130,11 @@ void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
     {
       gui_chat_stack_map.find(messageStruct.sender_key).value()->checkMessage(messageStruct, fromMe);
     }
+}
+
+void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
+{
+  emit sendMessage(*usrKey, *message);
 }
 
 //  QProgressBar {

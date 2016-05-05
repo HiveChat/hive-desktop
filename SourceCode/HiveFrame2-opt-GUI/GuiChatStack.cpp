@@ -288,7 +288,8 @@ void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
 
 void GuiChatStack::onSendButtonClicked()
 {
-  emit sendMessage(usr_profile.key_str, message_editor->text_editor->toPlainText());
+  QString message_str = message_editor->text_editor->toPlainText();
+  emit sendMessage(&usr_profile.key_str, &message_str);
   message_editor->text_editor->clear();
 
 }

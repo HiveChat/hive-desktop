@@ -40,6 +40,12 @@ public slots:
   GuiChatStack *addChatStack(UsrProfileStruct *usrProfileStruct);
   void onMessageRecieved(MessageStruct messageStruct, bool fromMe);
 
+private slots:
+  void onMessageToSend(QString *usrKey, QString *message);
+
+signals:
+  void sendMessage(QString usrKey, QString message);
+
 
 };
 
