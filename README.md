@@ -10,6 +10,13 @@ Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 真的很希望大家提意见反馈，虽然学习真的很忙，写代码的时间我是会留的。不要失望啦~
 暑假是大更新的时候，请大家保持期待萌萌的Hive正式发布吧~
 
+目前的破Hive是没有局域网穿透的，只在同一个网段下用哦。
+
+为什么自己会出现在聊天栏里？
+* 因为测试的时候方便找问题啦。。。
+为什么有些选项打不开？
+* 在做，不会影响聊天
+
 ## Download:
 * This programme is not finished yet.
 * But there are some pre-releases, which might be incomplete. I'm apologetic for the inconvenience!
