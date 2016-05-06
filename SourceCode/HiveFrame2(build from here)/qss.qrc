@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/qss">
+        <file>qss/comb_treewidget.qss</file>
+    </qresource>
+</RCC>

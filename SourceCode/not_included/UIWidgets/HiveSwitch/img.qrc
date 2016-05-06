@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/slot.png</file>
+        <file>img/switch.png</file>
+    </qresource>
+</RCC>
