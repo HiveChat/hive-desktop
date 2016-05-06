@@ -5,7 +5,6 @@
 #include "GlobalData.h"
 
 #include "ThreadData.h"
-#include "ThreadInfo.h"
 #include "ThreadNet.h"
 
 #include <QApplication>
@@ -25,7 +24,6 @@ public:
 
   GuiCentralWidget *gui_central_widget;
   ThreadData *thread_data;
-  ThreadInfo *thread_info;
   ThreadNet *thread_net;
 
 };

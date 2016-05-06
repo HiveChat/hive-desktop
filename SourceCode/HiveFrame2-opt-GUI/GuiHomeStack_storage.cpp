@@ -5,7 +5,7 @@ GuiHomeStack_storage::GuiHomeStack_storage(QWidget *parent)
   setIcon(":/img/img/storage.png");
   setTitle("Home");
   setSubTitle("storage");
-  setTag("Overview");
+  addTag("Overview");
 
   this->setParent(parent);
 }

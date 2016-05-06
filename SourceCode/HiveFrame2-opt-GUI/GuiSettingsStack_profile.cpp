@@ -15,7 +15,7 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   setIcon(":/img/img/profile.png");
   setTitle("Settings");
   setSubTitle("profile");
-  setTag("User information");
+  addTag("User information");
 
   //avatar
   avatar_btn = new GuiAvatarButton(GlobalData::g_settings_struct.avatar_str, 100, this);

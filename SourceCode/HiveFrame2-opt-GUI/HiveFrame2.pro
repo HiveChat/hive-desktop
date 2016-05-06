@@ -40,7 +40,6 @@ SOURCES += main.cpp\
     GuiColorPicker.cpp \
     GuiSettingsStack_messaging.cpp \
     GuiSettingsStack_profile.cpp \
-    ThreadInfo.cpp \
     GuiSettingsStack_questions.cpp \
     GuiHomeStack_storage.cpp \
     ThreadNet.cpp \
@@ -70,7 +69,6 @@ HEADERS  += \
     GuiColorPicker.h \
     GuiSettingsStack_messaging.h \
     GuiSettingsStack_profile.h \
-    ThreadInfo.h \
     GuiSettingsStack_questions.h \
     GuiHomeStack_storage.h \
     ThreadNet.h \

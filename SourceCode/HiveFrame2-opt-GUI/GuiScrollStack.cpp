@@ -71,6 +71,7 @@ void GuiScrollStack::setUpUI()
 //  central_layout->setContentsMargins(10,30,10,30);
   central_layout->setAlignment(Qt::AlignCenter);
   central_layout->setContentsMargins(30,30,0,50);
+  central_layout->setSpacing(0);
 
   QFrame *top_line = new QFrame(this);
   top_line->setFrameShape(QFrame::HLine);
@@ -113,7 +114,7 @@ void GuiScrollStack::setUpUI()
 
 }
 
-void GuiScrollStack::setTag(QString text)
+void GuiScrollStack::addTag(QString text)
 {
   QLabel *tag_labe = new QLabel(text, this);
   tag_labe->setFont(font);
@@ -182,7 +183,7 @@ void GuiScrollStack::addItem(QString text, QLayout *widgetLayout)
   text_label->setPalette(sub_text_palette);
 
   QHBoxLayout *layout = new QHBoxLayout();
-  //layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+//  layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
   layout->setContentsMargins(0,10,200,0);
   layout->setSpacing(30);
   layout->setStretch(0,0);

@@ -22,7 +22,7 @@ public:
 
 protected:
   void setUpUI();
-  void setTag(QString text);
+  void addTag(QString text);
 
   void addItem(QString text, QString string);
   void addItem(QString text, QWidget *widget);

@@ -41,7 +41,7 @@ void ThreadData::checkSettings()
 
 void ThreadData::refreshGui()
 {
-  emit refreshWS();
+  emit refreshWelcomeStack();
 }
 
 
@@ -281,6 +281,9 @@ void ThreadData::initVariable()
   myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_settings_struct.avatar_str);
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_settings_struct.chat_bubble_color_i);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_settings_struct.chat_bubble_color_o);
+
+  GlobalData::g_settings_struct.chat_bubble_color_i = GlobalData::g_defaultChatBubbleColorI;
+  GlobalData::g_settings_struct.chat_bubble_color_o = GlobalData::g_defaultChatBubbleColorO;
 
 //  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
 //  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
