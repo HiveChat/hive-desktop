@@ -7,16 +7,16 @@ Hive! is a LAN chatting software. This is a free software.
 * This programme is not finished yet.
 * But there are some pre-releases, which might be incomplete. I'm apologetic for the inconvenience!
 
-Hive! for MacOS X:
+MacOS X:
 [MacOS X <= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.4.1_osx_low_0.0.1.zip)
 
-Hive! for new MacOS X:
+MacOS X:
 [MacOS X >= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.5.1_osx_high_0.0.1.zip)
 
-Hive! for Linux(Qt 5.5):
+Linux(Qt 5.5):
 	not yet compiled. Building from source code recommended.
 
-Hive! for Windows:
+Windows:
 	not yet compiled.
 ## Features(aims):
 1. Nice UX/UI which creates an relaxing working environment.
