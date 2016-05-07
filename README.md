@@ -23,11 +23,11 @@ Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 * This programme is not finished yet.
 * But there are some pre-releases, which might be incomplete. I'm apologetic for the inconvenience!
 
-MacOS X:
-[MacOS X <= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.4.1_osx_low_0.0.1.zip)
+Old MacOS X:
+[Old MacOS X <= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.5.0_osx_old_0.0.2_alpha.zip.zip)
 
-MacOS X:
-[MacOS X >= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.5.1_osx_high_0.0.1.zip)
+New MacOS X:
+[MacOS X >= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.5.1_osx_new_0.0.2_alpha.zip)
 
 Linux(Qt 5.5):
 	not yet compiled. Building from source code recommended.
