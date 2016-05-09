@@ -7,7 +7,7 @@
 #include <QHostInfo>
 #include <QDataStream>
 #include <QUdpSocket>
-#include <QDateTime>
+#include <QDate>
 #include <QFile>
 #include <QNetworkInterface>
 #include <QPixmap>

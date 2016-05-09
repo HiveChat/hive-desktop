@@ -29,9 +29,9 @@ void ThreadNet::run()
     }
 }
 
-void ThreadNet::setStatus(bool running)
+void ThreadNet::setStatus(bool Running)
 {
-  running = running;
+  running = Running;
 }
 
 void ThreadNet::refreshLocalHostIP()
