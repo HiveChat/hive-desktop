@@ -1,4 +1,4 @@
-# Hive!
+# Hive! [0.0.2]
 
 ![](http://7xpqkc.dl1.z0.glb.clouddn.com/HiveIcon_small.png)
 
@@ -18,10 +18,12 @@ Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 --在做，不会影响聊天</p>
 <p>为什么这么差不好用呢？
 --我最怕你问这个问题，因为只有我一个人在开发，也很累的，体谅一下，进度也许慢一点。但是我会一直做下去的。</p>
+<p>为什么我和朋友不能聊天？
+--请检查你们是否连接在同一个网域或路由器下哦。</p>
 
 ## Download:
-* This programme is not finished yet.
-* But there are some pre-releases, which might be incomplete. I'm apologetic for the inconvenience!
+* This programme is NOT finished yet.
+* But there are some pre-releases, which might be incomplete.
 
 Old MacOS X:
 [Old MacOS X <= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_Qt5.5.0_osx_old_0.0.2_alpha.zip.zip)
