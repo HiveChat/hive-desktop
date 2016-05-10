@@ -20,6 +20,7 @@ public:
 
 private:
   QVBoxLayout *main_layout;
+  QVBoxLayout *button_layout;
 };
 
 #endif // GUIHOMETAB_H
