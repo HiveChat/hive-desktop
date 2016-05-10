@@ -45,7 +45,8 @@ SOURCES += main.cpp\
     ThreadNet.cpp \
     ThreadData.cpp \
     Hive.cpp \
-    GuiHomeStack_network.cpp
+    GuiHomeStack_network.cpp \
+    GuiHomeStack_list.cpp
     #ThreadData.cpp
 
 HEADERS  += \
@@ -75,7 +76,8 @@ HEADERS  += \
     ThreadNet.h \
     ThreadData.h \
     Hive.h \
-    GuiHomeStack_network.h
+    GuiHomeStack_network.h \
+    GuiHomeStack_list.h
     #ThreadData.h
 
 RESOURCES += \

@@ -15,6 +15,7 @@ public:
   ~GuiHomeTab();
 
   GuiMenuButton *welcome_btn;
+  GuiMenuButton *list_btn;
   GuiMenuButton *storage_btn;
 
 private:

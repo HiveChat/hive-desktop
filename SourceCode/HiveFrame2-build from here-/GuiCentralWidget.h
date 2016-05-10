@@ -28,7 +28,6 @@ public slots:
   void delUsr(UsrProfileStruct *usrProfileStruct);
 
 private slots:
-  void onUsrEnter(UsrProfileStruct *usrProfileStruct);
   void onUsrProfileChanged(UsrProfileStruct *usrProfileStruct);
   void onMessageCome(MessageStruct *messageStruct, bool fromMe);
 

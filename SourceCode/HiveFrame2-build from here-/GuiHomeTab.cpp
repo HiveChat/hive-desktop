@@ -8,10 +8,14 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
   label_font.setPointSize(20);
 
   welcome_btn = new GuiMenuButton("welcome", Home_Welcome, this);
+  list_btn = new GuiMenuButton("online user", Home_list, this);
   storage_btn = new GuiMenuButton("file storage", Home_Storage, this);
 
   welcome_btn->setDefaultPixmap(":/img/img/welcome_0.png");
   welcome_btn->setHoveredPixmap(":/img/img/welcome_1.png");
+
+  list_btn->setDefaultPixmap(":/img/img/list_0");
+  list_btn->setHoveredPixmap(":/img/img/list_1");
 
   storage_btn->setDefaultPixmap(":/img/img/storage_0.png");
   storage_btn->setHoveredPixmap(":/img/img/storage_1.png");
@@ -22,6 +26,7 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(20);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addWidget(welcome_btn);
+  main_layout->addWidget(list_btn);
   main_layout->addWidget(storage_btn);
   ///For test period!
   storage_btn->setHidden(true);

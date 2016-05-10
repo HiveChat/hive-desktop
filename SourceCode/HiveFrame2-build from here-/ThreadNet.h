@@ -35,7 +35,7 @@ private:
 
   bool running = true;
 
-  void setStatus(bool running);
+  void setStatus(bool Running);
   void refreshLocalHostIP();
   void sendOnlineStatus();
 

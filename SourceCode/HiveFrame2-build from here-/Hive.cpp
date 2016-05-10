@@ -19,7 +19,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
 
   ////connect
   connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEntered(UsrProfileStruct*)));
-  connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_central_widget, SLOT(onUsrEnter(UsrProfileStruct*)));
+  connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_central_widget, SLOT(addUsr(UsrProfileStruct*)));
   connect(thread_data, SIGNAL(usrProfileChanged(UsrProfileStruct*)), gui_central_widget, SLOT(onUsrProfileChanged(UsrProfileStruct*)));
   connect(thread_net, SIGNAL(messageRecieved(MessageStruct*,bool)), thread_data, SLOT(onMessageCome(MessageStruct*,bool)));
   connect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)));

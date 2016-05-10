@@ -5,6 +5,7 @@
 #include "GuiColorPicker.h"
 
 #include "GuiWelcomeStack.h"
+#include "GuiHomeStack_list.h"
 #include "GuiHomeStack_storage.h"
 #include "GuiSettingsStack_messaging.h"
 #include "GuiSettingsStack_profile.h"

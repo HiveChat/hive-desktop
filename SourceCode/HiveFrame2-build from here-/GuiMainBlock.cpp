@@ -51,6 +51,16 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
             break;
           }
 
+        case Home_list:
+          {
+            GuiHomeStack_list *gui_home_stack = new GuiHomeStack_list(this);
+            static_stack_widget = gui_home_stack;
+            main_stacked_widget->addWidget(gui_home_stack);
+            main_stacked_widget->setCurrentWidget(gui_home_stack);
+
+            break;
+          }
+
         case Home_Storage:
           {
             GuiHomeStack_storage *gui_home_stack = new GuiHomeStack_storage(this);

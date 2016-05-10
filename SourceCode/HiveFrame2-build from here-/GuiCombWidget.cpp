@@ -110,9 +110,9 @@ void GuiCombWidget::leaveEvent(QEvent *)
   hovered = false;
 }
 
-void GuiCombWidget::dragMoveEvent(QEvent *)
-{
+//void GuiCombWidget::dragMoveEvent(QEvent *)
+//{
 
-}
+//}
 
 

@@ -33,7 +33,7 @@ void GuiScrollStack::setUpUI()
   font.setFamily("Futura");
   font.setPointSize(15);
   sub_font.setFamily("Futura");
-  text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
+  text_palette.setColor(QPalette::WindowText, QColor(80,80,80));
   sub_text_palette.setColor(QPalette::WindowText, QColor(130, 130, 130));
 
   QPalette palette;
@@ -46,6 +46,7 @@ void GuiScrollStack::setUpUI()
   icon_btn->setAlignment(Qt::AlignLeft);
 
   title_label = new QLabel("", this);
+  title_label->setPalette(text_palette);
 
   QFont usr_name_font("Futura");//Verdana
   usr_name_font.setPointSize(15);

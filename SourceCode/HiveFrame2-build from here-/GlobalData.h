@@ -12,6 +12,7 @@ enum StaticStackType
 {
   NULL_Stack,
   Home_Welcome,
+  Home_list,
   Home_Storage,
   Settings_Messaging,
   Settings_Profile,

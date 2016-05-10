@@ -29,6 +29,9 @@
         <file>img/question_0.png</file>
         <file>img/question_1.png</file>
         <file>img/question.png</file>
+        <file>img/list_0.png</file>
+        <file>img/list_1.png</file>
+        <file>img/list.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>

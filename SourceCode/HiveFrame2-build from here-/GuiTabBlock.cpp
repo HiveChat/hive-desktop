@@ -16,37 +16,6 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 //      QImage image ;
 //      image.load(fileName) ;
 
-  ////window btn
-//  exit_hint = new GuiLabelButton(this);
-//  min_hint = new GuiLabelButton(this);
-//  max_hint = new GuiLabelButton(this);
-
-//  exit_hint->setDefaultPixmap(":/img/img/exit_hint_0.png");
-//  exit_hint->setHoveredPixmap(":/img/img/exit_hint_1.png");
-
-//  min_hint->setDefaultPixmap(":/img/img/min_hint_0.png");
-//  min_hint->setHoveredPixmap(":/img/img/min_hint_1.png");
-
-//  max_hint->setDefaultPixmap(":/img/img/max_hint_0.png");
-//  max_hint->setHoveredPixmap(":/img/img/max_hint_1.png");
-
-//  connect(exit_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-//  connect(exit_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
-//  connect(min_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-//  connect(min_hintr, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
-//  connect(max_hint, SIGNAL(entered()), this, SLOT(changeWindowBtn()));
-//  connect(max_hint, SIGNAL(left()), this, SLOT(recoverWindowBtn()));
-
-//  ////window btn layout
-//  window_btn_layout = new QHBoxLayout();
-//  window_btn_layout->setMargin(10);
-//  window_btn_layout->setSpacing(8);
-//  window_btn_layout->setSizeConstraint(QLayout::SetFixedSize);
-//  window_btn_layout->setAlignment(Qt::AlignLeft);
-//  window_btn_layout->addWidget(exit_hint);
-//  window_btn_layout->addWidget(min_hint);
-//  window_btn_layout->addWidget(max_hint);
-
   ////tab label
   left_tab_label = new GuiLabelButton(this);
   mid_tab_label = new GuiLabelButton(this);
@@ -125,7 +94,6 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
   main_layout->setAlignment(Qt::AlignTop);
-  //main_layout->addLayout(window_btn_layout);
   main_layout->addLayout(tab_label_layout);
   main_layout->addWidget(tab_stacked_widget);
 }
@@ -173,19 +141,7 @@ void GuiTabBlock::changeBtnLine()
     }
 }
 
-//void GuiTabBlock::changeWindowBtn()
-//{
-//  exit_hint->setHovered();
-//  min_hint->setHovered();
-//  max_hint->setHovered();
-//}
 
-//void GuiTabBlock::recoverWindowBtn()
-//{
-//  exit_hint->setDefault();
-//  min_hint->setDefault();
-//  max_hint->setDefault();
-//}
 
 int GuiTabBlock::currentIndex()
 {
