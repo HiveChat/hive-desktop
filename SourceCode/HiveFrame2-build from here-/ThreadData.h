@@ -82,7 +82,7 @@ public slots:
 
 
 signals:
-  void refreshWelcomeStack();
+  void refreshGuiInfo();
   void usrProfileLoaded(UsrProfileStruct *usrProfileStruct);
   void usrProfileChanged(UsrProfileStruct *usrProfileStruct);
   void messageLoaded(MessageStruct messageStrList, bool fromMe);

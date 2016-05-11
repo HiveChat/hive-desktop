@@ -58,7 +58,7 @@ void ThreadData::checkSettings()
 
 void ThreadData::refreshGui()
 {
-  emit refreshWelcomeStack();
+  emit refreshGuiInfo();
 }
 
 
