@@ -16,12 +16,12 @@
 
 #include <QDebug>
 
-class GuiWelcomeStack : public QWidget
+class GuiHomeStack_welcome : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiWelcomeStack(QWidget *parent = 0);
+  explicit GuiHomeStack_welcome(QWidget *parent = 0);
 
 private:
   QHBoxLayout *bottom_layout;

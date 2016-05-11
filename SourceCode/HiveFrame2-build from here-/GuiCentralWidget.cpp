@@ -60,6 +60,8 @@ void GuiCentralWidget::addUsr(UsrProfileStruct *usrProfileStruct)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(usrProfileStruct);
   GuiChatStack *temp_gui_chat_stack_pointer = gui_main_block->addChatStack(usrProfileStruct);
+
+
 //  connect(temp_gui_chat_stack_pointer, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
 }
 

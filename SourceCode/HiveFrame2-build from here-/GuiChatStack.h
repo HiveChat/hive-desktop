@@ -68,15 +68,16 @@ class GuiChatStack_message_editor : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_message_editor(QWidget *parent = 0);
+  explicit GuiChatStack_message_editor(QString *usrKey, QWidget *parent = 0);
   ~GuiChatStack_message_editor();
 
   GuiLabelButton *send_btn;
   QTextEdit *text_editor;
 
 protected:
-  void keyPressEvent(QKeyEvent *event);
-  void keyReleaseEvent(QKeyEvent *event);
+  bool eventFilter(QObject *obj, QEvent *e);
+//  void keyPressEvent(QKeyEvent *event);
+//  void keyReleaseEvent(QKeyEvent *event);
 
 private:
   QVBoxLayout *edit_layout;
@@ -87,6 +88,11 @@ private:
   GuiLabelButton *file_label;
 
   QHBoxLayout *main_layout;
+
+
+  QString usr_key;
+signals:
+  void sendMessage(QString *usrKey, QString *message);
 
 };
 

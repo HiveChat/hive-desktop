@@ -118,8 +118,10 @@ void GuiChatStack_chat_widget::addChatBubble(QString message, bool fromMe)
 
 //////////////////////////bottom//////////////////////////////////////
 
-GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
+GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidget *parent) : QWidget(parent)
 {
+  usr_key = *usrKey;
+
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setPalette(palette);
@@ -128,6 +130,8 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   text_editor = new QTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
+//  text_editor->;
+  text_editor->installEventFilter(this);
 
   QFont text_font("Gill Sans", 34);
   text_font.setPointSize(16);
@@ -190,23 +194,52 @@ GuiChatStack_message_editor::~GuiChatStack_message_editor()
 
 }
 
-void GuiChatStack_message_editor::keyPressEvent(QKeyEvent *event)
+bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 {
-  if(event->key() == Qt::Key_Enter)
-    {
-      //send_btn->setHovered();
-      ////emit send!
-    }
+    Q_ASSERT(obj == text_editor);
+    if(e->type() == QEvent::KeyPress)
+      {
+        QKeyEvent *event = static_cast<QKeyEvent*>(e);
+        if(event->key() == Qt::Key_Return /*&& (event->modifiers() & Qt::ControlModifier)*/)
+          {
+            send_btn->setHovered();
+            return true;
+          }
+      }
+
+    if(e->type() == QEvent::KeyRelease)
+      {
+        QKeyEvent *event = static_cast<QKeyEvent*>(e);
+        if (event->key() == Qt::Key_Return /*|| (event->modifiers() & Qt::ControlModifier)*/)
+          {
+            QString message_str = text_editor->toPlainText();
+            emit sendMessage(&usr_key, &message_str);
+            text_editor->clear();
+
+            send_btn->setDefault();
+            return true;
+          }
+      }
+    return false;
 }
 
-void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
-{
-  if(event->key() == Qt::Key_Enter)
-    {
-      send_btn->setDefault();
-      ////emit send!
-    }
-}
+//void GuiChatStack_message_editor::keyPressEvent(QKeyEvent *event)
+//{
+
+//  //////To Reallize this function This function should be written in a Extra class which : QTextEdit.
+//  if( event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+//    {
+//      send_btn->setHovered();
+//    }
+//}
+
+//void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
+//{
+//  if( event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
+//    {
+//      send_btn->setDefault();
+//    }
+//}
 //////////////////////////main//////////////////////////////////////
 
 GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
@@ -235,7 +268,7 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
   chat_scroll_area->setPalette(palette);
   chat_scroll_area->setFrameStyle(0);
 
-  message_editor = new GuiChatStack_message_editor(this);
+  message_editor = new GuiChatStack_message_editor(&usr_profile.key_str, this);
 
 
   ////main layout

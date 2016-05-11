@@ -1,6 +1,6 @@
-#include "GuiWelcomeStack.h"
+#include "GuiHomeStack_welcome.h"
 
-GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
+GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255,255));
@@ -48,7 +48,7 @@ GuiWelcomeStack::GuiWelcomeStack(QWidget *parent) : QWidget(parent)
   this->refresh();
 }
 
-void GuiWelcomeStack::refresh()
+void GuiHomeStack_welcome::refresh()
 {
   int current_hour = QTime::currentTime().toString("hh").toInt();
   if(current_hour >= 4 && current_hour <= 12)
@@ -82,7 +82,7 @@ void GuiWelcomeStack::refresh()
     {
       ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
     }
-  qDebug()<<"rrrrrrrrrrrrrrrrrrrrrrrre";
+  qDebug()<<"@GuiWelcomeStack::refresh(): Finished";
 }
 
 

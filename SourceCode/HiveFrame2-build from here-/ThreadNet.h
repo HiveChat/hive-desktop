@@ -28,12 +28,13 @@ private:
   enum BroadcastType{
     Message,
     UsrEnter,
-    UsrLeft,
+    UsrLeave,
     FileName,
     Refuse
   };
 
   bool running = true;
+  int loop_count = 1;
 
   void setStatus(bool Running);
   void refreshLocalHostIP();
@@ -56,6 +57,7 @@ signals:
 
 public slots:
   void sendUsrEnter();
+  void sendUsrLeave();
   void sendMessage(QString usrKeyStr, QString message);
   void TEST_sendMessage(QString to, QString from, QString message);
 

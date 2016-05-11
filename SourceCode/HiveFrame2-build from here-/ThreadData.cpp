@@ -22,9 +22,26 @@ void ThreadData::run()
 {
   while(running)
     {
-      checkSettings();
-      refreshGui();
+      if(loop_count%1 == 0)//every 1 second
+        {
 
+        }
+      if(loop_count%2 == 0)//every 2 second
+        {
+          refreshGui();
+          checkSettings();
+        }
+      if(loop_count%5 == 0)//every 5 second
+        {
+
+        }
+      if(loop_count%10 == 0)//every 10 second
+        {
+
+          loop_count = 0;
+        }
+
+      loop_count ++;
       msleep(1000);
     }
 }
@@ -422,9 +439,10 @@ void ThreadData::writeCurrentConfig()
 }
 
 void ThreadData::loadFonts()
-{
+{  
   int fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
-  QString msyh = QFontDatabase::applicationFontFamilies ( fontId ).at(0);
+  ////WINDOWS EXPLODE HERE!!!!!!!!!!
+  QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
   GlobalData::g_font = QFont(msyh,10);
 }
 

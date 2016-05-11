@@ -13,6 +13,7 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 
 ThreadNet::~ThreadNet()
 {
+  sendUsrLeave();
   running = false;
   emit usrLeft(&GlobalData::g_settings_struct.key_str);
 }
@@ -22,9 +23,28 @@ void ThreadNet::run()
 {
   while(running)
     {
-      sendOnlineStatus();
-      refreshLocalHostIP();
+      if(loop_count%1 == 0)
+        {
+          refreshLocalHostIP();
+        }
 
+      if(loop_count%2 == 0)
+        {
+
+        }
+
+      if(loop_count%5 == 0)
+        {
+          sendOnlineStatus();
+        }
+
+      if(loop_count%10 == 0)
+        {
+
+          loop_count = 0;
+        }
+
+      loop_count ++;
       msleep(1000);
     }
 }
@@ -163,6 +183,16 @@ void ThreadNet::sendUsrEnter()
   return;
 }
 
+void ThreadNet::sendUsrLeave()
+{
+  QByteArray data;
+  QDataStream out(&data, QIODevice::WriteOnly);
+  out << UsrLeave << GlobalData::g_settings_struct.key_str;
+  udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
+
+  qDebug()<<"@sendUsrLeave(): Finished!";
+}
+
 void ThreadNet::sendMessage(QString usrKeyStr, QString message)
 {
   QByteArray data;
@@ -234,7 +264,7 @@ void ThreadNet::processPendingDatagrams()
             processUsrEnter(&usr_profile);
             break;
           }
-        case UsrLeft:
+        case UsrLeave:
           {
 
 

@@ -41,6 +41,7 @@ protected:
 private:
 
   bool running = true;
+  int loop_count;
   void checkSettings();
   void refreshGui();
 

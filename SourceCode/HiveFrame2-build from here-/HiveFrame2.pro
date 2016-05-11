@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     GuiTextButton.cpp \
     GuiCombWidget.cpp \
     GuiAvatarButton.cpp \
-    GuiWelcomeStack.cpp \
     GuiChatBubble.cpp \
     GlobalData.cpp \
     DataHistoryIO.cpp \
@@ -46,7 +45,8 @@ SOURCES += main.cpp\
     ThreadData.cpp \
     Hive.cpp \
     GuiHomeStack_network.cpp \
-    GuiHomeStack_list.cpp
+    GuiHomeStack_list.cpp \
+    GuiHomeStack_welcome.cpp
     #ThreadData.cpp
 
 HEADERS  += \
@@ -60,7 +60,6 @@ HEADERS  += \
     GuiTextButton.h \
     GuiCombWidget.h \
     GuiAvatarButton.h \
-    GuiWelcomeStack.h \
     GuiChatBubble.h \
     GlobalData.h \
     DataHistoryIO.h \
@@ -77,7 +76,8 @@ HEADERS  += \
     ThreadData.h \
     Hive.h \
     GuiHomeStack_network.h \
-    GuiHomeStack_list.h
+    GuiHomeStack_list.h \
+    GuiHomeStack_welcome.h
     #ThreadData.h
 
 RESOURCES += \
