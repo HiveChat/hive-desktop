@@ -25,7 +25,7 @@ GuiListItem::~GuiListItem()
 
 }
 
-void GuiListItem::refreshUsrProfile(UsrProfileStruct *UsrProfileStruct)
+void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
   qDebug()<<"准备崩溃！3，2，1";
   avatar_button->setDisabled(true);

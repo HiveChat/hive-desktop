@@ -16,7 +16,7 @@ public:
   ~GuiListItem();
 
 public slots:
-  void refreshUsrProfile(UsrProfileStruct *UsrProfileStruct);
+  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
 
 
 private:
