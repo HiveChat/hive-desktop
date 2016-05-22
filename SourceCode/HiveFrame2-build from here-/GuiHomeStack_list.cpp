@@ -1,4 +1,39 @@
 #include "GuiHomeStack_list.h"
+#include <QDebug>
+
+GuiListItem::GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent)
+{
+  avatar_button = new GuiAvatarButton(usrProfileStruct->avatar_str, 50, this);
+  name_label = new QLabel(usrProfileStruct->name_str, this);
+  ip_label = new QLabel(usrProfileStruct->ip_str, this);
+
+  QHBoxLayout *main_layout = new QHBoxLayout(this);
+  main_layout->setSpacing(50);
+  main_layout->addWidget(avatar_button);
+  main_layout->addWidget(name_label);
+  main_layout->addWidget(ip_label);
+
+  ///下面是第一次调用不会崩溃？
+  refreshUsrProfile(usrProfileStruct);
+
+
+  this->setParent(parent);
+}
+
+GuiListItem::~GuiListItem()
+{
+
+}
+
+void GuiListItem::refreshUsrProfile(UsrProfileStruct *UsrProfileStruct)
+{
+  qDebug()<<"准备崩溃！3，2，1";
+  avatar_button->setDisabled(true);
+}
+
+
+
+
 
 GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
 {
@@ -9,19 +44,24 @@ GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
   this->setParent(parent);
 }
 
-void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
+GuiHomeStack_list::~GuiHomeStack_list()
 {
 
-  GuiAvatarButton *avatar_button = new GuiAvatarButton(usrProfileStruct->avatar_str, 50, this);
-  QLabel *name_label = new QLabel(usrProfileStruct->name_str);
-  QLabel *ip_label = new QLabel(usrProfileStruct->ip_str);
-
-  QHBoxLayout *usr_item_layout = new QHBoxLayout();
-  usr_item_layout->addWidget(avatar_button);
-  usr_item_layout->addWidget(name_label);
-  usr_item_layout->addWidget(ip_label);
-
-  central_layout->addLayout(usr_item_layout);
 }
+
+void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
+{
+  GuiListItem *list_item = new GuiListItem(usrProfileStruct, this);
+
+  central_layout->addWidget(list_item);
+}
+
+void GuiHomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+{
+  list_item_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
+}
+
+
+
 
 

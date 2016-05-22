@@ -36,7 +36,6 @@ private:
   bool running = true;
   int loop_count = 1;
 
-  void setStatus(bool Running);
   void refreshLocalHostIP();
   void sendOnlineStatus();
 

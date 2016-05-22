@@ -19,7 +19,6 @@ public:
   UsrProfileStruct usrProfile();
   void setProfile(UsrProfileStruct *usrProfile);
 
-
 protected:
   void paintEvent(QPaintEvent*);
 

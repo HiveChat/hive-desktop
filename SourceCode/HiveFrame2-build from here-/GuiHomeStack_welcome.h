@@ -6,14 +6,8 @@
 #include "GlobalData.h"
 #include "NetManager.h"
 
-#include <QWidget>
-#include <QLabel>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QStackedLayout>
-#include <QPixmap>
 #include <QTime>
-
 #include <QDebug>
 
 class GuiHomeStack_welcome : public QWidget

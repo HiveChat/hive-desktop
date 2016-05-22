@@ -8,7 +8,7 @@
 
 class GuiScrollStack : public QWidget
 {
-  Q_OBJECT
+//  Q_OBJECT
 
 public:
   explicit GuiScrollStack(QWidget *parent = 0);

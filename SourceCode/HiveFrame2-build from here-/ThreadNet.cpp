@@ -14,15 +14,21 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 ThreadNet::~ThreadNet()
 {
   sendUsrLeave();
+
+  QMutex mutex;
+  mutex.lock();
   running = false;
-  emit usrLeft(&GlobalData::g_settings_struct.key_str);
+  mutex.unlock();
 }
 
 ////////run
 void ThreadNet::run()
 {
-  while(running)
+  QMutex mutex;
+  while(this->isRunning())
     {
+      mutex.lock();
+
       if(loop_count%1 == 0)
         {
           refreshLocalHostIP();
@@ -45,14 +51,11 @@ void ThreadNet::run()
         }
 
       loop_count ++;
+      mutex.unlock();
       msleep(1000);
     }
 }
 
-void ThreadNet::setStatus(bool Running)
-{
-  running = Running;
-}
 
 void ThreadNet::refreshLocalHostIP()
 {

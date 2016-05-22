@@ -7,14 +7,15 @@
 #include "GuiChatBubble.h"
 #include "GlobalData.h"
 
-
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QScrollBar>
 #include <QTextEdit>
 #include <QScrollArea>
 
+
+class GuiChatStack_top_bar;
+class GuiChatStack_chat_widget;
+class GuiChatStack_message_editor;
+class GuiChatStack;
 
 
 //////////////////////////top//////////////////////////////////////

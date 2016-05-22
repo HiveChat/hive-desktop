@@ -5,6 +5,8 @@
 
 class GuiHomeStack_storage : public GuiScrollStack
 {
+//  Q_OBJECT
+
 public:
   GuiHomeStack_storage(QWidget *parent);
 };

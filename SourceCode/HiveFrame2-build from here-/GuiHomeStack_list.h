@@ -4,14 +4,42 @@
 #include "GuiScrollStack.h"
 #include "GlobalData.h"
 
-class GuiHomeStack_list : public GuiScrollStack
+class GuiHomeStack_list;
+class GuiListItem;
+
+
+class GuiListItem : public QWidget
 {
+  Q_OBJECT
 public:
-  GuiHomeStack_list(QWidget *parent);
+  explicit GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  ~GuiListItem();
+
+public slots:
+  void refreshUsrProfile(UsrProfileStruct *UsrProfileStruct);
+
 
 private:
-  void addUsr(UsrProfileStruct *usrProfileStruct);
+  GuiAvatarButton *avatar_button;
+  QLabel *name_label;
+  QLabel *ip_label;
 
+};
+
+
+class GuiHomeStack_list : public GuiScrollStack
+{
+  Q_OBJECT
+
+public:
+  explicit GuiHomeStack_list(QWidget *parent);
+  ~GuiHomeStack_list();
+
+  void addUsr(UsrProfileStruct *usrProfileStruct);
+  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
+
+private:
+  QMap<QString, GuiListItem*> list_item_map;
 };
 
 

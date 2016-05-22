@@ -39,7 +39,23 @@ Hive::Hive(QObject *parent) : QObject(parent)
 
 Hive::~Hive()
 {
+#ifdef Q_OS_MAC
+  QtMac::setBadgeLabelText("Bye");
+#endif
+
   delete gui_central_widget;
+  thread_net->quit();
+  thread_data->quit();
+  if(!thread_net->wait(500))
+    {
+      thread_net->terminate();
+      thread_net->wait();
+    }
+  if(!thread_data->wait(500))
+    {
+      thread_data->terminate();
+      thread_data->wait();
+    }
 }
 
 

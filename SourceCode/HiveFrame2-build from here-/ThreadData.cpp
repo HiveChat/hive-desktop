@@ -15,13 +15,20 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
 /////////////thread
 ThreadData::~ThreadData()
 {
+  QMutex mutex;
+  mutex.lock();
   running = false;
+  mutex.unlock();
+
 }
 
 void ThreadData::run()
 {
-  while(running)
+  QMutex mutex;
+  while(this->isRunning())
     {
+      mutex.lock();
+
       if(loop_count%1 == 0)//every 1 second
         {
 
@@ -42,6 +49,7 @@ void ThreadData::run()
         }
 
       loop_count ++;
+      mutex.unlock();
       msleep(1000);
     }
 }
