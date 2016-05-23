@@ -14,8 +14,6 @@ GuiListItem::GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent)
   main_layout->addWidget(ip_label);
 
   ///下面是第一次调用不会崩溃？
-  refreshUsrProfile(usrProfileStruct);
-
 
   this->setParent(parent);
 }
@@ -28,9 +26,9 @@ GuiListItem::~GuiListItem()
 void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
   qDebug()<<"准备崩溃！3，2，1";
-  avatar_button->setDisabled(true);
+  a++;
+//  avatar_button->setDisabled(true);
 }
-
 
 
 
@@ -52,13 +50,13 @@ GuiHomeStack_list::~GuiHomeStack_list()
 void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
 {
   GuiListItem *list_item = new GuiListItem(usrProfileStruct, this);
-
+//  list_item_map.insert(usrProfileStruct->key_str, list_item);
   central_layout->addWidget(list_item);
 }
 
 void GuiHomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
-  list_item_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
+  qDebug()<<list_item_map.value(usrProfileStruct->key_str)->objectName();//->refreshUsrProfile(usrProfileStruct);
 }
 
 

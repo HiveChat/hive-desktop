@@ -15,9 +15,9 @@ public:
   explicit GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiListItem();
 
-public slots:
-  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
+  int a = 0;
 
+  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
 
 private:
   GuiAvatarButton *avatar_button;

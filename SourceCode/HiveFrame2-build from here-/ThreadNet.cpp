@@ -7,8 +7,6 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
 
   sendUsrEnter();
-
-  this->setParent(parent);
 }
 
 ThreadNet::~ThreadNet()
