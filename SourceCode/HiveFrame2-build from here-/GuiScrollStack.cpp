@@ -1,4 +1,5 @@
 #include "GuiScrollStack.h"
+#include <QDebug>
 
 GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
 {
@@ -30,9 +31,6 @@ void GuiScrollStack::setIcon(QString path)
 
 void GuiScrollStack::setUpUI()
 {
-  font.setFamily("Futura");
-  font.setPointSize(15);
-  sub_font.setFamily("Futura");
   text_palette.setColor(QPalette::WindowText, QColor(80,80,80));
   sub_text_palette.setColor(QPalette::WindowText, QColor(130, 130, 130));
 
@@ -47,10 +45,6 @@ void GuiScrollStack::setUpUI()
 
   title_label = new QLabel("", this);
   title_label->setPalette(text_palette);
-
-  QFont usr_name_font("Futura");//Verdana
-  usr_name_font.setPointSize(15);
-  title_label->setFont(usr_name_font);
 
   top_widget_main_layout = new QHBoxLayout(top_widget);
   top_widget_main_layout->setAlignment(Qt::AlignLeft |Qt::AlignVCenter);

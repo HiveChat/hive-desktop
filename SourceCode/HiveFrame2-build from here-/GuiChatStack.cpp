@@ -13,15 +13,11 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, Q
   avatar_button->setAlignment(Qt::AlignLeft);
 
   usr_name_label = new QLabel(usrProfileStruct->name_str, this);
+  usr_name_label->setFont(GlobalData::g_scrollStackTitle);
+
   usr_ip_label = new QLabel(usrProfileStruct->ip_str, this);
+  usr_ip_label->setFont(GlobalData::g_scrollStackSubtitle);
 
-  QFont usr_name_font("Futura");//Verdana
-  usr_name_font.setPointSize(15);
-  usr_name_label->setFont(usr_name_font);
-
-  QFont usr_ip_font("Futura");//Gill Sans
-  usr_ip_font.setPointSize(11);
-  usr_ip_label->setFont(usr_ip_font);
 
   QVBoxLayout *usr_info_layout = new QVBoxLayout();
   usr_info_layout->setContentsMargins(0,0,10,10);
@@ -132,10 +128,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidge
   text_editor->setFrameStyle(QFrame::NoFrame);
 //  text_editor->;
   text_editor->installEventFilter(this);
-
-  QFont text_font("Gill Sans", 34);
-  text_font.setPointSize(16);
-  text_editor->setFont(text_font);
+  text_editor->setFont(GlobalData::g_chatTextEditorFont);
 
   ///tools
   expression_label = new GuiLabelButton(this);

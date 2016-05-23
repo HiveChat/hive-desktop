@@ -2,10 +2,6 @@
 
 GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
 {
-  QFont label_font("Futura");
-  //label_font.setPointSize(20);
-  label_font.setPointSize(20);
-
   messaging_btn = new GuiMenuButton("messaging", Settings_Messaging, this);
   messaging_btn->setDefaultPixmap(":/img/img/messaging_0.png");
   messaging_btn->setHoveredPixmap(":/img/img/messaging_1.png");

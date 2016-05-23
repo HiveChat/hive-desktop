@@ -6,10 +6,6 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
 {
   QPalette usr_name_palette;
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
-  QFont usr_name_font("futura");//verdana
-  usr_name_font.setPointSize(15);
-  QFont ip_addr_font("futura");//Gill Sans
-  ip_addr_font.setPointSize(11);
 
   ///usrKey<<usrName<<ipAddr<<avatarPathr
   avatar = new GuiAvatarButton(80,  this);
@@ -18,9 +14,9 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   status_label = new QLabel(offline_str, this);
 
   usr_name_label->setPalette(usr_name_palette);
-  usr_name_label->setFont(usr_name_font);
+  usr_name_label->setFont(GlobalData::g_combWidgetUsrNameFont);
 
-  ip_addr_label->setFont(ip_addr_font);
+  ip_addr_label->setFont(GlobalData::g_combWidgetIpAddrFont);
 
   net_status_layout = new QHBoxLayout();
   net_status_layout->setAlignment(Qt::AlignLeft);

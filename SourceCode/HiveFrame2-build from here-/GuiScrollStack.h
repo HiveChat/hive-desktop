@@ -1,9 +1,11 @@
 #ifndef GUISCROLLSTACK_H
 #define GUISCROLLSTACK_H
 
+#include "GuiAvatarButton.h"
+#include "GlobalData.h"
+
 #include <QFormLayout>
 #include <QScrollArea>
-#include <GuiAvatarButton.h>
 
 
 class GuiScrollStack : public QWidget
@@ -28,8 +30,8 @@ protected:
   void addItem(QString text, QWidget *widget);
   void addItem(QString text, QLayout *widgetLayout);
 
-  QFont sub_font;
-  QFont font;
+  QFont font = GlobalData::g_scrollStackTitle;
+  QFont sub_font = GlobalData::g_scrollStackSubtitle;
   QPalette text_palette;
   QPalette sub_text_palette;
 

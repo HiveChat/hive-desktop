@@ -26,7 +26,6 @@ SOURCES += main.cpp\
     GuiChatTab.cpp \
     GuiChatStack.cpp \
     GuiLabelButton.cpp \
-    GuiTextButton.cpp \
     GuiCombWidget.cpp \
     GuiAvatarButton.cpp \
     GuiChatBubble.cpp \
@@ -57,7 +56,6 @@ HEADERS  += \
     GuiChatTab.h \
     GuiChatStack.h \
     GuiLabelButton.h \
-    GuiTextButton.h \
     GuiCombWidget.h \
     GuiAvatarButton.h \
     GuiChatBubble.h \

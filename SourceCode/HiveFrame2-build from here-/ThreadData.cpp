@@ -448,10 +448,30 @@ void ThreadData::writeCurrentConfig()
 
 void ThreadData::loadFonts()
 {  
-  int fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
-  ////WINDOWS EXPLODE HERE!!!!!!!!!!
-  QString msyh = QFontDatabase::applicationFontFamilies(fontId).at(0);
-  GlobalData::g_font = QFont(msyh,10);
+  int font_id;
+  QString font_family;
+
+  font_id = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
+  font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);  ////WINDOWS EXPLODE HERE!!!!!!!!!!
+  GlobalData::g_chatTextEditorFont = QFont(font_family, 16);
+
+  font_id = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
+  font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
+  GlobalData::g_font = QFont(font_family, 10);
+  GlobalData::g_chatBubbleFont = GlobalData::g_font;
+  GlobalData::g_chatBubbleFont.setPointSize(14);
+  GlobalData::g_combWidgetUsrNameFont = GlobalData::g_font;
+  GlobalData::g_combWidgetUsrNameFont.setPointSize(15);
+  GlobalData::g_combWidgetIpAddrFont = GlobalData::g_font;
+  GlobalData::g_combWidgetIpAddrFont.setPointSize(11);
+  GlobalData::g_menuButtonFont = GlobalData::g_font;
+  GlobalData::g_menuButtonFont.setPointSize(14);
+  GlobalData::g_scrollStackTitle = GlobalData::g_font;
+  GlobalData::g_scrollStackTitle.setPointSize(15);
+  GlobalData::g_scrollStackSubtitle = GlobalData::g_font;
+  GlobalData::g_scrollStackSubtitle.setPointSize(13);
+
+
 }
 
 

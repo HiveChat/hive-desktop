@@ -26,7 +26,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
 
   connect(gui_central_widget->gui_main_block, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)), Qt::QueuedConnection);
   connect(thread_net, SIGNAL(messageRecieved(MessageStruct*,bool)), thread_data, SLOT(onMessageCome(MessageStruct*,bool)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)), Qt::QueuedConnection);
+  connect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)), Qt::AutoConnection);
 
 
 

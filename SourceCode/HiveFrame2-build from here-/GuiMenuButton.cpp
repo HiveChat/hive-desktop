@@ -6,11 +6,9 @@ GuiMenuButton::GuiMenuButton(QString text, StaticStackType staticStackType, QWid
 
   icon_label = new QLabel(this);
 
-  QFont font("Futura");
-  font.setPointSize(14);
   text_label = new QLabel(this);
   text_label->setText(text);
-  text_label->setFont(font);
+  text_label->setFont(GlobalData::g_menuButtonFont);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);

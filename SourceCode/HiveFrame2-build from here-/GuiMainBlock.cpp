@@ -150,6 +150,7 @@ GuiChatStack* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
 
 void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
 {
+  qDebug()<<"hhhhiodsadjiajdknasjkdbnkjasbhfjbdjhsbafjbsdajkfbsak";
   if(fromMe)
     {
       gui_chat_stack_map.find(messageStruct.reciever_key).value()->checkMessage(messageStruct, fromMe);

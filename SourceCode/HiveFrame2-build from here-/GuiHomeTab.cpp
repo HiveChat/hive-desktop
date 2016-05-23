@@ -4,9 +4,6 @@
 
 GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 {
-  QFont label_font("Futura");
-  label_font.setPointSize(20);
-
   welcome_btn = new GuiMenuButton("welcome", Home_Welcome, this);
   list_btn = new GuiMenuButton("online user", Home_list, this);
   storage_btn = new GuiMenuButton("file storage", Home_Storage, this);

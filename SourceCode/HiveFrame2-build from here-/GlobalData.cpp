@@ -45,6 +45,14 @@ bool operator !=(const SettingStruct &arg1, const SettingStruct &arg2)
 
 ///UI
 QFont GlobalData::g_font;
+QFont GlobalData::g_chatTextEditorFont;
+QFont GlobalData::g_chatBubbleFont;
+QFont GlobalData::g_combWidgetUsrNameFont;
+QFont GlobalData::g_combWidgetIpAddrFont;
+QFont GlobalData::g_menuButtonFont;
+QFont GlobalData::g_scrollStackTitle;
+QFont GlobalData::g_scrollStackSubtitle;
+
 QColor GlobalData::g_windowColor = QColor(255,255,255);
 QColor GlobalData::g_alphaTabColor = QColor(255,255,255,230);
 QColor GlobalData::g_tabColor = QColor(0,0,0,0);

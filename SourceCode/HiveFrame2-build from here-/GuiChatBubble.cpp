@@ -4,12 +4,9 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = 
 {
   int maxWidth = 500;
 
-  QFont font("Verdana");
-  font.setPointSize(14);
-
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
   label =  new QLabel(text, this);
-  label->setFont(font);
+  label->setFont(GlobalData::g_chatBubbleFont);
   label->adjustSize();
   label->setWordWrap(true);
   label->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -30,7 +27,6 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = 
       main_layout->setAlignment(Qt::AlignRight);
     }
 
-  this->setParent(parent);
   this->setFixedWidth(maxWidth);
 }
 

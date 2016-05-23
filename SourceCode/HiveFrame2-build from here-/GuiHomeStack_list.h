@@ -12,10 +12,8 @@ class GuiListItem : public QWidget
 {
   Q_OBJECT
 public:
-  explicit GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  explicit GuiListItem(QWidget *parent = 0);
   ~GuiListItem();
-
-  int a = 0;
 
   void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
 

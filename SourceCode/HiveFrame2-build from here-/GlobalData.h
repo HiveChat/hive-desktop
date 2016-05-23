@@ -64,6 +64,14 @@ class GlobalData
 public:
   ///UI
   static QFont g_font;
+  static QFont g_chatTextEditorFont;
+  static QFont g_chatBubbleFont;
+  static QFont g_combWidgetUsrNameFont;
+  static QFont g_combWidgetIpAddrFont;
+  static QFont g_menuButtonFont;
+  static QFont g_scrollStackTitle;
+  static QFont g_scrollStackSubtitle;
+
   static QColor g_windowColor;
   static QColor g_alphaTabColor;
   static QColor g_tabColor;
