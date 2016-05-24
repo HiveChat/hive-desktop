@@ -179,7 +179,6 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidge
 
 
   this->setMaximumHeight(130);
-  this->setParent(parent);
 }
 
 GuiChatStack_message_editor::~GuiChatStack_message_editor()
@@ -278,7 +277,6 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
 
   loadHistory(current_active_index);
 
-  this->setParent(parent);
 
 
   chat_widget->addChatBubble("This is Test Message one: \n We are staying at the bottom every time you start hive~~", false);

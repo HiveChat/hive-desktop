@@ -4,7 +4,6 @@
 GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
 {
   setUpUI();
-  this->setParent(parent);
 }
 
 GuiScrollStack::~GuiScrollStack()

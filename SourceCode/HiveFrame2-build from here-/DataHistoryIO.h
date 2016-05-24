@@ -36,8 +36,6 @@ private:
   void makeHistoryFile(int num);
   void saveMessage();
 
-
-
 };
 
 #endif // DATAHISTORYIO_H

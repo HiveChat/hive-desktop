@@ -7,18 +7,17 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
   ThreadData::checkDir(history_path);
 
-  ///Qt 5.5.0 bug here! put it back to the class def as soon a possible!
-
-  //debug
-  int debug_active_mun = 0;
-  //-debug
-
   for(int i = 1;;i++)
     {
       QString tmp_file_path = QString(history_path+"/%1.json").arg(i);
       QFile file(tmp_file_path);
       if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
+          if(i == 1)
+            {
+              current_active_index = 1;
+              makeHistoryFile(current_active_index);
+            }
           break;
         }
 
@@ -29,41 +28,23 @@ DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
 
       QJsonParseError json_error;
       QJsonDocument json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-      if(json_error.error == QJsonParseError::NoError)
+      if(json_error.error == QJsonParseError::NoError && json_document.isObject())
         {
-          ///the last check
-          if(json_document.isObject())
-            {
-              QJsonObject temp_history_json_obj;
-              temp_history_json_obj = json_document.object();
-              ///if full
-              if(temp_history_json_obj.value("full").toBool())
-                {
-                  debug_active_mun ++;
-                  full_history_list.append(temp_history_json_obj);
-                }
-              else
-                {
-                  //debug
-                  debug_active_mun ++;
-                  //-debug
+          QJsonObject temp_history_json_obj;
+          temp_history_json_obj = json_document.object();
 
-                  active_history_json_array = temp_history_json_obj["history"].toArray();
-                      //= temp_history_json_obj;
-                  current_active_index = i;
-                }
-            }///the last check if
+          if(temp_history_json_obj.value("full").toBool())  //if full
+            {
+              full_history_list.append(temp_history_json_obj);
+            }
+          else
+            {
+              active_history_json_array = temp_history_json_obj.value("history").toArray();
+              current_active_index = i;
+              break;
+            }
         }
     }///for
-
-  if(debug_active_mun == 0)
-    {
-      qDebug()<<"\nmake new history \n";
-      current_active_index = 1;
-      makeHistoryFile(current_active_index);
-    }
-
-  this->setParent(parent);
 }
 
 DataHistoryIO::~DataHistoryIO()
@@ -78,19 +59,10 @@ QJsonArray DataHistoryIO::readMessage(int index)
 
 void DataHistoryIO::wirteMessage(MessageStruct messageStruct, bool fromMe)
 {
-  //  message_str_list.append(object_key_str);
-  //  message_str_list.append(subject_key_str);
-  //  message_str_list.append(message_str);
-  //  message_str_list.append(GlobalData::g_currentTime());
     if(active_history_json_array.count() == 100)
       {
         saveMessage();
       }
-
-  //  QJsonObject message_json_obj;
-  //  message_json_obj.insert("message", message[2]);
-  //  message_json_obj.insert("fromMe", fromMe);
-  //  message_json_obj.insert("time", message[3]);
     QJsonObject message_json_obj;
     message_json_obj.insert("message", messageStruct.message_str);
     message_json_obj.insert("fromMe", fromMe);
@@ -103,7 +75,9 @@ void DataHistoryIO::wirteMessage(MessageStruct messageStruct, bool fromMe)
 void DataHistoryIO::makeHistoryFile(int num)
 {
   QString make_file_path = QString(history_path+"/%0.json").arg(QString::number(num));
+  qDebug()<<"#DataHistoryIO::makeHistoryFile(int num): Make new history:";
   qDebug()<<make_file_path;
+
   QFile file(make_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -143,7 +117,6 @@ void DataHistoryIO::saveMessage()
       active_history_json_doc.setObject(active_history_json_obj);
 
       out << active_history_json_doc.toJson();
-      //qDebug()<<active_history_json_doc.toJson();
     }
   else
     {

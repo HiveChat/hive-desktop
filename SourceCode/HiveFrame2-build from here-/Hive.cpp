@@ -45,7 +45,19 @@ Hive::~Hive()
   QtMac::setBadgeLabelText("Bye");
 #endif
 
-  delete gui_central_widget;
+  disconnect(thread_data, SIGNAL(refreshGuiInfo()), gui_central_widget->gui_main_block->gui_home_stack_welcome, SLOT(refresh()));
+
+  disconnect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEntered(UsrProfileStruct*)));
+  disconnect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_central_widget, SLOT(addUsr(UsrProfileStruct*)));
+  disconnect(thread_data, SIGNAL(usrProfileChanged(UsrProfileStruct*)), gui_central_widget, SLOT(onUsrProfileChanged(UsrProfileStruct*)));
+
+  disconnect(gui_central_widget->gui_main_block, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(sendMessage(QString,QString)));
+  disconnect(thread_net, SIGNAL(messageRecieved(MessageStruct*,bool)), thread_data, SLOT(onMessageCome(MessageStruct*,bool)));
+  disconnect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)));
+
+  gui_central_widget->close();
+  gui_central_widget->deleteLater();
+
   thread_net->quit();
   thread_data->quit();
   if(!thread_net->wait(500))

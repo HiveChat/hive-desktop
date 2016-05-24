@@ -47,7 +47,6 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   this->setAutoFillBackground(true);
   this->setPalette(palette);
   this->setFixedWidth(250);
-  this->setParent(parent);
 }
 
 

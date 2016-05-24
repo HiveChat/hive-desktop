@@ -178,7 +178,7 @@ void ThreadNet::sendUsrEnter()
   out << GlobalData::g_settings_struct.name_str;
   out << GlobalData::g_settings_struct.avatar_str;
 
-  qint64 f = udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
+  /*qint64 f = */udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
 
   qDebug()<<"@sendUsrEnter(): finished!";
   return;

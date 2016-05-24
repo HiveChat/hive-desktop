@@ -1,6 +1,6 @@
 #include "GuiChatBubble.h"
 
-GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = true, QWidget *parent)
+GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
 {
   int maxWidth = 500;
 
