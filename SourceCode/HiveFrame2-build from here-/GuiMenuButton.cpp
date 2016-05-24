@@ -8,7 +8,7 @@ GuiMenuButton::GuiMenuButton(QString text, StaticStackType staticStackType, QWid
 
   text_label = new QLabel(this);
   text_label->setText(text);
-  text_label->setFont(GlobalData::g_menuButtonFont);
+  text_label->setFont(GlobalData::font_menuButton);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);

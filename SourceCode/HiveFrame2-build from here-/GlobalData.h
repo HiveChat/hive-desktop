@@ -1,9 +1,10 @@
 #ifndef GLOBALDATA_H
 #define GLOBALDATA_H
-#include <QStringList>
-#include <QDatetime>
+
+#include <QDate>
 #include <QFont>
 #include <QMap>
+#include <QPalette>
 #include <QColor>
 #include <QStandardPaths>
 
@@ -63,24 +64,34 @@ class GlobalData
 {
 public:
   ///UI
-  static QFont g_font;
-  static QFont g_chatTextEditorFont;
-  static QFont g_chatBubbleFont;
-  static QFont g_combWidgetUsrNameFont;
-  static QFont g_combWidgetIpAddrFont;
-  static QFont g_menuButtonFont;
-  static QFont g_scrollStackTitle;
-  static QFont g_scrollStackSubtitle;
+  static QFont font_futura;
+  static QFont font_chatTextEditor;
+  static QFont font_chatBubble;
+  static QFont font_combWidgetUsrName;
+  static QFont font_combWidgetIpAddr;
+  static QFont font_menuButton;
+  static QFont font_scrollStackTitle;
+  static QFont font_scrollStackSubtitle;
 
-  static QColor g_windowColor;
-  static QColor g_alphaTabColor;
-  static QColor g_tabColor;
+  //!base color
+  static QColor bc_darkGrey;
+  static QColor bc_lightGrey;
+  static QColor bc_brown;
+  static QColor bc_hiveYellow;
+  static QColor bc_lightYellow;
 
-  static QColor g_defaultChatBubbleColorI;
-  static QColor g_defaultChatBubbleColorO;
-  static QColor g_mChatBubbleColorI;
-  static QColor g_mChatBubbleColorO;
+  static QColor color_window;
+  static QColor color_alphaTab;
+  static QColor color_tab;
 
+  static QColor color_defaultChatBubbleI;
+  static QColor color_defaultChatBubbleO;
+  static QColor color_mChatBubbleI;
+  static QColor color_mChatBubbleO;
+
+  static QPalette palette_bkg_normalWhite;
+  static QPalette palette_bkg_transparent;
+  static QPalette palette_txt_brown;
 
   ///data
   static SettingStruct g_settings_struct;

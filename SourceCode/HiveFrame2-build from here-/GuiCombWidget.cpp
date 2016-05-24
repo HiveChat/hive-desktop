@@ -14,9 +14,9 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   status_label = new QLabel(offline_str, this);
 
   usr_name_label->setPalette(usr_name_palette);
-  usr_name_label->setFont(GlobalData::g_combWidgetUsrNameFont);
+  usr_name_label->setFont(GlobalData::font_combWidgetUsrName);
 
-  ip_addr_label->setFont(GlobalData::g_combWidgetIpAddrFont);
+  ip_addr_label->setFont(GlobalData::font_combWidgetIpAddr);
 
   net_status_layout = new QHBoxLayout();
   net_status_layout->setAlignment(Qt::AlignLeft);

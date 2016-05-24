@@ -3,17 +3,20 @@
 
 GuiListItem::GuiListItem(QWidget *parent) : QWidget(parent)
 {
+
+
   avatar_button = new GuiAvatarButton(":/avatar/avatar/default.png", 90, this);
   name_label = new QLabel("Loading...", this);
   ip_label = new QLabel("Loading...", this);
+
+  name_label->setFont(GlobalData::font_scrollStackSubtitle);
+  ip_label->setFont(GlobalData::font_scrollStackSubtitle);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setSpacing(50);
   main_layout->addWidget(avatar_button);
   main_layout->addWidget(name_label);
   main_layout->addWidget(ip_label);
-
-  ///下面是第一次调用不会崩溃？
 
   this->setParent(parent);
 }

@@ -51,6 +51,7 @@ private:
   void makeUsrKey();
 
   void initVariable();
+  void initPalette();
   void checkFiles();
   void loadDefaultGlobalData();
   void loadMyProfile();

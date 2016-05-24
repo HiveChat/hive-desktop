@@ -70,6 +70,7 @@ void DataHistoryIO::wirteMessage(MessageStruct messageStruct, bool fromMe)
 
     active_history_json_array.append(message_json_obj);
 
+    saveMessage();
 }
 
 void DataHistoryIO::makeHistoryFile(int num)
@@ -115,7 +116,6 @@ void DataHistoryIO::saveMessage()
 
       QJsonDocument active_history_json_doc;
       active_history_json_doc.setObject(active_history_json_obj);
-
       out << active_history_json_doc.toJson();
     }
   else

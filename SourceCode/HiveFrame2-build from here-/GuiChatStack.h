@@ -28,7 +28,7 @@ public:
   explicit GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiChatStack_top_bar();
 
-  void set_profile(UsrProfileStruct *usrProfileStruct);
+  void setProfile(UsrProfileStruct *usrProfileStruct);
 
 private:
   QHBoxLayout *main_layout;
@@ -77,8 +77,6 @@ public:
 
 protected:
   bool eventFilter(QObject *obj, QEvent *e);
-//  void keyPressEvent(QKeyEvent *event);
-//  void keyReleaseEvent(QKeyEvent *event);
 
 private:
   QVBoxLayout *edit_layout;
@@ -107,6 +105,9 @@ public:
   explicit GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiChatStack();
 
+  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
+  void checkMessage(MessageStruct messageStruct, bool fromMe);
+
   GuiChatStack_top_bar *top_bar;
   GuiChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
@@ -120,12 +121,11 @@ private:
 
   UsrProfileStruct usr_profile;
 
+  void loadHistory(int index);
   void refreshCurrentActiveIndex();
 
 public slots:
-  void checkMessage(MessageStruct messageStruct, bool fromMe);
   void onSendButtonClicked();
-  void loadHistory(int index);
 
 signals:
   void sendMessage(QString *usrKey, QString *message);

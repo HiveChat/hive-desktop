@@ -2,19 +2,15 @@
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 {
-  QPalette palette;
-  palette.setColor(QPalette::Window, QColor(250,250,250));
+//! do not delete yet, see if it causes problems.
+//  QPalette palette;
+//  palette.setColor(QPalette::Window, QColor(250,250,250));
+//  this->setPalette(palette);
 
-  this->setPalette(palette);
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setWindowTitle("Hive! 0.0.3 alpha-test");
   this->setAttribute(Qt::WA_TranslucentBackground);
-  this->setParent(parent);
-
-
-
-
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);
@@ -72,12 +68,7 @@ void GuiCentralWidget::delUsr(UsrProfileStruct *usrProfileStruct)
 void GuiCentralWidget::onUsrProfileChanged(UsrProfileStruct *usrProfileStruct)
 {
   gui_main_block->gui_home_stack_list->refreshUsrProfile(usrProfileStruct);
+  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(usrProfileStruct);
 }
 
-void GuiCentralWidget::onMessageCome(MessageStruct *messageStruct, bool fromMe)
-{
-
-
-
-}

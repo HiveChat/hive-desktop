@@ -1,5 +1,4 @@
 #include "GlobalData.h"
-#include <QPalette>
 
 
 bool operator ==(const UsrProfileStruct &arg1, const UsrProfileStruct &arg2)
@@ -44,23 +43,32 @@ bool operator !=(const SettingStruct &arg1, const SettingStruct &arg2)
 
 
 ///UI
-QFont GlobalData::g_font;
-QFont GlobalData::g_chatTextEditorFont;
-QFont GlobalData::g_chatBubbleFont;
-QFont GlobalData::g_combWidgetUsrNameFont;
-QFont GlobalData::g_combWidgetIpAddrFont;
-QFont GlobalData::g_menuButtonFont;
-QFont GlobalData::g_scrollStackTitle;
-QFont GlobalData::g_scrollStackSubtitle;
+QFont GlobalData::font_futura;
+QFont GlobalData::font_chatTextEditor;
+QFont GlobalData::font_chatBubble;
+QFont GlobalData::font_combWidgetUsrName;
+QFont GlobalData::font_combWidgetIpAddr;
+QFont GlobalData::font_menuButton;
+QFont GlobalData::font_scrollStackTitle;
+QFont GlobalData::font_scrollStackSubtitle;
 
-QColor GlobalData::g_windowColor = QColor(255,255,255);
-QColor GlobalData::g_alphaTabColor = QColor(255,255,255,230);
-QColor GlobalData::g_tabColor = QColor(0,0,0,0);
+QColor GlobalData::bc_darkGrey = QColor(100,100,100);
+QColor GlobalData::bc_lightGrey = QColor(225,225,225);
+QColor GlobalData::bc_brown = QColor(103,72,0);
+QColor GlobalData::bc_hiveYellow = QColor(255,181,0);
+QColor GlobalData::bc_lightYellow = QColor(255,215,126);
 
-QColor GlobalData::g_defaultChatBubbleColorI = QColor(255,215,126);
-QColor GlobalData::g_defaultChatBubbleColorO = QColor(225,225,225);
-//QColor GlobalData::g_mChatBubbleColorI;// = GlobalData::g_defaultChatBubbleColorI;
-//QColor GlobalData::g_mChatBubbleColorO;// = GlobalData::g_defaultChatBubbleColorO;
+QColor GlobalData::color_window = QColor(255,255,255);
+QColor GlobalData::color_alphaTab = QColor(255,255,255,230);
+QColor GlobalData::color_tab = QColor(0,0,0,0);
+
+QColor GlobalData::color_defaultChatBubbleI = GlobalData::bc_lightYellow;
+QColor GlobalData::color_defaultChatBubbleO = GlobalData::bc_lightGrey;
+
+QPalette GlobalData::palette_bkg_normalWhite;
+QPalette GlobalData::palette_bkg_transparent;
+QPalette GlobalData::palette_txt_brown;
+
 
 ///data
 SettingStruct GlobalData::g_settings_struct;

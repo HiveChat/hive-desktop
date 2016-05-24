@@ -13,10 +13,10 @@ GuiChatStack_top_bar::GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, Q
   avatar_button->setAlignment(Qt::AlignLeft);
 
   usr_name_label = new QLabel(usrProfileStruct->name_str, this);
-  usr_name_label->setFont(GlobalData::g_scrollStackTitle);
+  usr_name_label->setFont(GlobalData::font_scrollStackTitle);
 
   usr_ip_label = new QLabel(usrProfileStruct->ip_str, this);
-  usr_ip_label->setFont(GlobalData::g_scrollStackSubtitle);
+  usr_ip_label->setFont(GlobalData::font_scrollStackSubtitle);
 
 
   QVBoxLayout *usr_info_layout = new QVBoxLayout();
@@ -40,7 +40,7 @@ GuiChatStack_top_bar::~GuiChatStack_top_bar()
 
 }
 
-void GuiChatStack_top_bar::set_profile(UsrProfileStruct *usrProfileStruct)
+void GuiChatStack_top_bar::setProfile(UsrProfileStruct *usrProfileStruct)
 {
   avatar_button->setAvatar(usrProfileStruct->avatar_str);
   usr_name_label->setText(usrProfileStruct->name_str);
@@ -126,9 +126,8 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidge
   text_editor = new QTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
-//  text_editor->;
   text_editor->installEventFilter(this);
-  text_editor->setFont(GlobalData::g_chatTextEditorFont);
+  text_editor->setFont(GlobalData::font_chatTextEditor);
 
   ///tools
   expression_label = new GuiLabelButton(this);
@@ -164,10 +163,9 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidge
   edit_layout->addWidget(text_editor);
 
   ///send button
-  send_btn = new GuiLabelButton();
+  send_btn = new GuiLabelButton(this);
   send_btn->setDefaultPixmap(":/img/img/send_button_0.png");
   send_btn->setHoveredPixmap(":/img/img/send_button_1.png");
-  //send_btn->setPressedPixmap(":/img/img/send_button_1.png");
   send_btn->setAlignment(Qt::AlignRight);
 
   main_layout = new QHBoxLayout(this);
@@ -215,23 +213,7 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
     return false;
 }
 
-//void GuiChatStack_message_editor::keyPressEvent(QKeyEvent *event)
-//{
 
-//  //////To Reallize this function This function should be written in a Extra class which : QTextEdit.
-//  if( event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-//    {
-//      send_btn->setHovered();
-//    }
-//}
-
-//void GuiChatStack_message_editor::keyReleaseEvent(QKeyEvent *event)
-//{
-//  if( event->key() == Qt::Key_Enter || event->key() == Qt::Key_Return)
-//    {
-//      send_btn->setDefault();
-//    }
-//}
 //////////////////////////main//////////////////////////////////////
 
 GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
@@ -302,7 +284,6 @@ void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
 //  QString object_key_str;//0 receiver
 //  QString subject_key_str;//1 sender
 //  QString message_str;//2
-  qDebug()<<"wait!!here!!!";
   chat_widget->addChatBubble(messageStruct.message_str, fromMe);
 
   data_history_io->wirteMessage(messageStruct, fromMe);
@@ -311,7 +292,6 @@ void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
 
   chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 
-  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 }
 
 void GuiChatStack::onSendButtonClicked()
@@ -338,6 +318,11 @@ void GuiChatStack::loadHistory(int index)
       qDebug()<<"sth wrong happened!!!!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
       return;
     }
+}
+
+void GuiChatStack::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+{
+  top_bar->setProfile(usrProfileStruct);
 }
 
 

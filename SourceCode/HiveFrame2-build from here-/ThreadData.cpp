@@ -274,8 +274,8 @@ QJsonDocument ThreadData::defaultProfile()
       my_profile_json_obj.insert(attribute, *myProfileConfigJsonMap.value(attribute));
     }
 
-  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_defaultChatBubbleColorI.name());
-  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_defaultChatBubbleColorO.name());
+  my_profile_json_obj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
+  my_profile_json_obj.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
@@ -307,13 +307,13 @@ void ThreadData::initVariable()
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_settings_struct.chat_bubble_color_i);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_settings_struct.chat_bubble_color_o);
 
-  GlobalData::g_settings_struct.chat_bubble_color_i = GlobalData::g_defaultChatBubbleColorI;
-  GlobalData::g_settings_struct.chat_bubble_color_o = GlobalData::g_defaultChatBubbleColorO;
+  GlobalData::g_settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
+  GlobalData::g_settings_struct.chat_bubble_color_o = GlobalData::color_defaultChatBubbleO;
+}
 
-//  b_mChatBubbleColorI = GlobalData::g_mChatBubbleColorI;
-//  b_mChatBubbleColorO = GlobalData::g_mChatBubbleColorO;
-//  b_myNameStr = GlobalData::g_my_profile.name_str;
-//  b_avatarPathStr = GlobalData::g_my_profile.avatar_str;
+void ThreadData::initPalette()
+{
+
 }
 
 
@@ -453,23 +453,23 @@ void ThreadData::loadFonts()
 
   font_id = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
   font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);  ////WINDOWS EXPLODE HERE!!!!!!!!!!
-  GlobalData::g_chatTextEditorFont = QFont(font_family, 16);
+  GlobalData::font_chatTextEditor = QFont(font_family, 16);
 
   font_id = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
   font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
-  GlobalData::g_font = QFont(font_family, 10);
-  GlobalData::g_chatBubbleFont = GlobalData::g_font;
-  GlobalData::g_chatBubbleFont.setPointSize(14);
-  GlobalData::g_combWidgetUsrNameFont = GlobalData::g_font;
-  GlobalData::g_combWidgetUsrNameFont.setPointSize(15);
-  GlobalData::g_combWidgetIpAddrFont = GlobalData::g_font;
-  GlobalData::g_combWidgetIpAddrFont.setPointSize(11);
-  GlobalData::g_menuButtonFont = GlobalData::g_font;
-  GlobalData::g_menuButtonFont.setPointSize(14);
-  GlobalData::g_scrollStackTitle = GlobalData::g_font;
-  GlobalData::g_scrollStackTitle.setPointSize(15);
-  GlobalData::g_scrollStackSubtitle = GlobalData::g_font;
-  GlobalData::g_scrollStackSubtitle.setPointSize(13);
+  GlobalData::font_futura = QFont(font_family, 10);
+  GlobalData::font_chatBubble = GlobalData::font_futura;
+  GlobalData::font_chatBubble.setPointSize(14);
+  GlobalData::font_combWidgetUsrName = GlobalData::font_futura;
+  GlobalData::font_combWidgetUsrName.setPointSize(15);
+  GlobalData::font_combWidgetIpAddr = GlobalData::font_futura;
+  GlobalData::font_combWidgetIpAddr.setPointSize(11);
+  GlobalData::font_menuButton = GlobalData::font_futura;
+  GlobalData::font_menuButton.setPointSize(14);
+  GlobalData::font_scrollStackTitle = GlobalData::font_futura;
+  GlobalData::font_scrollStackTitle.setPointSize(15);
+  GlobalData::font_scrollStackSubtitle = GlobalData::font_futura;
+  GlobalData::font_scrollStackSubtitle.setPointSize(13);
 
 
 }

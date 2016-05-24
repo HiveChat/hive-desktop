@@ -42,7 +42,7 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
   main_layout->setContentsMargins(5,5,5,5);
 
   QPalette palette;
-  palette.setColor(QPalette::Window, GlobalData::g_tabColor);
+  palette.setColor(QPalette::Window, GlobalData::color_tab);
 
   this->setAutoFillBackground(true);
   this->setPalette(palette);

@@ -22,7 +22,7 @@ void GuiAvatarButton::setAvatar(QString path)
   painter.setRenderHint(QPainter::Antialiasing);
   painter.setRenderHint(QPainter::SmoothPixmapTransform);
   painter.fillRect(0, 0, diameter, diameter, Qt::white);
-  painter.setBrush(QColor(0, 0, 0));
+  painter.setBrush(Qt::black);
   painter.drawRoundedRect(0, 0, diameter, diameter, 99, 99);
 
 

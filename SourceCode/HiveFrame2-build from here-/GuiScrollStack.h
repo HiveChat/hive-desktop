@@ -30,8 +30,8 @@ protected:
   void addItem(QString text, QWidget *widget);
   void addItem(QString text, QLayout *widgetLayout);
 
-  QFont font = GlobalData::g_scrollStackTitle;
-  QFont sub_font = GlobalData::g_scrollStackSubtitle;
+  QFont font = GlobalData::font_scrollStackTitle;
+  QFont sub_font = GlobalData::font_scrollStackSubtitle;
   QPalette text_palette;
   QPalette sub_text_palette;
 

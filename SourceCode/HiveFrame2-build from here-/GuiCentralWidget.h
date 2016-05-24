@@ -29,8 +29,6 @@ public slots:
 
 private slots:
   void onUsrProfileChanged(UsrProfileStruct *usrProfileStruct);
-  void onMessageCome(MessageStruct *messageStruct, bool fromMe);
-
 
 
 };

@@ -5,8 +5,9 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = 
   int maxWidth = 500;
 
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
-  label =  new QLabel(text, this);
-  label->setFont(GlobalData::g_chatBubbleFont);
+  label =  new QLabel(this);
+  label->setText(text);
+  label->setFont(GlobalData::font_chatBubble);
   label->adjustSize();
   label->setWordWrap(true);
   label->setTextInteractionFlags(Qt::TextSelectableByMouse);
