@@ -452,8 +452,18 @@ void ThreadData::loadFonts()
   QString font_family;
 
   font_id = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
+  if(font_id == -1)
+    {
+      return;
+    }
+
   font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);  ////WINDOWS EXPLODE HERE!!!!!!!!!!
+
   GlobalData::font_chatTextEditor = QFont(font_family, 16);
+  if(font_id == -1)
+    {
+      return;
+    }
 
   font_id = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
   font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
