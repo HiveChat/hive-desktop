@@ -11,6 +11,7 @@
 #include <QFile>
 #include <QNetworkInterface>
 #include <QPixmap>
+#include <QMutex>
 
 
 class ThreadNet : public QThread

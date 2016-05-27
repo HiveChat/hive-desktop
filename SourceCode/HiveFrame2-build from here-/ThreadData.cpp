@@ -447,7 +447,9 @@ void ThreadData::writeCurrentConfig()
 }
 
 void ThreadData::loadFonts()
-{  
+{
+
+#ifndef Q_OS_WIN ///windows can't load font from qrc, don't know why.
   int font_id;
   QString font_family;
 
@@ -457,7 +459,7 @@ void ThreadData::loadFonts()
       return;
     }
 
-  font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);  ////WINDOWS EXPLODE HERE!!!!!!!!!!
+  font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
 
   GlobalData::font_chatTextEditor = QFont(font_family, 16);
   if(font_id == -1)
@@ -481,6 +483,7 @@ void ThreadData::loadFonts()
   GlobalData::font_scrollStackSubtitle = GlobalData::font_futura;
   GlobalData::font_scrollStackSubtitle.setPointSize(13);
 
+#endif
 
 }
 

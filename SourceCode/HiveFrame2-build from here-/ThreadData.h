@@ -19,6 +19,7 @@
 #include <QFontDatabase>
 #include <QTime>
 #include <QThread>
+#include <QMutex>
 
 class ThreadData : public QThread
 {
