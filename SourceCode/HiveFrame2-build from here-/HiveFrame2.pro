@@ -6,10 +6,12 @@
 
 QT       += core gui
 QT	 += network
+config   += c++11
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 macx{
     QT	 += macextras
+    INCLUDEPATH += /usr/include
 }
 
 
@@ -80,3 +82,5 @@ RESOURCES += \
     qss.qrc \
     img.qrc \
     font.qrc
+
+
