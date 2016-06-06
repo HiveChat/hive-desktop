@@ -1,5 +1,4 @@
 #include "Hive.h"
-#include "GuiOSXNotification.h"
 
 Hive::Hive(QObject *parent) : QObject(parent)
 {

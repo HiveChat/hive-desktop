@@ -33,7 +33,6 @@ SOURCES += main.cpp\
     GuiChatBubble.cpp \
     GlobalData.cpp \
     DataHistoryIO.cpp \
-    GuiOSXNotification.cpp \
     GuiMenuButton.cpp \
     GuiScrollStack.cpp \
     GuiSettingsTab.cpp \
@@ -62,7 +61,6 @@ HEADERS  += \
     GuiChatBubble.h \
     GlobalData.h \
     DataHistoryIO.h \
-    GuiOSXNotification.h \
     GuiMenuButton.h \
     GuiScrollStack.h \
     GuiSettingsTab.h \
