@@ -38,7 +38,7 @@ private:
 
   QString online_str = "<span style=\" color:#39c828;\">●</span>";
   QString offline_str = "<span style=\" color:#ed403f;\">●</span>";
-  QString unstable_str = "<span style=\" color:#fdb525;\">●</span>";
+  QString unstable_str = "<span style=\" color:#ffb500;\">●</span>";
 
 
   QPalette hover_palette;

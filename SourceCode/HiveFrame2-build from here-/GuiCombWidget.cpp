@@ -61,19 +61,15 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
     }
   else
     {
-      qDebug()<<"aaaaaaaaaaaaaakfdsjkbfjdsbjkafbsfbbsabbdfbbbbbbbbbbbbbb";
-
-//      qDebug()<<getSubNetStr(GlobalData::g_localHostIP);
-//      qDebug()<<getSubNetStr(usr_profile.ip_str);
 
       if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip_str))
         {
 
-          status_label->setText(online_str);
+          status_label->setText(unstable_str);
         }
       else
         {
-          status_label->setText(unstable_str);
+          status_label->setText(online_str);
         }
     }
 
@@ -121,7 +117,7 @@ QString GuiCombWidget::getSubNetStr(QString ipAddr)
 
   for(int i = 0; i < ipAddr.size(); i++)
     {
-      if(ipAddr[i] == '.')
+      if(ipAddr.at(i) == '.')
         {
           loop_num ++;
         }
@@ -133,10 +129,10 @@ QString GuiCombWidget::getSubNetStr(QString ipAddr)
 
       if(loop_num == 2)
         {
-          sub_net_str.append(ipAddr[i]);
+          sub_net_str.append(ipAddr.at(i));
         }
-
     }
+  return sub_net_str;
 }
 
 //void GuiCombWidget::dragMoveEvent(QEvent *)
