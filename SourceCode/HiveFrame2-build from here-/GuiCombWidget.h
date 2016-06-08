@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QHostAddress>
 
 #include "GlobalData.h"
 #include "GuiLabelButton.h"
@@ -16,7 +17,6 @@ public:
   explicit GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
   ~GuiCombWidget();
 
-  UsrProfileStruct usrProfile();
   void setProfile(UsrProfileStruct *usrProfile);
 
 protected:
@@ -38,6 +38,7 @@ private:
 
   QString online_str = "<span style=\" color:#39c828;\">●</span>";
   QString offline_str = "<span style=\" color:#ed403f;\">●</span>";
+  QString unstable_str = "<span style=\" color:#fdb525;\">●</span>";
 
 
   QPalette hover_palette;
@@ -50,6 +51,8 @@ private:
 
   ///data
   UsrProfileStruct usr_profile;
+
+  QString getSubNetStr(QString ipAddr);
 
 
 

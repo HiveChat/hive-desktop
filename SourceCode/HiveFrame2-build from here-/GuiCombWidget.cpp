@@ -48,11 +48,6 @@ GuiCombWidget::~GuiCombWidget()
 
 }
 
-UsrProfileStruct GuiCombWidget::usrProfile()
-{
-  return usr_profile;
-}
-
 void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
 {
   usr_profile = *usrProfile;
@@ -66,7 +61,20 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
     }
   else
     {
-      status_label->setText(online_str);
+      qDebug()<<"aaaaaaaaaaaaaakfdsjkbfjdsbjkafbsfbbsabbdfbbbbbbbbbbbbbb";
+
+//      qDebug()<<getSubNetStr(GlobalData::g_localHostIP);
+//      qDebug()<<getSubNetStr(usr_profile.ip_str);
+
+      if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip_str))
+        {
+
+          status_label->setText(online_str);
+        }
+      else
+        {
+          status_label->setText(unstable_str);
+        }
     }
 
   return;
@@ -104,6 +112,31 @@ void GuiCombWidget::leaveEvent(QEvent *)
   window_color = default_window_color;
   repaint();
   hovered = false;
+}
+
+QString GuiCombWidget::getSubNetStr(QString ipAddr)
+{
+  int loop_num = 0;
+  QString sub_net_str;
+
+  for(int i = 0; i < ipAddr.size(); i++)
+    {
+      if(ipAddr[i] == '.')
+        {
+          loop_num ++;
+        }
+
+      if(loop_num == 3)
+        {
+          break;
+        }
+
+      if(loop_num == 2)
+        {
+          sub_net_str.append(ipAddr[i]);
+        }
+
+    }
 }
 
 //void GuiCombWidget::dragMoveEvent(QEvent *)

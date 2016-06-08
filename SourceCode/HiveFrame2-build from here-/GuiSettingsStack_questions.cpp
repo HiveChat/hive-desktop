@@ -16,6 +16,7 @@ GuiSettingsStack_questions::GuiSettingsStack_questions(QWidget *parent)
 
   addItem("Author:", "<b>Tim Zheng</b>");
   addItem("Why Hive?", "Hive is designed for users without <b>Internet Access</b>. \nIt enables users to chat in <b>LAN</b> (Limited Area Network) connection.");
+  addItem("Can't chat?", "<p><b>1.</b> Make sure that the person you are chatting to has installed the same version of Hive!</p>  <p><b>2.</b> You can only chat to the person who is in the same LAN</p>");
 
   this->setParent(parent);
 }
