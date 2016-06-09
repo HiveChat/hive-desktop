@@ -95,10 +95,11 @@ QTreeView::branch:open:has-children:!has-siblings {
 
 
 QToolTip {
+    border: 0px solid black;
     padding: 0px;
-    border-radius: 5px;
     opacity: 150;
 }
+
 
 QScrollArea{
 	background: transparent

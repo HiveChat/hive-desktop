@@ -40,6 +40,7 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   this->setMinimumWidth(200);
   this->setPalette(hover_palette);
   this->setAutoFillBackground(true);
+  this->setToolTipDuration(1000);
   this->setParent(parent);
 }
 
@@ -58,18 +59,20 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
   if(usr_profile.ip_str == "" || usr_profile.ip_str == "Offline")
     {
       status_label->setText(offline_str);
+      this->setToolTip("offline");
     }
   else
     {
 
       if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip_str))
         {
-
-          status_label->setText(unstable_str);
+          status_label->setText(online_str);
+          this->setToolTip("online");
         }
       else
         {
-          status_label->setText(online_str);
+          status_label->setText(unstable_str);
+          this->setToolTip("not in same subnet");
         }
     }
 
