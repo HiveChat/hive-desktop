@@ -8,6 +8,7 @@
 #include "ThreadNet.h"
 
 #include <QApplication>
+#include <QSystemTrayIcon>
 
 #ifdef Q_OS_MAC
 //#include <QtMacExtras>

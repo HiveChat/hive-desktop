@@ -4,6 +4,8 @@
 #include "GuiTabBlock.h"
 #include "GuiMainBlock.h"
 
+#include <QSystemTrayIcon>
+
 class GuiCentralWidget : public QWidget
 {
   Q_OBJECT
@@ -26,6 +28,20 @@ private:
 public slots:
   void addUsr(UsrProfileStruct *usrProfileStruct);
   void delUsr(UsrProfileStruct *usrProfileStruct);
+
+  void iconActivated(QSystemTrayIcon::ActivationReason reason)
+  {
+    switch (reason)
+    {
+      case QSystemTrayIcon::Trigger:
+        this->show();
+      case QSystemTrayIcon::DoubleClick:
+      break;
+      case QSystemTrayIcon::MiddleClick:
+      break;
+      default:;
+    }
+  }
 
 private slots:
   void onUsrProfileChanged(UsrProfileStruct *usrProfileStruct);

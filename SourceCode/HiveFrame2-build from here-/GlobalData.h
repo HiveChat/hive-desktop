@@ -94,6 +94,7 @@ public:
   static QPalette palette_txt_brown;
 
   ///data
+  static QString g_version[3];
   static SettingStruct g_settings_struct;
   static QMap<QString, UsrProfileStruct> saved_usr_profile_map;
   static QMap<QString, UsrProfileStruct> online_usr_profile_map;

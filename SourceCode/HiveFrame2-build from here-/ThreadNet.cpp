@@ -211,6 +211,11 @@ void ThreadNet::sendMessage(QString usrKeyStr, QString message)
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
+void ThreadNet::sendFileTran()
+{
+
+}
+
 void ThreadNet::TEST_sendMessage(QString to, QString from, QString message)
 {
   QByteArray data;
@@ -270,11 +275,11 @@ void ThreadNet::processPendingDatagrams()
 
 
           }
-        case Refuse:
+        case RejectFile:
           {
 
           }
-        case FileName:
+        case FileTran:
           {
 
           }

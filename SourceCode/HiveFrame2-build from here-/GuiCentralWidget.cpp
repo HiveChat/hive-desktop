@@ -9,8 +9,11 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
-  this->setWindowTitle("Hive! 0.0.3 alpha-test");
   this->setAttribute(Qt::WA_TranslucentBackground);
+  this->setWindowTitle(QString("Hive! %1.%2.%3 alpha-test")
+                       .arg(GlobalData::g_version[0])
+                       .arg(GlobalData::g_version[1])
+                       .arg(GlobalData::g_version[2]));
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);
@@ -50,6 +53,7 @@ GuiCentralWidget::~GuiCentralWidget()
 {
   qDebug()<<"\n@Hive UI is destructed";
 }
+
 
 void GuiCentralWidget::addUsr(UsrProfileStruct *usrProfileStruct)
 {

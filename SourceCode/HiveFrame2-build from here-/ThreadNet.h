@@ -30,8 +30,8 @@ private:
     Message,
     UsrEnter,
     UsrLeave,
-    FileName,
-    Refuse
+    FileTran,
+    RejectFile
   };
 
   bool running = true;
@@ -59,6 +59,7 @@ public slots:
   void sendUsrEnter();
   void sendUsrLeave();
   void sendMessage(QString usrKeyStr, QString message);
+  void sendFileTran();
   void TEST_sendMessage(QString to, QString from, QString message);
 
 
