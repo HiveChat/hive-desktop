@@ -8,7 +8,6 @@
 #include <QColor>
 #include <QStandardPaths>
 
-
 enum StaticStackType
 {
   NULL_Stack,
@@ -31,6 +30,17 @@ enum BuiltInAvatarType
   worm
 };
 
+enum BuiltInIconType
+{
+  doc,
+  exe,
+  ppt,
+  rar,
+  txt,
+  xls,
+  zip
+};
+
 struct UsrProfileStruct
 {
   QString key_str;
@@ -47,6 +57,14 @@ struct MessageStruct
   QString sender_key;
   QString message_str;
   QString time_str;
+};
+
+struct FileInfoStruct
+{
+  QString name;
+  QString size;
+  QString type;
+  bool direct_display;
 };
 
 struct SettingStruct

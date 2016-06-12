@@ -196,7 +196,6 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
             return true;
           }
       }
-
     if(e->type() == QEvent::KeyRelease)
       {
         QKeyEvent *event = static_cast<QKeyEvent*>(e);
@@ -209,6 +208,15 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
             send_btn->setDefault();
             return true;
           }
+      }
+
+    if(e->type() == QEvent::DragEnter)
+      {
+
+      }
+    if(e->type() == QEvent::DragLeave)
+      {
+
       }
     return false;
 }
@@ -243,7 +251,6 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
   chat_scroll_area->setFrameStyle(0);
 
   message_editor = new GuiChatStack_message_editor(&usr_profile.key_str, this);
-
 
   ////main layout
   main_layout = new QVBoxLayout(this);

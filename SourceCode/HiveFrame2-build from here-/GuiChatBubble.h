@@ -24,14 +24,7 @@ protected:
 
 private:
   QHBoxLayout *main_layout;
-
-  QPixmap background_pixmap;
   QLabel *label;
-  QRect mrect;
-
-  int rect_width;
-  int rect_height;
-
   QColor *color;
 
 };
@@ -66,13 +59,7 @@ protected:
 private:
   QHBoxLayout *main_layout;
 
-  QPixmap background_pixmap;
   QLabel *label;
-  QRect mrect;
-
-  int rect_width;
-  int rect_height;
-
   QColor *color;
 
 };

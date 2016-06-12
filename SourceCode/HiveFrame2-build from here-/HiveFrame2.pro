@@ -46,7 +46,8 @@ SOURCES += main.cpp\
     Hive.cpp \
     GuiHomeStack_network.cpp \
     GuiHomeStack_list.cpp \
-    GuiHomeStack_welcome.cpp
+    GuiHomeStack_welcome.cpp \
+    ThreadFileTCP.cpp
 
 HEADERS  += \
     GuiCentralWidget.h \
@@ -74,11 +75,13 @@ HEADERS  += \
     Hive.h \
     GuiHomeStack_network.h \
     GuiHomeStack_list.h \
-    GuiHomeStack_welcome.h
+    GuiHomeStack_welcome.h \
+    ThreadFileTCP.h
 
 RESOURCES += \
     qss.qrc \
     img.qrc \
-    font.qrc
+    font.qrc \
+    icon.qrc
 
 

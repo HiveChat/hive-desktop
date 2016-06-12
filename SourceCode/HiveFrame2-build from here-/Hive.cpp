@@ -4,7 +4,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
 {
 
 #ifdef Q_OS_MAC
-  QApplication::setQuitOnLastWindowClosed(false);
+//  QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
 #endif
 

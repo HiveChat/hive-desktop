@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>icon/doc.png</file>
+        <file>icon/exe.png</file>
+        <file>icon/ppt.png</file>
+        <file>icon/rar.png</file>
+        <file>icon/txt.png</file>
+        <file>icon/xls.png</file>
+        <file>icon/zip.png</file>
+    </qresource>
+</RCC>
