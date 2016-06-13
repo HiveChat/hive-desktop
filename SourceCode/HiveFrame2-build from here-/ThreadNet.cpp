@@ -2,16 +2,21 @@
 
 ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 {
+
+  tcp_port = 8723;
+  tcp_server = new QTcpServer(this);
+  connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
+  tcpInitServer();
+
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
-  connect(udp_socket, SIGNAL(readyRead()), this, SLOT(processPendingDatagrams()));
-
-  sendUsrEnter();
+  connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
+  udpSendUsrEnter();
 }
 
 ThreadNet::~ThreadNet()
 {
-  sendUsrLeave();
+  udpSendUsrLeave();
 
   QMutex mutex;
   mutex.lock();
@@ -88,12 +93,12 @@ void ThreadNet::sendOnlineStatus()
 {
   if(GlobalData::g_localHostIP != "")
     {
-      sendUsrEnter();
+      udpSendUsrEnter();
     }
 }
 
-/////process packet
-void ThreadNet::processMessage(MessageStruct *messageStruct)
+///udp process
+void ThreadNet::udpProcessMessage(MessageStruct *messageStruct)
 {
   if(messageStruct->reciever_key != GlobalData::g_settings_struct.key_str)
     {
@@ -125,7 +130,7 @@ void ThreadNet::processMessage(MessageStruct *messageStruct)
     }
 }
 
-void ThreadNet::processUsrEnter(UsrProfileStruct *usrProfileStruct)
+void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
 {
 
 
@@ -142,7 +147,7 @@ void ThreadNet::processUsrEnter(UsrProfileStruct *usrProfileStruct)
 
 }
 
-void ThreadNet::processUsrLeft(QString *usrKey)
+void ThreadNet::udpProcessUsrLeft(QString *usrKey)
 {
   if(usrKey == GlobalData::g_settings_struct.key_str)
     {
@@ -155,19 +160,13 @@ void ThreadNet::processUsrLeft(QString *usrKey)
   emit usrLeft(usrKey);
 }
 
-void ThreadNet::processFileName()
+void ThreadNet::udpProcessFileName()
 {
 
 }
 
-void ThreadNet::processRefuse()
-{
-
-}
-
-
-/////////////public slots////////////
-void ThreadNet::sendUsrEnter()
+///UDP Action
+void ThreadNet::udpSendUsrEnter()
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
@@ -184,7 +183,7 @@ void ThreadNet::sendUsrEnter()
   return;
 }
 
-void ThreadNet::sendUsrLeave()
+void ThreadNet::udpSendUsrLeave()
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
@@ -194,7 +193,7 @@ void ThreadNet::sendUsrLeave()
   qDebug()<<"@sendUsrLeave(): Finished!";
 }
 
-void ThreadNet::sendMessage(QString usrKeyStr, QString message)
+void ThreadNet::udpSendMessage(QString usrKeyStr, QString message)
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
@@ -211,12 +210,12 @@ void ThreadNet::sendMessage(QString usrKeyStr, QString message)
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
-void ThreadNet::sendFileTran()
+void ThreadNet::udpSendFileTran()
 {
 
 }
 
-void ThreadNet::TEST_sendMessage(QString to, QString from, QString message)
+void ThreadNet::TEST_udpsSendMessage(QString to, QString from, QString message)
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
@@ -231,11 +230,34 @@ void ThreadNet::TEST_sendMessage(QString to, QString from, QString message)
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
+void ThreadNet::udpProcessRefuse()
+{
+
+}
+
+
+
+
+
+void ThreadNet::tcpInitServer()
+{
+
+}
+
+void ThreadNet::tcpSendData()
+{
+
+}
+
+void ThreadNet::tcpCloseConnection()
+{
+
+}
 
 
 /////////////private slots////////////
 
-void ThreadNet::processPendingDatagrams()
+void ThreadNet::udpProcessPendingDatagrams()
 {
   while(udp_socket->hasPendingDatagrams())
     {
@@ -256,7 +278,7 @@ void ThreadNet::processPendingDatagrams()
             in >> message.sender_key;
             in >> message.message_str;
 
-            processMessage(&message);
+            udpProcessMessage(&message);
             break;
           }
         case UsrEnter:
@@ -267,7 +289,7 @@ void ThreadNet::processPendingDatagrams()
             in >> usr_profile.name_str;
             in >> usr_profile.avatar_str;
 
-            processUsrEnter(&usr_profile);
+            udpProcessUsrEnter(&usr_profile);
             break;
           }
         case UsrLeave:

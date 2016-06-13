@@ -5,12 +5,13 @@
 
 #include <QThread>
 #include <QHostInfo>
-#include <QDataStream>
+#include <QTcpServer>
+#include <QTcpSocket>
 #include <QUdpSocket>
-#include <QDate>
-#include <QFile>
 #include <QNetworkInterface>
-#include <QPixmap>
+#include <QDataStream>
+#include <QFile>
+#include <QDate>
 #include <QMutex>
 
 
@@ -34,20 +35,39 @@ private:
     RejectFile
   };
 
+  ///Thread Tasks
   bool running = true;
   int loop_count = 1;
-
   void refreshLocalHostIP();
   void sendOnlineStatus();
 
+  ///UDP Socket
   qint16 udp_port = 23232;
   QUdpSocket *udp_socket;
-  void processMessage(MessageStruct *messageStruct);
-  void processUsrEnter(UsrProfileStruct *usrProfileStruct);
-  void processUsrLeft(QString *usrKey);
-  void processFileName();
-  void processRefuse();
+  void udpProcessMessage(MessageStruct *messageStruct);
+  void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);
+  void udpProcessUsrLeft(QString *usrKey);
+  void udpProcessFileName();
+  void udpProcessRefuse();
 
+  void udpSendUsrEnter();
+  void udpSendUsrLeave();
+  void udpSendMessage(QString usrKeyStr, QString message);
+  void udpSendFileTran();
+  void TEST_udpsSendMessage(QString to, QString from, QString message);
+
+
+  ///TCP Socket
+  qint16 tcp_port;
+  QString file_name;
+  QFile *local_file;
+
+  QTcpServer *tcp_server;
+  QTcpSocket *tcp_socket;
+
+  void tcpInitServer();
+  void tcpSendData();
+  void tcpCloseConnection();
 
 
 signals:
@@ -55,17 +75,8 @@ signals:
   void usrEnter(UsrProfileStruct *usrProfileStruct);
   void usrLeft(QString *usrKey);
 
-public slots:
-  void sendUsrEnter();
-  void sendUsrLeave();
-  void sendMessage(QString usrKeyStr, QString message);
-  void sendFileTran();
-  void TEST_sendMessage(QString to, QString from, QString message);
-
-
-
 private slots:
-  void processPendingDatagrams();
+  void udpProcessPendingDatagrams();
 
 
 

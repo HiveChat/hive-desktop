@@ -140,7 +140,6 @@ void GuiScrollStack::addItem(QString text, QString string)
   layout->setSizeConstraint(QLayout::SetFixedSize);
   layout->setContentsMargins(0,10,200,0);
   layout->setSpacing(30);
-//  layout->setStretch(0,0);
   layout->addWidget(text_label);
   layout->addWidget(string_label);
 
@@ -155,7 +154,6 @@ void GuiScrollStack::addItem(QString text, QWidget *widget)
   text_label->setPalette(sub_text_palette);
 
   QHBoxLayout *layout = new QHBoxLayout();
-//  layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
   layout->setContentsMargins(0,10,200,0);
   layout->setSpacing(30);
   layout->setStretch(0,0);
