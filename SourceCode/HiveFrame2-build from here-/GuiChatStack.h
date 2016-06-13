@@ -8,9 +8,10 @@
 #include "GlobalData.h"
 
 #include <QScrollBar>
-#include <QTextEdit>
 #include <QScrollArea>
-
+#include <QTextEdit>
+#include <QDragEnterEvent>
+#include <QMimeData>
 
 class GuiChatStack_top_bar;
 class GuiChatStack_chat_widget;
@@ -88,8 +89,9 @@ private:
 
   QHBoxLayout *main_layout;
 
-
   QString usr_key;
+
+  bool control_pressed = false;
 signals:
   void sendMessage(QString *usrKey, QString *message);
 

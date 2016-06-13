@@ -103,11 +103,11 @@ void GuiChatStack_chat_widget::addChatBubble(QString message, bool fromMe)
   gui_chat_bubble = new GuiChatBubble(message, !fromMe, this);
   if(fromMe)
     {
-      chat_bubble_layout->addWidget(gui_chat_bubble/*, Qt::AlignRight*/);
+      chat_bubble_layout->addWidget(gui_chat_bubble);
     }
   else
     {
-      chat_bubble_layout->addWidget(gui_chat_bubble/*, Qt::AlignLeft*/);
+      chat_bubble_layout->addWidget(gui_chat_bubble);
     }
   chat_bubble_list.append(gui_chat_bubble);
 }
@@ -190,16 +190,25 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
     if(e->type() == QEvent::KeyPress)
       {
         QKeyEvent *event = static_cast<QKeyEvent*>(e);
-        if(event->key() == Qt::Key_Return /*&& (event->modifiers() & Qt::ControlModifier)*/)
+        if(event->key() == Qt::Key_Return)
           {
-            send_btn->setHovered();
-            return true;
+            if(event->modifiers() & Qt::ControlModifier)
+              {
+                control_pressed = true;
+                text_editor->insertPlainText("\n");
+              }
+            else
+              {
+                control_pressed = false;
+                send_btn->setHovered();
+              }
           }
+        return true;
       }
-    if(e->type() == QEvent::KeyRelease)
+    else if(e->type() == QEvent::KeyRelease)
       {
         QKeyEvent *event = static_cast<QKeyEvent*>(e);
-        if (event->key() == Qt::Key_Return /*|| (event->modifiers() & Qt::ControlModifier)*/)
+        if (event->key() == Qt::Key_Return)
           {
             QString message_str = text_editor->toPlainText();
             emit sendMessage(&usr_key, &message_str);
@@ -208,15 +217,6 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
             send_btn->setDefault();
             return true;
           }
-      }
-
-    if(e->type() == QEvent::DragEnter)
-      {
-
-      }
-    if(e->type() == QEvent::DragLeave)
-      {
-
       }
     return false;
 }
@@ -288,9 +288,6 @@ void GuiChatStack::refreshCurrentActiveIndex()
 
 void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
 {
-//  QString object_key_str;//0 receiver
-//  QString subject_key_str;//1 sender
-//  QString message_str;//2
   chat_widget->addChatBubble(messageStruct.message_str, fromMe);
 
   data_history_io->wirteMessage(messageStruct, fromMe);
@@ -322,7 +319,7 @@ void GuiChatStack::loadHistory(int index)
     }
   else
     {
-      qDebug()<<"sth wrong happened!!!!<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<";
+      qDebug()<<"@GuiChatStack::loadHistory(): History index error!!";
       return;
     }
 }
