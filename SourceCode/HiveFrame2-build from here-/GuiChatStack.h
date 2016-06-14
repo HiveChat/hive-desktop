@@ -13,11 +13,33 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 
+class GuiTextEdit;
 class GuiChatStack_top_bar;
 class GuiChatStack_chat_widget;
 class GuiChatStack_message_editor;
 class GuiChatStack;
 
+
+class GuiTextEdit : public QTextEdit
+{
+  Q_OBJECT
+
+public:
+  explicit GuiTextEdit(QWidget *parent = 0);
+  ~GuiTextEdit();
+
+protected:
+  void keyPressEvent(QKeyEvent *e);
+  void keyReleaseEvent(QKeyEvent *e);
+  void dragEnterEvent(QDragEnterEvent *event);
+  void dropEvent(QDropEvent *event);
+
+private:
+  bool control_pressed = false;
+
+signals:
+  void keyEnterTriggered(bool pressed);
+};
 
 //////////////////////////top//////////////////////////////////////
 
@@ -74,7 +96,7 @@ public:
   ~GuiChatStack_message_editor();
 
   GuiLabelButton *send_btn;
-  QTextEdit *text_editor;
+  GuiTextEdit *text_editor;
 
 protected:
   bool eventFilter(QObject *obj, QEvent *e);
@@ -90,8 +112,9 @@ private:
   QHBoxLayout *main_layout;
 
   QString usr_key;
-
   bool control_pressed = false;
+
+
 signals:
   void sendMessage(QString *usrKey, QString *message);
 
@@ -114,6 +137,10 @@ public:
   GuiChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
 
+protected:
+  void dragEnterEvent(QDragEnterEvent *event);
+  void dropEvent(QDropEvent *event);
+
 private:
   DataHistoryIO *data_history_io;
   int current_active_index;
@@ -128,6 +155,7 @@ private:
 
 public slots:
   void onSendButtonClicked();
+  void onKeyEnterTriggered(bool pressed);
 
 signals:
   void sendMessage(QString *usrKey, QString *message);

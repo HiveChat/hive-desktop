@@ -52,12 +52,11 @@ private:
 
   void udpSendUsrEnter();
   void udpSendUsrLeave();
-  void udpSendMessage(QString usrKeyStr, QString message);
   void udpSendFileTran();
   void TEST_udpsSendMessage(QString to, QString from, QString message);
 
 
-  ///TCP Socket
+  ///TCP Server
   qint16 tcp_port;
   QString file_name;
   QFile *local_file;
@@ -66,7 +65,6 @@ private:
   QTcpSocket *tcp_socket;
 
   void tcpInitServer();
-  void tcpSendData();
   void tcpCloseConnection();
 
 
@@ -75,9 +73,12 @@ signals:
   void usrEnter(UsrProfileStruct *usrProfileStruct);
   void usrLeft(QString *usrKey);
 
+public slots:
+  void udpSendMessage(QString usrKeyStr, QString message);
 private slots:
   void udpProcessPendingDatagrams();
 
+  void tcpSendData();
 
 
 

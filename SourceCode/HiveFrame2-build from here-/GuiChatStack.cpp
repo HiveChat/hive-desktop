@@ -123,7 +123,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidge
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
-  text_editor = new QTextEdit(this);
+  text_editor = new GuiTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
   text_editor->installEventFilter(this);
@@ -186,38 +186,46 @@ GuiChatStack_message_editor::~GuiChatStack_message_editor()
 
 bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 {
-    Q_ASSERT(obj == text_editor);
-    if(e->type() == QEvent::KeyPress)
-      {
-        QKeyEvent *event = static_cast<QKeyEvent*>(e);
-        if(event->key() == Qt::Key_Return)
-          {
-            if(event->modifiers() & Qt::ControlModifier)
-              {
-                control_pressed = true;
-                text_editor->insertPlainText("\n");
-              }
-            else
-              {
-                control_pressed = false;
-                send_btn->setHovered();
-              }
-          }
-        return true;
-      }
-    else if(e->type() == QEvent::KeyRelease)
-      {
-        QKeyEvent *event = static_cast<QKeyEvent*>(e);
-        if (event->key() == Qt::Key_Return)
-          {
-            QString message_str = text_editor->toPlainText();
-            emit sendMessage(&usr_key, &message_str);
-            text_editor->clear();
+  Q_ASSERT(obj == text_editor);
+  if(e->type() == QEvent::KeyPress)
+    {
+      QKeyEvent *event = static_cast<QKeyEvent*>(e);
+      if(event->key() == Qt::Key_Return)
+        {
+          if(event->modifiers() & Qt::ControlModifier)
+            {
+              control_pressed = true;
+              text_editor->insertPlainText("\n");
+            }
+          else
+            {
+              control_pressed = false;
+              send_btn->setHovered();
+            }
+          return true;
+        }
+    }
+  if(e->type() == QEvent::KeyRelease)
+    {
+      QKeyEvent *event = static_cast<QKeyEvent*>(e);
+      if (event->key() == Qt::Key_Return)
+        {
+          if(event->modifiers() & Qt::ControlModifier)
+            {
+              return true;
+            }
+          else
+            {
+              QString message_str = text_editor->toPlainText();
+              emit sendMessage(&usr_key, &message_str);
 
-            send_btn->setDefault();
-            return true;
-          }
-      }
+              text_editor->clear();
+              send_btn->setDefault();
+              return true;
+            }
+        }
+    }
+
     return false;
 }
 
@@ -262,6 +270,7 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
 
+  connect(message_editor->text_editor, SIGNAL(keyEnterTriggered(bool)), this, SLOT(onKeyEnterTriggered(bool)));
   connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
 
   loadHistory(current_active_index);
@@ -269,7 +278,8 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
 
 
   chat_widget->addChatBubble("This is Test Message one: \n We are staying at the bottom every time you start hive~~", false);
-  chat_widget->addChatBubble("This is a Test Message two: Yes", true);
+  chat_widget->addChatBubble("This is a Test Message two: Yes", true);  
+  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 }
 
 GuiChatStack::~GuiChatStack()
@@ -298,12 +308,46 @@ void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
 
 }
 
+void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
+{
+  event->accept();
+}
+
+void GuiChatStack::dropEvent(QDropEvent *event)
+{
+  qDebug()<<"0890809090909000file entre0000000000000000000";
+  QList<QUrl> urls = event->mimeData()->urls();
+  if (urls.isEmpty())
+    {
+      return;
+    }
+  QString fileName = urls.first().toLocalFile();
+  if (fileName.isEmpty())
+    {
+      return;
+    }
+
+}
+
 void GuiChatStack::onSendButtonClicked()
 {
   QString message_str = message_editor->text_editor->toPlainText();
   emit sendMessage(&usr_profile.key_str, &message_str);
   message_editor->text_editor->clear();
 
+}
+
+void GuiChatStack::onKeyEnterTriggered(bool pressed)
+{
+  if(pressed)
+    {
+      message_editor->send_btn->setHovered();
+    }
+  else
+    {
+      message_editor->send_btn->setDefault();
+
+    }
 }
 
 void GuiChatStack::loadHistory(int index)
@@ -330,3 +374,59 @@ void GuiChatStack::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 }
 
 
+
+GuiTextEdit::GuiTextEdit(QWidget *parent)
+{
+
+}
+
+GuiTextEdit::~GuiTextEdit()
+{
+
+}
+
+void GuiTextEdit::keyPressEvent(QKeyEvent *e)
+{
+  QKeyEvent *event = static_cast<QKeyEvent*>(e);
+  if(event->key() == Qt::Key_Return)
+    {
+      if(event->modifiers() & Qt::ControlModifier)
+        {
+          control_pressed = true;
+          this->insertPlainText("\n");
+        }
+      else
+        {
+          control_pressed = false;
+          emit keyEnterTriggered(true);
+        }
+    }
+}
+
+void GuiTextEdit::keyReleaseEvent(QKeyEvent *e)
+{
+  QKeyEvent *event = static_cast<QKeyEvent*>(e);
+  if (event->key() == Qt::Key_Return)
+    {
+      if(event->modifiers() & Qt::ControlModifier)
+        {
+          return;
+        }
+      else
+        {
+          QString message_str = this->toPlainText();
+          emit keyEnterTriggered(false);
+          this->clear();
+        }
+    }
+}
+
+void GuiTextEdit::dragEnterEvent(QDragEnterEvent *event)
+{
+
+}
+
+void GuiTextEdit::dropEvent(QDropEvent *event)
+{
+
+}

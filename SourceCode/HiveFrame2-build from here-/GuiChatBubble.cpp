@@ -1,3 +1,4 @@
+
 #include "GuiChatBubble.h"
 
 GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
@@ -44,7 +45,6 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
   painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
   this->setFixedWidth(label->rect().width()+20);
   this->setFixedHeight(label->rect().height()+20);
-
 }
 
 

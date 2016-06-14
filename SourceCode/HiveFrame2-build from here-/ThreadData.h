@@ -3,23 +3,22 @@
 
 #include "GlobalData.h"
 
+#include <QThread>
+#include <QMutex>
 #include <QDebug>
-#include <QObject>
-#include <QHostInfo>
 
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-
 #include <QFile>
 #include <QDir>
 #include <QTextStream>
 #include <QFileInfo>
 #include <QStandardPaths>
+
 #include <QFontDatabase>
+#include <QHostInfo>
 #include <QTime>
-#include <QThread>
-#include <QMutex>
 
 class ThreadData : public QThread
 {
