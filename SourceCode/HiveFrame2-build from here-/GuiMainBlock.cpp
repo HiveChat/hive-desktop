@@ -144,7 +144,6 @@ GuiChatStack* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
   main_stacked_widget->addWidget(gui_chat_stack);
   gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
   connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
-  connect(gui_chat_stack->message_editor, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
   return gui_chat_stack;
 }
 

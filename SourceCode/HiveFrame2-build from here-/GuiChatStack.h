@@ -29,8 +29,9 @@ public:
   ~GuiTextEdit();
 
 protected:
-  void keyPressEvent(QKeyEvent *e);
-  void keyReleaseEvent(QKeyEvent *e);
+///Do not delete!
+//  void keyPressEvent(QKeyEvent *e);
+//  void keyReleaseEvent(QKeyEvent *e);
   void dragEnterEvent(QDragEnterEvent *event);
   void dropEvent(QDropEvent *event);
 
@@ -99,6 +100,7 @@ public:
   GuiTextEdit *text_editor;
 
 protected:
+/// An old way to capture QEvent outside the class!
   bool eventFilter(QObject *obj, QEvent *e);
 
 private:
@@ -116,7 +118,7 @@ private:
 
 
 signals:
-  void sendMessage(QString *usrKey, QString *message);
+  void sendTriggered();
 
 };
 

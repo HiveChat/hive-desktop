@@ -126,8 +126,8 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidge
   text_editor = new GuiTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
-  text_editor->installEventFilter(this);
   text_editor->setFont(GlobalData::font_chatTextEditor);
+  text_editor->installEventFilter(this);
 
   ///tools
   expression_label = new GuiLabelButton(this);
@@ -184,6 +184,8 @@ GuiChatStack_message_editor::~GuiChatStack_message_editor()
 
 }
 
+/// Event filter: capture QEvent outside the class
+///   text_editor->installEventFilter(this);
 bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 {
   Q_ASSERT(obj == text_editor);
@@ -216,10 +218,8 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
             }
           else
             {
-              QString message_str = text_editor->toPlainText();
-              emit sendMessage(&usr_key, &message_str);
-
-              text_editor->clear();
+              qDebug()<<"old key";
+              emit sendTriggered();
               send_btn->setDefault();
               return true;
             }
@@ -270,7 +270,7 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
 
-  connect(message_editor->text_editor, SIGNAL(keyEnterTriggered(bool)), this, SLOT(onKeyEnterTriggered(bool)));
+  connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
   connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
 
   loadHistory(current_active_index);
@@ -339,6 +339,7 @@ void GuiChatStack::onSendButtonClicked()
 
 void GuiChatStack::onKeyEnterTriggered(bool pressed)
 {
+  qDebug()<<"enter key pressed";
   if(pressed)
     {
       message_editor->send_btn->setHovered();
@@ -346,7 +347,7 @@ void GuiChatStack::onKeyEnterTriggered(bool pressed)
   else
     {
       message_editor->send_btn->setDefault();
-
+      onSendButtonClicked();
     }
 }
 
@@ -377,7 +378,7 @@ void GuiChatStack::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 
 GuiTextEdit::GuiTextEdit(QWidget *parent)
 {
-
+  this->setParent(parent);
 }
 
 GuiTextEdit::~GuiTextEdit()
@@ -385,48 +386,77 @@ GuiTextEdit::~GuiTextEdit()
 
 }
 
-void GuiTextEdit::keyPressEvent(QKeyEvent *e)
-{
-  QKeyEvent *event = static_cast<QKeyEvent*>(e);
-  if(event->key() == Qt::Key_Return)
-    {
-      if(event->modifiers() & Qt::ControlModifier)
-        {
-          control_pressed = true;
-          this->insertPlainText("\n");
-        }
-      else
-        {
-          control_pressed = false;
-          emit keyEnterTriggered(true);
-        }
-    }
-}
 
-void GuiTextEdit::keyReleaseEvent(QKeyEvent *e)
-{
-  QKeyEvent *event = static_cast<QKeyEvent*>(e);
-  if (event->key() == Qt::Key_Return)
-    {
-      if(event->modifiers() & Qt::ControlModifier)
-        {
-          return;
-        }
-      else
-        {
-          QString message_str = this->toPlainText();
-          emit keyEnterTriggered(false);
-          this->clear();
-        }
-    }
-}
+///Not applicatable because "QWidget::keyPressEvent(e);" doesn't work as expected
+//void GuiTextEdit::keyPressEvent(QKeyEvent *e)
+//{
+//  if(e->key() == Qt::Key_Return)
+//    {
+//      if(e->modifiers() & Qt::ControlModifier)
+//        {
+//          control_pressed = true;
+//          this->insertPlainText("\n");
+//        }
+//      else
+//        {
+//          control_pressed = false;
+//          emit keyEnterTriggered(true);
+//        }
+//    }
+//  else
+//    {
+//      QWidget::keyPressEvent(e);
+//    }
+//}
+
+//void GuiTextEdit::keyReleaseEvent(QKeyEvent *e)
+//{
+//  if (e->key() == Qt::Key_Return)
+//    {
+//      if(e->modifiers() & Qt::ControlModifier)
+//        {
+//          return;
+//        }
+//      else
+//        {
+//          QString message_str = this->toPlainText();
+//          emit keyEnterTriggered(false);
+//          this->clear();
+//        }
+//    }
+//  else
+//    {
+//      QWidget::keyPressEvent(e);
+//    }
+//}
 
 void GuiTextEdit::dragEnterEvent(QDragEnterEvent *event)
 {
-
+  event->accept();
 }
 
 void GuiTextEdit::dropEvent(QDropEvent *event)
 {
+  QList<QUrl> url_list = event->mimeData()->urls();
+  if(url_list.isEmpty())
+    {
+      return;
+    }
+
+  if(url_list.count() > 15)
+    {
+      qDebug()<<"@GuiTextEdit::dropEvent: Too many files dropped";
+      return;
+    }
+
+  foreach(QUrl url, url_list)
+    {
+      QString fileName = url.toLocalFile();
+      if (fileName.isEmpty())
+        {
+          break;
+        }
+      qDebug()<<"@file dropped"<<fileName;
+    }
 
 }
