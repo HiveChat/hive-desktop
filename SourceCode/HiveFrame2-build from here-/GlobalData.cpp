@@ -43,7 +43,7 @@ bool operator !=(const SettingStruct &arg1, const SettingStruct &arg2)
 
 
 ///UI
-QFont GlobalData::font_futura;
+QFont GlobalData::font_main;
 QFont GlobalData::font_chatTextEditor;
 QFont GlobalData::font_chatBubble;
 QFont GlobalData::font_combWidgetUsrName;

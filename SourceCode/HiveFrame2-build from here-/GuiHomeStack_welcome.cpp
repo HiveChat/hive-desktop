@@ -10,18 +10,16 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   ////profile widget
   profile_widget = new QWidget(this);
 
-  QFont profile_font("Futura");
-
   my_avatar = new GuiAvatarButton(GlobalData::g_settings_struct.avatar_str,175,this);
   my_avatar->setAlignment(Qt::AlignHCenter);
 
   welcome_label = new QLabel(this);
   welcome_label->setAlignment(Qt::AlignHCenter);
-  welcome_label->setFont(profile_font);
+  welcome_label->setFont(GlobalData::font_chatBubble);
 
   ip_label = new QLabel(this);
   ip_label->setAlignment(Qt::AlignHCenter);
-  ip_label->setFont(profile_font);
+  ip_label->setFont(GlobalData::font_chatBubble);
 
   profile_layout = new QVBoxLayout(profile_widget);
   profile_layout->setAlignment(Qt::AlignCenter);

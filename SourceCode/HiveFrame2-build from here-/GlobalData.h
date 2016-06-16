@@ -82,7 +82,7 @@ class GlobalData
 {
 public:
   ///UI
-  static QFont font_futura;
+  static QFont font_main;
   static QFont font_chatTextEditor;
   static QFont font_chatBubble;
   static QFont font_combWidgetUsrName;

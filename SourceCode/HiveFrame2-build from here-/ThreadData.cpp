@@ -449,6 +449,27 @@ void ThreadData::writeCurrentConfig()
 void ThreadData::loadFonts()
 {
 
+#ifdef Q_OS_WIN
+    QString font_family = "Verdana";
+    GlobalData::font_chatTextEditor = QFont(font_family, 11);
+    GlobalData::font_main = QFont(font_family, 6);
+    GlobalData::font_chatBubble = GlobalData::font_main;
+    GlobalData::font_chatBubble.setPointSize(10);
+    GlobalData::font_combWidgetUsrName = GlobalData::font_main;
+    GlobalData::font_combWidgetUsrName.setPointSize(10);
+    GlobalData::font_combWidgetIpAddr = GlobalData::font_main;
+    GlobalData::font_combWidgetIpAddr.setPointSize(7);
+    GlobalData::font_menuButton = GlobalData::font_main;
+    GlobalData::font_menuButton.setPointSize(10);
+    GlobalData::font_scrollStackTitle = GlobalData::font_main;
+    GlobalData::font_scrollStackTitle.setPointSize(10);
+    GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
+    GlobalData::font_scrollStackSubtitle.setPointSize(9);
+
+
+#endif //Q_OS_WIN
+
+
 #ifndef Q_OS_WIN ///windows can't load font from qrc, don't know why.
   int font_id;
   QString font_family;
@@ -469,21 +490,21 @@ void ThreadData::loadFonts()
 
   font_id = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
   font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
-  GlobalData::font_futura = QFont(font_family, 10);
-  GlobalData::font_chatBubble = GlobalData::font_futura;
+  GlobalData::font_main = QFont(font_family, 10);
+  GlobalData::font_chatBubble = GlobalData::font_main;
   GlobalData::font_chatBubble.setPointSize(14);
-  GlobalData::font_combWidgetUsrName = GlobalData::font_futura;
+  GlobalData::font_combWidgetUsrName = GlobalData::font_main;
   GlobalData::font_combWidgetUsrName.setPointSize(15);
-  GlobalData::font_combWidgetIpAddr = GlobalData::font_futura;
+  GlobalData::font_combWidgetIpAddr = GlobalData::font_main;
   GlobalData::font_combWidgetIpAddr.setPointSize(11);
-  GlobalData::font_menuButton = GlobalData::font_futura;
+  GlobalData::font_menuButton = GlobalData::font_main;
   GlobalData::font_menuButton.setPointSize(14);
-  GlobalData::font_scrollStackTitle = GlobalData::font_futura;
+  GlobalData::font_scrollStackTitle = GlobalData::font_main;
   GlobalData::font_scrollStackTitle.setPointSize(15);
-  GlobalData::font_scrollStackSubtitle = GlobalData::font_futura;
+  GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
   GlobalData::font_scrollStackSubtitle.setPointSize(13);
 
-#endif
+#endif //Q_OS_WIN
 
 }
 
