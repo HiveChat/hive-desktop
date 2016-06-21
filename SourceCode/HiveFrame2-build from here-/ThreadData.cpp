@@ -464,8 +464,6 @@ void ThreadData::loadFonts()
     GlobalData::font_scrollStackTitle.setPointSize(10);
     GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
     GlobalData::font_scrollStackSubtitle.setPointSize(9);
-
-
 #endif //Q_OS_WIN
 
 
