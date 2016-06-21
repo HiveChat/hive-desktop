@@ -37,7 +37,7 @@ void GuiColorPicker::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
     {
-      *my_color = QColorDialog::getColor(Qt::white, this);
+      *my_color = QColorDialog::getColor(*my_color, this);
       repaint();
       emit clicked();
     }

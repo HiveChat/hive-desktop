@@ -1,7 +1,7 @@
 
 #include "GuiChatBubble.h"
 
-GuiChatBubble_text_area::GuiChatBubble_text_area(QString text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
+GuiChatBubble_text_area::GuiChatBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
 {
   int maxWidth = 500;
 
@@ -48,7 +48,7 @@ void GuiChatBubble_text_area::paintEvent(QPaintEvent *)
 }
 
 
-GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+GuiChatBubble::GuiChatBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
 
   ////recently not consider the strip, it's ugly.
@@ -102,7 +102,7 @@ GuiChatBubble::GuiChatBubble(QString text, bool alignLeft = true, QWidget *paren
 
 
 
-GuiFileBubble_file_info::GuiFileBubble_file_info(QString text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
+GuiFileBubble_file_info::GuiFileBubble_file_info(const QString &text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
 {
   int maxWidth = 500;
 
@@ -151,7 +151,7 @@ void GuiFileBubble_file_info::paintEvent(QPaintEvent *)
 }
 
 
-GuiFileBubble::GuiFileBubble(QString text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
 
   ////recently not consider the strip, it's ugly.

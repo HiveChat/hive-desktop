@@ -1,6 +1,6 @@
 #include "DataHistoryIO.h"
 
-DataHistoryIO::DataHistoryIO(QString usrKey, QObject *parent) : QObject(parent)
+DataHistoryIO::DataHistoryIO(const QString &usrKey, QObject *parent) : QObject(parent)
 {
   usr_key = usrKey;
   history_path = usr_path+usr_key;

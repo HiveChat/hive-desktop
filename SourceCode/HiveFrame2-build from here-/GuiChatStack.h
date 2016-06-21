@@ -133,7 +133,7 @@ public:
   ~GuiChatStack();
 
   void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
-  void checkMessage(MessageStruct messageStruct, bool fromMe);
+  void checkMessage(MessageStruct &messageStruct, bool fromMe);
 
   GuiChatStack_top_bar *top_bar;
   GuiChatStack_chat_widget *chat_widget;
@@ -157,7 +157,7 @@ private:
 
 public slots:
   void onSendButtonClicked();
-  void onKeyEnterTriggered(bool pressed);
+  void onKeyEnterTriggered(bool &pressed);
 
 signals:
   void sendMessage(QString *usrKey, QString *message);

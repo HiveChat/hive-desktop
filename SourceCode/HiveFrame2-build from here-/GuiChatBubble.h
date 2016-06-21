@@ -17,7 +17,7 @@ class GuiChatBubble_text_area : public QLabel
   Q_OBJECT
 
 public:
-  explicit GuiChatBubble_text_area(QString text, bool alignLeft, QWidget *parent = 0);
+  explicit GuiChatBubble_text_area(const QString &text, bool alignLeft, QWidget *parent = 0);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -35,7 +35,7 @@ class GuiChatBubble : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatBubble(QString text, bool alignLeft, QWidget *parent = 0);
+  explicit GuiChatBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
   GuiChatBubble_text_area *text_area;
 
 
@@ -51,7 +51,7 @@ class GuiFileBubble_file_info : public QLabel
   Q_OBJECT
 
 public:
-  explicit GuiFileBubble_file_info(QString text, bool alignLeft, QWidget *parent = 0);
+  explicit GuiFileBubble_file_info(const QString &text, bool alignLeft, QWidget *parent = 0);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -69,7 +69,7 @@ class GuiFileBubble : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiFileBubble(QString text, bool alignLeft, QWidget *parent = 0);
+  explicit GuiFileBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
   GuiFileBubble_file_info *file_info;
 
 

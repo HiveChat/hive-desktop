@@ -8,7 +8,7 @@ class DataHistoryIO : public QObject
   Q_OBJECT
 
 public:
-  explicit DataHistoryIO(QString usrKey, QObject *parent = 0);
+  explicit DataHistoryIO(const QString &usrKey, QObject *parent = 0);
   ~DataHistoryIO();
 
   QJsonArray readMessage(int index);

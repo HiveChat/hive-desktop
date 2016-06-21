@@ -52,7 +52,7 @@ private:
   ///data
   UsrProfileStruct usr_profile;
 
-  QString getSubNetStr(QString ipAddr);
+  QString getSubNetStr(QString &ipAddr);
 
 
 

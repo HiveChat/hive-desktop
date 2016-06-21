@@ -275,10 +275,6 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
 
   loadHistory(current_active_index);
 
-
-
-  chat_widget->addChatBubble("This is Test Message one: \n We are staying at the bottom every time you start hive~~", false);
-  chat_widget->addChatBubble("This is a Test Message two: Yes", true);  
   chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 }
 
@@ -296,7 +292,7 @@ void GuiChatStack::refreshCurrentActiveIndex()
 ///slots
 
 
-void GuiChatStack::checkMessage(MessageStruct messageStruct, bool fromMe)
+void GuiChatStack::checkMessage(MessageStruct &messageStruct, bool fromMe)
 {
   chat_widget->addChatBubble(messageStruct.message_str, fromMe);
 
@@ -337,7 +333,7 @@ void GuiChatStack::onSendButtonClicked()
 
 }
 
-void GuiChatStack::onKeyEnterTriggered(bool pressed)
+void GuiChatStack::onKeyEnterTriggered(bool &pressed)
 {
   qDebug()<<"enter key pressed";
   if(pressed)

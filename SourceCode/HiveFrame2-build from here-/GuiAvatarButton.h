@@ -16,7 +16,7 @@ public:
   GuiAvatarButton(const QString path, const int Diameter, QWidget *parent);
   GuiAvatarButton(const int Diameter, QWidget *parent);
 
-  void setAvatar(QString path);
+  void setAvatar(const QString &path);
 
 protected:
   void mouseReleaseEvent(QMouseEvent *);

@@ -183,7 +183,6 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
           write_json_document.setObject(usr_list_json_obj);
           file.resize(0);
           out<<write_json_document.toJson(QJsonDocument::Indented)<<endl;
-//          qDebug()<<write_json_document.toJson(QJsonDocument::Indented);
 
         }
     }

@@ -15,7 +15,7 @@ GuiAvatarButton::GuiAvatarButton(const int Diameter, QWidget *parent)
   this->setParent(parent);
 }
 
-void GuiAvatarButton::setAvatar(QString path)
+void GuiAvatarButton::setAvatar(const QString &path)
 {
   QBitmap mask(QSize(diameter,diameter));
   QPainter painter(&mask);
