@@ -48,7 +48,8 @@ SOURCES += main.cpp\
     GuiHomeStack_network.cpp \
     GuiHomeStack_list.cpp \
     GuiHomeStack_welcome.cpp \
-    ThreadSocketTCP.cpp
+    ThreadSocketTCP.cpp \
+    UserData.cpp
 
 HEADERS  += \
     GuiCentralWidget.h \
@@ -77,7 +78,8 @@ HEADERS  += \
     GuiHomeStack_network.h \
     GuiHomeStack_list.h \
     GuiHomeStack_welcome.h \
-    ThreadSocketTCP.h
+    ThreadSocketTCP.h \
+    UserData.h
 
 RESOURCES += \
     qss.qrc \

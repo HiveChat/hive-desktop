@@ -67,10 +67,11 @@ void GuiCentralWidget::delUsr(UsrProfileStruct *usrProfileStruct)
 
 }
 
-void GuiCentralWidget::onUsrProfileChanged(UsrProfileStruct *usrProfileStruct)
+void GuiCentralWidget::changeUsr(UsrProfileStruct *usrProfileStruct)
 {
   gui_main_block->gui_home_stack_list->refreshUsrProfile(usrProfileStruct);
   gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(usrProfileStruct);
+  gui_main_block->gui_home_stack_list->refreshUsrProfile(usrProfileStruct);
 }
 

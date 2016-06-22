@@ -69,6 +69,31 @@ void ThreadData::refreshGui()
   emit refreshGuiInfo();
 }
 
+QJsonObject ThreadData::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
+{
+  QJsonObject profile_json_obj;
+  profile_json_obj.insert("usrName", usrProfileStruct.name_str);
+  profile_json_obj.insert("avatarPath", usrProfileStruct.avatar_str);
+
+  QJsonObject usr_profile_json_obj;
+  usr_profile_json_obj.insert(usrProfileStruct.key_str, profile_json_obj);
+
+  return usr_profile_json_obj;
+}
+
+QJsonDocument ThreadData::makeUsrList(QList<QJsonObject> &usr_profile_list)
+{
+  QJsonArray usr_list_json_array;
+  foreach (QJsonObject json_obj, usr_profile_list)
+    {
+      usr_list_json_array.append(json_obj);
+    }
+  QJsonDocument json_doc;
+  json_doc.setArray(usr_list_json_array);
+
+  return json_doc;
+}
+
 
 ///////////!thread
 
@@ -111,7 +136,6 @@ void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
           if(!usr_list_json_obj.contains(usr_key))
             {
               QJsonObject usr_info_json_obj;
-//              usr_info_json_obj.insert("ipAddr", ip_addr);
               usr_info_json_obj.insert("usrKey", usr_key);
               usr_info_json_obj.insert("usrName", usr_name);
               usr_info_json_obj.insert("avatarPath", avatar_path);
@@ -248,7 +272,6 @@ bool ThreadData::checkDir(const QString directory)
   if(!dir.exists())
     {
 //      qDebug()<<"bool DataManager::ckeckDir(QString directory) NOT EXIST~";
-
       if(!dir.mkdir(directory))
         {
 //          qDebug()<<"bool DataManager::ckeckDir(QString directory) CANT MAKE DIR!";
@@ -263,7 +286,7 @@ QString ThreadData::appDataLocalPath()
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 }
 
-QJsonDocument ThreadData::defaultProfile()
+QJsonDocument ThreadData::makeUsrProfile()
 {
   loadDefaultGlobalData();
 
@@ -351,13 +374,13 @@ void ThreadData::loadMyProfile()
       else
         {
           file.resize(0);
-          out<<defaultProfile().toJson(QJsonDocument::Indented)<<endl;
+          out<<makeUsrProfile().toJson(QJsonDocument::Indented)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      out<<defaultProfile().toJson(QJsonDocument::Indented)<<endl;
+      out<<makeUsrProfile().toJson(QJsonDocument::Indented)<<endl;
     }
 
   written_settings_struct = GlobalData::g_settings_struct;

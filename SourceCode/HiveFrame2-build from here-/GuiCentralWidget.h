@@ -28,6 +28,7 @@ private:
 public slots:
   void addUsr(UsrProfileStruct *usrProfileStruct);
   void delUsr(UsrProfileStruct *usrProfileStruct);
+  void changeUsr(UsrProfileStruct *usrProfileStruct);
 
   void iconActivated(QSystemTrayIcon::ActivationReason reason)
   {
@@ -44,7 +45,6 @@ public slots:
   }
 
 private slots:
-  void onUsrProfileChanged(UsrProfileStruct *usrProfileStruct);
 
 
 };

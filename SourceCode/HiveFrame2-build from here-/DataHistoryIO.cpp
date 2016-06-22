@@ -35,7 +35,7 @@ DataHistoryIO::DataHistoryIO(const QString &usrKey, QObject *parent) : QObject(p
 
           if(temp_history_json_obj.value("full").toBool())  //if full
             {
-              full_history_list.append(temp_history_json_obj);
+              history_bundle_list.append(temp_history_json_obj);
             }
           else
             {
@@ -123,7 +123,7 @@ void DataHistoryIO::saveMessage()
       active_history_json_obj.insert("full", true);
       active_history_json_obj.insert("history", active_history_json_array);
 
-      full_history_list.append(active_history_json_obj);
+      history_bundle_list.append(active_history_json_obj);
 
       QJsonDocument active_history_json_doc;
       active_history_json_doc.setObject(active_history_json_obj);

@@ -27,7 +27,7 @@ private:
   QString usr_key;
 
   int current_active_index;
-  QList<QJsonObject> full_history_list;
+  QList<QJsonObject> history_bundle_list;
   QJsonObject active_history_json_obj;
   QJsonArray active_history_json_array;
 

@@ -47,9 +47,11 @@ private:
 
   SettingStruct written_settings_struct;
 
-  QJsonDocument defaultProfile();
-  void makeUsrKey();
+  QJsonDocument makeUsrProfile();
+  QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
+  QJsonDocument makeUsrList(QList<QJsonObject> &usr_profile_list);
 
+  void makeUsrKey();
   void initVariable();
   void initPalette();
   void checkFiles();

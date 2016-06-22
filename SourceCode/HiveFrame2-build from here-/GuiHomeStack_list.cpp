@@ -3,8 +3,6 @@
 
 GuiListItem::GuiListItem(QWidget *parent) : QWidget(parent)
 {
-
-
   avatar_button = new GuiAvatarButton(":/avatar/avatar/default.png", 90, this);
   name_label = new QLabel("Loading...", this);
   ip_label = new QLabel("Loading...", this);
@@ -34,7 +32,7 @@ void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 }
 
 
-
+////////////////////////////////////////////////////////////////////////
 
 GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
 {
