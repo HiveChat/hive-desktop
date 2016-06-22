@@ -31,7 +31,7 @@ public:
   void addUsr(UsrProfileStruct *usrProfileStruct);
 
   void loadUsrList();
-  static bool checkDir(const QString dir);
+  static bool checkDir(const QString &dir);
   static QString appDataLocalPath();
   void TEST_SECTION();
 

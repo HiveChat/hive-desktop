@@ -3,7 +3,6 @@
 ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 {
 
-  tcp_port = 8723;
   tcp_server = new QTcpServer(this);
   connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
   tcpInitServer();

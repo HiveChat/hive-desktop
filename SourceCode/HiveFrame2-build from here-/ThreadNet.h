@@ -57,7 +57,7 @@ private:
 
 
   ///TCP Server
-  qint16 tcp_port;
+  qint16 tcp_port = 8723;
   QString file_name;
   QFile *local_file;
 

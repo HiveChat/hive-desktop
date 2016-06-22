@@ -226,7 +226,6 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     {
       if(*usrProfileStruct != online_usr_profile_map.value(usrProfileStruct->key_str))
         {
-          qDebug()<<"Avatar Changed to be"<<usrProfileStruct->avatar_str;
           online_usr_profile_map.remove(usrProfileStruct->key_str);
           emit usrProfileChanged(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
         }
@@ -266,7 +265,7 @@ void ThreadData::loadDefaultGlobalData()
 }
 
 
-bool ThreadData::checkDir(const QString directory)
+bool ThreadData::checkDir(const QString &directory)
 {
   QDir dir(directory);
   if(!dir.exists())

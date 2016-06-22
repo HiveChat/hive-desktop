@@ -2,31 +2,36 @@
 #define DATAUSER_H
 
 #include <QObject>
-#include "GlobalData.h"
-#include "DataHistoryIO.h"
+#include <QtConcurrent>
+#include "ThreadData.h"
 
 class UserData : public QObject
 {
   Q_OBJECT
 public:
-  explicit UserData(const UsrProfileStruct *usr_profile_struct, QObject *parent = 0);
-
+  explicit UserData(const UsrProfileStruct &usr_profile_struct, QObject *parent = 0);
+  ~UserData();
 private:
-  UsrProfileStruct *usr_profile_struct;
-  DataHistoryIO *data_history_io;
+  void refreshUsrProfile(const UsrProfileStruct &usrProfileStruct);
 
+  void readHistoryBundle();
+  void makeHistoryBundle(int num);
+  void saveHistoryBundle();
+  void recordMessage(MessageStruct messageStruct, bool fromMe);
+
+  UsrProfileStruct usr_profile_struct;
+
+  const int max_bundle_capacity = 100;
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   const QString usr_path = app_data_local_path + "/usr/";
 
   QString history_path;
   QString usr_key;
 
-  int current_active_index;
-  QList<QJsonObject> full_history_list;
-  QJsonObject active_history_json_obj;
-  QJsonArray active_history_json_array;
+  int current_history_bundle_index;
+  QList<QJsonObject> history_bundle_list;
+  QJsonArray current_history_json_array;
 
-  int save_cout_down = 0;
 };
 
 #endif // DATAUSER_H
