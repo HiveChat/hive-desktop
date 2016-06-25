@@ -588,6 +588,3 @@ void decode(QString filename)
 
 
 //////slots
-
-
-
