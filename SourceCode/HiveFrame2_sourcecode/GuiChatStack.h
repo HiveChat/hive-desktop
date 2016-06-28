@@ -6,6 +6,8 @@
 #include "GuiAvatarButton.h"
 #include "GuiChatBubble.h"
 #include "GlobalData.h"
+#include "UserData.h"
+#include "GuiScrollStack.h"
 
 #include <QScrollBar>
 #include <QScrollArea>
@@ -13,10 +15,12 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 
+
 class GuiTextEdit;
 class GuiChatStack_top_bar;
 class GuiChatStack_chat_widget;
 class GuiChatStack_message_editor;
+class GuiChatStack_old;
 class GuiChatStack;
 
 
@@ -124,13 +128,18 @@ signals:
 
 //////////////////////////main//////////////////////////////////////
 
-class GuiChatStack : public QWidget
+class GuiChatStack_old : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
-  ~GuiChatStack();
+  explicit GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  ~GuiChatStack_old();
+
+  ////new
+  void setUserData(UserData *usr_data);
+
+  ////!new
 
   void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
   void checkMessage(MessageStruct &messageStruct, bool fromMe);
@@ -162,6 +171,19 @@ public slots:
 signals:
   void sendMessage(QString *usrKey, QString *message);
 
+
+  ////move
+
+
+};
+
+
+
+class GuiChatStack : GuiScrollStack
+{
+public:
+  GuiChatStack(QWidget *parent = 0);
+  ~GuiChatStack();
 };
 
 

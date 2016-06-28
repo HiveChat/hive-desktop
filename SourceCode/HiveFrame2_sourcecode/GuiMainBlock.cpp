@@ -21,19 +21,21 @@ GuiMainBlock::~GuiMainBlock()
 
 }
 
-void GuiMainBlock::clearStackMap(StaticStackType *reservation)
+void GuiMainBlock::clearStackMap(StaticStackType &reservation)
 {
   foreach (StaticStackType temp_static_stack_type, static_stack_map.keys())
     {
       if(temp_static_stack_type == Home_Welcome
          || temp_static_stack_type == Home_list
-         || temp_static_stack_type == *reservation)
+         || temp_static_stack_type == reservation)
         {
           continue;
         }
       else
         {
           qDebug()<<"#GuiMainBlock::clearStackMap(): Destroyed a QStackedWidget.";
+          QObject *obj = static_stack_map.value(temp_static_stack_type);
+          connect(obj, SIGNAL(destroyed()), this, SLOT(TEST_destroyedTest()));
           static_stack_map.value(temp_static_stack_type)->deleteLater();
           static_stack_map.remove(temp_static_stack_type);
         }
@@ -107,8 +109,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
         return static_stack;
       }
-
-    default:
+    case NULL_Stack:
       {
         break;
       }
@@ -127,20 +128,20 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 {
   if(!static_stack_map.contains(staticStackType))
     {
-      main_stacked_widget->setCurrentWidget(createStaticStack(staticStackType));
+      createStaticStack(staticStackType);
     }
   else
     {
       qDebug()<<"GuiMainBlock::displayStaticStack(): Displaying Stack that already exist.";
       main_stacked_widget->setCurrentWidget(static_stack_map.value(staticStackType));
     }
-  clearStackMap(&staticStackType);
+  clearStackMap(staticStackType);
 
 }
 
-GuiChatStack* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
+GuiChatStack_old* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
 {
-  gui_chat_stack = new GuiChatStack(usrProfileStruct, this);
+  gui_chat_stack = new GuiChatStack_old(usrProfileStruct, this);
   main_stacked_widget->addWidget(gui_chat_stack);
   gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
   connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
@@ -162,6 +163,11 @@ void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
 void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
 {
   emit sendMessage(*usrKey, *message);
+}
+
+void GuiMainBlock::TEST_destroyedTest()
+{
+  qDebug()<<"distroy is sucessful";
 }
 
 //  QProgressBar {

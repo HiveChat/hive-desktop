@@ -232,7 +232,7 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 
 //////////////////////////main//////////////////////////////////////
 
-GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
+GuiChatStack_old::GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
   ///Data
   usr_profile = *usrProfileStruct;
@@ -278,12 +278,17 @@ GuiChatStack::GuiChatStack(UsrProfileStruct *usrProfileStruct, QWidget *parent) 
   chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
 }
 
-GuiChatStack::~GuiChatStack()
+GuiChatStack_old::~GuiChatStack_old()
 {
 
 }
 
-void GuiChatStack::refreshCurrentActiveIndex()
+void GuiChatStack_old::setUserData(UserData *usr_data)
+{
+
+}
+
+void GuiChatStack_old::refreshCurrentActiveIndex()
 {
   current_active_index = data_history_io->currentActiveIndex();
 }
@@ -292,7 +297,7 @@ void GuiChatStack::refreshCurrentActiveIndex()
 ///slots
 
 
-void GuiChatStack::checkMessage(MessageStruct &messageStruct, bool fromMe)
+void GuiChatStack_old::checkMessage(MessageStruct &messageStruct, bool fromMe)
 {
   chat_widget->addChatBubble(messageStruct.message_str, fromMe);
 
@@ -304,12 +309,12 @@ void GuiChatStack::checkMessage(MessageStruct &messageStruct, bool fromMe)
 
 }
 
-void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
+void GuiChatStack_old::dragEnterEvent(QDragEnterEvent *event)
 {
   event->accept();
 }
 
-void GuiChatStack::dropEvent(QDropEvent *event)
+void GuiChatStack_old::dropEvent(QDropEvent *event)
 {
   qDebug()<<"0890809090909000file entre0000000000000000000";
   QList<QUrl> urls = event->mimeData()->urls();
@@ -325,7 +330,7 @@ void GuiChatStack::dropEvent(QDropEvent *event)
 
 }
 
-void GuiChatStack::onSendButtonClicked()
+void GuiChatStack_old::onSendButtonClicked()
 {
   QString message_str = message_editor->text_editor->toPlainText();
   emit sendMessage(&usr_profile.key_str, &message_str);
@@ -333,7 +338,7 @@ void GuiChatStack::onSendButtonClicked()
 
 }
 
-void GuiChatStack::onKeyEnterTriggered(bool &pressed)
+void GuiChatStack_old::onKeyEnterTriggered(bool &pressed)
 {
   qDebug()<<"enter key pressed";
   if(pressed)
@@ -347,7 +352,7 @@ void GuiChatStack::onKeyEnterTriggered(bool &pressed)
     }
 }
 
-void GuiChatStack::loadHistory(int index)
+void GuiChatStack_old::loadHistory(int index)
 {
   if(index <= current_active_index)
     {
@@ -365,7 +370,7 @@ void GuiChatStack::loadHistory(int index)
     }
 }
 
-void GuiChatStack::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+void GuiChatStack_old::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
   top_bar->setProfile(usrProfileStruct);
 }
@@ -454,5 +459,15 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
         }
       qDebug()<<"@file dropped"<<fileName;
     }
+
+}
+
+GuiChatStack::GuiChatStack(QWidget *parent)
+{
+  this->setParent(parent);
+}
+
+GuiChatStack::~GuiChatStack()
+{
 
 }

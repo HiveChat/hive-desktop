@@ -4,7 +4,8 @@
 #include "GuiAvatarButton.h"
 #include "GlobalData.h"
 
-#include <QFormLayout>
+#include <QFrame>
+#include <QVBoxLayout>
 #include <QScrollArea>
 
 
@@ -40,7 +41,7 @@ protected:
 
   GuiAvatarButton *icon_btn;
   QLabel *title_label;
-  QHBoxLayout *top_widget_main_layout;
+  QHBoxLayout *top_frame_main_layout;
 
 };
 
