@@ -1,7 +1,7 @@
 #include "GuiHomeStack_list.h"
 #include <QDebug>
 
-GuiListItem::GuiListItem(QWidget *parent) : QWidget(parent)
+GuiListItem::GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
   avatar_button = new GuiAvatarButton(":/avatar/avatar/default.png", 90, this);
   name_label = new QLabel("Loading...", this);
@@ -16,7 +16,7 @@ GuiListItem::GuiListItem(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(name_label);
   main_layout->addWidget(ip_label);
 
-  this->setParent(parent);
+  refreshUsrProfile(usrProfileStruct);
 }
 
 GuiListItem::~GuiListItem()
@@ -40,6 +40,7 @@ GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
   setTitle("Home");
   setSubTitle("online user");
 
+  this->central_layout->setAlignment(Qt::AlignLeft);
   this->setParent(parent);
 }
 
@@ -50,9 +51,8 @@ GuiHomeStack_list::~GuiHomeStack_list()
 
 void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
 {
-  GuiListItem *list_item = new GuiListItem(this);
+  GuiListItem *list_item = new GuiListItem(usrProfileStruct, this);
   list_item_map.insert(usrProfileStruct->key_str, list_item);
-  central_layout->setAlignment(Qt::AlignLeft);
   central_layout->addWidget(list_item);
 }
 
