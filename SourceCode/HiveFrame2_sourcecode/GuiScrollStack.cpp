@@ -11,19 +11,19 @@ GuiScrollStack::~GuiScrollStack()
 
 }
 
-void GuiScrollStack::setTitle(QString text)
+void GuiScrollStack::setTitle(const QSting &text)
 {
   title_qstr = text;
   title_label->setText(title_qstr+" - "+sub_title_qstr);
 }
 
-void GuiScrollStack::setSubTitle(QString text)
+void GuiScrollStack::setSubTitle(const QSting &text)
 {
   sub_title_qstr = text;
   title_label->setText(title_qstr+" - "+sub_title_qstr);
 }
 
-void GuiScrollStack::setIcon(QString path)
+void GuiScrollStack::setIcon(const QSting &path)
 {
   icon_btn->setAvatar(path);
 }
@@ -125,7 +125,7 @@ void GuiScrollStack::addTag(QString text)
   central_layout->addSpacing(30);
 }
 
-void GuiScrollStack::addItem(QString text, QString string)
+void GuiScrollStack::addItem(const QString &text, QString string)
 {
   QLabel *text_label = new QLabel("\t" + text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -147,7 +147,7 @@ void GuiScrollStack::addItem(QString text, QString string)
   central_layout->addSpacing(10);
 }
 
-void GuiScrollStack::addItem(QString text, QWidget *widget)
+void GuiScrollStack::addItem(const QString &text, QWidget *widget)
 {
   QLabel *text_label = new QLabel(text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -165,7 +165,7 @@ void GuiScrollStack::addItem(QString text, QWidget *widget)
 
 }
 
-void GuiScrollStack::addItem(QString text, QLayout *widgetLayout)
+void GuiScrollStack::addItem(const QString &text, QLayout *widgetLayout)
 {
   QLabel *text_label = new QLabel(text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -181,6 +181,14 @@ void GuiScrollStack::addItem(QString text, QLayout *widgetLayout)
   central_layout->addLayout(layout);
   central_layout->addSpacing(10);
 
+}
+
+void GuiScrollStack::addItem(QWidget *centralWidget)
+{
+  central_layout->addWidget(centralWidget);
+  central_layout->setAlignment(Qt::AlignCenter);
+  central_layout->setMargin(0);
+  central_layout->setSpacing(0);
 }
 
 

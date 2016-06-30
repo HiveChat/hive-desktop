@@ -117,7 +117,7 @@ private:
 
   QHBoxLayout *main_layout;
 
-  QString usr_key;
+  QString *usr_key;
   bool control_pressed = false;
 
 
@@ -133,15 +133,15 @@ class GuiChatStack_old : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
-  ~GuiChatStack_old();
+  explicit GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);//"
+  ~GuiChatStack_old();//"
 
   ////new
-  void setUserData(UserData *usr_data);
+  void setUserData(UserData *usr_data);//"
 
   ////!new
 
-  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
+  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);//"
   void checkMessage(MessageStruct &messageStruct, bool fromMe);
 
   GuiChatStack_top_bar *top_bar;
@@ -182,8 +182,30 @@ signals:
 class GuiChatStack : GuiScrollStack
 {
 public:
-  GuiChatStack(QWidget *parent = 0);
+  GuiChatStack(UserData *usrData, QWidget *parent = 0);
   ~GuiChatStack();
+
+  void refreshUI();
+
+
+
+private:
+  //UI
+  QScrollArea *chat_scroll_area;
+  GuiChatStack_chat_widget *chat_widget;
+  GuiChatStack_message_editor *message_editor;
+
+  //Data
+  UserData *usr_data;
+
+  //Function
+  void flipLatestMessage();
+  void flipUpMessage();
+  void flipDownMessage();
+
+
+
+
 };
 
 

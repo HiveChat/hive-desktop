@@ -15,6 +15,16 @@ UserData::~UserData()
   saveHistoryBundle();
 }
 
+QJsonObject UserData::flipUp()
+{
+
+}
+
+QJsonObject UserData::flipDown()
+{
+
+}
+
 void UserData::readHistoryBundle()
 {
 //  int index = 1;

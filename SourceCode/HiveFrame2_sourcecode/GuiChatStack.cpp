@@ -116,7 +116,7 @@ void GuiChatStack_chat_widget::addChatBubble(QString message, bool fromMe)
 
 GuiChatStack_message_editor::GuiChatStack_message_editor(QString *usrKey, QWidget *parent) : QWidget(parent)
 {
-  usr_key = *usrKey;
+  usr_key = usrKey;
 
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
@@ -258,7 +258,7 @@ GuiChatStack_old::GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *
   chat_scroll_area->setPalette(palette);
   chat_scroll_area->setFrameStyle(0);
 
-  message_editor = new GuiChatStack_message_editor(&usr_profile.key_str, this);
+  message_editor = new GuiChatStack_message_editor(usr_profile.key_str, this);
 
   ////main layout
   main_layout = new QVBoxLayout(this);
@@ -462,12 +462,75 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 }
 
-GuiChatStack::GuiChatStack(QWidget *parent)
+
+
+
+
+
+GuiChatStack::GuiChatStack(UserData *usrData, QWidget *parent)
 {
+  ///Data
+  usr_data = usrData;
+
+  ///UI
+//  top_bar = new GuiChatStack_top_bar(&usr_profile, this);
+
+  QFrame *top_bar_line = new QFrame(this);
+  top_bar_line->setFrameShape(QFrame::HLine);
+  top_bar_line->setFrameShadow(QFrame::Plain);
+  top_bar_line->setFixedHeight(2);
+  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+
+  chat_widget = new GuiChatStack_chat_widget(this);
+  chat_scroll_area = new QScrollArea(this);
+  chat_scroll_area->setWidgetResizable(true);
+  chat_scroll_area->setWidget(chat_widget);
+  QPalette palette = chat_scroll_area->palette();
+  palette.setColor(QPalette::Base, QColor(255,255,255,255));
+  chat_scroll_area->setPalette(palette);
+  chat_scroll_area->setFrameStyle(0);
+
+  message_editor = new GuiChatStack_message_editor(usrData->key(), this);
+
+  //this is a flag to distinguish
+  ///////////////////////////////////////Eiffel Tower////////////////////////////////////
+
+  ////main layout
+  central_layout->addWidget(top_bar_line);
+  central_layout->addWidget(chat_scroll_area);
+  central_layout->addWidget(message_editor);
+
+
+  connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
+  connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
+
+  flipLatestMessage();
+  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
+
   this->setParent(parent);
 }
 
 GuiChatStack::~GuiChatStack()
+{
+
+}
+
+void GuiChatStack::refreshUI()
+{
+
+}
+
+void GuiChatStack::flipLatestMessage()
+{
+
+}
+
+void GuiChatStack::flipUpMessage()
+{
+
+}
+
+void GuiChatStack::flipDownMessage()
 {
 
 }

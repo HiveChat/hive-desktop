@@ -11,25 +11,32 @@
 
 class GuiScrollStack : public QWidget
 {
-//  Q_OBJECT
+  Q_OBJECT
+
+  enum LayoutStyle
+  {
+    Profile,
+    Linear
+  };
 
 public:
-  explicit GuiScrollStack(QWidget *parent = 0);
+  explicit GuiScrollStack(LayoutStyle , QWidget *parent = 0);
   ~GuiScrollStack();
 
   QVBoxLayout *central_layout;
 
-  void setTitle(QString text);
-  void setSubTitle(QString text);
-  void setIcon(QString path);
 
 protected:
   void setUpUI();
-  void addTag(QString text);
+  void setTitle(const QString &text);
+  void setSubTitle(const QString &text);
+  void setIcon(const QString &path);
+  void addTag(const QString &text);
 
-  void addItem(QString text, QString string);
-  void addItem(QString text, QWidget *widget);
-  void addItem(QString text, QLayout *widgetLayout);
+  void addItem(const QString &text, QString string);
+  void addItem(const QString &text, QWidget *widget);
+  void addItem(const QString &text, QLayout *widgetLayout);
+  void addItem(QWidget *centralWidget);
 
   QFont font = GlobalData::font_scrollStackTitle;
   QFont sub_font = GlobalData::font_scrollStackSubtitle;
