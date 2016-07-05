@@ -258,7 +258,7 @@ GuiChatStack_old::GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *
   chat_scroll_area->setPalette(palette);
   chat_scroll_area->setFrameStyle(0);
 
-  message_editor = new GuiChatStack_message_editor(usr_profile.key_str, this);
+//  message_editor = new GuiChatStack_message_editor(usr_profile.key_str, this);
 
   ////main layout
   main_layout = new QVBoxLayout(this);
@@ -512,7 +512,7 @@ GuiChatStack::GuiChatStack(UserData *usrData, QWidget *parent)
 
 GuiChatStack::~GuiChatStack()
 {
-
+//  this->set
 }
 
 void GuiChatStack::refreshUI()

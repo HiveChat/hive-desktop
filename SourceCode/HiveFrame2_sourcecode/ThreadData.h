@@ -69,7 +69,7 @@ private:
   const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
 
   //data map
-  QMap<QString, UsrProfileStruct> localUsrProfileMap;
+  QMap<QString, UsrProfileStruct> local_usr_profile_map;
   QMap<QString, UsrProfileStruct> online_usr_profile_map;
 
   //config map

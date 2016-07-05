@@ -11,19 +11,19 @@ GuiScrollStack::~GuiScrollStack()
 
 }
 
-void GuiScrollStack::setTitle(const QSting &text)
+void GuiScrollStack::setTitle(const QString &text)
 {
   title_qstr = text;
   title_label->setText(title_qstr+" - "+sub_title_qstr);
 }
 
-void GuiScrollStack::setSubTitle(const QSting &text)
+void GuiScrollStack::setSubTitle(const QString &text)
 {
   sub_title_qstr = text;
   title_label->setText(title_qstr+" - "+sub_title_qstr);
 }
 
-void GuiScrollStack::setIcon(const QSting &path)
+void GuiScrollStack::setIcon(const QString &path)
 {
   icon_btn->setAvatar(path);
 }
@@ -107,7 +107,7 @@ void GuiScrollStack::setUpUI()
 
 }
 
-void GuiScrollStack::addTag(QString text)
+void GuiScrollStack::addTag(const QString &text)
 {
   QLabel *tag_labe = new QLabel(text, this);
   tag_labe->setFont(GlobalData::font_scrollStackTitle);

@@ -179,10 +179,10 @@ signals:
 
 
 
-class GuiChatStack : GuiScrollStack
+class GuiChatStack : public GuiScrollStack
 {
 public:
-  GuiChatStack(UserData *usrData, QWidget *parent = 0);
+  explicit GuiChatStack(UserData *usrData, QWidget *parent = 0);
   ~GuiChatStack();
 
   void refreshUI();
