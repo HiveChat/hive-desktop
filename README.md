@@ -1,3 +1,5 @@
+#DO NOT COMPILE! UPGRADING!
+#在大改结构，不要编译！！！！！
 # Hive! [0.0.4]
 
 ![](http://7xpqkc.dl1.z0.glb.clouddn.com/HiveIcon_small.png)

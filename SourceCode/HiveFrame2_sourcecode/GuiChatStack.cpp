@@ -517,7 +517,30 @@ GuiChatStack::~GuiChatStack()
 
 void GuiChatStack::refreshUI()
 {
+  this->setIcon(*usr_data->avatar());
+  this->setTitle(*usr_data->name());
+  this->setSubTitle(*usr_data->ip());
+}
 
+void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
+{
+  event->accept();
+
+}
+
+void GuiChatStack::dropEvent(QDropEvent *event)
+{
+  qDebug()<<"@GuiChatStack::dropEvent(): file entered.";
+  QList<QUrl> urls = event->mimeData()->urls();
+  if (urls.isEmpty())
+    {
+      return;
+    }
+  QString fileName = urls.first().toLocalFile();
+  if (fileName.isEmpty())
+    {
+      return;
+    }
 }
 
 void GuiChatStack::flipLatestMessage()
@@ -534,3 +557,26 @@ void GuiChatStack::flipDownMessage()
 {
 
 }
+
+void GuiChatStack::onSendButtonClicked()
+{
+  QString message_str = message_editor->text_editor->toPlainText();
+  emit sendMessage(usr_data->key(), &message_str);
+  message_editor->text_editor->clear();
+
+}
+
+void GuiChatStack::onKeyEnterTriggered(bool &pressed)
+{
+  qDebug()<<"enter key pressed";
+  if(pressed)
+    {
+      message_editor->send_btn->setHovered();
+    }
+  else
+    {
+      message_editor->send_btn->setDefault();
+      onSendButtonClicked();
+    }
+}
+

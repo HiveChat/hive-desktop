@@ -418,7 +418,7 @@ void ThreadData::loadUsrList()
               usr_profile_struct.name_str = temp_usr_profile_json_obj["usrName"].toString();
               usr_profile_struct.avatar_str = temp_usr_profile_json_obj["avatarPath"].toString();
 
-              localUsrProfileMap.insert(*temp_usr_key_str, usr_profile_struct);
+              local_usr_profile_map.insert(*temp_usr_key_str, usr_profile_struct);
               emit usrProfileLoaded(&usr_profile_struct);
             }
         }
