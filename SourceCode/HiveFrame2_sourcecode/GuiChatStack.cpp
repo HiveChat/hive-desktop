@@ -230,251 +230,246 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 }
 
 
-//////////////////////////main//////////////////////////////////////
+////////////////////////////main//////////////////////////////////////
 
-GuiChatStack_old::GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
-{
-  ///Data
-  usr_profile = *usrProfileStruct;
-
-  data_history_io = new DataHistoryIO(usr_profile.key_str, this);
-  refreshCurrentActiveIndex();
-
-  ///UI
-  top_bar = new GuiChatStack_top_bar(&usr_profile, this);
-
-  QFrame *top_bar_line = new QFrame(this);
-  top_bar_line->setFrameShape(QFrame::HLine);
-  top_bar_line->setFrameShadow(QFrame::Plain);
-  top_bar_line->setFixedHeight(2);
-  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
-
-  chat_widget = new GuiChatStack_chat_widget(this);
-  chat_scroll_area = new QScrollArea(this);
-  chat_scroll_area->setWidgetResizable(true);
-  chat_scroll_area->setWidget(chat_widget);
-  QPalette palette = chat_scroll_area->palette();
-  palette.setColor(QPalette::Base, QColor(255,255,255,255));
-  chat_scroll_area->setPalette(palette);
-  chat_scroll_area->setFrameStyle(0);
-
-//  message_editor = new GuiChatStack_message_editor(usr_profile.key_str, this);
-
-  ////main layout
-  main_layout = new QVBoxLayout(this);
-  main_layout->setAlignment(Qt::AlignCenter);
-  main_layout->addWidget(top_bar);
-  main_layout->addWidget(top_bar_line);
-  main_layout->addWidget(chat_scroll_area);
-  main_layout->addWidget(message_editor);
-  main_layout->setMargin(0);
-  main_layout->setSpacing(0);
-
-  connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
-  connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
-
-  loadHistory(current_active_index);
-
-  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
-}
-
-GuiChatStack_old::~GuiChatStack_old()
-{
-
-}
-
-void GuiChatStack_old::setUserData(UserData *usr_data)
-{
-
-}
-
-void GuiChatStack_old::refreshCurrentActiveIndex()
-{
-  current_active_index = data_history_io->currentActiveIndex();
-}
-
-
-///slots
-
-
-void GuiChatStack_old::checkMessage(MessageStruct &messageStruct, bool fromMe)
-{
-  chat_widget->addChatBubble(messageStruct.message_str, fromMe);
-
-  data_history_io->wirteMessage(messageStruct, fromMe);
-
-  refreshCurrentActiveIndex();
-
-  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
-
-}
-
-void GuiChatStack_old::dragEnterEvent(QDragEnterEvent *event)
-{
-  event->accept();
-}
-
-void GuiChatStack_old::dropEvent(QDropEvent *event)
-{
-  qDebug()<<"0890809090909000file entre0000000000000000000";
-  QList<QUrl> urls = event->mimeData()->urls();
-  if (urls.isEmpty())
-    {
-      return;
-    }
-  QString fileName = urls.first().toLocalFile();
-  if (fileName.isEmpty())
-    {
-      return;
-    }
-
-}
-
-void GuiChatStack_old::onSendButtonClicked()
-{
-  QString message_str = message_editor->text_editor->toPlainText();
-  emit sendMessage(&usr_profile.key_str, &message_str);
-  message_editor->text_editor->clear();
-
-}
-
-void GuiChatStack_old::onKeyEnterTriggered(bool &pressed)
-{
-  qDebug()<<"enter key pressed";
-  if(pressed)
-    {
-      message_editor->send_btn->setHovered();
-    }
-  else
-    {
-      message_editor->send_btn->setDefault();
-      onSendButtonClicked();
-    }
-}
-
-void GuiChatStack_old::loadHistory(int index)
-{
-  if(index <= current_active_index)
-    {
-      QJsonArray history_json_array = data_history_io->readMessage(index);
-      for(int i = 0; i < history_json_array.count(); i++)
-        {
-          QJsonObject history_json_obj = history_json_array[i].toObject();
-          chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
-        }
-    }
-  else
-    {
-      qDebug()<<"@GuiChatStack::loadHistory(): History index error!!";
-      return;
-    }
-}
-
-void GuiChatStack_old::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
-{
-  top_bar->setProfile(usrProfileStruct);
-}
-
-
-
-GuiTextEdit::GuiTextEdit(QWidget *parent)
-{
-  this->setParent(parent);
-}
-
-GuiTextEdit::~GuiTextEdit()
-{
-
-}
-
-
-///Not applicatable because "QWidget::keyPressEvent(e);" doesn't work as expected
-//void GuiTextEdit::keyPressEvent(QKeyEvent *e)
+//GuiChatStack_old::GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 //{
-//  if(e->key() == Qt::Key_Return)
-//    {
-//      if(e->modifiers() & Qt::ControlModifier)
-//        {
-//          control_pressed = true;
-//          this->insertPlainText("\n");
-//        }
-//      else
-//        {
-//          control_pressed = false;
-//          emit keyEnterTriggered(true);
-//        }
-//    }
-//  else
-//    {
-//      QWidget::keyPressEvent(e);
-//    }
-//}
+//  ///Data
+//  usr_profile = *usrProfileStruct;
 
-//void GuiTextEdit::keyReleaseEvent(QKeyEvent *e)
-//{
-//  if (e->key() == Qt::Key_Return)
-//    {
-//      if(e->modifiers() & Qt::ControlModifier)
-//        {
-//          return;
-//        }
-//      else
-//        {
-//          QString message_str = this->toPlainText();
-//          emit keyEnterTriggered(false);
-//          this->clear();
-//        }
-//    }
-//  else
-//    {
-//      QWidget::keyPressEvent(e);
-//    }
-//}
+//  data_history_io = new DataHistoryIO(usr_profile.key_str, this);
+//  refreshCurrentActiveIndex();
 
-void GuiTextEdit::dragEnterEvent(QDragEnterEvent *event)
-{
-  event->accept();
-}
-
-void GuiTextEdit::dropEvent(QDropEvent *event)
-{
-  QList<QUrl> url_list = event->mimeData()->urls();
-  if(url_list.isEmpty())
-    {
-      return;
-    }
-
-  if(url_list.count() > 15)
-    {
-      qDebug()<<"@GuiTextEdit::dropEvent: Too many files dropped";
-      return;
-    }
-
-  foreach(QUrl url, url_list)
-    {
-      QString fileName = url.toLocalFile();
-      if (fileName.isEmpty())
-        {
-          break;
-        }
-      qDebug()<<"@file dropped"<<fileName;
-    }
-
-}
-
-
-
-
-
-
-GuiChatStack::GuiChatStack(UserData *usrData, QWidget *parent)
-{
-  ///Data
-  usr_data = usrData;
-
-  ///UI
+//  ///UI
 //  top_bar = new GuiChatStack_top_bar(&usr_profile, this);
 
+//  QFrame *top_bar_line = new QFrame(this);
+//  top_bar_line->setFrameShape(QFrame::HLine);
+//  top_bar_line->setFrameShadow(QFrame::Plain);
+//  top_bar_line->setFixedHeight(2);
+//  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+
+//  chat_widget = new GuiChatStack_chat_widget(this);
+//  chat_scroll_area = new QScrollArea(this);
+//  chat_scroll_area->setWidgetResizable(true);
+//  chat_scroll_area->setWidget(chat_widget);
+//  QPalette palette = chat_scroll_area->palette();
+//  palette.setColor(QPalette::Base, QColor(255,255,255,255));
+//  chat_scroll_area->setPalette(palette);
+//  chat_scroll_area->setFrameStyle(0);
+
+////  message_editor = new GuiChatStack_message_editor(usr_profile.key_str, this);
+
+//  ////main layout
+//  main_layout = new QVBoxLayout(this);
+//  main_layout->setAlignment(Qt::AlignCenter);
+//  main_layout->addWidget(top_bar);
+//  main_layout->addWidget(top_bar_line);
+//  main_layout->addWidget(chat_scroll_area);
+//  main_layout->addWidget(message_editor);
+//  main_layout->setMargin(0);
+//  main_layout->setSpacing(0);
+
+//  connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
+//  connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
+
+//  loadHistory(current_active_index);
+
+//  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
+//}
+
+//GuiChatStack_old::~GuiChatStack_old()
+//{
+
+//}
+
+//void GuiChatStack_old::setUserData(UserData *usr_data)
+//{
+
+//}
+
+//void GuiChatStack_old::refreshCurrentActiveIndex()
+//{
+//  current_active_index = data_history_io->currentActiveIndex();
+//}
+
+
+/////slots
+
+
+//void GuiChatStack_old::checkMessage(MessageStruct &messageStruct, bool fromMe)
+//{
+//  chat_widget->addChatBubble(messageStruct.message_str, fromMe);
+
+//  data_history_io->wirteMessage(messageStruct, fromMe);
+
+//  refreshCurrentActiveIndex();
+
+//  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
+
+//}
+
+//void GuiChatStack_old::dragEnterEvent(QDragEnterEvent *event)
+//{
+//  event->accept();
+//}
+
+//void GuiChatStack_old::dropEvent(QDropEvent *event)
+//{
+//  qDebug()<<"0890809090909000file entre0000000000000000000";
+//  QList<QUrl> urls = event->mimeData()->urls();
+//  if (urls.isEmpty())
+//    {
+//      return;
+//    }
+//  QString fileName = urls.first().toLocalFile();
+//  if (fileName.isEmpty())
+//    {
+//      return;
+//    }
+
+//}
+
+//void GuiChatStack_old::onSendButtonClicked()
+//{
+//  QString message_str = message_editor->text_editor->toPlainText();
+//  emit sendMessage(&usr_profile.key_str, &message_str);
+//  message_editor->text_editor->clear();
+
+//}
+
+//void GuiChatStack_old::onKeyEnterTriggered(bool &pressed)
+//{
+//  qDebug()<<"enter key pressed";
+//  if(pressed)
+//    {
+//      message_editor->send_btn->setHovered();
+//    }
+//  else
+//    {
+//      message_editor->send_btn->setDefault();
+//      onSendButtonClicked();
+//    }
+//}
+
+//void GuiChatStack_old::loadHistory(int index)
+//{
+//  if(index <= current_active_index)
+//    {
+//      QJsonArray history_json_array = data_history_io->readMessage(index);
+//      for(int i = 0; i < history_json_array.count(); i++)
+//        {
+//          QJsonObject history_json_obj = history_json_array[i].toObject();
+//          chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+//        }
+//    }
+//  else
+//    {
+//      qDebug()<<"@GuiChatStack::loadHistory(): History index error!!";
+//      return;
+//    }
+//}
+
+//void GuiChatStack_old::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+//{
+//  top_bar->setProfile(usrProfileStruct);
+//}
+
+
+
+//GuiTextEdit::GuiTextEdit(QWidget *parent)
+//{
+//  this->setParent(parent);
+//}
+
+//GuiTextEdit::~GuiTextEdit()
+//{
+
+//}
+
+
+/////Not applicatable because "QWidget::keyPressEvent(e);" doesn't work as expected
+////void GuiTextEdit::keyPressEvent(QKeyEvent *e)
+////{
+////  if(e->key() == Qt::Key_Return)
+////    {
+////      if(e->modifiers() & Qt::ControlModifier)
+////        {
+////          control_pressed = true;
+////          this->insertPlainText("\n");
+////        }
+////      else
+////        {
+////          control_pressed = false;
+////          emit keyEnterTriggered(true);
+////        }
+////    }
+////  else
+////    {
+////      QWidget::keyPressEvent(e);
+////    }
+////}
+
+////void GuiTextEdit::keyReleaseEvent(QKeyEvent *e)
+////{
+////  if (e->key() == Qt::Key_Return)
+////    {
+////      if(e->modifiers() & Qt::ControlModifier)
+////        {
+////          return;
+////        }
+////      else
+////        {
+////          QString message_str = this->toPlainText();
+////          emit keyEnterTriggered(false);
+////          this->clear();
+////        }
+////    }
+////  else
+////    {
+////      QWidget::keyPressEvent(e);
+////    }
+////}
+
+//void GuiTextEdit::dragEnterEvent(QDragEnterEvent *event)
+//{
+//  event->accept();
+//}
+
+//void GuiTextEdit::dropEvent(QDropEvent *event)
+//{
+//  QList<QUrl> url_list = event->mimeData()->urls();
+//  if(url_list.isEmpty())
+//    {
+//      return;
+//    }
+
+//  if(url_list.count() > 15)
+//    {
+//      qDebug()<<"@GuiTextEdit::dropEvent: Too many files dropped";
+//      return;
+//    }
+
+//  foreach(QUrl url, url_list)
+//    {
+//      QString fileName = url.toLocalFile();
+//      if (fileName.isEmpty())
+//        {
+//          break;
+//        }
+//      qDebug()<<"@file dropped"<<fileName;
+//    }
+
+//}
+
+
+
+
+
+
+GuiChatStack::GuiChatStack(QWidget *parent)
+{
+  ///UI
   QFrame *top_bar_line = new QFrame(this);
   top_bar_line->setFrameShape(QFrame::HLine);
   top_bar_line->setFrameShadow(QFrame::Plain);

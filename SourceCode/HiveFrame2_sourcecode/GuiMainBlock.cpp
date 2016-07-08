@@ -2,9 +2,8 @@
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
-
   main_stacked_widget = new QStackedWidget(this);
-
+  gui_chat_stack = new GuiChatStack(this);
 
   main_layout = new QVBoxLayout(this);
   main_layout->setMargin(0);
@@ -119,7 +118,8 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(QString usrKey)
 {
-  main_stacked_widget->setCurrentWidget(gui_chat_stack_map.find(usrKey).value());
+  main_stacked_widget->setCurrentWidget(gui_chat_stack);
+  gui_chat_stack->
 }
 
 
@@ -139,25 +139,27 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 
 }
 
-GuiChatStack_old* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
-{
-  gui_chat_stack = new GuiChatStack_old(usrProfileStruct, this);
-  main_stacked_widget->addWidget(gui_chat_stack);
-  gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
-  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
-  return gui_chat_stack;
-}
+//GuiChatStack_old* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
+//{
+//  gui_chat_stack = new GuiChatStack_old(usrProfileStruct, this);
+//  main_stacked_widget->addWidget(gui_chat_stack);
+//  gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
+//  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
+//  return gui_chat_stack;
+//}
+//<<
 
 void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
 {
-  if(fromMe)
-    {
-      gui_chat_stack_map.find(messageStruct.reciever_key).value()->checkMessage(messageStruct, fromMe);
-    }
-  else
-    {
-      gui_chat_stack_map.find(messageStruct.sender_key).value()->checkMessage(messageStruct, fromMe);
-    }
+//  if(fromMe)
+//    {
+//      gui_chat_stack_map.find(messageStruct.reciever_key).value()->checkMessage(messageStruct, fromMe);
+//    }
+//  else
+//    {
+//      gui_chat_stack_map.find(messageStruct.sender_key).value()->checkMessage(messageStruct, fromMe);
+//    }
+//<<
 }
 
 void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)

@@ -26,8 +26,8 @@ private:
   QStringList my_profile_str_list;
 
 public slots:
-  void addUsr(UsrProfileStruct *usrProfileStruct);
-  void delUsr(UsrProfileStruct *usrProfileStruct);
+  void addUsr(UserData *userData);
+  void delUsr(UserData *userData);
   void changeUsr(UsrProfileStruct *usrProfileStruct);
 
   void iconActivated(QSystemTrayIcon::ActivationReason reason)

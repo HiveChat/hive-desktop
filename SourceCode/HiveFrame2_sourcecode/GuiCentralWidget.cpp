@@ -34,7 +34,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(gui_main_block);
 
   //connect
-  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(QString)), gui_main_block, SLOT(displayChatStack(QString)));
+
 
   ///buttons~~
   connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
@@ -55,9 +55,9 @@ GuiCentralWidget::~GuiCentralWidget()
 }
 
 
-void GuiCentralWidget::addUsr(UsrProfileStruct *usrProfileStruct)
+void GuiCentralWidget::addUsr(UserData *userData)
 {
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(usrProfileStruct);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
 
   //these will be eliminated
   gui_main_block->addChatStack(usrProfileStruct);
@@ -69,12 +69,12 @@ void GuiCentralWidget::delUsr(UsrProfileStruct *usrProfileStruct)
 
 }
 
-void GuiCentralWidget::changeUsr(UsrProfileStruct *usrProfileStruct)
+void GuiCentralWidget::changeUsr(UserData *userData)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(usrProfileStruct);
   gui_main_block->gui_home_stack_list->refreshUsrProfile(usrProfileStruct);
 
   //these will be eliminated
-  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
+//  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);<<
 }
 

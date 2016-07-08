@@ -1,12 +1,13 @@
 #include "UserData.h"
 
-UserData::UserData(const UsrProfileStruct &usr_profile_struct, QObject *parent) : QObject(parent)
+UserData::UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
-  usr_key = usr_profile_struct.key_str;
+  usr_key = usrProfileStruct.key_str;
   history_path = usr_path+usr_key;
-
   ThreadData::checkDir(history_path);
+
   readHistoryBundle();
+  current_history_bundle_index = latest_history_bundle_index;
 
 }
 
@@ -15,14 +16,38 @@ UserData::~UserData()
   saveHistoryBundle();
 }
 
-QJsonObject UserData::flipUp()
+void UserData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
 {
+  usr_profile_struct = usrProfileStruct;
+}
+
+QJsonArray* UserData::flipLatest()
+{
+  current_history_bundle_index = latest_history_bundle_index;
+  return &latest_history_json_array;
+}
+
+QJsonArray* UserData::flipUp()
+{
+  current_history_bundle_index --;
+  if(current_history_bundle_index > 0)
+    {
+      return &history_bundle_list[current_history_bundle_index];
+    }
 
 }
 
-QJsonObject UserData::flipDown()
+QJsonArray* UserData::flipDown()
 {
-
+  current_history_bundle_index ++;
+  if(current_history_bundle_index == latest_history_bundle_index)
+    {
+      return &latest_history_json_array;
+    }
+  else if(current_history_bundle_index < latest_history_bundle_index)
+    {
+      return &history_bundle_list[current_history_bundle_index];
+    }
 }
 
 void UserData::readHistoryBundle()
@@ -36,8 +61,8 @@ void UserData::readHistoryBundle()
         {
           if(index == 1)
             {
-              current_history_bundle_index = 1;
-              makeHistoryBundle(current_history_bundle_index);
+              latest_history_bundle_index = 1;
+              makeHistoryBundle(latest_history_bundle_index);
               break;
             }
           else
@@ -61,12 +86,12 @@ void UserData::readHistoryBundle()
 
           if(temp_history_json_obj.value("full").toBool())
             {
-              history_bundle_list.append(temp_history_json_obj);
+              history_bundle_list.append( temp_history_json_obj.value("history").toArray());
             }
           else
             {
-              current_history_json_array = temp_history_json_obj.value("history").toArray();
-              current_history_bundle_index = index;
+              latest_history_json_array = temp_history_json_obj.value("history").toArray();
+              latest_history_bundle_index = index;
               break;
             }
         }
@@ -116,10 +141,10 @@ void UserData::saveHistoryBundle()
 
       ///max num of messages allowed in each file.
       QJsonObject history_bundle_json_obj;
-      if(current_history_json_array.count() < max_bundle_capacity)
+      if(latest_history_json_array.count() < max_bundle_capacity)
         {
           history_bundle_json_obj.insert("full", false);
-          history_bundle_json_obj.insert("history", current_history_json_array);
+          history_bundle_json_obj.insert("history", latest_history_json_array);
 
           QJsonDocument active_history_json_doc;
           active_history_json_doc.setObject(history_bundle_json_obj);
@@ -128,9 +153,9 @@ void UserData::saveHistoryBundle()
       else
         {
           history_bundle_json_obj.insert("full", true);
-          history_bundle_json_obj.insert("history", current_history_json_array);
+          history_bundle_json_obj.insert("history", latest_history_json_array);
 
-          history_bundle_list.append(history_bundle_json_obj);
+          history_bundle_list.append(history_bundle_json_obj.value("history").toArray());
 
           QJsonDocument active_history_json_doc;
           active_history_json_doc.setObject(history_bundle_json_obj);
@@ -140,7 +165,7 @@ void UserData::saveHistoryBundle()
     //        {
     //          current_history_json_array.removeFirst();
     //        }
-          current_history_json_array = QJsonArray();
+          latest_history_json_array = QJsonArray();
 
           current_history_bundle_index ++;
           makeHistoryBundle(current_history_bundle_index);
@@ -155,7 +180,7 @@ void UserData::saveHistoryBundle()
 
 void UserData::recordMessage(MessageStruct messageStruct, bool fromMe)
 {
-  if(current_history_json_array.count() >= max_bundle_capacity)
+  if(latest_history_json_array.count() >= max_bundle_capacity)
     {
       saveHistoryBundle();
     }
@@ -164,7 +189,7 @@ void UserData::recordMessage(MessageStruct messageStruct, bool fromMe)
   message_json_obj.insert("fromMe", fromMe);
   message_json_obj.insert("time", messageStruct.time_str);
 
-  current_history_json_array.append(message_json_obj);
+  latest_history_json_array.append(message_json_obj);
 
   saveHistoryBundle();
 }

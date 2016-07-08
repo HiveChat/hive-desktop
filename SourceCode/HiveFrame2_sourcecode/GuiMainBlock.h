@@ -23,12 +23,12 @@ public:
   explicit GuiMainBlock(QWidget *parent = 0);
   ~GuiMainBlock();
 
-  GuiChatStack_old *gui_chat_stack;
+  GuiChatStack *gui_chat_stack;
   QStackedWidget *main_stacked_widget;
   GuiHomeStack_welcome *gui_home_stack_welcome;
   GuiHomeStack_list *gui_home_stack_list;
 
-  QMap<QString ,GuiChatStack_old*> gui_chat_stack_map;
+//  QMap<QString ,GuiChatStack_old*> gui_chat_stack_map;<<
 
 private:
   QMap<StaticStackType, QWidget*> static_stack_map;
@@ -42,13 +42,11 @@ private:
 public slots:
   void displayStaticStack(StaticStackType staticStackType);
   void displayChatStack(QString usrKey);
-  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);
+//  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);<<
   void onMessageRecieved(MessageStruct messageStruct, bool fromMe);
 
 private slots:
   void onMessageToSend(QString *usrKey, QString *message);
-
-
   void TEST_destroyedTest();
 
 signals:

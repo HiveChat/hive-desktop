@@ -126,56 +126,56 @@ signals:
 
 };
 
-//////////////////////////main//////////////////////////////////////
+////////////////////////////main//////////////////////////////////////
 
-class GuiChatStack_old : public QWidget
-{
-  Q_OBJECT
+//class GuiChatStack_old : public QWidget
+//{
+//  Q_OBJECT
 
-public:
-  explicit GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);//"
-  ~GuiChatStack_old();//"
+//public:
+//  explicit GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);//"
+//  ~GuiChatStack_old();//"
 
-  ////new
-  void setUserData(UserData *usr_data);//"
+//  ////new
+//  void setUserData(UserData *usr_data);//"
 
-  ////!new
+//  ////!new
 
-  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);//"
-  void checkMessage(MessageStruct &messageStruct, bool fromMe);
+//  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);//"
+//  void checkMessage(MessageStruct &messageStruct, bool fromMe);
 
-  GuiChatStack_top_bar *top_bar;//"
-  GuiChatStack_chat_widget *chat_widget;//"
-  GuiChatStack_message_editor *message_editor;//"
+//  GuiChatStack_top_bar *top_bar;//"
+//  GuiChatStack_chat_widget *chat_widget;//"
+//  GuiChatStack_message_editor *message_editor;//"
 
-protected:
-  void dragEnterEvent(QDragEnterEvent *event);//"
-  void dropEvent(QDropEvent *event);//"
+//protected:
+//  void dragEnterEvent(QDragEnterEvent *event);//"
+//  void dropEvent(QDropEvent *event);//"
 
-private:
-  DataHistoryIO *data_history_io;//"
-  int current_active_index;//"
+//private:
+//  DataHistoryIO *data_history_io;//"
+//  int current_active_index;//"
 
-  QVBoxLayout *main_layout;//"
-  QScrollArea *chat_scroll_area;//"
+//  QVBoxLayout *main_layout;//"
+//  QScrollArea *chat_scroll_area;//"
 
-  UsrProfileStruct usr_profile;//"
+//  UsrProfileStruct usr_profile;//"
 
-  void loadHistory(int index);
-  void refreshCurrentActiveIndex();//"
+//  void loadHistory(int index);
+//  void refreshCurrentActiveIndex();//"
 
-public slots:
-  void onSendButtonClicked();//"
-  void onKeyEnterTriggered(bool &pressed);//"
+//public slots:
+//  void onSendButtonClicked();//"
+//  void onKeyEnterTriggered(bool &pressed);//"
 
-signals:
-  void sendMessage(QString *usrKey, QString *message);//"
-
-
-  ////move
+//signals:
+//  void sendMessage(QString *usrKey, QString *message);//"
 
 
-};
+//  ////move
+
+
+//};
 
 
 
@@ -184,7 +184,7 @@ class GuiChatStack : public GuiScrollStack
   Q_OBJECT
 
 public:
-  explicit GuiChatStack(UserData *usrData, QWidget *parent = 0);
+  explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
   void refreshUI();

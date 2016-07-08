@@ -21,9 +21,11 @@ Hive::Hive(QObject *parent) : QObject(parent)
   connect(thread_data, SIGNAL(refreshGuiInfo()), gui_central_widget->gui_main_block->gui_home_stack_welcome, SLOT(refresh()), Qt::QueuedConnection);
 
   connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEntered(UsrProfileStruct*)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(usrProfileLoaded(UsrProfileStruct*)), gui_central_widget, SLOT(addUsr(UsrProfileStruct*)), Qt::QueuedConnection);
-  connect(thread_data, SIGNAL(usrProfileChanged(UsrProfileStruct*)), gui_central_widget, SLOT(changeUsr(UsrProfileStruct*)), Qt::QueuedConnection);
+  connect(thread_data, SIGNAL(usrProfileLoaded(UserData*)), gui_central_widget, SLOT(addUsr(UserData*)), Qt::QueuedConnection);
+  connect(thread_data, SIGNAL(usrProfileChanged(UserData*)), gui_central_widget, SLOT(changeUsr(UserData*)), Qt::QueuedConnection);
 
+    connect(gui_central_widget->gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), thread_data, SLOT(onCombClicked(const QString&)));
+    connect(thread_data, SIGNAL(refreshChatStack(UserData*)), gui_central_widget->gui_main_block->gui_chat_stack, SLOT(setUserData(UserData*)));
   connect(gui_central_widget->gui_main_block, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(udpSendMessage(QString,QString)), Qt::QueuedConnection);
   connect(thread_net, SIGNAL(messageRecieved(MessageStruct*,bool)), thread_data, SLOT(onMessageCome(MessageStruct*,bool)), Qt::AutoConnection);
   connect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)), Qt::AutoConnection);

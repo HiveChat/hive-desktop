@@ -2,6 +2,7 @@
 #define DATAMANAGER_H
 
 #include "GlobalData.h"
+#include "UserData.h"
 
 #include <QThread>
 #include <QMutex>
@@ -71,12 +72,14 @@ private:
   //data map
   QMap<QString, UsrProfileStruct> local_usr_profile_map;
   QMap<QString, UsrProfileStruct> online_usr_profile_map;
+  QMap<QString, UserData*> online_usr_data_map;
 
   //config map
   QMap<QString, QColor*> myColorConfigJsonMap;
   QMap<QString, QString*> myProfileConfigJsonMap;
 
 public slots:
+  void onCombClicked(const QString &usrKey);
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(MessageStruct *messageStruct, bool fromMe);
@@ -86,8 +89,9 @@ public slots:
 
 signals:
   void refreshGuiInfo();
-  void usrProfileLoaded(UsrProfileStruct *usrProfileStruct);
-  void usrProfileChanged(UsrProfileStruct *usrProfileStruct);
+  void refreshChatStack(UserData *userData);
+  void usrProfileLoaded(UserData *userData);
+  void usrProfileChanged(UserData *userData);
   void messageLoaded(MessageStruct messageStrList, bool fromMe);
 
 

@@ -220,6 +220,11 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
+void ThreadData::onCombClicked(const QString &usrKey)
+{
+  emit refreshChatStack(online_usr_data_map.value(usrKey));
+}
+
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
   if(online_usr_profile_map.keys().contains(usrProfileStruct->key_str))
@@ -227,13 +232,18 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
       if(*usrProfileStruct != online_usr_profile_map.value(usrProfileStruct->key_str))
         {
           online_usr_profile_map.remove(usrProfileStruct->key_str);
+          online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
+
           emit usrProfileChanged(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
         }
       return;
     }
   else
     {
+      UserData *user_data = new UserData(*usrProfileStruct, this);
       online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct);
+      online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
+
       emit usrProfileLoaded(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
 
       return;
