@@ -60,19 +60,18 @@ void GuiCentralWidget::addUsr(UserData *userData)
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
 
   //these will be eliminated
-  gui_main_block->addChatStack(usrProfileStruct);
-  gui_main_block->gui_home_stack_list->addUsr(usrProfileStruct);
+  gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
 }
 
-void GuiCentralWidget::delUsr(UsrProfileStruct *usrProfileStruct)
+void GuiCentralWidget::delUsr(UserData *userData)
 {
 
 }
 
 void GuiCentralWidget::changeUsr(UserData *userData)
 {
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(usrProfileStruct);
-  gui_main_block->gui_home_stack_list->refreshUsrProfile(usrProfileStruct);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
+  gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
 
   //these will be eliminated
 //  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);<<

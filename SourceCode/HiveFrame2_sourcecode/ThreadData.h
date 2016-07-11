@@ -21,6 +21,8 @@
 #include <QHostInfo>
 #include <QTime>
 
+extern QMap<QString, UserData*> online_usr_data_map;
+
 class ThreadData : public QThread
 {
   Q_OBJECT
@@ -72,7 +74,6 @@ private:
   //data map
   QMap<QString, UsrProfileStruct> local_usr_profile_map;
   QMap<QString, UsrProfileStruct> online_usr_profile_map;
-  QMap<QString, UserData*> online_usr_data_map;
 
   //config map
   QMap<QString, QColor*> myColorConfigJsonMap;
