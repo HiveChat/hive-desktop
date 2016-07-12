@@ -29,17 +29,18 @@ Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 * This programme is NOT finished yet.
 * But there are some pre-releases, which might be incomplete.
 
-Old MacOS X:
-Not available yet.
-
 New MacOS X:
 [MacOS X >= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_0.0.4_alpha_osx_new_Qt5.6.zip.dmg)
 
+Old MacOS X:
+[MacOS X <= 10.9 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_0.0.4_alpha_osx_old_Qt5.5.0.zip.dmg)
+
 Linux(Qt 5.5):
-	not yet compiled. Building from source code recommended.
+	Building from source code is recommended.
 
 Windows:
-Making installer. Comming....
+[Download now](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_0.0.4_Installer_alpha_win_Qt5.6.exe)
+
 ## Features(aims):
 1. Nice UX/UI which creates an relaxing working environment.
 2. Considerate group discussion function to optimize the efficiency of cooperation. The messages of different topic won't mix messily together(I know you hate it).
