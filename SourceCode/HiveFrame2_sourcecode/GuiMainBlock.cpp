@@ -116,10 +116,10 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 }
 
 
-void GuiMainBlock::displayChatStack(QString usrKey)
+void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
-  gui_chat_stack->refreshUI();
+  gui_chat_stack->refreshUI(usrKey);
 }
 
 

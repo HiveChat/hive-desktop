@@ -21,6 +21,9 @@
 #include <QHostInfo>
 #include <QTime>
 
+class ThreadData;
+class UserData;
+
 extern QMap<QString, UserData*> online_usr_data_map;
 
 class ThreadData : public QThread
@@ -80,7 +83,6 @@ private:
   QMap<QString, QString*> myProfileConfigJsonMap;
 
 public slots:
-  void onCombClicked(const QString &usrKey);
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(MessageStruct *messageStruct, bool fromMe);
@@ -90,7 +92,6 @@ public slots:
 
 signals:
   void refreshGuiInfo();
-  void refreshChatStack(UserData *userData);
   void usrProfileLoaded(UserData *userData);
   void usrProfileChanged(UserData *userData);
   void messageLoaded(MessageStruct messageStrList, bool fromMe);

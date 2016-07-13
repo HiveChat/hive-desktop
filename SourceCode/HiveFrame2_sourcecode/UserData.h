@@ -5,6 +5,9 @@
 #include <QtConcurrent>
 #include "ThreadData.h"
 
+
+class UserData;
+
 class UserData : public QObject
 {
   Q_OBJECT

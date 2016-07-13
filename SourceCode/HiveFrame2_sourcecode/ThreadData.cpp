@@ -220,11 +220,6 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
-void ThreadData::onCombClicked(const QString &usrKey)
-{
-  emit refreshChatStack(online_usr_data_map.value(usrKey));
-}
-
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
   if(online_usr_profile_map.keys().contains(usrProfileStruct->key_str))
@@ -234,7 +229,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
           online_usr_profile_map.remove(usrProfileStruct->key_str);
           online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
 
-          emit usrProfileChanged(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
+          emit usrProfileChanged(online_usr_data_map.value(usrProfileStruct->key_str));
         }
       return;
     }
@@ -244,7 +239,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
       online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct);
       online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
-      emit usrProfileLoaded(&online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct).value());
+      emit usrProfileLoaded(online_usr_data_map.value(usrProfileStruct->key_str));
 
       return;
     }
@@ -429,7 +424,8 @@ void ThreadData::loadUsrList()
               usr_profile_struct.avatar_str = temp_usr_profile_json_obj["avatarPath"].toString();
 
               local_usr_profile_map.insert(*temp_usr_key_str, usr_profile_struct);
-              emit usrProfileLoaded(&usr_profile_struct);
+              ////////////must enable!!!!!!!!
+//              emit usrProfileLoaded(&usr_profile_struct);
             }
         }
     }

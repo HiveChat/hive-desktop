@@ -1,7 +1,6 @@
 #ifndef GUICHATSTACK_H
 #define GUICHATSTACK_H
 
-#include "DataHistoryIO.h"
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
 #include "GuiChatBubble.h"
@@ -14,14 +13,14 @@
 #include <QTextEdit>
 #include <QDragEnterEvent>
 #include <QMimeData>
-
+#include <QJsonArray>
 
 class GuiTextEdit;
-class GuiChatStack_top_bar;
 class GuiChatStack_chat_widget;
 class GuiChatStack_message_editor;
-class GuiChatStack_old;
 class GuiChatStack;
+//class GuiChatStack_top_bar;
+//class GuiChatStack_old;
 
 
 class GuiTextEdit : public QTextEdit
@@ -48,23 +47,23 @@ signals:
 
 //////////////////////////top//////////////////////////////////////
 
-class GuiChatStack_top_bar : public QWidget
-{
-  Q_OBJECT
+//class GuiChatStack_top_bar : public QWidget
+//{
+//  Q_OBJECT
 
-public:
-  explicit GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
-  ~GuiChatStack_top_bar();
+//public:
+//  explicit GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+//  ~GuiChatStack_top_bar();
 
-  void setProfile(UsrProfileStruct *usrProfileStruct);
+//  void setProfile(UsrProfileStruct *usrProfileStruct);
 
-private:
-  QHBoxLayout *main_layout;
-  QLabel *usr_name_label;
-  QLabel *usr_ip_label;
-  GuiAvatarButton *avatar_button;
+//private:
+//  QHBoxLayout *main_layout;
+//  QLabel *usr_name_label;
+//  QLabel *usr_ip_label;
+//  GuiAvatarButton *avatar_button;
 
-};
+//};
 
 //////////////////////////mid//////////////////////////////////////
 
@@ -86,7 +85,7 @@ private:
   QList<GuiChatBubble*> chat_bubble_list;
 
 public slots:
-  void addChatBubble(QString message, bool fromMe);
+  void addChatBubble(const QString &message, const bool &fromMe);
 
 };
 
@@ -97,7 +96,7 @@ class GuiChatStack_message_editor : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_message_editor(QString *usrKey, QWidget *parent = 0);
+  explicit GuiChatStack_message_editor(QWidget *parent = 0);
   ~GuiChatStack_message_editor();
 
   GuiLabelButton *send_btn;
@@ -117,7 +116,6 @@ private:
 
   QHBoxLayout *main_layout;
 
-  QString *usr_key;
   bool control_pressed = false;
 
 
@@ -187,7 +185,6 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
-  void refreshUI();
 
 protected:
   void dragEnterEvent(QDragEnterEvent *event);
@@ -208,6 +205,7 @@ private:
   void flipDownMessage();
 
 public slots:
+  void refreshUI(const QString &usrKey);
   void onSendButtonClicked();
   void onKeyEnterTriggered(bool &pressed);
 

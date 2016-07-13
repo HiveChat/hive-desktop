@@ -1,3 +1,4 @@
+
 #include "GuiChatBubble.h"
 
 GuiChatBubble_text_area::GuiChatBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
