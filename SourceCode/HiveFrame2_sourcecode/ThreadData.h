@@ -24,7 +24,7 @@
 class ThreadData;
 class UserData;
 
-extern QMap<QString, UserData*> online_usr_data_map;
+static QMap<QString, UserData*> online_usr_data_map;
 
 class ThreadData : public QThread
 {

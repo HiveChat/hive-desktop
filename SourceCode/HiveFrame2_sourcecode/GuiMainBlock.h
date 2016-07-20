@@ -34,7 +34,7 @@ private:
   QMap<StaticStackType, QWidget*> static_stack_map;
   StaticStackType current_static_stack_type = NULL_Stack;
   void clearStackMap(StaticStackType &reservation);
-  QWidget *createStaticStack(StaticStackType staticStackType);
+  void createStaticStack(StaticStackType staticStackType);
 
   QVBoxLayout *main_layout;
 

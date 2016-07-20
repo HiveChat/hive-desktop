@@ -2,8 +2,9 @@
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
-  main_stacked_widget = new QStackedWidget(this);
   gui_chat_stack = new GuiChatStack(this);
+  main_stacked_widget = new QStackedWidget(this);
+  main_stacked_widget->addWidget(gui_chat_stack);
 
   main_layout = new QVBoxLayout(this);
   main_layout->setMargin(0);
@@ -41,7 +42,7 @@ void GuiMainBlock::clearStackMap(StaticStackType &reservation)
     }
 }
 
-QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
+void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 {
   switch (staticStackType) {
     case Home_Welcome:
@@ -51,7 +52,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->addWidget(gui_home_stack_welcome);
         main_stacked_widget->setCurrentWidget(gui_home_stack_welcome);
 
-        return gui_home_stack_welcome;
+        return;
       }
 
     case Home_list:
@@ -61,7 +62,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->addWidget(gui_home_stack_list);
         main_stacked_widget->setCurrentWidget(gui_home_stack_list);
 
-        return gui_home_stack_list;
+        return;
       }
 
     ///active stacks
@@ -72,7 +73,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->addWidget(static_stack);
         main_stacked_widget->setCurrentWidget(static_stack);
 
-        return static_stack;
+        return;
       }
 
     case Settings_Messaging:
@@ -82,7 +83,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->addWidget(static_stack);
         main_stacked_widget->setCurrentWidget(static_stack);
 
-        return static_stack;
+        return;
       }
     case Settings_Profile:
       {
@@ -91,7 +92,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->addWidget(static_stack);
         main_stacked_widget->setCurrentWidget(static_stack);
 
-        return static_stack;
+        return;
       }
 
     case Settings_Style:
@@ -106,7 +107,7 @@ QWidget *GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->addWidget(static_stack);
         main_stacked_widget->setCurrentWidget(static_stack);
 
-        return static_stack;
+        return;
       }
     case NULL_Stack:
       {

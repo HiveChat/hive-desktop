@@ -31,7 +31,6 @@ private:
 
   QLabel *icon_label;
   QLabel *text_label;
-  QHBoxLayout *main_layout;
 
   QPixmap default_pixmap;
   QPixmap hovered_pixmap;
