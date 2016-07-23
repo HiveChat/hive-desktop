@@ -6,6 +6,7 @@
 #include "ThreadData.h"
 
 
+
 class UserData;
 
 class UserData : public QObject
@@ -14,6 +15,8 @@ class UserData : public QObject
 public:
   explicit UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
   ~UserData();
+
+  void TEST_print_usr_profile_struct();
 
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
 

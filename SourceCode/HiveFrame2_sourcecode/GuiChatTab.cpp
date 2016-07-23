@@ -71,8 +71,6 @@ void GuiChatTab::showMenu()
 GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
-
-  ///color problem here !!!!!!!!!!!
   palette.setColor(QPalette::Window,QColor(0,0,0,0));// GlobalData::g_tabColor);
   this->setPalette(palette);
   this->setAutoFillBackground(true);
@@ -83,7 +81,6 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
 
-  this->setParent(parent);
 }
 
 void GuiChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
