@@ -4,28 +4,25 @@ Hive::Hive(QObject *parent) : QObject(parent)
 {
 
 #ifdef Q_OS_MAC
-//  QApplication::setQui tOnLastWindowClosed(false);
+//  QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
 #endif
 
-  ////data manager
   thread_data = new ThreadData(this);
-
-  ////net manager
   thread_net = new ThreadNet(this);
-
-  ////gui
   gui_central_widget = new GuiCentralWidget();
+  //QObject not compatible to QWidget, delete obj manually
 
   ////connect
-  connect(thread_data, SIGNAL(refreshGuiInfo()), gui_central_widget->gui_main_block->gui_home_stack_welcome, SLOT(refresh()), Qt::QueuedConnection);
+  connect(thread_data, SIGNAL(refreshGuiInfo()), gui_central_widget, SLOT(refreshUI()), Qt::QueuedConnection);
 
   connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEntered(UsrProfileStruct*)), Qt::AutoConnection);
   connect(thread_data, SIGNAL(usrProfileLoaded(UserData*)), gui_central_widget, SLOT(addUsr(UserData*)), Qt::QueuedConnection);
   connect(thread_data, SIGNAL(usrProfileChanged(UserData*)), gui_central_widget, SLOT(changeUsr(UserData*)), Qt::QueuedConnection);
 
 
-  connect(thread_data, SIGNAL(refreshChatStack(UserData*)), gui_central_widget->gui_main_block->gui_chat_stack, SLOT(setUserData(UserData*)));
+  //bind to SIGNAL refreshGuiInfo();
+//  connect(thread_data, SIGNAL(refreshChatStack(UserData*)), gui_central_widget->gui_main_block->gui_chat_stack, SLOT(setUserData(UserData*)));
   connect(gui_central_widget->gui_main_block, SIGNAL(sendMessage(QString,QString)), thread_net, SLOT(udpSendMessage(QString,QString)), Qt::QueuedConnection);
   connect(thread_net, SIGNAL(messageRecieved(MessageStruct*,bool)), thread_data, SLOT(onMessageCome(MessageStruct*,bool)), Qt::AutoConnection);
   connect(thread_data, SIGNAL(messageLoaded(MessageStruct,bool)), gui_central_widget->gui_main_block, SLOT(onMessageRecieved(MessageStruct, bool)), Qt::AutoConnection);
@@ -33,7 +30,6 @@ Hive::Hive(QObject *parent) : QObject(parent)
 
   thread_data->start(QThread::NormalPriority);
   thread_net->start(QThread::NormalPriority);
-
 
 #ifdef Q_OS_MAC
   QtMac::setBadgeLabelText("");

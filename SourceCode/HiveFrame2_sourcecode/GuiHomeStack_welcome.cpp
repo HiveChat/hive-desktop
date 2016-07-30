@@ -43,10 +43,10 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   dd->addWidget(background_label);
 
 
-  this->refresh();
+  this->refreshUI();
 }
 
-void GuiHomeStack_welcome::refresh()
+void GuiHomeStack_welcome::refreshUI()
 {
   int current_hour = QTime::currentTime().toString("hh").toInt();
   if(current_hour >= 4 && current_hour <= 12)

@@ -35,7 +35,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   //connect
 
-  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), gui_main_block->gui_chat_stack, SLOT(refreshUI()));
+//  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), gui_main_block->gui_chat_stack, SLOT(refreshUI()));
 
   ///buttons~~
   connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
@@ -76,6 +76,11 @@ void GuiCentralWidget::changeUsr(UserData *userData)
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
 
   //these will be eliminated
-//  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);<<
+  //  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);<<
+}
+
+void GuiCentralWidget::refreshUI()
+{
+  gui_main_block->gui_home_stack_welcome->refreshUI();
 }
 

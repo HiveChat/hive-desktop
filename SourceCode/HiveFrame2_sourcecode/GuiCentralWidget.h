@@ -29,6 +29,8 @@ public slots:
   void addUsr(UserData *userData);
   void delUsr(UserData *userData);
   void changeUsr(UserData *userData);
+  void refreshUI();
+
 
   void iconActivated(QSystemTrayIcon::ActivationReason reason)
   {
