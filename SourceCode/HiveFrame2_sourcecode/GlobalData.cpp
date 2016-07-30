@@ -84,4 +84,14 @@ QString GlobalData::g_currentTime()
   return QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 }
 
+void GlobalData::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
+{
+  qDebug()<<endl<<"Test by "<<str;
+  qDebug()<<usrProfileStruct.key_str;
+  qDebug()<<usrProfileStruct.name_str;
+  qDebug()<<usrProfileStruct.ip_str;
+  qDebug()<<usrProfileStruct.avatar_str<<endl;
+
+}
+
 

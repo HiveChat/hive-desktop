@@ -131,12 +131,15 @@ void ThreadNet::udpProcessMessage(MessageStruct *messageStruct)
 
 void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
 {
-
+  if(usrProfileStruct->key_str.isEmpty())
+    {
+      return;
+    }
 
   if(usrProfileStruct->key_str == GlobalData::g_settings_struct.key_str)
     {
-      emit usrEnter(usrProfileStruct);
       qDebug()<<"UDP receive# Myself entered.";
+      emit usrEnter(usrProfileStruct);
     }
   else
     {

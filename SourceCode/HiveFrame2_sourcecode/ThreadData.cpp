@@ -229,6 +229,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
           online_usr_profile_map.remove(usrProfileStruct->key_str);
           online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
 
+          GlobalData::TEST_printUsrProfileStruct(*online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
           emit usrProfileChanged(online_usr_data_map.value(usrProfileStruct->key_str));
         }
       return;

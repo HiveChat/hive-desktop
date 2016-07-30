@@ -16,11 +16,6 @@ UserData::~UserData()
   saveHistoryBundle();
 }
 
-void UserData::TEST_print_usr_profile_struct()
-{
-  qDebug()<<usr_profile_struct.avatar_str<<usr_profile_struct.key_str<<usr_profile_struct.name_str;
-}
-
 void UserData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;

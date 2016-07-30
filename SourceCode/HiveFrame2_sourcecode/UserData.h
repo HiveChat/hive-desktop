@@ -16,20 +16,19 @@ public:
   explicit UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
   ~UserData();
 
-  void TEST_print_usr_profile_struct();
-
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
-
-  UsrProfileStruct* usrProfileStruct(){return &usr_profile_struct;}
-  QString* key(){return &usr_profile_struct.key_str;}
-  QString* name(){return &usr_profile_struct.name_str;}
-  QString* avatar(){return &usr_profile_struct.avatar_str;}
-  QString* ip(){return &usr_profile_struct.ip_str;}
 
   int currentHistoryBundleIndex(){return current_history_bundle_index;}
   QJsonArray* flipLatest();
   QJsonArray* flipUp();
   QJsonArray* flipDown();
+
+  UsrProfileStruct* usrProfileStruct(){return &usr_profile_struct;}
+  QString* key() {return &usr_profile_struct.key_str;}
+  QString* name() {return &usr_profile_struct.name_str;}
+  QString* avatar() {return &usr_profile_struct.avatar_str;}
+  QString* ip() {return &usr_profile_struct.ip_str;}
+
 
 private:
 

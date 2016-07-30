@@ -7,6 +7,7 @@
 #include <QPalette>
 #include <QColor>
 #include <QStandardPaths>
+#include <QDebug>
 
 enum StaticStackType
 {
@@ -122,6 +123,9 @@ public:
 
   ///other
   static QString g_currentTime();
+
+  ///debug
+  static void TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str);
 
 };
 

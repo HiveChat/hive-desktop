@@ -2,6 +2,7 @@
 #define GUICHATTAB_H
 
 #include "GuiCombWidget.h"
+#include "UserData.h"
 
 #include <QScrollArea>
 #include <QMap>
@@ -17,7 +18,7 @@ public:
 
 private:
   QVBoxLayout *main_layout;
-  QMap<QString, GuiCombWidget *> comb_widget_list;
+  QMap<QString, GuiCombWidget *> comb_widget_map;
 
 signals:
   void combWidgetClicked(QString usrKey);
