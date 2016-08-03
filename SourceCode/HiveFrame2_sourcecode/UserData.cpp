@@ -2,6 +2,7 @@
 
 UserData::UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
+  usr_profile_struct = usrProfileStruct;
   usr_key = usrProfileStruct.key_str;
   history_path = usr_path+usr_key;
   ThreadData::checkDir(history_path);

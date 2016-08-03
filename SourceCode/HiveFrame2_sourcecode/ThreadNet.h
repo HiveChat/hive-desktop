@@ -42,7 +42,7 @@ private:
   void sendOnlineStatus();
 
   ///UDP Socket
-  qint16 udp_port = 23232;
+  quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
   void udpProcessMessage(MessageStruct *messageStruct);
   void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);

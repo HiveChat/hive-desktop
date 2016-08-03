@@ -240,6 +240,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
       online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct);
       online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
+      GlobalData::TEST_printUsrProfileStruct(*online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Justed packaged");
       emit usrProfileLoaded(online_usr_data_map.value(usrProfileStruct->key_str));
 
       return;
