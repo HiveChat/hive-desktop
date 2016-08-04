@@ -24,7 +24,6 @@
 class ThreadData;
 class UserData;
 
-static QMap<QString, UserData*> online_usr_data_map;
 
 class ThreadData : public QThread
 {
@@ -39,7 +38,10 @@ public:
   void loadUsrList();
   static bool checkDir(const QString &dir);
   static QString appDataLocalPath();
+  static QMap<QString, UserData*> online_usr_data_map;
   void TEST_SECTION();
+
+
 
 protected:
   void run();

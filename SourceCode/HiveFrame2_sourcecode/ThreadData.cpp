@@ -20,6 +20,7 @@ ThreadData::~ThreadData()
   running = false;
   mutex.unlock();
 
+  qDebug()<<"ThreadData destructed";
 }
 
 void ThreadData::run()
@@ -96,6 +97,8 @@ QJsonDocument ThreadData::makeUsrList(QList<QJsonObject> &usr_profile_list)
 
 
 ///////////!thread
+
+QMap<QString, UserData*> ThreadData::online_usr_data_map;
 
 void ThreadData::TEST_SECTION()
 {

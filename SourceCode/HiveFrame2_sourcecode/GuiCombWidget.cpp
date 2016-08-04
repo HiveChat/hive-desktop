@@ -53,10 +53,6 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
 {
   usr_profile = *usrProfile;
 
-  qDebug()<<endl<<"second para"<<usr_profile.avatar_str;
-  qDebug()<<usr_profile.ip_str;
-  qDebug()<<usr_profile.name_str<<endl;
-
   avatar->setAvatar(usr_profile.avatar_str);
   usr_name_label->setText(usr_profile.name_str);
   ip_addr_label->setText(usr_profile.ip_str);

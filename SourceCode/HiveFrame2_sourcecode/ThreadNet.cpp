@@ -15,12 +15,14 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 
 ThreadNet::~ThreadNet()
 {
-  udpSendUsrLeave();
+//  udpSendUsrLeave();
 
   QMutex mutex;
   mutex.lock();
   running = false;
   mutex.unlock();
+
+  qDebug()<<"ThreadData destructed";
 }
 
 ////////run
