@@ -36,9 +36,8 @@ public:
   void addUsr(UsrProfileStruct *usrProfileStruct);
 
   void loadUsrList();
-  static bool checkDir(const QString &dir);
+  static bool checkDir(const QString &directory);
   static QString appDataLocalPath();
-  static QMap<QString, UserData*> online_usr_data_map;
   void TEST_SECTION();
 
 

@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QHostAddress>
 
+#include "GlobalType.h"
 #include "GlobalData.h"
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"

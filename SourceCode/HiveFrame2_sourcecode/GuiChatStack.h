@@ -6,6 +6,7 @@
 #include "GuiChatBubble.h"
 #include "GlobalData.h"
 #include "UserData.h"
+#include "ThreadData.h"
 #include "GuiScrollStack.h"
 
 #include <QScrollBar>

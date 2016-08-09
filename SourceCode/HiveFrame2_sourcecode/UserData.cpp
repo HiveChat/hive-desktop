@@ -1,11 +1,12 @@
 #include "UserData.h"
 
+
 UserData::UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
   usr_profile_struct = usrProfileStruct;
   usr_key = usrProfileStruct.key_str;
   history_path = usr_path+usr_key;
-  ThreadData::checkDir(history_path);
+  checkDir(history_path);
 
   readHistoryBundle();
   current_history_bundle_index = latest_history_bundle_index;
@@ -48,6 +49,19 @@ QJsonArray* UserData::flipDown()
     {
       return &history_bundle_list[current_history_bundle_index];
     }
+}
+
+bool UserData::checkDir(const QString &directory)
+{
+  QDir dir(directory);
+  if(!dir.exists())
+    {
+      if(!dir.mkdir(directory))
+        {
+          return false;
+        }
+    }
+  return true;
 }
 
 void UserData::readHistoryBundle()
@@ -129,7 +143,7 @@ void UserData::makeHistoryBundle(int num)
 
 void UserData::saveHistoryBundle()
 {
-  auto lambda = [this]()
+  auto lambda = [&]()
     {
       QString file_path = QString(history_path+"/%1.json").arg(current_history_bundle_index);
       QFile file(file_path);

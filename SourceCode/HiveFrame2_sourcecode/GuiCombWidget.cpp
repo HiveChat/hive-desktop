@@ -41,7 +41,6 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   this->setPalette(hover_palette);
   this->setAutoFillBackground(true);
   this->setToolTipDuration(1000);
-  this->setParent(parent);
 }
 
 GuiCombWidget::~GuiCombWidget()

@@ -37,11 +37,20 @@ public slots:
     switch (reason)
     {
       case QSystemTrayIcon::Trigger:
-        this->show();
+        {
+          this->show();
+          break;
+        }
       case QSystemTrayIcon::DoubleClick:
-      break;
+        {
+          this->show();
+          break;
+        }
       case QSystemTrayIcon::MiddleClick:
-      break;
+        {
+          this->show();
+          break;
+        }
       default:;
     }
   }

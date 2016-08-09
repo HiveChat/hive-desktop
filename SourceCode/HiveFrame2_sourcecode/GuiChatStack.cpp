@@ -516,7 +516,7 @@ void GuiChatStack::refreshUI(const QString &usrKey)
 
   chat_widget->clearChatBubbles();
 
-  QJsonArray message_json_array = *ThreadData::online_usr_data_map.value(usrKey)->flipLatest();
+  QJsonArray message_json_array = *GlobalData::online_usr_data_map.value(usrKey)->flipLatest();
   int message_count = message_json_array.count();
   for(int i = 0; i < message_count; i++)
     {

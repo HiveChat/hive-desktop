@@ -98,7 +98,6 @@ QJsonDocument ThreadData::makeUsrList(QList<QJsonObject> &usr_profile_list)
 
 ///////////!thread
 
-QMap<QString, UserData*> ThreadData::online_usr_data_map;
 
 void ThreadData::TEST_SECTION()
 {
@@ -230,10 +229,10 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
       if(*usrProfileStruct != online_usr_profile_map.value(usrProfileStruct->key_str))
         {
           online_usr_profile_map.remove(usrProfileStruct->key_str);
-          online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
+          GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
 
-          GlobalData::TEST_printUsrProfileStruct(*online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
-          emit usrProfileChanged(online_usr_data_map.value(usrProfileStruct->key_str));
+          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
+          emit usrProfileChanged(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
         }
       return;
     }
@@ -241,10 +240,10 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     {
       UserData *user_data = new UserData(*usrProfileStruct, this);
       online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct);
-      online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
+      GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
-      GlobalData::TEST_printUsrProfileStruct(*online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Justed packaged");
-      emit usrProfileLoaded(online_usr_data_map.value(usrProfileStruct->key_str));
+      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Justed packaged");
+      emit usrProfileLoaded(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
 
       return;
     }

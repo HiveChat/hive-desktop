@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QtConcurrent>
-#include "ThreadData.h"
+#include "GlobalType.h"
+//#include "ThreadData.h"//delete?
 
 
 
@@ -46,6 +47,7 @@ private:
   QJsonArray latest_history_json_array;
 
   //Funciton
+  bool checkDir(const QString &directory);
   void refreshUsrProfile(const UsrProfileStruct &usrProfileStruct);
 
   void readHistoryBundle();
