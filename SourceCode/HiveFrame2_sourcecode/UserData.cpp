@@ -143,8 +143,8 @@ void UserData::makeHistoryBundle(int num)
 
 void UserData::saveHistoryBundle()
 {
-  auto lambda = [&]()
-    {
+//  auto lambda = [&]()
+//    {
       QString file_path = QString(history_path+"/%1.json").arg(current_history_bundle_index);
       QFile file(file_path);
       if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -187,9 +187,9 @@ void UserData::saveHistoryBundle()
 
       file.flush();
       file.close();
-    };
+//    };
 
-  QtConcurrent::run(lambda);
+//  QtConcurrent::run(lambda);
 }
 
 void UserData::recordMessage(MessageStruct messageStruct, bool fromMe)

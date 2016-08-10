@@ -142,8 +142,6 @@ void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
               usr_info_json_obj.insert("usrName", usr_name);
               usr_info_json_obj.insert("avatarPath", avatar_path);
 
-
-
               usr_list_json_obj.insert(usr_key, usr_info_json_obj);
 
               QJsonDocument write_json_document;
@@ -224,29 +222,31 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
 
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
-  if(online_usr_profile_map.keys().contains(usrProfileStruct->key_str))
+  if(GlobalData::online_usr_data_map.keys().contains(usrProfileStruct->key_str))
     {
-      if(*usrProfileStruct != online_usr_profile_map.value(usrProfileStruct->key_str))
+      qDebug()<<"@ThreadData::onUsrEntered: Usr data already exist.";
+
+      if(usrProfileStruct != GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct())
         {
-          online_usr_profile_map.remove(usrProfileStruct->key_str);
           GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
 
           GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
+          qDebug()<<"@ThreadData::onUsrEntered: usr profile Changed.";
           emit usrProfileChanged(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
         }
-      return;
     }
   else
     {
       UserData *user_data = new UserData(*usrProfileStruct, this);
-      online_usr_profile_map.insert(usrProfileStruct->key_str, *usrProfileStruct);
       GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
-      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Justed packaged");
+      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
+      qDebug()<<"@ThreadData::onUsrEntered: usr profile Loaded.";
       emit usrProfileLoaded(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
 
-      return;
     }
+
+  return;
 }
 
 void ThreadData::onUsrLeft(QString *usrKey)
