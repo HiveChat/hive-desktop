@@ -7,7 +7,7 @@
 Hive! is a LAN chatting software. This is a free software.
 
 #请读：
-Hive项目还没有正式发布，现在还处于功能测试阶段，欢饮大家在本页issues里提bug和不爽的体验。
+Hive项目还没有正式发布，现在还处于功能测试阶段，欢迎大家在本页issues里提bug和不爽的体验。
 Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 真的很希望大家提意见反馈，虽然学习真的很忙，写代码的时间我是会留的。不要失望啦~
 暑假是大更新的时候，请大家保持期待萌萌的Hive正式发布吧~
