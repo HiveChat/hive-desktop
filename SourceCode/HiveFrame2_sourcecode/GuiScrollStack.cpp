@@ -98,7 +98,7 @@ void GuiScrollStack::setUpUI()
 
 
   ////main layout
-  QVBoxLayout *main_layout = new QVBoxLayout(this);
+  main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addWidget(top_frame);
   main_layout->addWidget(scroll_area);

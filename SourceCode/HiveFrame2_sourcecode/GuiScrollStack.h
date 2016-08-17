@@ -25,7 +25,6 @@ public:
   explicit GuiScrollStack(LayoutStyle &layout_style, QWidget *parent = 0);
   ~GuiScrollStack();
 
-  QVBoxLayout *central_layout;
 
 
 protected:
@@ -50,7 +49,8 @@ protected:
   GuiAvatarButton *icon_btn;
   QLabel *title_label;
   QHBoxLayout *top_frame_main_layout;
-
+  QVBoxLayout *central_layout;
+  QVBoxLayout *main_layout;
 };
 
 #endif // GUISCROLLSTACK_H

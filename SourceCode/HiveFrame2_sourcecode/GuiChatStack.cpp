@@ -261,12 +261,12 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 //  ////main layout
 //  main_layout = new QVBoxLayout(this);
 //  main_layout->setAlignment(Qt::AlignCenter);
+//  main_layout->setMargin(0);
+//  main_layout->setSpacing(0);
 //  main_layout->addWidget(top_bar);
 //  main_layout->addWidget(top_bar_line);
 //  main_layout->addWidget(chat_scroll_area);
 //  main_layout->addWidget(message_editor);
-//  main_layout->setMargin(0);
-//  main_layout->setSpacing(0);
 
 //  connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
 //  connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
@@ -489,9 +489,17 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   ///////////////////////////////////////Eiffel Tower////////////////////////////////////
 
   ////main layout
+  central_layout->setContentsMargins(0,0,0,0);
+  central_layout->setAlignment(Qt::AlignBottom);
+  central_layout->setMargin(0);
+  central_layout->setSpacing(0);
   central_layout->addWidget(top_bar_line);
   central_layout->addWidget(chat_scroll_area);
-  central_layout->addWidget(message_editor);
+  chat_scroll_area->hide();
+  main_layout->setAlignment(Qt::AlignBottom);
+  main_layout->setMargin(0);
+  main_layout->setSpacing(0);
+  main_layout->addWidget(message_editor);
 
 
   connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
@@ -510,11 +518,16 @@ GuiChatStack::~GuiChatStack()
 
 void GuiChatStack::refreshUI(const QString &usrKey)
 {
+  usr_data = GlobalData::online_usr_data_map.value(usrKey);
+
+  qDebug()<<"1&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
   this->setIcon(*usr_data->avatar());
   this->setTitle(*usr_data->name());
   this->setSubTitle(*usr_data->ip());
+  qDebug()<<"2&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
 
   chat_widget->clearChatBubbles();
+  qDebug()<<"3&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
 
   QJsonArray message_json_array = *GlobalData::online_usr_data_map.value(usrKey)->flipLatest();
   int message_count = message_json_array.count();

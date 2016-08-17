@@ -11,9 +11,14 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
 
+
   createStaticStack(Home_list);
   createStaticStack(Home_Welcome);
   displayStaticStack(Home_Welcome);
+
+  ///test
+  main_stacked_widget->setCurrentWidget(gui_chat_stack);
+  //!test
 }
 
 GuiMainBlock::~GuiMainBlock()
