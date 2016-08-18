@@ -468,11 +468,11 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 GuiChatStack::GuiChatStack(QWidget *parent)
 {
   ///UI
-  QFrame *top_bar_line = new QFrame(this);
-  top_bar_line->setFrameShape(QFrame::HLine);
-  top_bar_line->setFrameShadow(QFrame::Plain);
-  top_bar_line->setFixedHeight(2);
-  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+//  QFrame *top_bar_line = new QFrame(this);
+//  top_bar_line->setFrameShape(QFrame::HLine);
+//  top_bar_line->setFrameShadow(QFrame::Plain);
+//  top_bar_line->setFixedHeight(2);
+//  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   chat_widget = new GuiChatStack_chat_widget(this);
   chat_scroll_area = new QScrollArea(this);
@@ -493,7 +493,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   central_layout->setAlignment(Qt::AlignBottom);
   central_layout->setMargin(0);
   central_layout->setSpacing(0);
-  central_layout->addWidget(top_bar_line);
+//  central_layout->addWidget(top_bar_line);
   central_layout->addWidget(chat_scroll_area);
   chat_scroll_area->hide();
   main_layout->setAlignment(Qt::AlignBottom);
@@ -520,14 +520,14 @@ void GuiChatStack::refreshUI(const QString &usrKey)
 {
   usr_data = GlobalData::online_usr_data_map.value(usrKey);
 
-  qDebug()<<"1&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
+  qDebug()<<"hello";
   this->setIcon(*usr_data->avatar());
   this->setTitle(*usr_data->name());
   this->setSubTitle(*usr_data->ip());
-  qDebug()<<"2&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
+  qDebug()<<"hello";
 
   chat_widget->clearChatBubbles();
-  qDebug()<<"3&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&";
+  qDebug()<<"hello";
 
   QJsonArray message_json_array = *GlobalData::online_usr_data_map.value(usrKey)->flipLatest();
   int message_count = message_json_array.count();

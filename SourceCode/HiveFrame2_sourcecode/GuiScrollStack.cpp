@@ -1,8 +1,9 @@
 #include "GuiScrollStack.h"
 #include <QDebug>
 
-GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
+GuiScrollStack::GuiScrollStack(const LayoutStyle &layoutStyle, QWidget *parent) : QWidget(parent)
 {
+  layout_style = layoutStyle;
   setUpUI();
 }
 
@@ -14,13 +15,29 @@ GuiScrollStack::~GuiScrollStack()
 void GuiScrollStack::setTitle(const QString &text)
 {
   title_qstr = text;
-  title_label->setText(title_qstr+" - "+sub_title_qstr);
+  if(layout_style == LayoutStyle::Linear)
+    {
+      composite_title_label->setText(title_qstr+" - "+sub_title_qstr);
+    }
+  else if(layout_style == LayoutStyle::Profile)
+    {
+      title_label->setText(title_qstr);
+    }
 }
 
 void GuiScrollStack::setSubTitle(const QString &text)
 {
   sub_title_qstr = text;
-  title_label->setText(title_qstr+" - "+sub_title_qstr);
+
+  if(layout_style == LayoutStyle::Linear)
+    {
+      composite_title_label->setText(title_qstr+" - "+sub_title_qstr);
+    }
+  else if(layout_style == LayoutStyle::Profile)
+    {
+      sub_title_label->setText(sub_title_qstr);
+    }
+
 }
 
 void GuiScrollStack::setIcon(const QString &path)
@@ -28,7 +45,7 @@ void GuiScrollStack::setIcon(const QString &path)
   icon_btn->setAvatar(path);
 }
 
-void GuiScrollStack::setUpUI()
+void GuiScrollStack::setUpUI()//////add enum GUI switcher.
 {
   text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
   sub_text_palette.setColor(QPalette::WindowText, QColor(100,100,100/*130, 130, 130*/));
@@ -36,25 +53,47 @@ void GuiScrollStack::setUpUI()
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
 
+
   ///top widget
   QFrame *top_frame = new QFrame(this);
+  top_frame->setPalette(palette);
+  top_frame->setAutoFillBackground(true);
+  top_frame->setFixedHeight(69);
 
   icon_btn = new GuiAvatarButton(90, this);
   icon_btn->setAlignment(Qt::AlignLeft);
-
-  title_label = new QLabel("", this);
-  title_label->setPalette(text_palette);
-  title_label->setFont(GlobalData::font_scrollStackTitle);
 
   top_frame_main_layout = new QHBoxLayout(top_frame);
   top_frame_main_layout->setAlignment(Qt::AlignLeft |Qt::AlignVCenter);
   top_frame_main_layout->setContentsMargins(15,0,10,0);
   top_frame_main_layout->addWidget(icon_btn);
-  top_frame_main_layout->addWidget(title_label);
 
-  top_frame->setPalette(palette);
-  top_frame->setAutoFillBackground(true);
-  top_frame->setFixedHeight(69);
+  if(layout_style == LayoutStyle::Linear)
+    {
+      composite_title_label = new QLabel("", this);
+      composite_title_label->setPalette(text_palette);
+      composite_title_label->setFont(GlobalData::font_scrollStackTitle);
+
+      top_frame_main_layout->addWidget(composite_title_label);
+    }
+  else if(layout_style == LayoutStyle::Profile)
+    {
+      title_label = new QLabel(this);
+      title_label->setFont(GlobalData::font_scrollStackTitle);
+
+      sub_title_label = new QLabel(this);
+      sub_title_label->setFont(GlobalData::font_scrollStackSubtitle);
+
+      QVBoxLayout *usr_info_layout = new QVBoxLayout();
+      usr_info_layout->setContentsMargins(0,0,10,10);
+      usr_info_layout->addWidget(title_label);
+      usr_info_layout->addWidget(sub_title_label);
+
+      top_frame_main_layout->addLayout(usr_info_layout);
+    }
+
+
+
 
   ///!top widget
 

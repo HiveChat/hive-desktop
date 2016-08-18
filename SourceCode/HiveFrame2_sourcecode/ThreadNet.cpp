@@ -10,7 +10,7 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
-  udpSendUsrEnter();
+  udpSendUsrEnter();//this can be deleted
 }
 
 ThreadNet::~ThreadNet()

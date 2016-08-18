@@ -20,9 +20,7 @@ class GuiScrollStack : public QWidget
   };
 
 public:
-  explicit GuiScrollStack(QWidget *parent = 0);
-
-  explicit GuiScrollStack(LayoutStyle &layout_style, QWidget *parent = 0);
+  explicit GuiScrollStack(const LayoutStyle &layoutStyle = LayoutStyle::Linear, QWidget *parent = 0);
   ~GuiScrollStack();
 
 
@@ -45,9 +43,12 @@ protected:
 
   QString title_qstr;
   QString sub_title_qstr;
+  LayoutStyle layout_style;
 
   GuiAvatarButton *icon_btn;
+  QLabel *composite_title_label;
   QLabel *title_label;
+  QLabel *sub_title_label;
   QHBoxLayout *top_frame_main_layout;
   QVBoxLayout *central_layout;
   QVBoxLayout *main_layout;

@@ -15,10 +15,6 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   createStaticStack(Home_list);
   createStaticStack(Home_Welcome);
   displayStaticStack(Home_Welcome);
-
-  ///test
-  main_stacked_widget->setCurrentWidget(gui_chat_stack);
-  //!test
 }
 
 GuiMainBlock::~GuiMainBlock()
@@ -173,10 +169,14 @@ void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
   emit sendMessage(*usrKey, *message);
 }
 
-void GuiMainBlock::TEST_destroyedTest()
+void GuiMainBlock::refreshChatStack(const QString &usrKey)
 {
-  qDebug()<<"distroy is sucessful";
+
+  gui_chat_stack->refreshUI(usrKey);
+  main_stacked_widget->setCurrentWidget(gui_chat_stack);
+
 }
+
 
 //  QProgressBar {
 //      border: 1px solid #FFB500;
