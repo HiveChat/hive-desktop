@@ -26,9 +26,9 @@ private:
   QStringList my_profile_str_list;
 
 public slots:
-  void addUsr(UserData *userData);
-  void delUsr(UserData *userData);
-  void changeUsr(UserData *userData);
+  void addUsr(UsrData *userData);
+  void delUsr(UsrData *userData);
+  void changeUsr(UsrData *userData);
   void refreshUI();
 
 

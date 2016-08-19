@@ -194,12 +194,12 @@ protected:
 
 private:
   //UI
-  QScrollArea *chat_scroll_area;
+//  QScrollArea *chat_scroll_area;
   GuiChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
 
   //Data
-  UserData *usr_data;
+  UsrData *usr_data;
 
   //Function
   void flipLatestMessage();

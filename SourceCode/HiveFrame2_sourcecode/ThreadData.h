@@ -22,7 +22,7 @@
 #include <QTime>
 
 class ThreadData;
-class UserData;
+class UsrData;
 
 
 class ThreadData : public QThread
@@ -93,8 +93,8 @@ public slots:
 
 signals:
   void refreshGuiInfo();
-  void usrProfileLoaded(UserData *userData);
-  void usrProfileChanged(UserData *userData);
+  void usrProfileLoaded(UsrData *userData);
+  void usrProfileChanged(UsrData *userData);
   void messageLoaded(MessageStruct messageStrList, bool fromMe);
 
 

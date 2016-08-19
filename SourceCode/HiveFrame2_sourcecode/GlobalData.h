@@ -54,7 +54,7 @@ public:
   static QMap<QString, UsrProfileStruct> saved_usr_profile_map;
   static QMap<QString, UsrProfileStruct> online_usr_profile_map;
 
-  static QMap<QString, UserData*> online_usr_data_map;//used
+  static QMap<QString, UsrData*> online_usr_data_map;//used
 
 
   ///net

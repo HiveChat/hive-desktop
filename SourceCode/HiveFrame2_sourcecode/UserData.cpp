@@ -1,7 +1,7 @@
 #include "UserData.h"
 
 
-UserData::UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
+UsrData::UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
   usr_profile_struct = usrProfileStruct;
   usr_key = usrProfileStruct.key_str;
@@ -13,23 +13,23 @@ UserData::UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : 
 
 }
 
-UserData::~UserData()
+UsrData::~UsrData()
 {
   saveHistoryBundle();
 }
 
-void UserData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
+void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
 }
 
-QJsonArray* UserData::flipLatest()
+QJsonArray* UsrData::flipLatest()
 {
   current_history_bundle_index = latest_history_bundle_index;
   return &latest_history_json_array;
 }
 
-QJsonArray* UserData::flipUp()
+QJsonArray* UsrData::flipUp()
 {
   current_history_bundle_index --;
   if(current_history_bundle_index > 0)
@@ -38,7 +38,7 @@ QJsonArray* UserData::flipUp()
     }
 }
 
-QJsonArray* UserData::flipDown()
+QJsonArray* UsrData::flipDown()
 {
   current_history_bundle_index ++;
   if(current_history_bundle_index == latest_history_bundle_index)
@@ -51,7 +51,7 @@ QJsonArray* UserData::flipDown()
     }
 }
 
-bool UserData::checkDir(const QString &directory)
+bool UsrData::checkDir(const QString &directory)
 {
   QDir dir(directory);
   if(!dir.exists())
@@ -64,7 +64,7 @@ bool UserData::checkDir(const QString &directory)
   return true;
 }
 
-void UserData::readHistoryBundle()
+void UsrData::readHistoryBundle()
 {
 //  int index = 1;
   for(int fail = 0, index = 1; fail <= 3; )
@@ -112,12 +112,12 @@ void UserData::readHistoryBundle()
     }
 }
 
-void UserData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
+void UsrData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
 }
 
-void UserData::makeHistoryBundle(int num)
+void UsrData::makeHistoryBundle(int num)
 {
   QString file_path = QString(history_path+"/%0.json").arg(QString::number(num));
   qDebug()<<"#DataHistoryIO::makeHistoryFile(int num): Make new history:";
@@ -141,7 +141,7 @@ void UserData::makeHistoryBundle(int num)
   file.close();
 }
 
-void UserData::saveHistoryBundle()
+void UsrData::saveHistoryBundle()
 {
 //  auto lambda = [&]()
 //    {
@@ -192,7 +192,7 @@ void UserData::saveHistoryBundle()
 //  QtConcurrent::run(lambda);
 }
 
-void UserData::recordMessage(MessageStruct messageStruct, bool fromMe)
+void UsrData::recordMessage(MessageStruct messageStruct, bool fromMe)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {

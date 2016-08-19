@@ -8,14 +8,14 @@
 
 
 
-class UserData;
+class UsrData;
 
-class UserData : public QObject
+class UsrData : public QObject
 {
   Q_OBJECT
 public:
-  explicit UserData(const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
-  ~UserData();
+  explicit UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
+  ~UsrData();
 
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
 

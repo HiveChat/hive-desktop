@@ -473,20 +473,20 @@ GuiChatStack::GuiChatStack(QWidget *parent)
 {
   this->layout_style = LayoutStyle::Profile;
   ///UI
-//  QFrame *top_bar_line = new QFrame(this);
-//  top_bar_line->setFrameShape(QFrame::HLine);
-//  top_bar_line->setFrameShadow(QFrame::Plain);
-//  top_bar_line->setFixedHeight(2);
-//  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+  QFrame *top_bar_line = new QFrame(this);
+  top_bar_line->setFrameShape(QFrame::HLine);
+  top_bar_line->setFrameShadow(QFrame::Plain);
+  top_bar_line->setFixedHeight(2);
+  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   chat_widget = new GuiChatStack_chat_widget(this);
-  chat_scroll_area = new QScrollArea(this);
-  chat_scroll_area->setWidgetResizable(true);
-  chat_scroll_area->setWidget(chat_widget);
-  QPalette palette = chat_scroll_area->palette();
+  scroll_area->setWidgetResizable(true);
+  scroll_area->setWidget(chat_widget);
+
+  QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
-  chat_scroll_area->setPalette(palette);
-  chat_scroll_area->setFrameStyle(0);
+  scroll_area->setPalette(palette);
+  scroll_area->setFrameStyle(0);
 
   message_editor = new GuiChatStack_message_editor(this);
 
@@ -494,13 +494,12 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   ///////////////////////////////////////Eiffel Tower////////////////////////////////////
 
   ////main layout
+  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
   central_layout->setContentsMargins(0,0,0,0);
   central_layout->setAlignment(Qt::AlignBottom);
   central_layout->setMargin(0);
   central_layout->setSpacing(0);
-//  central_layout->addWidget(top_bar_line);
-  central_layout->addWidget(chat_scroll_area);
-  chat_scroll_area->hide();
+
   main_layout->setAlignment(Qt::AlignBottom);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
@@ -511,7 +510,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
 
   flipLatestMessage();
-  chat_scroll_area->verticalScrollBar()->setValue(chat_scroll_area->verticalScrollBar()->maximum());
+  scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
 
   this->setParent(parent);
 }
@@ -523,15 +522,19 @@ GuiChatStack::~GuiChatStack()
 
 void GuiChatStack::refreshUI(const QString &usrKey)
 {
+  UsrData *target_usr_data = GlobalData::online_usr_data_map.value(usrKey);
+  if(usr_data == target_usr_data)
+    {
+      return;
+    }
+
   usr_data = GlobalData::online_usr_data_map.value(usrKey);
 
   this->setIcon(*usr_data->avatar());
   this->setTitle(*usr_data->name());
   this->setSubTitle(*usr_data->ip());
-  qDebug()<<"hello";
 
   chat_widget->clearChatBubbles();
-  qDebug()<<"hello";
 
   QJsonArray message_json_array = *GlobalData::online_usr_data_map.value(usrKey)->flipLatest();
   int message_count = message_json_array.count();
@@ -542,6 +545,7 @@ void GuiChatStack::refreshUI(const QString &usrKey)
             chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
     }
 
+  qDebug()<<"@GuiChatStack::refreshUI: Chat stack refreshed...";
 }
 
 

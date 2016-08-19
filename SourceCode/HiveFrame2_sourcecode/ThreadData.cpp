@@ -237,7 +237,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     }
   else
     {
-      UserData *user_data = new UserData(*usrProfileStruct, this);
+      UsrData *user_data = new UsrData(*usrProfileStruct, this);
       GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
       GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");

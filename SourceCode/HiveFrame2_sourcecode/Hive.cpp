@@ -17,8 +17,8 @@ Hive::Hive(QObject *parent) : QObject(parent)
   connect(thread_data, SIGNAL(refreshGuiInfo()), gui_central_widget, SLOT(refreshUI()), Qt::QueuedConnection);
 
   connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEntered(UsrProfileStruct*)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(usrProfileLoaded(UserData*)), gui_central_widget, SLOT(addUsr(UserData*)), Qt::QueuedConnection);
-  connect(thread_data, SIGNAL(usrProfileChanged(UserData*)), gui_central_widget, SLOT(changeUsr(UserData*)), Qt::QueuedConnection);
+  connect(thread_data, SIGNAL(usrProfileLoaded(UsrData*)), gui_central_widget, SLOT(addUsr(UsrData*)), Qt::QueuedConnection);
+  connect(thread_data, SIGNAL(usrProfileChanged(UsrData*)), gui_central_widget, SLOT(changeUsr(UsrData*)), Qt::QueuedConnection);
 
 
   //bind to SIGNAL refreshGuiInfo();

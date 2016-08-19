@@ -49,6 +49,7 @@ protected:
   QLabel *composite_title_label;
   QLabel *title_label;
   QLabel *sub_title_label;
+  QScrollArea *scroll_area;
   QHBoxLayout *top_frame_main_layout;
   QVBoxLayout *central_layout;
   QVBoxLayout *main_layout;

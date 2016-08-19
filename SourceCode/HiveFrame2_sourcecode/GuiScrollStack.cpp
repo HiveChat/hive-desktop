@@ -135,7 +135,7 @@ void GuiScrollStack::setUpUI()//////add enum GUI switcher.
   mid_frame->setLayout(mid_frame_layout);
   ///!central widget
 
-  QScrollArea *scroll_area = new QScrollArea(this);
+  scroll_area = new QScrollArea(this);
   scroll_area->setWidgetResizable(true);
   scroll_area->setWidget(mid_frame);
   scroll_area->setFrameStyle(0);
