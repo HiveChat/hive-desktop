@@ -120,8 +120,8 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
-  main_stacked_widget->setCurrentWidget(gui_chat_stack);
   gui_chat_stack->refreshUI(usrKey);
+  main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
 
 
@@ -169,13 +169,7 @@ void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
   emit sendMessage(*usrKey, *message);
 }
 
-void GuiMainBlock::refreshChatStack(const QString &usrKey)
-{
 
-  gui_chat_stack->refreshUI(usrKey);
-  main_stacked_widget->setCurrentWidget(gui_chat_stack);
-
-}
 
 
 //  QProgressBar {

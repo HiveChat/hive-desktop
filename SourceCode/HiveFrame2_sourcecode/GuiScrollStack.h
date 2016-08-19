@@ -8,19 +8,19 @@
 #include <QVBoxLayout>
 #include <QScrollArea>
 
+enum LayoutStyle
+{
+  Profile,
+  Linear
+};
+
 
 class GuiScrollStack : public QWidget
 {
   Q_OBJECT
 
-  enum LayoutStyle
-  {
-    Profile,
-    Linear
-  };
-
 public:
-  explicit GuiScrollStack(const LayoutStyle &layoutStyle = LayoutStyle::Linear, QWidget *parent = 0);
+  explicit GuiScrollStack(QWidget *parent = 0);
   ~GuiScrollStack();
 
 
@@ -41,8 +41,8 @@ protected:
   QPalette text_palette;
   QPalette sub_text_palette;
 
-  QString title_qstr;
-  QString sub_title_qstr;
+  QString title_qstr = "";
+  QString sub_title_qstr = "";
   LayoutStyle layout_style;
 
   GuiAvatarButton *icon_btn;

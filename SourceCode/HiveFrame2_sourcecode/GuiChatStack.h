@@ -186,6 +186,7 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
+  void refreshUI(const QString &usrKey);
 
 protected:
   void dragEnterEvent(QDragEnterEvent *event);
@@ -206,7 +207,6 @@ private:
   void flipDownMessage();
 
 public slots:
-  void refreshUI(const QString &usrKey);
   void onSendButtonClicked();
   void onKeyEnterTriggered(bool &pressed);
 

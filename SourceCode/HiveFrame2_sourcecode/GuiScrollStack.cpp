@@ -1,9 +1,8 @@
 #include "GuiScrollStack.h"
 #include <QDebug>
 
-GuiScrollStack::GuiScrollStack(const LayoutStyle &layoutStyle, QWidget *parent) : QWidget(parent)
+GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
 {
-  layout_style = layoutStyle;
   setUpUI();
 }
 
@@ -14,7 +13,13 @@ GuiScrollStack::~GuiScrollStack()
 
 void GuiScrollStack::setTitle(const QString &text)
 {
+  if(text.isEmpty())
+    {
+      qDebug()<<"zero";
+      return;
+    }
   title_qstr = text;
+
   if(layout_style == LayoutStyle::Linear)
     {
       composite_title_label->setText(title_qstr+" - "+sub_title_qstr);
@@ -115,7 +120,7 @@ void GuiScrollStack::setUpUI()//////add enum GUI switcher.
   scroll_bottom_line->setFrameShape(QFrame::HLine);
   scroll_bottom_line->setFrameShadow(QFrame::Plain);
   scroll_bottom_line->setFixedHeight(4);
-  scroll_bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
+  scroll_bottom_line->setStyleSheet("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
   QVBoxLayout *mid_frame_layout = new QVBoxLayout(this);
   mid_frame_layout->setAlignment(Qt::AlignTop);

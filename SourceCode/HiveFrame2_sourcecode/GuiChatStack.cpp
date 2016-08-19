@@ -94,7 +94,11 @@ void GuiChatStack_chat_widget::clearChatBubbles()
 {
   foreach (GuiChatBubble *temp_chat_bubble_pointer, chat_bubble_list)
     {
-      temp_chat_bubble_pointer->deleteLater();
+      if(temp_chat_bubble_pointer != nullptr)
+        {
+          temp_chat_bubble_pointer->deleteLater();
+        }
+      chat_bubble_list.removeOne(temp_chat_bubble_pointer);
     }
 }
 
@@ -467,6 +471,7 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 GuiChatStack::GuiChatStack(QWidget *parent)
 {
+  this->layout_style = LayoutStyle::Profile;
   ///UI
 //  QFrame *top_bar_line = new QFrame(this);
 //  top_bar_line->setFrameShape(QFrame::HLine);
@@ -520,7 +525,6 @@ void GuiChatStack::refreshUI(const QString &usrKey)
 {
   usr_data = GlobalData::online_usr_data_map.value(usrKey);
 
-  qDebug()<<"hello";
   this->setIcon(*usr_data->avatar());
   this->setTitle(*usr_data->name());
   this->setSubTitle(*usr_data->ip());

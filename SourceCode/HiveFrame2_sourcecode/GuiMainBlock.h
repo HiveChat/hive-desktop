@@ -47,7 +47,6 @@ public slots:
 
 private slots:
   void onMessageToSend(QString *usrKey, QString *message);
-  void refreshChatStack(const QString &usrKey);
 
 signals:
   void sendMessage(QString usrKey, QString message);
