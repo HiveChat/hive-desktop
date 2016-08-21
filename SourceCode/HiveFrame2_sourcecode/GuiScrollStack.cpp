@@ -138,6 +138,7 @@ void GuiScrollStack::setUpUI()//////add enum GUI switcher.
   scroll_area = new QScrollArea(this);
   scroll_area->setWidgetResizable(true);
   scroll_area->setWidget(mid_frame);
+  scroll_area->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   scroll_area->setFrameStyle(0);
 
 
@@ -169,14 +170,14 @@ void GuiScrollStack::addTag(const QString &text)
   central_layout->addSpacing(30);
 }
 
-void GuiScrollStack::addItem(const QString &text, QString string)
+void GuiScrollStack::addItem(const QString &text, const QString &string, const bool &wrapping)
 {
   QLabel *text_label = new QLabel("\t" + text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
   text_label->setPalette(sub_text_palette);
 
   QLabel *string_label = new QLabel(string, this);
-  string_label->setWordWrap(true);
+  string_label->setWordWrap(wrapping);
   string_label->adjustSize();
 
   QHBoxLayout *layout = new QHBoxLayout();

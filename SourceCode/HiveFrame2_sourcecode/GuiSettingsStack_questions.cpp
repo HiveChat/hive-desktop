@@ -8,7 +8,7 @@ GuiSettingsStack_questions::GuiSettingsStack_questions(QWidget *parent)
   setSubTitle("questions");
 
   addTag("About Hive!");
-  addItem("Author:", "<b>Tim Zheng</b>");
+  addItem("Copyright:", "©2015-2016 Tim Zheng (Ultrasilicon). All Rights Reserved.", false);
   addItem("Why Hive?", "Hive is designed for users without <b>Internet Access</b>. \nIt enables users to chat in <b>LAN</b> (Limited Area Network) connection.");
 
   addTag("Troubleshoot");

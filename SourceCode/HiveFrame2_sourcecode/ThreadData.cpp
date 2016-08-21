@@ -226,7 +226,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     {
       qDebug()<<"@ThreadData::onUsrEntered: Usr data already exist.";
 
-      if(usrProfileStruct != GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct())
+      if(*usrProfileStruct != *GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct())
         {
           GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
 
@@ -241,7 +241,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
       GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
       GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
-      qDebug()<<"@ThreadData::onUsrEntered: usr profile Loaded.";
+      qDebug()<<"@ThreadData::onUsrEntered: Usr profile Loaded.";
       emit usrProfileLoaded(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
 
     }

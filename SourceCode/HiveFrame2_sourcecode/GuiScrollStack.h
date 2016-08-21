@@ -31,7 +31,7 @@ protected:
   void setSubTitle(const QString &text);
   void setIcon(const QString &path);
   void addTag(const QString &text);
-  void addItem(const QString &text, QString string);
+  void addItem(const QString &text, const QString &string, const bool &wrapping = true);
   void addItem(const QString &text, QWidget *widget);
   void addItem(const QString &text, QLayout *widgetLayout);
   void addItem(QWidget *centralWidget);
