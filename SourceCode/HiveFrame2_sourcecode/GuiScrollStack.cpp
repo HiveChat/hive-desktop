@@ -97,8 +97,11 @@ void GuiScrollStack::setUpUI()//////add enum GUI switcher.
       top_frame_main_layout->addLayout(usr_info_layout);
     }
 
-
-
+  QFrame *topwidget_base_line = new QFrame(this);
+  topwidget_base_line->setFrameShape(QFrame::HLine);
+  topwidget_base_line->setFrameShadow(QFrame::Plain);
+  topwidget_base_line->setFixedHeight(2);
+  topwidget_base_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   ///!top widget
 
@@ -113,7 +116,7 @@ void GuiScrollStack::setUpUI()//////add enum GUI switcher.
   QFrame *scroll_top_line = new QFrame(this);
   scroll_top_line->setFrameShape(QFrame::HLine);
   scroll_top_line->setFrameShadow(QFrame::Plain);
-  scroll_top_line->setFixedHeight(2);
+  scroll_top_line->setFixedHeight(1.5);
   scroll_top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   QFrame *scroll_bottom_line = new QFrame(this);
@@ -146,6 +149,7 @@ void GuiScrollStack::setUpUI()//////add enum GUI switcher.
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addWidget(top_frame);
+  main_layout->addWidget(topwidget_base_line);
   main_layout->addWidget(scroll_area);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);

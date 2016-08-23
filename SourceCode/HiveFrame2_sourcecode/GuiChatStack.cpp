@@ -152,10 +152,10 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   tool_layout->addWidget(expression_label);
   tool_layout->addWidget(image_label);
   tool_layout->addWidget(file_label);
-  ///for test period
-    expression_label->setHidden(true);
-    image_label->setHidden(true);
-    file_label->setHidden(true);
+//  ///for test period
+//    expression_label->setHidden(true);
+//    image_label->setHidden(true);
+//    file_label->setHidden(true);
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);
@@ -473,11 +473,11 @@ GuiChatStack::GuiChatStack(QWidget *parent)
 {
   this->layout_style = LayoutStyle::Profile;
   ///UI
-  QFrame *top_bar_line = new QFrame(this);
-  top_bar_line->setFrameShape(QFrame::HLine);
-  top_bar_line->setFrameShadow(QFrame::Plain);
-  top_bar_line->setFixedHeight(2);
-  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+//  QFrame *top_bar_line = new QFrame(this);
+//  top_bar_line->setFrameShape(QFrame::HLine);
+//  top_bar_line->setFrameShadow(QFrame::Plain);
+//  top_bar_line->setFixedHeight(2);
+//  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   chat_widget = new GuiChatStack_chat_widget(this);
   scroll_area->setWidgetResizable(true);
