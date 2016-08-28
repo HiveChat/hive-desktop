@@ -55,6 +55,11 @@ GuiCentralWidget::~GuiCentralWidget()
   qDebug()<<"\n@Hive UI is destructed";
 }
 
+void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
+{
+//  gui_main_block->gui_chat_stack->
+}
+
 
 void GuiCentralWidget::addUsr(UsrData *userData)
 {

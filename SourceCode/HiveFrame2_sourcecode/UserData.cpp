@@ -120,7 +120,7 @@ void UsrData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
 void UsrData::makeHistoryBundle(int num)
 {
   QString file_path = QString(history_path+"/%0.json").arg(QString::number(num));
-  qDebug()<<"#DataHistoryIO::makeHistoryFile(int num): Make new history:";
+  qDebug()<<"#UsrData::makeHistoryFile(int num): Make new history:";
   qDebug()<<file_path;
 
   QFile file(file_path);

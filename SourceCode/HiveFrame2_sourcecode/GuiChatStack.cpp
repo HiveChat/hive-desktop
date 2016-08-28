@@ -522,11 +522,16 @@ GuiChatStack::~GuiChatStack()
 
 void GuiChatStack::refreshUI(const QString &usrKey)
 {
-  UsrData *target_usr_data = GlobalData::online_usr_data_map.value(usrKey);
-  if(usr_data == target_usr_data)
+  //refreshing
+  //1. check if usr has changed.
+  //  YES: load new usr.
+  //  NO: retrieve new message for existing usr.
+  UsrProfileStruct *target_usr_profile_struct = GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct();
+  if(*usr_data->usrProfileStruct() == *target_usr_profile_struct)
     {
       return;
     }
+  qDebug()<<"GuiChatStack::refreshUI(): different usr is refreshed....";
 
   usr_data = GlobalData::online_usr_data_map.value(usrKey);
 

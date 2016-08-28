@@ -26,6 +26,7 @@ private:
   QStringList my_profile_str_list;
 
 public slots:
+  void onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe);
   void addUsr(UsrData *userData);
   void delUsr(UsrData *userData);
   void changeUsr(UsrData *userData);
