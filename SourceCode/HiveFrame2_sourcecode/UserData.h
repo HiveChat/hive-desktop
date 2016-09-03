@@ -15,6 +15,7 @@ class UsrData : public QObject
   Q_OBJECT
 public:
   explicit UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
+  explicit UsrData(QObject *parent = 0);
   ~UsrData();
 
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
@@ -29,11 +30,13 @@ public:
   QString* name() {return &usr_profile_struct.name_str;}
   QString* avatar() {return &usr_profile_struct.avatar_str;}
   QString* ip() {return &usr_profile_struct.ip_str;}
+  bool isNull() {return is_null;}
 
 
 private:
 
   UsrProfileStruct usr_profile_struct;
+  bool is_null = true;
 
   const int max_bundle_capacity = 100;
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);

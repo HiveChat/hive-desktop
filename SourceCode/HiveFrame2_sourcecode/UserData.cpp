@@ -3,6 +3,7 @@
 
 UsrData::UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
+  is_null = false;
   usr_profile_struct = usrProfileStruct;
   usr_key = usrProfileStruct.key_str;
   history_path = usr_path+usr_key;
@@ -11,6 +12,11 @@ UsrData::UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QO
   readHistoryBundle();
   current_history_bundle_index = latest_history_bundle_index;
 
+}
+
+UsrData::UsrData(QObject *parent) : QObject(parent)
+{
+  is_null = true;
 }
 
 UsrData::~UsrData()
@@ -50,6 +56,7 @@ QJsonArray* UsrData::flipDown()
       return &history_bundle_list[current_history_bundle_index];
     }
 }
+
 
 bool UsrData::checkDir(const QString &directory)
 {

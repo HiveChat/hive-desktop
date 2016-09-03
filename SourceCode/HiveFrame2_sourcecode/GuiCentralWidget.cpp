@@ -66,6 +66,7 @@ void GuiCentralWidget::addUsr(UsrData *userData)
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
 
   GlobalData::TEST_printUsrProfileStruct(*userData->usrProfileStruct(), "GuiCentralWidget recieved package generated just now");
+
   //these will be eliminated
   gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
 }

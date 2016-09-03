@@ -471,6 +471,7 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 GuiChatStack::GuiChatStack(QWidget *parent)
 {
+  usr_data = new UsrData(this);
   this->layout_style = LayoutStyle::Profile;
   ///UI
 //  QFrame *top_bar_line = new QFrame(this);
@@ -527,9 +528,14 @@ void GuiChatStack::refreshUI(const QString &usrKey)
   //  YES: load new usr.
   //  NO: retrieve new message for existing usr.
   UsrProfileStruct *target_usr_profile_struct = GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct();
-  if(*usr_data->usrProfileStruct() == *target_usr_profile_struct)
+  GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "refreshUI, before comparing");
+  if(usr_data->isNull())
     {
-      return;
+      qDebug()<<"not nullptr";
+      if(*usr_data->usrProfileStruct() == *target_usr_profile_struct)
+        {
+          return;
+        }
     }
   qDebug()<<"GuiChatStack::refreshUI(): different usr is refreshed....";
 

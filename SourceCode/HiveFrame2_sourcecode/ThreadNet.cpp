@@ -22,7 +22,7 @@ ThreadNet::~ThreadNet()
   running = false;
   mutex.unlock();
 
-  qDebug()<<"ThreadData destructed";
+  qDebug()<<"ThreadNet destructed";
 }
 
 ////////run
