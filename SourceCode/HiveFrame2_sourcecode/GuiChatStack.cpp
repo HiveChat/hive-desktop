@@ -529,18 +529,18 @@ void GuiChatStack::refreshUI(const QString &usrKey)
   //  NO: retrieve new message for existing usr.
   UsrProfileStruct *target_usr_profile_struct = GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct();
   GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "refreshUI, before comparing");
-  if(usr_data->isNull())
+  if(!usr_data->isNull())
     {
-      qDebug()<<"not nullptr";
       if(*usr_data->usrProfileStruct() == *target_usr_profile_struct)
         {
           return;
         }
     }
-  qDebug()<<"GuiChatStack::refreshUI(): different usr is refreshed....";
+  qDebug()<<"#GuiChatStack::refreshUI(): different usr is refreshed....";
 
   usr_data = GlobalData::online_usr_data_map.value(usrKey);
 
+  GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "After ");
   this->setIcon(*usr_data->avatar());
   this->setTitle(*usr_data->name());
   this->setSubTitle(*usr_data->ip());
@@ -554,10 +554,17 @@ void GuiChatStack::refreshUI(const QString &usrKey)
             QJsonObject history_json_obj = message_json_array[i].toObject();
 
             chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+            qDebug()<<"@GuiChatStack::refreshUI(): Message loaded...";
+
     }
 
   qDebug()<<"@GuiChatStack::refreshUI: Chat stack refreshed...";
 }
+
+//void GuiChatStack::setUpUI()
+//{
+
+//}
 
 
 void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
@@ -568,7 +575,7 @@ void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
 
 void GuiChatStack::dropEvent(QDropEvent *event)
 {
-  qDebug()<<"@GuiChatStack::dropEvent(): file entered.";
+  qDebug()<<"#GuiChatStack::dropEvent(): file entered.";
   QList<QUrl> urls = event->mimeData()->urls();
   if (urls.isEmpty())
     {

@@ -59,7 +59,7 @@ void ThreadData::checkSettings()
 {
   if(written_settings_struct != GlobalData::g_settings_struct)
     {
-      qDebug()<<"ThreadData::checkSettings():    written!!!!";
+      qDebug()<<"&ThreadData::checkSettings():    written!!!!";
       writeCurrentConfig();
       written_settings_struct = GlobalData::g_settings_struct;
     }
@@ -435,7 +435,7 @@ void ThreadData::loadUsrList()
     }
   else
     {
-      qDebug()<<"@loadUsrList(): Usr list file broken... Resize to 0.";
+      qDebug()<<"&ThreadData::loadUsrList(): Usr list file broken... Resize to 0.";
       file.resize(0);
       return;
     }

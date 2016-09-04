@@ -13,9 +13,9 @@ GuiScrollStack::~GuiScrollStack()
 
 void GuiScrollStack::setTitle(const QString &text)
 {
-  if(text.isEmpty())
+  if(text.isEmpty() || text.isNull())
     {
-      qDebug()<<"zero";
+      qDebug()<<"#GuiScrollStack::setTitle(): Empty title";
       return;
     }
   title_qstr = text;
@@ -32,6 +32,11 @@ void GuiScrollStack::setTitle(const QString &text)
 
 void GuiScrollStack::setSubTitle(const QString &text)
 {
+  if(text.isNull() || text.isEmpty())
+    {
+      qDebug()<<"GuiScrollStack::setSubTitle(): Empty subtitle";
+      return;
+    }
   sub_title_qstr = text;
 
   if(layout_style == LayoutStyle::Linear)
@@ -47,6 +52,10 @@ void GuiScrollStack::setSubTitle(const QString &text)
 
 void GuiScrollStack::setIcon(const QString &path)
 {
+  if(path.isNull() || path.isEmpty())
+    {
+      return;
+    }
   icon_btn->setAvatar(path);
 }
 

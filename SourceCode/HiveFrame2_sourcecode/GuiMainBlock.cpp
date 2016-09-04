@@ -120,7 +120,7 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
-  qDebug()<<"GuiMainBlock::displayChatStack(): refreshing GuiCHatStack with usr key" << usrKey;
+  qDebug()<<"#GuiMainBlock::displayChatStack(): refreshing GuiChatStack with usr key" << usrKey;
   gui_chat_stack->refreshUI(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
@@ -135,7 +135,7 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
     }
   else
     {
-      qDebug()<<"GuiMainBlock::displayStaticStack(): Displaying Stack that already exist.";
+      qDebug()<<"#GuiMainBlock::displayStaticStack(): Displaying Stack that already exist.";
       main_stacked_widget->setCurrentWidget(static_stack_map.value(staticStackType));
     }
   clearStackMap(staticStackType);

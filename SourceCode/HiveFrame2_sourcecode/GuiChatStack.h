@@ -189,6 +189,7 @@ public:
   void refreshUI(const QString &usrKey);
 
 protected:
+//  void setUpUI();
   void dragEnterEvent(QDragEnterEvent *event);
   void dropEvent(QDropEvent *event);
 
@@ -200,6 +201,7 @@ private:
 
   //Data
   UsrData *usr_data;
+  LayoutStyle layout_style = LayoutStyle::Profile;
 
   //Function
   void flipLatestMessage();

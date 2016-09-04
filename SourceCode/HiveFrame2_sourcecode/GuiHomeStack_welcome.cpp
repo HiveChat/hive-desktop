@@ -42,7 +42,6 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   dd->addWidget(profile_widget);
   dd->addWidget(background_label);
 
-
   this->refreshUI();
 }
 
@@ -80,7 +79,7 @@ void GuiHomeStack_welcome::refreshUI()
     {
       ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
     }
-  qDebug()<<"@GuiWelcomeStack::refresh(): Finished";
+  qDebug()<<"#GuiWelcomeStack::refresh(): Finished";
 }
 
 
