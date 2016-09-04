@@ -202,6 +202,7 @@ private:
   //Data
   UsrData *usr_data;
   LayoutStyle layout_style = LayoutStyle::Profile;
+  bool first_refresh = true;
 
   //Function
   void flipLatestMessage();

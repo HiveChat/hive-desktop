@@ -120,7 +120,6 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
-  qDebug()<<"#GuiMainBlock::displayChatStack(): refreshing GuiChatStack with usr key" << usrKey;
   gui_chat_stack->refreshUI(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
@@ -163,6 +162,8 @@ void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
 //      gui_chat_stack_map.find(messageStruct.sender_key).value()->checkMessage(messageStruct, fromMe);
 //    }
 //<<
+//  if(fromMe)
+
 }
 
 void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)

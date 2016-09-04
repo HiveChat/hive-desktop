@@ -471,7 +471,6 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 GuiChatStack::GuiChatStack(QWidget *parent)
 {
-  usr_data = new UsrData(this);
   this->layout_style = LayoutStyle::Profile;
   ///UI
 //  QFrame *top_bar_line = new QFrame(this);
@@ -528,19 +527,24 @@ void GuiChatStack::refreshUI(const QString &usrKey)
   //  YES: load new usr.
   //  NO: retrieve new message for existing usr.
   UsrProfileStruct *target_usr_profile_struct = GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct();
-  GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "refreshUI, before comparing");
-  if(!usr_data->isNull())
+//  GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "refreshUI, before comparing");
+  if(!first_refresh)
     {
+      qDebug()<<"not null ptr";
       if(*usr_data->usrProfileStruct() == *target_usr_profile_struct)
         {
           return;
         }
     }
+  else
+    {
+      first_refresh = false;
+    }
   qDebug()<<"#GuiChatStack::refreshUI(): different usr is refreshed....";
 
   usr_data = GlobalData::online_usr_data_map.value(usrKey);
 
-  GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "After ");
+//  GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "After ");
   this->setIcon(*usr_data->avatar());
   this->setTitle(*usr_data->name());
   this->setSubTitle(*usr_data->ip());

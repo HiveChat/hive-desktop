@@ -3,25 +3,21 @@
 
 UsrData::UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
-  is_null = false;
-  usr_profile_struct = usrProfileStruct;
-  usr_key = usrProfileStruct.key_str;
-  history_path = usr_path+usr_key;
-  checkDir(history_path);
+  this->setUsrProfileStruct(usrProfileStruct);
+  history_path = usr_path + usr_profile_struct.key_str;
+  this->checkDir(history_path);
+  this->readHistoryBundle();
 
-  readHistoryBundle();
-  current_history_bundle_index = latest_history_bundle_index;
-
-}
-
-UsrData::UsrData(QObject *parent) : QObject(parent)
-{
-  is_null = true;
 }
 
 UsrData::~UsrData()
 {
   saveHistoryBundle();
+}
+
+void UsrData::newMessage(const QJsonObject &message)
+{
+
 }
 
 void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
@@ -73,8 +69,7 @@ bool UsrData::checkDir(const QString &directory)
 
 void UsrData::readHistoryBundle()
 {
-//  int index = 1;
-  for(int fail = 0, index = 1; fail <= 3; )
+  for(int index = 1; ; index ++)
     {
       QString tmp_file_path = QString(history_path+"/%1.json").arg(index);
       QFile file(tmp_file_path);
@@ -84,12 +79,8 @@ void UsrData::readHistoryBundle()
             {
               latest_history_bundle_index = 1;
               makeHistoryBundle(latest_history_bundle_index);
-              break;
             }
-          else
-            {
-              fail ++;
-            }
+          break;
         }
 
       QTextStream in(&file);
@@ -107,6 +98,7 @@ void UsrData::readHistoryBundle()
 
           if(temp_history_json_obj.value("full").toBool())
             {
+              //put full history_bundle to the list
               history_bundle_list.append( temp_history_json_obj.value("history").toArray());
             }
           else
@@ -117,6 +109,7 @@ void UsrData::readHistoryBundle()
             }
         }
     }
+  current_history_bundle_index = latest_history_bundle_index;
 }
 
 void UsrData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
