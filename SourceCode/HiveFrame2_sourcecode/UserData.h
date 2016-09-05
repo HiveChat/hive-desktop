@@ -21,6 +21,7 @@ public:
 
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
 
+  QList<QJsonObject>* retrieveNewMessage();
   QJsonArray* flipLatest();
   QJsonArray* flipUp();
   QJsonArray* flipDown();
@@ -45,9 +46,10 @@ private:
 
   int current_history_bundle_index;
   int latest_history_bundle_index;
-  QList<QJsonArray> history_bundle_list;
-  QList<QJsonObject> new_message_list;//unused
-  QJsonArray latest_history_json_array;
+  QList<QJsonObject> unread_message_list;//unused
+  QList<QJsonObject> unread_message_buffer_list;
+  QList<QJsonArray> history_bundle_list;//Boxes of canned patato chips
+  QJsonArray latest_history_json_array;//Pieces of patato chips
 
   //Funciton
   bool checkDir(const QString &directory);
@@ -56,8 +58,9 @@ private:
   void readHistoryBundle();
   void makeHistoryBundle(int num);
   void saveHistoryBundle();
-  void recordMessage(MessageStruct messageStruct, bool fromMe);
-
+  void recordMessage(const MessageStruct &messageStruct, bool fromMe);
+  void recordMessage(const QJsonObject &messageJsonObject);
+  void recordMessage(const QList<QJsonObject> &messageJsonObjectList);
 
 };
 

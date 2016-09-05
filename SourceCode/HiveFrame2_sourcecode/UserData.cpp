@@ -12,7 +12,7 @@ UsrData::UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QO
 
 UsrData::~UsrData()
 {
-  saveHistoryBundle();
+  recordMessage(unread_message_list);
 }
 
 void UsrData::newMessage(const QJsonObject &message)
@@ -23,6 +23,14 @@ void UsrData::newMessage(const QJsonObject &message)
 void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
+}
+
+QList<QJsonObject> *UsrData::retrieveNewMessage()
+{
+  unread_message_buffer_list = unread_message_list;
+  recordMessage(unread_message_list);
+  unread_message_list.clear();
+  return &unread_message_buffer_list;
 }
 
 QJsonArray* UsrData::flipLatest()
@@ -192,7 +200,7 @@ void UsrData::saveHistoryBundle()
 //  QtConcurrent::run(lambda);
 }
 
-void UsrData::recordMessage(MessageStruct messageStruct, bool fromMe)
+void UsrData::recordMessage(const MessageStruct &messageStruct, bool fromMe)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {
@@ -205,6 +213,30 @@ void UsrData::recordMessage(MessageStruct messageStruct, bool fromMe)
 
   latest_history_json_array.append(message_json_obj);
 
+  saveHistoryBundle();
+}
+
+void UsrData::recordMessage(const QJsonObject &messageJsonObject)
+{
+  if(latest_history_json_array.count() >= max_bundle_capacity)
+    {
+      saveHistoryBundle();
+    }
+  latest_history_json_array.append(messageJsonObject);
+
+  saveHistoryBundle();
+}
+
+void UsrData::recordMessage(const QList<QJsonObject> &messageJsonObjectList)
+{
+  foreach (QJsonObject json_obj, messageJsonObjectList)
+    {
+      if(latest_history_json_array.count() >= max_bundle_capacity)
+        {
+          saveHistoryBundle();
+        }
+      latest_history_json_array.append(json_obj);
+    }
   saveHistoryBundle();
 }
 
