@@ -153,6 +153,7 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
 {
+//  gui_chat_stack->refreshUI();
 //  if(fromMe)
 //    {
 //      gui_chat_stack_map.find(messageStruct.reciever_key).value()->checkMessage(messageStruct, fromMe);

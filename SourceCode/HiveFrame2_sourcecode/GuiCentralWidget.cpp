@@ -2,6 +2,8 @@
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 {
+  initAction();
+  initTrayIcon();
 //! do not delete yet, see if it causes problems.
 //  QPalette palette;
 //  palette.setColor(QPalette::Window, QColor(250,250,250));
@@ -53,6 +55,37 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 GuiCentralWidget::~GuiCentralWidget()
 {
   qDebug()<<"\n@Hive UI is destructed";
+}
+
+void GuiCentralWidget::initAction()
+{
+  hide_action = new QAction(tr("&Hide"), this);
+  connect(hide_action, &QAction::triggered, this, &QWidget::hide);
+
+  show_action = new QAction(tr("&Show"), this);
+  connect(show_action, &QAction::triggered, this, &QWidget::showNormal);
+
+  quit_action = new QAction(tr("&Quit"), this);
+  connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
+}
+
+void GuiCentralWidget::initTrayIcon()
+{
+  tray_icon_menu = new QMenu(this);
+  tray_icon_menu->addAction(hide_action);
+  tray_icon_menu->addAction(show_action);
+  tray_icon_menu->addSeparator();
+  tray_icon_menu->addAction(quit_action);
+
+//  QPixmap pixmap(":/img/img/icon.png");
+  QIcon icon(":/img/img/icon.png");
+
+  tray_icon = new QSystemTrayIcon(this);
+  tray_icon->setIcon(icon);
+  tray_icon->setToolTip("Hive!");
+  tray_icon->setContextMenu(tray_icon_menu);
+  tray_icon->setVisible(true);
+  tray_icon->show();
 }
 
 void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)

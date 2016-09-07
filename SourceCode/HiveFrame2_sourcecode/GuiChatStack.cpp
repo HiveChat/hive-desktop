@@ -480,12 +480,11 @@ GuiChatStack::GuiChatStack(QWidget *parent)
 //  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   chat_widget = new GuiChatStack_chat_widget(this);
-  scroll_area->setWidgetResizable(true);
-  scroll_area->setWidget(chat_widget);
-
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   scroll_area->setPalette(palette);
+  scroll_area->setWidgetResizable(true);
+  scroll_area->setWidget(chat_widget);
   scroll_area->setFrameStyle(0);
 
   message_editor = new GuiChatStack_message_editor(this);

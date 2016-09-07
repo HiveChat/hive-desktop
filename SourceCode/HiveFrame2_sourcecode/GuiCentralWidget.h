@@ -5,6 +5,8 @@
 #include "GuiMainBlock.h"
 
 #include <QSystemTrayIcon>
+#include <QAction>
+#include <QMenu>
 
 class GuiCentralWidget : public QWidget
 {
@@ -14,7 +16,6 @@ public:
   explicit GuiCentralWidget(QWidget *parent = 0);
   ~GuiCentralWidget();
 
-  QHBoxLayout *main_layout;
   GuiTabBlock *gui_tab_block;
   GuiMainBlock *gui_main_block;
 
@@ -25,6 +26,17 @@ private:
 
   QStringList my_profile_str_list;
 
+  QHBoxLayout *main_layout;
+  QSystemTrayIcon *tray_icon;
+
+  QMenu *tray_icon_menu;
+  QAction *hide_action;
+  QAction *show_action;
+  QAction *quit_action;
+
+  void initAction();
+  void initTrayIcon();
+
 public slots:
   void onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe);
   void addUsr(UsrData *userData);
@@ -33,28 +45,6 @@ public slots:
   void refreshUI();
 
 
-  void iconActivated(QSystemTrayIcon::ActivationReason reason)
-  {
-    switch (reason)
-    {
-      case QSystemTrayIcon::Trigger:
-        {
-          this->show();
-          break;
-        }
-      case QSystemTrayIcon::DoubleClick:
-        {
-          this->show();
-          break;
-        }
-      case QSystemTrayIcon::MiddleClick:
-        {
-          this->show();
-          break;
-        }
-      default:;
-    }
-  }
 
 private slots:
 
