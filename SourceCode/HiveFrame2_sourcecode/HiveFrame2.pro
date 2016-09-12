@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     GuiHomeStack_welcome.cpp \
     ThreadSocketTCP.cpp \
     UserData.cpp \
-    GlobalType.cpp
+    GlobalType.cpp \
+    GuiBadgeIcon.cpp
 
 HEADERS  += \
     GuiCentralWidget.h \
@@ -82,7 +83,8 @@ HEADERS  += \
     GuiHomeStack_welcome.h \
     ThreadSocketTCP.h \
     UserData.h \
-    GlobalType.h
+    GlobalType.h \
+    GuiBadgeIcon.h
 
 RESOURCES += \
     qss.qrc \

@@ -44,8 +44,6 @@ public slots:
   void changeUsr(UsrData *userData);
   void refreshUI();
 
-
-
 private slots:
 
 

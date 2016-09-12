@@ -90,6 +90,14 @@ void GuiCentralWidget::initTrayIcon()
 
 void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
 {
+  if(messageStruct.sender_key == GlobalData::g_settings_struct.key_str)
+    {
+      return;
+    }
+  else
+    {
+
+    }
 //  gui_main_block->gui_chat_stack->
 }
 
@@ -100,7 +108,6 @@ void GuiCentralWidget::addUsr(UsrData *userData)
 
   GlobalData::TEST_printUsrProfileStruct(*userData->usrProfileStruct(), "GuiCentralWidget recieved package generated just now");
 
-  //these will be eliminated
   gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
 }
 

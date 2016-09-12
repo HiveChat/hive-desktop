@@ -28,8 +28,13 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   usr_info_layout->addWidget(usr_name_label);
   usr_info_layout->addLayout(net_status_layout);
 
+  badge_icon = new GuiBadgeIcon(14, this);
+  badge_icon->setNumber(12);
+
   main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeft);
+  main_layout->addSpacing(10);
+//  main_layout->addWidget(badge_icon, Qt::AlignCenter);
   main_layout->addWidget(avatar);
   main_layout->addLayout(usr_info_layout);
 

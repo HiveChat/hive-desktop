@@ -9,6 +9,7 @@
 #include "GlobalData.h"
 #include "GuiLabelButton.h"
 #include "GuiAvatarButton.h"
+#include "GuiBadgeIcon.h"
 
 class GuiCombWidget : public QWidget
 {
@@ -33,6 +34,7 @@ private:
   QLabel *usr_name_label;
   QLabel *ip_addr_label;
   QLabel *status_label;
+  GuiBadgeIcon *badge_icon;
   QVBoxLayout *usr_info_layout;
   QHBoxLayout *net_status_layout;
   QHBoxLayout *main_layout;
