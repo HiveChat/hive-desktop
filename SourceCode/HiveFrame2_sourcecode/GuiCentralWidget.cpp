@@ -78,7 +78,7 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon_menu->addAction(quit_action);
 
 //  QPixmap pixmap(":/img/img/icon.png");
-  QIcon icon(":/img/img/icon.png");
+  QIcon icon(":/img/img/tray_0.png");
 
   tray_icon = new QSystemTrayIcon(this);
   tray_icon->setIcon(icon);

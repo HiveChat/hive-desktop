@@ -33,6 +33,7 @@
         <file>img/list_1.png</file>
         <file>img/list.png</file>
         <file>img/corner_honey.png</file>
+        <file>img/tray_0.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>
