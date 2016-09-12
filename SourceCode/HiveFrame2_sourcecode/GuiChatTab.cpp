@@ -92,6 +92,11 @@ void GuiChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
   connect(comb_widget, SIGNAL(clicked(QString)), this, SLOT(onCombWidgetClicked(QString)));
 }
 
+void GuiChatTab_comb_scroll_widget::setBadgeNumber(const QString &usrKey, const int &num)
+{
+  comb_widget_map.value(usrKey)->setBadgeNumber(num);
+}
+
 void GuiChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)
 {
   GlobalData::TEST_printUsrProfileStruct(*usrProfileStruct, "comb scroll widget");

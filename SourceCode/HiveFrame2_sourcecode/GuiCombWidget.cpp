@@ -29,7 +29,7 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   usr_info_layout->addLayout(net_status_layout);
 
   badge_icon = new GuiBadgeIcon(14, this);
-  badge_icon->setNumber(12);
+  badge_icon->setHidden(true);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeft);
@@ -82,6 +82,11 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
     }
 
   return;
+}
+
+void GuiCombWidget::setBadgeNumber(const int &num)
+{
+  badge_icon->setNumber(num);
 }
 
 

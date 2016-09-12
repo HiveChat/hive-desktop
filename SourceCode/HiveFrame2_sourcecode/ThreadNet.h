@@ -68,11 +68,6 @@ private:
   void tcpCloseConnection();
 
 
-signals:
-  void messageRecieved(MessageStruct *messageStruct, bool fromMe);
-  void usrEnter(UsrProfileStruct *usrProfileStruct);
-  void usrLeft(QString *usrKey);
-
 public slots:
   void udpSendMessage(QString usrKeyStr, QString message);
 private slots:
@@ -81,6 +76,11 @@ private slots:
   void tcpSendData();
 
 
+
+signals:
+  void messageRecieved(MessageStruct *messageStruct, bool fromMe);
+  void usrEnter(UsrProfileStruct *usrProfileStruct);
+  void usrLeft(QString *usrKey);
 
 };
 

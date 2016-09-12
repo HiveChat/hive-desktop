@@ -186,6 +186,7 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
+  QString usrKey() {return usr_data->usrProfileStruct()->key_str;}
   void refreshUI(const QString &usrKey);
 
 protected:

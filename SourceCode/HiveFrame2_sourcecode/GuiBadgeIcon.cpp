@@ -15,13 +15,23 @@ GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent) : QWidget(parent)
 
 void GuiBadgeIcon::setNumber(const int &number)
 {
+  if(number < 10)
+    {
+      num_label->setFrameRect(QRect(22, 12, height, height));
+      num_label->setText(QString::number(number));
+      return;
+    }
   if(number > 99)
     {
+      num_label->setFrameRect(QRect(20, 12, height, height));
       num_label->setText("...");
+      return;
     }
   else
     {
+      num_label->setFrameRect(QRect(20, 12, height, height));
       num_label->setText(QString::number(number));
+      return;
     }
 }
 

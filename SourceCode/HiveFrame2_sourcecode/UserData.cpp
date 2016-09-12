@@ -1,8 +1,9 @@
 #include "UserData.h"
 
 
-UsrData::UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
+UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
 {
+  my_key = myKey;
   this->setUsrProfileStruct(usrProfileStruct);
   history_path = usr_path + usr_profile_struct.key_str;
   this->checkDir(history_path);
@@ -15,9 +16,9 @@ UsrData::~UsrData()
   recordMessage(unread_message_list);
 }
 
-void UsrData::newMessage(const QJsonObject &message)
+void UsrData::addUnreadMessage(const MessageStruct &message)
 {
-
+  unread_message_list.append(getMessageJsonObject(message));
 }
 
 void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
@@ -25,13 +26,14 @@ void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
   usr_profile_struct = usrProfileStruct;
 }
 
-QList<QJsonObject> *UsrData::retrieveNewMessage()
+QList<QJsonObject> *UsrData::retrieveUnreadMessage()
 {
   unread_message_buffer_list = unread_message_list;
   recordMessage(unread_message_list);
   unread_message_list.clear();
   return &unread_message_buffer_list;
 }
+
 
 QJsonArray* UsrData::flipLatest()
 {
@@ -123,6 +125,17 @@ void UsrData::readHistoryBundle()
 void UsrData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
+}
+
+QJsonObject UsrData::getMessageJsonObject(const MessageStruct &messageStruct)
+{
+  bool fromMe = (messageStruct.sender_key == my_key);
+  QJsonObject json_object;
+  json_object.insert("fromMe", fromMe);
+  json_object.insert("message", messageStruct.message_str);
+  json_object.insert("time", messageStruct.time_str);
+
+  return json_object;
 }
 
 void UsrData::makeHistoryBundle(int num)

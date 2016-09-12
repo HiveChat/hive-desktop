@@ -15,6 +15,8 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   createStaticStack(Home_list);
   createStaticStack(Home_Welcome);
   displayStaticStack(Home_Welcome);
+
+  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
 }
 
 GuiMainBlock::~GuiMainBlock()
@@ -150,22 +152,6 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
 //  return gui_chat_stack;
 //}
 //<<
-
-void GuiMainBlock::onMessageRecieved(MessageStruct messageStruct, bool fromMe)
-{
-//  gui_chat_stack->refreshUI();
-//  if(fromMe)
-//    {
-//      gui_chat_stack_map.find(messageStruct.reciever_key).value()->checkMessage(messageStruct, fromMe);
-//    }
-//  else
-//    {
-//      gui_chat_stack_map.find(messageStruct.sender_key).value()->checkMessage(messageStruct, fromMe);
-//    }
-//<<
-//  if(fromMe)
-
-}
 
 void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
 {

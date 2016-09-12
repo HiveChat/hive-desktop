@@ -561,6 +561,16 @@ void GuiChatStack::refreshUI(const QString &usrKey)
 
     }
 
+  if(usr_data->unreadMessageNumber() != 0)
+    {
+      QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
+      foreach (QJsonObject history_json_obj, *message_list)
+        {
+          chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+          qDebug()<<"@GuiChatStack::refreshUI(): Message loaded...";
+        }
+    }
+
   qDebug()<<"@GuiChatStack::refreshUI: Chat stack refreshed...";
 }
 

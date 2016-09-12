@@ -14,14 +14,13 @@ class UsrData : public QObject
 {
   Q_OBJECT
 public:
-  explicit UsrData(const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
+  explicit UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
   ~UsrData();
 
-  void newMessage(const QJsonObject &message);
-
+  void addUnreadMessage(const MessageStruct &message);
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
 
-  QList<QJsonObject>* retrieveNewMessage();
+  QList<QJsonObject>* retrieveUnreadMessage();
   QJsonArray* flipLatest();
   QJsonArray* flipUp();
   QJsonArray* flipDown();
@@ -31,6 +30,7 @@ public:
   QString* name() {return &usr_profile_struct.name_str;}
   QString* avatar() {return &usr_profile_struct.avatar_str;}
   QString* ip() {return &usr_profile_struct.ip_str;}
+  int unreadMessageNumber() {return unread_message_list.count();}
   int currentHistoryBundleIndex(){return current_history_bundle_index;}
 
 
@@ -43,6 +43,7 @@ private:
   const QString usr_path = app_data_local_path + "/usr/";
   QString history_path;
   QString usr_key;
+  QString *my_key;
 
   int current_history_bundle_index;
   int latest_history_bundle_index;
@@ -54,6 +55,7 @@ private:
   //Funciton
   bool checkDir(const QString &directory);
   void refreshUsrProfile(const UsrProfileStruct &usrProfileStruct);
+  QJsonObject getMessageJsonObject(const MessageStruct &messageStruct);
 
   void readHistoryBundle();
   void makeHistoryBundle(int num);

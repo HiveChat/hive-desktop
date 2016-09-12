@@ -43,7 +43,6 @@ public slots:
   void displayStaticStack(StaticStackType staticStackType);
   void displayChatStack(const QString &usrKey);
 //  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);<<
-  void onMessageRecieved(MessageStruct messageStruct, bool fromMe);
 
 private slots:
   void onMessageToSend(QString *usrKey, QString *message);

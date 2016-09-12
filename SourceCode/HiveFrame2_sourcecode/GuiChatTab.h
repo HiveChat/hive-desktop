@@ -15,6 +15,8 @@ class GuiChatTab_comb_scroll_widget : public QWidget
 public:
   explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
   void refreshComb(UsrProfileStruct *usrProfileStruct);
+  void addComb(UsrProfileStruct *usrProfileStruct);
+  void setBadgeNumber(const QString &usrKey, const int &num);
 
 private:
   QVBoxLayout *main_layout;
@@ -25,7 +27,6 @@ signals:
 
 public slots:
   void onCombWidgetClicked(QString usrKey);
-  void addComb(UsrProfileStruct *usrProfileStruct);
 
 
 };
@@ -40,10 +41,6 @@ public:
   explicit GuiChatTab(QWidget *parent = 0);
   QScrollArea *comb_scrollarea;
   GuiChatTab_comb_scroll_widget *comb_scroll_widget;
-
-signals:
-
-public slots:
 
 private:
   QVBoxLayout *main_layout;

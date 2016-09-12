@@ -20,6 +20,7 @@ public:
   ~GuiCombWidget();
 
   void setProfile(UsrProfileStruct *usrProfile);
+  void setBadgeNumber(const int &num);
 
 protected:
   void paintEvent(QPaintEvent*);

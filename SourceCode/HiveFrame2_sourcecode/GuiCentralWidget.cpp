@@ -90,14 +90,14 @@ void GuiCentralWidget::initTrayIcon()
 
 void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
 {
-  if(messageStruct.sender_key == GlobalData::g_settings_struct.key_str)
+  if(fromMe)
     {
-      return;
+//      if(gui_main_block->gui_chat_stack->usrKey() != messageStruct.sender_key)
+        {
+          gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender_key, GlobalData::online_usr_data_map.value(messageStruct.sender_key)->unreadMessageNumber());
+        }
     }
-  else
-    {
-
-    }
+  gui_main_block->gui_chat_stack->refreshUI(messageStruct.sender_key);
 //  gui_main_block->gui_chat_stack->
 }
 
