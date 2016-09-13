@@ -16,7 +16,7 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   createStaticStack(Home_Welcome);
   displayStaticStack(Home_Welcome);
 
-  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
+//  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
 }
 
 GuiMainBlock::~GuiMainBlock()

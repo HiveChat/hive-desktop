@@ -15,6 +15,7 @@ class UsrData : public QObject
   Q_OBJECT
 public:
   explicit UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent = 0);
+  explicit UsrData(QObject *parent = 0);
   ~UsrData();
 
   void addUnreadMessage(const MessageStruct &message);

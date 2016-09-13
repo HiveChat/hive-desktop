@@ -35,7 +35,6 @@ int load_my_style()
 
 int main(int argc, char *argv[])
 {
-
   ///Check single instance.
   if(!checkSingleInstance("topo-client.lock"))
     {

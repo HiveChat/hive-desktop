@@ -188,6 +188,7 @@ public:
 
   QString usrKey() {return usr_data->usrProfileStruct()->key_str;}
   void refreshUI(const QString &usrKey);
+  void setUsrData(UsrData *usrData);
 
 protected:
 //  void setUpUI();
@@ -203,7 +204,6 @@ private:
   //Data
   UsrData *usr_data;
   LayoutStyle layout_style = LayoutStyle::Profile;
-  bool first_refresh = true;
 
   //Function
   void flipLatestMessage();
@@ -215,7 +215,7 @@ public slots:
   void onKeyEnterTriggered(bool &pressed);
 
 signals:
-  void sendMessage(QString *usrKey, QString *message);
+  void sendMessage(QString usrKey, QString message);
 
 };
 
