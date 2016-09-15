@@ -122,8 +122,10 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
+  gui_chat_stack->display(usrKey);
   gui_chat_stack->refreshMessage(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
+//  GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct(), "GuiMainBlock::displayChatStack");
 }
 
 

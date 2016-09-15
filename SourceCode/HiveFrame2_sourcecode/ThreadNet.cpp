@@ -140,12 +140,12 @@ void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
 
   if(usrProfileStruct->key_str == GlobalData::g_settings_struct.key_str)
     {
-      qDebug()<<"UDP receive# Myself entered.";
+      qDebug()<<"@UDP receive# Myself entered.";
       emit usrEnter(usrProfileStruct);
     }
   else
     {
-      qDebug()<<"UDP receive# Someone entered.";
+      qDebug()<<"@UDP receive# Someone entered.";
       emit usrEnter(usrProfileStruct);
     }
 

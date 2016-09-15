@@ -490,7 +490,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
 
   message_editor = new GuiChatStack_message_editor(this);
 
-  //this is a flag to distinguish
+  ///this is a flag to distinguish
   ///////////////////////////////////////Eiffel Tower////////////////////////////////////
 
   ////main layout
@@ -504,7 +504,6 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(message_editor);
-
 
   connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
   connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
@@ -553,14 +552,17 @@ void GuiChatStack::setUsrData(UsrData *usrData)
 
 void GuiChatStack::display(const QString &usrKey)
 {
-  usr_data = GlobalData::online_usr_data_map.value(usrKey);
+  if(*usr_data->key() != *GlobalData::online_usr_data_map.value(usrKey)->key())
+    {
+      this->setUsrData(GlobalData::online_usr_data_map.value(usrKey));
 
-  this->setIcon(*usr_data->avatar());
-  this->setTitle(*usr_data->name());
-  this->setSubTitle(*usr_data->ip());
+      this->setIcon(*usr_data->avatar());
+      this->setTitle(*usr_data->name());
+      this->setSubTitle(*usr_data->ip());
 
-  this->flipLatestMessage(true);
-  this->flipUnreadMessage();
+      this->flipLatestMessage(true);
+      this->flipUnreadMessage();
+    }
 }
 
 bool GuiChatStack::isDisplaying(const QString &usrKey)
@@ -601,7 +603,7 @@ void GuiChatStack::flipUnreadMessage()
           qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
         }
     }
-  scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+  scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
 
 void GuiChatStack::flipLatestMessage(const bool &clear)
