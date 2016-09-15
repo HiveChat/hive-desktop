@@ -1,18 +1,16 @@
-#DO NOT COMPILE! UPGRADING!
-#在大改结构，不要编译！！！！！
 # Hive! [0.0.4]
 
 ![](http://7xpqkc.dl1.z0.glb.clouddn.com/HiveIcon_small.png)
 
 Hive! is a LAN chatting software. This is a free software.
+Hive is written by pure Qt C++ without design forms.
 
 #请读：
 Hive项目还没有正式发布，现在还处于功能测试阶段，欢迎大家在本页issues里提bug和不爽的体验。
 Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 真的很希望大家提意见反馈，虽然学习真的很忙，写代码的时间我是会留的。不要失望啦~
-暑假是大更新的时候，请大家保持期待萌萌的Hive正式发布吧~
 
-目前的破Hive是没有局域网穿透的，只在同一个网段下用哦。
+目前的Hive是没有局域网穿透的，在同一个网段下用比较稳定哦。
 
 <p>为什么自己会出现在聊天栏里？
 --因为测试的时候方便找问题啦。。。</p>
@@ -27,7 +25,7 @@ Hive官网是hivechat.org，自动转跳至github.io的GitHub pages。
 
 ## Download:
 * This programme is NOT finished yet.
-* But there are some pre-releases, which might be incomplete.
+* But there are some pre-releases, whose functions might be incomplete.
 
 New MacOS X:
 [MacOS X >= 10.10 Download here >>](http://7xpoh1.dl1.z0.glb.clouddn.com/Hive_0.0.4_alpha_osx_new_Qt5.6.zip.dmg)
