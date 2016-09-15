@@ -90,24 +90,24 @@ void GuiCentralWidget::initTrayIcon()
 
 void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
 {
-  if(fromMe)
+  if(!fromMe)
     {
-//      if(gui_main_block->gui_chat_stack->usrKey() != messageStruct.sender_key)
+      //if not displaying the usr
+      if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender_key))
         {
           gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender_key, GlobalData::online_usr_data_map.value(messageStruct.sender_key)->unreadMessageNumber());
         }
     }
-  gui_main_block->gui_chat_stack->refreshUI(messageStruct.sender_key);
-//  gui_main_block->gui_chat_stack->
+  else
+    {
+      gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender_key);
+    }
 }
 
 
 void GuiCentralWidget::addUsr(UsrData *userData)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
-
-  GlobalData::TEST_printUsrProfileStruct(*userData->usrProfileStruct(), "GuiCentralWidget recieved package generated just now");
-
   gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
 }
 
@@ -119,8 +119,8 @@ void GuiCentralWidget::delUsr(UsrData *userData)
 void GuiCentralWidget::changeUsr(UsrData *userData)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
+  gui_main_block->gui_chat_stack->refreshProfile(*userData->key());
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
-
   //these will be eliminated
   //  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);<<
 }

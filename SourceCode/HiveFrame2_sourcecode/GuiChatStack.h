@@ -186,18 +186,17 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
-  QString usrKey() {return usr_data->usrProfileStruct()->key_str;}
-  void refreshUI(const QString &usrKey);
   void setUsrData(UsrData *usrData);
+  void display(const QString &usrKey);
+  bool refreshProfile(const QString &usrKey);
+  bool refreshMessage(const QString &usrKey);
 
 protected:
-//  void setUpUI();
   void dragEnterEvent(QDragEnterEvent *event);
   void dropEvent(QDropEvent *event);
 
 private:
   //UI
-//  QScrollArea *chat_scroll_area;
   GuiChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
 
@@ -206,9 +205,11 @@ private:
   LayoutStyle layout_style = LayoutStyle::Profile;
 
   //Function
-  void flipLatestMessage();
-  void flipUpMessage();
-  void flipDownMessage();
+  void flipUnreadMessage();
+  void flipLatestMessage(const bool &clear);
+  void flipUpMessage(const bool &clear);
+  void flipDownMessage(const bool &clear);
+  bool isDisplaying(const QString &usrKey);
 
 public slots:
   void onSendButtonClicked();

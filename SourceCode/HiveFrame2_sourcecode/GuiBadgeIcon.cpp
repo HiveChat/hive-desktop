@@ -15,22 +15,29 @@ GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent) : QWidget(parent)
 
 void GuiBadgeIcon::setNumber(const int &number)
 {
+  if(number == 0)
+    {
+      num_label->setHidden(true);
+    }
   if(number < 10)
     {
       num_label->setFrameRect(QRect(22, 12, height, height));
       num_label->setText(QString::number(number));
+      num_label->setHidden(false);
       return;
     }
   if(number > 99)
     {
       num_label->setFrameRect(QRect(20, 12, height, height));
       num_label->setText("...");
+      num_label->setHidden(false);
       return;
     }
   else
     {
       num_label->setFrameRect(QRect(20, 12, height, height));
       num_label->setText(QString::number(number));
+      num_label->setHidden(false);
       return;
     }
 }

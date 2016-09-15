@@ -122,7 +122,7 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
-  gui_chat_stack->refreshUI(usrKey);
+  gui_chat_stack->refreshMessage(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
 

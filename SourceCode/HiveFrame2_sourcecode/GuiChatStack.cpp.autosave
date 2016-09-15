@@ -490,7 +490,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
 
   message_editor = new GuiChatStack_message_editor(this);
 
-  //this is a flag to distinguish
+  ///this is a flag to distinguish
   ///////////////////////////////////////Eiffel Tower////////////////////////////////////
 
   ////main layout
@@ -504,7 +504,6 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(message_editor);
-
 
   connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
   connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));

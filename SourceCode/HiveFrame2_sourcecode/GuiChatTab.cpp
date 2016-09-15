@@ -85,7 +85,7 @@ GuiChatTab_comb_scroll_widget::GuiChatTab_comb_scroll_widget(QWidget *parent) : 
 
 void GuiChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 {
-  qDebug()<<"Comb Added";
+  qDebug()<<"#GuiChatTab_comb_scroll_widget::addComb(): Adding Comb.";
   GuiCombWidget *comb_widget = new GuiCombWidget(usrProfileStruct, this);
   comb_widget_map.insert(usrProfileStruct->key_str, comb_widget);
   main_layout->addWidget(comb_widget);
@@ -104,6 +104,10 @@ void GuiChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStru
   if(comb_widget != nullptr)
     {
       comb_widget->setProfile(usrProfileStruct);
+    }
+  else
+    {
+      qDebug()<<"Something Impossible happened!!!";
     }
 }
 
