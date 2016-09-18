@@ -3,7 +3,6 @@
 
 GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
 {
-  setUpUI();
 }
 
 GuiScrollStack::~GuiScrollStack()
@@ -59,8 +58,10 @@ void GuiScrollStack::setIcon(const QString &path)
   icon_btn->setAvatar(path);
 }
 
-void GuiScrollStack::setUpUI()//////add enum GUI switcher.
+void GuiScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI switcher.
 {
+  layout_style = layoutStyle;
+
   text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
   sub_text_palette.setColor(QPalette::WindowText, QColor(100,100,100/*130, 130, 130*/));
 

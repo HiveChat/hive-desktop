@@ -36,9 +36,11 @@ void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 
 GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
 {
-  setIcon(":/img/img/list.png");
-  setTitle("Home");
-  setSubTitle("online user");
+  this->setUpUI(LayoutStyle::Linear);
+
+  this->setIcon(":/img/img/list.png");
+  this->setTitle("Home");
+  this->setSubTitle("online user");
 
   this->central_layout->setAlignment(Qt::AlignLeft);
   this->setParent(parent);

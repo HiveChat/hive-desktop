@@ -2,6 +2,8 @@
 
 GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
 {
+  this->setUpUI(LayoutStyle::Linear);
+
   avatar_map.insert("Flying Bee", ":/avatar/avatar/bee.png");
   avatar_map.insert("Hive", ":/img/img/icon.png");
   avatar_map.insert("Fat Bee", ":/avatar/avatar/fat.png");

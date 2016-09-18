@@ -104,16 +104,11 @@ void GuiChatStack_chat_widget::clearChatBubbles()
 
 void GuiChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
 {
+  qDebug()<<"CHATBUBBLEMAKING...";
   gui_chat_bubble = new GuiChatBubble(message, !fromMe, this);
-  if(fromMe)
-    {
-      chat_bubble_layout->addWidget(gui_chat_bubble);
-    }
-  else
-    {
-      chat_bubble_layout->addWidget(gui_chat_bubble);
-    }
   chat_bubble_list.append(gui_chat_bubble);
+
+  chat_bubble_layout->addWidget(gui_chat_bubble);
 }
 
 //////////////////////////bottom//////////////////////////////////////
@@ -471,8 +466,9 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 GuiChatStack::GuiChatStack(QWidget *parent)
 {
+  this->setUpUI(LayoutStyle::Profile);
+
   usr_data = new UsrData(this);//empty object
-  this->layout_style = LayoutStyle::Profile;
   ///UI
 //  QFrame *top_bar_line = new QFrame(this);
 //  top_bar_line->setFrameShape(QFrame::HLine);
@@ -524,9 +520,9 @@ bool GuiChatStack::refreshProfile(const QString &usrKey)
     }
   else
     {
-      this->setIcon(*usr_data->avatar());
-      this->setTitle(*usr_data->name());
-      this->setSubTitle(*usr_data->ip());
+      this->setIcon(usr_data->avatar());
+      this->setTitle(usr_data->name());
+      this->setSubTitle(usr_data->ip());
       return true;
     }
 }
@@ -552,22 +548,28 @@ void GuiChatStack::setUsrData(UsrData *usrData)
 
 void GuiChatStack::display(const QString &usrKey)
 {
-  if(*usr_data->key() != *GlobalData::online_usr_data_map.value(usrKey)->key())
+  UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(usrKey);
+
+  if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
     {
-      this->setUsrData(GlobalData::online_usr_data_map.value(usrKey));
+      if(usr_data->key() != temp_usr_data->key())
+        {
+          this->setUsrData(temp_usr_data);
+          this->flipLatestMessage(true);
+          this->flipUnreadMessage();
+        }
 
-      this->setIcon(*usr_data->avatar());
-      this->setTitle(*usr_data->name());
-      this->setSubTitle(*usr_data->ip());
+      this->setIcon(temp_usr_data->avatar());
+      this->setTitle(temp_usr_data->name());
+      this->setSubTitle(temp_usr_data->ip());
 
-      this->flipLatestMessage(true);
-      this->flipUnreadMessage();
+
     }
 }
 
 bool GuiChatStack::isDisplaying(const QString &usrKey)
 {
-  return (usrKey == *usr_data->key());
+  return (usrKey == usr_data->key());
 }
 
 void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
@@ -623,6 +625,7 @@ void GuiChatStack::flipLatestMessage(const bool &clear)
       chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
       qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
     }
+
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
 }
 
@@ -645,8 +648,9 @@ void GuiChatStack::flipDownMessage(const bool &clear)
 void GuiChatStack::onSendButtonClicked()
 {
   QString message_str = message_editor->text_editor->toPlainText();
-  emit sendMessage(*usr_data->key(), message_str);
+  emit sendMessage(usr_data->key(), message_str);
   message_editor->text_editor->clear();
+  scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 
 }
 

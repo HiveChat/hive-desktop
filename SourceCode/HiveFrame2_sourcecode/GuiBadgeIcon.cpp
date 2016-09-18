@@ -1,4 +1,5 @@
 #include "GuiBadgeIcon.h"
+#include <QDebug>
 
 GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent) : QWidget(parent)
 {
@@ -10,34 +11,37 @@ GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent) : QWidget(parent)
   QFont label_font = num_label->font();
   label_font.setPointSize(8);
   num_label->setFont(label_font);
-  num_label->setFrameRect(QRect(20, 12, height, height));
+  num_label->setFrameRect(QRect(22, 12, height, height));
 }
 
 void GuiBadgeIcon::setNumber(const int &number)
 {
   if(number == 0)
     {
-      num_label->setHidden(true);
+      num_label->setFrameRect(QRect(22, 12, height, height));
+      num_label->setText(QString::number(number));
+      this->setHidden(true);
+      return;
     }
   if(number < 10)
     {
       num_label->setFrameRect(QRect(22, 12, height, height));
       num_label->setText(QString::number(number));
-      num_label->setHidden(false);
+      this->setHidden(false);
       return;
     }
   if(number > 99)
     {
       num_label->setFrameRect(QRect(20, 12, height, height));
       num_label->setText("...");
-      num_label->setHidden(false);
+      this->setHidden(false);
       return;
     }
   else
     {
       num_label->setFrameRect(QRect(20, 12, height, height));
       num_label->setText(QString::number(number));
-      num_label->setHidden(false);
+      this->setHidden(false);
       return;
     }
 }

@@ -29,8 +29,8 @@ Hive::Hive(QObject *parent) : QObject(parent)
   connect(thread_data, SIGNAL(messageLoaded(MessageStruct, bool)), gui_central_widget, SLOT(onMessageReceived(MessageStruct, bool)), Qt::AutoConnection);
 
 
-  thread_data->start(QThread::NormalPriority);
-  thread_net->start(QThread::NormalPriority);
+  thread_data->start(QThread::HighPriority);
+  thread_net->start(QThread::HighPriority);
 
 #ifdef Q_OS_MAC
   QtMac::setBadgeLabelText("");

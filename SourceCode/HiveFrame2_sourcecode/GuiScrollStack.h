@@ -26,7 +26,7 @@ public:
 
 
 protected:
-  void setUpUI();
+  void setUpUI(const LayoutStyle &layoutStyle);
   void setTitle(const QString &text);
   void setSubTitle(const QString &text);
   void setIcon(const QString &path);
@@ -43,7 +43,7 @@ protected:
 
   QString title_qstr = "";
   QString sub_title_qstr = "";
-  LayoutStyle layout_style;
+  LayoutStyle layout_style = LayoutStyle::Linear;
 
   GuiAvatarButton *icon_btn;
   QLabel *composite_title_label;

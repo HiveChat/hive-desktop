@@ -256,9 +256,13 @@ void ThreadData::onUsrLeft(QString *usrKey)
 
 void ThreadData::onMessageCome(MessageStruct *messageStruct, bool fromMe)
 {
-//  if(fromMe)
+  if(fromMe)
     {
       GlobalData::online_usr_data_map.value(messageStruct->reciever_key)->addUnreadMessage(*messageStruct);
+    }
+  else
+    {
+      GlobalData::online_usr_data_map.value(messageStruct->sender_key)->addUnreadMessage(*messageStruct);
     }
   emit messageLoaded(*messageStruct, fromMe);
 }

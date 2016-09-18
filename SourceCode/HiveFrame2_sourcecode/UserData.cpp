@@ -13,7 +13,6 @@ UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObje
 
 UsrData::UsrData(QObject *parent) : QObject(parent)
 {
-
 }
 
 UsrData::~UsrData()

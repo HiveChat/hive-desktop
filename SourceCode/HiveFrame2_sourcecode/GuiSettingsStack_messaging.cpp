@@ -2,6 +2,8 @@
 
 GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
 {
+  this->setUpUI(LayoutStyle::Linear);
+
   setIcon(":/img/img/messaging.png");
   setTitle("Settings");
   setSubTitle("messaging");

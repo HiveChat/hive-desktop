@@ -195,6 +195,8 @@ protected:
   void dragEnterEvent(QDragEnterEvent *event);
   void dropEvent(QDropEvent *event);
 
+  LayoutStyle layout_style = LayoutStyle::Profile;
+
 private:
   //UI
   GuiChatStack_chat_widget *chat_widget;
@@ -202,7 +204,6 @@ private:
 
   //Data
   UsrData *usr_data;
-  LayoutStyle layout_style = LayoutStyle::Profile;
 
   //Function
   void flipUnreadMessage();

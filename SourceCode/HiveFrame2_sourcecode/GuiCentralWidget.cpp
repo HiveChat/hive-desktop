@@ -90,17 +90,18 @@ void GuiCentralWidget::initTrayIcon()
 
 void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
 {
-  if(!fromMe)
+  if(fromMe)
+    {
+      gui_main_block->gui_chat_stack->refreshMessage(messageStruct.reciever_key);
+    }
+  else
     {
       //if not displaying the usr
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender_key))
         {
+          qDebug()<<"?????????????"<<GlobalData::online_usr_data_map.value(messageStruct.sender_key)->unreadMessageNumber()<<"??????????";
           gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender_key, GlobalData::online_usr_data_map.value(messageStruct.sender_key)->unreadMessageNumber());
         }
-    }
-  else
-    {
-      gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender_key);
     }
 }
 
@@ -119,7 +120,7 @@ void GuiCentralWidget::delUsr(UsrData *userData)
 void GuiCentralWidget::changeUsr(UsrData *userData)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
-  gui_main_block->gui_chat_stack->refreshProfile(*userData->key());
+  gui_main_block->gui_chat_stack->refreshProfile(userData->key());
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
   //these will be eliminated
   //  gui_main_block->gui_chat_stack_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);<<

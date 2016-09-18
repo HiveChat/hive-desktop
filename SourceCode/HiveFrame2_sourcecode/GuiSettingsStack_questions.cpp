@@ -3,6 +3,8 @@
 
 GuiSettingsStack_questions::GuiSettingsStack_questions(QWidget *parent)
 {
+  this->setUpUI(LayoutStyle::Linear);
+
   setIcon(":/img/img/question.png");
   setTitle("Settings");
   setSubTitle("questions");

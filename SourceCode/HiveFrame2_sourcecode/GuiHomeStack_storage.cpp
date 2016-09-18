@@ -2,10 +2,11 @@
 
 GuiHomeStack_storage::GuiHomeStack_storage(QWidget *parent)
 {
-  setIcon(":/img/img/storage.png");
-  setTitle("Home");
-  setSubTitle("storage");
-  addTag("Overview");
+  this->setUpUI(LayoutStyle::Linear);
+  this->setIcon(":/img/img/storage.png");
+  this->setTitle("Home");
+  this->setSubTitle("storage");
+  this->addTag("Overview");
 
   this->setParent(parent);
 }
