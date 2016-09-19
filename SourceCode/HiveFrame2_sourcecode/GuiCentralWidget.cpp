@@ -99,8 +99,9 @@ void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, con
       //if not displaying the usr
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender_key))
         {
-          qDebug()<<"?????????????"<<GlobalData::online_usr_data_map.value(messageStruct.sender_key)->unreadMessageNumber()<<"??????????";
-          gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender_key, GlobalData::online_usr_data_map.value(messageStruct.sender_key)->unreadMessageNumber());
+          UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender_key);
+          gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender_key, temp_usr_data->unreadMessageNumber());
+          tray_icon->showMessage(temp_usr_data->name(), messageStruct.message_str);
         }
     }
 }

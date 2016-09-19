@@ -31,6 +31,7 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   badge_icon = new GuiBadgeIcon(14, this);
   badge_icon->setNumber(0);
 
+
   main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeft);
   main_layout->addSpacing(10);
