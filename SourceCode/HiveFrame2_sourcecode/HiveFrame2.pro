@@ -34,7 +34,6 @@ SOURCES += main.cpp\
     GuiAvatarButton.cpp \
     GuiChatBubble.cpp \
     GlobalData.cpp \
-    DataHistoryIO.cpp \
     GuiMenuButton.cpp \
     GuiScrollStack.cpp \
     GuiSettingsTab.cpp \
@@ -50,9 +49,9 @@ SOURCES += main.cpp\
     GuiHomeStack_list.cpp \
     GuiHomeStack_welcome.cpp \
     ThreadSocketTCP.cpp \
-    UserData.cpp \
     GlobalType.cpp \
-    GuiBadgeIcon.cpp
+    GuiBadgeIcon.cpp \
+    UsrData.cpp
 
 HEADERS  += \
     GuiCentralWidget.h \
@@ -66,7 +65,6 @@ HEADERS  += \
     GuiAvatarButton.h \
     GuiChatBubble.h \
     GlobalData.h \
-    DataHistoryIO.h \
     GuiMenuButton.h \
     GuiScrollStack.h \
     GuiSettingsTab.h \
@@ -82,9 +80,9 @@ HEADERS  += \
     GuiHomeStack_list.h \
     GuiHomeStack_welcome.h \
     ThreadSocketTCP.h \
-    UserData.h \
     GlobalType.h \
-    GuiBadgeIcon.h
+    GuiBadgeIcon.h \
+    UsrData.h
 
 RESOURCES += \
     qss.qrc \

@@ -2,7 +2,7 @@
 #define DATAMANAGER_H
 
 #include "GlobalData.h"
-#include "UserData.h"
+#include "UsrData.h"
 
 #include <QThread>
 #include <QMutex>
@@ -52,7 +52,7 @@ private:
   void checkSettings();
   void refreshGui();
 
-  SettingStruct written_settings_struct;
+  Settings::SettingStruct written_settings_struct;
 
   QJsonDocument makeUsrProfile();
   QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);

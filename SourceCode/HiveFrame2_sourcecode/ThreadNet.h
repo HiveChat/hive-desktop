@@ -53,11 +53,12 @@ private:
   void udpSendUsrEnter();
   void udpSendUsrLeave();
   void udpSendFileTran();
+  void udpSendFileAccept();
   void TEST_udpsSendMessage(QString to, QString from, QString message);
 
 
   ///TCP Server
-  qint16 tcp_port = 8723;
+  qint16 tcp_port = 23232;
   QString file_name;
   QFile *local_file;
 

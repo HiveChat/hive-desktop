@@ -32,7 +32,7 @@ QPalette GlobalData::palette_txt_brown;
 
 ///data
 char GlobalData::g_version[3] = {'0','0','6'};
-SettingStruct GlobalData::g_settings_struct;
+Settings::SettingStruct GlobalData::g_settings_struct;
 QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
 QMap<QString, UsrProfileStruct> GlobalData::online_usr_profile_map;
 

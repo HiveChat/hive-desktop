@@ -9,7 +9,7 @@ class ThreadSocketTCP : public QThread
 {
   Q_OBJECT
 public:
-  explicit ThreadSocketTCP(QObject *parent = 0);
+  explicit ThreadSocketTCP(const qint16 &port, QObject *parent = 0);
 
 private:
   qint16 tcp_port;

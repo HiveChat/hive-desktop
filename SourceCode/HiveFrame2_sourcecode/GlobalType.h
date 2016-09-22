@@ -63,16 +63,28 @@ struct FileInfoStruct
   bool direct_display;
 };
 
-struct SettingStruct
-{
-  QColor chat_bubble_color_i;
-  QColor chat_bubble_color_o;
-  QString avatar_str;
-  QString key_str;
-  QString name_str;
-};
-bool operator !=(const SettingStruct &arg1 , const SettingStruct &arg2);
-bool operator ==(const SettingStruct &arg1 , const SettingStruct &arg2);
+namespace Settings {
+
+  enum Notification{
+    ShowCount,
+    ShowDetail,
+    None
+  };
+
+  struct SettingStruct
+  {
+    QColor chat_bubble_color_i;
+    QColor chat_bubble_color_o;
+    QString profile_avatar_str;
+    QString profile_name_str;
+    QString profile_key_str;
+    Notification notification;
+  };
+  bool operator !=(const SettingStruct &arg1 , const SettingStruct &arg2);
+  bool operator ==(const SettingStruct &arg1 , const SettingStruct &arg2);
+
+}
+
 
 
 #endif // GLOBALTYPE_H

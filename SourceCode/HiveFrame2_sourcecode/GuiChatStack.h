@@ -5,7 +5,7 @@
 #include "GuiAvatarButton.h"
 #include "GuiChatBubble.h"
 #include "GlobalData.h"
-#include "UserData.h"
+#include "UsrData.h"
 #include "ThreadData.h"
 #include "GuiScrollStack.h"
 

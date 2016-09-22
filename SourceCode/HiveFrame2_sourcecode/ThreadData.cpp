@@ -237,7 +237,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     }
   else
     {
-      UsrData *user_data = new UsrData(&GlobalData::g_settings_struct.key_str, *usrProfileStruct, this);
+      UsrData *user_data = new UsrData(&GlobalData::g_settings_struct.profile_key_str, *usrProfileStruct, this);
       GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
       GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
@@ -277,8 +277,8 @@ void ThreadData::checkFiles()
 void ThreadData::loadDefaultGlobalData()
 {
   makeUsrKey();
-  GlobalData::g_settings_struct.avatar_str = ":/avatar/avatar/default.png";
-  GlobalData::g_settings_struct.name_str = QHostInfo::localHostName();
+  GlobalData::g_settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
+  GlobalData::g_settings_struct.profile_name_str = QHostInfo::localHostName();
 }
 
 
@@ -327,21 +327,21 @@ void ThreadData::makeUsrKey()
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-  GlobalData::g_settings_struct.key_str.clear();
+  GlobalData::g_settings_struct.profile_key_str.clear();
 
   for(int i = 0; i < 32; i ++)
     {
-      GlobalData::g_settings_struct.key_str.append(alphabet_char[qrand()%63]);
+      GlobalData::g_settings_struct.profile_key_str.append(alphabet_char[qrand()%63]);
     }
 
-  qDebug()<<GlobalData::g_settings_struct.key_str;
+  qDebug()<<GlobalData::g_settings_struct.profile_key_str;
 }
 
 void ThreadData::initVariable()
 {
-  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_settings_struct.key_str);
-  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_settings_struct.name_str);
-  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_settings_struct.avatar_str);
+  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_settings_struct.profile_key_str);
+  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_settings_struct.profile_name_str);
+  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_settings_struct.profile_avatar_str);
   myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_settings_struct.chat_bubble_color_i);
   myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_settings_struct.chat_bubble_color_o);
 

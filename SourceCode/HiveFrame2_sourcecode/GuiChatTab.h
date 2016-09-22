@@ -2,7 +2,7 @@
 #define GUICHATTAB_H
 
 #include "GuiCombWidget.h"
-#include "UserData.h"
+#include "UsrData.h"
 
 #include <QScrollArea>
 #include <QMap>

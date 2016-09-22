@@ -1,9 +1,8 @@
 #include "ThreadSocketTCP.h"
 
-ThreadSocketTCP::ThreadSocketTCP(QObject *parent) : QThread(parent)
+ThreadSocketTCP::ThreadSocketTCP(const qint16 &port, QObject *parent) : QThread(parent)
 {
-
-  tcp_port = 8723;
+  tcp_port = port;
   initServer();
 }
 
