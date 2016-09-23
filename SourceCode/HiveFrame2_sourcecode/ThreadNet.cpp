@@ -92,7 +92,7 @@ void ThreadNet::refreshLocalHostIP()
 
 void ThreadNet::sendOnlineStatus()
 {
-  if(GlobalData::g_localHostIP != "")
+  if(!GlobalData::g_localHostIP.isEmpty())
     {
       udpSendUsrEnter();
     }
@@ -101,6 +101,11 @@ void ThreadNet::sendOnlineStatus()
 ///udp process
 void ThreadNet::udpProcessMessage(MessageStruct *messageStruct)
 {
+  if(messageStruct->sender_key.isEmpty() || messageStruct->reciever_key.isEmpty())
+    {
+      return;
+    }
+
   if(messageStruct->reciever_key != GlobalData::g_settings_struct.profile_key_str)
     {
       if(messageStruct->sender_key != GlobalData::g_settings_struct.profile_key_str)
@@ -202,7 +207,7 @@ void ThreadNet::udpSendMessage(QString usrKeyStr, QString message)
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  if(message == "")
+  if(message.isEmpty())
     {
       qDebug()<<"@sendMessage(): Message content empty!";
       return;
@@ -229,7 +234,7 @@ void ThreadNet::TEST_udpsSendMessage(QString to, QString from, QString message)
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  if (message == "")
+  if (message.isEmpty())
     {
       qDebug()<<"@sendMessage(): Message content empty!";
       return;

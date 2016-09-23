@@ -38,7 +38,6 @@ void GuiMainBlock::clearStackMap(StaticStackType &reservation)
         {
           qDebug()<<"#GuiMainBlock::clearStackMap(): Destroyed a QStackedWidget.";
           QObject *obj = static_stack_map.value(temp_static_stack_type);
-          connect(obj, SIGNAL(destroyed()), this, SLOT(TEST_destroyedTest()));
           static_stack_map.value(temp_static_stack_type)->deleteLater();
           static_stack_map.remove(temp_static_stack_type);
         }

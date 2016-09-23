@@ -62,7 +62,7 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
   usr_name_label->setText(usr_profile.name_str);
   ip_addr_label->setText(usr_profile.ip_str);
 
-  if(usr_profile.ip_str == "" || usr_profile.ip_str == "Offline")
+  if(usr_profile.ip_str.isEmpty() || usr_profile.ip_str == "Offline")
     {
       status_label->setText(offline_str);
       this->setToolTip("offline");

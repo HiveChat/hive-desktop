@@ -85,7 +85,7 @@ void GuiScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI s
 
   if(layout_style == LayoutStyle::Linear)
     {
-      composite_title_label = new QLabel("", this);
+      composite_title_label = new QLabel(this);
       composite_title_label->setPalette(text_palette);
       composite_title_label->setFont(GlobalData::font_scrollStackTitle);
 

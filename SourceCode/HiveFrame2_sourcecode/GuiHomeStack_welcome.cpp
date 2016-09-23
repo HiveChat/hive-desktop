@@ -71,7 +71,7 @@ void GuiHomeStack_welcome::refreshUI()
 
   my_avatar->setAvatar(GlobalData::g_settings_struct.profile_avatar_str);
 
-  if(GlobalData::g_localHostIP == "")
+  if(GlobalData::g_localHostIP.isEmpty())
     {
       ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
     }

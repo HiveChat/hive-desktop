@@ -104,7 +104,6 @@ void GuiChatStack_chat_widget::clearChatBubbles()
 
 void GuiChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
 {
-  qDebug()<<"CHATBUBBLEMAKING...";
   gui_chat_bubble = new GuiChatBubble(message, !fromMe, this);
   chat_bubble_list.append(gui_chat_bubble);
 
