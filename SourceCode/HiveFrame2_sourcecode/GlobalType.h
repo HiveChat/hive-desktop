@@ -60,7 +60,6 @@ struct FileInfoStruct
   QString name;
   QString size;
   QString type;
-  bool direct_display;
 };
 
 namespace Settings {

@@ -2,6 +2,7 @@
 #define THREADNET_H
 
 #include "GlobalData.h"
+#include "GlobalType.h"
 
 #include <QThread>
 #include <QHostInfo>
@@ -32,7 +33,7 @@ private:
     UsrEnter,
     UsrLeave,
     FileTran,
-    RejectFile
+    FileReject
   };
 
   ///Thread Tasks
@@ -47,8 +48,8 @@ private:
   void udpProcessMessage(MessageStruct *messageStruct);
   void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
-  void udpProcessFileName();
-  void udpProcessRefuse();
+  void udpProcessFileTran(const FileInfoStruct &fileInfoStruct);
+  void udpProcessFileReject();
 
   void udpSendUsrEnter();
   void udpSendUsrLeave();

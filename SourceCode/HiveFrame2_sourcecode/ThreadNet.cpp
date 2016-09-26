@@ -110,11 +110,12 @@ void ThreadNet::udpProcessMessage(MessageStruct *messageStruct)
     {
       if(messageStruct->sender_key != GlobalData::g_settings_struct.profile_key_str)
         {
-          qDebug()<<"人家的事情我不管";
+          //no sniffing
+          return;
         }
       else
         {
-          qDebug()<<"我发了消息："<<messageStruct->message_str;
+          qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct->message_str;
           messageStruct->time_str =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, true);
         }
@@ -123,13 +124,13 @@ void ThreadNet::udpProcessMessage(MessageStruct *messageStruct)
     {
       if(messageStruct->sender_key == GlobalData::g_settings_struct.profile_key_str)
         {
-          qDebug()<<"我发给自己的消息";
+          qDebug()<<"@ThreadNet::udpProcessMessage(): me 2 me...";
           messageStruct->time_str =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, true);
         }
       else
         {
-          qDebug()<<"别人发给我的："<<messageStruct->message_str;
+          qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct->message_str;
           messageStruct->time_str =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, false);
         }
@@ -145,12 +146,12 @@ void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
 
   if(usrProfileStruct->key_str == GlobalData::g_settings_struct.profile_key_str)
     {
-      qDebug()<<"@UDP receive# Myself entered.";
+      qDebug()<<"@ThreadNet::udpProcessUsrEnter(): Myself entered.";
       emit usrEnter(usrProfileStruct);
     }
   else
     {
-      qDebug()<<"@UDP receive# Someone entered.";
+      qDebug()<<"@ThreadNet::udpProcessUsrEnter(): Someone entered.";
       emit usrEnter(usrProfileStruct);
     }
 
@@ -162,14 +163,14 @@ void ThreadNet::udpProcessUsrLeft(QString *usrKey)
     {
       emit usrLeft(usrKey);
 
-      qDebug()<<"UDP receive# Myself left.";
+      qDebug()<<"@ThreadNet::udpProcessUsrLeft(): Myself left.";
     }
 
-  qDebug()<<"UDP receive# Someone left.";
+  qDebug()<<"@ThreadNet::udpProcessUsrLeft(): Someone left.";
   emit usrLeft(usrKey);
 }
 
-void ThreadNet::udpProcessFileName()
+void ThreadNet::udpProcessFileTran(const FileInfoStruct &fileInfoStruct)
 {
 
 }
@@ -244,7 +245,7 @@ void ThreadNet::TEST_udpsSendMessage(QString to, QString from, QString message)
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
-void ThreadNet::udpProcessRefuse()
+void ThreadNet::udpProcessFileReject()
 {
 
 }
@@ -311,13 +312,20 @@ void ThreadNet::udpProcessPendingDatagrams()
 
 
           }
-        case RejectFile:
+        case FileReject:
           {
+
 
           }
         case FileTran:
           {
+            FileInfoStruct file_info_struct;
+            in >> file_info_struct.name;
+            in >> file_info_struct.size;
+            in >> file_info_struct.type;
 
+            udpProcessFileTran(file_info_struct);
+            break;
           }
       }
     }
