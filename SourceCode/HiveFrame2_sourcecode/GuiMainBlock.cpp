@@ -123,8 +123,6 @@ void GuiMainBlock::displayChatStack(const QString &usrKey)
   gui_chat_stack->display(usrKey);
   gui_chat_stack->refreshMessage(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
-
-//  GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct(), "GuiMainBlock::displayChatStack");
 }
 
 void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
@@ -141,24 +139,6 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
   clearStackMap(staticStackType);
 
 }
-
-//GuiChatStack_old* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
-//{
-//  gui_chat_stack = new GuiChatStack_old(usrProfileStruct, this);
-//  main_stacked_widget->addWidget(gui_chat_stack);
-//  gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
-//  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
-//  return gui_chat_stack;
-//}
-//<<
-
-void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
-{
-  emit sendMessage(*usrKey, *message);
-}
-
-
-
 
 //  QProgressBar {
 //      border: 1px solid #FFB500;

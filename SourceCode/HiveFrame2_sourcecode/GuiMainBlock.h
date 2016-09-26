@@ -28,7 +28,7 @@ public:
   GuiHomeStack_welcome *gui_home_stack_welcome;
   GuiHomeStack_list *gui_home_stack_list;
 
-//  QMap<QString ,GuiChatStack_old*> gui_chat_stack_map;<<
+  void displayChatStack(const QString &usrKey);
 
 private:
   QMap<StaticStackType, QWidget*> static_stack_map;
@@ -41,11 +41,6 @@ private:
 
 public slots:
   void displayStaticStack(StaticStackType staticStackType);
-  void displayChatStack(const QString &usrKey);
-//  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);<<
-
-private slots:
-  void onMessageToSend(QString *usrKey, QString *message);
 
 signals:
   void sendMessage(QString usrKey, QString message);

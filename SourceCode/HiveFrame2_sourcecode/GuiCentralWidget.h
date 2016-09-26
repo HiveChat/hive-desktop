@@ -38,6 +38,7 @@ private:
   void initTrayIcon();
 
 public slots:
+  void onCombWidgetClicked(const QString &usrKey);
   void onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe);
   void addUsr(UsrData *userData);
   void delUsr(UsrData *userData);

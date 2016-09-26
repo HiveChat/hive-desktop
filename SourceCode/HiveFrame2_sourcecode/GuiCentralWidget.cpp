@@ -37,7 +37,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 
   //connect
 
-  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), gui_main_block, SLOT(displayChatStack(const QString&)));
+  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(QString)));
 
   ///buttons~~
   connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
@@ -87,6 +87,13 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon->setContextMenu(tray_icon_menu);
   tray_icon->setVisible(true);
   tray_icon->show();
+}
+
+void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
+{
+  gui_main_block->displayChatStack(usrKey);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(usrKey, 0);
+
 }
 
 void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
