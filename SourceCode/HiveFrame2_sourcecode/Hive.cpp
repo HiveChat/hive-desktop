@@ -24,9 +24,9 @@ Hive::Hive(QObject *parent) : QObject(parent)
   //bind to SIGNAL refreshGuiInfo();
 //  connect(thread_data, SIGNAL(refreshChatStack(UserData*)), gui_central_widget->gui_main_block->gui_chat_stack, SLOT(setUserData(UserData*)));
 
-  connect(gui_central_widget->gui_main_block->gui_chat_stack, SIGNAL(sendMessage(QString, QString)), thread_net, SLOT(udpSendMessage(QString, QString)), Qt::QueuedConnection);
-  connect(thread_net, SIGNAL(messageRecieved(MessageStruct*, bool)), thread_data, SLOT(onMessageCome(MessageStruct*, bool)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(messageLoaded(MessageStruct, bool)), gui_central_widget, SLOT(onMessageReceived(MessageStruct, bool)), Qt::AutoConnection);
+  connect(gui_central_widget->gui_main_block->gui_chat_stack, SIGNAL(sendMessage(QString, QString)), thread_net, SLOT(udpSendMessage_old(QString, QString)), Qt::QueuedConnection);
+  connect(thread_net, SIGNAL(messageRecieved(TextMessageStruct*, bool)), thread_data, SLOT(onMessageCome(TextMessageStruct*, bool)), Qt::AutoConnection);
+  connect(thread_data, SIGNAL(messageLoaded(TextMessageStruct, bool)), gui_central_widget, SLOT(onMessageReceived(TextMessageStruct, bool)), Qt::AutoConnection);
 
 
   thread_data->start(QThread::HighPriority);
@@ -58,6 +58,33 @@ Hive::~Hive()
       thread_data->terminate();
       thread_data->wait();
     }
+}
+
+
+void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
+{
+
+}
+
+QJsonObject Hive::wrapTextMessage(const TextMessageStruct &messageStruct)
+{
+  QJsonObject json_object;
+  json_object.insert("sender", messageStruct.reciever_key);
+  json_object.insert("receiver", messageStruct.reciever_key);
+  json_object.insert("time", messageStruct.time_str);
+  json_object.insert("message", messageStruct.message_str);
+
+  return json_object;
+}
+
+QJsonObject Hive::wrapFileMessage(const FileInfoStruct &fileInfoStruct)
+{
+  QJsonObject json_object;
+  json_object.insert("name", fileInfoStruct.name);
+  json_object.insert("size", fileInfoStruct.size);
+  json_object.insert("type", fileInfoStruct.type);
+
+  return json_object;
 }
 
 

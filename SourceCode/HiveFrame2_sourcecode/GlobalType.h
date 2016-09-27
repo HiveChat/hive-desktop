@@ -47,23 +47,32 @@ struct UsrProfileStruct
 bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 
-struct MessageStruct
-{
-  QString reciever_key;
-  QString sender_key;
-  QString message_str;
-  QString time_str;
-};
+namespace Message {
+  enum MessageType{
+    TextMessage,
+    FileInfo
+  };
 
-struct FileInfoStruct
-{
-  QString name;
-  QString size;
-  QString type;
-};
+  struct TextMessageStruct
+  {
+    QString index;
+    QString reciever;
+    QString sender;
+    QString message;
+    QString time;
+  };
+
+  struct FileInfoStruct
+  {
+    QString index;
+    QString name;
+    QString size;
+    QString type;
+  };
+
+}
 
 namespace Settings {
-
   enum Notification{
     ShowCount,
     ShowDetail,

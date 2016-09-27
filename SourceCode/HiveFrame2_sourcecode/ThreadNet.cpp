@@ -99,7 +99,7 @@ void ThreadNet::sendOnlineStatus()
 }
 
 ///udp process
-void ThreadNet::udpProcessMessage(MessageStruct *messageStruct)
+void ThreadNet::udpProcessMessage(TextMessageStruct *messageStruct)
 {
   if(messageStruct->sender_key.isEmpty() || messageStruct->reciever_key.isEmpty())
     {
@@ -203,10 +203,29 @@ void ThreadNet::udpSendUsrLeave()
   qDebug()<<"@sendUsrLeave(): Finished!";
 }
 
+void ThreadNet::udpSendMessage_old(QString usrKeyStr, QString message)
+{
+  QByteArray data;
+  QDataStream out(&data, QIODevice::WriteOnly);
+
+  if(message.isEmpty())
+    {
+      qDebug()<<"@sendMessage(): Message content empty!";
+      return;
+    }
+
+  qDebug()<<"@sendMessage(): Message Sent!";
+
+  out << Message << usrKeyStr << GlobalData::g_settings_struct.profile_key_str << message;
+  udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
+}
+
 void ThreadNet::udpSendMessage(QString usrKeyStr, QString message)
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
+
+  QJsonObject json_object = wrapFileTran()
 
   if(message.isEmpty())
     {
@@ -244,6 +263,8 @@ void ThreadNet::TEST_udpsSendMessage(QString to, QString from, QString message)
   out << Message << to << from << message;
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
+
+
 
 void ThreadNet::udpProcessFileReject()
 {
@@ -288,7 +309,7 @@ void ThreadNet::udpProcessPendingDatagrams()
       {
         case Message:
           {
-            MessageStruct message;
+            TextMessageStruct message;
             in >> message.reciever_key;
             in >> message.sender_key;
             in >> message.message_str;

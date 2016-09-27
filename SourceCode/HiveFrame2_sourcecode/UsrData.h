@@ -18,7 +18,7 @@ public:
   explicit UsrData(QObject *parent = 0);
   ~UsrData();
 
-  void addUnreadMessage(const MessageStruct &message);
+  void addUnreadMessage(const TextMessageStruct &message);
   void setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct);
 
   QList<QJsonObject>* retrieveUnreadMessage();
@@ -56,12 +56,12 @@ private:
   //Funciton
   bool checkDir(const QString &directory);
   void refreshUsrProfile(const UsrProfileStruct &usrProfileStruct);
-  QJsonObject getMessageJsonObject(const MessageStruct &messageStruct);
+  QJsonObject getMessageJsonObject(const TextMessageStruct &messageStruct);
 
   void readHistoryBundle();
   void makeHistoryBundle(int num);
   void saveHistoryBundle();
-  void recordMessage(const MessageStruct &messageStruct, bool fromMe);
+  void recordMessage(const TextMessageStruct &messageStruct, bool fromMe);
   void recordMessage(const QJsonObject &messageJsonObject);
   void recordMessage(const QList<QJsonObject> &messageJsonObjectList);
 

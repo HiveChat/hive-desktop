@@ -46,6 +46,19 @@ QString GlobalData::g_currentTime()
   return QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 }
 
+QString GlobalData::getRandomString(const int &digit)
+{
+  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+  QString random_str;
+  for(int i = 0; i < digit; i ++)
+    {
+      random_str.append(alphabet_char[qrand()%63]);
+    }
+
+  return random_str;
+}
+
 void GlobalData::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
 {
   qDebug()<<endl<<"Test by "<<str;

@@ -62,6 +62,7 @@ public:
 
   ///other
   static QString g_currentTime();
+  static QString getRandomString(const int &digit);
 
   ///debug
   static void TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str);

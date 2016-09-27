@@ -254,7 +254,7 @@ void ThreadData::onUsrLeft(QString *usrKey)
 
 }
 
-void ThreadData::onMessageCome(MessageStruct *messageStruct, bool fromMe)
+void ThreadData::onMessageCome(TextMessageStruct *messageStruct, bool fromMe)
 {
   if(fromMe)
     {

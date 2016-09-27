@@ -86,7 +86,7 @@ private:
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
-  void onMessageCome(MessageStruct *messageStruct, bool fromMe);
+  void onMessageCome(TextMessageStruct *messageStruct, bool fromMe);
 
   void writeCurrentConfig();
 
@@ -95,7 +95,7 @@ signals:
   void refreshGuiInfo();
   void usrProfileLoaded(UsrData *userData);
   void usrProfileChanged(UsrData *userData);
-  void messageLoaded(MessageStruct messageStrList, bool fromMe);
+  void messageLoaded(TextMessageStruct messageStrList, bool fromMe);
 
 
 };

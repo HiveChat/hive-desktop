@@ -89,7 +89,7 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon->show();
 }
 
-void GuiCentralWidget::onMessageReceived(const MessageStruct &messageStruct, const bool &fromMe)
+void GuiCentralWidget::onMessageReceived(const TextMessageStruct &messageStruct, const bool &fromMe)
 {
   if(fromMe)
     {

@@ -27,6 +27,13 @@ public:
   ThreadData *thread_data;
   ThreadNet *thread_net;
 
+private:
+  QJsonObject wrapTextMessage(const Message::TextMessageStruct &textMessageStruct);
+  QJsonObject wrapFileMessage(const Message::FileInfoStruct &fileMessageStruct);
+
+private slots:
+  void onTextMessageToSend(const QString &receiver, const QString &message);
+
 };
 
 #endif // MAINWINDOW_H
