@@ -48,7 +48,7 @@ private:
   void udpProcessMessage(Message::TextMessageStruct *messageStruct);
   void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
-  void udpProcessFileTran(const FileInfoStruct &fileInfoStruct);
+  void udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct);
   void udpProcessFileReject();
 
   void udpSendUsrEnter();
@@ -83,7 +83,7 @@ private slots:
 
 
 signals:
-  void messageReceived(const QJsonObject&, const );
+  void messageReceived(const QJsonObject &jsonObj, const Message::MessageType &messageType);
 
   void messageRecieved(Message::TextMessageStruct *messageStruct, bool fromMe);//<
   void usrEnter(UsrProfileStruct *usrProfileStruct);

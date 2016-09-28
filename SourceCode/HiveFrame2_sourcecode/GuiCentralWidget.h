@@ -38,7 +38,7 @@ private:
   void initTrayIcon();
 
 public slots:
-  void onMessageReceived(const TextMessageStruct &messageStruct, const bool &fromMe);
+  void onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe);
   void addUsr(UsrData *userData);
   void delUsr(UsrData *userData);
   void changeUsr(UsrData *userData);

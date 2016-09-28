@@ -295,7 +295,7 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 
 //void GuiChatStack_old::checkMessage(MessageStruct &messageStruct, bool fromMe)
 //{
-//  chat_widget->addChatBubble(messageStruct.message_str, fromMe);
+//  chat_widget->addChatBubble(messageStruct.message, fromMe);
 
 //  data_history_io->wirteMessage(messageStruct, fromMe);
 
@@ -328,8 +328,8 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 
 //void GuiChatStack_old::onSendButtonClicked()
 //{
-//  QString message_str = message_editor->text_editor->toPlainText();
-//  emit sendMessage(&usr_profile.key_str, &message_str);
+//  QString message = message_editor->text_editor->toPlainText();
+//  emit sendMessage(&usr_profile.key_str, &message);
 //  message_editor->text_editor->clear();
 
 //}
@@ -416,7 +416,7 @@ GuiTextEdit::~GuiTextEdit()
 //        }
 //      else
 //        {
-//          QString message_str = this->toPlainText();
+//          QString message = this->toPlainText();
 //          emit keyEnterTriggered(false);
 //          this->clear();
 //        }
@@ -646,8 +646,8 @@ void GuiChatStack::flipDownMessage(const bool &clear)
 
 void GuiChatStack::onSendButtonClicked()
 {
-  QString message_str = message_editor->text_editor->toPlainText();
-  emit sendMessage(usr_data->key(), message_str);
+  QString message = message_editor->text_editor->toPlainText();
+  emit sendMessage(usr_data->key(), message);
   message_editor->text_editor->clear();
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 

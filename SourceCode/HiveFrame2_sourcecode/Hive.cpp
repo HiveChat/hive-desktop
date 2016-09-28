@@ -66,18 +66,18 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 
 }
 
-QJsonObject Hive::wrapTextMessage(const TextMessageStruct &messageStruct)
+QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)
 {
   QJsonObject json_object;
-  json_object.insert("sender", messageStruct.reciever_key);
-  json_object.insert("receiver", messageStruct.reciever_key);
-  json_object.insert("time", messageStruct.time_str);
-  json_object.insert("message", messageStruct.message_str);
+  json_object.insert("sender", messageStruct.sender);
+  json_object.insert("receiver", messageStruct.reciever);
+  json_object.insert("time", messageStruct.time);
+  json_object.insert("message", messageStruct.message);
 
   return json_object;
 }
 
-QJsonObject Hive::wrapFileMessage(const FileInfoStruct &fileInfoStruct)
+QJsonObject Hive::wrapFileMessage(const Message::FileInfoStruct &fileInfoStruct)
 {
   QJsonObject json_object;
   json_object.insert("name", fileInfoStruct.name);

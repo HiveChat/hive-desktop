@@ -20,7 +20,7 @@ UsrData::~UsrData()
   recordMessage(unread_message_list);
 }
 
-void UsrData::addUnreadMessage(const TextMessageStruct &message)
+void UsrData::addUnreadMessage(const Message::TextMessageStruct &message)
 {
   unread_message_list.append(getMessageJsonObject(message));
 }
@@ -131,13 +131,13 @@ void UsrData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
   usr_profile_struct = usrProfileStruct;
 }
 
-QJsonObject UsrData::getMessageJsonObject(const TextMessageStruct &messageStruct)
+QJsonObject UsrData::getMessageJsonObject(const Message::TextMessageStruct &messageStruct)
 {
-  bool fromMe = (messageStruct.sender_key == my_key);
+  bool fromMe = (messageStruct.sender == my_key);
   QJsonObject json_object;
   json_object.insert("fromMe", fromMe);
-  json_object.insert("message", messageStruct.message_str);
-  json_object.insert("time", messageStruct.time_str);
+  json_object.insert("message", messageStruct.message);
+  json_object.insert("time", messageStruct.time);
 
   return json_object;
 }
@@ -217,16 +217,16 @@ void UsrData::saveHistoryBundle()
 //  QtConcurrent::run(lambda);
 }
 
-void UsrData::recordMessage(const TextMessageStruct &messageStruct, bool fromMe)
+void UsrData::recordMessage(const Message::TextMessageStruct &messageStruct, bool fromMe)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {
       saveHistoryBundle();
     }
   QJsonObject message_json_obj;
-  message_json_obj.insert("message", messageStruct.message_str);
+  message_json_obj.insert("message", messageStruct.message);
   message_json_obj.insert("fromMe", fromMe);
-  message_json_obj.insert("time", messageStruct.time_str);
+  message_json_obj.insert("time", messageStruct.time);
 
   latest_history_json_array.append(message_json_obj);
 

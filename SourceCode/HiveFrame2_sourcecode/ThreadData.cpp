@@ -254,15 +254,15 @@ void ThreadData::onUsrLeft(QString *usrKey)
 
 }
 
-void ThreadData::onMessageCome(TextMessageStruct *messageStruct, bool fromMe)
+void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe)
 {
   if(fromMe)
     {
-      GlobalData::online_usr_data_map.value(messageStruct->reciever_key)->addUnreadMessage(*messageStruct);
+      GlobalData::online_usr_data_map.value(messageStruct->reciever)->addUnreadMessage(*messageStruct);
     }
   else
     {
-      GlobalData::online_usr_data_map.value(messageStruct->sender_key)->addUnreadMessage(*messageStruct);
+      GlobalData::online_usr_data_map.value(messageStruct->sender)->addUnreadMessage(*messageStruct);
     }
   emit messageLoaded(*messageStruct, fromMe);
 }

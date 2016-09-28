@@ -99,39 +99,39 @@ void ThreadNet::sendOnlineStatus()
 }
 
 ///udp process
-void ThreadNet::udpProcessMessage(TextMessageStruct *messageStruct)
+void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
 {
-  if(messageStruct->sender_key.isEmpty() || messageStruct->reciever_key.isEmpty())
+  if(messageStruct->sender.isEmpty() || messageStruct->reciever.isEmpty())
     {
       return;
     }
 
-  if(messageStruct->reciever_key != GlobalData::g_settings_struct.profile_key_str)
+  if(messageStruct->reciever != GlobalData::g_settings_struct.profile_key_str)
     {
-      if(messageStruct->sender_key != GlobalData::g_settings_struct.profile_key_str)
+      if(messageStruct->sender != GlobalData::g_settings_struct.profile_key_str)
         {
           //no sniffing
           return;
         }
       else
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct->message_str;
-          messageStruct->time_str =  GlobalData::g_currentTime();
+          qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct->message;
+          messageStruct->time =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, true);
         }
     }
   else
     {
-      if(messageStruct->sender_key == GlobalData::g_settings_struct.profile_key_str)
+      if(messageStruct->sender == GlobalData::g_settings_struct.profile_key_str)
         {
           qDebug()<<"@ThreadNet::udpProcessMessage(): me 2 me...";
-          messageStruct->time_str =  GlobalData::g_currentTime();
+          messageStruct->time =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, true);
         }
       else
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct->message_str;
-          messageStruct->time_str =  GlobalData::g_currentTime();
+          qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct->message;
+          messageStruct->time =  GlobalData::g_currentTime();
           emit messageRecieved(messageStruct, false);
         }
     }
@@ -170,7 +170,7 @@ void ThreadNet::udpProcessUsrLeft(QString *usrKey)
   emit usrLeft(usrKey);
 }
 
-void ThreadNet::udpProcessFileTran(const FileInfoStruct &fileInfoStruct)
+void ThreadNet::udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct)
 {
 
 }
@@ -225,7 +225,7 @@ void ThreadNet::udpSendMessage(QString usrKeyStr, QString message)
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  QJsonObject json_object = wrapFileTran()
+  QJsonObject json_object = wrapFileTran();
 
   if(message.isEmpty())
     {
@@ -309,10 +309,10 @@ void ThreadNet::udpProcessPendingDatagrams()
       {
         case Message:
           {
-            TextMessageStruct message;
-            in >> message.reciever_key;
-            in >> message.sender_key;
-            in >> message.message_str;
+            Message::TextMessageStruct message;
+            in >> message.reciever;
+            in >> message.sender;
+            in >> message.message;
 
             udpProcessMessage(&message);
             break;
@@ -340,7 +340,7 @@ void ThreadNet::udpProcessPendingDatagrams()
           }
         case FileTran:
           {
-            FileInfoStruct file_info_struct;
+            Message::FileInfoStruct file_info_struct;
             in >> file_info_struct.name;
             in >> file_info_struct.size;
             in >> file_info_struct.type;

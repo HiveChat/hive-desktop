@@ -89,20 +89,20 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon->show();
 }
 
-void GuiCentralWidget::onMessageReceived(const TextMessageStruct &messageStruct, const bool &fromMe)
+void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe)
 {
   if(fromMe)
     {
-      gui_main_block->gui_chat_stack->refreshMessage(messageStruct.reciever_key);
+      gui_main_block->gui_chat_stack->refreshMessage(messageStruct.reciever);
     }
   else
     {
       //if not displaying the usr
-      if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender_key))
+      if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {
-          UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender_key);
-          gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender_key, temp_usr_data->unreadMessageNumber());
-          tray_icon->showMessage(temp_usr_data->name(), messageStruct.message_str);
+          UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender);
+          gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
+          tray_icon->showMessage(temp_usr_data->name(), messageStruct.message);
         }
     }
 }
