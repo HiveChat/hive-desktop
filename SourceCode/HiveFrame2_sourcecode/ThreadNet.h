@@ -4,6 +4,7 @@
 #include "GlobalData.h"
 #include "GlobalType.h"
 
+#include <QJsonDocument>
 #include <QThread>
 #include <QHostInfo>
 #include <QTcpServer>
@@ -42,6 +43,7 @@ private:
   void refreshLocalHostIP();
   void sendOnlineStatus();
 
+
   ///UDP Socket
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
@@ -73,7 +75,7 @@ private:
 
 public slots:
   void udpSendMessage_old(QString usrKeyStr, QString message);
-  void udpSendMessage(QString usrKeyStr, QString message);
+  void udpSendMessage(const QJsonObject &jsonObj);
 
 private slots:
   void udpProcessPendingDatagrams();

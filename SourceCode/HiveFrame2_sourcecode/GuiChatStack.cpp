@@ -647,10 +647,14 @@ void GuiChatStack::flipDownMessage(const bool &clear)
 void GuiChatStack::onSendButtonClicked()
 {
   QString message = message_editor->text_editor->toPlainText();
+  if(message.isEmpty())
+    {
+      return;
+    }
+
   emit sendMessage(usr_data->key(), message);
   message_editor->text_editor->clear();
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
-
 }
 
 void GuiChatStack::onKeyEnterTriggered(bool &pressed)

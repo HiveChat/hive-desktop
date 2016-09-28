@@ -24,9 +24,9 @@ Hive::Hive(QObject *parent) : QObject(parent)
   //bind to SIGNAL refreshGuiInfo();
 //  connect(thread_data, SIGNAL(refreshChatStack(UserData*)), gui_central_widget->gui_main_block->gui_chat_stack, SLOT(setUserData(UserData*)));
 
-  connect(gui_central_widget->gui_main_block->gui_chat_stack, SIGNAL(sendMessage(QString, QString)), thread_net, SLOT(udpSendMessage_old(QString, QString)), Qt::QueuedConnection);
-  connect(thread_net, SIGNAL(messageRecieved(TextMessageStruct*, bool)), thread_data, SLOT(onMessageCome(TextMessageStruct*, bool)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(messageLoaded(TextMessageStruct, bool)), gui_central_widget, SLOT(onMessageReceived(TextMessageStruct, bool)), Qt::AutoConnection);
+  connect(gui_central_widget->gui_main_block->gui_chat_stack, SIGNAL(sendMessage(QString, QString)), this, SLOT(onTextMessageToSend(const QString &, const QString &)), Qt::QueuedConnection);
+  connect(thread_net, SIGNAL(messageRecieved(Message::TextMessageStruct*, bool)), thread_data, SLOT(onMessageCome(Message::TextMessageStruct*, bool)), Qt::AutoConnection);
+  connect(thread_data, SIGNAL(messageLoaded(Message::TextMessageStruct, bool)), gui_central_widget, SLOT(onMessageReceived(Message::TextMessageStruct, bool)), Qt::AutoConnection);
 
 
   thread_data->start(QThread::HighPriority);
@@ -63,7 +63,13 @@ Hive::~Hive()
 
 void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 {
+  QJsonObject json_object;
+  json_object.insert("sender", GlobalData::g_settings_struct.profile_key_str);
+  json_object.insert("receiver", receiver);
+  json_object.insert("time", GlobalData::g_currentTime());
+  json_object.insert("message", message);
 
+  thread_net->udpSendMessage(json_object);
 }
 
 QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)

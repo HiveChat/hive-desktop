@@ -1,6 +1,7 @@
 #include "GuiCentralWidget.h"
 
-GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
+GuiCentralWidget::GuiCentralWidget(QWidget *parent)
+  : QWidget(parent)
 {
   initAction();
   initTrayIcon();

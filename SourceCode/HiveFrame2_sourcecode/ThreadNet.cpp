@@ -98,6 +98,7 @@ void ThreadNet::sendOnlineStatus()
     }
 }
 
+
 ///udp process
 void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
 {
@@ -220,23 +221,25 @@ void ThreadNet::udpSendMessage_old(QString usrKeyStr, QString message)
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
-void ThreadNet::udpSendMessage(QString usrKeyStr, QString message)
+void ThreadNet::udpSendMessage(const QJsonObject &jsonObj)
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  QJsonObject json_object = wrapFileTran();
+  QJsonObject json_obj = jsonObj;
+  qDebug()<<"@ThreadNet::udpSendMessage(): Message sent1";
 
-  if(message.isEmpty())
+  json_obj.insert("index", QJsonValue(GlobalData::getRandomString(8)));
+  qDebug()<<"@ThreadNet::udpSendMessage(): Message sent2";
+
+  QJsonDocument json_doc(json_obj);
+  out << Message << json_doc.toBinaryData();
+  qDebug()<<json_doc;
+  qint64 ret = udp_socket->writeDatagram(data,data.length(), QHostAddress::Broadcast, udp_port);
+  if(ret != 0 && ret != -1)
     {
-      qDebug()<<"@sendMessage(): Message content empty!";
-      return;
+      qDebug()<<"@ThreadNet::udpSendMessage(): Message sent!";
     }
-
-  qDebug()<<"@sendMessage(): Message Sent!";
-
-  out << Message << usrKeyStr << GlobalData::g_settings_struct.profile_key_str << message;
-  udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
 void ThreadNet::udpSendFileTran()
@@ -309,12 +312,27 @@ void ThreadNet::udpProcessPendingDatagrams()
       {
         case Message:
           {
+            QByteArray byte_array;
+            in >> byte_array;
+
+            QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
+            if(!json_document.isObject())
+              {
+                qDebug() << "@ThreadNet::checkJsonObject(): Json object crashed.";
+                return;
+              }
+
+            QJsonObject json_obj = json_document.object();
+
             Message::TextMessageStruct message;
-            in >> message.reciever;
-            in >> message.sender;
-            in >> message.message;
+            message.index = json_obj.value("index").toString();
+            message.reciever = json_obj.value("receiver").toString();
+            message.sender = json_obj.value("sender").toString();
+            message.message = json_obj.value("message").toString();
+            message.time = json_obj.value("time").toString();
 
             udpProcessMessage(&message);
+
             break;
           }
         case UsrEnter:
