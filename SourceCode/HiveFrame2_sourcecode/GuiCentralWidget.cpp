@@ -9,8 +9,8 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent) : QWidget(parent)
 //  palette.setColor(QPalette::Window, QColor(250,250,250));
 //  this->setPalette(palette);
 
-  this->setMinimumHeight(600);
-  this->setMinimumWidth(900);
+  this->setMinimumHeight(500);
+  this->setMinimumWidth(800);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowTitle(QString("Hive! %1.%2.%3 alpha-test")
                        .arg(GlobalData::g_version[0])
