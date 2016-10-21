@@ -649,6 +649,7 @@ void GuiChatStack::onSendButtonClicked()
   QString message = message_editor->text_editor->toPlainText();
   if(message.isEmpty())
     {
+      scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
       return;
     }
 
