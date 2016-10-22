@@ -13,3 +13,5 @@ Icon
 .DS_Store
 
 SourceCode/.DS_Store
+
+*.user
