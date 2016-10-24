@@ -7,6 +7,8 @@
 #include <QJsonDocument>
 #include <QThread>
 #include <QHostInfo>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QUdpSocket>
@@ -40,9 +42,15 @@ private:
   ///Thread Tasks
   bool running = true;
   int loop_count = 1;
+  bool downloaded_update = false;
   void refreshLocalHostIP();
   void sendOnlineStatus();
+  void checkUpdate();
 
+
+  QNetworkAccessManager *updateManager;
+  QNetworkReply *updateReply;
+  QByteArray update_file;
 
   ///UDP Socket
   quint16 udp_port = 23232;
@@ -81,6 +89,8 @@ private slots:
   void udpProcessPendingDatagrams();
 
   void tcpSendData();
+
+  void onRedirectFinished();
 
 
 

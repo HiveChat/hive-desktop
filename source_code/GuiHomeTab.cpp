@@ -1,6 +1,4 @@
 #include "GuiHomeTab.h"
-#include <stdlib.h>
-
 
 GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 {

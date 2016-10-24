@@ -1,6 +1,5 @@
 #include "GuiColorPicker.h"
-#include <QDebug>
-#include <GlobalData.h>
+#include "GlobalData.h"
 
 GuiColorPicker::GuiColorPicker(QColor *color, QWidget *parent) : QWidget(parent)
 {

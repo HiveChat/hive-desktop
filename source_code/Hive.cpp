@@ -4,43 +4,62 @@ Hive::Hive(QObject *parent) : QObject(parent)
 {
 
 #ifdef Q_OS_MAC
+#ifndef Q_OS_IOS
+
   QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
+#endif
 #endif
 
   thread_data = new ThreadData(this);
   thread_net = new ThreadNet(this);
   gui_central_widget = new GuiCentralWidget();
-  //QObject not compatible to QWidget, delete obj manually
+  //QObject not compatible to QWidget para, delete obj manually
 
   ////connect
-  connect(thread_data, SIGNAL(refreshGuiInfo()), gui_central_widget, SLOT(refreshUI()), Qt::QueuedConnection);
+  connect(thread_data, &ThreadData::refreshGuiInfo,
+          gui_central_widget, &GuiCentralWidget::refreshUI,
+          Qt::QueuedConnection);
 
-  connect(thread_net, SIGNAL(usrEnter(UsrProfileStruct*)), thread_data, SLOT(onUsrEntered(UsrProfileStruct*)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(usrProfileLoaded(UsrData*)), gui_central_widget, SLOT(addUsr(UsrData*)), Qt::QueuedConnection);
-  connect(thread_data, SIGNAL(usrProfileChanged(UsrData*)), gui_central_widget, SLOT(changeUsr(UsrData*)), Qt::QueuedConnection);
+  connect(thread_net, &ThreadNet::usrEnter,
+          thread_data, &ThreadData::onUsrEntered,
+          Qt::AutoConnection);
+  connect(thread_data, &ThreadData::usrProfileLoaded,
+          gui_central_widget, &GuiCentralWidget::addUsr,
+          Qt::QueuedConnection);
+  connect(thread_data, &ThreadData::usrProfileChanged,
+          gui_central_widget, &GuiCentralWidget::changeUsr,
+          Qt::QueuedConnection);
 
-
-  //bind to SIGNAL refreshGuiInfo();
-//  connect(thread_data, SIGNAL(refreshChatStack(UserData*)), gui_central_widget->gui_main_block->gui_chat_stack, SLOT(setUserData(UserData*)));
-
-  connect(gui_central_widget->gui_main_block->gui_chat_stack, SIGNAL(sendMessage(QString, QString)), this, SLOT(onTextMessageToSend(const QString &, const QString &)), Qt::QueuedConnection);
-  connect(thread_net, SIGNAL(messageRecieved(Message::TextMessageStruct*, bool)), thread_data, SLOT(onMessageCome(Message::TextMessageStruct*, bool)), Qt::AutoConnection);
-  connect(thread_data, SIGNAL(messageLoaded(Message::TextMessageStruct, bool)), gui_central_widget, SLOT(onMessageReceived(Message::TextMessageStruct, bool)), Qt::AutoConnection);
+  connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
+          this, &Hive::onTextMessageToSend,
+          Qt::QueuedConnection);
+  connect(thread_net, &ThreadNet::messageRecieved,
+          thread_data, &ThreadData::onMessageCome,
+          Qt::AutoConnection);
+  connect(thread_data, &ThreadData::messageLoaded,
+          gui_central_widget, &GuiCentralWidget::onMessageReceived,
+          Qt::AutoConnection);
 
 
   thread_data->start(QThread::HighPriority);
   thread_net->start(QThread::HighPriority);
 
 #ifdef Q_OS_MAC
+#ifndef Q_OS_IOS
+
   QtMac::setBadgeLabelText("");
+#endif
 #endif
 }
 
 Hive::~Hive()
 {
 #ifdef Q_OS_MAC
+#ifndef Q_OS_IOS
+
   QtMac::setBadgeLabelText("Bye");
+#endif
 #endif
 
   gui_central_widget->close();

@@ -1,5 +1,7 @@
 #include "ThreadNet.h"
 
+//QNetworkAccessManager::networkAccessible()
+
 ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 {
 
@@ -11,6 +13,9 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
   udpSendUsrEnter();//this can be deleted
+
+  checkUpdate();
+
 }
 
 ThreadNet::~ThreadNet()
@@ -50,8 +55,8 @@ void ThreadNet::run()
 
       if(loop_count%10 == 0)
         {
-
           loop_count = 0;
+
         }
 
       loop_count ++;
@@ -98,6 +103,14 @@ void ThreadNet::sendOnlineStatus()
     }
 }
 
+void ThreadNet::checkUpdate()
+{
+  QUrl update_url = QUrl("http://updates.hivechat.org");
+  updateManager = new QNetworkAccessManager(this);
+  updateReply = updateManager->head(QNetworkRequest(update_url));
+  connect(updateReply, &QNetworkReply::readyRead, [this]() {update_file.append(updateReply->readAll());});
+  connect(updateReply, &QNetworkReply::finished, this, &ThreadNet::onRedirectFinished);
+}
 
 ///udp process
 void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
@@ -288,13 +301,15 @@ void ThreadNet::tcpSendData()
 
 }
 
+void ThreadNet::onRedirectFinished()
+{
+  qDebug()<<updateReply->rawHeader("Location");
+}
+
 void ThreadNet::tcpCloseConnection()
 {
 
 }
-
-
-/////////////private slots////////////
 
 void ThreadNet::udpProcessPendingDatagrams()
 {

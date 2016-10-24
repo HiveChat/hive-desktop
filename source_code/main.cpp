@@ -5,11 +5,11 @@
 #ifndef Q_OS_IOS
 
 #include <QPropertyAnimation>
+
+#endif
+#endif
+
 #include <QSharedMemory>
-
-#endif
-#endif
-
 
 bool checkSingleInstance(const char* program)
 {
@@ -21,7 +21,7 @@ bool checkSingleInstance(const char* program)
     return true;
 }
 
-int load_my_style()
+int loadMyStyle()
 {
   QFile  qss(":/qss/qss/comb_treewidget.qss");
   if(!qss.open(QFile::ReadOnly))
@@ -35,16 +35,22 @@ int load_my_style()
 
 int main(int argc, char *argv[])
 {
-  ///Check single instance.
-  if(!checkSingleInstance("topo-client.lock"))
-    {
-      //return 1;
-    }
 
-  ///Construction
+#ifndef Q_OS_ANDROID
+#ifndef Q_OS_IOS
+
+//  if(!checkSingleInstance("topo-client.lock"))
+//    {
+//      return 1;
+//    }
+
+#endif
+#endif
+
+
   QApplication a(argc, argv);
 
-  load_my_style();
+  loadMyStyle();
 
   Hive w;
   w.gui_central_widget->show();

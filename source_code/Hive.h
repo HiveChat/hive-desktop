@@ -11,9 +11,12 @@
 #include <QSystemTrayIcon>
 
 #ifdef Q_OS_MAC
+#ifndef Q_OS_IOS
 //#include <QtMacExtras>
 #include <QtMac>
 #endif
+#endif
+
 
 class Hive : public QObject
 {
