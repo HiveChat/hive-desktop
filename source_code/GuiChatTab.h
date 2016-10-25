@@ -7,6 +7,8 @@
 #include <QScrollArea>
 #include <QMap>
 
+class GuiChatTab_comb_scroll_widget;
+class GuiChatTab;
 
 class GuiChatTab_comb_scroll_widget : public QWidget
 {
@@ -14,9 +16,9 @@ class GuiChatTab_comb_scroll_widget : public QWidget
 
 public:
   explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
-  void refreshComb(UsrProfileStruct *usrProfileStruct);
   void addComb(UsrProfileStruct *usrProfileStruct);
-  void setBadgeNumber(const QString &usrKey, const int &num);
+  void refreshComb(UsrProfileStruct *usrProfileStruct);
+  void refreshBadgeNumber(const QString &usrKey, const int &num);
 
 private:
   QVBoxLayout *main_layout;
@@ -30,8 +32,6 @@ public slots:
 
 
 };
-
-///////////
 
 class GuiChatTab : public QWidget
 {

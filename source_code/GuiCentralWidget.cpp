@@ -102,7 +102,7 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {
           UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender);
-          gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
+          gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
           tray_icon->showMessage(temp_usr_data->name(), messageStruct.message);
         }
     }
@@ -111,7 +111,7 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
 void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
 {
   gui_main_block->displayChatStack(usrKey);
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->setBadgeNumber(usrKey, 0);
+  gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
 

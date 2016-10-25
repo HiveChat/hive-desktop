@@ -48,9 +48,9 @@ private:
   void checkUpdate();
 
 
-  QNetworkAccessManager *updateManager;
-  QNetworkReply *updateReply;
-  QByteArray update_file;
+  QNetworkAccessManager *http_update_manager;
+  QNetworkReply *http_update_reply;
+  QByteArray http_update_file;
 
   ///UDP Socket
   quint16 udp_port = 23232;

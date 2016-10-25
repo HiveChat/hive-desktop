@@ -22,8 +22,7 @@ GuiChatTab::GuiChatTab(QWidget *parent) : QWidget(parent)
 
   connect(comb_treewidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(onItemClicked(QTreeWidgetItem*, int)));
 
-  QTreeWidgetItem *item=new QTreeWidgetItem(comb_treewidget,QStringList(QString("Tree")));//添加节点
-      //添加子节点
+  QTreeWidgetItem *item=new QTreeWidgetItem(comb_treewidget,QStringList(QString("Tree")));
 
 
   for(int i = 0; i <= 10; i++)
@@ -92,9 +91,15 @@ void GuiChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
   connect(comb_widget, SIGNAL(clicked(QString)), this, SLOT(onCombWidgetClicked(QString)));
 }
 
-void GuiChatTab_comb_scroll_widget::setBadgeNumber(const QString &usrKey, const int &num)
+void GuiChatTab_comb_scroll_widget::refreshBadgeNumber(const QString &usrKey, const int &num)
 {
-  comb_widget_map.value(usrKey)->setBadgeNumber(num);
+  GuiCombWidget *comb_widget = comb_widget_map.value(usrKey);
+  comb_widget->setBadgeNumber(num);
+  if(num != 0)
+    {
+      main_layout->takeAt(main_layout->indexOf(comb_widget));
+      main_layout->insertWidget(0, comb_widget);
+    }
 }
 
 void GuiChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)

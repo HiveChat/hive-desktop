@@ -106,10 +106,10 @@ void ThreadNet::sendOnlineStatus()
 void ThreadNet::checkUpdate()
 {
   QUrl update_url = QUrl("http://updates.hivechat.org");
-  updateManager = new QNetworkAccessManager(this);
-  updateReply = updateManager->head(QNetworkRequest(update_url));
-  connect(updateReply, &QNetworkReply::readyRead, [this]() {update_file.append(updateReply->readAll());});
-  connect(updateReply, &QNetworkReply::finished, this, &ThreadNet::onRedirectFinished);
+  http_update_manager = new QNetworkAccessManager(this);
+  http_update_reply = http_update_manager->head(QNetworkRequest(update_url));
+  connect(http_update_reply, &QNetworkReply::finished,
+          this, &ThreadNet::onRedirectFinished);
 }
 
 ///udp process
@@ -303,7 +303,25 @@ void ThreadNet::tcpSendData()
 
 void ThreadNet::onRedirectFinished()
 {
-  qDebug()<<updateReply->rawHeader("Location");
+  QUrl redirectUrl = QString(http_update_reply->rawHeader("Location"));
+  qDebug()<<"@ThreadNet::onRedirectFinished(): Redirect url from http header:"<<redirectUrl.toString();
+
+  http_update_manager->deleteLater();
+  http_update_reply->deleteLater();
+
+  http_update_manager = new QNetworkAccessManager(this);
+  http_update_reply = http_update_manager->get(QNetworkRequest(redirectUrl));
+
+  connect(http_update_reply, &QNetworkReply::readyRead,
+          [this]() {
+            http_update_file.append(http_update_reply->readAll());
+          });
+  connect(http_update_reply, &QNetworkReply::finished,
+          [this]() {
+            qDebug()<<"@ThreadNet: Got update file: "<<http_update_file;
+            http_update_manager->deleteLater();
+            http_update_reply->deleteLater();
+          });
 }
 
 void ThreadNet::tcpCloseConnection()
