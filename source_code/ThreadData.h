@@ -52,7 +52,7 @@ private:
   void checkSettings();
   void refreshGui();
 
-  Settings::SettingStruct written_settings_struct;
+//  Settings::SettingsStruct written_settings_struct;
 
   QJsonDocument makeUsrProfile();
   QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
@@ -60,10 +60,9 @@ private:
 
   void makeUsrKey();
   void initVariable();
-  void initPalette();
   void checkFiles();
   void loadDefaultGlobalData();
-  void loadMyProfile();
+  void loadMySettings();
   void loadFonts();
 
   void deleteUsr(const QStringList usrInfoStrList);
@@ -77,11 +76,10 @@ private:
 
   //data map
   QMap<QString, UsrProfileStruct> local_usr_profile_map;
-  QMap<QString, UsrProfileStruct> online_usr_profile_map;
 
   //config map
-  QMap<QString, QColor*> myColorConfigJsonMap;
-  QMap<QString, QString*> myProfileConfigJsonMap;
+  QMap<QString, QColor*> colorSettingsMap;
+  QMap<QString, QString*> generalSettingsMap;
 
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);

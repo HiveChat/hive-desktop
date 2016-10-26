@@ -1,10 +1,9 @@
 #include "GuiColorPicker.h"
 #include "GlobalData.h"
 
-GuiColorPicker::GuiColorPicker(QColor *color, QWidget *parent) : QWidget(parent)
+GuiColorPicker::GuiColorPicker(QColor *object_color, QWidget *parent) : QWidget(parent)
 {
-  my_color = color;
-
+  my_color = object_color;
   this->setFixedSize(20,20);
   this->setParent(parent);
 }
@@ -36,9 +35,14 @@ void GuiColorPicker::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
     {
-      *my_color = QColorDialog::getColor(*my_color, this);
+      QColor color = QColorDialog::getColor(*my_color, this);
+      if(color == QColor(0,0,0))
+        {
+          return;
+        }
+      *my_color = color;
+      GlobalData::settings_struct.modified_lock = true;
       repaint();
-      emit clicked();
     }
 }
 

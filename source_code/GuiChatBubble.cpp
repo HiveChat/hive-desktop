@@ -20,12 +20,12 @@ GuiChatBubble_text_area::GuiChatBubble_text_area(const QString &text, bool align
 
   if(alignLeft)
     {
-      color = &GlobalData::g_settings_struct.chat_bubble_color_i;//255,181,0
+      color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
       main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = &GlobalData::g_settings_struct.chat_bubble_color_o;//255,215,126
+      color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
       main_layout->setAlignment(Qt::AlignRight);
     }
 
@@ -122,12 +122,12 @@ GuiFileBubble_file_info::GuiFileBubble_file_info(const QString &text, bool align
 
   if(alignLeft)
     {
-      color = &GlobalData::g_settings_struct.chat_bubble_color_i;//255,181,0
+      color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
       main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = &GlobalData::g_settings_struct.chat_bubble_color_o;//255,215,126
+      color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
       main_layout->setAlignment(Qt::AlignRight);
     }
 

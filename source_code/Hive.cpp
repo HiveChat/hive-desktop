@@ -83,7 +83,7 @@ Hive::~Hive()
 void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 {
   QJsonObject json_object;
-  json_object.insert("sender", GlobalData::g_settings_struct.profile_key_str);
+  json_object.insert("sender", GlobalData::settings_struct.profile_key_str);
   json_object.insert("receiver", receiver);
   json_object.insert("time", GlobalData::g_currentTime());
   json_object.insert("message", message);

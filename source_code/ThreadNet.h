@@ -39,6 +39,13 @@ private:
     FileReject
   };
 
+  enum NetworkError{
+    NoError,
+    NoInternet,
+    NoNetwork,
+    TimeOut
+  };
+
   ///Thread Tasks
   bool running = true;
   int loop_count = 1;

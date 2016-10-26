@@ -50,7 +50,7 @@ public:
 
   ///data
   static char g_version[3];
-  static Settings::SettingStruct g_settings_struct;
+  static Settings::SettingsStruct settings_struct;
   static QMap<QString, UsrProfileStruct> saved_usr_profile_map;
   static QMap<QString, UsrProfileStruct> online_usr_profile_map;
 

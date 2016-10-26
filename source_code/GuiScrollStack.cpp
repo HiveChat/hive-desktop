@@ -198,7 +198,7 @@ void GuiScrollStack::addItem(const QString &text, const QString &string, const b
   layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
   layout->setSizeConstraint(QLayout::SetFixedSize);
   layout->setContentsMargins(0,10,200,0);
-  layout->setSpacing(30);
+  layout->setSpacing(80);
   layout->addWidget(text_label);
   layout->addWidget(string_label);
 
@@ -222,6 +222,24 @@ void GuiScrollStack::addItem(const QString &text, QWidget *widget)
   central_layout->addLayout(layout);
   central_layout->addSpacing(10);
 
+}
+
+void GuiScrollStack::addItem(QWidget *widget, const QString &text)
+{
+  QLabel *text_label = new QLabel(text, this);
+  text_label->setFont(GlobalData::font_scrollStackSubtitle);
+  text_label->setPalette(sub_text_palette);
+
+  QHBoxLayout *layout = new QHBoxLayout();
+  layout->setContentsMargins(0,10,200,0);
+  layout->setSpacing(30);
+  layout->setStretch(0,0);
+  layout->addSpacing(60);
+  layout->addWidget(widget);
+  layout->addWidget(text_label);
+
+  central_layout->addLayout(layout);
+  central_layout->addSpacing(10);
 }
 
 void GuiScrollStack::addItem(const QString &text, QLayout *widgetLayout)

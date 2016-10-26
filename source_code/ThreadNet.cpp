@@ -1,6 +1,5 @@
 #include "ThreadNet.h"
 
-//QNetworkAccessManager::networkAccessible()
 
 ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 {
@@ -120,9 +119,9 @@ void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
       return;
     }
 
-  if(messageStruct->reciever != GlobalData::g_settings_struct.profile_key_str)
+  if(messageStruct->reciever != GlobalData::settings_struct.profile_key_str)
     {
-      if(messageStruct->sender != GlobalData::g_settings_struct.profile_key_str)
+      if(messageStruct->sender != GlobalData::settings_struct.profile_key_str)
         {
           //no sniffing
           return;
@@ -136,7 +135,7 @@ void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
     }
   else
     {
-      if(messageStruct->sender == GlobalData::g_settings_struct.profile_key_str)
+      if(messageStruct->sender == GlobalData::settings_struct.profile_key_str)
         {
           qDebug()<<"@ThreadNet::udpProcessMessage(): me 2 me...";
           messageStruct->time =  GlobalData::g_currentTime();
@@ -158,7 +157,7 @@ void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
       return;
     }
 
-  if(usrProfileStruct->key_str == GlobalData::g_settings_struct.profile_key_str)
+  if(usrProfileStruct->key_str == GlobalData::settings_struct.profile_key_str)
     {
       qDebug()<<"@ThreadNet::udpProcessUsrEnter(): Myself entered.";
       emit usrEnter(usrProfileStruct);
@@ -173,7 +172,7 @@ void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
 
 void ThreadNet::udpProcessUsrLeft(QString *usrKey)
 {
-  if(usrKey == GlobalData::g_settings_struct.profile_key_str)
+  if(usrKey == GlobalData::settings_struct.profile_key_str)
     {
       emit usrLeft(usrKey);
 
@@ -197,9 +196,9 @@ void ThreadNet::udpSendUsrEnter()
 
   out << UsrEnter;
   out << GlobalData::g_localHostIP;
-  out << GlobalData::g_settings_struct.profile_key_str;
-  out << GlobalData::g_settings_struct.profile_name_str;
-  out << GlobalData::g_settings_struct.profile_avatar_str;
+  out << GlobalData::settings_struct.profile_key_str;
+  out << GlobalData::settings_struct.profile_name_str;
+  out << GlobalData::settings_struct.profile_avatar_str;
 
   /*qint64 f = */udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
 
@@ -211,7 +210,7 @@ void ThreadNet::udpSendUsrLeave()
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
-  out << UsrLeave << GlobalData::g_settings_struct.profile_key_str;
+  out << UsrLeave << GlobalData::settings_struct.profile_key_str;
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 
   qDebug()<<"@sendUsrLeave(): Finished!";
@@ -230,7 +229,7 @@ void ThreadNet::udpSendMessage_old(QString usrKeyStr, QString message)
 
   qDebug()<<"@sendMessage(): Message Sent!";
 
-  out << Message << usrKeyStr << GlobalData::g_settings_struct.profile_key_str << message;
+  out << Message << usrKeyStr << GlobalData::settings_struct.profile_key_str << message;
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 

@@ -4,7 +4,7 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
 {
   initVariable();
   checkFiles();
-  loadMyProfile();
+  loadMySettings();
   loadFonts();
 
   TEST_SECTION();
@@ -57,11 +57,19 @@ void ThreadData::run()
 
 void ThreadData::checkSettings()
 {
-  if(written_settings_struct != GlobalData::g_settings_struct)
+//  if(written_settings_struct != GlobalData::g_settings_struct)
+//    {
+//      qDebug()<<"&ThreadData::checkSettings():    written!!!!";
+//      writeCurrentConfig();
+//      written_settings_struct = GlobalData::g_settings_struct;
+//    }
+  if(GlobalData::settings_struct.modified_lock)
     {
-      qDebug()<<"&ThreadData::checkSettings():    written!!!!";
+      qDebug()<<"&ThreadData::checkSettings(): Settings changed";
       writeCurrentConfig();
-      written_settings_struct = GlobalData::g_settings_struct;
+      GlobalData::settings_struct.modified_lock = false;
+//      written_settings_struct = GlobalData::g_settings_struct;
+
     }
 }
 
@@ -237,7 +245,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     }
   else
     {
-      UsrData *user_data = new UsrData(&GlobalData::g_settings_struct.profile_key_str, *usrProfileStruct, this);
+      UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
       GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
       GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
@@ -277,8 +285,8 @@ void ThreadData::checkFiles()
 void ThreadData::loadDefaultGlobalData()
 {
   makeUsrKey();
-  GlobalData::g_settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
-  GlobalData::g_settings_struct.profile_name_str = QHostInfo::localHostName();
+  GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
+  GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
 }
 
 
@@ -307,9 +315,9 @@ QJsonDocument ThreadData::makeUsrProfile()
   loadDefaultGlobalData();
 
   QJsonObject my_profile_json_obj;
-  foreach (QString attribute, myProfileConfigJsonMap.keys())
+  foreach (QString attribute, generalSettingsMap.keys())
     {
-      my_profile_json_obj.insert(attribute, *myProfileConfigJsonMap.value(attribute));
+      my_profile_json_obj.insert(attribute, *generalSettingsMap.value(attribute));
     }
 
   my_profile_json_obj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
@@ -327,35 +335,29 @@ void ThreadData::makeUsrKey()
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-  GlobalData::g_settings_struct.profile_key_str.clear();
+  GlobalData::settings_struct.profile_key_str.clear();
 
   for(int i = 0; i < 32; i ++)
     {
-      GlobalData::g_settings_struct.profile_key_str.append(alphabet_char[qrand()%63]);
+      GlobalData::settings_struct.profile_key_str.append(alphabet_char[qrand()%63]);
     }
 
-  qDebug()<<GlobalData::g_settings_struct.profile_key_str;
+  qDebug()<<GlobalData::settings_struct.profile_key_str;
 }
 
 void ThreadData::initVariable()
 {
-  myProfileConfigJsonMap.insert("usrKey", &GlobalData::g_settings_struct.profile_key_str);
-  myProfileConfigJsonMap.insert("usrName", &GlobalData::g_settings_struct.profile_name_str);
-  myProfileConfigJsonMap.insert("avatarPath", &GlobalData::g_settings_struct.profile_avatar_str);
-  myColorConfigJsonMap.insert("BubbleColorI", &GlobalData::g_settings_struct.chat_bubble_color_i);
-  myColorConfigJsonMap.insert("BubbleColorO", &GlobalData::g_settings_struct.chat_bubble_color_o);
+  generalSettingsMap.insert("usrKey", &GlobalData::settings_struct.profile_key_str);
+  generalSettingsMap.insert("usrName", &GlobalData::settings_struct.profile_name_str);
+  generalSettingsMap.insert("avatarPath", &GlobalData::settings_struct.profile_avatar_str);
+  colorSettingsMap.insert("BubbleColorI", &GlobalData::settings_struct.chat_bubble_color_i);
+  colorSettingsMap.insert("BubbleColorO", &GlobalData::settings_struct.chat_bubble_color_o);
 
-  GlobalData::g_settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
-  GlobalData::g_settings_struct.chat_bubble_color_o = GlobalData::color_defaultChatBubbleO;
+  GlobalData::settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
+  GlobalData::settings_struct.chat_bubble_color_o = GlobalData::color_defaultChatBubbleO;
 }
 
-void ThreadData::initPalette()
-{
-
-}
-
-
-void ThreadData::loadMyProfile()
+void ThreadData::loadMySettings()
 {
   QFile file(my_profile_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -375,16 +377,17 @@ void ThreadData::loadMyProfile()
         {
           QJsonObject usr_list_json_obj = read_json_document.object();
 
-          foreach(QString *global_data_ptr, myProfileConfigJsonMap.values())
+          //this is Tim's magic
+          foreach(QString *global_data_ptr, generalSettingsMap.values())
             {
-              *global_data_ptr = usr_list_json_obj[myProfileConfigJsonMap.key(global_data_ptr)].toString();
+              *global_data_ptr = usr_list_json_obj[generalSettingsMap.key(global_data_ptr)].toString();
             }
 
-          foreach(QColor *global_data_ptr, myColorConfigJsonMap.values())
+          foreach(QColor *global_data_ptr, colorSettingsMap.values())
             {
-              qDebug()<<usr_list_json_obj[myColorConfigJsonMap.key(global_data_ptr)].toString();
-              *global_data_ptr = QColor(usr_list_json_obj[myColorConfigJsonMap.key(global_data_ptr)].toString());
+              *global_data_ptr = QColor(usr_list_json_obj[colorSettingsMap.key(global_data_ptr)].toString());
             }
+//          GlobalData::g_settings_struct.modified_lock = true;
 
         }
       else
@@ -399,7 +402,7 @@ void ThreadData::loadMyProfile()
       out<<makeUsrProfile().toJson(QJsonDocument::Indented)<<endl;
     }
 
-  written_settings_struct = GlobalData::g_settings_struct;
+//  written_settings_struct = GlobalData::g_settings_struct;
 
   file.flush();
   file.close();
@@ -454,7 +457,7 @@ void ThreadData::loadUsrList()
 
 void ThreadData::writeCurrentConfig()
 {
-  qDebug()<<"void DataManager::writeCurrentConfig() invoked";
+  qDebug()<<"&DataManager::writeCurrentConfig() invoked";
 
   QFile file(my_profile_file_path);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
@@ -465,13 +468,13 @@ void ThreadData::writeCurrentConfig()
   QTextStream out(&file);
 
   QJsonObject my_profile_json_obj;
-  foreach (QString attribute, myProfileConfigJsonMap.keys())
+  foreach (QString attribute, generalSettingsMap.keys())
     {
-      my_profile_json_obj.insert(attribute, *myProfileConfigJsonMap.value(attribute));
+      my_profile_json_obj.insert(attribute, *generalSettingsMap.value(attribute));
     }
 
-  my_profile_json_obj.insert("BubbleColorI", GlobalData::g_settings_struct.chat_bubble_color_i.name());
-  my_profile_json_obj.insert("BubbleColorO", GlobalData::g_settings_struct.chat_bubble_color_o.name());
+  my_profile_json_obj.insert("BubbleColorI", GlobalData::settings_struct.chat_bubble_color_i.name());
+  my_profile_json_obj.insert("BubbleColorO", GlobalData::settings_struct.chat_bubble_color_o.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
@@ -480,7 +483,7 @@ void ThreadData::writeCurrentConfig()
 
   file.resize(0);
   out << write_json_document.toJson();
-//  qDebug()<<write_json_document.toJson();
+  qDebug()<<".....................history written...................";
   file.flush();
   file.close();
 }

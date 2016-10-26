@@ -32,8 +32,9 @@ protected:
   void setIcon(const QString &path);
   void addTag(const QString &text);
   void addItem(const QString &text, const QString &string, const bool &wrapping = true);
-  void addItem(const QString &text, QWidget *widget);
   void addItem(const QString &text, QLayout *widgetLayout);
+  void addItem(const QString &text, QWidget *widget);
+  void addItem(QWidget *widget, const QString &text);
   void addItem(QWidget *centralWidget);
 
   QFont font = GlobalData::font_scrollStackTitle;

@@ -20,7 +20,7 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   addTag("User information");
 
   //avatar
-  avatar_btn = new GuiAvatarButton(GlobalData::g_settings_struct.profile_avatar_str, 100, this);
+  avatar_btn = new GuiAvatarButton(GlobalData::settings_struct.profile_avatar_str, 100, this);
   QButtonGroup *avatar_option_group = new QButtonGroup(this);
   QVBoxLayout *avatar_option_layout = new QVBoxLayout();
   avatar_option_layout->addWidget(avatar_btn);
@@ -36,21 +36,23 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   addItem("\tAvatar:", avatar_option_layout);
 
   //usrname
-  QLineEdit *usr_name_line_edit = new QLineEdit(GlobalData::g_settings_struct.profile_name_str,this);
+  QLineEdit *usr_name_line_edit = new QLineEdit(GlobalData::settings_struct.profile_name_str,this);
   usr_name_line_edit->setMaximumWidth(200);
   addItem("\tUser Name:", usr_name_line_edit);
 
   //usrkey
-  QLineEdit *usr_key_line_edit = new QLineEdit(GlobalData::g_settings_struct.profile_name_str,this);
-  usr_key_line_edit->setText(GlobalData::g_settings_struct.profile_key_str);
+  QLineEdit *usr_key_line_edit = new QLineEdit(GlobalData::settings_struct.profile_name_str,this);
+  usr_key_line_edit->setText(GlobalData::settings_struct.profile_key_str);
   usr_key_line_edit->setCursor(QCursor(Qt::IBeamCursor));
   usr_key_line_edit->setReadOnly(true);
   usr_key_line_edit->setMaximumWidth(200);
   addItem("\tUser Key:", usr_key_line_edit);
 
 
-  connect(avatar_option_group, SIGNAL(buttonClicked(QAbstractButton*)), this, SLOT(onRadioClicked(QAbstractButton*)));
-  connect(usr_name_line_edit, SIGNAL(textEdited(QString)), this, SLOT(onUsrNameChanged(QString)));
+  connect(avatar_option_group, SIGNAL(buttonClicked(QAbstractButton*)),
+          this, SLOT(onRadioClicked(QAbstractButton*)));
+  connect(usr_name_line_edit, &QLineEdit::textEdited,
+          this, &GuiSettingsStack_profile::onUsrNameChanged);
 
   this->setParent(parent);
 }
@@ -65,12 +67,14 @@ GuiSettingsStack_profile::~GuiSettingsStack_profile()
 
 void GuiSettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
-  GlobalData::g_settings_struct.profile_avatar_str = avatar_map.value(abstractButton->text());
-  avatar_btn->setAvatar(GlobalData::g_settings_struct.profile_avatar_str);
+  GlobalData::settings_struct.profile_avatar_str = avatar_map.value(abstractButton->text());
+  avatar_btn->setAvatar(GlobalData::settings_struct.profile_avatar_str);
+  GlobalData::settings_struct.modified_lock = true;
 }
 
 void GuiSettingsStack_profile::onUsrNameChanged(QString usr_name)
 {
-  GlobalData::g_settings_struct.profile_name_str = usr_name;
+  GlobalData::settings_struct.profile_name_str = usr_name;
+  GlobalData::settings_struct.modified_lock = true;
 }
 

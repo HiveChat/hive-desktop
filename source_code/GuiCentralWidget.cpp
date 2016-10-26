@@ -103,7 +103,17 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
         {
           UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender);
           gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
-          tray_icon->showMessage(temp_usr_data->name(), messageStruct.message);
+          if(GlobalData::settings_struct.notification.enabled)
+            {
+              if(GlobalData::settings_struct.notification.show_detail)
+                {
+                  tray_icon->showMessage(temp_usr_data->name(), messageStruct.message);
+                }
+              else
+                {
+                  tray_icon->showMessage(temp_usr_data->name(), "new message");
+                }
+            }
         }
     }
 }

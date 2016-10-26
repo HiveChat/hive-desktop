@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QColor>
+#include <QJsonObject>
 
 enum StaticStackType
 {
@@ -73,23 +74,33 @@ namespace Message {
 }
 
 namespace Settings {
-  enum Notification{
-    ShowCount,
-    ShowDetail,
-    None
+  struct Notification{
+    bool enabled;
+    bool show_detail;
   };
 
-  struct SettingStruct
+  struct Update{
+    bool show_notification;
+    bool auto_check;
+    bool auto_update;
+    QJsonObject update_json;
+  };
+
+  struct SettingsStruct
   {
+    bool modified_lock;
     QColor chat_bubble_color_i;
     QColor chat_bubble_color_o;
+
     QString profile_avatar_str;
     QString profile_name_str;
     QString profile_key_str;
+
     Notification notification;
+    Update update;
   };
-  bool operator !=(const SettingStruct &arg1 , const SettingStruct &arg2);
-  bool operator ==(const SettingStruct &arg1 , const SettingStruct &arg2);
+//  bool operator !=(const SettingsStruct &arg1 , const SettingsStruct &arg2);
+//  bool operator ==(const SettingsStruct &arg1 , const SettingsStruct &arg2);
 
 }
 

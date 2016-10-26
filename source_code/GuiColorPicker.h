@@ -5,13 +5,14 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QColorDialog>
+#include "GlobalData.h"
 
 class GuiColorPicker : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiColorPicker(QColor *color, QWidget *parent = 0);
+  explicit GuiColorPicker(QColor *object_color, QWidget *parent = 0);
   ~GuiColorPicker();
 
   QColor color();
@@ -23,8 +24,6 @@ protected:
 private:
   QColor *my_color;
 
-signals:
-  void clicked();
 };
 
 #endif // GUICOLORPICKER_H
