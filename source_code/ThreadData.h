@@ -78,8 +78,10 @@ private:
   QMap<QString, UsrProfileStruct> local_usr_profile_map;
 
   //config map
-  QMap<QString, QColor*> colorSettingsMap;
-  QMap<QString, QString*> generalSettingsMap;
+  QMap<QString, QColor*> settings_map_qcolor;
+  QMap<QString, QString*> settings_map_qstring;
+  QMap<QString, QJsonObject*> settings_map_qjsonobject;
+  QMap<QString, bool*> settings_map_bool;
 
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);

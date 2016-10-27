@@ -25,18 +25,22 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
           });
   addItem("\tDefault color scheme:      ", push_btn);
 
+
   addTag("Notifications");
   QCheckBox *enable_notify_box = new QCheckBox(this);
+  enable_notify_box->setChecked(GlobalData::settings_struct.notification.message_notification);
   connect(enable_notify_box, &QCheckBox::toggled,
           [this](bool toggled){
-            GlobalData::settings_struct.notification.enabled = toggled;
+            GlobalData::settings_struct.notification.message_notification = toggled;
             GlobalData::settings_struct.modified_lock = true;
           });
   addItem("\tEnable notifications\t\t\t          ", enable_notify_box);
+
   QCheckBox *show_detail_box = new QCheckBox(this);
+  show_detail_box->setChecked(GlobalData::settings_struct.notification.message_detail_notification);
   connect(show_detail_box, &QCheckBox::toggled,
           [this](bool toggled){
-            GlobalData::settings_struct.notification.show_detail = toggled;
+            GlobalData::settings_struct.notification.message_detail_notification = toggled;
             GlobalData::settings_struct.modified_lock = true;
           });
   addItem("\tShow message detail\t\t          ", show_detail_box);

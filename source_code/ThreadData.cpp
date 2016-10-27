@@ -315,9 +315,9 @@ QJsonDocument ThreadData::makeUsrProfile()
   loadDefaultGlobalData();
 
   QJsonObject my_profile_json_obj;
-  foreach (QString attribute, generalSettingsMap.keys())
+  foreach (QString attribute, settings_map_qstring.keys())
     {
-      my_profile_json_obj.insert(attribute, *generalSettingsMap.value(attribute));
+      my_profile_json_obj.insert(attribute, QJsonValue::fromVariant(*settings_map_qstring.value(attribute)));
     }
 
   my_profile_json_obj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
@@ -347,14 +347,43 @@ void ThreadData::makeUsrKey()
 
 void ThreadData::initVariable()
 {
-  generalSettingsMap.insert("usrKey", &GlobalData::settings_struct.profile_key_str);
-  generalSettingsMap.insert("usrName", &GlobalData::settings_struct.profile_name_str);
-  generalSettingsMap.insert("avatarPath", &GlobalData::settings_struct.profile_avatar_str);
-  colorSettingsMap.insert("BubbleColorI", &GlobalData::settings_struct.chat_bubble_color_i);
-  colorSettingsMap.insert("BubbleColorO", &GlobalData::settings_struct.chat_bubble_color_o);
+  //When adding global variable to settings, choose a map with corresponding data type below.
+  //When adding map, go to register in loadMySettings() to enable reaing from disk.
+  settings_map_qstring.insert("usrKey",
+                              &GlobalData::settings_struct.profile_key_str);
+  settings_map_qstring.insert("usrName",
+                              &GlobalData::settings_struct.profile_name_str);
+  settings_map_qstring.insert("avatarPath",
+                              &GlobalData::settings_struct.profile_avatar_str);
 
+  settings_map_qjsonobject.insert("updateJson",
+                                  &GlobalData::settings_struct.update.update_json);
+
+  settings_map_qcolor.insert("BubbleColorI",
+                             &GlobalData::settings_struct.chat_bubble_color_i);
+  settings_map_qcolor.insert("BubbleColorO",
+                             &GlobalData::settings_struct.chat_bubble_color_o);
+
+  settings_map_bool.insert("updateNotification",
+                           &GlobalData::settings_struct.notification.update_notification);
+  settings_map_bool.insert("messageNotification",
+                           &GlobalData::settings_struct.notification.message_notification);
+  settings_map_bool.insert("messageDetailNotification",
+                           &GlobalData::settings_struct.notification.message_detail_notification);
+  settings_map_bool.insert("autoUpdate",
+                           &GlobalData::settings_struct.update.auto_update);
+  settings_map_bool.insert("autoCheckUpdate",
+                           &GlobalData::settings_struct.update.auto_check_update);
+
+  //defaults:
   GlobalData::settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
   GlobalData::settings_struct.chat_bubble_color_o = GlobalData::color_defaultChatBubbleO;
+  GlobalData::settings_struct.notification.message_detail_notification = true;
+  GlobalData::settings_struct.notification.message_notification = true;
+  GlobalData::settings_struct.notification.update_notification = true;
+  GlobalData::settings_struct.update.auto_check_update = true;
+  GlobalData::settings_struct.update.auto_update = true;
+
 }
 
 void ThreadData::loadMySettings()
@@ -377,18 +406,26 @@ void ThreadData::loadMySettings()
         {
           QJsonObject usr_list_json_obj = read_json_document.object();
 
-          //this is Tim's magic
-          foreach(QString *global_data_ptr, generalSettingsMap.values())
+          //This is Tim's magic
+          foreach(QString *var, settings_map_qstring.values())
             {
-              *global_data_ptr = usr_list_json_obj[generalSettingsMap.key(global_data_ptr)].toString();
+              *var = usr_list_json_obj[settings_map_qstring.key(var)].toString();
             }
 
-          foreach(QColor *global_data_ptr, colorSettingsMap.values())
+          foreach(QJsonObject *var, settings_map_qjsonobject.values())
             {
-              *global_data_ptr = QColor(usr_list_json_obj[colorSettingsMap.key(global_data_ptr)].toString());
+              *var = usr_list_json_obj[settings_map_qjsonobject.key(var)].toObject();
             }
-//          GlobalData::g_settings_struct.modified_lock = true;
 
+          foreach(QColor *var, settings_map_qcolor.values())
+            {
+              *var = QColor(usr_list_json_obj[settings_map_qcolor.key(var)].toString());
+            }
+
+          foreach(bool *var, settings_map_bool.values())
+            {
+              *var = usr_list_json_obj[settings_map_bool.key(var)].toBool();
+            }
         }
       else
         {
@@ -468,13 +505,26 @@ void ThreadData::writeCurrentConfig()
   QTextStream out(&file);
 
   QJsonObject my_profile_json_obj;
-  foreach (QString attribute, generalSettingsMap.keys())
+  foreach (QString attribute, settings_map_qstring.keys())
     {
-      my_profile_json_obj.insert(attribute, *generalSettingsMap.value(attribute));
+      my_profile_json_obj.insert(attribute, *settings_map_qstring.value(attribute));
+    }
+  foreach (QString attribute, settings_map_qcolor.keys())
+    {
+      my_profile_json_obj.insert(attribute, settings_map_qcolor.value(attribute)->name());
+    }
+  foreach (QString attribute, settings_map_qjsonobject.keys())
+    {
+      my_profile_json_obj.insert(attribute, *settings_map_qjsonobject.value(attribute));
+    }
+  foreach (QString attribute, settings_map_bool.keys())
+    {
+      my_profile_json_obj.insert(attribute, *settings_map_bool.value(attribute));
     }
 
-  my_profile_json_obj.insert("BubbleColorI", GlobalData::settings_struct.chat_bubble_color_i.name());
-  my_profile_json_obj.insert("BubbleColorO", GlobalData::settings_struct.chat_bubble_color_o.name());
+
+//  my_profile_json_obj.insert("BubbleColorI", GlobalData::settings_struct.chat_bubble_color_i.name());
+//  my_profile_json_obj.insert("BubbleColorO", GlobalData::settings_struct.chat_bubble_color_o.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 

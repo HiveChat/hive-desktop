@@ -76,13 +76,13 @@ namespace Message {
 
 namespace Settings {
   struct Notification{
-    bool enabled;
-    bool show_detail;
+    bool update_notification;
+    bool message_notification;
+    bool message_detail_notification;
   };
 
   struct Update{
-    bool show_notification;
-    bool auto_check;
+    bool auto_check_update;
     bool auto_update;
     QJsonObject update_json;
   };

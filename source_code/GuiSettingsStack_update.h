@@ -2,6 +2,7 @@
 #define GUISETTINGSSTACK_UPDATE_H
 
 #include "GuiScrollStack.h"
+#include <QCheckBox>
 
 class GuiSettingsStack_update : public GuiScrollStack
 {

@@ -104,9 +104,9 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
         {
           UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender);
           gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
-          if(GlobalData::settings_struct.notification.enabled)
+          if(GlobalData::settings_struct.notification.message_notification)
             {
-              if(GlobalData::settings_struct.notification.show_detail)
+              if(GlobalData::settings_struct.notification.message_detail_notification)
                 {
                   tray_icon->showMessage(temp_usr_data->name(), messageStruct.message);
                 }
