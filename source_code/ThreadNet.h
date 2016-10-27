@@ -5,6 +5,7 @@
 #include "GlobalType.h"
 
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QThread>
 #include <QHostInfo>
 #include <QNetworkAccessManager>

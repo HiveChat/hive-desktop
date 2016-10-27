@@ -31,7 +31,7 @@ QPalette GlobalData::palette_txt_brown;
 
 
 ///data
-char GlobalData::g_version[3] = {'0','0','6'};
+char GlobalData::g_version[3] = {'0','0','7'};
 Settings::SettingsStruct GlobalData::settings_struct;
 QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
 QMap<QString, UsrProfileStruct> GlobalData::online_usr_profile_map;
@@ -41,7 +41,7 @@ QMap<QString, UsrData*> GlobalData::online_usr_data_map;//used
 ///netr
 QString GlobalData::g_localHostIP;
 
-QString GlobalData::g_currentTime()
+QString GlobalData::getCurrentTime()
 {
   return QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 }

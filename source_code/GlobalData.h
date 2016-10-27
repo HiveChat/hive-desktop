@@ -56,12 +56,11 @@ public:
 
   static QMap<QString, UsrData*> online_usr_data_map;//used
 
-
   ///net
   static QString g_localHostIP;
 
   ///other
-  static QString g_currentTime();
+  static QString getCurrentTime();
   static QString getRandomString(const int &digit);
 
   ///debug

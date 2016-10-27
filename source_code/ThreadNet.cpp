@@ -129,7 +129,7 @@ void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
       else
         {
           qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct->message;
-          messageStruct->time =  GlobalData::g_currentTime();
+          messageStruct->time =  GlobalData::getCurrentTime();
           emit messageRecieved(messageStruct, true);
         }
     }
@@ -138,13 +138,13 @@ void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
       if(messageStruct->sender == GlobalData::settings_struct.profile_key_str)
         {
           qDebug()<<"@ThreadNet::udpProcessMessage(): me 2 me...";
-          messageStruct->time =  GlobalData::g_currentTime();
+          messageStruct->time =  GlobalData::getCurrentTime();
           emit messageRecieved(messageStruct, true);
         }
       else
         {
           qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct->message;
-          messageStruct->time =  GlobalData::g_currentTime();
+          messageStruct->time =  GlobalData::getCurrentTime();
           emit messageRecieved(messageStruct, false);
         }
     }
@@ -317,6 +317,7 @@ void ThreadNet::onRedirectFinished()
           });
   connect(http_update_reply, &QNetworkReply::finished,
           [this]() {
+//            GlobalData::settings_struct.update.update_json = QJsonDocument http_update_file;
             qDebug()<<"@ThreadNet: Got update file: "<<http_update_file;
             http_update_manager->deleteLater();
             http_update_reply->deleteLater();
