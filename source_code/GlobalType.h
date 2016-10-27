@@ -14,7 +14,8 @@ enum StaticStackType
   Settings_Messaging,
   Settings_Profile,
   Settings_Style,
-  Settings_Questions
+  Settings_Questions,
+  Settings_Update
 };
 
 enum BuiltInAvatarType

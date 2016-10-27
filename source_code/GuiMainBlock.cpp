@@ -66,7 +66,6 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
         return;
       }
-
     ///active stacks
     case Home_Storage:
       {
@@ -77,7 +76,6 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
         return;
       }
-
     case Settings_Messaging:
       {
         GuiSettingsStack_messaging *static_stack = new GuiSettingsStack_messaging(this);
@@ -110,6 +108,13 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         main_stacked_widget->setCurrentWidget(static_stack);
 
         return;
+      }
+    case Settings_Update:
+      {
+        GuiSettingsStack_update *static_stack = new GuiSettingsStack_update(this);
+        static_stack_map.insert(staticStackType, static_stack);
+        main_stacked_widget->addWidget(static_stack);
+        main_stacked_widget->setCurrentWidget(static_stack);
       }
     case NULL_Stack:
       {

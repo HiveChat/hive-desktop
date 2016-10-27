@@ -25,9 +25,12 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   QVBoxLayout *avatar_option_layout = new QVBoxLayout();
   avatar_option_layout->addWidget(avatar_btn);
 
+  QString current_avatar_name = avatar_map.key(GlobalData::settings_struct.profile_avatar_str);
+
   foreach(QString temp_avatar_name_str, avatar_map.keys())
     {
       QRadioButton *temp_radio_btn = new QRadioButton(temp_avatar_name_str, this);
+      temp_radio_btn->setChecked(temp_avatar_name_str == current_avatar_name);
       avatar_option_group->addButton(temp_radio_btn);
       avatar_option_layout->addWidget(temp_radio_btn);
       avatar_radio_btn_list.append(temp_radio_btn);

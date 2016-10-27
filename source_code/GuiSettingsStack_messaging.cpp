@@ -34,7 +34,7 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
           });
   addItem("\tEnable notifications\t\t\t          ", enable_notify_box);
   QCheckBox *show_detail_box = new QCheckBox(this);
-  connect(enable_notify_box, &QCheckBox::toggled,
+  connect(show_detail_box, &QCheckBox::toggled,
           [this](bool toggled){
             GlobalData::settings_struct.notification.show_detail = toggled;
             GlobalData::settings_struct.modified_lock = true;

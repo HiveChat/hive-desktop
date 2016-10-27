@@ -18,6 +18,10 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
   questions_btn->setDefaultPixmap(":/img/img/question_0.png");
   questions_btn->setHoveredPixmap(":/img/img/question_1.png");
 
+  update_btn = new GuiMenuButton("update", Settings_Update, this);
+  update_btn->setDefaultPixmap(":/img/img/update_0.png");
+  update_btn->setHoveredPixmap(":/img/img/update_1.png");
+
   ////main layout
   main_layout = new QVBoxLayout(this);
   main_layout->setContentsMargins(30,20,20,0);
@@ -27,6 +31,7 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(profile_btn);
   main_layout->addWidget(style_btn);
   main_layout->addWidget(questions_btn);
+  main_layout->addWidget(update_btn);
 
   ///for test period
   style_btn->setHidden(true);

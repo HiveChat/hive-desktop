@@ -10,6 +10,7 @@
 #include "GuiSettingsStack_messaging.h"
 #include "GuiSettingsStack_profile.h"
 #include "GuiSettingsStack_questions.h"
+#include "GuiSettingsStack_update.h"
 
 #include <QStackedWidget>
 #include <QList>

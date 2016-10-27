@@ -34,6 +34,9 @@
         <file>img/list.png</file>
         <file>img/corner_honey.png</file>
         <file>img/tray_0.png</file>
+        <file>img/update_0.png</file>
+        <file>img/update_1.png</file>
+        <file>img/update.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>
