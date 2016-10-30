@@ -191,6 +191,9 @@ void GuiScrollStack::addItem(const QString &text, const QString &string, const b
   text_label->setPalette(sub_text_palette);
 
   QLabel *string_label = new QLabel(string, this);
+#ifdef Q_OS_WIN
+  string_label->setFont(GlobalData::font_scrollStackSubtitle);
+#endif
   string_label->setWordWrap(wrapping);
   string_label->adjustSize();
 

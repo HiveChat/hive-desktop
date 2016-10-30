@@ -317,7 +317,7 @@ void ThreadNet::onRedirectFinished()
           });
   connect(http_update_reply, &QNetworkReply::finished,
           [this]() {
-//            GlobalData::settings_struct.update.update_json = QJsonDocument http_update_file;
+            GlobalData::settings_struct.update.update_json = QJsonDocument::fromBinaryData(http_update_file).object();
             qDebug()<<"@ThreadNet: Got update file: "<<http_update_file;
             http_update_manager->deleteLater();
             http_update_reply->deleteLater();
