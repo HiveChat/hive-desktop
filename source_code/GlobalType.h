@@ -49,8 +49,17 @@ struct UsrProfileStruct
 bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 
-namespace Message {
-  enum MessageType{
+struct UpdateStruct
+{
+  QChar version[3];
+  QString message;
+  QString title;
+};
+
+namespace Message
+{
+  enum MessageType
+  {
     TextMessage,
     FileInfo
   };
@@ -74,14 +83,17 @@ namespace Message {
 
 }
 
-namespace Settings {
-  struct Notification{
+namespace Settings
+{
+  struct Notification
+  {
     bool update_notification;
     bool message_notification;
     bool message_detail_notification;
   };
 
-  struct Update{
+  struct Update
+  {
     bool auto_check_update;
     bool auto_update;
     QJsonObject update_json;

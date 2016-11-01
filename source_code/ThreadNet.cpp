@@ -318,6 +318,30 @@ void ThreadNet::onRedirectFinished()
   connect(http_update_reply, &QNetworkReply::finished,
           [this]() {
             GlobalData::settings_struct.update.update_json = QJsonDocument::fromBinaryData(http_update_file).object();
+
+            QJsonParseError json_error;
+            QJsonDocument json_document = QJsonDocument::fromJson(http_update_file, &json_error);
+            if(json_error.error == QJsonParseError::NoError)
+              {
+                if(json_document.isObject())
+                  {
+                    QJsonObject json_obj = json_document.object();
+                    GlobalData::update_struct.version[0] = json_obj.value("latest_stable_version").toInt();
+                    GlobalData::update_struct.version[1] = json_obj.value("latest_beta_version").toInt();
+                    GlobalData::update_struct.version[2] = json_obj.value("latest_alpha_version").toInt();
+                    GlobalData::update_struct.message = json_obj.value("message").toString();
+                    GlobalData::update_struct.title = json_obj.value("title").toString();
+                  }
+                else
+                  {
+                    qDebug()<<"!@ThreadNet::onRedirectFinished(): Update Json Document IS NOT AN OBJECT!";
+                  }
+              }
+            else
+              {
+                qDebug()<<"!@ThreadNet::onRedirectFinished(): Update Json Document Parse ERROR!";
+              }
+
             qDebug()<<"@ThreadNet: Got update file: "<<http_update_file;
             http_update_manager->deleteLater();
             http_update_reply->deleteLater();

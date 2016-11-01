@@ -4,9 +4,9 @@ Widget::Widget(QString title, QString content, QSize size, QWidget *parent)
   : QWidget(parent)
 {
   ////window btn
-  exit_hint = new GuiLabelButton();
-  min_hint = new GuiLabelButton();
-  max_hint = new GuiLabelButton();
+  exit_hint = new GuiLabelButton(this);
+  min_hint = new GuiLabelButton(this);
+  max_hint = new GuiLabelButton(this);
 
   exit_hint->setDefaultPixmap(":/img/img/exit_hint_0.png");
   exit_hint->setHoveredPixmap(":/img/img/exit_hint_1.png");
@@ -42,8 +42,6 @@ Widget::Widget(QString title, QString content, QSize size, QWidget *parent)
 
 
   this->setMinimumSize(300,150);
-  this->setMinimumSize(300,150);
-  this->setParent(parent);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowFlags(Qt::FramelessWindowHint);
 
@@ -57,21 +55,21 @@ Widget::~Widget()
 void Widget::paintEvent(QPaintEvent*)
 {
   ///rounded frame     //scroll bug here!
-  /*QBitmap bmp(this->size());
-  bmp.fill();
-  QPainter p(&bmp);
-  p.setPen(Qt::NoPen);
-  p.setBrush(Qt::black);
-  p.setRenderHint(QPainter::Antialiasing, true);
-  p.setRenderHint(QPainter::SmoothPixmapTransform);
-  p.drawRoundedRect(bmp.rect(), 8, 8);
-  bmp.setDevicePixelRatio(2.0);
-  this->setMask(bmp);
+//  QBitmap bmp(this->size());
+//  bmp.fill();
+//  QPainter p(&bmp);
+//  p.setPen(Qt::NoPen);
+//  p.setBrush(Qt::black);
+//  p.setRenderHint(QPainter::Antialiasing, true);
+//  p.setRenderHint(QPainter::SmoothPixmapTransform);
+//  p.drawRoundedRect(bmp.rect(), 8, 8);
+//  bmp.setDevicePixelRatio(2.0);
+//  this->setMask(bmp);
 
-  ///color
-  QPainter painter(this);
-  painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillRect(rect(), QColor(255,255,255,255));*/
+//  ///color
+//  QPainter painter(this);
+//  painter.setRenderHint(QPainter::Antialiasing, true);
+//  painter.fillRect(rect(), QColor(255,255,255,255));
 
   QRectF rectangle(0, 0, this->width(), this->height());
   QPainter paint(this);

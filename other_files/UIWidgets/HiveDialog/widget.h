@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QPainter>
+//#include <QBitmap>
 
 class Widget : public QWidget
 {

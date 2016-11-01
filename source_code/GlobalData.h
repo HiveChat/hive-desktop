@@ -51,6 +51,7 @@ public:
   ///data
   static char g_version[3];
   static Settings::SettingsStruct settings_struct;
+  static UpdateStruct update_struct;
   static QMap<QString, UsrProfileStruct> saved_usr_profile_map;
   static QMap<QString, UsrProfileStruct> online_usr_profile_map;
 

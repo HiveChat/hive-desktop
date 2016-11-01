@@ -1,7 +1,6 @@
 #include "GlobalData.h"
 
 
-
 ///UI
 QFont GlobalData::font_main;
 QFont GlobalData::font_chatTextEditor;
@@ -33,6 +32,7 @@ QPalette GlobalData::palette_txt_brown;
 ///data
 char GlobalData::g_version[3] = {'0','0','7'};
 Settings::SettingsStruct GlobalData::settings_struct;
+UpdateStruct GlobalData::update_struct;
 QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
 QMap<QString, UsrProfileStruct> GlobalData::online_usr_profile_map;
 
