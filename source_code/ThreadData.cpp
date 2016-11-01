@@ -45,7 +45,6 @@ void ThreadData::run()
         }
       if(loop_count%10 == 0)//every 10 second
         {
-
           loop_count = 0;
         }
 
@@ -122,7 +121,7 @@ void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
   qDebug()<<ip_addr;
 
   ///usrKey<<usrName<<ipAddr<<avatarPath
-  QFile file(usr_list_file_path);
+  QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -190,7 +189,7 @@ void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
 
 void ThreadData::deleteUsr(const QStringList usrInfoStrList)
 {
-  QFile file(usr_list_file_path);
+  QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
   {
     return;
@@ -275,6 +274,24 @@ void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool f
   emit messageLoaded(*messageStruct, fromMe);
 }
 
+void ThreadData::onUpdatesAvailable()
+{
+  QFile file(update_file_path);
+  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+      return;
+    }
+
+  QTextStream in(&file);
+  QTextStream out(&file);
+  QByteArray in_byte_array = in.readAll().toUtf8();
+
+  if(in_byte_array.isEmpty())
+    {
+      out << GlobalData::update_struct;
+    }
+}
+
 void ThreadData::checkFiles()
 {
   checkDir(app_data_local_path);
@@ -305,10 +322,10 @@ bool ThreadData::checkDir(const QString &directory)
   return true;
 }
 
-QString ThreadData::appDataLocalPath()
-{
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-}
+//QString ThreadData::appDataLocalPath()
+//{
+//  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+//}
 
 QJsonDocument ThreadData::makeUsrProfile()
 {
@@ -388,7 +405,7 @@ void ThreadData::initVariable()
 
 void ThreadData::loadMySettings()
 {
-  QFile file(my_profile_file_path);
+  QFile file(settings_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -447,7 +464,7 @@ void ThreadData::loadMySettings()
 
 void ThreadData::loadUsrList()
 {
-  QFile file(usr_list_file_path);
+  QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;
@@ -496,7 +513,7 @@ void ThreadData::writeCurrentConfig()
 {
   qDebug()<<"&DataManager::writeCurrentConfig() invoked";
 
-  QFile file(my_profile_file_path);
+  QFile file(settings_file_path);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
       return;

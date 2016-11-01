@@ -109,6 +109,8 @@ signals:
   void usrEnter(UsrProfileStruct *usrProfileStruct);
   void usrLeft(QString *usrKey);
 
+  void updateAvailable();
+
 };
 
 #endif // THREADNET_H

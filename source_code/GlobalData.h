@@ -29,11 +29,11 @@ public:
   static QFont font_scrollStackSubtitle;
 
   //!base color
-  static QColor bc_darkGrey;
-  static QColor bc_lightGrey;
-  static QColor bc_brown;
-  static QColor bc_hiveYellow;
-  static QColor bc_lightYellow;
+  static QColor color_darkGrey;
+  static QColor color_lightGrey;
+  static QColor color_brown;
+  static QColor color_hiveYellow;
+  static QColor color_lightYellow;
 
   static QColor color_window;
   static QColor color_alphaTab;
@@ -49,7 +49,7 @@ public:
   static QPalette palette_txt_brown;
 
   ///data
-  static char g_version[3];
+  static QChar current_version[3];
   static Settings::SettingsStruct settings_struct;
   static UpdateStruct update_struct;
   static QMap<QString, UsrProfileStruct> saved_usr_profile_map;

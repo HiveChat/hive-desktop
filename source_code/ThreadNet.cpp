@@ -331,6 +331,14 @@ void ThreadNet::onRedirectFinished()
                     GlobalData::update_struct.version[2] = json_obj.value("latest_alpha_version").toInt();
                     GlobalData::update_struct.message = json_obj.value("message").toString();
                     GlobalData::update_struct.title = json_obj.value("title").toString();
+                    if(GlobalData::update_struct.version != GlobalData::current_version)
+                      {
+                        GlobalData::settings_struct.update.update_json = json_obj;
+                      }
+                    else
+                      {
+                        emit updateAvailable();
+                      }
                   }
                 else
                   {

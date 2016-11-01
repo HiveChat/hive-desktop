@@ -11,18 +11,18 @@ QFont GlobalData::font_menuButton;
 QFont GlobalData::font_scrollStackTitle;
 QFont GlobalData::font_scrollStackSubtitle;
 
-QColor GlobalData::bc_darkGrey = QColor(100,100,100);
-QColor GlobalData::bc_lightGrey = QColor(225,225,225);
-QColor GlobalData::bc_brown = QColor(103,72,0);
-QColor GlobalData::bc_hiveYellow = QColor(255,181,0);
-QColor GlobalData::bc_lightYellow = QColor(255,215,126);
+QColor GlobalData::color_darkGrey = QColor(100,100,100);
+QColor GlobalData::color_lightGrey = QColor(225,225,225);
+QColor GlobalData::color_brown = QColor(103,72,0);
+QColor GlobalData::color_hiveYellow = QColor(255,181,0);
+QColor GlobalData::color_lightYellow = QColor(255,215,126);
 
 QColor GlobalData::color_window = QColor(255,255,255);
 QColor GlobalData::color_alphaTab = QColor(255,255,255,230);
 QColor GlobalData::color_tab = QColor(0,0,0,0);
 
-QColor GlobalData::color_defaultChatBubbleI = GlobalData::bc_lightYellow;
-QColor GlobalData::color_defaultChatBubbleO = GlobalData::bc_lightGrey;
+QColor GlobalData::color_defaultChatBubbleI = GlobalData::color_lightYellow;
+QColor GlobalData::color_defaultChatBubbleO = GlobalData::color_lightGrey;
 
 QPalette GlobalData::palette_bkg_normalWhite;
 QPalette GlobalData::palette_bkg_transparent;
@@ -30,7 +30,7 @@ QPalette GlobalData::palette_txt_brown;
 
 
 ///data
-char GlobalData::g_version[3] = {'0','0','7'};
+QChar GlobalData::current_version[3] = {'0','0','7'};
 Settings::SettingsStruct GlobalData::settings_struct;
 UpdateStruct GlobalData::update_struct;
 QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;

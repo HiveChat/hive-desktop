@@ -14,9 +14,9 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   this->setMinimumWidth(900);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowTitle(QString("Hive! %1.%2.%3 alpha-test")
-                       .arg(GlobalData::g_version[0])
-                       .arg(GlobalData::g_version[1])
-                       .arg(GlobalData::g_version[2]));
+                       .arg(GlobalData::current_version[0])
+                       .arg(GlobalData::current_version[1])
+                       .arg(GlobalData::current_version[2]));
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);

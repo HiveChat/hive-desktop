@@ -96,7 +96,6 @@ namespace Settings
   {
     bool auto_check_update;
     bool auto_update;
-    QJsonObject update_json;
   };
 
   struct SettingsStruct
@@ -115,6 +114,11 @@ namespace Settings
 //  bool operator !=(const SettingsStruct &arg1 , const SettingsStruct &arg2);
 //  bool operator ==(const SettingsStruct &arg1 , const SettingsStruct &arg2);
 
+}
+
+namespace Update
+{
+  QJsonObject update_json;
 }
 
 

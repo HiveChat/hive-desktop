@@ -71,7 +71,7 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);
   bottom_line->setFrameShadow(QFrame::Plain);
-  bottom_line->setFixedHeight(4);
+  bottom_line->setFixedHeight(2);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
   main_layout = new QVBoxLayout(this);
@@ -469,11 +469,11 @@ GuiChatStack::GuiChatStack(QWidget *parent)
 
   usr_data = new UsrData(this);//empty object
   ///UI
-//  QFrame *top_bar_line = new QFrame(this);
-//  top_bar_line->setFrameShape(QFrame::HLine);
-//  top_bar_line->setFrameShadow(QFrame::Plain);
-//  top_bar_line->setFixedHeight(2);
-//  top_bar_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+  QFrame *bottom_line = new QFrame(this);
+  bottom_line->setFrameShape(QFrame::HLine);
+  bottom_line->setFrameShadow(QFrame::Plain);
+  bottom_line->setFixedHeight(2);
+  bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
   chat_widget = new GuiChatStack_chat_widget(this);
   QPalette palette = scroll_area->palette();
@@ -498,6 +498,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   main_layout->setAlignment(Qt::AlignBottom);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
+  main_layout->addWidget(bottom_line);
   main_layout->addWidget(message_editor);
 
   connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));

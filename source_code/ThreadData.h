@@ -34,10 +34,8 @@ public:
   ~ThreadData();
 
   void addUsr(UsrProfileStruct *usrProfileStruct);
-
   void loadUsrList();
-  static bool checkDir(const QString &directory);
-  static QString appDataLocalPath();
+//  static QString appDataLocalPath();
   void TEST_SECTION();
 
 
@@ -49,10 +47,9 @@ private:
 
   bool running = true;
   int loop_count = 1;
-  void checkSettings();
   void refreshGui();
-
-//  Settings::SettingsStruct written_settings_struct;
+  void checkSettings();
+  static bool checkDir(const QString &directory);
 
   QJsonDocument makeUsrProfile();
   QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
@@ -71,8 +68,9 @@ private:
   const QString usr_path = app_data_local_path + "/usr/";
   const QString log_path = app_data_local_path + "/log/";
 
-  const QString usr_list_file_path = app_data_local_path + "/usr_list.json";
-  const QString my_profile_file_path = app_data_local_path + "/my_profile.json";
+  const QString contacts_file_path = app_data_local_path + "/contacts.json";
+  const QString settings_file_path = app_data_local_path + "/settings.json";
+  const QString update_file_path = app_data_local_path + "/update.json";
 
   //data map
   QMap<QString, UsrProfileStruct> local_usr_profile_map;
@@ -87,7 +85,9 @@ public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe);
+  void onUpdatesAvailable();
 
+private slots:
   void writeCurrentConfig();
 
 
