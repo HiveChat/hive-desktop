@@ -286,10 +286,41 @@ void ThreadData::onUpdatesAvailable()
   QTextStream out(&file);
   QByteArray in_byte_array = in.readAll().toUtf8();
 
-  if(in_byte_array.isEmpty())
-    {
-      out << GlobalData::update_struct;
+  if(!in_byte_array.isEmpty())
+    {q
+      QJsonParseError json_error;
+      QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
+      if(json_error.error == QJsonParseError::NoError)
+        {
+          if(read_json_document.isObject())
+            {
+              QJsonObject read_json_obj = read_json_document.object();
+              if(read_json_obj.value("stable_version") == GlobalData::update_struct.version[0]
+                 && read_json_obj.value("beta_version") == GlobalData::update_struct.version[1]
+                 && read_json_obj.value("alpha_version") == GlobalData::update_struct.version[2])
+                {
+                  file.close();
+                  file.flush();
+
+                  emit updatesAvailable();
+                }
+            }
+        }
     }
+
+  QJsonObject write_json_obj;
+  write_json_obj.insert("stable_version", GlobalData::update_struct.version[0]);
+  write_json_obj.insert("beta_version", GlobalData::update_struct.version[1]);
+  write_json_obj.insert("alpha_version", GlobalData::update_struct.version[2]);
+
+  QJsonDocument write_json_document;
+  write_json_document.setObject(write_json_obj);
+  out << write_json_document.toJson(QJsonDocument::Indented) << endl;
+
+  file.close();
+  file.flush();
+
+  emit updatesAvailable();
 }
 
 void ThreadData::checkFiles()

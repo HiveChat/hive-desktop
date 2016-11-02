@@ -93,6 +93,7 @@ private slots:
 
 signals:
   void refreshGuiInfo();
+  void updatesAvailable();
   void usrProfileLoaded(UsrData *userData);
   void usrProfileChanged(UsrData *userData);
   void messageLoaded(Message::TextMessageStruct messageStrList, bool fromMe);

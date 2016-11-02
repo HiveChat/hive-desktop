@@ -326,9 +326,9 @@ void ThreadNet::onRedirectFinished()
                 if(json_document.isObject())
                   {
                     QJsonObject json_obj = json_document.object();
-                    GlobalData::update_struct.version[0] = json_obj.value("latest_stable_version").toInt();
-                    GlobalData::update_struct.version[1] = json_obj.value("latest_beta_version").toInt();
-                    GlobalData::update_struct.version[2] = json_obj.value("latest_alpha_version").toInt();
+                    GlobalData::update_struct.version[0] = json_obj.value("stable_version").toInt();
+                    GlobalData::update_struct.version[1] = json_obj.value("beta_version").toInt();
+                    GlobalData::update_struct.version[2] = json_obj.value("alpha_version").toInt();
                     GlobalData::update_struct.message = json_obj.value("message").toString();
                     GlobalData::update_struct.title = json_obj.value("title").toString();
                     if(GlobalData::update_struct.version != GlobalData::current_version)
