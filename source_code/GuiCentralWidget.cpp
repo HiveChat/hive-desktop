@@ -80,7 +80,6 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon_menu->addSeparator();
   tray_icon_menu->addAction(quit_action);
 
-//  QPixmap pixmap(":/img/img/icon.png");
   QIcon icon(":/img/img/tray_0.png");
 
   tray_icon = new QSystemTrayIcon(this);
@@ -127,6 +126,17 @@ void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
 
 void GuiCentralWidget::onUpdateAvailable()
 {
+  if(GlobalData::settings_struct.notification.update_notification)
+    {
+      QString message = QString("current version: %0.%1.%2\nnew version: %3.%4.%5")
+          .arg(GlobalData::current_version[0])
+          .arg(GlobalData::current_version[1])
+          .arg(GlobalData::current_version[2])
+          .arg(GlobalData::update_struct.version[0])
+          .arg(GlobalData::update_struct.version[1])
+          .arg(GlobalData::update_struct.version[2]);
+      tray_icon->showMessage("Update Available", message);
+    }
   //if notification
   //if popup
   //todo research on the examples and find how to trigger the show()

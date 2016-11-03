@@ -116,11 +116,5 @@ namespace Settings
 
 }
 
-namespace Update
-{
-  QJsonObject update_json;
-}
-
-
 
 #endif // GLOBALTYPE_H

@@ -295,9 +295,9 @@ void ThreadData::onUpdatesAvailable()
           if(read_json_document.isObject())
             {
               QJsonObject read_json_obj = read_json_document.object();
-              if(read_json_obj.value("stable_version") == GlobalData::update_struct.version[0]
-                 && read_json_obj.value("beta_version") == GlobalData::update_struct.version[1]
-                 && read_json_obj.value("alpha_version") == GlobalData::update_struct.version[2])
+              if(read_json_obj.value("stable_version").toInt() == GlobalData::update_struct.version[0]
+                 && read_json_obj.value("beta_version").toInt() == GlobalData::update_struct.version[1]
+                 && read_json_obj.value("alpha_version").toInt() == GlobalData::update_struct.version[2])
                 {
                   file.close();
                   file.flush();
@@ -309,14 +309,15 @@ void ThreadData::onUpdatesAvailable()
     }
 
   QJsonObject write_json_obj;
-  write_json_obj.insert("stable_version", GlobalData::update_struct.version[0]);
-  write_json_obj.insert("beta_version", GlobalData::update_struct.version[1]);
-  write_json_obj.insert("alpha_version", GlobalData::update_struct.version[2]);
+  write_json_obj.insert("stable_version", QJsonValue(GlobalData::update_struct.version[0]));
+  write_json_obj.insert("beta_version", QJsonValue(GlobalData::update_struct.version[1]));
+  write_json_obj.insert("alpha_version", QJsonValue(GlobalData::update_struct.version[2]));
 
   QJsonDocument write_json_document;
   write_json_document.setObject(write_json_obj);
   out << write_json_document.toJson(QJsonDocument::Indented) << endl;
 
+  qDebug()<<"how?";
   file.close();
   file.flush();
 
@@ -404,9 +405,6 @@ void ThreadData::initVariable()
   settings_map_qstring.insert("avatarPath",
                               &GlobalData::settings_struct.profile_avatar_str);
 
-  settings_map_qjsonobject.insert("updateJson",
-                                  &GlobalData::settings_struct.update.update_json);
-
   settings_map_qcolor.insert("BubbleColorI",
                              &GlobalData::settings_struct.chat_bubble_color_i);
   settings_map_qcolor.insert("BubbleColorO",
@@ -458,11 +456,6 @@ void ThreadData::loadMySettings()
           foreach(QString *var, settings_map_qstring.values())
             {
               *var = usr_list_json_obj[settings_map_qstring.key(var)].toString();
-            }
-
-          foreach(QJsonObject *var, settings_map_qjsonobject.values())
-            {
-              *var = usr_list_json_obj[settings_map_qjsonobject.key(var)].toObject();
             }
 
           foreach(QColor *var, settings_map_qcolor.values())
@@ -560,10 +553,6 @@ void ThreadData::writeCurrentConfig()
   foreach (QString attribute, settings_map_qcolor.keys())
     {
       my_profile_json_obj.insert(attribute, settings_map_qcolor.value(attribute)->name());
-    }
-  foreach (QString attribute, settings_map_qjsonobject.keys())
-    {
-      my_profile_json_obj.insert(attribute, *settings_map_qjsonobject.value(attribute));
     }
   foreach (QString attribute, settings_map_bool.keys())
     {

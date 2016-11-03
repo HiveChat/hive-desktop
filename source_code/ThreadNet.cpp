@@ -317,8 +317,7 @@ void ThreadNet::onRedirectFinished()
           });
   connect(http_update_reply, &QNetworkReply::finished,
           [this]() {
-            GlobalData::settings_struct.update.update_json = QJsonDocument::fromBinaryData(http_update_file).object();
-
+            qDebug()<<"Downloaded: "<<http_update_file;
             QJsonParseError json_error;
             QJsonDocument json_document = QJsonDocument::fromJson(http_update_file, &json_error);
             if(json_error.error == QJsonParseError::NoError)
@@ -333,11 +332,15 @@ void ThreadNet::onRedirectFinished()
                     GlobalData::update_struct.title = json_obj.value("title").toString();
                     if(GlobalData::update_struct.version != GlobalData::current_version)
                       {
-                        GlobalData::settings_struct.update.update_json = json_obj;
+                        qDebug()<<GlobalData::update_struct.version[0]
+                            <<GlobalData::update_struct.version[1]
+                            <<GlobalData::update_struct.version[2];
+                        qDebug()<<"@ThreadNet::onRedirectFinished(): update available";
+                        emit updateAvailable();
                       }
                     else
                       {
-                        emit updateAvailable();
+                        qDebug()<<"@ThreadNet::onRedirectFinished(): already the newest version";
                       }
                   }
                 else

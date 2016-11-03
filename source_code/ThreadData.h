@@ -78,7 +78,6 @@ private:
   //config map
   QMap<QString, QColor*> settings_map_qcolor;
   QMap<QString, QString*> settings_map_qstring;
-  QMap<QString, QJsonObject*> settings_map_qjsonobject;
   QMap<QString, bool*> settings_map_bool;
 
 public slots:
