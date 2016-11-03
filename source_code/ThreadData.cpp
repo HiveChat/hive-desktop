@@ -287,7 +287,7 @@ void ThreadData::onUpdatesAvailable()
   QByteArray in_byte_array = in.readAll().toUtf8();
 
   if(!in_byte_array.isEmpty())
-    {q
+    {
       QJsonParseError json_error;
       QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
       if(json_error.error == QJsonParseError::NoError)

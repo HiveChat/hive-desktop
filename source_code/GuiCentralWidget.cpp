@@ -125,6 +125,14 @@ void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
+void GuiCentralWidget::onUpdateAvailable()
+{
+  //if notification
+  //if popup
+  //todo research on the examples and find how to trigger the show()
+
+}
+
 
 void GuiCentralWidget::addUsr(UsrData *userData)
 {

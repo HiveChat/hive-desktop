@@ -36,7 +36,6 @@ private:
 
 private slots:
   void onTextMessageToSend(const QString &receiver, const QString &message);
-
 };
 
 #endif // MAINWINDOW_H

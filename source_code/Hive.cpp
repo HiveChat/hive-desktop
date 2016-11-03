@@ -33,6 +33,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
   connect(thread_data, &ThreadData::usrProfileChanged,
           gui_central_widget, &GuiCentralWidget::changeUsr,
           Qt::QueuedConnection);
+//  connect()
 
   connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,
