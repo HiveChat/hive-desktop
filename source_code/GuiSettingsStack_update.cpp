@@ -27,5 +27,23 @@ GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
           });
   addItem("\tShow notifications\t\t\t          ", show_notification_box);
 
+  addTag("Available Update:");
+//  addItem("\tCurrent version:\t\t\t",
+//          QString("%1.%2.%3")
+//          .arg(GlobalData::current_version[0])
+//          .arg(GlobalData::current_version[1])
+//          .arg(GlobalData::current_version[2]));
+  addItem("New version: version:\t", GlobalData::update_struct.title, false);
+  addItem("Update version: version:\t",
+          QString("%1.%2.%3")
+          .arg(GlobalData::update_struct.version[0])
+          .arg(GlobalData::update_struct.version[1])
+          .arg(GlobalData::update_struct.version[2]),
+          false);
+  addItem("Features and Fixes: \t", GlobalData::update_struct.message);
+
+
+
+
   this->setParent(parent);
 }

@@ -104,9 +104,8 @@ void ThreadNet::sendOnlineStatus()
 
 void ThreadNet::checkUpdate()
 {
-  QUrl update_url = QUrl("http://updates.hivechat.org");
   http_update_manager = new QNetworkAccessManager(this);
-  http_update_reply = http_update_manager->head(QNetworkRequest(update_url));
+  http_update_reply = http_update_manager->head(QNetworkRequest(GlobalData::update_url));
   connect(http_update_reply, &QNetworkReply::finished,
           this, &ThreadNet::onRedirectFinished);
 }
