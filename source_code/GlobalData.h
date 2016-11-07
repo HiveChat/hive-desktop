@@ -49,7 +49,7 @@ public:
   static QPalette palette_txt_brown;
 
   ///data
-  static QChar current_version[3];
+  static int current_version[3];
   static Settings::SettingsStruct settings_struct;
   static UpdateStruct update_struct;
   static QUrl update_url;
@@ -61,7 +61,6 @@ public:
 
   ///net
   static QString g_localHostIP;
-
   ///other
   static QString getCurrentTime();
   static QString getRandomString(const int &digit);

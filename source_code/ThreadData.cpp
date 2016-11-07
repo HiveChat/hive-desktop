@@ -102,6 +102,18 @@ QJsonDocument ThreadData::makeUsrList(QList<QJsonObject> &usr_profile_list)
   return json_doc;
 }
 
+QJsonDocument ThreadData::makeUpdateJson(const int stable[])
+{
+  QJsonObject write_json_obj;
+  write_json_obj.insert("stable_version", QJsonValue(stable[0]));
+  write_json_obj.insert("beta_version", QJsonValue(stable[1]));
+  write_json_obj.insert("alpha_version", QJsonValue(stable[2]));
+
+  QJsonDocument write_json_document;
+  write_json_document.setObject(write_json_obj);
+  return write_json_document;
+}
+
 
 ///////////!thread
 
@@ -274,8 +286,15 @@ void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool f
   emit messageLoaded(*messageStruct, fromMe);
 }
 
-void ThreadData::onUpdatesAvailable()
+void ThreadData::checkOutUpdates()
 {
+  if(GlobalData::update_struct.version[0] == 0
+     && GlobalData::update_struct.version[1] == 0
+     && GlobalData::update_struct.version[2] == 0)
+    {
+      return;
+    }
+
   QFile file(update_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -285,6 +304,7 @@ void ThreadData::onUpdatesAvailable()
   QTextStream in(&file);
   QTextStream out(&file);
   QByteArray in_byte_array = in.readAll().toUtf8();
+  int write_version[3];
 
   if(!in_byte_array.isEmpty())
     {
@@ -295,29 +315,68 @@ void ThreadData::onUpdatesAvailable()
           if(read_json_document.isObject())
             {
               QJsonObject read_json_obj = read_json_document.object();
-              if(read_json_obj.value("stable_version").toInt() == GlobalData::update_struct.version[0]
-                 && read_json_obj.value("beta_version").toInt() == GlobalData::update_struct.version[1]
-                 && read_json_obj.value("alpha_version").toInt() == GlobalData::update_struct.version[2])
+
+              int read_version[3] = {
+                read_json_obj.value("stable_version").toInt(),
+                read_json_obj.value("beta_version").toInt(),
+                read_json_obj.value("alpha_version").toInt()
+              };
+
+              for(int i = 0; i < 3; i ++)
+                {
+                  write_version[i] = read_version[i];
+                }
+
+              if(read_version[0] == GlobalData::update_struct.version[0]
+                 && read_version[1] == GlobalData::update_struct.version[1]
+                 && read_version[2] == GlobalData::update_struct.version[2])
                 {
                   file.close();
                   file.flush();
-
                   emit updatesAvailable();
+
+                  return;
+                }
+              else
+                {
+                  if(GlobalData::update_struct.version[0] > read_version[0])
+                    {
+                      for(int i = 0; i < 3; i ++)
+                        {
+                          write_version[i] = GlobalData::update_struct.version[i];
+                        }
+                    }
+                  else
+                    {
+                      if(GlobalData::update_struct.version[1] > read_version[1])
+                        {
+                          for(int i = 0; i < 3; i ++)
+                            {
+                              write_version[i] = GlobalData::update_struct.version[i];
+                            }
+                        }
+                      else
+                        {
+                          if(GlobalData::update_struct.version[2] > read_version[2])
+                            {
+                              for(int i = 0; i < 3; i ++)
+                                {
+                                  write_version[i] = GlobalData::update_struct.version[i];
+                                }
+                            }
+                          else
+                            {
+                              qDebug()<<"&ThreadData::checkOutUpdates(): Lower update detected !! ERROR !!";
+                            }
+                        }
+                    }
                 }
             }
         }
     }
 
-  QJsonObject write_json_obj;
-  write_json_obj.insert("stable_version", QJsonValue(GlobalData::update_struct.version[0]));
-  write_json_obj.insert("beta_version", QJsonValue(GlobalData::update_struct.version[1]));
-  write_json_obj.insert("alpha_version", QJsonValue(GlobalData::update_struct.version[2]));
+  out << makeUpdateJson(write_version).toJson(QJsonDocument::Indented) << endl;
 
-  QJsonDocument write_json_document;
-  write_json_document.setObject(write_json_obj);
-  out << write_json_document.toJson(QJsonDocument::Indented) << endl;
-
-  qDebug()<<"how?";
   file.close();
   file.flush();
 

@@ -10,9 +10,9 @@ class GuiSettingsStack_update : public GuiScrollStack
 public:
   explicit GuiSettingsStack_update(QWidget *parent = 0);
 
-signals:
-
-public slots:
+private:
+  QLabel *update_available_label;
+  QBoxLayout *update_available_layout;
 };
 
 #endif // GUISETTINGSSTACK_UPDATE_H

@@ -19,7 +19,6 @@ bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2)
   return !(arg1 == arg2);
 }
 
-
 //bool Settings::operator ==(const Settings::SettingsStruct &arg1, const Settings::SettingsStruct &arg2)
 //{
 //  if(arg1.profile_avatar_str == arg2.profile_avatar_str

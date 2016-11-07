@@ -54,6 +54,7 @@ private:
   QJsonDocument makeUsrProfile();
   QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
   QJsonDocument makeUsrList(QList<QJsonObject> &usr_profile_list);
+  QJsonDocument makeUpdateJson(const int stable[]);
 
   void makeUsrKey();
   void initVariable();
@@ -84,7 +85,7 @@ public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe);
-  void onUpdatesAvailable();
+  void checkOutUpdates();
 
 private slots:
   void writeCurrentConfig();

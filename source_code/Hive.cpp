@@ -25,7 +25,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
           thread_data, &ThreadData::onUsrEntered,
           Qt::AutoConnection);
   connect(thread_net, &ThreadNet::updateAvailable,
-          thread_data, &ThreadData::onUpdatesAvailable,
+          thread_data, &ThreadData::checkOutUpdates,
           Qt::AutoConnection);
   connect(thread_data, &ThreadData::usrProfileLoaded,
           gui_central_widget, &GuiCentralWidget::addUsr,

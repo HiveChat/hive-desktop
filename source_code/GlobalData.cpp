@@ -30,7 +30,7 @@ QPalette GlobalData::palette_txt_brown;
 
 
 ///data
-QChar GlobalData::current_version[3] = {'0','0','7'};
+int GlobalData::current_version[3] = {'0','0','7'};
 Settings::SettingsStruct GlobalData::settings_struct;
 UpdateStruct GlobalData::update_struct;
 QUrl GlobalData::update_url = QUrl("http://updates.hivechat.org");

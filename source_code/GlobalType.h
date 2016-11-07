@@ -51,7 +51,7 @@ bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 
 struct UpdateStruct
 {
-  QChar version[3];
+  int version[3];
   QString message;
   QString title;
 };

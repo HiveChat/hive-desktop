@@ -52,6 +52,10 @@ QJsonArray* UsrData::flipUp()
     {
       return &history_bundle_list[current_history_bundle_index];
     }
+  else
+    {
+      return NULL;
+    }
 }
 
 QJsonArray* UsrData::flipDown()
@@ -64,6 +68,10 @@ QJsonArray* UsrData::flipDown()
   else if(current_history_bundle_index < latest_history_bundle_index)
     {
       return &history_bundle_list[current_history_bundle_index];
+    }
+  else
+    {
+      return NULL;
     }
 }
 
