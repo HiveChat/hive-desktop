@@ -41,15 +41,15 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(QString)));
 
   ///buttons~~
-  connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
-  connect(gui_tab_block->gui_home_tab->list_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
-  connect(gui_tab_block->gui_home_tab->storage_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
+	connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->gui_home_tab->list_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->gui_home_tab->storage_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
 
 
-  connect(gui_tab_block->gui_settings_tab->messaging_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
-  connect(gui_tab_block->gui_settings_tab->profile_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
-  connect(gui_tab_block->gui_settings_tab->questions_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
-  connect(gui_tab_block->gui_settings_tab->update_btn, SIGNAL(clicked(StaticStackType)), gui_main_block, SLOT(displayStaticStack(StaticStackType)));
+	connect(gui_tab_block->gui_settings_tab->messaging_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->gui_settings_tab->profile_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->gui_settings_tab->questions_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->gui_settings_tab->update_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
 
 
 
@@ -87,7 +87,7 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon->setToolTip("Hive!");
   tray_icon->setContextMenu(tray_icon_menu);
   tray_icon->setVisible(true);
-  tray_icon->show();
+	tray_icon->show();
 }
 
 void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe)
@@ -124,26 +124,6 @@ void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
   gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
-void GuiCentralWidget::onUpdateAvailable()
-{
-  if(GlobalData::settings_struct.notification.update_notification)
-    {
-      QString message = QString("current version: %0.%1.%2\nnew version: %3.%4.%5")
-          .arg(GlobalData::current_version[0])
-          .arg(GlobalData::current_version[1])
-          .arg(GlobalData::current_version[2])
-          .arg(GlobalData::update_struct.version[0])
-          .arg(GlobalData::update_struct.version[1])
-          .arg(GlobalData::update_struct.version[2]);
-      tray_icon->showMessage("Update Available", message);
-    }
-  //if notification
-  //if popup
-  //todo research on the examples and find how to trigger the show()
-
-}
-
-
 void GuiCentralWidget::addUsr(UsrData *userData)
 {
   gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
@@ -162,8 +142,19 @@ void GuiCentralWidget::changeUsr(UsrData *userData)
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
 }
 
-void GuiCentralWidget::refreshUI()
+void GuiCentralWidget::onUpdateAvailable()
 {
-  gui_main_block->gui_home_stack_welcome->refreshUI();
+	if(GlobalData::settings_struct.notification.update_notification)
+		{
+			QString message = QString("current version: %0.%1.%2\nnew version: %3.%4.%5")
+					.arg(GlobalData::current_version[0])
+					.arg(GlobalData::current_version[1])
+					.arg(GlobalData::current_version[2])
+					.arg(GlobalData::update_struct.version[0])
+					.arg(GlobalData::update_struct.version[1])
+					.arg(GlobalData::update_struct.version[2]);
+			tray_icon->showMessage("Update Available", message);
+		}
 }
+
 

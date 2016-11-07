@@ -15,7 +15,6 @@ class GuiHomeStack_welcome : public QWidget
 
 public:
   explicit GuiHomeStack_welcome(QWidget *parent = 0);
-  void refreshUI();
 
 private:
   QHBoxLayout *bottom_layout;
@@ -31,6 +30,9 @@ private:
   GuiAvatarButton *my_avatar;
 
   QPixmap icon_pixmap;
+
+private slots:
+	void refreshUI();
 };
 
 #endif // GUIWELCOMESTACK_H

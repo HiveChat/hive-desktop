@@ -40,14 +40,10 @@ private:
 public slots:
   void onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe);
   void onCombWidgetClicked(const QString &usrKey);
-  void onUpdateAvailable();
   void addUsr(UsrData *userData);
   void delUsr(UsrData *userData);
   void changeUsr(UsrData *userData);
-  void refreshUI();
-
-private slots:
-
+	void onUpdateAvailable();
 
 };
 

@@ -5,39 +5,43 @@
 #include <QColor>
 #include <QJsonObject>
 
-enum StaticStackType
+namespace GUI
 {
-  NULL_Stack,
-  Home_Welcome,
-  Home_list,
-  Home_Storage,
-  Settings_Messaging,
-  Settings_Profile,
-  Settings_Style,
-  Settings_Questions,
-  Settings_Update
-};
+	enum StaticStackType
+	{
+		NULL_Stack,
+		Home_Welcome,
+		Home_list,
+		Home_Storage,
+		Settings_Messaging,
+		Settings_Profile,
+		Settings_Style,
+		Settings_Questions,
+		Settings_Update
+	};
 
-enum BuiltInAvatarType
-{
-  Bee,
-  Disk,
-  Fat,
-  Ladybug,
-  sunflower,
-  worm
-};
+	enum BuiltInAvatarType
+	{
+		Bee,
+		Disk,
+		Fat,
+		Ladybug,
+		sunflower,
+		worm
+	};
 
-enum BuiltInIconType
-{
-  doc,
-  exe,
-  ppt,
-  rar,
-  txt,
-  xls,
-  zip
-};
+	enum BuiltInIconType
+	{
+		Default,
+		Doc,
+		Exe,
+		Ppt,
+		Rar,
+		Txt,
+		Xls,
+		Zip
+	};
+}
 
 struct UsrProfileStruct
 {

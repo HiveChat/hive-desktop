@@ -2,9 +2,9 @@
 
 GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 {
-  welcome_btn = new GuiMenuButton("welcome", Home_Welcome, this);
-  list_btn = new GuiMenuButton("online user", Home_list, this);
-  storage_btn = new GuiMenuButton("file storage", Home_Storage, this);
+	welcome_btn = new GuiMenuButton("welcome", GUI::StaticStackType::Home_Welcome, this);
+	list_btn = new GuiMenuButton("online user", GUI::StaticStackType::Home_list, this);
+	storage_btn = new GuiMenuButton("file storage", GUI::StaticStackType::Home_Storage, this);
 
   welcome_btn->setDefaultPixmap(":/img/img/welcome_0.png");
   welcome_btn->setHoveredPixmap(":/img/img/welcome_1.png");

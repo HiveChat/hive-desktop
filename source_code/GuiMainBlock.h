@@ -32,16 +32,16 @@ public:
 //  QMap<QString ,GuiChatStack_old*> gui_chat_stack_map;<<
 
 private:
-  QMap<StaticStackType, QWidget*> static_stack_map;
-  StaticStackType current_static_stack_type = NULL_Stack;
-  void clearStackMap(StaticStackType &reservation);
-  void createStaticStack(StaticStackType staticStackType);
+	QMap< GUI::StaticStackType, QWidget*> static_stack_map;
+	GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
+	void clearStackMap( GUI::StaticStackType &reservation);
+	void createStaticStack( GUI::StaticStackType staticStackType);
 
   QVBoxLayout *main_layout;
 
 
 public slots:
-  void displayStaticStack(StaticStackType staticStackType);
+	void displayStaticStack( GUI::StaticStackType staticStackType);
   void displayChatStack(const QString &usrKey);
 //  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);<<
 

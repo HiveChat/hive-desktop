@@ -1,6 +1,6 @@
 #include "GuiMenuButton.h"
 
-GuiMenuButton::GuiMenuButton(QString text, StaticStackType staticStackType, QWidget *parent) : QWidget(parent)
+GuiMenuButton::GuiMenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent) : QWidget(parent)
 {
   static_stack_type = staticStackType;
 

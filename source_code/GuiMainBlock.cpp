@@ -12,11 +12,9 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(main_stacked_widget);
 
 
-  createStaticStack(Home_list);
-  createStaticStack(Home_Welcome);
-  displayStaticStack(Home_Welcome);
-
-//  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
+	createStaticStack(GUI::StaticStackType::Home_list);
+	createStaticStack(GUI::StaticStackType::Home_Welcome);
+	displayStaticStack(GUI::StaticStackType::Home_Welcome);
 }
 
 GuiMainBlock::~GuiMainBlock()
@@ -24,12 +22,12 @@ GuiMainBlock::~GuiMainBlock()
 
 }
 
-void GuiMainBlock::clearStackMap(StaticStackType &reservation)
+void GuiMainBlock::clearStackMap( GUI::StaticStackType &reservation)
 {
-  foreach (StaticStackType temp_static_stack_type, static_stack_map.keys())
+  foreach ( GUI::StaticStackType temp_static_stack_type, static_stack_map.keys())
     {
-      if(temp_static_stack_type == Home_Welcome
-         || temp_static_stack_type == Home_list
+			if(temp_static_stack_type == GUI::StaticStackType::Home_Welcome
+				 || temp_static_stack_type == GUI::StaticStackType::Home_list
          || temp_static_stack_type == reservation)
         {
           continue;
@@ -43,10 +41,10 @@ void GuiMainBlock::clearStackMap(StaticStackType &reservation)
     }
 }
 
-void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
+void GuiMainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 {
   switch (staticStackType) {
-    case Home_Welcome:
+		case GUI::StaticStackType::Home_Welcome:
       {
         gui_home_stack_welcome = new GuiHomeStack_welcome(this);
         static_stack_map.insert(staticStackType, gui_home_stack_welcome);
@@ -56,7 +54,7 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         return;
       }
 
-    case Home_list:
+		case GUI::StaticStackType::Home_list:
       {
         gui_home_stack_list = new GuiHomeStack_list(this);
         static_stack_map.insert(staticStackType, gui_home_stack_list);
@@ -66,7 +64,7 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         return;
       }
     ///active stacks
-    case Home_Storage:
+		case GUI::StaticStackType::Home_Storage:
       {
         GuiHomeStack_storage *static_stack = new GuiHomeStack_storage(this);
         static_stack_map.insert(staticStackType, static_stack);
@@ -75,7 +73,7 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
         return;
       }
-    case Settings_Messaging:
+		case GUI::StaticStackType::Settings_Messaging:
       {
         GuiSettingsStack_messaging *static_stack = new GuiSettingsStack_messaging(this);
         static_stack_map.insert(staticStackType, static_stack);
@@ -84,7 +82,7 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
         return;
       }
-    case Settings_Profile:
+		case GUI::StaticStackType::Settings_Profile:
       {
         GuiSettingsStack_profile *static_stack = new GuiSettingsStack_profile(this);
         static_stack_map.insert(staticStackType, static_stack);
@@ -94,12 +92,12 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
         return;
       }
 
-    case Settings_Style:
+		case GUI::StaticStackType::Settings_Style:
       {
 
         break;
       }
-    case Settings_Questions:
+		case GUI::StaticStackType::Settings_Questions:
       {
         GuiSettingsStack_questions *static_stack = new GuiSettingsStack_questions(this);
         static_stack_map.insert(staticStackType, static_stack);
@@ -108,14 +106,14 @@ void GuiMainBlock::createStaticStack(StaticStackType staticStackType)
 
         return;
       }
-    case Settings_Update:
+		case GUI::StaticStackType::Settings_Update:
       {
         GuiSettingsStack_update *static_stack = new GuiSettingsStack_update(this);
         static_stack_map.insert(staticStackType, static_stack);
         main_stacked_widget->addWidget(static_stack);
         main_stacked_widget->setCurrentWidget(static_stack);
       }
-    case NULL_Stack:
+		case GUI::StaticStackType::NULL_Stack:
       {
         break;
       }
@@ -127,11 +125,9 @@ void GuiMainBlock::displayChatStack(const QString &usrKey)
   gui_chat_stack->display(usrKey);
   gui_chat_stack->refreshMessage(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
-
-//  GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrKey)->usrProfileStruct(), "GuiMainBlock::displayChatStack");
 }
 
-void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
+void GuiMainBlock::displayStaticStack( GUI::StaticStackType staticStackType)
 {
   if(!static_stack_map.contains(staticStackType))
     {
@@ -145,16 +141,6 @@ void GuiMainBlock::displayStaticStack(StaticStackType staticStackType)
   clearStackMap(staticStackType);
 
 }
-
-//GuiChatStack_old* GuiMainBlock::addChatStack(UsrProfileStruct *usrProfileStruct)
-//{
-//  gui_chat_stack = new GuiChatStack_old(usrProfileStruct, this);
-//  main_stacked_widget->addWidget(gui_chat_stack);
-//  gui_chat_stack_map.insert(usrProfileStruct->key_str, gui_chat_stack);
-//  connect(gui_chat_stack, SIGNAL(sendMessage(QString*,QString*)), this, SLOT(onMessageToSend(QString*,QString*)));
-//  return gui_chat_stack;
-//}
-//<<
 
 void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
 {

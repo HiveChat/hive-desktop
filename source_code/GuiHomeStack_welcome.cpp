@@ -42,7 +42,13 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   dd->addWidget(profile_widget);
   dd->addWidget(background_label);
 
-  this->refreshUI();
+	this->refreshUI();
+
+	QTimer *timer = new QTimer(this);
+	connect(timer, &QTimer::timeout,
+					this, &GuiHomeStack_welcome::refreshUI);
+	timer->setSingleShot(false);
+	timer->start(1000);
 }
 
 void GuiHomeStack_welcome::refreshUI()

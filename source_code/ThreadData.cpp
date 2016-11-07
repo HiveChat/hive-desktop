@@ -36,7 +36,6 @@ void ThreadData::run()
         }
       if(loop_count%2 == 0)//every 2 second
         {
-          refreshGui();
           checkSettings();
         }
       if(loop_count%5 == 0)//every 5 second
@@ -70,11 +69,6 @@ void ThreadData::checkSettings()
 //      written_settings_struct = GlobalData::g_settings_struct;
 
     }
-}
-
-void ThreadData::refreshGui()
-{
-  emit refreshGuiInfo();
 }
 
 QJsonObject ThreadData::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
@@ -286,7 +280,7 @@ void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool f
   emit messageLoaded(*messageStruct, fromMe);
 }
 
-void ThreadData::checkOutUpdates()
+void ThreadData::onUpdatesAvailable()
 {
   if(GlobalData::update_struct.version[0] == 0
      && GlobalData::update_struct.version[1] == 0
@@ -339,41 +333,17 @@ void ThreadData::checkOutUpdates()
                 }
               else
                 {
-                  if(GlobalData::update_struct.version[0] > read_version[0])
-                    {
-                      for(int i = 0; i < 3; i ++)
-                        {
-                          write_version[i] = GlobalData::update_struct.version[i];
-                        }
-                    }
-                  else
-                    {
-                      if(GlobalData::update_struct.version[1] > read_version[1])
-                        {
-                          for(int i = 0; i < 3; i ++)
-                            {
-                              write_version[i] = GlobalData::update_struct.version[i];
-                            }
-                        }
-                      else
-                        {
-                          if(GlobalData::update_struct.version[2] > read_version[2])
-                            {
-                              for(int i = 0; i < 3; i ++)
-                                {
-                                  write_version[i] = GlobalData::update_struct.version[i];
-                                }
-                            }
-                          else
-                            {
-                              qDebug()<<"&ThreadData::checkOutUpdates(): Lower update detected !! ERROR !!";
-                            }
-                        }
-                    }
+									if(GlobalData::versionCompare(GlobalData::update_struct.version, read_version))
+										{
+											for(int i = 0; i < 3; i ++)
+												{
+													write_version[i] = GlobalData::update_struct.version[i];
+												}
+										}
                 }
             }
         }
-    }
+		}
 
   out << makeUpdateJson(write_version).toJson(QJsonDocument::Indented) << endl;
 
@@ -692,6 +662,49 @@ void ThreadData::loadFonts()
 
 #endif //Q_OS_WIN
 
+}
+
+void ThreadData::loadUpdates()
+{
+	QFile file(update_file_path);
+	if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		{
+			return;
+		}
+
+	QTextStream in(&file);
+	QByteArray in_byte_array = in.readAll().toUtf8();
+
+	if(!in_byte_array.isEmpty())
+		{
+			QJsonParseError json_error;
+			QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
+			if(json_error.error == QJsonParseError::NoError)
+				{
+					if(read_json_document.isObject())
+						{
+							QJsonObject read_json_obj = read_json_document.object();
+
+							int read_version[3] = {
+								read_json_obj.value("stable_version").toInt(),
+								read_json_obj.value("beta_version").toInt(),
+								read_json_obj.value("alpha_version").toInt()
+							};
+
+							if(GlobalData::versionCompare(GlobalData::current_version, read_version))
+								{
+									for(int i = 0; i < 3; i ++)
+										{
+											GlobalData::update_struct.version[i] = read_version[i];
+										}
+									emit updatesAvailable();
+								}
+						}
+				}
+		}
+
+	file.close();
+	file.flush();
 }
 
 

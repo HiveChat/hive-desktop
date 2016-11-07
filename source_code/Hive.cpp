@@ -17,15 +17,15 @@ Hive::Hive(QObject *parent) : QObject(parent)
   //QObject not compatible to QWidget para, delete obj manually
 
   ////connect
-  connect(thread_data, &ThreadData::refreshGuiInfo,
-          gui_central_widget, &GuiCentralWidget::refreshUI,
+	connect(thread_data, &ThreadData::updatesAvailable,
+					gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
           Qt::QueuedConnection);
 
   connect(thread_net, &ThreadNet::usrEnter,
           thread_data, &ThreadData::onUsrEntered,
           Qt::AutoConnection);
   connect(thread_net, &ThreadNet::updateAvailable,
-          thread_data, &ThreadData::checkOutUpdates,
+          thread_data, &ThreadData::onUpdatesAvailable,
           Qt::AutoConnection);
   connect(thread_data, &ThreadData::usrProfileLoaded,
           gui_central_widget, &GuiCentralWidget::addUsr,
@@ -33,7 +33,6 @@ Hive::Hive(QObject *parent) : QObject(parent)
   connect(thread_data, &ThreadData::usrProfileChanged,
           gui_central_widget, &GuiCentralWidget::changeUsr,
           Qt::QueuedConnection);
-//  connect()
 
   connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,

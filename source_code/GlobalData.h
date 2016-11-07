@@ -65,6 +65,9 @@ public:
   static QString getCurrentTime();
   static QString getRandomString(const int &digit);
 
+
+	static bool versionCompare(const int (&old)[3], const int (&fresh)[3]);
+
   ///debug
   static void TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str);
 

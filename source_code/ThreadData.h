@@ -47,7 +47,6 @@ private:
 
   bool running = true;
   int loop_count = 1;
-  void refreshGui();
   void checkSettings();
   static bool checkDir(const QString &directory);
 
@@ -62,6 +61,7 @@ private:
   void loadDefaultGlobalData();
   void loadMySettings();
   void loadFonts();
+	void loadUpdates();
 
   void deleteUsr(const QStringList usrInfoStrList);
 
@@ -85,14 +85,13 @@ public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe);
-  void checkOutUpdates();
+	void onUpdatesAvailable();
 
 private slots:
   void writeCurrentConfig();
 
 
 signals:
-  void refreshGuiInfo();
   void updatesAvailable();
   void usrProfileLoaded(UsrData *userData);
   void usrProfileChanged(UsrData *userData);

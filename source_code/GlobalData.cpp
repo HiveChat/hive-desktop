@@ -59,7 +59,43 @@ QString GlobalData::getRandomString(const int &digit)
       random_str.append(alphabet_char[qrand()%63]);
     }
 
-  return random_str;
+	return random_str;
+}
+
+bool GlobalData::versionCompare(const int (&old)[3], const int (&fresh)[3])
+{
+	//return true if fresh is really fresh
+	if(fresh[0] != old[0]
+		 || fresh[1] != old[1]
+		 || fresh[2] != old[2])
+		{
+			if(fresh[0] > old[0])
+				{
+					return true;
+				}
+			else
+				{
+					if(fresh[1] > old[1])
+						{
+							return true;
+						}
+					else
+						{
+							if(fresh[2] > old[2])
+								{
+									return true;
+								}
+							else
+								{
+									return false;
+								}
+						}
+				}
+		}
+	else
+		{
+			return false;
+		}
 }
 
 void GlobalData::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
