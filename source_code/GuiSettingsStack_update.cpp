@@ -31,17 +31,27 @@ GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
      && GlobalData::update_struct.version[1] == GlobalData::current_version[1]
      && GlobalData::update_struct.version[2] == GlobalData::current_version[2])
     {
-      addTag("You are awsome!");
-			addItem("Current features:\t", "");
+			addTag("Hive is new!");
+			addItem("Current version: ",
+							QString("%1.%2.%3")
+							.arg(GlobalData::current_version[0])
+							.arg(GlobalData::current_version[1])
+							.arg(GlobalData::current_version[2]));
+			addItem("features:\t"
+							, "1. Added notifications for messaging\n"
+								"2. Added notifications for updates\n"
+								"3. Added update helper\n"
+								"4. Added badge number for unread message count\n"
+								"5. Added more settings\n"
+								"6. Updated Icon\n"
+								"7. Optimized typeface on Windows\n"
+								"8. Optimized chat area switch algorithm to reduce RAM\n"
+								"9. Fixed unexpected quit caused by unrecognized user\n"
+							, false);
     }
   else
     {
-      addTag("Available Update:");
-    //  addItem("\tCurrent version:\t\t\t",
-    //          QString("%1.%2.%3")
-    //          .arg(GlobalData::current_version[0])
-    //          .arg(GlobalData::current_version[1])
-    //          .arg(GlobalData::current_version[2]));
+			addTag("Available Update:");
       addItem("New version: version:\t", GlobalData::update_struct.title, false);
       addItem("Update version: version:\t",
               QString("%1.%2.%3")

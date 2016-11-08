@@ -5,6 +5,7 @@
 #include "GuiColorPicker.h"
 #include <QPushButton>
 #include <QCheckBox>
+#include <QDir>
 
 class GuiSettingsStack_messaging : public GuiScrollStack
 {
@@ -17,6 +18,9 @@ public:
 private:
   GuiColorPicker *in_bubble_picker;
   GuiColorPicker *out_bubble_picker;
+
+	QPushButton *clear_btn;
+	int make_sure = 0;
 
 };
 

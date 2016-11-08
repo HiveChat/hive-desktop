@@ -120,7 +120,7 @@ void GuiScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI s
 
   central_layout = new QVBoxLayout();
   central_layout->setAlignment(Qt::AlignCenter);
-  central_layout->setContentsMargins(30,30,0,50);
+	central_layout->setContentsMargins(30,20,0,50);
   central_layout->setSpacing(0);
 
   QFrame *scroll_top_line = new QFrame(this);
@@ -179,9 +179,9 @@ QLabel *GuiScrollStack::addTag(const QString &text)
   line->setFixedWidth(580);
   line->setStyleSheet ("QFrame{  background: #CFCFCF; border: 0px transparent;  }");
 
+	central_layout->addSpacing(25);
   central_layout->addWidget(tag_labe);
   central_layout->addWidget(line);
-  central_layout->addSpacing(30);
 
   return tag_labe;
 }
@@ -207,8 +207,8 @@ QBoxLayout *GuiScrollStack::addItem(const QString &text, const QString &string, 
   layout->addWidget(text_label);
   layout->addWidget(string_label);
 
+	central_layout->addSpacing(10);
   central_layout->addLayout(layout);
-  central_layout->addSpacing(10);
 
   return layout;
 }
@@ -226,8 +226,8 @@ QBoxLayout *GuiScrollStack::addItem(const QString &text, QWidget *widget)
   layout->addWidget(text_label);
   layout->addWidget(widget);
 
+	central_layout->addSpacing(10);
   central_layout->addLayout(layout);
-  central_layout->addSpacing(10);
 
   return layout;
 }
@@ -246,8 +246,8 @@ QBoxLayout *GuiScrollStack::addItem(QWidget *widget, const QString &text)
   layout->addWidget(widget);
   layout->addWidget(text_label);
 
+	central_layout->addSpacing(10);
   central_layout->addLayout(layout);
-  central_layout->addSpacing(10);
 
   return layout;
 }
@@ -265,8 +265,8 @@ QBoxLayout *GuiScrollStack::addItem(const QString &text, QLayout *widgetLayout)
   layout->addWidget(text_label);
   layout->addLayout(widgetLayout);
 
+	central_layout->addSpacing(10);
   central_layout->addLayout(layout);
-  central_layout->addSpacing(10);
 
   return layout;
 }
