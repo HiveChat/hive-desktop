@@ -321,13 +321,13 @@ void ThreadData::onUpdatesAvailable()
                   write_version[i] = read_version[i];
                 }
 
-              if(read_version[0] == GlobalData::update_struct.version[0]
-                 && read_version[1] == GlobalData::update_struct.version[1]
-                 && read_version[2] == GlobalData::update_struct.version[2])
+							if(memcmp(read_version,
+												GlobalData::update_struct.version,
+												sizeof(read_version)) == 0)
                 {
                   file.close();
                   file.flush();
-                  emit updatesAvailable();
+									emit updatesAvailable();
 
                   return;
                 }
@@ -348,7 +348,7 @@ void ThreadData::onUpdatesAvailable()
   out << makeUpdateJson(write_version).toJson(QJsonDocument::Indented) << endl;
 
   file.close();
-  file.flush();
+	file.flush();
 
   emit updatesAvailable();
 }

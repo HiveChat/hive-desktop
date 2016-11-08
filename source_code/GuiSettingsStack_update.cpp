@@ -32,7 +32,7 @@ GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
      && GlobalData::update_struct.version[2] == GlobalData::current_version[2])
     {
       addTag("You are awsome!");
-      addItem("Features:\t", "");
+			addItem("Current features:\t", "");
     }
   else
     {

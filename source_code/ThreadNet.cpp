@@ -329,11 +329,10 @@ void ThreadNet::onRedirectFinished()
                     GlobalData::update_struct.version[2] = json_obj.value("alpha_version").toInt();
                     GlobalData::update_struct.message = json_obj.value("message").toString();
                     GlobalData::update_struct.title = json_obj.value("title").toString();
-                    if(GlobalData::update_struct.version != GlobalData::current_version)
-                      {
-                        qDebug()<<GlobalData::update_struct.version[0]
-                            <<GlobalData::update_struct.version[1]
-                            <<GlobalData::update_struct.version[2];
+										if(memcmp(GlobalData::update_struct.version,
+															GlobalData::current_version,
+															sizeof(GlobalData::current_version)) != 0)
+											{
                         qDebug()<<"@ThreadNet::onRedirectFinished(): update available";
                         emit updateAvailable();
                       }

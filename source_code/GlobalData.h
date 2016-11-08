@@ -49,7 +49,7 @@ public:
   static QPalette palette_txt_brown;
 
   ///data
-  static int current_version[3];
+	static int current_version[3];
   static Settings::SettingsStruct settings_struct;
   static UpdateStruct update_struct;
   static QUrl update_url;
