@@ -36,10 +36,13 @@ void GuiColorPicker::mouseReleaseEvent(QMouseEvent *ev)
   if (ev->button() == Qt::LeftButton)
     {
       QColor color = QColorDialog::getColor(*my_color, this);
-      if(color == QColor(0,0,0))
+			if(!color.isValid()
+				 || color == QColor(0,0,0)
+				 || color == QColor(255,255,255))
         {
           return;
         }
+
       *my_color = color;
       GlobalData::settings_struct.modified_lock = true;
       repaint();

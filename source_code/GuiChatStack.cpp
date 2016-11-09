@@ -108,7 +108,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   edit_layout->setAlignment(Qt::AlignLeft);
   edit_layout->setContentsMargins(10,5,15,10);
   edit_layout->setSpacing(5);
-  edit_layout->addLayout(tool_layout);
+//  edit_layout->addLayout(tool_layout);
   edit_layout->addWidget(text_editor);
 
   ///send button

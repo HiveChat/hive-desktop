@@ -27,9 +27,15 @@ GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
           });
   addItem("\tShow notifications\t\t\t          ", show_notification_box);
 
-  if(GlobalData::update_struct.version[0] == GlobalData::current_version[0]
-     && GlobalData::update_struct.version[1] == GlobalData::current_version[1]
-     && GlobalData::update_struct.version[2] == GlobalData::current_version[2])
+	bool alreadyNew = memcmp(GlobalData::update_struct.version,
+													 GlobalData::current_version,
+													 sizeof(GlobalData::current_version) == 0);
+	bool updateNotLoaded = (GlobalData::update_struct.version[0] == 0
+												 && GlobalData::update_struct.version[1] == 0
+												 && GlobalData::update_struct.version[2] == 0);
+
+
+	if(alreadyNew || updateNotLoaded)
     {
 			addTag("Hive is new!");
 			addItem("Current version: ",

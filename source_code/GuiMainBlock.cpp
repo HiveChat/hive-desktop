@@ -127,7 +127,7 @@ void GuiMainBlock::displayChatStack(const QString &usrKey)
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
 
-void GuiMainBlock::displayStaticStack( GUI::StaticStackType staticStackType)
+void GuiMainBlock::displayStaticStack(GUI::StaticStackType staticStackType)
 {
   if(!static_stack_map.contains(staticStackType))
     {
