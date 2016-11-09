@@ -20,8 +20,6 @@ class GuiTextEdit;
 class GuiChatStack_chat_widget;
 class GuiChatStack_message_editor;
 class GuiChatStack;
-//class GuiChatStack_top_bar;
-//class GuiChatStack_old;
 
 
 class GuiTextEdit : public QTextEdit
@@ -46,28 +44,9 @@ signals:
   void keyEnterTriggered(bool pressed);
 };
 
-//////////////////////////top//////////////////////////////////////
 
-//class GuiChatStack_top_bar : public QWidget
-//{
-//  Q_OBJECT
-
-//public:
-//  explicit GuiChatStack_top_bar(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
-//  ~GuiChatStack_top_bar();
-
-//  void setProfile(UsrProfileStruct *usrProfileStruct);
-
-//private:
-//  QHBoxLayout *main_layout;
-//  QLabel *usr_name_label;
-//  QLabel *usr_ip_label;
-//  GuiAvatarButton *avatar_button;
-
-//};
 
 //////////////////////////mid//////////////////////////////////////
-
 class GuiChatStack_chat_widget : public QWidget
 {
   Q_OBJECT
@@ -90,8 +69,8 @@ public slots:
 
 };
 
-//////////////////////////bottom//////////////////////////////////////
 
+//////////////////////////bottom//////////////////////////////////////
 class GuiChatStack_message_editor : public QWidget
 {
   Q_OBJECT
@@ -125,57 +104,6 @@ signals:
 
 };
 
-////////////////////////////main//////////////////////////////////////
-
-//class GuiChatStack_old : public QWidget
-//{
-//  Q_OBJECT
-
-//public:
-//  explicit GuiChatStack_old(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);//"
-//  ~GuiChatStack_old();//"
-
-//  ////new
-//  void setUserData(UserData *usr_data);//"
-
-//  ////!new
-
-//  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);//"
-//  void checkMessage(MessageStruct &messageStruct, bool fromMe);
-
-//  GuiChatStack_top_bar *top_bar;//"
-//  GuiChatStack_chat_widget *chat_widget;//"
-//  GuiChatStack_message_editor *message_editor;//"
-
-//protected:
-//  void dragEnterEvent(QDragEnterEvent *event);//"
-//  void dropEvent(QDropEvent *event);//"
-
-//private:
-//  DataHistoryIO *data_history_io;//"
-//  int current_active_index;//"
-
-//  QVBoxLayout *main_layout;//"
-//  QScrollArea *chat_scroll_area;//"
-
-//  UsrProfileStruct usr_profile;//"
-
-//  void loadHistory(int index);
-//  void refreshCurrentActiveIndex();//"
-
-//public slots:
-//  void onSendButtonClicked();//"
-//  void onKeyEnterTriggered(bool &pressed);//"
-
-//signals:
-//  void sendMessage(QString *usrKey, QString *message);//"
-
-
-//  ////move
-
-
-//};
-
 
 
 class GuiChatStack : public GuiScrollStack
@@ -204,6 +132,9 @@ private:
 
   //Data
   UsrData *usr_data;
+#ifdef Q_OS_OSX
+	QTimer *timer;
+#endif
 
   //Function
   void flipUnreadMessage();

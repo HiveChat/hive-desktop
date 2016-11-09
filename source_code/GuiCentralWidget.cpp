@@ -145,7 +145,8 @@ void GuiCentralWidget::changeUsr(UsrData *userData)
 
 void GuiCentralWidget::onUpdateAvailable()
 {
-	if(GlobalData::settings_struct.notification.update_notification)
+	if(GlobalData::settings_struct.notification.update_notification
+		 && GlobalData::settings_struct.update.auto_check_update)
 		{
 			QString message = QString("current version: %0.%1.%2\nnew version: %3.%4.%5")
 					.arg(GlobalData::current_version[0])

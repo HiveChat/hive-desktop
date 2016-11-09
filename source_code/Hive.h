@@ -10,11 +10,8 @@
 #include <QApplication>
 #include <QSystemTrayIcon>
 
-#ifdef Q_OS_MAC
-#ifndef Q_OS_IOS
-//#include <QtMacExtras>
+#ifdef Q_OS_OSX
 #include <QtMac>
-#endif
 #endif
 
 

@@ -30,8 +30,8 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(messaging_btn);
   main_layout->addWidget(profile_btn);
   main_layout->addWidget(style_btn);
-  main_layout->addWidget(questions_btn);
   main_layout->addWidget(update_btn);
+	main_layout->addWidget(questions_btn);
 
   ///for test period
   style_btn->setHidden(true);

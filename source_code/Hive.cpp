@@ -3,12 +3,10 @@
 Hive::Hive(QObject *parent) : QObject(parent)
 {
 
-#ifdef Q_OS_MAC
-#ifndef Q_OS_IOS
+#ifdef Q_OS_OSX
 
   QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
-#endif
 #endif
 
   thread_data = new ThreadData(this);
@@ -48,21 +46,16 @@ Hive::Hive(QObject *parent) : QObject(parent)
   thread_data->start(QThread::HighPriority);
   thread_net->start(QThread::HighPriority);
 
-#ifdef Q_OS_MAC
-#ifndef Q_OS_IOS
-
+#ifdef Q_OS_OSX
   QtMac::setBadgeLabelText("");
-#endif
 #endif
 }
 
 Hive::~Hive()
 {
-#ifdef Q_OS_MAC
-#ifndef Q_OS_IOS
+#ifdef Q_OS_OSX
 
   QtMac::setBadgeLabelText("Bye");
-#endif
 #endif
 
   gui_central_widget->close();
