@@ -58,6 +58,7 @@ GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
   else
     {
 			addTag("Available Update:");
+			addItem("\tGo to update!\t\t             ", new QLabel("<a href=\"http://hivechat.org\">hivechat.org</a>"));
       addItem("New version: version:\t", GlobalData::update_struct.title, false);
       addItem("Update version: version:\t",
               QString("%1.%2.%3")

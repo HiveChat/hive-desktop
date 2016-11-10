@@ -3,6 +3,7 @@
 
 #include "GuiScrollStack.h"
 #include <QCheckBox>
+#include <QPushButton>
 
 class GuiSettingsStack_update : public GuiScrollStack
 {
