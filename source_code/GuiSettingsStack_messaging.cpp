@@ -34,8 +34,11 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
             GlobalData::settings_struct.notification.message_notification = toggled;
             GlobalData::settings_struct.modified_lock = true;
           });
+#ifndef Q_OS_WIN
   addItem("\tEnable notifications\t\t\t          ", enable_notify_box);
-
+#else
+  addItem("\tEnable notifications\t\t\t\t", enable_notify_box);
+#endif
   QCheckBox *show_detail_box = new QCheckBox(this);
   show_detail_box->setChecked(GlobalData::settings_struct.notification.message_detail_notification);
   connect(show_detail_box, &QCheckBox::toggled,
@@ -43,8 +46,11 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
             GlobalData::settings_struct.notification.message_detail_notification = toggled;
             GlobalData::settings_struct.modified_lock = true;
           });
+#ifndef Q_OS_WIN
   addItem("\tShow message detail\t\t          ", show_detail_box);
-
+#else
+  addItem("\tShow message detail\t\t\t\t", show_detail_box);
+#endif
 	addTag("History Cleaner");
 	clear_btn = new QPushButton("clear", this);
 	clear_btn->setMaximumWidth(70);

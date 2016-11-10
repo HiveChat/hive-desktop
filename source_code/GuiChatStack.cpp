@@ -99,16 +99,16 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   tool_layout->addWidget(expression_label);
   tool_layout->addWidget(image_label);
   tool_layout->addWidget(file_label);
-//  ///for test period
-//    expression_label->setHidden(true);
-//    image_label->setHidden(true);
-//    file_label->setHidden(true);
+  ///for test period
+    expression_label->setHidden(true);
+    image_label->setHidden(true);
+    file_label->setHidden(true);
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);
   edit_layout->setContentsMargins(10,5,15,10);
   edit_layout->setSpacing(5);
-//  edit_layout->addLayout(tool_layout);
+  edit_layout->addLayout(tool_layout);
   edit_layout->addWidget(text_editor);
 
   ///send button

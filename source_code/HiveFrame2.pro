@@ -16,6 +16,9 @@ macx{
 #    INCLUDEPATH += /usr/include
 }
 
+win32{
+    RC_FILE = hive.rc
+}
 
 TARGET = Hive!
 TEMPLATE = app

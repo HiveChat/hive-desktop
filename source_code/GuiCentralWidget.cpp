@@ -2,7 +2,7 @@
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   : QWidget(parent)
-{
+{    
   initAction();
   initTrayIcon();
 //! do not delete yet, see if it causes problems.
@@ -17,6 +17,9 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
                        .arg(GlobalData::current_version[0])
                        .arg(GlobalData::current_version[1])
                        .arg(GlobalData::current_version[2]));
+#ifdef Q_OS_WIN
+  this->setWindowIcon(QIcon(":/img/img/icon.png"));
+#endif
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);
