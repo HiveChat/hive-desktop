@@ -20,42 +20,35 @@ GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
 
   QCheckBox *show_notification_box = new QCheckBox(this);
   show_notification_box->setChecked(GlobalData::settings_struct.notification.update_notification);
-  connect(show_notification_box, &QCheckBox::toggled,
-          [this](bool toggled){
-            GlobalData::settings_struct.notification.update_notification = toggled;
-            GlobalData::settings_struct.modified_lock = true;
-          });
-  addItem("\tShow notifications\t\t\t          ", show_notification_box);
 
-	bool alreadyNew = memcmp(GlobalData::update_struct.version,
+
+	addTag("Hive version: ");
+	addItem("Current version: ",
+					QString("%1.%2.%3")
+					.arg(GlobalData::current_version[0])
+					.arg(GlobalData::current_version[1])
+					.arg(GlobalData::current_version[2]));
+	addItem("Current features:"
+					, "1. Added notifications for messaging\n"
+						"2. Added notifications for updates\n"
+						"3. Added update helper\n"
+						"4. Added badge number for unread message count\n"
+						"5. Added more settings\n"
+						"6. Updated Icon\n"
+						"7. Optimized typeface on Windows\n"
+						"8. Optimized chat area switch algorithm to reduce RAM\n"
+						"9. Fixed unexpected quit caused by unrecognized user\n"
+					, false);
+
+	bool updateLoaded = (GlobalData::update_struct.version[0] != 0
+											 || GlobalData::update_struct.version[1] != 0
+											 || GlobalData::update_struct.version[2] != 0);
+
+	bool updateAvailable = memcmp(GlobalData::update_struct.version,
 													 GlobalData::current_version,
-													 sizeof(GlobalData::current_version) == 0);
-	bool updateNotLoaded = (GlobalData::update_struct.version[0] == 0
-												 && GlobalData::update_struct.version[1] == 0
-												 && GlobalData::update_struct.version[2] == 0);
+													 sizeof(GlobalData::current_version))  != 0;
 
-
-	if(alreadyNew || updateNotLoaded)
-    {
-			addTag("Hive is new!");
-			addItem("Current version: ",
-							QString("%1.%2.%3")
-							.arg(GlobalData::current_version[0])
-							.arg(GlobalData::current_version[1])
-							.arg(GlobalData::current_version[2]));
-			addItem("features:\t"
-							, "1. Added notifications for messaging\n"
-								"2. Added notifications for updates\n"
-								"3. Added update helper\n"
-								"4. Added badge number for unread message count\n"
-								"5. Added more settings\n"
-								"6. Updated Icon\n"
-								"7. Optimized typeface on Windows\n"
-								"8. Optimized chat area switch algorithm to reduce RAM\n"
-								"9. Fixed unexpected quit caused by unrecognized user\n"
-							, false);
-    }
-  else
+	if(updateLoaded && updateAvailable)
     {
 			addTag("Available Update:");
 			addItem("\tGo to update!\t\t             ", new QLabel("<a href=\"http://hivechat.org\">hivechat.org</a>"));
