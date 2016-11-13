@@ -9,6 +9,7 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
 
   TEST_SECTION();
 
+	qDebug()<<this->currentThreadId();
   this->setParent(parent);
 }
 

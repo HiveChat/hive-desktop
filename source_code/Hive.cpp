@@ -9,6 +9,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
   QtMac::setBadgeLabelText("Hi");
 #endif
 
+	qDebug()<<this->thread()->currentThreadId();
   thread_data = new ThreadData(this);
   thread_net = new ThreadNet(this);
   gui_central_widget = new GuiCentralWidget();
