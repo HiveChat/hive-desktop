@@ -1,5 +1,14 @@
 # Hive！
-
+<!--[![Github All Releases](https://img.shields.io/github/downloads/HiveChat/Hive-desktop/total.svg)]()-->
+[![GitHub commits](https://img.shields.io/github/commits-since/HiveChat/Hive-desktop/0.0.6.svg)]()
+[![GitHub tag](https://img.shields.io/github/tag/HiveChat/Hive-desktop.svg)]()
+[![GitHub release](https://img.shields.io/github/release/HiveChat/Hive-desktop.svg)]()
+[![license](https://img.shields.io/github/license/HiveChat/Hive-desktop.svg)]()
+[![GitHub issues](https://img.shields.io/github/issues/HiveChat/Hive-desktop.svg)]()
+[![GitHub closed issues](https://img.shields.io/github/issues-closed/HiveChat/Hive-desktop.svg)]()
+[![GitHub contributors](https://img.shields.io/github/contributors/HiveChat/Hive-desktop.svg)]()
+[![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)]()
+[![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)]()
 ![](http://7xpqkc.dl1.z0.glb.clouddn.com/HiveIcon_small.png)
 
 Hive! is a LAN chatting software. This is a free software.
