@@ -1,2 +1,2 @@
 language: c++
-script: qmake HiveFrame2.pro -r -spec macx-clang CONFIG+=x86_64 && make -j8 in ./
+script: qmake ./source_code/HiveFrame2.pro -r -spec macx-clang CONFIG+=x86_64 && make -j8 in ./build
