@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "GuiCentralWidget.h"
+#include "Gui/CentralWidget.h"
 #include "GlobalData.h"
 
 #include "ThreadData.h"

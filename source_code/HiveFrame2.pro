@@ -17,82 +17,82 @@ macx{
 }
 
 win32{
-    RC_FILE = hive.rc
+    RC_FILE = /Src/hive.rc
 }
 
 TARGET = Hive!
 TEMPLATE = app
 
-ICON = hive.icns
-
-SOURCES += main.cpp\
-    GuiCentralWidget.cpp \
-    GuiTabBlock.cpp \
-    GuiHomeTab.cpp \
-    GuiMainBlock.cpp \
-    GuiChatTab.cpp \
-    GuiChatStack.cpp \
-    GuiLabelButton.cpp \
-    GuiCombWidget.cpp \
-    GuiAvatarButton.cpp \
-    GuiChatBubble.cpp \
+SOURCES += main.cpp \
+    $$PWD/Gui/Frameworks/Widgets/TextBubble.cpp \
+    $$PWD/Gui/Frameworks/Widgets/LabelButton.cpp \
+    $$PWD/Gui/Frameworks/Widgets/AvatarButton.cpp \
+    $$PWD/Gui/Frameworks/Widgets/ColorPicker.cpp \
+    $$PWD/Gui/Frameworks/Widgets/BadgeIcon.cpp \
+    $$PWD/Gui/Frameworks/CombWidget.cpp \
+    $$PWD/Gui/Frameworks/ScrollStack.cpp \
+    $$PWD/Gui/Frameworks/MenuButton.cpp \
+    $$PWD/Gui/CentralWidget.cpp \
+    $$PWD/Gui/TabBlock.cpp \
+    $$PWD/Gui/HomeTab.cpp \
+    $$PWD/Gui/MainBlock.cpp \
+    $$PWD/Gui/ChatTab.cpp \
+    $$PWD/Gui/ChatStack.cpp \
     GlobalData.cpp \
-    GuiMenuButton.cpp \
-    GuiScrollStack.cpp \
-    GuiSettingsTab.cpp \
-    GuiColorPicker.cpp \
-    GuiSettingsStack_messaging.cpp \
-    GuiSettingsStack_profile.cpp \
-    GuiSettingsStack_questions.cpp \
-    GuiHomeStack_storage.cpp \
+    $$PWD/Gui/SettingsTab.cpp \
+    $$PWD/Gui/SettingsStack_messaging.cpp \
+    $$PWD/Gui/SettingsStack_profile.cpp \
+    $$PWD/Gui/SettingsStack_questions.cpp \
+    $$PWD/Gui/HomeStack_storage.cpp \
     ThreadNet.cpp \
     ThreadData.cpp \
     Hive.cpp \
-    GuiHomeStack_network.cpp \
-    GuiHomeStack_list.cpp \
-    GuiHomeStack_welcome.cpp \
+    $$PWD/Gui/HomeStack_network.cpp \
+    $$PWD/Gui/HomeStack_list.cpp \
+    $$PWD/Gui/HomeStack_welcome.cpp \
     ThreadSocketTCP.cpp \
     GlobalType.cpp \
-    GuiBadgeIcon.cpp \
     UsrData.cpp \
-    GuiSettingsStack_update.cpp
+    $$PWD/Gui/SettingsStack_update.cpp
 
 HEADERS  += \
-    GuiCentralWidget.h \
-    GuiTabBlock.h \
-    GuiHomeTab.h \
-    GuiMainBlock.h \
-    GuiChatTab.h \
-    GuiChatStack.h \
-    GuiLabelButton.h \
-    GuiCombWidget.h \
-    GuiAvatarButton.h \
-    GuiChatBubble.h \
+    $$PWD/Gui/Frameworks/Widgets/TextBubble.h \
+    $$PWD/Gui/Frameworks/Widgets/LabelButton.h \
+    $$PWD/Gui/Frameworks/Widgets/AvatarButton.h \
+    $$PWD/Gui/Frameworks/Widgets/ColorPicker.h \
+    $$PWD/Gui/Frameworks/Widgets/BadgeIcon.h \
+    $$PWD/Gui/Frameworks/CombWidget.h \
+    $$PWD/Gui/Frameworks/ScrollStack.h \
+    $$PWD/Gui/Frameworks/MenuButton.h \
+    $$PWD/Gui/CentralWidget.h \
+    $$PWD/Gui/TabBlock.h \
+    $$PWD/Gui/HomeTab.h \
+    $$PWD/Gui/MainBlock.h \
+    $$PWD/Gui/ChatTab.h \
+    $$PWD/Gui/ChatStack.h \
     GlobalData.h \
-    GuiMenuButton.h \
-    GuiScrollStack.h \
-    GuiSettingsTab.h \
-    GuiColorPicker.h \
-    GuiSettingsStack_messaging.h \
-    GuiSettingsStack_profile.h \
-    GuiSettingsStack_questions.h \
-    GuiHomeStack_storage.h \
+    $$PWD/Gui/SettingsTab.h \
+    $$PWD/Gui/SettingsStack_messaging.h \
+    $$PWD/Gui/SettingsStack_profile.h \
+    $$PWD/Gui/SettingsStack_questions.h \
+    $$PWD/Gui/HomeStack_storage.h \
     ThreadNet.h \
     ThreadData.h \
     Hive.h \
-    GuiHomeStack_network.h \
-    GuiHomeStack_list.h \
-    GuiHomeStack_welcome.h \
+    $$PWD/Gui/HomeStack_network.h \
+    $$PWD/Gui/HomeStack_list.h \
+    $$PWD/Gui/HomeStack_welcome.h \
     ThreadSocketTCP.h \
     GlobalType.h \
-    GuiBadgeIcon.h \
     UsrData.h \
-    GuiSettingsStack_update.h
+    $$PWD/Gui/SettingsStack_update.h
+
+ICON = Src/hive.icns
 
 RESOURCES += \
-    qss.qrc \
-    img.qrc \
-    font.qrc \
-    icon.qrc
+    $$PWD/Src/qss.qrc \
+    $$PWD/Src/img.qrc \
+    $$PWD/Src/font.qrc \
+    $$PWD/Src/icon.qrc
 
 
