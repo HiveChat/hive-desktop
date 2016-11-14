@@ -7,7 +7,6 @@
 [![GitHub issues](https://img.shields.io/github/issues/HiveChat/Hive-desktop.svg)]()
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/HiveChat/Hive-desktop.svg)]()
 [![GitHub contributors](https://img.shields.io/github/contributors/HiveChat/Hive-desktop.svg)]()
-[![Beerpay](https://beerpay.io/HiveChat/Hive-desktop/make-wish.svg?style=flat)](https://beerpay.io/HiveChat/Hive-desktop)
 [![license](https://img.shields.io/github/license/HiveChat/Hive-desktop.svg)]()
 
 ## Download:
@@ -24,12 +23,6 @@
 * Qt5
 
 ## Star me!
-[![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)]()
-[![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)]()
-
-
-## Support on Beerpay
-Hey dude! Help me out for a couple of :beers:!
-
-[![Beerpay](https://beerpay.io/HiveChat/Hive-desktop/badge.svg?style=beer-square)](https://beerpay.io/HiveChat/Hive-desktop)  [![Beerpay](https://beerpay.io/HiveChat/Hive-desktop/make-wish.svg?style=flat-square)](https://beerpay.io/HiveChat/Hive-desktop?focus=wish)
+[![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)](https://github.com/HiveChat/Hive-desktop)
+[![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)](https://github.com/Ultrasilicon)
 
