@@ -26,3 +26,8 @@
 [![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)]()
 [![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)]()
 
+
+## Support on Beerpay
+Hey dude! Help me out for a couple of :beers:!
+
+[![Beerpay](https://beerpay.io/HiveChat/Hive-desktop/badge.svg?style=beer-square)](https://beerpay.io/HiveChat/Hive-desktop)  [![Beerpay](https://beerpay.io/HiveChat/Hive-desktop/make-wish.svg?style=flat-square)](https://beerpay.io/HiveChat/Hive-desktop?focus=wish)
