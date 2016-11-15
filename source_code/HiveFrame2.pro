@@ -38,22 +38,22 @@ SOURCES += main.cpp \
     $$PWD/Gui/MainBlock.cpp \
     $$PWD/Gui/ChatTab.cpp \
     $$PWD/Gui/ChatStack.cpp \
-    GlobalData.cpp \
     $$PWD/Gui/SettingsTab.cpp \
     $$PWD/Gui/SettingsStack_messaging.cpp \
     $$PWD/Gui/SettingsStack_profile.cpp \
     $$PWD/Gui/SettingsStack_questions.cpp \
+    $$PWD/Gui/SettingsStack_update.cpp \
     $$PWD/Gui/HomeStack_storage.cpp \
-    ThreadNet.cpp \
-    ThreadData.cpp \
-    Hive.cpp \
     $$PWD/Gui/HomeStack_network.cpp \
     $$PWD/Gui/HomeStack_list.cpp \
     $$PWD/Gui/HomeStack_welcome.cpp \
+    GlobalData.cpp \
+    ThreadNet.cpp \
+    ThreadData.cpp \
+    Hive.cpp \
     ThreadSocketTCP.cpp \
     GlobalType.cpp \
-    UsrData.cpp \
-    $$PWD/Gui/SettingsStack_update.cpp
+    UsrData.cpp
 
 HEADERS  += \
     $$PWD/Gui/Frameworks/Widgets/TextBubble.h \
@@ -70,22 +70,22 @@ HEADERS  += \
     $$PWD/Gui/MainBlock.h \
     $$PWD/Gui/ChatTab.h \
     $$PWD/Gui/ChatStack.h \
-    GlobalData.h \
     $$PWD/Gui/SettingsTab.h \
     $$PWD/Gui/SettingsStack_messaging.h \
     $$PWD/Gui/SettingsStack_profile.h \
     $$PWD/Gui/SettingsStack_questions.h \
+    $$PWD/Gui/SettingsStack_update.h \
     $$PWD/Gui/HomeStack_storage.h \
-    ThreadNet.h \
-    ThreadData.h \
-    Hive.h \
     $$PWD/Gui/HomeStack_network.h \
     $$PWD/Gui/HomeStack_list.h \
     $$PWD/Gui/HomeStack_welcome.h \
+    GlobalData.h \
+    ThreadNet.h \
+    ThreadData.h \
+    Hive.h \
     ThreadSocketTCP.h \
     GlobalType.h \
-    UsrData.h \
-    $$PWD/Gui/SettingsStack_update.h
+    UsrData.h
 
 ICON = Src/hive.icns
 
