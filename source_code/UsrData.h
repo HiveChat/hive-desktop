@@ -40,7 +40,7 @@ private:
   UsrProfileStruct usr_profile_struct;
 
   const int max_bundle_capacity = 100;
-  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+	const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   const QString usr_path = app_data_local_path + "/usr/";
   QString history_path;
   QString usr_key;

@@ -28,12 +28,12 @@ Hive::Hive(QObject *parent) : QObject(parent)
           Qt::AutoConnection);
   connect(thread_data, &ThreadData::usrProfileLoaded,
           gui_central_widget, &GuiCentralWidget::addUsr,
-          Qt::QueuedConnection);
+					Qt::QueuedConnection);
   connect(thread_data, &ThreadData::usrProfileChanged,
           gui_central_widget, &GuiCentralWidget::changeUsr,
           Qt::QueuedConnection);
 
-  connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
+	connect(gui_central_widget->gui_main_block->gui_chat_stack, &ChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,
           Qt::QueuedConnection);
   connect(thread_net, &ThreadNet::messageRecieved,

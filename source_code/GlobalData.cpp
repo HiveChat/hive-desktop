@@ -39,7 +39,8 @@ QUrl GlobalData::download_url = QUrl("http://download.hivechat.org");
 QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
 QMap<QString, UsrProfileStruct> GlobalData::online_usr_profile_map;
 
-QMap<QString, UsrData*> GlobalData::online_usr_data_map;//used
+
+QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
 
 ///netr
 QString GlobalData::g_localHostIP;

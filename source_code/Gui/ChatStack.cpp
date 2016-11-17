@@ -1,9 +1,9 @@
 #include "ChatStack.h"
 
-//////////////////////////mid////////////////////////////////
-
-GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
+ChatScrollWidget::ChatScrollWidget(UsrData *usrData, QWidget *parent) : QWidget(parent)
 {
+	usr_data = usrData;
+
   setAutoFillBackground(true);
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, Qt::white);
@@ -34,16 +34,21 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
   main_layout->addWidget(top_line);
   main_layout->addLayout(chat_bubble_layout);
   main_layout->addWidget(bottom_line);
-
+	// this is moved from the parent class; layout warning may come from here
+//	QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
+//  central_layout->setContentsMargins(0,0,0,0);
+//  central_layout->setAlignment(Qt::AlignBottom);
+//  central_layout->setMargin(0);
+//  central_layout->setSpacing(0);<<
 
 }
 
-GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
+ChatScrollWidget::~ChatScrollWidget()
 {
 
 }
 
-void GuiChatStack_chat_widget::clearChatBubbles()
+void ChatScrollWidget::clearChatBubbles()
 {
 	foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
     {
@@ -52,10 +57,51 @@ void GuiChatStack_chat_widget::clearChatBubbles()
           temp_chat_bubble_pointer->deleteLater();
         }
       chat_bubble_list.removeOne(temp_chat_bubble_pointer);
-    }
+		}
 }
 
-void GuiChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
+void ChatScrollWidget::flipUnreadMessage()
+{
+	qDebug()<<"#ChatScrollWidget::flipUnreadMessage(): Chat stack is loading unread message...";
+
+	if(usr_data->unreadMessageNumber() != 0)
+		{
+			QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
+			foreach (QJsonObject history_json_obj, *message_list)
+				{
+					this->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+					qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
+				}
+		}
+
+}
+
+void ChatScrollWidget::flipLatestMessage()
+{
+	qDebug()<<"#ChatScrollWidget::flipLatestMessage(): Chat scroll widget is loading history message...";
+
+	QJsonArray *message_json_array = usr_data->flipLatest();
+	int message_count = message_json_array->count();
+	for(int i = 0; i < message_count; i++)
+		{
+			QJsonObject history_json_obj = message_json_array->at(i).toObject();
+			this->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+			qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
+		}
+	qDebug()<<" ↳ @GuiChatStack::refreshUI(): Message loaded...";
+}
+
+void ChatScrollWidget::flipUpMessage()
+{
+
+}
+
+void ChatScrollWidget::flipDownMessage()
+{
+
+}
+
+void ChatScrollWidget::addChatBubble(const QString &message, const bool &fromMe)
 {
 	gui_chat_bubble = new TextBubble(message, !fromMe, this);
   chat_bubble_list.append(gui_chat_bubble);
@@ -63,16 +109,18 @@ void GuiChatStack_chat_widget::addChatBubble(const QString &message, const bool 
   chat_bubble_layout->addWidget(gui_chat_bubble);
 }
 
-//////////////////////////bottom//////////////////////////////////////
 
-GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
+
+
+
+ChatMessageEditor::ChatMessageEditor(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
-  text_editor = new GuiTextEdit(this);
+	text_editor = new TextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
   text_editor->setFont(GlobalData::font_chatTextEditor);
@@ -128,14 +176,14 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   this->setMaximumHeight(130);
 }
 
-GuiChatStack_message_editor::~GuiChatStack_message_editor()
+ChatMessageEditor::~ChatMessageEditor()
 {
 
 }
 
 /// Event filter: capture QEvent outside the class
 ///   text_editor->installEventFilter(this);
-bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
+bool ChatMessageEditor::eventFilter(QObject *obj, QEvent *e)
 {
   Q_ASSERT(obj == text_editor);
   if(e->type() == QEvent::KeyPress)
@@ -178,24 +226,24 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 }
 
 
-GuiTextEdit::GuiTextEdit(QWidget *parent)
+TextEdit::TextEdit(QWidget *parent)
 {
   this->setParent(parent);
 }
 
-GuiTextEdit::~GuiTextEdit()
+TextEdit::~TextEdit()
 {
 
 }
 
 
 
-void GuiTextEdit::dragEnterEvent(QDragEnterEvent *event)
+void TextEdit::dragEnterEvent(QDragEnterEvent *event)
 {
   event->accept();
 }
 
-void GuiTextEdit::dropEvent(QDropEvent *event)
+void TextEdit::dropEvent(QDropEvent *event)
 {
   QList<QUrl> url_list = event->mimeData()->urls();
   if(url_list.isEmpty())
@@ -226,7 +274,7 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 
 
-GuiChatStack::GuiChatStack(QWidget *parent)
+ChatStack::ChatStack(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Profile);
 
@@ -238,25 +286,20 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   bottom_line->setFixedHeight(2);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
-  chat_widget = new GuiChatStack_chat_widget(this);
+//	chat_widget = new ChatScrollWidget(this); <<
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   scroll_area->setPalette(palette);
   scroll_area->setWidgetResizable(true);
-  scroll_area->setWidget(chat_widget);
+//  scroll_area->setWidget(chat_widget);<<
   scroll_area->setFrameStyle(0);
 
-  message_editor = new GuiChatStack_message_editor(this);
+	message_editor = new ChatMessageEditor(this);
 
   ///this is a flag to distinguish
   ///////////////////////////////////////Eiffel Tower////////////////////////////////////
 
   ////main layout
-  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
-  central_layout->setContentsMargins(0,0,0,0);
-  central_layout->setAlignment(Qt::AlignBottom);
-  central_layout->setMargin(0);
-  central_layout->setSpacing(0);
 
   main_layout->setAlignment(Qt::AlignBottom);
   main_layout->setMargin(0);
@@ -270,12 +313,15 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   this->setParent(parent);
 }
 
-GuiChatStack::~GuiChatStack()
+ChatStack::~ChatStack()
 {
-  //  this->set
+	foreach (ChatScrollWidget *widget, chat_scroll_widget_hash.values())
+		{
+			widget->deleteLater();
+		}
 }
 
-bool GuiChatStack::refreshProfile(const QString &usrKey)
+bool ChatStack::refreshProfile(const QString &usrKey)
 {
   if(!this->isDisplaying(usrKey))
     {
@@ -290,9 +336,9 @@ bool GuiChatStack::refreshProfile(const QString &usrKey)
     }
 }
 
-bool GuiChatStack::refreshMessage(const QString &usrKey)
+bool ChatStack::refreshMessage(const QString &usrKey)
 {
-  if(!this->isDisplaying(usrKey))
+	if(!isDisplaying(usrKey))
     {
       qDebug()<<"@GuiChatStack::refreshMessage: Message load request denied (different usr)...";
       return false;
@@ -304,44 +350,115 @@ bool GuiChatStack::refreshMessage(const QString &usrKey)
     }
 }
 
-void GuiChatStack::setUsrData(UsrData *usrData)
+void ChatStack::setUsrData(UsrData *usrData)
 {
   usr_data = usrData;
 }
 
-void GuiChatStack::display(const QString &usrKey)
+void ChatStack::display(const QString &usrKey)
 {
-  UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(usrKey);
+	UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 
-  if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
-    {
-      if(usr_data->key() != temp_usr_data->key())
-        {
-          this->setUsrData(temp_usr_data);
-          this->flipLatestMessage(true);
-          this->flipUnreadMessage();
-        }
+	if(!isDisplaying(usrKey))
+		{
+			ChatScrollWidget *temp_chat_scroll_widget;
 
-      this->setIcon(temp_usr_data->avatar());
-      this->setTitle(temp_usr_data->name());
-      this->setSubTitle(temp_usr_data->ip());
+			//if widget not exist
+			if(!chat_scroll_widget_hash.keys().contains(usrKey))
+				{
+					qDebug()<<"key not found";
+					temp_chat_scroll_widget = new ChatScrollWidget(temp_usr_data, this);
+					chat_scroll_widget_hash.insert(usrKey, temp_chat_scroll_widget);
+				}
+			else
+				{
+					temp_chat_scroll_widget = chat_scroll_widget_hash.value(usrKey);
+				}
+
+			if(temp_chat_scroll_widget == Q_NULLPTR)
+				{
+					qDebug()<<"NULL POINTERRRRRRRR!!!!";
+				}
+			temp_chat_scroll_widget->flipLatestMessage();
+			temp_chat_scroll_widget->flipUnreadMessage();
+
+			this->setIcon(temp_usr_data->avatar());
+			this->setTitle(temp_usr_data->name());
+			this->setSubTitle(temp_usr_data->ip());
+
+//			scroll_area->widget()->setHidden(true);
+			scroll_area->setWidget(temp_chat_scroll_widget);
+//			scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+		}
+	else
+		{
+			if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
+				{
+					this->setIcon(temp_usr_data->avatar());
+					this->setTitle(temp_usr_data->name());
+					this->setSubTitle(temp_usr_data->ip());
+				}
+		}
 
 
-    }
+
+
+//  UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(usrKey);
+
+//	//if profile changed
+//	if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
+//		{
+
+//			if(!isDisplaying(usrKey))
+//        {
+//					ChatScrollWidget *temp_chat_scroll_widget;
+
+//					//if chat widget already exist
+//					if(!chat_scroll_widget_hash.keys().contains(usrKey))
+//						{
+//							temp_chat_scroll_widget = new ChatScrollWidget(this);
+//							chat_scroll_widget_hash.insert(usr_data->key(), temp_chat_scroll_widget);
+//							qDebug()<<"hello1";
+//							temp_chat_scroll_widget->adjustSize();
+//							qDebug()<<"hello2";
+//							//test
+//							if(temp_chat_scroll_widget == Q_NULLPTR)
+//								{
+//									qDebug()<<"!!void ChatStack::flipLatestMessage(): NULL POINTER EXCEPTION!!!!!!!!!";
+//								}
+//							//$test<<
+//						}
+//					else
+//						{
+//							temp_chat_scroll_widget =	chat_scroll_widget_hash.value(usrKey);
+//						}
+//					scroll_area->widget()->setHidden(true);
+//					scroll_area->setWidget(temp_chat_scroll_widget);
+
+//					this->setUsrData(temp_usr_data);
+//					this->flipLatestMessage();
+//					this->flipUnreadMessage();
+//        }
+
+//      this->setIcon(temp_usr_data->avatar());
+//      this->setTitle(temp_usr_data->name());
+//      this->setSubTitle(temp_usr_data->ip());
+//    }
+
 }
 
-bool GuiChatStack::isDisplaying(const QString &usrKey)
+bool ChatStack::isDisplaying(const QString &usrKey)
 {
   return (usrKey == usr_data->key());
 }
 
-void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
+void ChatStack::dragEnterEvent(QDragEnterEvent *event)
 {
   event->accept();
 
 }
 
-void GuiChatStack::dropEvent(QDropEvent *event)
+void ChatStack::dropEvent(QDropEvent *event)
 {
   qDebug()<<"#GuiChatStack::dropEvent(): file entered.";
   QList<QUrl> urls = event->mimeData()->urls();
@@ -356,15 +473,26 @@ void GuiChatStack::dropEvent(QDropEvent *event)
     }
 }
 
-void GuiChatStack::flipUnreadMessage()
+void ChatStack::flipUnreadMessage()
 {
+	ChatScrollWidget *temp_chat_scroll_widget;
+
+	if(chat_scroll_widget_hash.keys().contains(usr_data->key()))
+		{
+			temp_chat_scroll_widget =	chat_scroll_widget_hash.value(usr_data->key());
+		}
+	else
+		{
+			qDebug()<<"!!void ChatStack::flipUnreadMessage(): WIDGET LOST!!!!!!!!!";
+		}
+
   qDebug()<<"@GuiChatStack::flipUnreadMessage(): Chat stack is loading unread message...";
   if(usr_data->unreadMessageNumber() != 0)
     {
       QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
       foreach (QJsonObject history_json_obj, *message_list)
         {
-          chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+					temp_chat_scroll_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
           qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
         }
     }
@@ -382,44 +510,59 @@ void GuiChatStack::flipUnreadMessage()
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
 
-void GuiChatStack::flipLatestMessage(const bool &clear)
+void ChatStack::flipLatestMessage()
+{
+//  qDebug()<<"@GuiChatStack::flipLatestMessage(): Chat stack is loading history message...";
+
+//	ChatScrollWidget *temp_chat_scroll_widget;
+
+//	if(!chat_scroll_widget_hash.keys().contains(usr_data->key()))
+//		{
+//			temp_chat_scroll_widget = new ChatScrollWidget(this);
+//			chat_scroll_widget_hash.insert(usr_data->key(), temp_chat_scroll_widget);
+
+//			//test
+//			if(temp_chat_scroll_widget == Q_NULLPTR)
+//				{
+//					qDebug()<<"!!void ChatStack::flipLatestMessage(): NULL POINTER EXCEPTION!!!!!!!!!";
+//				}
+//			//$test
+//		}
+//	else
+//		{
+//			temp_chat_scroll_widget =	chat_scroll_widget_hash.value(usr_data->key());
+//		}
+
+//  QJsonArray message_json_array = *usr_data->flipLatest();
+//  int message_count = message_json_array.count();
+//  for(int i = 0; i < message_count; i++)
+//    {
+//      QJsonObject history_json_obj = message_json_array[i].toObject();
+
+//			temp_chat_scroll_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+//			qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
+//    }
+
+//  scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+}
+
+void ChatStack::flipUpMessage(const bool &clear)
 {
   if(clear)
     {
-      chat_widget->clearChatBubbles();
+//      chat_widget->clearChatBubbles();
     }
-
-  qDebug()<<"@GuiChatStack::flipLatestMessage(): Chat stack is loading history message...";
-  QJsonArray message_json_array = *usr_data->flipLatest();
-  int message_count = message_json_array.count();
-  for(int i = 0; i < message_count; i++)
-    {
-      QJsonObject history_json_obj = message_json_array[i].toObject();
-
-      chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
-      qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
-    }
-
-  scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
 }
 
-void GuiChatStack::flipUpMessage(const bool &clear)
+void ChatStack::flipDownMessage(const bool &clear)
 {
   if(clear)
     {
-      chat_widget->clearChatBubbles();
+//      chat_widget->clearChatBubbles();
     }
 }
 
-void GuiChatStack::flipDownMessage(const bool &clear)
-{
-  if(clear)
-    {
-      chat_widget->clearChatBubbles();
-    }
-}
-
-void GuiChatStack::onSendButtonClicked()
+void ChatStack::onSendButtonClicked()
 {
   QString message = message_editor->text_editor->toPlainText();
   if(message.isEmpty())
@@ -445,7 +588,7 @@ void GuiChatStack::onSendButtonClicked()
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
 
-void GuiChatStack::onKeyEnterTriggered(bool &pressed)
+void ChatStack::onKeyEnterTriggered(bool &pressed)
 {
   qDebug()<<"enter key pressed";
   if(pressed)
