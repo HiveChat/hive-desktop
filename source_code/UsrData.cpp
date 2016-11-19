@@ -41,7 +41,7 @@ QList<QJsonObject> *UsrData::retrieveUnreadMessage()
 
 QJsonArray* UsrData::flipLatest()
 {
-  current_history_bundle_index = latest_history_bundle_index;
+	current_history_bundle_index = latest_history_bundle_index;
   return &latest_history_json_array;
 }
 

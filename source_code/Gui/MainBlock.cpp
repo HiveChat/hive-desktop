@@ -122,6 +122,8 @@ void GuiMainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
+	/// show corresponding scroll widget
+	/// show set current widget
   gui_chat_stack->display(usrKey);
 //  gui_chat_stack->refreshMessage(usrKey); don't know why it is here
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
