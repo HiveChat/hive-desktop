@@ -25,7 +25,7 @@ private:
   QMap<QString, GuiCombWidget *> comb_widget_map;
 
 signals:
-  void combWidgetClicked(QString usrKey);
+	void combWidgetClicked(const QString &usrKey);
 
 public slots:
   void onCombWidgetClicked(QString usrKey);

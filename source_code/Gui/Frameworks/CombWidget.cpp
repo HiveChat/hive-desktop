@@ -7,7 +7,6 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   QPalette usr_name_palette;
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
 
-  ///usrKey<<usrName<<ipAddr<<avatarPathr
   avatar = new GuiAvatarButton(80,  this);
   usr_name_label = new QLabel(this);
   ip_addr_label = new QLabel(this);

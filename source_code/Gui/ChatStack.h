@@ -62,6 +62,9 @@ public:
 	void flipUpMessage();
 	void flipDownMessage();
 
+	int a = 0;
+	int hello() {return a;}
+
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *chat_bubble_layout;
