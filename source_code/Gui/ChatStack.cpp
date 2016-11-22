@@ -3,7 +3,7 @@
 ChatScrollWidget::ChatScrollWidget(UsrData *usrData, QWidget *parent) : QWidget(parent)
 {
 	usr_data = usrData;
-	a = 90;
+
   setAutoFillBackground(true);
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, Qt::white);
@@ -374,23 +374,19 @@ void ChatStack::display(const QString &usrKey)
 			usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 			ChatScrollWidget *temp_chat_scroll_widget;
 
-			//if widget exists
-			if(chat_scroll_widget_hash.contains(usrKey))
+			//if widget not exist
+			if(chat_scroll_widget_hash.keys().contains(usrKey))
 				{
 					qDebug()<<"* | key found in hash, got it";
 					temp_chat_scroll_widget = chat_scroll_widget_hash.value(usrKey);
-					qDebug()<<temp_chat_scroll_widget->hello();
-
 				}
 			else
 				{
 					qDebug()<<"* | key not found in hash, creating...";
 					temp_chat_scroll_widget = new ChatScrollWidget(usr_data, this);
 					chat_scroll_widget_hash.insert(usrKey, temp_chat_scroll_widget);
-					qDebug()<<temp_chat_scroll_widget->hello();
-
 				}
-			qDebug()<<"* | ha?";
+
 
 			temp_chat_scroll_widget->flipLatestMessage();
 			temp_chat_scroll_widget->flipUnreadMessage();
@@ -399,11 +395,11 @@ void ChatStack::display(const QString &usrKey)
 			this->setTitle(usr_data->name());
 			this->setSubTitle(usr_data->ip());
 
-			scroll_area->widget()->setHidden(true);
+//			scroll_area->widget()->setHidden(true);
 			scroll_area->setWidget(temp_chat_scroll_widget);
+//			scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
 		}
 
-	scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
 
 
 

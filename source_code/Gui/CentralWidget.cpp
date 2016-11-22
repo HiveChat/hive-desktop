@@ -41,7 +41,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 
   //connect
 
-	connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(const QString&)));
+	connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(QString)));
 
   ///buttons~~
 	connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
