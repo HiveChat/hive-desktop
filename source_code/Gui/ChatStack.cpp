@@ -84,8 +84,6 @@ void ChatScrollWidget::flipLatestMessage()
 {
 	qDebug()<<"#ChatScrollWidget::flipLatestMessage(): Chat scroll widget is loading history message...";
 
-	qDebug()<<"usr_data 2"<<(void*)usr_data;
-
 	GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "tested lastly ");
 	QJsonArray *message_json_array = usr_data->flipLatest();
 	int message_count = message_json_array->count();
@@ -374,31 +372,25 @@ void ChatStack::display(const QString &usrKey)
 		{
 			qDebug()<<"* | not displaying " << usrKey;
 			usr_data = GlobalData::online_usr_data_hash.value(usrKey);
-//			GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrKey)->usrProfileStruct(), "ChatStack::display()");
 			ChatScrollWidget *temp_chat_scroll_widget;
 
 			//if widget exists
 			if(chat_scroll_widget_hash.contains(usrKey))
 				{
 					qDebug()<<"* | key found in hash, got it";
-					qDebug()<<"pointer"<<(void*)temp_chat_scroll_widget;
 					temp_chat_scroll_widget = chat_scroll_widget_hash.value(usrKey);
-					qDebug()<<"pointer"<<(void*)temp_chat_scroll_widget;
+					qDebug()<<temp_chat_scroll_widget->hello();
 
-					qDebug()<<"a:"<<temp_chat_scroll_widget->hello();
 				}
 			else
 				{
 					qDebug()<<"* | key not found in hash, creating...";
-					temp_chat_scroll_widget = new ChatScrollWidget(GlobalData::online_usr_data_hash.value(usrKey), this);
+					temp_chat_scroll_widget = new ChatScrollWidget(usr_data, this);
 					chat_scroll_widget_hash.insert(usrKey, temp_chat_scroll_widget);
-					qDebug()<<"pointer"<<(void*)temp_chat_scroll_widget;
-					qDebug()<<"a:"<<temp_chat_scroll_widget->hello();
+					qDebug()<<temp_chat_scroll_widget->hello();
 
 				}
 			qDebug()<<"* | ha?";
-
-			qDebug()<<"usr_data 1"<<(void*)usr_data;
 
 			temp_chat_scroll_widget->flipLatestMessage();
 			temp_chat_scroll_widget->flipUnreadMessage();
@@ -408,7 +400,6 @@ void ChatStack::display(const QString &usrKey)
 			this->setSubTitle(usr_data->ip());
 
 			scroll_area->widget()->setHidden(true);
-			temp_chat_scroll_widget->setHidden(false);
 			scroll_area->setWidget(temp_chat_scroll_widget);
 		}
 
