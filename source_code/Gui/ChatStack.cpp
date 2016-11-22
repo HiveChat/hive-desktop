@@ -66,11 +66,7 @@ void ChatScrollWidget::flipUnreadMessage()
 
 	if(usr_data->unreadMessageNumber() != 0)
 		{
-			qDebug()<<"#ChatScrollWidget::flipUnreadMessage(): Chat stack is loading unread message...2";
-
 			QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
-			qDebug()<<"#ChatScrollWidget::flipUnreadMessage(): Chat stack is loading unread message...3";
-
 			foreach (QJsonObject history_json_obj, *message_list)
 				{
 					this->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
@@ -84,7 +80,6 @@ void ChatScrollWidget::flipLatestMessage()
 {
 	qDebug()<<"#ChatScrollWidget::flipLatestMessage(): Chat scroll widget is loading history message...";
 
-	GlobalData::TEST_printUsrProfileStruct(*usr_data->usrProfileStruct(), "tested lastly ");
 	QJsonArray *message_json_array = usr_data->flipLatest();
 	int message_count = message_json_array->count();
 	for(int i = 0; i < message_count; i++)
@@ -362,42 +357,47 @@ void ChatStack::setUsrData(UsrData *usrData)
 
 void ChatStack::display(const QString &usrKey)
 {
-	/// if usr key is the same, simply ignore
-	/// else, test if it exists in scroll_widget_hash
-	///		if exits, get one,
-	///
-
+	UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 
 	if(!isDisplaying(usrKey))
 		{
-			qDebug()<<"* | not displaying " << usrKey;
-			usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 			ChatScrollWidget *temp_chat_scroll_widget;
 
 			//if widget not exist
-			if(chat_scroll_widget_hash.keys().contains(usrKey))
+			if(!chat_scroll_widget_hash.keys().contains(usrKey))
 				{
-					qDebug()<<"* | key found in hash, got it";
-					temp_chat_scroll_widget = chat_scroll_widget_hash.value(usrKey);
+					qDebug()<<"key not found";
+					temp_chat_scroll_widget = new ChatScrollWidget(temp_usr_data, this);
+					chat_scroll_widget_hash.insert(usrKey, temp_chat_scroll_widget);
 				}
 			else
 				{
-					qDebug()<<"* | key not found in hash, creating...";
-					temp_chat_scroll_widget = new ChatScrollWidget(usr_data, this);
-					chat_scroll_widget_hash.insert(usrKey, temp_chat_scroll_widget);
+					temp_chat_scroll_widget = chat_scroll_widget_hash.value(usrKey);
 				}
 
-
+			if(temp_chat_scroll_widget == Q_NULLPTR)
+				{
+					qDebug()<<"NULL POINTERRRRRRRR!!!!";
+				}
 			temp_chat_scroll_widget->flipLatestMessage();
 			temp_chat_scroll_widget->flipUnreadMessage();
 
-			this->setIcon(usr_data->avatar());
-			this->setTitle(usr_data->name());
-			this->setSubTitle(usr_data->ip());
+			this->setIcon(temp_usr_data->avatar());
+			this->setTitle(temp_usr_data->name());
+			this->setSubTitle(temp_usr_data->ip());
 
 //			scroll_area->widget()->setHidden(true);
 			scroll_area->setWidget(temp_chat_scroll_widget);
 //			scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+		}
+	else
+		{
+			if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
+				{
+					this->setIcon(temp_usr_data->avatar());
+					this->setTitle(temp_usr_data->name());
+					this->setSubTitle(temp_usr_data->ip());
+				}
 		}
 
 
