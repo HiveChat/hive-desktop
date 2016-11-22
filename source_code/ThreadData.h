@@ -74,12 +74,12 @@ private:
   const QString update_file_path = app_data_local_path + "/update.json";
 
   //data map
-  QMap<QString, UsrProfileStruct> local_usr_profile_map;
+	QHash<QString, UsrProfileStruct> local_usr_profile_hash;
 
   //config map
-  QMap<QString, QColor*> settings_map_qcolor;
-  QMap<QString, QString*> settings_map_qstring;
-  QMap<QString, bool*> settings_map_bool;
+	QHash<QString, QColor*> settings_hash_qcolor;
+	QHash<QString, QString*> settings_hash_qstring;
+	QHash<QString, bool*> settings_hash_bool;
 
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);

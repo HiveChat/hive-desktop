@@ -36,10 +36,8 @@ UpdateStruct GlobalData::update_struct;
 QUrl GlobalData::update_url = QUrl("http://updates.hivechat.org");
 QUrl GlobalData::download_url = QUrl("http://download.hivechat.org");
 
-QMap<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
-QMap<QString, UsrProfileStruct> GlobalData::online_usr_profile_map;
-
-QMap<QString, UsrData*> GlobalData::online_usr_data_map;//used
+QHash<QString, UsrProfileStruct> GlobalData::saved_usr_profile_map;
+QHash<QString, UsrData*> GlobalData::online_usr_data_map;//used
 
 ///netr
 QString GlobalData::g_localHostIP;

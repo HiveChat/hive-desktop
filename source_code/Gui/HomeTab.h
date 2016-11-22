@@ -6,13 +6,13 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 
-class GuiHomeTab : public QWidget
+class HomeTab : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiHomeTab(QWidget *parent = 0);
-  ~GuiHomeTab();
+  explicit HomeTab(QWidget *parent = 0);
+  ~HomeTab();
 
   GuiMenuButton *welcome_btn;
   GuiMenuButton *list_btn;

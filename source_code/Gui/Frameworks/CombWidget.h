@@ -56,12 +56,12 @@ private:
   ///data
   UsrProfileStruct usr_profile;
 
-  QString getSubNetStr(QString &ipAddr);
+	QString getSubNetStr(const QString &ipAddr);
 
 
 
 signals:
-  void clicked(QString usrKey);
+	void clicked(const QString &usrKey);
 
 
 

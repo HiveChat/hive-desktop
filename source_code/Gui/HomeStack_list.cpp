@@ -54,13 +54,13 @@ GuiHomeStack_list::~GuiHomeStack_list()
 void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
 {
   GuiListItem *list_item = new GuiListItem(usrProfileStruct, this);
-  list_item_map.insert(usrProfileStruct->key_str, list_item);
+  list_item_hash.insert(usrProfileStruct->key_str, list_item);
   central_layout->addWidget(list_item);
 }
 
 void GuiHomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
-  list_item_map.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
+  list_item_hash.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
 }
 
 

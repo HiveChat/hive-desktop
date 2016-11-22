@@ -1,6 +1,6 @@
 #include "SettingsTab.h"
 
-GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
+SettingsTab::SettingsTab(QWidget *parent) : QWidget(parent)
 {
 	messaging_btn = new GuiMenuButton("messaging", GUI::StaticStackType::Settings_Messaging, this);
   messaging_btn->setDefaultPixmap(":/img/img/messaging_0.png");
@@ -41,7 +41,7 @@ GuiSettingsTab::GuiSettingsTab(QWidget *parent) : QWidget(parent)
 
 }
 
-GuiSettingsTab::~GuiSettingsTab()
+SettingsTab::~SettingsTab()
 {
 
 }

@@ -5,50 +5,46 @@
 #include "UsrData.h"
 
 #include <QScrollArea>
-#include <QMap>
+#include <QHash>
 
-class GuiChatTab_comb_scroll_widget;
-class GuiChatTab;
+class ChatTab_comb_scroll_widget;
+class ChatTab;
 
-class GuiChatTab_comb_scroll_widget : public QWidget
+class ChatTab_comb_scroll_widget : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiChatTab_comb_scroll_widget(QWidget *parent = 0);
+	explicit ChatTab_comb_scroll_widget(QWidget *parent = 0);
   void addComb(UsrProfileStruct *usrProfileStruct);
   void refreshComb(UsrProfileStruct *usrProfileStruct);
   void refreshBadgeNumber(const QString &usrKey, const int &num);
 
 private:
   QVBoxLayout *main_layout;
-  QMap<QString, GuiCombWidget *> comb_widget_map;
+	QHash<QString, GuiCombWidget *> comb_widget_hash;
 
 signals:
-  void combWidgetClicked(QString usrKey);
+	void combWidgetClicked(const QString &usrKey);
 
 public slots:
-  void onCombWidgetClicked(QString usrKey);
+	void onCombWidgetClicked(const QString &usrKey);
 
 
 };
 
-class GuiChatTab : public QWidget
+class ChatTab : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiChatTab(QWidget *parent = 0);
+	explicit ChatTab(QWidget *parent = 0);
   QScrollArea *comb_scrollarea;
-  GuiChatTab_comb_scroll_widget *comb_scroll_widget;
+	ChatTab_comb_scroll_widget *comb_scroll_widget;
 
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *comb_layout;
-
-
-private slots:
-  void showMenu();
 
 };
 

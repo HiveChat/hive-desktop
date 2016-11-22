@@ -41,18 +41,18 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 
   //connect
 
-  connect(gui_tab_block->gui_chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(QString)));
+	connect(gui_tab_block->chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(const QString&)));
 
   ///buttons~~
-	connect(gui_tab_block->gui_home_tab->welcome_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->gui_home_tab->list_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->gui_home_tab->storage_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->home_tab->welcome_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->home_tab->list_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->home_tab->storage_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
 
 
-	connect(gui_tab_block->gui_settings_tab->messaging_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->gui_settings_tab->profile_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->gui_settings_tab->questions_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->gui_settings_tab->update_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->settings_tab->messaging_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->settings_tab->profile_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->settings_tab->questions_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->settings_tab->update_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
 
 
 
@@ -105,7 +105,7 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {
           UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(messageStruct.sender);
-          gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
+					gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
 					if(GlobalData::settings_struct.notification.message_notification
 						 && GlobalData::settings_struct.update.auto_check_update)
             {
@@ -125,12 +125,12 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
 void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
 {
   gui_main_block->displayChatStack(usrKey);
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
+	gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
 void GuiCentralWidget::addUsr(UsrData *userData)
 {
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
+	gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
   gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
 }
 
@@ -141,7 +141,7 @@ void GuiCentralWidget::delUsr(UsrData *userData)
 
 void GuiCentralWidget::changeUsr(UsrData *userData)
 {
-  gui_tab_block->gui_chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
+	gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
   gui_main_block->gui_chat_stack->refreshProfile(userData->key());
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
 }

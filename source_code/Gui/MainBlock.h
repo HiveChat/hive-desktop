@@ -14,7 +14,7 @@
 
 #include <QStackedWidget>
 #include <QList>
-#include <QMap>
+#include <QHash>
 
 class GuiMainBlock : public QWidget
 {
@@ -29,16 +29,13 @@ public:
   GuiHomeStack_welcome *gui_home_stack_welcome;
   GuiHomeStack_list *gui_home_stack_list;
 
-//  QMap<QString ,GuiChatStack_old*> gui_chat_stack_map;<<
-
 private:
-	QMap< GUI::StaticStackType, QWidget*> static_stack_map;
+	QHash< GUI::StaticStackType, QWidget*> static_stack_hash;
 	GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
 	void clearStackMap(GUI::StaticStackType &reservation);
 	void createStaticStack(GUI::StaticStackType staticStackType);
 
   QVBoxLayout *main_layout;
-
 
 public slots:
 	void displayStaticStack(GUI::StaticStackType staticStackType);

@@ -37,7 +37,7 @@ public:
   void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
 
 private:
-  QMap<QString, GuiListItem*> list_item_map;
+	QHash<QString, GuiListItem*> list_item_hash;
 };
 
 

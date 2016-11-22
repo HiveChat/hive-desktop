@@ -4,15 +4,15 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
-  avatar_map.insert("Flying Bee", ":/avatar/avatar/bee.png");
-  avatar_map.insert("Hive", ":/img/img/icon.png");
-  avatar_map.insert("Fat Bee", ":/avatar/avatar/fat.png");
-  avatar_map.insert("Lady Bug", ":/avatar/avatar/ladybug.png");
-  avatar_map.insert("Disk", ":/avatar/avatar/disk.png");
-  avatar_map.insert("Sunflower", ":/avatar/avatar/sunflower.png");
-  avatar_map.insert("Worm", ":/avatar/avatar/worm.png");
-  avatar_map.insert("Default", ":/avatar/avatar/default.png");
-  avatar_map.insert("Spider", ":/avatar/avatar/spider.png");
+  avatar_hash.insert("Flying Bee", ":/avatar/avatar/bee.png");
+  avatar_hash.insert("Hive", ":/img/img/icon.png");
+  avatar_hash.insert("Fat Bee", ":/avatar/avatar/fat.png");
+  avatar_hash.insert("Lady Bug", ":/avatar/avatar/ladybug.png");
+  avatar_hash.insert("Disk", ":/avatar/avatar/disk.png");
+  avatar_hash.insert("Sunflower", ":/avatar/avatar/sunflower.png");
+  avatar_hash.insert("Worm", ":/avatar/avatar/worm.png");
+  avatar_hash.insert("Default", ":/avatar/avatar/default.png");
+  avatar_hash.insert("Spider", ":/avatar/avatar/spider.png");
 
   setIcon(":/img/img/profile.png");
   setTitle("Settings");
@@ -25,9 +25,9 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   QVBoxLayout *avatar_option_layout = new QVBoxLayout();
   avatar_option_layout->addWidget(avatar_btn);
 
-  QString current_avatar_name = avatar_map.key(GlobalData::settings_struct.profile_avatar_str);
+  QString current_avatar_name = avatar_hash.key(GlobalData::settings_struct.profile_avatar_str);
 
-  foreach(QString temp_avatar_name_str, avatar_map.keys())
+  foreach(QString temp_avatar_name_str, avatar_hash.keys())
     {
       QRadioButton *temp_radio_btn = new QRadioButton(temp_avatar_name_str, this);
       temp_radio_btn->setChecked(temp_avatar_name_str == current_avatar_name);
@@ -70,7 +70,7 @@ GuiSettingsStack_profile::~GuiSettingsStack_profile()
 
 void GuiSettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
-  GlobalData::settings_struct.profile_avatar_str = avatar_map.value(abstractButton->text());
+  GlobalData::settings_struct.profile_avatar_str = avatar_hash.value(abstractButton->text());
   avatar_btn->setAvatar(GlobalData::settings_struct.profile_avatar_str);
   GlobalData::settings_struct.modified_lock = true;
 }

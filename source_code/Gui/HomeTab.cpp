@@ -1,6 +1,6 @@
 #include "HomeTab.h"
 
-GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
+HomeTab::HomeTab(QWidget *parent) : QWidget(parent)
 {
 	welcome_btn = new GuiMenuButton("welcome", GUI::StaticStackType::Home_Welcome, this);
 	list_btn = new GuiMenuButton("online user", GUI::StaticStackType::Home_list, this);
@@ -42,7 +42,7 @@ GuiHomeTab::GuiHomeTab(QWidget *parent) : QWidget(parent)
 
 }
 
-GuiHomeTab::~GuiHomeTab()
+HomeTab::~HomeTab()
 {
 
 }

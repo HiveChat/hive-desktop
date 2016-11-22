@@ -124,7 +124,7 @@ void GuiCombWidget::leaveEvent(QEvent *)
   hovered = false;
 }
 
-QString GuiCombWidget::getSubNetStr(QString &ipAddr)
+QString GuiCombWidget::getSubNetStr(const QString &ipAddr)
 {
   int loop_num = 0;
   QString sub_net_str;

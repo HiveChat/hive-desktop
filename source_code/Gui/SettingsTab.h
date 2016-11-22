@@ -7,13 +7,13 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 
-class GuiSettingsTab : public QWidget
+class SettingsTab : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiSettingsTab(QWidget *parent = 0);
-  ~GuiSettingsTab();
+  explicit SettingsTab(QWidget *parent = 0);
+  ~SettingsTab();
 
   GuiMenuButton *profile_btn;
   GuiMenuButton *messaging_btn;
