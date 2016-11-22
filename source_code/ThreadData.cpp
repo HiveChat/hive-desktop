@@ -236,27 +236,27 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
 
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
-  if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct->key_str))
+  if(GlobalData::online_usr_data_map.keys().contains(usrProfileStruct->key_str))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
 
-      if(*usrProfileStruct != *GlobalData::online_usr_data_hash.value(usrProfileStruct->key_str)->usrProfileStruct())
+      if(*usrProfileStruct != *GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct())
         {
-          GlobalData::online_usr_data_hash.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
+          GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
 
-          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
+          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
           qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
-          emit usrProfileChanged(GlobalData::online_usr_data_hash.value(usrProfileStruct->key_str));
+          emit usrProfileChanged(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
         }
     }
   else
     {
       UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
-      GlobalData::online_usr_data_hash.insert(usrProfileStruct->key_str, user_data);
+      GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
 
-      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
+      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
       qDebug()<<"@ThreadData::onUsrEntered: User profile Created.";
-      emit usrProfileLoaded(GlobalData::online_usr_data_hash.value(usrProfileStruct->key_str));
+      emit usrProfileLoaded(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
 
     }
 
@@ -272,11 +272,11 @@ void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool f
 {
   if(fromMe)
     {
-      GlobalData::online_usr_data_hash.value(messageStruct->reciever)->addUnreadMessage(*messageStruct);
+      GlobalData::online_usr_data_map.value(messageStruct->reciever)->addUnreadMessage(*messageStruct);
     }
   else
     {
-      GlobalData::online_usr_data_hash.value(messageStruct->sender)->addUnreadMessage(*messageStruct);
+      GlobalData::online_usr_data_map.value(messageStruct->sender)->addUnreadMessage(*messageStruct);
     }
   emit messageLoaded(*messageStruct, fromMe);
 }

@@ -15,21 +15,20 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QJsonArray>
-#include <QHash>
 
-class TextEdit;
-class ChatScrollWidget;
-class ChatMessageEditor;
-class ChatStack;
+class GuiTextEdit;
+class GuiChatStack_chat_widget;
+class GuiChatStack_message_editor;
+class GuiChatStack;
 
 
-class TextEdit : public QTextEdit
+class GuiTextEdit : public QTextEdit
 {
   Q_OBJECT
 
 public:
-	explicit TextEdit(QWidget *parent = 0);
-	~TextEdit();
+  explicit GuiTextEdit(QWidget *parent = 0);
+  ~GuiTextEdit();
 
 protected:
 ///Do not delete!
@@ -47,27 +46,21 @@ signals:
 
 
 
-class ChatScrollWidget : public QWidget
+//////////////////////////mid//////////////////////////////////////
+class GuiChatStack_chat_widget : public QWidget
 {
   Q_OBJECT
 
 public:
-	explicit ChatScrollWidget(UsrData *usrData, QWidget *parent = 0);
-	~ChatScrollWidget();
+  explicit GuiChatStack_chat_widget(QWidget *parent = 0);
+  ~GuiChatStack_chat_widget();
 
   void clearChatBubbles();
-
-	void flipUnreadMessage();
-	void flipLatestMessage();
-	void flipUpMessage();
-	void flipDownMessage();
 
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *chat_bubble_layout;
   TextBubble *gui_chat_bubble;
-
-	UsrData *usr_data;
 
   QList<TextBubble*> chat_bubble_list;
 
@@ -77,18 +70,20 @@ public slots:
 };
 
 
-class ChatMessageEditor : public QWidget
+//////////////////////////bottom//////////////////////////////////////
+class GuiChatStack_message_editor : public QWidget
 {
   Q_OBJECT
 
 public:
-	explicit ChatMessageEditor(QWidget *parent = 0);
-	~ChatMessageEditor();
+  explicit GuiChatStack_message_editor(QWidget *parent = 0);
+  ~GuiChatStack_message_editor();
 
 	LabelButton *send_btn;
-	TextEdit *text_editor;
+  GuiTextEdit *text_editor;
 
 protected:
+/// An old way to capture QEvent outside the class!
   bool eventFilter(QObject *obj, QEvent *e);
 
 private:
@@ -111,13 +106,13 @@ signals:
 
 
 
-class ChatStack : public GuiScrollStack
+class GuiChatStack : public GuiScrollStack
 {
   Q_OBJECT
 
 public:
-	explicit ChatStack(QWidget *parent = 0);
-	~ChatStack();
+  explicit GuiChatStack(QWidget *parent = 0);
+  ~GuiChatStack();
 
   void setUsrData(UsrData *usrData);
   void display(const QString &usrKey);
@@ -131,22 +126,19 @@ protected:
   LayoutStyle layout_style = LayoutStyle::Profile;
 
 private:
-	QHash<QString, ChatScrollWidget*> chat_scroll_widget_hash;
-
   //UI
-//	ChatScrollWidget *chat_widget; <<
-	ChatMessageEditor *message_editor;
+  GuiChatStack_chat_widget *chat_widget;
+  GuiChatStack_message_editor *message_editor;
 
   //Data
   UsrData *usr_data;
-
 #ifdef Q_OS_OSX
 	QTimer *timer;
 #endif
 
   //Function
   void flipUnreadMessage();
-	void flipLatestMessage();
+  void flipLatestMessage(const bool &clear);
   void flipUpMessage(const bool &clear);
   void flipDownMessage(const bool &clear);
   bool isDisplaying(const QString &usrKey);

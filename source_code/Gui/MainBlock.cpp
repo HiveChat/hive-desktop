@@ -2,7 +2,7 @@
 
 GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 {
-	gui_chat_stack = new ChatStack(this);
+  gui_chat_stack = new GuiChatStack(this);
   main_stacked_widget = new QStackedWidget(this);
   main_stacked_widget->addWidget(gui_chat_stack);
 
@@ -123,7 +123,7 @@ void GuiMainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 void GuiMainBlock::displayChatStack(const QString &usrKey)
 {
   gui_chat_stack->display(usrKey);
-//  gui_chat_stack->refreshMessage(usrKey); don't know why it is here
+  gui_chat_stack->refreshMessage(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
 
