@@ -15,11 +15,11 @@ public:
   explicit SettingsTab(QWidget *parent = 0);
   ~SettingsTab();
 
-  GuiMenuButton *profile_btn;
-  GuiMenuButton *messaging_btn;
-  GuiMenuButton *style_btn;
-  GuiMenuButton *questions_btn;
-  GuiMenuButton *update_btn;
+  MenuButton *profile_btn;
+  MenuButton *messaging_btn;
+  MenuButton *style_btn;
+  MenuButton *questions_btn;
+  MenuButton *update_btn;
 
 private:
   QVBoxLayout *main_layout;

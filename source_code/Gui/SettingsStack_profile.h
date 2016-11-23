@@ -11,7 +11,7 @@
 #include <QLineEdit>
 
 
-class GuiSettingsStack_profile : public GuiScrollStack
+class GuiSettingsStack_profile : public ScrollStack
 {
   Q_OBJECT
 

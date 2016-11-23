@@ -1,6 +1,6 @@
 #include "MenuButton.h"
 
-GuiMenuButton::GuiMenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent) : QWidget(parent)
+MenuButton::MenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent) : QWidget(parent)
 {
   static_stack_type = staticStackType;
 
@@ -24,19 +24,19 @@ GuiMenuButton::GuiMenuButton(QString text, GUI::StaticStackType staticStackType,
   this->setParent(parent);
 }
 
-GuiMenuButton::~GuiMenuButton()
+MenuButton::~MenuButton()
 {
 
 }
 
-void GuiMenuButton::setDefaultPixmap(QString path)
+void MenuButton::setDefaultPixmap(QString path)
 {
   default_pixmap.load(path);
   default_pixmap.setDevicePixelRatio(2.0);
   setDefault();
 }
 
-void GuiMenuButton::setHoveredPixmap(QString path)
+void MenuButton::setHoveredPixmap(QString path)
 {
   hovered_pixmap.load(path);
   hovered_pixmap.setDevicePixelRatio(2.0);
@@ -45,34 +45,34 @@ void GuiMenuButton::setHoveredPixmap(QString path)
 
 
 
-void GuiMenuButton::mousePressEvent(QMouseEvent *)
+void MenuButton::mousePressEvent(QMouseEvent *)
 {
   emit clicked(static_stack_type);
 }
 
-void GuiMenuButton::mouseReleaseEvent(QMouseEvent *)
+void MenuButton::mouseReleaseEvent(QMouseEvent *)
 {
 
 }
 
-void GuiMenuButton::enterEvent(QEvent *)
+void MenuButton::enterEvent(QEvent *)
 {
   setHovered();
 }
 
-void GuiMenuButton::leaveEvent(QEvent *)
+void MenuButton::leaveEvent(QEvent *)
 {
   setDefault();
 }
 
-void GuiMenuButton::setDefault()
+void MenuButton::setDefault()
 {
   text_palette.setColor(QPalette::WindowText, default_text_color);
   text_label->setPalette(text_palette);
   icon_label->setPixmap(default_pixmap);
 }
 
-void GuiMenuButton::setHovered()
+void MenuButton::setHovered()
 {
   text_palette.setColor(QPalette::WindowText, hovered_text_color);
   text_label->setPalette(text_palette);

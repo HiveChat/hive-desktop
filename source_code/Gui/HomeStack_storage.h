@@ -3,7 +3,7 @@
 
 #include "Gui/Frameworks/ScrollStack.h"
 
-class GuiHomeStack_storage : public GuiScrollStack
+class GuiHomeStack_storage : public ScrollStack
 {
 //  Q_OBJECT
 

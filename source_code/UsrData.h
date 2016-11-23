@@ -27,10 +27,10 @@ public:
   QJsonArray* flipDown();
 
   UsrProfileStruct* usrProfileStruct(){return &usr_profile_struct;}
-  QString key() {return usr_profile_struct.key_str;}
-  QString name() {return usr_profile_struct.name_str;}
-  QString avatar() {return usr_profile_struct.avatar_str;}
-  QString ip() {return usr_profile_struct.ip_str;}
+  QString key() {return usr_profile_struct.key;}
+  QString name() {return usr_profile_struct.name;}
+  QString avatar() {return usr_profile_struct.avatar;}
+  QString ip() {return usr_profile_struct.ip;}
   int unreadMessageNumber() {return unread_message_list.count();}
   int currentHistoryBundleIndex(){return current_history_bundle_index;}
 

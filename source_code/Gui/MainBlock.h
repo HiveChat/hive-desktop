@@ -16,13 +16,13 @@
 #include <QList>
 #include <QHash>
 
-class GuiMainBlock : public QWidget
+class MainBlock : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiMainBlock(QWidget *parent = 0);
-  ~GuiMainBlock();
+	explicit MainBlock(QWidget *parent = 0);
+	~MainBlock();
 
   GuiChatStack *gui_chat_stack;
   QStackedWidget *main_stacked_widget;

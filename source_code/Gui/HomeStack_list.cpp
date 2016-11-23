@@ -26,9 +26,9 @@ GuiListItem::~GuiListItem()
 
 void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
-  avatar_button->setAvatar(usrProfileStruct->avatar_str);
-  name_label->setText(usrProfileStruct->name_str);
-  ip_label->setText(usrProfileStruct->ip_str);
+  avatar_button->setAvatar(usrProfileStruct->avatar);
+  name_label->setText(usrProfileStruct->name);
+  ip_label->setText(usrProfileStruct->ip);
 }
 
 
@@ -54,13 +54,13 @@ GuiHomeStack_list::~GuiHomeStack_list()
 void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
 {
   GuiListItem *list_item = new GuiListItem(usrProfileStruct, this);
-  list_item_hash.insert(usrProfileStruct->key_str, list_item);
+  list_item_hash.insert(usrProfileStruct->key, list_item);
   central_layout->addWidget(list_item);
 }
 
 void GuiHomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
-  list_item_hash.value(usrProfileStruct->key_str)->refreshUsrProfile(usrProfileStruct);
+  list_item_hash.value(usrProfileStruct->key)->refreshUsrProfile(usrProfileStruct);
 }
 
 

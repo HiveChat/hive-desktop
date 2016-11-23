@@ -2,10 +2,10 @@
 
 bool operator ==(const UsrProfileStruct &arg1, const UsrProfileStruct &arg2)
 {
-  if(arg1.key_str == arg2.key_str
-     && arg1.ip_str == arg2.ip_str
-     && arg1.name_str == arg2.name_str
-     && arg1.avatar_str == arg2.avatar_str)
+  if(arg1.key == arg2.key
+     && arg1.ip == arg2.ip
+     && arg1.name == arg2.name
+     && arg1.avatar == arg2.avatar)
     {
       return true;
     }

@@ -73,7 +73,7 @@ void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 {
   qDebug()<<"#GuiChatTab_comb_scroll_widget::addComb(): Adding Comb.";
   GuiCombWidget *comb_widget = new GuiCombWidget(usrProfileStruct, this);
-  comb_widget_hash.insert(usrProfileStruct->key_str, comb_widget);
+  comb_widget_hash.insert(usrProfileStruct->key, comb_widget);
   main_layout->addWidget(comb_widget);
 
 	connect(comb_widget, &GuiCombWidget::clicked,
@@ -95,7 +95,7 @@ void ChatTab_comb_scroll_widget::refreshBadgeNumber(const QString &usrKey, const
 
 void ChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)
 {
-  GuiCombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key_str);
+  GuiCombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key);
   if(comb_widget != nullptr)
     {
       comb_widget->setProfile(usrProfileStruct);

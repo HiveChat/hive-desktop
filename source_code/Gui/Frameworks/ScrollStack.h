@@ -15,13 +15,13 @@ enum LayoutStyle
 };
 
 
-class GuiScrollStack : public QWidget
+class ScrollStack : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiScrollStack(QWidget *parent = 0);
-  ~GuiScrollStack();
+  explicit ScrollStack(QWidget *parent = 0);
+  ~ScrollStack();
 
 
 

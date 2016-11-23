@@ -4,7 +4,7 @@
 #include "Gui/Frameworks/ScrollStack.h"
 #include "GlobalData.h"
 
-class GuiSettingsStack_questions : public GuiScrollStack
+class GuiSettingsStack_questions : public ScrollStack
 {
   Q_OBJECT
 

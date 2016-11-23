@@ -32,23 +32,23 @@ namespace GUI
 
 	enum BuiltInIconType
 	{
-		Default,
-		Doc,
-		Exe,
-		Ppt,
-		Rar,
-		Txt,
-		Xls,
-		Zip
+		Default = 0,
+		Doc = 1,
+		Exe = 2,
+		Ppt = 3,
+		Rar = 4,
+		Txt = 5,
+		Xls = 6,
+		Zip = 7
 	};
 }
 
 struct UsrProfileStruct
 {
-  QString key_str;
-  QString name_str;
-  QString avatar_str;
-  QString ip_str = "Offline";
+  QString key;
+  QString name;
+  QString avatar;
+  QString ip = "Offline";
 };
 bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
 bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
@@ -81,8 +81,8 @@ namespace Message
   {
     QString index;
     QString name;
-    QString size;
-    QString type;
+		int size;
+		GUI::BuiltInIconType type;
   };
 
 }

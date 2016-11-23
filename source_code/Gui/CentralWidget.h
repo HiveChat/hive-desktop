@@ -17,7 +17,7 @@ public:
   ~GuiCentralWidget();
 
   GuiTabBlock *gui_tab_block;
-  GuiMainBlock *gui_main_block;
+  MainBlock *gui_main_block;
 
 private:
   QString usr_key_str;

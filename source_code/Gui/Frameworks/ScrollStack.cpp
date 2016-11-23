@@ -1,16 +1,16 @@
 #include "Gui/Frameworks/ScrollStack.h"
 #include <QDebug>
 
-GuiScrollStack::GuiScrollStack(QWidget *parent) : QWidget(parent)
+ScrollStack::ScrollStack(QWidget *parent) : QWidget(parent)
 {
 }
 
-GuiScrollStack::~GuiScrollStack()
+ScrollStack::~ScrollStack()
 {
 
 }
 
-void GuiScrollStack::setTitle(const QString &text)
+void ScrollStack::setTitle(const QString &text)
 {
   if(text.isEmpty() || text.isNull())
     {
@@ -29,7 +29,7 @@ void GuiScrollStack::setTitle(const QString &text)
     }
 }
 
-void GuiScrollStack::setSubTitle(const QString &text)
+void ScrollStack::setSubTitle(const QString &text)
 {
   if(text.isNull() || text.isEmpty())
     {
@@ -49,7 +49,7 @@ void GuiScrollStack::setSubTitle(const QString &text)
 
 }
 
-void GuiScrollStack::setIcon(const QString &path)
+void ScrollStack::setIcon(const QString &path)
 {
   if(path.isNull() || path.isEmpty())
     {
@@ -58,7 +58,7 @@ void GuiScrollStack::setIcon(const QString &path)
   icon_btn->setAvatar(path);
 }
 
-void GuiScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI switcher.
+void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI switcher.
 {
   layout_style = layoutStyle;
 
@@ -166,7 +166,7 @@ void GuiScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI s
 
 }
 
-QLabel *GuiScrollStack::addTag(const QString &text)
+QLabel *ScrollStack::addTag(const QString &text)
 {
   QLabel *tag_labe = new QLabel(text, this);
   tag_labe->setFont(GlobalData::font_scrollStackTitle);
@@ -186,7 +186,7 @@ QLabel *GuiScrollStack::addTag(const QString &text)
   return tag_labe;
 }
 
-QBoxLayout *GuiScrollStack::addItem(const QString &text, const QString &string, const bool &wrapping)
+QBoxLayout *ScrollStack::addItem(const QString &text, const QString &string, const bool &wrapping)
 {
   QLabel *text_label = new QLabel("\t" + text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -213,7 +213,7 @@ QBoxLayout *GuiScrollStack::addItem(const QString &text, const QString &string, 
   return layout;
 }
 
-QBoxLayout *GuiScrollStack::addItem(const QString &text, QWidget *widget)
+QBoxLayout *ScrollStack::addItem(const QString &text, QWidget *widget)
 {
   QLabel *text_label = new QLabel(text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -232,7 +232,7 @@ QBoxLayout *GuiScrollStack::addItem(const QString &text, QWidget *widget)
   return layout;
 }
 
-QBoxLayout *GuiScrollStack::addItem(QWidget *widget, const QString &text)
+QBoxLayout *ScrollStack::addItem(QWidget *widget, const QString &text)
 {
   QLabel *text_label = new QLabel(text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -252,7 +252,7 @@ QBoxLayout *GuiScrollStack::addItem(QWidget *widget, const QString &text)
   return layout;
 }
 
-QBoxLayout *GuiScrollStack::addItem(const QString &text, QLayout *widgetLayout)
+QBoxLayout *ScrollStack::addItem(const QString &text, QLayout *widgetLayout)
 {
   QLabel *text_label = new QLabel(text, this);
   text_label->setFont(GlobalData::font_scrollStackSubtitle);
@@ -271,7 +271,7 @@ QBoxLayout *GuiScrollStack::addItem(const QString &text, QLayout *widgetLayout)
   return layout;
 }
 
-void GuiScrollStack::addItem(QWidget *centralWidget)
+void ScrollStack::addItem(QWidget *centralWidget)
 {
   central_layout->addWidget(centralWidget);
   central_layout->setAlignment(Qt::AlignCenter);

@@ -5,7 +5,7 @@ UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObje
 {
   my_key = myKey;
   this->setUsrProfileStruct(usrProfileStruct);
-  history_path = usr_path + usr_profile_struct.key_str;
+  history_path = usr_path + usr_profile_struct.key;
   this->checkDir(history_path);
   this->readHistoryBundle();
 

@@ -75,11 +75,11 @@ void ThreadData::checkSettings()
 QJsonObject ThreadData::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
 {
   QJsonObject profile_json_obj;
-  profile_json_obj.insert("usrName", usrProfileStruct.name_str);
-  profile_json_obj.insert("avatarPath", usrProfileStruct.avatar_str);
+	profile_json_obj.insert("usrName", usrProfileStruct.name);
+	profile_json_obj.insert("avatarPath", usrProfileStruct.avatar);
 
   QJsonObject usr_profile_json_obj;
-  usr_profile_json_obj.insert(usrProfileStruct.key_str, profile_json_obj);
+	usr_profile_json_obj.insert(usrProfileStruct.key, profile_json_obj);
 
   return usr_profile_json_obj;
 }
@@ -120,10 +120,10 @@ void ThreadData::TEST_SECTION()
 
 void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
 {
-  QString usr_key = usrProfileStruct->key_str;
-  QString ip_addr = usrProfileStruct->ip_str;
-  QString usr_name = usrProfileStruct->name_str;
-  QString avatar_path = usrProfileStruct->avatar_str;
+	QString usr_key = usrProfileStruct->key;
+	QString ip_addr = usrProfileStruct->ip;
+	QString usr_name = usrProfileStruct->name;
+	QString avatar_path = usrProfileStruct->avatar;
 
   qDebug()<<ip_addr;
 
@@ -236,27 +236,27 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
 
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
-  if(GlobalData::online_usr_data_map.keys().contains(usrProfileStruct->key_str))
+	if(GlobalData::online_usr_data_map.keys().contains(usrProfileStruct->key))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
 
-      if(*usrProfileStruct != *GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct())
+			if(*usrProfileStruct != *GlobalData::online_usr_data_map.value(usrProfileStruct->key)->usrProfileStruct())
         {
-          GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->setUsrProfileStruct(*usrProfileStruct);
+					GlobalData::online_usr_data_map.value(usrProfileStruct->key)->setUsrProfileStruct(*usrProfileStruct);
 
-          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "Thread Data packaging...");
+					GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key)->usrProfileStruct(), "Thread Data packaging...");
           qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
-          emit usrProfileChanged(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
+					emit usrProfileChanged(GlobalData::online_usr_data_map.value(usrProfileStruct->key));
         }
     }
   else
     {
       UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
-      GlobalData::online_usr_data_map.insert(usrProfileStruct->key_str, user_data);
+			GlobalData::online_usr_data_map.insert(usrProfileStruct->key, user_data);
 
-      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key_str)->usrProfileStruct(), "ThreadData Just packaged");
+			GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_map.value(usrProfileStruct->key)->usrProfileStruct(), "ThreadData Just packaged");
       qDebug()<<"@ThreadData::onUsrEntered: User profile Created.";
-      emit usrProfileLoaded(GlobalData::online_usr_data_map.value(usrProfileStruct->key_str));
+			emit usrProfileLoaded(GlobalData::online_usr_data_map.value(usrProfileStruct->key));
 
     }
 
@@ -542,9 +542,9 @@ void ThreadData::loadUsrList()
               QJsonObject temp_usr_profile_json_obj = usr_list_json_obj[*temp_usr_key_str].toObject();
 
               UsrProfileStruct usr_profile_struct;
-              usr_profile_struct.key_str = temp_usr_profile_json_obj["usrKey"].toString();
-              usr_profile_struct.name_str = temp_usr_profile_json_obj["usrName"].toString();
-              usr_profile_struct.avatar_str = temp_usr_profile_json_obj["avatarPath"].toString();
+							usr_profile_struct.key = temp_usr_profile_json_obj["usrKey"].toString();
+							usr_profile_struct.name = temp_usr_profile_json_obj["usrName"].toString();
+							usr_profile_struct.avatar = temp_usr_profile_json_obj["avatarPath"].toString();
 
               local_usr_profile_hash.insert(*temp_usr_key_str, usr_profile_struct);
               ////////////must enable!!!!!!!!

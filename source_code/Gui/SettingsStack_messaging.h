@@ -7,7 +7,7 @@
 #include <QCheckBox>
 #include <QDir>
 
-class GuiSettingsStack_messaging : public GuiScrollStack
+class GuiSettingsStack_messaging : public ScrollStack
 {
   Q_OBJECT
 

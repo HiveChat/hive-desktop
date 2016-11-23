@@ -99,11 +99,10 @@ bool GlobalData::versionCompare(const int (&old)[3], const int (&fresh)[3])
 void GlobalData::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
 {
   qDebug()<<endl<<"Test by "<<str;
-  qDebug()<<usrProfileStruct.key_str;
-  qDebug()<<usrProfileStruct.name_str;
-  qDebug()<<usrProfileStruct.ip_str;
-  qDebug()<<usrProfileStruct.avatar_str<<endl;
-
+  qDebug()<<usrProfileStruct.key;
+  qDebug()<<usrProfileStruct.name;
+  qDebug()<<usrProfileStruct.ip;
+  qDebug()<<usrProfileStruct.avatar<<endl;
 }
 
 

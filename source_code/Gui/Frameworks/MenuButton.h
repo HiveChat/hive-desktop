@@ -8,13 +8,13 @@
 #include <QHBoxLayout>
 
 
-class GuiMenuButton : public QWidget
+class MenuButton : public QWidget
 {
   Q_OBJECT
 
 public:
-	explicit GuiMenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent = 0);
-  ~GuiMenuButton();
+	explicit MenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent = 0);
+  ~MenuButton();
 
   void setDefaultPixmap(QString path);
   void setHoveredPixmap(QString path);

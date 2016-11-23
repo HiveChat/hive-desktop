@@ -23,7 +23,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 
   ////Gui
   gui_tab_block = new GuiTabBlock(this);
-  gui_main_block = new GuiMainBlock(this);
+	gui_main_block = new MainBlock(this);
 
   QFrame *line = new QFrame(this);
   line->setFrameShape(QFrame::VLine);

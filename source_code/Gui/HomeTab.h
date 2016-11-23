@@ -14,9 +14,9 @@ public:
   explicit HomeTab(QWidget *parent = 0);
   ~HomeTab();
 
-  GuiMenuButton *welcome_btn;
-  GuiMenuButton *list_btn;
-  GuiMenuButton *storage_btn;
+  MenuButton *welcome_btn;
+  MenuButton *list_btn;
+  MenuButton *storage_btn;
 
 private:
   QVBoxLayout *main_layout;

@@ -63,8 +63,8 @@ private:
   ///UDP Socket
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
-  void udpProcessMessage(Message::TextMessageStruct *messageStruct);
-  void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);
+	void udpProcessMessage(Message::TextMessageStruct *messageStruct);
+	void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
   void udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct);
   void udpProcessFileReject();
@@ -90,7 +90,6 @@ private:
 
 
 public slots:
-  void udpSendMessage_old(QString usrKeyStr, QString message);
   void udpSendMessage(const QJsonObject &jsonObj);
 
 private slots:

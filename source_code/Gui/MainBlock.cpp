@@ -1,6 +1,6 @@
 #include "MainBlock.h"
 
-GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
+MainBlock::MainBlock(QWidget *parent) : QWidget(parent)
 {
   gui_chat_stack = new GuiChatStack(this);
   main_stacked_widget = new QStackedWidget(this);
@@ -17,12 +17,12 @@ GuiMainBlock::GuiMainBlock(QWidget *parent) : QWidget(parent)
 	displayStaticStack(GUI::StaticStackType::Home_Welcome);
 }
 
-GuiMainBlock::~GuiMainBlock()
+MainBlock::~MainBlock()
 {
 
 }
 
-void GuiMainBlock::clearStackMap( GUI::StaticStackType &reservation)
+void MainBlock::clearStackMap( GUI::StaticStackType &reservation)
 {
   foreach ( GUI::StaticStackType temp_static_stack_type, static_stack_hash.keys())
     {
@@ -41,7 +41,7 @@ void GuiMainBlock::clearStackMap( GUI::StaticStackType &reservation)
     }
 }
 
-void GuiMainBlock::createStaticStack(GUI::StaticStackType staticStackType)
+void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 {
   switch (staticStackType) {
 		case GUI::StaticStackType::Home_Welcome:
@@ -120,14 +120,14 @@ void GuiMainBlock::createStaticStack(GUI::StaticStackType staticStackType)
     }
 }
 
-void GuiMainBlock::displayChatStack(const QString &usrKey)
+void MainBlock::displayChatStack(const QString &usrKey)
 {
   gui_chat_stack->display(usrKey);
   gui_chat_stack->refreshMessage(usrKey);
   main_stacked_widget->setCurrentWidget(gui_chat_stack);
 }
 
-void GuiMainBlock::displayStaticStack(GUI::StaticStackType staticStackType)
+void MainBlock::displayStaticStack(GUI::StaticStackType staticStackType)
 {
   if(!static_stack_hash.contains(staticStackType))
     {
@@ -142,7 +142,7 @@ void GuiMainBlock::displayStaticStack(GUI::StaticStackType staticStackType)
 
 }
 
-void GuiMainBlock::onMessageToSend(QString *usrKey, QString *message)
+void MainBlock::onMessageToSend(QString *usrKey, QString *message)
 {
   emit sendMessage(*usrKey, *message);
 }

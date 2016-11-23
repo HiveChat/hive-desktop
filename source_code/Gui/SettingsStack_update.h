@@ -5,7 +5,7 @@
 #include <QCheckBox>
 #include <QPushButton>
 
-class GuiSettingsStack_update : public GuiScrollStack
+class GuiSettingsStack_update : public ScrollStack
 {
   Q_OBJECT
 public:

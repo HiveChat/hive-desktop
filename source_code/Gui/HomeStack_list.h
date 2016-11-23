@@ -25,7 +25,7 @@ private:
 };
 
 
-class GuiHomeStack_list : public GuiScrollStack
+class GuiHomeStack_list : public ScrollStack
 {
   Q_OBJECT
 

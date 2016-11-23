@@ -19,7 +19,7 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 
 ThreadNet::~ThreadNet()
 {
-//  udpSendUsrLeave();
+	udpSendUsrLeave();
 
   QMutex mutex;
   mutex.lock();
@@ -113,58 +113,55 @@ void ThreadNet::checkUpdate()
 ///udp process
 void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
 {
-  if(messageStruct->sender.isEmpty() || messageStruct->reciever.isEmpty())
+	if(messageStruct->sender.isEmpty() || messageStruct->reciever.isEmpty())
     {
       return;
     }
 
-  if(messageStruct->reciever != GlobalData::settings_struct.profile_key_str)
+	if(messageStruct->reciever != GlobalData::settings_struct.profile_key_str)
     {
-      if(messageStruct->sender != GlobalData::settings_struct.profile_key_str)
+			if(messageStruct->sender != GlobalData::settings_struct.profile_key_str)
         {
-          //no sniffing
+					//no sniffing man!
           return;
         }
       else
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct->message;
-          messageStruct->time =  GlobalData::getCurrentTime();
-          emit messageRecieved(messageStruct, true);
+					qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct->message;
+					emit messageRecieved(messageStruct, true);
         }
     }
   else
     {
-      if(messageStruct->sender == GlobalData::settings_struct.profile_key_str)
+			if(messageStruct->sender == GlobalData::settings_struct.profile_key_str)
         {
           qDebug()<<"@ThreadNet::udpProcessMessage(): me 2 me...";
-          messageStruct->time =  GlobalData::getCurrentTime();
-          emit messageRecieved(messageStruct, true);
+					emit messageRecieved(messageStruct, true);
         }
       else
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct->message;
-          messageStruct->time =  GlobalData::getCurrentTime();
-          emit messageRecieved(messageStruct, false);
+					qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct->message;
+					emit messageRecieved(messageStruct, false);
         }
     }
 }
 
 void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
 {
-  if(usrProfileStruct->key_str.isEmpty())
+	if(usrProfileStruct->key.isEmpty())
     {
       return;
     }
 
-  if(usrProfileStruct->key_str == GlobalData::settings_struct.profile_key_str)
+	if(usrProfileStruct->key == GlobalData::settings_struct.profile_key_str)
     {
       qDebug()<<"@ThreadNet::udpProcessUsrEnter(): Myself entered.";
-      emit usrEnter(usrProfileStruct);
+			emit usrEnter(usrProfileStruct);
     }
   else
     {
       qDebug()<<"@ThreadNet::udpProcessUsrEnter(): Someone entered.";
-      emit usrEnter(usrProfileStruct);
+			emit usrEnter(usrProfileStruct);
     }
 
 }
@@ -193,15 +190,22 @@ void ThreadNet::udpSendUsrEnter()
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  out << UsrEnter;
-  out << GlobalData::g_localHostIP;
-  out << GlobalData::settings_struct.profile_key_str;
-  out << GlobalData::settings_struct.profile_name_str;
-  out << GlobalData::settings_struct.profile_avatar_str;
-
-  /*qint64 f = */udp_socket->writeDatagram(data, data.length(), QHostAddress::Broadcast, udp_port);
-
-  qDebug()<<"@sendUsrEnter(): finished!";
+	QJsonObject json_obj;
+	json_obj.insert("ip", GlobalData::g_localHostIP);
+	json_obj.insert("key", GlobalData::settings_struct.profile_key_str);
+	json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
+	json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
+	json_obj.insert("msgType", UsrEnter);
+	QJsonDocument json_doc(json_obj);
+	out << json_doc;
+	qint64 ret = udp_socket->writeDatagram(data
+														, data.length()
+														, QHostAddress::Broadcast
+														, udp_port);
+	if(ret != 0 && ret != -1)
+		{
+			qDebug()<<"@sendUsrEnter(): sent!";
+		}
   return;
 }
 
@@ -215,41 +219,24 @@ void ThreadNet::udpSendUsrLeave()
   qDebug()<<"@sendUsrLeave(): Finished!";
 }
 
-void ThreadNet::udpSendMessage_old(QString usrKeyStr, QString message)
-{
-  QByteArray data;
-  QDataStream out(&data, QIODevice::WriteOnly);
-
-  if(message.isEmpty())
-    {
-      qDebug()<<"@sendMessage(): Message content empty!";
-      return;
-    }
-
-  qDebug()<<"@sendMessage(): Message Sent!";
-
-  out << Message << usrKeyStr << GlobalData::settings_struct.profile_key_str << message;
-  udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
-}
-
 void ThreadNet::udpSendMessage(const QJsonObject &jsonObj)
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
   QJsonObject json_obj = jsonObj;
-  qDebug()<<"@ThreadNet::udpSendMessage(): Message sent1";
-
   json_obj.insert("index", QJsonValue(GlobalData::getRandomString(8)));
-  qDebug()<<"@ThreadNet::udpSendMessage(): Message sent2";
+	json_obj.insert("msgType", Message);
+	QJsonDocument json_doc(json_obj);
 
-  QJsonDocument json_doc(json_obj);
-  out << Message << json_doc.toBinaryData();
-  qDebug()<<json_doc;
-  qint64 ret = udp_socket->writeDatagram(data,data.length(), QHostAddress::Broadcast, udp_port);
+	out << json_doc.toBinaryData();
+	qint64 ret = udp_socket->writeDatagram(data
+																				 ,data.length()
+																				 , QHostAddress::Broadcast
+																				 , udp_port);
   if(ret != 0 && ret != -1)
     {
-      qDebug()<<"@ThreadNet::udpSendMessage(): Message sent!";
+			qDebug()<<"@ThreadNet::udpSendMessage(): sent!";
     }
 }
 
@@ -366,73 +353,136 @@ void ThreadNet::udpProcessPendingDatagrams()
 {
   while(udp_socket->hasPendingDatagrams())
     {
-      QByteArray datagram;
-      datagram.resize(udp_socket->pendingDatagramSize());
-      udp_socket->readDatagram(datagram.data(), datagram.size());
-      QDataStream in(&datagram, QIODevice::ReadOnly);
+			QByteArray datagram;
+			datagram.resize(udp_socket->pendingDatagramSize());
+			udp_socket->readDatagram(datagram.data(), datagram.size());
+			QDataStream in(&datagram, QIODevice::ReadOnly);
 
-      int msgType;
-      in >> msgType;
+			QByteArray byte_array;
+			in >> byte_array;
 
-      switch(msgType)
-      {
-        case Message:
-          {
-            QByteArray byte_array;
-            in >> byte_array;
+			///new message data structure
+			QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
+			if(json_document.isObject())
+				{
+					qDebug() << "@ThreadNet::checkJsonObject(): got message with JSON format";
 
-            QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
-            if(!json_document.isObject())
-              {
-                qDebug() << "@ThreadNet::checkJsonObject(): Json object crashed.";
-                return;
-              }
+					QJsonObject json_obj = json_document.object();
+					int type = json_obj.value("msgType").toInt();
 
-            QJsonObject json_obj = json_document.object();
+					switch (type) {
+						case Message:
+							{
+								Message::TextMessageStruct message;
+								message.index = json_obj.value("index").toString();
+								message.time = json_obj.value("time").toString();
+								message.reciever = json_obj.value("receiver").toString();
+								message.sender = json_obj.value("sender").toString();
+								message.message = json_obj.value("message").toString();
+								udpProcessMessage(&message);
+								break;
+							}
+						case UsrEnter:
+							{
+								UsrProfileStruct usr_profile;
+								usr_profile.ip = json_obj.value("ip").toString();
+								usr_profile.key = json_obj.value("key").toString();
+								usr_profile.name = json_obj.value("name").toString();
+								usr_profile.avatar = json_obj.value("avatar").toString();
+								udpProcessUsrEnter(&usr_profile);
+								break;
+							}
+						case UsrLeave:
+							{
 
-            Message::TextMessageStruct message;
-            message.index = json_obj.value("index").toString();
-            message.reciever = json_obj.value("receiver").toString();
-            message.sender = json_obj.value("sender").toString();
-            message.message = json_obj.value("message").toString();
-            message.time = json_obj.value("time").toString();
+								break;
+							}
+						case FileTran:
+							{
+								Message::FileInfoStruct file_info_struct;
+								file_info_struct.name = json_obj.value("name").toString();
+								file_info_struct.size = json_obj.value("size").toInt();
+								file_info_struct.type = (GUI::BuiltInIconType)json_obj.value("type").toInt();
+								udpProcessFileTran(file_info_struct);
+								break;
+							}
+						case FileReject:
+							{
 
-            udpProcessMessage(&message);
+								break;
+							}
+						}
 
-            break;
-          }
-        case UsrEnter:
-          {
-            UsrProfileStruct usr_profile;
-            in >> usr_profile.ip_str;
-            in >> usr_profile.key_str;
-            in >> usr_profile.name_str;
-            in >> usr_profile.avatar_str;
-
-            udpProcessUsrEnter(&usr_profile);
-            break;
-          }
-        case UsrLeave:
-          {
-
-
-          }
-        case FileReject:
-          {
+				}
+			else
+				{
+					qWarning()<<"@ThreadNet::checkJsonObject(): message crashed / message from old versions";
+				}
+		}
 
 
-          }
-        case FileTran:
-          {
-            Message::FileInfoStruct file_info_struct;
-            in >> file_info_struct.name;
-            in >> file_info_struct.size;
-            in >> file_info_struct.type;
+//      int msgType;
+//      in >> msgType;
 
-            udpProcessFileTran(file_info_struct);
-            break;
-          }
-      }
-    }
+//      switch(msgType)
+//      {
+//        case Message:
+//          {
+//            QByteArray byte_array;
+//            in >> byte_array;
+
+//            QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
+//            if(!json_document.isObject())
+//              {
+//                qDebug() << "@ThreadNet::checkJsonObject(): Json object crashed.";
+//                return;
+//              }
+
+//            QJsonObject json_obj = json_document.object();
+
+//            Message::TextMessageStruct message;
+//            message.index = json_obj.value("index").toString();
+//            message.reciever = json_obj.value("receiver").toString();
+//            message.sender = json_obj.value("sender").toString();
+//            message.message = json_obj.value("message").toString();
+//            message.time = json_obj.value("time").toString();
+
+//            udpProcessMessage(&message);
+
+//            break;
+//          }
+//        case UsrEnter:
+//          {
+//            UsrProfileStruct usr_profile;
+//            in >> usr_profile.ip_str;
+//            in >> usr_profile.key_str;
+//            in >> usr_profile.name_str;
+//            in >> usr_profile.avatar_str;
+
+//            udpProcessUsrEnter(&usr_profile);
+//            break;
+//          }
+//        case UsrLeave:
+//          {
+
+
+//          }
+//        case FileReject:
+//          {
+
+
+//          }
+//        case FileTran:
+//          {
+//            Message::FileInfoStruct file_info_struct;
+//            in >> file_info_struct.name;
+//            in >> file_info_struct.size;
+//            in >> file_info_struct.type;
+
+//            udpProcessFileTran(file_info_struct);
+//            break;
+//          }
+//      }
+//    }
 }
 

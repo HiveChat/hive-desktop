@@ -106,7 +106,7 @@ signals:
 
 
 
-class GuiChatStack : public GuiScrollStack
+class GuiChatStack : public ScrollStack
 {
   Q_OBJECT
 

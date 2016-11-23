@@ -58,11 +58,11 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
 {
   usr_profile = *usrProfile;
 
-  avatar->setAvatar(usr_profile.avatar_str);
-  usr_name_label->setText(usr_profile.name_str);
-  ip_addr_label->setText(usr_profile.ip_str);
+  avatar->setAvatar(usr_profile.avatar);
+  usr_name_label->setText(usr_profile.name);
+  ip_addr_label->setText(usr_profile.ip);
 
-  if(usr_profile.ip_str.isEmpty() || usr_profile.ip_str == "Offline")
+  if(usr_profile.ip.isEmpty() || usr_profile.ip == "Offline")
     {
       status_label->setText(offline_str);
       this->setToolTip("offline");
@@ -70,7 +70,7 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
   else
     {
 
-      if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip_str))
+      if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip))
         {
           status_label->setText(online_str);
           this->setToolTip("online");
@@ -107,7 +107,7 @@ void GuiCombWidget::paintEvent(QPaintEvent *)
 
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 {
-  emit clicked(usr_profile.key_str);
+  emit clicked(usr_profile.key);
 }
 
 void GuiCombWidget::enterEvent(QEvent *)
