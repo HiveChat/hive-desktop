@@ -44,8 +44,8 @@ Hive::Hive(QObject *parent) : QObject(parent)
           Qt::AutoConnection);
 
 
-  thread_data->start(QThread::HighPriority);
-  thread_net->start(QThread::HighPriority);
+	thread_data->start(QThread::NormalPriority);
+	thread_net->start(QThread::NormalPriority);
 
 #ifdef Q_OS_OSX
   QtMac::setBadgeLabelText("");

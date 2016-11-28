@@ -34,7 +34,7 @@ protected:
 private:
   enum BroadcastType{
     Message,
-    UsrEnter,
+    HeartBeat,
     UsrLeave,
     FileTran,
     FileReject
@@ -64,12 +64,12 @@ private:
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
 	void udpProcessMessage(Message::TextMessageStruct *messageStruct);
-	void udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct);
+	void udpProcessHeartBeat(UsrProfileStruct *usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
   void udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct);
   void udpProcessFileReject();
 
-  void udpSendUsrEnter();
+  void udpSendHeartBeat();
   void udpSendUsrLeave();
   void udpSendFileTran();
   void udpSendFileAccept();

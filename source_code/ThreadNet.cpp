@@ -11,10 +11,8 @@ ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
-  udpSendUsrEnter();//this can be deleted
 
   checkUpdate();
-
 }
 
 ThreadNet::~ThreadNet()
@@ -39,7 +37,7 @@ void ThreadNet::run()
 
       if(loop_count%1 == 0)
         {
-          refreshLocalHostIP();
+					refreshLocalHostIP();
         }
 
       if(loop_count%2 == 0)
@@ -75,7 +73,8 @@ void ThreadNet::refreshLocalHostIP()
          && address != QHostAddress::Null
          && address != QHostAddress::LocalHost)
         {
-          if (!address.toString().contains("127.0."))
+					if (!address.toString().contains("127.0.")
+							&& !address.toString().contains("169.254."))
             {
               result = address;
               break;
@@ -98,7 +97,7 @@ void ThreadNet::sendOnlineStatus()
 {
   if(!GlobalData::g_localHostIP.isEmpty())
     {
-      udpSendUsrEnter();
+			udpSendHeartBeat();
     }
 }
 
@@ -146,7 +145,7 @@ void ThreadNet::udpProcessMessage(Message::TextMessageStruct *messageStruct)
     }
 }
 
-void ThreadNet::udpProcessUsrEnter(UsrProfileStruct *usrProfileStruct)
+void ThreadNet::udpProcessHeartBeat(UsrProfileStruct *usrProfileStruct)
 {
 	if(usrProfileStruct->key.isEmpty())
     {
@@ -185,7 +184,7 @@ void ThreadNet::udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct
 }
 
 ///UDP Action
-void ThreadNet::udpSendUsrEnter()
+void ThreadNet::udpSendHeartBeat()
 {
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
@@ -195,9 +194,9 @@ void ThreadNet::udpSendUsrEnter()
 	json_obj.insert("key", GlobalData::settings_struct.profile_key_str);
 	json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
 	json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
-	json_obj.insert("msgType", UsrEnter);
+	json_obj.insert("msgType", HeartBeat);
 	QJsonDocument json_doc(json_obj);
-	out << json_doc;
+	out << json_doc.toBinaryData();
 	qint64 ret = udp_socket->writeDatagram(data
 														, data.length()
 														, QHostAddress::Broadcast
@@ -206,6 +205,7 @@ void ThreadNet::udpSendUsrEnter()
 		{
 			qDebug()<<"@sendUsrEnter(): sent!";
 		}
+
   return;
 }
 
@@ -363,6 +363,7 @@ void ThreadNet::udpProcessPendingDatagrams()
 
 			///new message data structure
 			QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
+			qDebug()<<json_document.toJson();
 			if(json_document.isObject())
 				{
 					qDebug() << "@ThreadNet::checkJsonObject(): got message with JSON format";
@@ -382,14 +383,14 @@ void ThreadNet::udpProcessPendingDatagrams()
 								udpProcessMessage(&message);
 								break;
 							}
-						case UsrEnter:
+						case HeartBeat:
 							{
 								UsrProfileStruct usr_profile;
 								usr_profile.ip = json_obj.value("ip").toString();
 								usr_profile.key = json_obj.value("key").toString();
 								usr_profile.name = json_obj.value("name").toString();
 								usr_profile.avatar = json_obj.value("avatar").toString();
-								udpProcessUsrEnter(&usr_profile);
+								udpProcessHeartBeat(&usr_profile);
 								break;
 							}
 						case UsrLeave:
