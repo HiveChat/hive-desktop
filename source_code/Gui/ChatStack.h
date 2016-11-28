@@ -17,7 +17,7 @@
 #include <QJsonArray>
 
 class GuiTextEdit;
-class GuiChatStack_chat_widget;
+class ChatStack_chat_widget;
 class GuiChatStack_message_editor;
 class GuiChatStack;
 
@@ -47,13 +47,13 @@ signals:
 
 
 //////////////////////////mid//////////////////////////////////////
-class GuiChatStack_chat_widget : public QWidget
+class ChatStack_chat_widget : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_chat_widget(QWidget *parent = 0);
-  ~GuiChatStack_chat_widget();
+	explicit ChatStack_chat_widget(QString hello, QWidget *parent = 0);
+  ~ChatStack_chat_widget();
 
   void clearChatBubbles();
 
@@ -114,7 +114,6 @@ public:
   explicit GuiChatStack(QWidget *parent = 0);
   ~GuiChatStack();
 
-  void setUsrData(UsrData *usrData);
   void display(const QString &usrKey);
   bool refreshProfile(const QString &usrKey);
   bool refreshMessage(const QString &usrKey);
@@ -127,7 +126,9 @@ protected:
 
 private:
   //UI
-  GuiChatStack_chat_widget *chat_widget;
+	QHash<QString, ChatStack_chat_widget*> chat_widget_hash;
+
+  ChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
 
   //Data
@@ -142,6 +143,8 @@ private:
   void flipUpMessage(const bool &clear);
   void flipDownMessage(const bool &clear);
   bool isDisplaying(const QString &usrKey);
+	void setUsrData(UsrData *usrData);
+	void setChatWidget(const QString &usrKey);
 
 public slots:
   void onSendButtonClicked();

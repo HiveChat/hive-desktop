@@ -2,8 +2,12 @@
 
 //////////////////////////mid////////////////////////////////
 
-GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(parent)
+ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : QWidget(parent)
 {
+	//test
+	QLabel *a = new QLabel(hello, this);
+
+
   setAutoFillBackground(true);
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, Qt::white);
@@ -38,12 +42,12 @@ GuiChatStack_chat_widget::GuiChatStack_chat_widget(QWidget *parent) : QWidget(pa
 
 }
 
-GuiChatStack_chat_widget::~GuiChatStack_chat_widget()
+ChatStack_chat_widget::~ChatStack_chat_widget()
 {
 
 }
 
-void GuiChatStack_chat_widget::clearChatBubbles()
+void ChatStack_chat_widget::clearChatBubbles()
 {
 	foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
     {
@@ -55,7 +59,7 @@ void GuiChatStack_chat_widget::clearChatBubbles()
     }
 }
 
-void GuiChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
+void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
 {
 	gui_chat_bubble = new TextBubble(message, !fromMe, this);
   chat_bubble_list.append(gui_chat_bubble);
@@ -238,7 +242,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   bottom_line->setFixedHeight(2);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
-  chat_widget = new GuiChatStack_chat_widget(this);
+	chat_widget = new ChatStack_chat_widget("init",this);
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   scroll_area->setPalette(palette);
@@ -247,9 +251,6 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   scroll_area->setFrameStyle(0);
 
   message_editor = new GuiChatStack_message_editor(this);
-
-  ///this is a flag to distinguish
-  ///////////////////////////////////////Eiffel Tower////////////////////////////////////
 
   ////main layout
   QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
@@ -306,26 +307,40 @@ bool GuiChatStack::refreshMessage(const QString &usrKey)
 
 void GuiChatStack::setUsrData(UsrData *usrData)
 {
-  usr_data = usrData;
+	usr_data = usrData;
+}
+
+void GuiChatStack::setChatWidget(const QString &usrKey)
+{
+	if(chat_widget_hash.contains(usrKey))
+		{
+			chat_widget = chat_widget_hash.value(usrKey);
+		}
+	else
+		{
+			ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
+			chat_widget = widget;
+		}
+
+	scroll_area->setWidget(chat_widget);
 }
 
 void GuiChatStack::display(const QString &usrKey)
 {
-  UsrData *temp_usr_data = GlobalData::online_usr_data_map.value(usrKey);
+	UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 
-  if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
+	if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
     {
       if(usr_data->key() != temp_usr_data->key())
         {
           this->setUsrData(temp_usr_data);
-          this->flipLatestMessage(true);
+					this->setChatWidget(usrKey);
+					this->flipLatestMessage(false);
           this->flipUnreadMessage();
         }
 
-      this->setIcon(temp_usr_data->avatar());
-      this->setTitle(temp_usr_data->name());
-      this->setSubTitle(temp_usr_data->ip());
 
+			this->refreshProfile(usrKey);
 
     }
 }

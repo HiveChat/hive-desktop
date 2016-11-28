@@ -55,8 +55,8 @@ public:
   static QUrl update_url;
   static QUrl download_url;
 
-	static QHash<QString, UsrProfileStruct> saved_usr_profile_map;
-	static QHash<QString, UsrData*> online_usr_data_map;//used
+	static QHash<QString, UsrProfileStruct> saved_usr_profile_hash;
+	static QHash<QString, UsrData*> online_usr_data_hash;//used
 
   ///net
   static QString g_localHostIP;
