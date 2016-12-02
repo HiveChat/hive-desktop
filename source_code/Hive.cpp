@@ -10,38 +10,45 @@ Hive::Hive(QObject *parent) : QObject(parent)
 #endif
 
 	qDebug()<<this->thread()->currentThreadId();
-  thread_data = new ThreadData(this);
-  thread_net = new ThreadNet(this);
+
+	thread_data = new ThreadData();
+	QThread *data_thread = new QThread(this);
+	thread_data->moveToThread(data_thread);
+
+	thread_net = new ThreadNet();
+	QThread *net_thread = new QThread(this);
+	thread_net->moveToThread(net_thread);
+
   gui_central_widget = new GuiCentralWidget();
   //QObject not compatible to QWidget para, delete obj manually
 
   ////connect
 	connect(thread_data, &ThreadData::updatesAvailable,
 					gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
-          Qt::QueuedConnection);
+					Qt::QueuedConnection);
 
   connect(thread_net, &ThreadNet::usrEnter,
-          thread_data, &ThreadData::onUsrEntered,
-          Qt::AutoConnection);
+					thread_data, &ThreadData::onUsrEntered,
+					Qt::QueuedConnection);
   connect(thread_net, &ThreadNet::updateAvailable,
-          thread_data, &ThreadData::onUpdatesAvailable,
-          Qt::AutoConnection);
+					thread_data, &ThreadData::onUpdatesAvailable,
+					Qt::QueuedConnection);
   connect(thread_data, &ThreadData::usrProfileLoaded,
-          gui_central_widget, &GuiCentralWidget::addUsr,
-          Qt::QueuedConnection);
+					gui_central_widget, &GuiCentralWidget::addUsr,
+					Qt::QueuedConnection);
   connect(thread_data, &ThreadData::usrProfileChanged,
-          gui_central_widget, &GuiCentralWidget::changeUsr,
-          Qt::QueuedConnection);
+					gui_central_widget, &GuiCentralWidget::changeUsr,
+					Qt::QueuedConnection);
 
   connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
-          this, &Hive::onTextMessageToSend,
-          Qt::QueuedConnection);
+					this, &Hive::onTextMessageToSend,
+					Qt::QueuedConnection);
   connect(thread_net, &ThreadNet::messageRecieved,
-          thread_data, &ThreadData::onMessageCome,
-          Qt::AutoConnection);
-  connect(thread_data, &ThreadData::messageLoaded,
-          gui_central_widget, &GuiCentralWidget::onMessageReceived,
-          Qt::AutoConnection);
+					thread_data, &ThreadData::onMessageCome,
+					Qt::QueuedConnection);
+	connect(thread_data, &ThreadData::messageLoaded,
+					gui_central_widget, &GuiCentralWidget::onMessageReceived,
+					Qt::QueuedConnection);
 
 
 	thread_data->start(QThread::NormalPriority);
