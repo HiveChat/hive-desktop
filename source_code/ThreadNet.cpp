@@ -3,16 +3,15 @@
 
 ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 {
-
-  tcp_server = new QTcpServer(this);
+	tcp_server = new QTcpServer(this);
   connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
   tcpInitServer();
 
-  udp_socket = new QUdpSocket(this);
+	udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
 
-  checkUpdate();
+	checkUpdate();
 }
 
 ThreadNet::~ThreadNet()
@@ -162,7 +161,6 @@ void ThreadNet::udpProcessHeartBeat(UsrProfileStruct *usrProfileStruct)
       qDebug()<<"@ThreadNet::udpProcessUsrEnter(): Someone entered.";
 			emit usrEnter(usrProfileStruct);
     }
-
 }
 
 void ThreadNet::udpProcessUsrLeft(QString *usrKey)
