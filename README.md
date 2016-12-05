@@ -3,6 +3,7 @@
 * Hive is written by pure Qt C++ without design forms.
 
 [![Build status](https://img.shields.io/badge/build-successful-green.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
+<!--[![Build status](https://img.shields.io/badge/build-failed-red.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)-->
 [![GitHub commits](https://img.shields.io/github/commits-since/HiveChat/Hive-desktop/0.0.6.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
 [![GitHub tag](https://img.shields.io/github/tag/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop)
 [![GitHub issues](https://img.shields.io/github/issues/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/issues)

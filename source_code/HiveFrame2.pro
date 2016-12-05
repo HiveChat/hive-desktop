@@ -92,7 +92,7 @@ ICON = Src/hive.icns
 RESOURCES += \
     $$PWD/Src/qss.qrc \
     $$PWD/Src/img.qrc \
-    $$PWD/Src/font.qrc \
-    $$PWD/Src/icon.qrc
+    $$PWD/Src/font.qrc
+#    $$PWD/Src/icon.qrc
 
 
