@@ -128,7 +128,7 @@ private:
   //UI
 	QHash<QString, ChatStack_chat_widget*> chat_widget_hash;
 
-  ChatStack_chat_widget *chat_widget;
+	ChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
 
   //Data

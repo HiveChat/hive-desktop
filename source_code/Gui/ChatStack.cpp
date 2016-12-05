@@ -312,17 +312,7 @@ void GuiChatStack::setUsrData(UsrData *usrData)
 
 void GuiChatStack::setChatWidget(const QString &usrKey)
 {
-	if(chat_widget_hash.contains(usrKey))
-		{
-			chat_widget = chat_widget_hash.value(usrKey);
-		}
-	else
-		{
-			ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
-			chat_widget = widget;
-		}
 
-	scroll_area->setWidget(chat_widget);
 }
 
 void GuiChatStack::display(const QString &usrKey)
@@ -334,8 +324,22 @@ void GuiChatStack::display(const QString &usrKey)
       if(usr_data->key() != temp_usr_data->key())
         {
           this->setUsrData(temp_usr_data);
+
+					if(chat_widget_hash.contains(usrKey))
+						{
+							chat_widget = chat_widget_hash.value(usrKey);
+						}
+					else
+						{
+							ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
+							chat_widget = widget;
+							chat_widget_hash.insert(usrKey, chat_widget);
+							this->flipLatestMessage(false);
+						}
+
+					scroll_area->takeWidget();
+					scroll_area->setWidget(chat_widget);
 					this->setChatWidget(usrKey);
-					this->flipLatestMessage(false);
           this->flipUnreadMessage();
         }
 
