@@ -265,8 +265,10 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   main_layout->addWidget(bottom_line);
   main_layout->addWidget(message_editor);
 
-  connect(message_editor, SIGNAL(sendTriggered()), this, SLOT(onSendButtonClicked()));
-  connect(message_editor->send_btn, SIGNAL(clicked()), this, SLOT(onSendButtonClicked()));
+	connect(message_editor, &GuiChatStack_message_editor::sendTriggered,
+					this, &GuiChatStack::onSendButtonClicked);
+	connect(message_editor->send_btn, &LabelButton::clicked,
+					this, &GuiChatStack::onSendButtonClicked);
 
   this->setParent(parent);
 }
@@ -310,37 +312,52 @@ void GuiChatStack::setUsrData(UsrData *usrData)
 	usr_data = usrData;
 }
 
-void GuiChatStack::setChatWidget(const QString &usrKey)
-{
-
-}
-
 void GuiChatStack::display(const QString &usrKey)
 {
 	UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 
 	if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
     {
-      if(usr_data->key() != temp_usr_data->key())
-        {
+			if(usr_data->key() != temp_usr_data->key())
+				{
+					if(message_hash.contains(usr_data->key()))
+						{
+							message_hash.take(usr_data->key());
+						}
+					message_hash.insert(usr_data->key(), message_editor->text_editor->toPlainText());
+
+
           this->setUsrData(temp_usr_data);
+
+
+					if(message_hash.contains(usrKey))
+						{
+							message_editor->text_editor->setText(message_hash.value(usrKey));
+						}
+					else
+						{
+							message_editor->text_editor->clear();
+							message_hash.insert(usrKey, "");
+						}
+
 
 					if(chat_widget_hash.contains(usrKey))
 						{
-							chat_widget = chat_widget_hash.value(usrKey);
+							 ChatStack_chat_widget *widget = chat_widget_hash.value(usrKey);
+							 chat_widget = widget;
 						}
 					else
 						{
 							ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
 							chat_widget = widget;
-							chat_widget_hash.insert(usrKey, chat_widget);
+							chat_widget_hash.insert(usrKey, widget);
 							this->flipLatestMessage(false);
 						}
 
+
+					this->flipUnreadMessage();
 					scroll_area->takeWidget();
 					scroll_area->setWidget(chat_widget);
-					this->setChatWidget(usrKey);
-          this->flipUnreadMessage();
         }
 
 

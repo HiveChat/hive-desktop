@@ -127,6 +127,7 @@ protected:
 private:
   //UI
 	QHash<QString, ChatStack_chat_widget*> chat_widget_hash;
+	QHash<QString, QString> message_hash;
 
 	ChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
@@ -144,7 +145,6 @@ private:
   void flipDownMessage(const bool &clear);
   bool isDisplaying(const QString &usrKey);
 	void setUsrData(UsrData *usrData);
-	void setChatWidget(const QString &usrKey);
 
 public slots:
   void onSendButtonClicked();
