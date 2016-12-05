@@ -8,6 +8,9 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
   loadFonts();
 
   TEST_SECTION();
+
+	qDebug()<<this->currentThreadId();
+  this->setParent(parent);
 }
 
 /////////////thread
@@ -233,7 +236,6 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
 
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
-	qDebug()<<"hhhhhhhhhhhhhhhdasljdksaljdlkasdjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj";
 	if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct->key))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
@@ -249,7 +251,7 @@ void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
     }
   else
     {
-			UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
+      UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
 			GlobalData::online_usr_data_hash.insert(usrProfileStruct->key, user_data);
 
 			GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "ThreadData Just packaged");

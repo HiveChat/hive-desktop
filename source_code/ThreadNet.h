@@ -105,7 +105,7 @@ signals:
   void messageReceived(const QJsonObject &jsonObj, const Message::MessageType &messageType);
 
   void messageRecieved(Message::TextMessageStruct *messageStruct, bool fromMe);//<
-	void usrEnter(UsrProfileStruct *usrProfileStruct);
+  void usrEnter(UsrProfileStruct *usrProfileStruct);
   void usrLeft(QString *usrKey);
 
   void updateAvailable();

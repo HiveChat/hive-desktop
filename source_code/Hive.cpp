@@ -12,10 +12,12 @@ Hive::Hive(QObject *parent) : QObject(parent)
 	qDebug()<<this->thread()->currentThreadId();
 
 	thread_data = new ThreadData();
-
+	QThread *data_thread = new QThread(this);
+	thread_data->moveToThread(data_thread);
 
 	thread_net = new ThreadNet();
-
+	QThread *net_thread = new QThread(this);
+	thread_net->moveToThread(net_thread);
 
   gui_central_widget = new GuiCentralWidget();
   //QObject not compatible to QWidget para, delete obj manually
@@ -24,12 +26,12 @@ Hive::Hive(QObject *parent) : QObject(parent)
 	connect(thread_data, &ThreadData::updatesAvailable,
 					gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
 					Qt::QueuedConnection);
-	connect(thread_net, &ThreadNet::updateAvailable,
-					thread_data, &ThreadData::onUpdatesAvailable,
-					Qt::QueuedConnection);
 
   connect(thread_net, &ThreadNet::usrEnter,
 					thread_data, &ThreadData::onUsrEntered,
+					Qt::QueuedConnection);
+  connect(thread_net, &ThreadNet::updateAvailable,
+					thread_data, &ThreadData::onUpdatesAvailable,
 					Qt::QueuedConnection);
   connect(thread_data, &ThreadData::usrProfileLoaded,
 					gui_central_widget, &GuiCentralWidget::addUsr,
@@ -47,7 +49,6 @@ Hive::Hive(QObject *parent) : QObject(parent)
 	connect(thread_data, &ThreadData::messageLoaded,
 					gui_central_widget, &GuiCentralWidget::onMessageReceived,
 					Qt::QueuedConnection);
-
 
 
 	thread_data->start(QThread::NormalPriority);

@@ -82,7 +82,7 @@ private:
 	QHash<QString, bool*> settings_hash_bool;
 
 public slots:
-	void onUsrEntered(UsrProfileStruct *usrProfileStruct);
+  void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe);
 	void onUpdatesAvailable();
