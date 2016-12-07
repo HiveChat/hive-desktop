@@ -10,7 +10,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
 #endif
 
 	qDebug()<<this->thread()->currentThreadId();
-  thread_data = new ThreadData(this);
+	thread_data = new ThreadData(this);
   thread_net = new ThreadNet(this);
   gui_central_widget = new GuiCentralWidget();
   //QObject not compatible to QWidget para, delete obj manually
@@ -20,7 +20,7 @@ Hive::Hive(QObject *parent) : QObject(parent)
 					gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
           Qt::QueuedConnection);
 
-  connect(thread_net, &ThreadNet::usrEnter,
+	connect(thread_net, &ThreadNet::usrEnter,
           thread_data, &ThreadData::onUsrEntered,
           Qt::AutoConnection);
   connect(thread_net, &ThreadNet::updateAvailable,

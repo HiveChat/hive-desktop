@@ -25,6 +25,6 @@
 * Qt5
 
 ## Star me!
-[![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)](https://github.com/HiveChat/Hive-desktop)
+[![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)](#)
 [![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)](https://github.com/Ultrasilicon)
 
