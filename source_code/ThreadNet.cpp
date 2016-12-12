@@ -189,7 +189,7 @@ void ThreadNet::udpSendHeartBeat()
 	json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
 	json_obj.insert("msgType", HeartBeat);
 	QJsonDocument json_doc(json_obj);
-	out << json_doc.toBinaryData();
+	out << json_doc.toJson();
 	qint64 ret = udp_socket->writeDatagram(data
 														, data.length()
 														, QHostAddress::Broadcast
@@ -207,7 +207,10 @@ void ThreadNet::udpSendUsrLeave()
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
   out << UsrLeave << GlobalData::settings_struct.profile_key_str;
-  udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
+	udp_socket->writeDatagram(data
+														, data.length()
+														, QHostAddress::Broadcast
+														, udp_port);
 
   qDebug()<<"@sendUsrLeave(): Finished!";
 }
@@ -222,9 +225,9 @@ void ThreadNet::udpSendMessage(const QJsonObject &jsonObj)
 	json_obj.insert("msgType", Message);
 	QJsonDocument json_doc(json_obj);
 
-	out << json_doc.toBinaryData();
+	out << json_doc.toJson();
 	qint64 ret = udp_socket->writeDatagram(data
-																				 ,data.length()
+																				 , data.length()
 																				 , QHostAddress::Broadcast
 																				 , udp_port);
   if(ret != 0 && ret != -1)
@@ -255,7 +258,7 @@ void ThreadNet::TEST_udpsSendMessage(QString to, QString from, QString message)
     }
 
   out << Message << to << from << message;
-  udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
+	udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
 
 
@@ -355,7 +358,7 @@ void ThreadNet::udpProcessPendingDatagrams()
 			in >> byte_array;
 
 			///new message data structure
-			QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
+			QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
 			qDebug()<<json_document.toJson();
 			if(json_document.isObject())
 				{
