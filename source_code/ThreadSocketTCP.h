@@ -11,6 +11,9 @@ class ThreadSocketTCP : public QThread
 public:
   explicit ThreadSocketTCP(const qint16 &port, QObject *parent = 0);
 
+protected:
+	void run();
+
 private:
   qint16 tcp_port;
   QString file_name;
@@ -18,9 +21,7 @@ private:
 
   QTcpSocket *tcp_socket;
 
-  void initServer();
-  void sendData();
-  void closeConnection();
+
 };
 
 #endif // THREADFILETCP_H

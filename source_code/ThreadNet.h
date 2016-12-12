@@ -54,6 +54,7 @@ private:
   void refreshLocalHostIP();
   void sendOnlineStatus();
   void checkUpdate();
+	void setTimer();
 
 
   QNetworkAccessManager *http_update_manager;

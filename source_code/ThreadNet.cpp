@@ -3,16 +3,19 @@
 
 ThreadNet::ThreadNet(QObject *parent) : QThread(parent)
 {
+	tcp_server = new QTcpServer();
+	connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
+	tcpInitServer();
 
-  tcp_server = new QTcpServer(this);
-  connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
-  tcpInitServer();
+	udp_socket = new QUdpSocket();
+	udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+	connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
 
-  udp_socket = new QUdpSocket(this);
-  udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
-  connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
+	checkUpdate();
+	setTimer();
 
-  checkUpdate();
+
+
 }
 
 ThreadNet::~ThreadNet()
@@ -30,36 +33,7 @@ ThreadNet::~ThreadNet()
 ////////run
 void ThreadNet::run()
 {
-  QMutex mutex;
-  while(this->isRunning())
-    {
-      mutex.lock();
 
-      if(loop_count%1 == 0)
-        {
-					refreshLocalHostIP();
-        }
-
-      if(loop_count%2 == 0)
-        {
-
-        }
-
-      if(loop_count%5 == 0)
-        {
-          sendOnlineStatus();
-        }
-
-      if(loop_count%10 == 0)
-        {
-          loop_count = 0;
-
-        }
-
-      loop_count ++;
-      mutex.unlock();
-      msleep(1000);
-    }
 }
 
 
@@ -106,7 +80,26 @@ void ThreadNet::checkUpdate()
   http_update_manager = new QNetworkAccessManager(this);
   http_update_reply = http_update_manager->head(QNetworkRequest(GlobalData::update_url));
   connect(http_update_reply, &QNetworkReply::finished,
-          this, &ThreadNet::onRedirectFinished);
+					this, &ThreadNet::onRedirectFinished);
+}
+
+void ThreadNet::setTimer()
+{
+	QTimer *timer_1s = new QTimer(this);
+	connect(timer_1s, &QTimer::timeout,
+					[this](){
+						refreshLocalHostIP();
+					});
+	timer_1s->setSingleShot(false);
+	timer_1s->start(1000);
+
+	QTimer *timer_3s = new QTimer(this);
+	connect(timer_3s, &QTimer::timeout,
+					[this](){
+						sendOnlineStatus();
+					});
+	timer_3s->setSingleShot(false);
+	timer_3s->start(3000);
 }
 
 ///udp process
