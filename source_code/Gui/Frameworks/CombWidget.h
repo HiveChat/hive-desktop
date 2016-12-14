@@ -2,7 +2,6 @@
 #define GUICOMBWIDGET_H
 
 #include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QHostAddress>
 
 #include "GlobalType.h"

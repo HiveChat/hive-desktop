@@ -44,17 +44,22 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 	connect(gui_tab_block->chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(const QString&)));
 
   ///buttons~~
-	connect(gui_tab_block->home_tab->welcome_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->home_tab->list_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->home_tab->storage_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
+	connect(gui_tab_block->home_tab->welcome_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
+	connect(gui_tab_block->home_tab->list_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
+	connect(gui_tab_block->home_tab->storage_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
 
 
-	connect(gui_tab_block->settings_tab->messaging_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->settings_tab->profile_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->settings_tab->questions_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-	connect(gui_tab_block->settings_tab->update_btn, SIGNAL(clicked(GUI::StaticStackType)), gui_main_block, SLOT(displayStaticStack( GUI::StaticStackType)));
-
-
+	connect(gui_tab_block->settings_tab->messaging_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
+	connect(gui_tab_block->settings_tab->profile_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
+	connect(gui_tab_block->settings_tab->questions_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
+	connect(gui_tab_block->settings_tab->update_btn, &MenuButton::clicked, 
+					gui_main_block, &MainBlock::displayStaticStack);
 
 }
 

@@ -89,25 +89,25 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
   thread_net->udpSendMessage(json_object);
 }
 
-QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)
-{
-  QJsonObject json_object;
-  json_object.insert("sender", messageStruct.sender);
-  json_object.insert("receiver", messageStruct.reciever);
-  json_object.insert("time", messageStruct.time);
-  json_object.insert("message", messageStruct.message);
+//QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)
+//{
+//  QJsonObject json_object;
+//  json_object.insert("sender", messageStruct.sender);
+//  json_object.insert("receiver", messageStruct.reciever);
+//  json_object.insert("time", messageStruct.time);
+//  json_object.insert("message", messageStruct.message);
 
-  return json_object;
-}
+//  return json_object;
+//}
 
-QJsonObject Hive::wrapFileMessage(const Message::FileInfoStruct &fileInfoStruct)
-{
-  QJsonObject json_object;
-  json_object.insert("name", fileInfoStruct.name);
-  json_object.insert("size", fileInfoStruct.size);
-  json_object.insert("type", fileInfoStruct.type);
+//QJsonObject Hive::wrapFileMessage(const Message::FileInfoStruct &fileInfoStruct)
+//{
+//  QJsonObject json_object;
+//  json_object.insert("name", fileInfoStruct.name);
+//  json_object.insert("size", fileInfoStruct.size);
+//  json_object.insert("type", fileInfoStruct.type);
 
-  return json_object;
-}
+//  return json_object;
+//}
 
 
