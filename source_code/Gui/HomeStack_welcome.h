@@ -6,6 +6,8 @@
 #include "GlobalData.h"
 
 #include <QStackedLayout>
+#include <QRadialGradient>
+#include <QPainter>
 #include <QTime>
 #include <QDebug>
 
@@ -15,6 +17,9 @@ class GuiHomeStack_welcome : public QWidget
 
 public:
   explicit GuiHomeStack_welcome(QWidget *parent = 0);
+
+protected:
+	void paintEvent(QPaintEvent *);
 
 private:
   QHBoxLayout *bottom_layout;
@@ -29,7 +34,13 @@ private:
 
   GuiAvatarButton *my_avatar;
 
-  QPixmap icon_pixmap;
+	QColor blur_color;
+
+	int radial_radius = 60;
+	int enlarge = true;
+	bool online = false;
+
+	void refreshCenter();
 
 private slots:
 	void refreshUI();
