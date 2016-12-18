@@ -96,6 +96,8 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon->setContextMenu(tray_icon_menu);
   tray_icon->setVisible(true);
 	tray_icon->show();
+
+	connect(tray_icon, &QSystemTrayIcon::activated, this, &GuiCentralWidget::showNormal);
 }
 
 void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe)

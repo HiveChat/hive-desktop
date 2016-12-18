@@ -5,8 +5,9 @@
 #include "MainBlock.h"
 
 #include <QSystemTrayIcon>
-#include <QAction>
+#include <QMenuBar>
 #include <QMenu>
+#include <QAction>
 
 class GuiCentralWidget : public QWidget
 {
@@ -33,6 +34,23 @@ private:
   QAction *hide_action;
   QAction *show_action;
   QAction *quit_action;
+
+	QMenuBar *menu_bar;
+
+	QMenu *home;
+	QAction *home_show;
+	QAction *home_welcome;
+	QAction *home_network;
+
+	QMenu *chat;
+	QAction *chat_show;
+	QAction *chat_1;
+	QAction *chat_2;
+	QAction *chat_3;
+
+
+	QMenu *settigns;
+	QAction *settigns_show;
 
   void initAction();
   void initTrayIcon();
