@@ -32,12 +32,12 @@ QTreeView::item:selected:!active {
 
 
 QTreeView::branch {
-	image:none;
+  image:none;
         /*background: palette(base);*/
 }
 
 QTreeView::branch:selected {
-	background: transparent;
+  background: transparent;
 }
 
 
@@ -102,7 +102,7 @@ QToolTip {
 
 
 QScrollArea{
-	background: transparent
+  background: transparent
 }
 
 

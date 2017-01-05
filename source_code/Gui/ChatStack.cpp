@@ -4,8 +4,8 @@
 
 ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : QWidget(parent)
 {
-	//test
-	QLabel *a = new QLabel(hello, this);
+  //test
+  QLabel *a = new QLabel(hello, this);
 
 
   setAutoFillBackground(true);
@@ -49,7 +49,7 @@ ChatStack_chat_widget::~ChatStack_chat_widget()
 
 void ChatStack_chat_widget::clearChatBubbles()
 {
-	foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
+  foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
     {
       if(temp_chat_bubble_pointer != nullptr)
         {
@@ -61,7 +61,7 @@ void ChatStack_chat_widget::clearChatBubbles()
 
 void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
 {
-	gui_chat_bubble = new TextBubble(message, !fromMe, this);
+  gui_chat_bubble = new TextBubble(message, !fromMe, this);
   chat_bubble_list.append(gui_chat_bubble);
 
   chat_bubble_layout->addWidget(gui_chat_bubble);
@@ -242,7 +242,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   bottom_line->setFixedHeight(2);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
-	chat_widget = new ChatStack_chat_widget("init",this);
+  chat_widget = new ChatStack_chat_widget("init",this);
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   scroll_area->setPalette(palette);
@@ -265,10 +265,10 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   main_layout->addWidget(bottom_line);
   main_layout->addWidget(message_editor);
 
-	connect(message_editor, &GuiChatStack_message_editor::sendTriggered,
-					this, &GuiChatStack::onSendButtonClicked);
-	connect(message_editor->send_btn, &LabelButton::clicked,
-					this, &GuiChatStack::onSendButtonClicked);
+  connect(message_editor, &GuiChatStack_message_editor::sendTriggered,
+          this, &GuiChatStack::onSendButtonClicked);
+  connect(message_editor->send_btn, &LabelButton::clicked,
+          this, &GuiChatStack::onSendButtonClicked);
 
   this->setParent(parent);
 }
@@ -309,59 +309,59 @@ bool GuiChatStack::refreshMessage(const QString &usrKey)
 
 void GuiChatStack::setUsrData(UsrData *usrData)
 {
-	usr_data = usrData;
+  usr_data = usrData;
 }
 
 void GuiChatStack::display(const QString &usrKey)
 {
-	UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
+  UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
 
-	if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
+  if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
     {
-			if(usr_data->key() != temp_usr_data->key())
-				{
-					if(message_hash.contains(usr_data->key()))
-						{
-							message_hash.take(usr_data->key());
-						}
-					message_hash.insert(usr_data->key(), message_editor->text_editor->toPlainText());
+      if(usr_data->key() != temp_usr_data->key())
+        {
+          if(message_hash.contains(usr_data->key()))
+            {
+              message_hash.take(usr_data->key());
+            }
+          message_hash.insert(usr_data->key(), message_editor->text_editor->toPlainText());
 
 
           this->setUsrData(temp_usr_data);
 
 
-					if(message_hash.contains(usrKey))
-						{
-							message_editor->text_editor->setText(message_hash.value(usrKey));
-						}
-					else
-						{
-							message_editor->text_editor->clear();
-							message_hash.insert(usrKey, "");
-						}
+          if(message_hash.contains(usrKey))
+            {
+              message_editor->text_editor->setText(message_hash.value(usrKey));
+            }
+          else
+            {
+              message_editor->text_editor->clear();
+              message_hash.insert(usrKey, "");
+            }
 
 
-					if(chat_widget_hash.contains(usrKey))
-						{
-							 ChatStack_chat_widget *widget = chat_widget_hash.value(usrKey);
-							 chat_widget = widget;
-						}
-					else
-						{
-							ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
-							chat_widget = widget;
-							chat_widget_hash.insert(usrKey, widget);
-							this->flipLatestMessage(false);
-						}
+          if(chat_widget_hash.contains(usrKey))
+            {
+               ChatStack_chat_widget *widget = chat_widget_hash.value(usrKey);
+               chat_widget = widget;
+            }
+          else
+            {
+              ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
+              chat_widget = widget;
+              chat_widget_hash.insert(usrKey, widget);
+              this->flipLatestMessage(false);
+            }
 
 
-					this->flipUnreadMessage();
-					scroll_area->takeWidget();
-					scroll_area->setWidget(chat_widget);
+          this->flipUnreadMessage();
+          scroll_area->takeWidget();
+          scroll_area->setWidget(chat_widget);
         }
 
 
-			this->refreshProfile(usrKey);
+      this->refreshProfile(usrKey);
 
     }
 }
@@ -406,14 +406,14 @@ void GuiChatStack::flipUnreadMessage()
     }
 
 #ifdef Q_OS_OSX
-	timer = new QTimer(this);
-	connect(timer, &QTimer::timeout,
-					[this](){
-						scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
-						timer->deleteLater();
-					});
-	timer->setSingleShot(true);
-	timer->start(100);
+  timer = new QTimer(this);
+  connect(timer, &QTimer::timeout,
+          [this](){
+            scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+            timer->deleteLater();
+          });
+  timer->setSingleShot(true);
+  timer->start(100);
 #endif
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
@@ -468,14 +468,14 @@ void GuiChatStack::onSendButtonClicked()
   message_editor->text_editor->clear();
 
 #ifdef Q_OS_OSX
-	timer = new QTimer(this);
-	connect(timer, &QTimer::timeout,
-					[this](){
-						scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
-						timer->deleteLater();
-					});
-	timer->setSingleShot(true);
-	timer->start(100);
+  timer = new QTimer(this);
+  connect(timer, &QTimer::timeout,
+          [this](){
+            scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+            timer->deleteLater();
+          });
+  timer->setSingleShot(true);
+  timer->start(100);
 #endif
 
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);

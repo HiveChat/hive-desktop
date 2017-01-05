@@ -12,7 +12,7 @@ public:
   explicit ThreadSocketTCP(const qint16 &port, QObject *parent = 0);
 
 protected:
-	void run();
+  void run();
 
 private:
   qint16 tcp_port;

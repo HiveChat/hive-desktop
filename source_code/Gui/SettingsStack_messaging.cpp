@@ -51,36 +51,36 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
 #else
   addItem("\tShow message detail\t\t\t\t", show_detail_box);
 #endif
-	addTag("History Cleaner");
-	clear_btn = new QPushButton("clear", this);
-	clear_btn->setMaximumWidth(70);
-	connect(clear_btn, &QPushButton::clicked,
-					[this](){
-						if(make_sure == 0)
-							{
-								clear_btn->setText("sure?");
-								make_sure ++;
-							}
-						else if(make_sure == 1)
-							{
-								clear_btn->setText("go!");
-								make_sure ++;
-							}
-						if(make_sure == 2)
-							{
-								QDir dir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation).append("/usr/"));
-								if(dir.removeRecursively())
-									{
-										clear_btn->setText("cleared");
-										clear_btn->setDisabled(true);
-									}
-								else
-									{
-										clear_btn->setText("failed");
-									}
-							}
-					});
-	addItem("\tDelete ALL Message History:      ", clear_btn);
+  addTag("History Cleaner");
+  clear_btn = new QPushButton("clear", this);
+  clear_btn->setMaximumWidth(70);
+  connect(clear_btn, &QPushButton::clicked,
+          [this](){
+            if(make_sure == 0)
+              {
+                clear_btn->setText("sure?");
+                make_sure ++;
+              }
+            else if(make_sure == 1)
+              {
+                clear_btn->setText("go!");
+                make_sure ++;
+              }
+            if(make_sure == 2)
+              {
+                QDir dir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation).append("/usr/"));
+                if(dir.removeRecursively())
+                  {
+                    clear_btn->setText("cleared");
+                    clear_btn->setDisabled(true);
+                  }
+                else
+                  {
+                    clear_btn->setText("failed");
+                  }
+              }
+          });
+  addItem("\tDelete ALL Message History:      ", clear_btn);
 
 
 

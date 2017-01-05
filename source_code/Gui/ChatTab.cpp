@@ -11,7 +11,7 @@ ChatTab::ChatTab(QWidget *parent) : QWidget(parent)
   comb_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   comb_scrollarea->setFrameShape(QFrame::NoFrame);
   comb_scrollarea->setWidgetResizable(true);
-	comb_scroll_widget = new ChatTab_comb_scroll_widget();
+  comb_scroll_widget = new ChatTab_comb_scroll_widget();
   comb_scrollarea->setWidget(comb_scroll_widget);
 
 
@@ -30,24 +30,24 @@ ChatTab::ChatTab(QWidget *parent) : QWidget(parent)
   this->setFixedWidth(250);
 
 
-	/*comb_treewidget = new QTreeWidget(this);
-	comb_treewidget->setHeaderHidden(true);
-	comb_treewidget->setAnimated(true);
-	comb_treewidget->setAlternatingRowColors(false);
-	comb_treewidget->setFrameStyle(QFrame::NoFrame);
+  /*comb_treewidget = new QTreeWidget(this);
+  comb_treewidget->setHeaderHidden(true);
+  comb_treewidget->setAnimated(true);
+  comb_treewidget->setAlternatingRowColors(false);
+  comb_treewidget->setFrameStyle(QFrame::NoFrame);
 
-	connect(comb_treewidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(onItemClicked(QTreeWidgetItem*, int)));
+  connect(comb_treewidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(onItemClicked(QTreeWidgetItem*, int)));
 
-	QTreeWidgetItem *item=new QTreeWidgetItem(comb_treewidget,QStringList(QString("Tree")));
+  QTreeWidgetItem *item=new QTreeWidgetItem(comb_treewidget,QStringList(QString("Tree")));
 
 
-	for(int i = 0; i <= 10; i++)
-		{
-			QTreeWidgetItem *item1=new QTreeWidgetItem(item,QStringList(QString("Band")+QString::number(i+1)));
-			item->addChild(item1);
-		}
-	//comb_treewidget->setFixedWidth(100);
-	*/
+  for(int i = 0; i <= 10; i++)
+    {
+      QTreeWidgetItem *item1=new QTreeWidgetItem(item,QStringList(QString("Band")+QString::number(i+1)));
+      item->addChild(item1);
+    }
+  //comb_treewidget->setFixedWidth(100);
+  */
 }
 
 
@@ -76,10 +76,10 @@ void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
   comb_widget_hash.insert(usrProfileStruct->key, comb_widget);
   main_layout->addWidget(comb_widget);
 
-	connect(comb_widget, &GuiCombWidget::clicked,
-					[this](const QString &usrKey){
-						emit combWidgetClicked(usrKey);
-					});
+  connect(comb_widget, &GuiCombWidget::clicked,
+          [this](const QString &usrKey){
+            emit combWidgetClicked(usrKey);
+          });
 }
 
 void ChatTab_comb_scroll_widget::refreshBadgeNumber(const QString &usrKey, const int &num)

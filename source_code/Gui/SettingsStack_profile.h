@@ -20,7 +20,7 @@ public:
   ~GuiSettingsStack_profile();
 
 private:
-	QHash<QString , QString> avatar_hash;
+  QHash<QString , QString> avatar_hash;
   QList<QRadioButton *> avatar_radio_btn_list;
   GuiAvatarButton *avatar_btn;
 
