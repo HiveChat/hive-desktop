@@ -61,11 +61,11 @@ private:
   void loadDefaultGlobalData();
   void loadMySettings();
   void loadFonts();
-	void loadUpdates();
+  void loadUpdates();
 
   void deleteUsr(const QStringList usrInfoStrList);
 
-	const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   const QString usr_path = app_data_local_path + "/usr/";
   const QString log_path = app_data_local_path + "/log/";
 
@@ -74,18 +74,18 @@ private:
   const QString update_file_path = app_data_local_path + "/update.json";
 
   //data map
-	QHash<QString, UsrProfileStruct> local_usr_profile_hash;
+  QHash<QString, UsrProfileStruct> local_usr_profile_hash;
 
   //config map
-	QHash<QString, QColor*> settings_hash_qcolor;
-	QHash<QString, QString*> settings_hash_qstring;
-	QHash<QString, bool*> settings_hash_bool;
+  QHash<QString, QColor*> settings_hash_qcolor;
+  QHash<QString, QString*> settings_hash_qstring;
+  QHash<QString, bool*> settings_hash_bool;
 
 public slots:
   void onUsrEntered(UsrProfileStruct *usrProfileStruct);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe);
-	void onUpdatesAvailable();
+  void onUpdatesAvailable();
 
 private slots:
   void writeCurrentConfig();

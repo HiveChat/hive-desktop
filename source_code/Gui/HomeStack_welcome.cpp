@@ -42,56 +42,56 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   dd->addWidget(profile_widget);
   dd->addWidget(background_label);
 
-	this->refreshUI();
+  this->refreshUI();
 
-	QTimer *timer = new QTimer(this);
-	connect(timer, &QTimer::timeout,
-					this, &GuiHomeStack_welcome::refreshUI);
-	timer->setSingleShot(false);
-	timer->start(1000);
+  QTimer *timer = new QTimer(this);
+  connect(timer, &QTimer::timeout,
+          this, &GuiHomeStack_welcome::refreshUI);
+  timer->setSingleShot(false);
+  timer->start(1000);
 
-	QTimer *repaint_timer = new QTimer(this);
-	connect(repaint_timer, &QTimer::timeout,
-					[this](){
-						this->repaint();
-					});
-	repaint_timer->setSingleShot(false);
-	repaint_timer->start(200);
+  QTimer *repaint_timer = new QTimer(this);
+  connect(repaint_timer, &QTimer::timeout,
+          [this](){
+            this->repaint();
+          });
+  repaint_timer->setSingleShot(false);
+  repaint_timer->start(200);
 
 
 }
 
 void GuiHomeStack_welcome::paintEvent(QPaintEvent *)
 {
-	if(online)
-		{
-			QPoint avatar_center = my_avatar->mapToParent(my_avatar->rect().center());
-			QPainter painter(this);
-			painter.setPen(QPen(Qt::NoPen));
-			QRadialGradient radialGradient(avatar_center, radial_radius);
-			radialGradient.setColorAt(0.4, QColor("#fff1d8"));
-			radialGradient.setColorAt(1.0, Qt::transparent);
-			painter.setBrush(QBrush(radialGradient));
-			painter.drawEllipse(avatar_center, 100, 100);
+  if(online)
+    {
+      QPoint avatar_center = my_avatar->mapToParent(my_avatar->rect().center());
+      QPainter painter(this);
+      painter.setPen(QPen(Qt::NoPen));
+      QRadialGradient radialGradient(avatar_center, radial_radius);
+      radialGradient.setColorAt(0.4, QColor("#fff1d8"));
+      radialGradient.setColorAt(1.0, Qt::transparent);
+      painter.setBrush(QBrush(radialGradient));
+      painter.drawEllipse(avatar_center, 100, 100);
 
-			if(radial_radius > 75)
-				{
-					enlarge = false;
-				}
-			if(radial_radius < 50)
-				{
-					enlarge = true;
-				}
+      if(radial_radius > 75)
+        {
+          enlarge = false;
+        }
+      if(radial_radius < 50)
+        {
+          enlarge = true;
+        }
 
-			if(enlarge)
-				{
-					radial_radius  = radial_radius + 1;
-				}
-			else
-				{
-					radial_radius = radial_radius - 1;
-				}
-		}
+      if(enlarge)
+        {
+          radial_radius  = radial_radius + 1;
+        }
+      else
+        {
+          radial_radius = radial_radius - 1;
+        }
+    }
 }
 
 void GuiHomeStack_welcome::refreshUI()
@@ -122,12 +122,12 @@ void GuiHomeStack_welcome::refreshUI()
 
   if(GlobalData::g_localHostIP.isEmpty())
     {
-			online = false;
+      online = false;
       ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
     }
   else
     {
-			online = true;
+      online = true;
       ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
     }
   qDebug()<<"#GuiWelcomeStack::refresh(): Finished";

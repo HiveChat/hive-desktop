@@ -12,9 +12,9 @@ MainBlock::MainBlock(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(main_stacked_widget);
 
 
-	createStaticStack(GUI::StaticStackType::Home_list);
-	createStaticStack(GUI::StaticStackType::Home_Welcome);
-	displayStaticStack(GUI::StaticStackType::Home_Welcome);
+  createStaticStack(GUI::StaticStackType::Home_list);
+  createStaticStack(GUI::StaticStackType::Home_Welcome);
+  displayStaticStack(GUI::StaticStackType::Home_Welcome);
 }
 
 MainBlock::~MainBlock()
@@ -26,8 +26,8 @@ void MainBlock::clearStackMap( GUI::StaticStackType &reservation)
 {
   foreach ( GUI::StaticStackType temp_static_stack_type, static_stack_hash.keys())
     {
-			if(temp_static_stack_type == GUI::StaticStackType::Home_Welcome
-				 || temp_static_stack_type == GUI::StaticStackType::Home_list
+      if(temp_static_stack_type == GUI::StaticStackType::Home_Welcome
+         || temp_static_stack_type == GUI::StaticStackType::Home_list
          || temp_static_stack_type == reservation)
         {
           continue;
@@ -44,7 +44,7 @@ void MainBlock::clearStackMap( GUI::StaticStackType &reservation)
 void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 {
   switch (staticStackType) {
-		case GUI::StaticStackType::Home_Welcome:
+    case GUI::StaticStackType::Home_Welcome:
       {
         gui_home_stack_welcome = new GuiHomeStack_welcome(this);
         static_stack_hash.insert(staticStackType, gui_home_stack_welcome);
@@ -54,7 +54,7 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
         return;
       }
 
-		case GUI::StaticStackType::Home_list:
+    case GUI::StaticStackType::Home_list:
       {
         gui_home_stack_list = new GuiHomeStack_list(this);
         static_stack_hash.insert(staticStackType, gui_home_stack_list);
@@ -64,7 +64,7 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
         return;
       }
     ///active stacks
-		case GUI::StaticStackType::Home_Storage:
+    case GUI::StaticStackType::Home_Storage:
       {
         GuiHomeStack_storage *static_stack = new GuiHomeStack_storage(this);
         static_stack_hash.insert(staticStackType, static_stack);
@@ -73,7 +73,7 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 
         return;
       }
-		case GUI::StaticStackType::Settings_Messaging:
+    case GUI::StaticStackType::Settings_Messaging:
       {
         GuiSettingsStack_messaging *static_stack = new GuiSettingsStack_messaging(this);
         static_stack_hash.insert(staticStackType, static_stack);
@@ -82,7 +82,7 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 
         return;
       }
-		case GUI::StaticStackType::Settings_Profile:
+    case GUI::StaticStackType::Settings_Profile:
       {
         GuiSettingsStack_profile *static_stack = new GuiSettingsStack_profile(this);
         static_stack_hash.insert(staticStackType, static_stack);
@@ -92,12 +92,12 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
         return;
       }
 
-		case GUI::StaticStackType::Settings_Style:
+    case GUI::StaticStackType::Settings_Style:
       {
 
         break;
       }
-		case GUI::StaticStackType::Settings_Questions:
+    case GUI::StaticStackType::Settings_Questions:
       {
         GuiSettingsStack_questions *static_stack = new GuiSettingsStack_questions(this);
         static_stack_hash.insert(staticStackType, static_stack);
@@ -106,14 +106,14 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 
         return;
       }
-		case GUI::StaticStackType::Settings_Update:
+    case GUI::StaticStackType::Settings_Update:
       {
         GuiSettingsStack_update *static_stack = new GuiSettingsStack_update(this);
         static_stack_hash.insert(staticStackType, static_stack);
         main_stacked_widget->addWidget(static_stack);
         main_stacked_widget->setCurrentWidget(static_stack);
       }
-		case GUI::StaticStackType::NULL_Stack:
+    case GUI::StaticStackType::NULL_Stack:
       {
         break;
       }

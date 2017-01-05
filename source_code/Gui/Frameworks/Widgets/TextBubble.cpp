@@ -2,12 +2,12 @@
 
 TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
 {
-	int maxWidth = 500;
+  int maxWidth = 500;
 
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
   label =  new QLabel(this);
-	label->setText(text);
-	label->setFont(GlobalData::font_chatBubble);
+  label->setText(text);
+  label->setFont(GlobalData::font_chatBubble);
   label->adjustSize();
   label->setWordWrap(true);
   label->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -66,7 +66,7 @@ TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *pare
 //  strip->setAlignment(Qt::AlignTop);
 //  strip->setContentsMargins(0,10,0,0);
 
-	text_area = new TextBubble_text_area(text, alignLeft, this);
+  text_area = new TextBubble_text_area(text, alignLeft, this);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);

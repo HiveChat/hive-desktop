@@ -80,14 +80,14 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
 
   ////tab stacked widget
-	home_tab = new HomeTab();
-	chat_tab = new ChatTab();
-	settings_tab = new SettingsTab();
+  home_tab = new HomeTab();
+  chat_tab = new ChatTab();
+  settings_tab = new SettingsTab();
 
   tab_stacked_widget = new QStackedWidget(this);
-	tab_stacked_widget->addWidget(home_tab);
-	tab_stacked_widget->addWidget(chat_tab);
-	tab_stacked_widget->addWidget(settings_tab);
+  tab_stacked_widget->addWidget(home_tab);
+  tab_stacked_widget->addWidget(chat_tab);
+  tab_stacked_widget->addWidget(settings_tab);
 
   //// main layout
   main_layout = new QVBoxLayout(this);
@@ -114,7 +114,7 @@ void GuiTabBlock::changeBtnLine()
       mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line->setFixedHeight(2);
       right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-			tab_stacked_widget->setCurrentWidget(home_tab);
+      tab_stacked_widget->setCurrentWidget(home_tab);
     }
   if(sender() == mid_tab_label)
     {
@@ -125,7 +125,7 @@ void GuiTabBlock::changeBtnLine()
       mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
       right_btn_line->setFixedHeight(2);
       right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-			tab_stacked_widget->setCurrentWidget(chat_tab);
+      tab_stacked_widget->setCurrentWidget(chat_tab);
     }
   if(sender() == right_tab_label)
     {
@@ -136,7 +136,7 @@ void GuiTabBlock::changeBtnLine()
       mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line->setFixedHeight(3);
       right_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
-			tab_stacked_widget->setCurrentWidget(settings_tab);
+      tab_stacked_widget->setCurrentWidget(settings_tab);
 
     }
 }
