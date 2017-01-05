@@ -19,8 +19,8 @@ private:
   GuiColorPicker *in_bubble_picker;
   GuiColorPicker *out_bubble_picker;
 
-  QPushButton *clear_btn;
-  int make_sure = 0;
+	QPushButton *clear_btn;
+	int make_sure = 0;
 
 };
 

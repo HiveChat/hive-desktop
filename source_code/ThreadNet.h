@@ -54,7 +54,7 @@ private:
   void refreshLocalHostIP();
   void sendOnlineStatus();
   void checkUpdate();
-  void setTimer();
+	void setTimer();
 
 
   QNetworkAccessManager *http_update_manager;
@@ -64,8 +64,8 @@ private:
   ///UDP Socket
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
-  void udpProcessMessage(Message::TextMessageStruct *messageStruct);
-  void udpProcessHeartBeat(UsrProfileStruct *usrProfileStruct);
+	void udpProcessMessage(Message::TextMessageStruct *messageStruct);
+	void udpProcessHeartBeat(UsrProfileStruct *usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
   void udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct);
   void udpProcessFileReject();

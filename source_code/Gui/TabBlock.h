@@ -17,30 +17,28 @@ public:
   explicit GuiTabBlock(QWidget *parent = 0);
   ~GuiTabBlock();
 
-  SettingsTab *settings_tab;
-  HomeTab *home_tab;
-  ChatTab *chat_tab;
-
-  void switchTab(const int index);
+	SettingsTab *settings_tab;
+	HomeTab *home_tab;
+	ChatTab *chat_tab;
 
 private slots:
-  void onTabClicked();
+  void changeBtnLine();
 
 private:
   int current_tab_index = 0;
 
-  QVBoxLayout *main_layout;
-  QGridLayout *tab_label_layout;
+	QVBoxLayout *main_layout;
+	QGridLayout *tab_label_layout;
 
-  LabelButton *left_tab_label;
-  LabelButton *mid_tab_label;
-  LabelButton *right_tab_label;
+	LabelButton *left_tab_label;
+	LabelButton *mid_tab_label;
+	LabelButton *right_tab_label;
 
-  QFrame *left_btn_line;
-  QFrame *mid_btn_line;
-  QFrame *right_btn_line;
+	QFrame *left_btn_line;
+	QFrame *mid_btn_line;
+	QFrame *right_btn_line;
 
-  QStackedWidget *tab_stacked_widget;
+	QStackedWidget *tab_stacked_widget;
 
 
 

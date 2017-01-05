@@ -19,7 +19,7 @@ public:
   explicit GuiHomeStack_welcome(QWidget *parent = 0);
 
 protected:
-  void paintEvent(QPaintEvent *);
+	void paintEvent(QPaintEvent *);
 
 private:
   QHBoxLayout *bottom_layout;
@@ -34,16 +34,16 @@ private:
 
   GuiAvatarButton *my_avatar;
 
-  QColor blur_color;
+	QColor blur_color;
 
-  int radial_radius = 60;
-  int enlarge = true;
-  bool online = false;
+	int radial_radius = 60;
+	int enlarge = true;
+	bool online = false;
 
-  void refreshCenter();
+	void refreshCenter();
 
 private slots:
-  void refreshUI();
+	void refreshUI();
 };
 
 #endif // GUIWELCOMESTACK_H

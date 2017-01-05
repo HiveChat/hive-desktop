@@ -36,9 +36,9 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   right_tab_label->setToolTipDuration(1000);
   right_tab_label->setToolTip("settings");
 
-  connect(left_tab_label, SIGNAL(clicked()), this, SLOT(onTabClicked()));
-  connect(mid_tab_label, SIGNAL(clicked()), this, SLOT(onTabClicked()));
-  connect(right_tab_label, SIGNAL(clicked()), this, SLOT(onTabClicked()));
+  connect(left_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
+  connect(mid_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
+  connect(right_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
 
   ////tab line
   left_btn_line  = new QFrame(this);
@@ -80,14 +80,14 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 
 
   ////tab stacked widget
-  home_tab = new HomeTab();
-  chat_tab = new ChatTab();
-  settings_tab = new SettingsTab();
+	home_tab = new HomeTab();
+	chat_tab = new ChatTab();
+	settings_tab = new SettingsTab();
 
   tab_stacked_widget = new QStackedWidget(this);
-  tab_stacked_widget->addWidget(home_tab);
-  tab_stacked_widget->addWidget(chat_tab);
-  tab_stacked_widget->addWidget(settings_tab);
+	tab_stacked_widget->addWidget(home_tab);
+	tab_stacked_widget->addWidget(chat_tab);
+	tab_stacked_widget->addWidget(settings_tab);
 
   //// main layout
   main_layout = new QVBoxLayout(this);
@@ -103,61 +103,41 @@ GuiTabBlock::~GuiTabBlock()
 
 }
 
-void GuiTabBlock::switchTab(const int index)
-{
-  switch (index) {
-    case 1:
-      {
-        current_tab_index = 1;
-        left_btn_line->setFixedHeight(3);
-        left_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
-        mid_btn_line->setFixedHeight(2);
-        mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-        right_btn_line->setFixedHeight(2);
-        right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-        tab_stacked_widget->setCurrentWidget(home_tab);
-        break;
-      }
-    case 2:
-      {
-        current_tab_index = 2;
-        left_btn_line->setFixedHeight(2);
-        left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-        mid_btn_line->setFixedHeight(3);
-        mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
-        right_btn_line->setFixedHeight(2);
-        right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-        tab_stacked_widget->setCurrentWidget(chat_tab);
-        break;
-      }
-    case 3:
-      {
-        current_tab_index = 3;
-        left_btn_line->setFixedHeight(2);
-        left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-        mid_btn_line->setFixedHeight(2);
-        mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-        right_btn_line->setFixedHeight(3);
-        right_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
-        tab_stacked_widget->setCurrentWidget(settings_tab);
-        break;
-      }
-    }
-}
-
-void GuiTabBlock::onTabClicked()
+void GuiTabBlock::changeBtnLine()
 {
   if(sender() == left_tab_label)
     {
-      switchTab(1);
+      current_tab_index = 1;
+      left_btn_line->setFixedHeight(3);
+      left_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+      mid_btn_line->setFixedHeight(2);
+      mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line->setFixedHeight(2);
+      right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+			tab_stacked_widget->setCurrentWidget(home_tab);
     }
   if(sender() == mid_tab_label)
     {
-      switchTab(2);
+      current_tab_index = 2;
+      left_btn_line->setFixedHeight(2);
+      left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line->setFixedHeight(3);
+      mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+      right_btn_line->setFixedHeight(2);
+      right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+			tab_stacked_widget->setCurrentWidget(chat_tab);
     }
   if(sender() == right_tab_label)
     {
-      switchTab(3);
+      current_tab_index = 3;
+      left_btn_line->setFixedHeight(2);
+      left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line->setFixedHeight(2);
+      mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line->setFixedHeight(3);
+      right_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+			tab_stacked_widget->setCurrentWidget(settings_tab);
+
     }
 }
 

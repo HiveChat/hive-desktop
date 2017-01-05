@@ -9,7 +9,7 @@ ThreadData::ThreadData(QObject *parent) : QThread(parent)
 
   TEST_SECTION();
 
-  qDebug()<<this->currentThreadId();
+	qDebug()<<this->currentThreadId();
   this->setParent(parent);
 }
 
@@ -75,11 +75,11 @@ void ThreadData::checkSettings()
 QJsonObject ThreadData::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
 {
   QJsonObject profile_json_obj;
-  profile_json_obj.insert("usrName", usrProfileStruct.name);
-  profile_json_obj.insert("avatarPath", usrProfileStruct.avatar);
+	profile_json_obj.insert("usrName", usrProfileStruct.name);
+	profile_json_obj.insert("avatarPath", usrProfileStruct.avatar);
 
   QJsonObject usr_profile_json_obj;
-  usr_profile_json_obj.insert(usrProfileStruct.key, profile_json_obj);
+	usr_profile_json_obj.insert(usrProfileStruct.key, profile_json_obj);
 
   return usr_profile_json_obj;
 }
@@ -120,10 +120,10 @@ void ThreadData::TEST_SECTION()
 
 void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
 {
-  QString usr_key = usrProfileStruct->key;
-  QString ip_addr = usrProfileStruct->ip;
-  QString usr_name = usrProfileStruct->name;
-  QString avatar_path = usrProfileStruct->avatar;
+	QString usr_key = usrProfileStruct->key;
+	QString ip_addr = usrProfileStruct->ip;
+	QString usr_name = usrProfileStruct->name;
+	QString avatar_path = usrProfileStruct->avatar;
 
   qDebug()<<ip_addr;
 
@@ -236,27 +236,27 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
 
 void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
 {
-  if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct->key))
+	if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct->key))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
 
-      if(*usrProfileStruct != *GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct())
+			if(*usrProfileStruct != *GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct())
         {
-          GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->setUsrProfileStruct(*usrProfileStruct);
+					GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->setUsrProfileStruct(*usrProfileStruct);
 
-          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "Thread Data packaging...");
+					GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "Thread Data packaging...");
           qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
-          emit usrProfileChanged(GlobalData::online_usr_data_hash.value(usrProfileStruct->key));
+					emit usrProfileChanged(GlobalData::online_usr_data_hash.value(usrProfileStruct->key));
         }
     }
   else
     {
       UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
-      GlobalData::online_usr_data_hash.insert(usrProfileStruct->key, user_data);
+			GlobalData::online_usr_data_hash.insert(usrProfileStruct->key, user_data);
 
-      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "ThreadData Just packaged");
+			GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "ThreadData Just packaged");
       qDebug()<<"@ThreadData::onUsrEntered: User profile Created.";
-      emit usrProfileLoaded(GlobalData::online_usr_data_hash.value(usrProfileStruct->key));
+			emit usrProfileLoaded(GlobalData::online_usr_data_hash.value(usrProfileStruct->key));
 
     }
 
@@ -272,11 +272,11 @@ void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool f
 {
   if(fromMe)
     {
-      GlobalData::online_usr_data_hash.value(messageStruct->reciever)->addUnreadMessage(*messageStruct);
+			GlobalData::online_usr_data_hash.value(messageStruct->reciever)->addUnreadMessage(*messageStruct);
     }
   else
     {
-      GlobalData::online_usr_data_hash.value(messageStruct->sender)->addUnreadMessage(*messageStruct);
+			GlobalData::online_usr_data_hash.value(messageStruct->sender)->addUnreadMessage(*messageStruct);
     }
   emit messageLoaded(*messageStruct, fromMe);
 }
@@ -322,34 +322,34 @@ void ThreadData::onUpdatesAvailable()
                   write_version[i] = read_version[i];
                 }
 
-              if(memcmp(read_version,
-                        GlobalData::update_struct.version,
-                        sizeof(read_version)) == 0)
+							if(memcmp(read_version,
+												GlobalData::update_struct.version,
+												sizeof(read_version)) == 0)
                 {
                   file.close();
                   file.flush();
-                  emit updatesAvailable();
+									emit updatesAvailable();
 
                   return;
                 }
               else
                 {
-                  if(GlobalData::versionCompare(GlobalData::update_struct.version, read_version))
-                    {
-                      for(int i = 0; i < 3; i ++)
-                        {
-                          write_version[i] = GlobalData::update_struct.version[i];
-                        }
-                    }
+									if(GlobalData::versionCompare(GlobalData::update_struct.version, read_version))
+										{
+											for(int i = 0; i < 3; i ++)
+												{
+													write_version[i] = GlobalData::update_struct.version[i];
+												}
+										}
                 }
             }
         }
-    }
+		}
 
   out << makeUpdateJson(write_version).toJson(QJsonDocument::Indented) << endl;
 
   file.close();
-  file.flush();
+	file.flush();
 
   emit updatesAvailable();
 }
@@ -542,9 +542,9 @@ void ThreadData::loadUsrList()
               QJsonObject temp_usr_profile_json_obj = usr_list_json_obj[*temp_usr_key_str].toObject();
 
               UsrProfileStruct usr_profile_struct;
-              usr_profile_struct.key = temp_usr_profile_json_obj["usrKey"].toString();
-              usr_profile_struct.name = temp_usr_profile_json_obj["usrName"].toString();
-              usr_profile_struct.avatar = temp_usr_profile_json_obj["avatarPath"].toString();
+							usr_profile_struct.key = temp_usr_profile_json_obj["usrKey"].toString();
+							usr_profile_struct.name = temp_usr_profile_json_obj["usrName"].toString();
+							usr_profile_struct.avatar = temp_usr_profile_json_obj["avatarPath"].toString();
 
               local_usr_profile_hash.insert(*temp_usr_key_str, usr_profile_struct);
               ////////////must enable!!!!!!!!
@@ -667,45 +667,45 @@ void ThreadData::loadFonts()
 
 void ThreadData::loadUpdates()
 {
-  QFile file(update_file_path);
-  if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-      return;
-    }
+	QFile file(update_file_path);
+	if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+		{
+			return;
+		}
 
-  QTextStream in(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
+	QTextStream in(&file);
+	QByteArray in_byte_array = in.readAll().toUtf8();
 
-  if(!in_byte_array.isEmpty())
-    {
-      QJsonParseError json_error;
-      QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-      if(json_error.error == QJsonParseError::NoError)
-        {
-          if(read_json_document.isObject())
-            {
-              QJsonObject read_json_obj = read_json_document.object();
+	if(!in_byte_array.isEmpty())
+		{
+			QJsonParseError json_error;
+			QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
+			if(json_error.error == QJsonParseError::NoError)
+				{
+					if(read_json_document.isObject())
+						{
+							QJsonObject read_json_obj = read_json_document.object();
 
-              int read_version[3] = {
-                read_json_obj.value("stable_version").toInt(),
-                read_json_obj.value("beta_version").toInt(),
-                read_json_obj.value("alpha_version").toInt()
-              };
+							int read_version[3] = {
+								read_json_obj.value("stable_version").toInt(),
+								read_json_obj.value("beta_version").toInt(),
+								read_json_obj.value("alpha_version").toInt()
+							};
 
-              if(GlobalData::versionCompare(GlobalData::current_version, read_version))
-                {
-                  for(int i = 0; i < 3; i ++)
-                    {
-                      GlobalData::update_struct.version[i] = read_version[i];
-                    }
-                  emit updatesAvailable();
-                }
-            }
-        }
-    }
+							if(GlobalData::versionCompare(GlobalData::current_version, read_version))
+								{
+									for(int i = 0; i < 3; i ++)
+										{
+											GlobalData::update_struct.version[i] = read_version[i];
+										}
+									emit updatesAvailable();
+								}
+						}
+				}
+		}
 
-  file.close();
-  file.flush();
+	file.close();
+	file.flush();
 }
 
 

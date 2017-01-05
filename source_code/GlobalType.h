@@ -7,40 +7,40 @@
 
 namespace GUI
 {
-  enum StaticStackType
-  {
-    NULL_Stack,
-    Home_Welcome,
-    Home_list,
-    Home_Storage,
-    Settings_Messaging,
-    Settings_Profile,
-    Settings_Style,
-    Settings_Questions,
-    Settings_Update
-  };
+	enum StaticStackType
+	{
+		NULL_Stack,
+		Home_Welcome,
+		Home_list,
+		Home_Storage,
+		Settings_Messaging,
+		Settings_Profile,
+		Settings_Style,
+		Settings_Questions,
+		Settings_Update
+	};
 
-  enum BuiltInAvatarType
-  {
-    Bee,
-    Disk,
-    Fat,
-    Ladybug,
-    sunflower,
-    worm
-  };
+	enum BuiltInAvatarType
+	{
+		Bee,
+		Disk,
+		Fat,
+		Ladybug,
+		sunflower,
+		worm
+	};
 
-  enum BuiltInIconType
-  {
-    Default = 0,
-    Doc = 1,
-    Exe = 2,
-    Ppt = 3,
-    Rar = 4,
-    Txt = 5,
-    Xls = 6,
-    Zip = 7
-  };
+	enum BuiltInIconType
+	{
+		Default = 0,
+		Doc = 1,
+		Exe = 2,
+		Ppt = 3,
+		Rar = 4,
+		Txt = 5,
+		Xls = 6,
+		Zip = 7
+	};
 }
 
 struct UsrProfileStruct
@@ -81,8 +81,8 @@ namespace Message
   {
     QString index;
     QString name;
-    int size;
-    GUI::BuiltInIconType type;
+		int size;
+		GUI::BuiltInIconType type;
   };
 
 }

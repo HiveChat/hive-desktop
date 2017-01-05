@@ -21,8 +21,8 @@ class MainBlock : public QWidget
   Q_OBJECT
 
 public:
-  explicit MainBlock(QWidget *parent = 0);
-  ~MainBlock();
+	explicit MainBlock(QWidget *parent = 0);
+	~MainBlock();
 
   GuiChatStack *gui_chat_stack;
   QStackedWidget *main_stacked_widget;
@@ -30,15 +30,15 @@ public:
   GuiHomeStack_list *gui_home_stack_list;
 
 private:
-  QHash< GUI::StaticStackType, QWidget*> static_stack_hash;
-  GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
-  void clearStackMap(GUI::StaticStackType &reservation);
-  void createStaticStack(GUI::StaticStackType staticStackType);
+	QHash< GUI::StaticStackType, QWidget*> static_stack_hash;
+	GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
+	void clearStackMap(GUI::StaticStackType &reservation);
+	void createStaticStack(GUI::StaticStackType staticStackType);
 
   QVBoxLayout *main_layout;
 
 public slots:
-  void displayStaticStack(GUI::StaticStackType staticStackType);
+	void displayStaticStack(GUI::StaticStackType staticStackType);
   void displayChatStack(const QString &usrKey);
 //  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);<<
 

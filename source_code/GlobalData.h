@@ -49,14 +49,14 @@ public:
   static QPalette palette_txt_brown;
 
   ///data
-  static int current_version[3];
+	static int current_version[3];
   static Settings::SettingsStruct settings_struct;
   static UpdateStruct update_struct;
   static QUrl update_url;
   static QUrl download_url;
 
-  static QHash<QString, UsrProfileStruct> saved_usr_profile_hash;
-  static QHash<QString, UsrData*> online_usr_data_hash;//used
+	static QHash<QString, UsrProfileStruct> saved_usr_profile_hash;
+	static QHash<QString, UsrData*> online_usr_data_hash;//used
 
   ///net
   static QString g_localHostIP;
@@ -65,7 +65,7 @@ public:
   static QString getRandomString(const int &digit);
 
 
-  static bool versionCompare(const int (&old)[3], const int (&fresh)[3]);
+	static bool versionCompare(const int (&old)[3], const int (&fresh)[3]);
 
   ///debug
   static void TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str);
