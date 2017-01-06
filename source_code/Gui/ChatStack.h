@@ -6,7 +6,7 @@
 #include "Gui/Frameworks/Widgets/TextBubble.h"
 #include "GlobalData.h"
 #include "UsrData.h"
-#include "ThreadData.h"
+#include "DataManager.h"
 #include "Gui/Frameworks/ScrollStack.h"
 
 #include <QScrollBar>

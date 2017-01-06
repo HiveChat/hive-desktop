@@ -472,7 +472,7 @@ void GuiChatStack::onSendButtonClicked()
   connect(timer, &QTimer::timeout,
           [this](){
             scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
-            timer->deleteLater();
+//            timer->deleteLater();//
           });
   timer->setSingleShot(true);
   timer->start(100);

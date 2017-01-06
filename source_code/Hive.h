@@ -4,8 +4,8 @@
 #include "Gui/CentralWidget.h"
 #include "GlobalData.h"
 
-#include "ThreadData.h"
-#include "ThreadNet.h"
+#include "DataManager.h"
+#include "NetworkManager.h"
 
 #include <QApplication>
 #include <QSystemTrayIcon>
@@ -24,8 +24,11 @@ public:
   ~Hive();
 
   GuiCentralWidget *gui_central_widget;
-  ThreadData *thread_data;
-  ThreadNet *thread_net;
+  DataManager *data_manager;
+  NetworkManager *network_manager;
+
+  QThread *data_thread;
+  QThread *network_thread;
 
 //private:
 //  QJsonObject wrapTextMessage(const Message::TextMessageStruct &textMessageStruct);

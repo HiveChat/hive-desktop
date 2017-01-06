@@ -20,16 +20,12 @@
 #include <QMutex>
 
 
-class ThreadNet : public QThread
+class NetworkManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit ThreadNet(QObject *parent = 0);
-  ~ThreadNet();
-
-protected:
-  void run();
-
+  explicit NetworkManager(QObject *parent = 0);
+  ~NetworkManager();
 
 private:
   enum BroadcastType{
@@ -48,13 +44,11 @@ private:
   };
 
   ///Thread Tasks
-  bool running = true;
-  int loop_count = 1;
   bool downloaded_update = false;
   void refreshLocalHostIP();
   void sendOnlineStatus();
   void checkUpdate();
-  void setTimer();
+  void loadTimerTasks();
 
 
   QNetworkAccessManager *http_update_manager;
@@ -64,8 +58,8 @@ private:
   ///UDP Socket
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
-  void udpProcessMessage(Message::TextMessageStruct *messageStruct);
-  void udpProcessHeartBeat(UsrProfileStruct *usrProfileStruct);
+  void udpProcessMessage(const Message::TextMessageStruct &messageStruct);
+  void udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
   void udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct);
   void udpProcessFileReject();
@@ -105,8 +99,8 @@ private slots:
 signals:
   void messageReceived(const QJsonObject &jsonObj, const Message::MessageType &messageType);
 
-  void messageRecieved(Message::TextMessageStruct *messageStruct, bool fromMe);//<
-  void usrEnter(UsrProfileStruct *usrProfileStruct);
+  void messageRecieved(const Message::TextMessageStruct &messageStruct, bool fromMe);//<
+  void usrEnter(const UsrProfileStruct &usrProfileStruct);
   void usrLeft(QString *usrKey);
 
   void updateAvailable();

@@ -10,43 +10,53 @@ Hive::Hive(QObject *parent) : QObject(parent)
 #endif
 
   qDebug()<<this->thread()->currentThreadId();
-  thread_data = new ThreadData(this);
-  thread_net = new ThreadNet(this);
+
+  data_thread = new QThread(this);
+  data_thread->start();
+
+  data_manager = new DataManager();
+  data_manager->moveToThread(data_thread);
+
+  network_thread = new QThread(this);
+  network_thread->start();
+
+  network_manager = new NetworkManager();
+  network_manager->moveToThread(network_thread);
 
   gui_central_widget = new GuiCentralWidget();
   //QObject not compatible to QWidget para, delete obj manually
 
+
   ////connect
-  connect(thread_data, &ThreadData::updatesAvailable,
+  qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
+  qRegisterMetaType<Message::TextMessageStruct> ("Message::TextMessageStruct");
+
+  connect(data_manager, &DataManager::updatesAvailable,
           gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
           Qt::AutoConnection);
 
-  connect(thread_net, &ThreadNet::usrEnter,
-          thread_data, &ThreadData::onUsrEntered,
+  connect(network_manager, &NetworkManager::usrEnter,
+          data_manager, &DataManager::onUsrEntered,
           Qt::AutoConnection);
-  connect(thread_net, &ThreadNet::updateAvailable,
-          thread_data, &ThreadData::onUpdatesAvailable,
+  connect(network_manager, &NetworkManager::updateAvailable,
+          data_manager, &DataManager::onUpdatesAvailable,
           Qt::AutoConnection);
-  connect(thread_data, &ThreadData::usrProfileLoaded,
+  connect(data_manager, &DataManager::usrProfileLoaded,
           gui_central_widget, &GuiCentralWidget::addUsr,
           Qt::AutoConnection);
-  connect(thread_data, &ThreadData::usrProfileChanged,
+  connect(data_manager, &DataManager::usrProfileChanged,
           gui_central_widget, &GuiCentralWidget::changeUsr,
           Qt::AutoConnection);
 
   connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,
           Qt::AutoConnection);
-  connect(thread_net, &ThreadNet::messageRecieved,
-          thread_data, &ThreadData::onMessageCome,
+  connect(network_manager, &NetworkManager::messageRecieved,
+          data_manager, &DataManager::onMessageCome,
           Qt::AutoConnection);
-  connect(thread_data, &ThreadData::messageLoaded,
+  connect(data_manager, &DataManager::messageLoaded,
           gui_central_widget, &GuiCentralWidget::onMessageReceived,
           Qt::AutoConnection);
-
-
-  thread_data->start(QThread::NormalPriority);
-  thread_net->start(QThread::NormalPriority);
 
 #ifdef Q_OS_OSX
   QtMac::setBadgeLabelText("");
@@ -63,18 +73,21 @@ Hive::~Hive()
   gui_central_widget->close();
   gui_central_widget->deleteLater();
 
-  thread_net->quit();
-  thread_data->quit();
+  network_manager->deleteLater();
+  data_manager->deleteLater();
 
-  if(!thread_net->wait(500))
+  network_thread->quit();
+  data_thread->quit();
+
+  if(!network_thread->wait(500))
     {
-      thread_net->terminate();
-      thread_net->wait();
+      network_thread->terminate();
+      network_thread->wait();
     }
-  if(!thread_data->wait(500))
+  if(!data_thread->wait(500))
     {
-      thread_data->terminate();
-      thread_data->wait();
+      data_thread->terminate();
+      data_thread->wait();
     }
 }
 
@@ -87,7 +100,7 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
   json_object.insert("time", GlobalData::getCurrentTime());
   json_object.insert("message", message);
 
-  thread_net->udpSendMessage(json_object);
+  network_manager->udpSendMessage(json_object);
 }
 
 //QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)
@@ -97,7 +110,6 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 //  json_object.insert("receiver", messageStruct.reciever);
 //  json_object.insert("time", messageStruct.time);
 //  json_object.insert("message", messageStruct.message);
-
 //  return json_object;
 //}
 
@@ -106,8 +118,7 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 //  QJsonObject json_object;
 //  json_object.insert("name", fileInfoStruct.name);
 //  json_object.insert("size", fileInfoStruct.size);
-//  json_object.insert("type", fileInfoStruct.type);
-
+//  json_object.insert("type", fileInfoStruct.type);p
 //  return json_object;
 //}
 

@@ -48,12 +48,12 @@ SOURCES += main.cpp \
     $$PWD/Gui/HomeStack_list.cpp \
     $$PWD/Gui/HomeStack_welcome.cpp \
     GlobalData.cpp \
-    ThreadNet.cpp \
-    ThreadData.cpp \
     Hive.cpp \
     ThreadSocketTCP.cpp \
     GlobalType.cpp \
-    UsrData.cpp
+    UsrData.cpp \
+    NetworkManager.cpp \
+    DataManager.cpp
 
 HEADERS  += \
     $$PWD/Gui/Frameworks/Widgets/TextBubble.h \
@@ -80,12 +80,12 @@ HEADERS  += \
     $$PWD/Gui/HomeStack_list.h \
     $$PWD/Gui/HomeStack_welcome.h \
     GlobalData.h \
-    ThreadNet.h \
-    ThreadData.h \
     Hive.h \
     ThreadSocketTCP.h \
     GlobalType.h \
-    UsrData.h
+    UsrData.h \
+    NetworkManager.h \
+    DataManager.h
 
 ICON = Src/hive.icns
 

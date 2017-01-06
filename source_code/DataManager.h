@@ -21,32 +21,19 @@
 #include <QHostInfo>
 #include <QTime>
 
-class ThreadData;
-class UsrData;
-
-
-class ThreadData : public QThread
+class DataManager : public QObject
 {
   Q_OBJECT
 
 public:
-  explicit ThreadData(QObject *parent = 0);
-  ~ThreadData();
+  explicit DataManager(QObject *parent = 0);
+  ~DataManager();
 
   void addUsr(UsrProfileStruct *usrProfileStruct);
   void loadUsrList();
-//  static QString appDataLocalPath();
-  void TEST_SECTION();
-
-
-
-protected:
-  void run();
 
 private:
 
-  bool running = true;
-  int loop_count = 1;
   void checkSettings();
   static bool checkDir(const QString &directory);
 
@@ -62,6 +49,7 @@ private:
   void loadMySettings();
   void loadFonts();
   void loadUpdates();
+  void loadTimerTasks();
 
   void deleteUsr(const QStringList usrInfoStrList);
 
@@ -82,9 +70,9 @@ private:
   QHash<QString, bool*> settings_hash_bool;
 
 public slots:
-  void onUsrEntered(UsrProfileStruct *usrProfileStruct);
+  void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
   void onUsrLeft(QString *usrKey);
-  void onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe);
+  void onMessageCome(const Message::TextMessageStruct &messageStruct, bool fromMe);
   void onUpdatesAvailable();
 
 private slots:

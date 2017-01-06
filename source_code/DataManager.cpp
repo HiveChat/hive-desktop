@@ -1,60 +1,21 @@
-#include "ThreadData.h"
+#include "DataManager.h"
 
-ThreadData::ThreadData(QObject *parent) : QThread(parent)
+DataManager::DataManager(QObject *parent) : QObject(parent)
 {
   initVariable();
   checkFiles();
   loadMySettings();
   loadFonts();
-
-  TEST_SECTION();
-
-  qDebug()<<this->currentThreadId();
-  this->setParent(parent);
+  loadTimerTasks();
 }
 
 /////////////thread
-ThreadData::~ThreadData()
+DataManager::~DataManager()
 {
-  QMutex mutex;
-  mutex.lock();
-  running = false;
-  mutex.unlock();
-
   qDebug()<<"ThreadData destructed";
 }
 
-void ThreadData::run()
-{
-  QMutex mutex;
-  while(this->isRunning())
-    {
-      mutex.lock();
-
-      if(loop_count%1 == 0)//every 1 second
-        {
-
-        }
-      if(loop_count%2 == 0)//every 2 second
-        {
-          checkSettings();
-        }
-      if(loop_count%5 == 0)//every 5 second
-        {
-
-        }
-      if(loop_count%10 == 0)//every 10 second
-        {
-          loop_count = 0;
-        }
-
-      loop_count ++;
-      mutex.unlock();
-      msleep(1000);
-    }
-}
-
-void ThreadData::checkSettings()
+void DataManager::checkSettings()
 {
 //  if(written_settings_struct != GlobalData::g_settings_struct)
 //    {
@@ -72,7 +33,7 @@ void ThreadData::checkSettings()
     }
 }
 
-QJsonObject ThreadData::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
+QJsonObject DataManager::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
 {
   QJsonObject profile_json_obj;
   profile_json_obj.insert("usrName", usrProfileStruct.name);
@@ -84,7 +45,7 @@ QJsonObject ThreadData::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
   return usr_profile_json_obj;
 }
 
-QJsonDocument ThreadData::makeUsrList(QList<QJsonObject> &usr_profile_list)
+QJsonDocument DataManager::makeUsrList(QList<QJsonObject> &usr_profile_list)
 {
   QJsonArray usr_list_json_array;
   foreach (QJsonObject json_obj, usr_profile_list)
@@ -97,7 +58,7 @@ QJsonDocument ThreadData::makeUsrList(QList<QJsonObject> &usr_profile_list)
   return json_doc;
 }
 
-QJsonDocument ThreadData::makeUpdateJson(const int stable[])
+QJsonDocument DataManager::makeUpdateJson(const int stable[])
 {
   QJsonObject write_json_obj;
   write_json_obj.insert("stable_version", QJsonValue(stable[0]));
@@ -112,13 +73,7 @@ QJsonDocument ThreadData::makeUpdateJson(const int stable[])
 
 ///////////!thread
 
-
-void ThreadData::TEST_SECTION()
-{
-  //addUsr(&GlobalData::g_settings_struct);
-}
-
-void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
+void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
 {
   QString usr_key = usrProfileStruct->key;
   QString ip_addr = usrProfileStruct->ip;
@@ -194,7 +149,7 @@ void ThreadData::addUsr(UsrProfileStruct *usrProfileStruct)
 
 }
 
-void ThreadData::deleteUsr(const QStringList usrInfoStrList)
+void DataManager::deleteUsr(const QStringList usrInfoStrList)
 {
   QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -234,54 +189,56 @@ void ThreadData::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
-void ThreadData::onUsrEntered(UsrProfileStruct *usrProfileStruct)
+void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct)
 {
-  if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct->key))
+  GlobalData::TEST_printUsrProfileStruct(usrProfileStruct, "tested by onUsrEntered()");
+
+  if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct.key))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
 
-      if(*usrProfileStruct != *GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct())
+      if(usrProfileStruct != *GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->usrProfileStruct())
         {
-          GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->setUsrProfileStruct(*usrProfileStruct);
+          GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->setUsrProfileStruct(usrProfileStruct);
 
-          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "Thread Data packaging...");
+          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->usrProfileStruct(), "Thread Data packaging...");
           qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
-          emit usrProfileChanged(GlobalData::online_usr_data_hash.value(usrProfileStruct->key));
+          emit usrProfileChanged(GlobalData::online_usr_data_hash.value(usrProfileStruct.key));
         }
     }
   else
     {
-      UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, *usrProfileStruct, this);
-      GlobalData::online_usr_data_hash.insert(usrProfileStruct->key, user_data);
+      UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
+      GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, user_data);
 
-      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct->key)->usrProfileStruct(), "ThreadData Just packaged");
+      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->usrProfileStruct(), "ThreadData Just packaged");
       qDebug()<<"@ThreadData::onUsrEntered: User profile Created.";
-      emit usrProfileLoaded(GlobalData::online_usr_data_hash.value(usrProfileStruct->key));
+      emit usrProfileLoaded(GlobalData::online_usr_data_hash.value(usrProfileStruct.key));
 
     }
 
   return;
 }
 
-void ThreadData::onUsrLeft(QString *usrKey)
+void DataManager::onUsrLeft(QString *usrKey)
 {
 
 }
 
-void ThreadData::onMessageCome(Message::TextMessageStruct *messageStruct, bool fromMe)
+void DataManager::onMessageCome(const Message::TextMessageStruct &messageStruct, bool fromMe)
 {
   if(fromMe)
     {
-      GlobalData::online_usr_data_hash.value(messageStruct->reciever)->addUnreadMessage(*messageStruct);
+      GlobalData::online_usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
     }
   else
     {
-      GlobalData::online_usr_data_hash.value(messageStruct->sender)->addUnreadMessage(*messageStruct);
+      GlobalData::online_usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
     }
-  emit messageLoaded(*messageStruct, fromMe);
+  emit messageLoaded(messageStruct, fromMe);
 }
 
-void ThreadData::onUpdatesAvailable()
+void DataManager::onUpdatesAvailable()
 {
   if(GlobalData::update_struct.version[0] == 0
      && GlobalData::update_struct.version[1] == 0
@@ -354,14 +311,14 @@ void ThreadData::onUpdatesAvailable()
   emit updatesAvailable();
 }
 
-void ThreadData::checkFiles()
+void DataManager::checkFiles()
 {
   checkDir(app_data_local_path);
   checkDir(usr_path);
   checkDir(log_path);
 }
 
-void ThreadData::loadDefaultGlobalData()
+void DataManager::loadDefaultGlobalData()
 {
   makeUsrKey();
   GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
@@ -369,7 +326,7 @@ void ThreadData::loadDefaultGlobalData()
 }
 
 
-bool ThreadData::checkDir(const QString &directory)
+bool DataManager::checkDir(const QString &directory)
 {
   QDir dir(directory);
   if(!dir.exists())
@@ -389,7 +346,7 @@ bool ThreadData::checkDir(const QString &directory)
 //  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 //}
 
-QJsonDocument ThreadData::makeUsrProfile()
+QJsonDocument DataManager::makeUsrProfile()
 {
   loadDefaultGlobalData();
 
@@ -410,7 +367,7 @@ QJsonDocument ThreadData::makeUsrProfile()
   return write_json_document;
 }
 
-void ThreadData::makeUsrKey()
+void DataManager::makeUsrKey()
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -424,7 +381,7 @@ void ThreadData::makeUsrKey()
   qDebug()<<GlobalData::settings_struct.profile_key_str;
 }
 
-void ThreadData::initVariable()
+void DataManager::initVariable()
 {
   //When adding global variable to settings, choose a map with corresponding data type below.
   //When adding map, go to register in loadMySettings() to enable reaing from disk.
@@ -462,7 +419,7 @@ void ThreadData::initVariable()
 
 }
 
-void ThreadData::loadMySettings()
+void DataManager::loadMySettings()
 {
   QFile file(settings_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -516,7 +473,7 @@ void ThreadData::loadMySettings()
   file.close();
 }
 
-void ThreadData::loadUsrList()
+void DataManager::loadUsrList()
 {
   QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -563,7 +520,7 @@ void ThreadData::loadUsrList()
   file.close();
 }
 
-void ThreadData::writeCurrentConfig()
+void DataManager::writeCurrentConfig()
 {
   qDebug()<<"&DataManager::writeCurrentConfig() invoked";
 
@@ -605,7 +562,7 @@ void ThreadData::writeCurrentConfig()
   file.close();
 }
 
-void ThreadData::loadFonts()
+void DataManager::loadFonts()
 {
 
 #ifdef Q_OS_WIN
@@ -665,7 +622,7 @@ void ThreadData::loadFonts()
 
 }
 
-void ThreadData::loadUpdates()
+void DataManager::loadUpdates()
 {
   QFile file(update_file_path);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -706,6 +663,18 @@ void ThreadData::loadUpdates()
 
   file.close();
   file.flush();
+}
+
+void DataManager::loadTimerTasks()
+{
+  QTimer *check_settings_timer = new QTimer(this);
+  connect(check_settings_timer, &QTimer::timeout,
+          [this]() {
+            checkSettings();
+          });
+  check_settings_timer->setSingleShot(false);
+  check_settings_timer->setInterval(1000);
+  check_settings_timer->start();
 }
 
 
