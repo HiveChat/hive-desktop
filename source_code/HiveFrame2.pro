@@ -23,76 +23,87 @@ win32{
 TARGET = Hive!
 TEMPLATE = app
 
-SOURCES += main.cpp \
-    $$PWD/Gui/Frameworks/Widgets/TextBubble.cpp \
-    $$PWD/Gui/Frameworks/Widgets/LabelButton.cpp \
-    $$PWD/Gui/Frameworks/Widgets/AvatarButton.cpp \
-    $$PWD/Gui/Frameworks/Widgets/ColorPicker.cpp \
-    $$PWD/Gui/Frameworks/Widgets/BadgeIcon.cpp \
-    $$PWD/Gui/Frameworks/CombWidget.cpp \
-    $$PWD/Gui/Frameworks/ScrollStack.cpp \
-    $$PWD/Gui/Frameworks/MenuButton.cpp \
-    $$PWD/Gui/CentralWidget.cpp \
-    $$PWD/Gui/TabBlock.cpp \
-    $$PWD/Gui/HomeTab.cpp \
-    $$PWD/Gui/MainBlock.cpp \
-    $$PWD/Gui/ChatTab.cpp \
-    $$PWD/Gui/ChatStack.cpp \
-    $$PWD/Gui/SettingsTab.cpp \
-    $$PWD/Gui/SettingsStack_messaging.cpp \
-    $$PWD/Gui/SettingsStack_profile.cpp \
-    $$PWD/Gui/SettingsStack_questions.cpp \
-    $$PWD/Gui/SettingsStack_update.cpp \
-    $$PWD/Gui/HomeStack_storage.cpp \
-    $$PWD/Gui/HomeStack_network.cpp \
-    $$PWD/Gui/HomeStack_list.cpp \
-    $$PWD/Gui/HomeStack_welcome.cpp \
-    GlobalData.cpp \
+SOURCES += \
+    main.cpp \
     Hive.cpp \
-    ThreadSocketTCP.cpp \
+    GlobalData.cpp \
     GlobalType.cpp \
     UsrData.cpp \
-    NetworkManager.cpp \
-    DataManager.cpp
+\
+    Gui/CentralWidget.cpp \
+    Gui/TabBlock.cpp \
+    Gui/HomeTab.cpp \
+    Gui/MainBlock.cpp \
+    Gui/ChatTab.cpp \
+    Gui/ChatStack.cpp \
+    Gui/SettingsTab.cpp \
+    Gui/SettingsStack_messaging.cpp \
+    Gui/SettingsStack_profile.cpp \
+    Gui/SettingsStack_questions.cpp \
+    Gui/SettingsStack_update.cpp \
+    Gui/HomeStack_storage.cpp \
+    Gui/HomeStack_network.cpp \
+    Gui/HomeStack_list.cpp \
+    Gui/HomeStack_welcome.cpp \
+\
+    Gui/Frameworks/CombWidget.cpp \
+    Gui/Frameworks/ScrollStack.cpp \
+    Gui/Frameworks/MenuButton.cpp \
+\
+    Gui/Frameworks/Widgets/TextBubble.cpp \
+    Gui/Frameworks/Widgets/LabelButton.cpp \
+    Gui/Frameworks/Widgets/AvatarButton.cpp \
+    Gui/Frameworks/Widgets/ColorPicker.cpp \
+    Gui/Frameworks/Widgets/BadgeIcon.cpp \
+\
+    Network/TcpServer.cpp \
+    Network/NetworkManager.cpp \
+\
+    Data/DataManager.cpp
 
 HEADERS  += \
-    $$PWD/Gui/Frameworks/Widgets/TextBubble.h \
-    $$PWD/Gui/Frameworks/Widgets/LabelButton.h \
-    $$PWD/Gui/Frameworks/Widgets/AvatarButton.h \
-    $$PWD/Gui/Frameworks/Widgets/ColorPicker.h \
-    $$PWD/Gui/Frameworks/Widgets/BadgeIcon.h \
-    $$PWD/Gui/Frameworks/CombWidget.h \
-    $$PWD/Gui/Frameworks/ScrollStack.h \
-    $$PWD/Gui/Frameworks/MenuButton.h \
-    $$PWD/Gui/CentralWidget.h \
-    $$PWD/Gui/TabBlock.h \
-    $$PWD/Gui/HomeTab.h \
-    $$PWD/Gui/MainBlock.h \
-    $$PWD/Gui/ChatTab.h \
-    $$PWD/Gui/ChatStack.h \
-    $$PWD/Gui/SettingsTab.h \
-    $$PWD/Gui/SettingsStack_messaging.h \
-    $$PWD/Gui/SettingsStack_profile.h \
-    $$PWD/Gui/SettingsStack_questions.h \
-    $$PWD/Gui/SettingsStack_update.h \
-    $$PWD/Gui/HomeStack_storage.h \
-    $$PWD/Gui/HomeStack_network.h \
-    $$PWD/Gui/HomeStack_list.h \
-    $$PWD/Gui/HomeStack_welcome.h \
-    GlobalData.h \
     Hive.h \
-    ThreadSocketTCP.h \
+    GlobalData.h \
     GlobalType.h \
     UsrData.h \
-    NetworkManager.h \
-    DataManager.h
+\
+    Gui/CentralWidget.h \
+    Gui/TabBlock.h \
+    Gui/HomeTab.h \
+    Gui/MainBlock.h \
+    Gui/ChatTab.h \
+    Gui/ChatStack.h \
+    Gui/SettingsTab.h \
+    Gui/SettingsStack_messaging.h \
+    Gui/SettingsStack_profile.h \
+    Gui/SettingsStack_questions.h \
+    Gui/SettingsStack_update.h \
+    Gui/HomeStack_storage.h \
+    Gui/HomeStack_network.h \
+    Gui/HomeStack_list.h \
+    Gui/HomeStack_welcome.h \
+\
+    Gui/Frameworks/CombWidget.h \
+    Gui/Frameworks/ScrollStack.h \
+    Gui/Frameworks/MenuButton.h \
+\
+    Gui/Frameworks/Widgets/TextBubble.h \
+    Gui/Frameworks/Widgets/LabelButton.h \
+    Gui/Frameworks/Widgets/AvatarButton.h \
+    Gui/Frameworks/Widgets/ColorPicker.h \
+    Gui/Frameworks/Widgets/BadgeIcon.h \
+\
+    Network/TcpServer.h \
+    Network/NetworkManager.h \
+\
+    Data/DataManager.h
 
 ICON = Src/hive.icns
 
 RESOURCES += \
-    $$PWD/Src/qss.qrc \
-    $$PWD/Src/img.qrc \
-    $$PWD/Src/font.qrc
-#    $$PWD/Src/icon.qrc
+    Src/qss.qrc \
+    Src/img.qrc \
+    Src/font.qrc
+#    Src/icon.qrc
 
 

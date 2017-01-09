@@ -1,11 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "Gui/CentralWidget.h"
 #include "GlobalData.h"
+#include "Data/DataManager.h"
+#include "Network/NetworkManager.h"
+#include "Gui/CentralWidget.h"
 
-#include "DataManager.h"
-#include "NetworkManager.h"
 
 #include <QApplication>
 #include <QSystemTrayIcon>

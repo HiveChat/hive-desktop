@@ -1,16 +1,15 @@
 #ifndef GUICHATSTACK_H
 #define GUICHATSTACK_H
 
+#include "GlobalData.h"
+#include "UsrData.h"
+#include "Data/DataManager.h"
+#include "Gui/Frameworks/ScrollStack.h"
 #include "Gui/Frameworks/Widgets/LabelButton.h"
 #include "Gui/Frameworks/Widgets/AvatarButton.h"
 #include "Gui/Frameworks/Widgets/TextBubble.h"
-#include "GlobalData.h"
-#include "UsrData.h"
-#include "DataManager.h"
-#include "Gui/Frameworks/ScrollStack.h"
 
 #include <QScrollBar>
-#include <QScrollArea>
 #include <QTextEdit>
 #include <QDragEnterEvent>
 #include <QMimeData>

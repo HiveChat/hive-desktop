@@ -23,7 +23,7 @@ bool checkSingleInstance(const char* program)
 
 int loadMyStyle()
 {
-  QFile  qss(":/qss/qss/comb_treewidget.qss");
+  QFile qss(":/qss/qss/comb_treewidget.qss");
   if(!qss.open(QFile::ReadOnly))
   {
       qDebug("can not open qss !");

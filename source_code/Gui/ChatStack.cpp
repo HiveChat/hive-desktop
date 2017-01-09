@@ -8,9 +8,9 @@ ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : Q
   QLabel *a = new QLabel(hello, this);
 
 
-  setAutoFillBackground(true);
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, Qt::white);
+  this->setAutoFillBackground(true);
   this->setPalette(palette);
 
   chat_bubble_layout = new QVBoxLayout();

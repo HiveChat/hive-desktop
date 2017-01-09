@@ -62,7 +62,7 @@ void NetworkManager::sendOnlineStatus()
 void NetworkManager::checkUpdate()
 {
   http_update_manager = new QNetworkAccessManager(this);
-  http_update_reply = http_update_manager->head(QNetworkRequest(GlobalData::update_url));
+  http_update_reply = http_update_manager->head(QNetworkRequest(GlobalData::update_url)); //leak?
   connect(http_update_reply, &QNetworkReply::finished,
           this, &NetworkManager::onRedirectFinished);
 }
@@ -467,4 +467,6 @@ void NetworkManager::udpProcessPendingDatagrams()
 //      }
 //    }
 }
+
+
 

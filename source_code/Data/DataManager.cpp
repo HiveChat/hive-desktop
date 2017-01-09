@@ -191,8 +191,6 @@ void DataManager::deleteUsr(const QStringList usrInfoStrList)
 
 void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct)
 {
-  GlobalData::TEST_printUsrProfileStruct(usrProfileStruct, "tested by onUsrEntered()");
-
   if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct.key))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
