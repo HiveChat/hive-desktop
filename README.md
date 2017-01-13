@@ -4,11 +4,13 @@
 
 [![Build status](https://img.shields.io/badge/build-successful-green.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
 <!--[![Build status](https://img.shields.io/badge/build-failed-red.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)-->
+
 [![GitHub commits](https://img.shields.io/github/commits-since/HiveChat/Hive-desktop/0.0.6.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
 [![GitHub tag](https://img.shields.io/github/tag/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop)
 [![GitHub issues](https://img.shields.io/github/issues/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/issues?q=is%3Aissue+is%3Aclosed)
-[![GitHub contributors](https://img.shields.io/github/contributors/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/graphs/contributors)
+[![platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-ff69b4.svg?style=flat)](http://doc.qt.io/qt-5/supported-platforms.html)
+<!--[![GitHub contributors](https://img.shields.io/github/contributors/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/graphs/contributors)-->
 [![license](https://img.shields.io/github/license/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/blob/master/GPLv3.LICENSE)
 
 ## Download:
