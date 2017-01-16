@@ -5,7 +5,6 @@
 ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : QWidget(parent)
 {
   //test
-  QLabel *a = new QLabel(hello, this);
 
 
   QPalette palette = this->palette();
@@ -253,11 +252,11 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   message_editor = new GuiChatStack_message_editor(this);
 
   ////main layout
-  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
-  central_layout->setContentsMargins(0,0,0,0);
-  central_layout->setAlignment(Qt::AlignBottom);
-  central_layout->setMargin(0);
-  central_layout->setSpacing(0);
+//  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
+//  central_layout->setContentsMargins(0,0,0,0);
+//  central_layout->setAlignment(Qt::AlignBottom);
+//  central_layout->setMargin(0);
+//  central_layout->setSpacing(0);
 
   main_layout->setAlignment(Qt::AlignBottom);
   main_layout->setMargin(0);

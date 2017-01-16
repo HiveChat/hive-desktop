@@ -80,7 +80,6 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
 
   top_frame_main_layout = new QHBoxLayout(top_frame);
   top_frame_main_layout->setAlignment(Qt::AlignLeft |Qt::AlignVCenter);
-  top_frame_main_layout->setContentsMargins(15,0,10,0);
   top_frame_main_layout->addWidget(icon_btn);
 
   if(layout_style == LayoutStyle::Linear)
@@ -89,6 +88,7 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
       composite_title_label->setPalette(text_palette);
       composite_title_label->setFont(GlobalData::font_scrollStackTitle);
 
+      top_frame_main_layout->setContentsMargins(15,0,10,0);
       top_frame_main_layout->addWidget(composite_title_label);
     }
   else if(layout_style == LayoutStyle::Profile)
@@ -104,6 +104,7 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
       usr_info_layout->addWidget(title_label);
       usr_info_layout->addWidget(sub_title_label);
 
+      top_frame_main_layout->setContentsMargins(15,10,10,0);
       top_frame_main_layout->addLayout(usr_info_layout);
     }
 

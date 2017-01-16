@@ -19,6 +19,10 @@ class GlobalData
 {
 public:
   ///UI
+
+  static int window_defaultWidth;
+  static int window_defaultHeight;
+
   static QFont font_main;
   static QFont font_chatTextEditor;
   static QFont font_chatBubble;

@@ -1,6 +1,6 @@
-#include "widget.h"
+#include "HiveDialog.h"
 
-Widget::Widget(QString title, QString content, QSize size, QWidget *parent)
+HiveDialog::HiveDialog(QString title, QString content, QSize size, QWidget *parent)
   : QWidget(parent)
 {
   ////window btn
@@ -47,12 +47,12 @@ Widget::Widget(QString title, QString content, QSize size, QWidget *parent)
 
 }
 
-Widget::~Widget()
+HiveDialog::~HiveDialog()
 {
 
 }
 
-void Widget::paintEvent(QPaintEvent*)
+void HiveDialog::paintEvent(QPaintEvent*)
 {
   ///rounded frame     //scroll bug here!
 //  QBitmap bmp(this->size());
@@ -78,21 +78,21 @@ void Widget::paintEvent(QPaintEvent*)
   paint.drawRoundedRect(rectangle,5,5);
 }
 
-void Widget::changeWindowBtn()
+void HiveDialog::changeWindowBtn()
 {
   exit_hint->setHovered();
   min_hint->setHovered();
   max_hint->setHovered();
 }
 
-void Widget::recoverWindowBtn()
+void HiveDialog::recoverWindowBtn()
 {
   exit_hint->setDefault();
   min_hint->setDefault();
   max_hint->setDefault();
 }
 
-void Widget::mousePressEvent(QMouseEvent *event)
+void HiveDialog::mousePressEvent(QMouseEvent *event)
 {
   ///drag area!
   if(event->button() == Qt::LeftButton && event->pos().y() <= 35)
@@ -102,7 +102,7 @@ void Widget::mousePressEvent(QMouseEvent *event)
       move_point = event->pos();
     }
 }
-void Widget::mouseMoveEvent(QMouseEvent *event)
+void HiveDialog::mouseMoveEvent(QMouseEvent *event)
 {
   if(mouse_pressed)
     {
@@ -110,12 +110,12 @@ void Widget::mouseMoveEvent(QMouseEvent *event)
       this->move(move_pos - move_point);
     }
 }
-void Widget::mouseReleaseEvent(QMouseEvent *event)
+void HiveDialog::mouseReleaseEvent(QMouseEvent *event)
 {
     mouse_pressed = false;
 }
 
-void Widget::setWindowMaximized()
+void HiveDialog::setWindowMaximized()
 {
   if(maximized)
     {

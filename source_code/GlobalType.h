@@ -105,6 +105,10 @@ namespace Settings
   struct SettingsStruct
   {
     bool modified_lock;
+
+    int window_width;
+    int window_height;
+
     QColor chat_bubble_color_i;
     QColor chat_bubble_color_o;
 

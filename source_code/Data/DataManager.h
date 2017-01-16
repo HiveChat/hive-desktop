@@ -65,6 +65,7 @@ private:
   QHash<QString, UsrProfileStruct> local_usr_profile_hash;
 
   //config map
+  QHash<QString, int*> settings_hash_int;
   QHash<QString, QColor*> settings_hash_qcolor;
   QHash<QString, QString*> settings_hash_qstring;
   QHash<QString, bool*> settings_hash_bool;

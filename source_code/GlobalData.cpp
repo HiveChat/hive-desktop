@@ -2,6 +2,9 @@
 
 
 ///UI
+int GlobalData::window_defaultWidth = 900;
+int GlobalData::window_defaultHeight = 600;
+
 QFont GlobalData::font_main;
 QFont GlobalData::font_chatTextEditor;
 QFont GlobalData::font_chatBubble;

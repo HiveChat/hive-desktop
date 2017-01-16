@@ -383,6 +383,11 @@ void DataManager::initVariable()
 {
   //When adding global variable to settings, choose a map with corresponding data type below.
   //When adding map, go to register in loadMySettings() to enable reaing from disk.
+  settings_hash_int.insert("window_width",
+                           &GlobalData::settings_struct.window_width);
+  settings_hash_int.insert("window_height",
+                           &GlobalData::settings_struct.window_height);
+
   settings_hash_qstring.insert("usrKey",
                               &GlobalData::settings_struct.profile_key_str);
   settings_hash_qstring.insert("usrName",
@@ -438,6 +443,11 @@ void DataManager::loadMySettings()
           QJsonObject usr_list_json_obj = read_json_document.object();
 
           //This is Tim's magic
+          foreach(int *var, settings_hash_int.values())
+            {
+              *var = usr_list_json_obj[settings_hash_int.key(var)].toInt();
+            }
+
           foreach(QString *var, settings_hash_qstring.values())
             {
               *var = usr_list_json_obj[settings_hash_qstring.key(var)].toString();
@@ -531,6 +541,10 @@ void DataManager::writeCurrentConfig()
   QTextStream out(&file);
 
   QJsonObject my_profile_json_obj;
+  foreach (QString attribute, settings_hash_int.keys())
+    {
+      my_profile_json_obj.insert(attribute, *settings_hash_int.value(attribute));
+    }
   foreach (QString attribute, settings_hash_qstring.keys())
     {
       my_profile_json_obj.insert(attribute, *settings_hash_qstring.value(attribute));
@@ -544,11 +558,8 @@ void DataManager::writeCurrentConfig()
       my_profile_json_obj.insert(attribute, *settings_hash_bool.value(attribute));
     }
 
-
 //  my_profile_json_obj.insert("BubbleColorI", GlobalData::settings_struct.chat_bubble_color_i.name());
-//  my_profile_json_obj.insert("BubbleColorO", GlobalData::settings_struct.chat_bubble_color_o.name());
-
-  ////these default data will be integrated in a class[I don't know what I meat in this comment...]
+//  my_profile_json_obj.insert("BubbleColorO", Globa_struct.chat_bubble_color_o.name());
 
   QJsonDocument write_json_document;
   write_json_document.setObject(my_profile_json_obj);

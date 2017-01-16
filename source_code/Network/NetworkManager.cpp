@@ -331,7 +331,6 @@ void NetworkManager::tcpCloseConnection()
 
 void NetworkManager::udpProcessPendingDatagrams()
 {
-  qDebug()<<"got udp";
   while(udp_socket->hasPendingDatagrams())
     {
       QByteArray datagram;
@@ -344,7 +343,6 @@ void NetworkManager::udpProcessPendingDatagrams()
 
       ///new message data structure
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
-      qDebug()<<json_document.toJson();
       if(json_document.isObject())
         {
           qDebug() << "@ThreadNet::checkJsonObject(): got message with JSON format";

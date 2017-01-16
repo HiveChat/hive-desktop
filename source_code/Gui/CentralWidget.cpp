@@ -5,6 +5,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 {    
   initAction();
   initTrayIcon();
+  initTimerTask();
 //! do not delete yet, see if it causes problems.
 //  QPalette palette;
 //  palette.setColor(QPalette::Window, QColor(250,250,250));
@@ -98,6 +99,25 @@ void GuiCentralWidget::initTrayIcon()
   tray_icon->show();
 
   connect(tray_icon, &QSystemTrayIcon::activated, this, &GuiCentralWidget::showNormal);
+}
+
+void GuiCentralWidget::initTimerTask()
+{
+  QTimer *timer = new QTimer(this);
+  connect(timer, &QTimer::timeout,
+          [this]() {
+            if(GlobalData::settings_struct.window_height != this->height()
+               || GlobalData::settings_struct.window_width != this->width())
+              {
+                qDebug()<<"timereferwfewfefefe";
+                GlobalData::settings_struct.window_height = this->height();
+                GlobalData::settings_struct.window_width = this->width();
+
+                GlobalData::settings_struct.modified_lock = true;
+              }
+          });
+  timer->setSingleShot(false);
+  timer->start(2000);
 }
 
 void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe)

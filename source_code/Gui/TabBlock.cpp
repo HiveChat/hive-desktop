@@ -37,7 +37,7 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   right_tab_label->setToolTip("settings");
 
   connect(left_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
-  connect(mid_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
+  connect(mid_tab_label, SIGNAL(entered()), this, SLOT(changeBtnLine()));
   connect(right_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
 
   ////tab line

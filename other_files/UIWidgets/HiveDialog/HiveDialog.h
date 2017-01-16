@@ -8,13 +8,13 @@
 #include <QPainter>
 //#include <QBitmap>
 
-class Widget : public QWidget
+class HiveDialog : public QWidget
 {
   Q_OBJECT
 
 public:
-  Widget(QString title, QString content, QSize size = QSize(450,200), QWidget *parent = 0);
-  ~Widget();
+  HiveDialog(QString title, QString content, QSize size = QSize(450,200), QWidget *parent = 0);
+  ~HiveDialog();
 
 
 protected:
