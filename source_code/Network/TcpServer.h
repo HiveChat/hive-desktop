@@ -4,7 +4,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QThread>
-#include <QMap>
+#include <QHash>
 
 class TcpServer : public QTcpServer
 {
@@ -16,7 +16,7 @@ protected:
   void incomingConnection(qintptr socketDescriptor);
 
 private:
-  QMap<int, QTcpSocket*> tcp_socket_map;
+  QHash<int, QTcpSocket*> tcp_socket_map;
 
 
 };

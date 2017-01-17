@@ -21,43 +21,35 @@ NetworkManager::~NetworkManager()
   qDebug()<<"ThreadNet destructed";
 }
 
-void NetworkManager::refreshLocalHostIP()
-{
-  QList<QHostAddress> AddressList = QNetworkInterface::allAddresses();
-  QHostAddress result;
-  foreach(QHostAddress address, AddressList)
-    {
-      if(address.protocol() == QAbstractSocket::IPv4Protocol
-         && address != QHostAddress::Null
-         && address != QHostAddress::LocalHost)
-        {
-          if (!address.toString().contains("127.0.")
-              && !address.toString().contains("169.254."))
-            {
-              result = address;
-              break;
-            }
-        }
-    }
+//void NetworkManager::refreshLocalHostIP()
+//{
+//  QList<QHostAddress> AddressList = QNetworkInterface::allAddresses();
+//  QHostAddress result;
+//  foreach(QHostAddress address, AddressList)
+//    {
+//      if(address.protocol() == QAbstractSocket::IPv4Protocol
+//         && address != QHostAddress::Null
+//         && address != QHostAddress::LocalHost)
+//        {
+//          if (!address.toString().contains("127.0.")
+//              && !address.toString().contains("169.254."))
+//            {
+//              result = address;
+//              break;
+//            }
+//        }
+//    }
 
-  if(!result.isNull())
-    {
-      GlobalData::g_localHostIP = result.toString();
-    }
-  else
-    {
-      GlobalData::g_localHostIP = "";
-    }
-  qDebug()<<"@refreshLocalHostIP(): finished!";
-}
-
-void NetworkManager::sendOnlineStatus()
-{
-  if(!GlobalData::g_localHostIP.isEmpty())
-    {
-      udpSendHeartBeat();
-    }
-}
+//  if(!result.isNull())
+//    {
+//      GlobalData::g_localHostIP = result.toString();
+//    }
+//  else
+//    {
+//      GlobalData::g_localHostIP = "";
+//    }
+//  qDebug()<<"@refreshLocalHostIP(): finished!";
+//}
 
 void NetworkManager::checkUpdate()
 {
@@ -69,18 +61,18 @@ void NetworkManager::checkUpdate()
 
 void NetworkManager::loadTimerTasks()
 {
-  QTimer *timer_1s = new QTimer(this);
-  connect(timer_1s, &QTimer::timeout,
-          [this](){
-            refreshLocalHostIP();
-          });
-  timer_1s->setSingleShot(false);
-  timer_1s->start(1000);
+//  QTimer *timer_1s = new QTimer(this);
+//  connect(timer_1s, &QTimer::timeout,
+//          [this](){
+//            refreshLocalHostIP();
+//          });
+//  timer_1s->setSingleShot(false);
+//  timer_1s->start(1000);
 
   QTimer *timer_3s = new QTimer(this);
   connect(timer_3s, &QTimer::timeout,
           [this](){
-            sendOnlineStatus();
+            udpSendHeartBeat();
           });
   timer_3s->setSingleShot(false);
   timer_3s->start(3000);
@@ -124,6 +116,8 @@ void NetworkManager::udpProcessMessage(const Message::TextMessageStruct &message
 
 void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct)
 {
+  qDebug()<<"kldsjfkldsjkfldsjklfjdslk";
+
   if(usrProfileStruct.key.isEmpty())
     {
       return;
@@ -131,6 +125,10 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
 
   if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
     {
+      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
+        {
+          GlobalData::g_localHostIP = usrProfileStruct.ip;
+        }
       qDebug()<<"@ThreadNet::udpProcessHeartBeat(): Myself entered.";
       emit usrEnter(usrProfileStruct);
     }
@@ -167,7 +165,6 @@ void NetworkManager::udpSendHeartBeat()
   QDataStream out(&data, QIODevice::WriteOnly);
 
   QJsonObject json_obj;
-  json_obj.insert("ip", GlobalData::g_localHostIP);
   json_obj.insert("key", GlobalData::settings_struct.profile_key_str);
   json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
   json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
@@ -180,7 +177,7 @@ void NetworkManager::udpSendHeartBeat()
                             , udp_port);
   if(ret != 0 && ret != -1)
     {
-      qDebug()<<"@sendUsrEnter(): sent!";
+      qDebug()<<"@NetworkManager::udpSendHeartBeat(): sent!";
     }
 
   return;
@@ -335,7 +332,8 @@ void NetworkManager::udpProcessPendingDatagrams()
     {
       QByteArray datagram;
       datagram.resize(udp_socket->pendingDatagramSize());
-      udp_socket->readDatagram(datagram.data(), datagram.size());
+      QHostAddress sender_address;
+      udp_socket->readDatagram(datagram.data(), datagram.size(), &sender_address);
       QDataStream in(&datagram, QIODevice::ReadOnly);
 
       QByteArray byte_array;
@@ -365,7 +363,8 @@ void NetworkManager::udpProcessPendingDatagrams()
             case HeartBeat:
               {
                 UsrProfileStruct usr_profile;
-                usr_profile.ip = json_obj.value("ip").toString();
+                usr_profile.ip = sender_address.toString().remove("::ffff:");
+                qDebug()<<sender_address.toString();
                 usr_profile.key = json_obj.value("key").toString();
                 usr_profile.name = json_obj.value("name").toString();
                 usr_profile.avatar = json_obj.value("avatar").toString();

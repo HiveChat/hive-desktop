@@ -46,7 +46,6 @@ private:
   ///Thread Tasks
   bool downloaded_update = false;
   void refreshLocalHostIP();
-  void sendOnlineStatus();
   void checkUpdate();
   void loadTimerTasks();
 

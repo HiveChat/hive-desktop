@@ -43,7 +43,7 @@ QHash<QString, UsrProfileStruct> GlobalData::saved_usr_profile_hash;
 QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
 
 ///netr
-QString GlobalData::g_localHostIP;
+QString GlobalData::g_localHostIP = "Offline";
 
 QString GlobalData::getCurrentTime()
 {
