@@ -83,17 +83,25 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 
   ///tools
   expression_label = new LabelButton(this);
-  image_label = new LabelButton(this);
-  file_label = new LabelButton(this);
-
   expression_label->setDefaultPixmap(":/img/img/expression_label_0.png");
   expression_label->setHoveredPixmap(":/img/img/expression_label_1.png");
 
+  image_label = new LabelButton(this);
   image_label->setDefaultPixmap(":/img/img/image_label_0.png");
   image_label->setHoveredPixmap(":/img/img/image_label_1.png");
 
+  file_label = new LabelButton(this);
   file_label->setDefaultPixmap(":/img/img/file_label_0.png");
   file_label->setHoveredPixmap(":/img/img/file_label_1.png");
+
+  file_progress_bar = new QProgressBar(this);
+  file_progress_bar->setMaximumWidth(300);
+  file_progress_bar->setHidden(true);
+
+  file_progress_label = new QLabel("26.2M / 502.3M | 20M/s", this);
+  file_progress_label->setHidden(true);
+
+
 
   tool_layout = new QHBoxLayout();
   tool_layout->setAlignment(Qt::AlignLeft);
@@ -102,10 +110,13 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   tool_layout->addWidget(expression_label);
   tool_layout->addWidget(image_label);
   tool_layout->addWidget(file_label);
+  tool_layout->addSpacing(30);
+  tool_layout->addWidget(file_progress_bar, 0, Qt::AlignLeft);
+  tool_layout->addWidget(file_progress_label, 0, Qt::AlignLeft);
   ///for test period
-    expression_label->setHidden(true);
-    image_label->setHidden(true);
-    file_label->setHidden(true);
+//    expression_label->setHidden(true);
+//    image_label->setHidden(true);
+//    file_label->setHidden(true);
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);
@@ -126,6 +137,33 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   main_layout->setSpacing(0);
   main_layout->addLayout(edit_layout);
   main_layout->addWidget(send_btn);
+
+
+
+  connect(file_label, &LabelButton::entered,
+          [this]() {
+            file_tran_ani = new QVariantAnimation(this);
+            file_tran_ani->setStartValue(0);
+            file_tran_ani->setEndValue(75);
+            file_tran_ani->setDuration(500);
+            file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
+            connect(file_tran_ani, &QVariantAnimation::valueChanged,
+                    [this](QVariant value) {
+                      file_progress_bar->setValue(value.toInt());
+                    });
+            file_progress_label->setHidden(false);
+            file_progress_bar->setHidden(false);
+            file_tran_ani->start();
+          });
+
+  connect(file_label, &LabelButton::left,
+          [this]() {
+            file_progress_label->setHidden(true);
+            file_progress_bar->setHidden(true);
+            file_progress_bar->setValue(0);
+            file_tran_ani->stop();
+            file_tran_ani->deleteLater();
+          });
 
 
   this->setMaximumHeight(130);

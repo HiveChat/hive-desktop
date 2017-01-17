@@ -14,6 +14,8 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 #include <QJsonArray>
+#include <QProgressBar>
+#include <QVariantAnimation>
 
 class GuiTextEdit;
 class ChatStack_chat_widget;
@@ -92,6 +94,11 @@ private:
   LabelButton *expression_label;
   LabelButton *image_label;
   LabelButton *file_label;
+  QProgressBar *file_progress_bar;
+  QLabel *file_progress_label;
+
+
+  QVariantAnimation *file_tran_ani;
 
   QHBoxLayout *main_layout;
 

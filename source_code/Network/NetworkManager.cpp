@@ -5,7 +5,6 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
   tcp_server = new QTcpServer(this);
   connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
-  tcpInitServer();
 
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
@@ -116,8 +115,6 @@ void NetworkManager::udpProcessMessage(const Message::TextMessageStruct &message
 
 void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct)
 {
-  qDebug()<<"kldsjfkldsjkfldsjklfjdslk";
-
   if(usrProfileStruct.key.isEmpty())
     {
       return;
@@ -253,10 +250,6 @@ void NetworkManager::udpProcessFileReject()
 
 
 
-void NetworkManager::tcpInitServer()
-{
-
-}
 
 void NetworkManager::tcpSendData()
 {

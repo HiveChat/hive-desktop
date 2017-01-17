@@ -79,7 +79,6 @@ private:
   QTcpServer *tcp_server;
   QTcpSocket *tcp_socket;
 
-  void tcpInitServer();
   void tcpCloseConnection();
 
 
