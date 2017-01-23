@@ -357,7 +357,6 @@ void NetworkManager::udpProcessPendingDatagrams()
               {
                 UsrProfileStruct usr_profile;
                 usr_profile.ip = sender_address.toString().remove("::ffff:");
-                qDebug()<<sender_address.toString();
                 usr_profile.key = json_obj.value("key").toString();
                 usr_profile.name = json_obj.value("name").toString();
                 usr_profile.avatar = json_obj.value("avatar").toString();

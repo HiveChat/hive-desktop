@@ -17,9 +17,9 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
 //      image.load(fileName) ;
 
   ////tab label
-  left_tab_label = new LabelButton(this);
-  mid_tab_label = new LabelButton(this);
-  right_tab_label = new LabelButton(this);
+  left_tab_label = new LabelButton(0, this);
+  mid_tab_label = new LabelButton(70, this);
+  right_tab_label = new LabelButton(0, this);
 
   left_tab_label->setDefaultPixmap(":/img/img/home_tab.png");
   left_tab_label->setHoveredPixmap(":/img/img/home_tab.png");

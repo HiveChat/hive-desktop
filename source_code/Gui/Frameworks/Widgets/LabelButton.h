@@ -3,13 +3,15 @@
 
 #include <QLabel>
 #include <QMouseEvent>
+#include <QTimer>
+#include <QDebug>
 
 class LabelButton : public QLabel
 {
   Q_OBJECT
 
 public:
-  explicit LabelButton(QWidget *parent = 0);
+  explicit LabelButton(const int &hoverDelay = 0, QWidget *parent = 0);
 
   void setDefaultPixmap(QString path);
   void setHoveredPixmap(QString path);
@@ -33,6 +35,9 @@ private:
   QPixmap default_pixmap;
   QPixmap hovered_pixmap;
   QPixmap pressed_pixmap;
+
+  int hover_delay;
+  bool hover_signal_lock;
 
 };
 

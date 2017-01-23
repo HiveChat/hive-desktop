@@ -5,7 +5,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 {    
   initAction();
   initTrayIcon();
-  initTimerTask();
+  loadTimerTask();
 //! do not delete yet, see if it causes problems.
 //  QPalette palette;
 //  palette.setColor(QPalette::Window, QColor(250,250,250));
@@ -101,7 +101,7 @@ void GuiCentralWidget::initTrayIcon()
   connect(tray_icon, &QSystemTrayIcon::activated, this, &GuiCentralWidget::showNormal);
 }
 
-void GuiCentralWidget::initTimerTask()
+void GuiCentralWidget::loadTimerTask()
 {
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout,

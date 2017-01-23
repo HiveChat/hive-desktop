@@ -8,8 +8,9 @@
  */
 
 
-LabelButton::LabelButton(QWidget *parent)
+LabelButton::LabelButton(const int &hoverDelay, QWidget *parent)
 {
+  hover_delay = hoverDelay;
   this->setParent(parent);
 }
 
@@ -69,11 +70,42 @@ void LabelButton::mouseReleaseEvent(QMouseEvent *ev)
 void LabelButton::enterEvent(QEvent * )
 {
   setHovered();
-  emit entered();
+  if(hover_delay != 0)
+    {
+      hover_signal_lock = false;
+      QTimer::singleShot(hover_delay, [this]() {
+          if(!hover_signal_lock)
+            {
+              emit entered();
+            }
+          else
+            {
+              hover_signal_lock = false;
+            }
+        });
+    }
+  else
+    {
+      emit entered();
+    }
 }
 
 void LabelButton::leaveEvent(QEvent *)
 {
   setDefault();
-  emit left();
+  if(hover_delay != 0)
+    {
+      if(!hover_signal_lock)
+        {
+          emit left();
+          hover_signal_lock = true;
+        }
+    }
+  else
+    {
+      emit left();
+    }
 }
+
+
+

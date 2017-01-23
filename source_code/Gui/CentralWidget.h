@@ -37,7 +37,7 @@ private:
 
   void initAction();
   void initTrayIcon();
-  void initTimerTask();
+  void loadTimerTask();
 
 public slots:
   void onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe);

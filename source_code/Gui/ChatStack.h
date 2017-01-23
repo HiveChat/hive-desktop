@@ -98,12 +98,14 @@ private:
   QLabel *file_progress_label;
 
 
+
+
   QVariantAnimation *file_tran_ani;
 
   QHBoxLayout *main_layout;
 
   bool control_pressed = false;
-
+  bool file_label_hovered = false;
 
 signals:
   void sendTriggered();
@@ -140,9 +142,6 @@ private:
 
   //Data
   UsrData *usr_data;
-#ifdef Q_OS_OSX
-  QTimer *timer;
-#endif
 
   //Function
   void flipUnreadMessage();

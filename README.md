@@ -2,8 +2,8 @@
 * Hive! is a LAN chat software. This is a free software.
 * Hive is written by pure Qt C++ without design forms.
 
-[![Build status](https://img.shields.io/badge/build-successful-green.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
-<!--[![Build status](https://img.shields.io/badge/build-failed-red.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)-->
+<!--[![Build status](https://img.shields.io/badge/build-successful-green.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)-->
+[![Build status](https://img.shields.io/badge/build-failed-red.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
 [![license](https://img.shields.io/github/license/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/blob/master/GPLv3.LICENSE)
 [![GitHub commits](https://img.shields.io/github/commits-since/HiveChat/Hive-desktop/0.0.6.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
 [![GitHub tag](https://img.shields.io/github/tag/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop)

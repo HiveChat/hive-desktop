@@ -82,15 +82,15 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   text_editor->installEventFilter(this);
 
   ///tools
-  expression_label = new LabelButton(this);
+  expression_label = new LabelButton(70, this);
   expression_label->setDefaultPixmap(":/img/img/expression_label_0.png");
   expression_label->setHoveredPixmap(":/img/img/expression_label_1.png");
 
-  image_label = new LabelButton(this);
+  image_label = new LabelButton(70, this);
   image_label->setDefaultPixmap(":/img/img/image_label_0.png");
   image_label->setHoveredPixmap(":/img/img/image_label_1.png");
 
-  file_label = new LabelButton(this);
+  file_label = new LabelButton(70, this);
   file_label->setDefaultPixmap(":/img/img/file_label_0.png");
   file_label->setHoveredPixmap(":/img/img/file_label_1.png");
 
@@ -98,10 +98,10 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   file_progress_bar->setMaximumWidth(300);
   file_progress_bar->setHidden(true);
 
-  file_progress_label = new QLabel("26.2M / 502.3M | 20M/s", this);
+  file_progress_label = new QLabel("376.7M / 0.5G | 10k/s", this);
   file_progress_label->setHidden(true);
 
-
+  file_tran_ani = new QVariantAnimation(this);
 
   tool_layout = new QHBoxLayout();
   tool_layout->setAlignment(Qt::AlignLeft);
@@ -126,7 +126,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   edit_layout->addWidget(text_editor);
 
   ///send button
-  send_btn = new LabelButton(this);
+  send_btn = new LabelButton(0, this);
   send_btn->setDefaultPixmap(":/img/img/send_button_0.png");
   send_btn->setHoveredPixmap(":/img/img/send_button_1.png");
   send_btn->setAlignment(Qt::AlignRight);
@@ -149,7 +149,11 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
             file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
             connect(file_tran_ani, &QVariantAnimation::valueChanged,
                     [this](QVariant value) {
-                      file_progress_bar->setValue(value.toInt());
+                      file_progress_bar->setValue(value.toInt()); //<<
+                    });
+            connect(file_tran_ani, &QVariantAnimation::finished,
+                    [this]() {
+                      file_label_hovered = true;
                     });
             file_progress_label->setHidden(false);
             file_progress_bar->setHidden(false);
@@ -158,6 +162,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
 
   connect(file_label, &LabelButton::left,
           [this]() {
+            file_label_hovered = true;
             file_progress_label->setHidden(true);
             file_progress_bar->setHidden(true);
             file_progress_bar->setValue(0);
@@ -443,14 +448,17 @@ void GuiChatStack::flipUnreadMessage()
     }
 
 #ifdef Q_OS_OSX
-  timer = new QTimer(this);
-  connect(timer, &QTimer::timeout,
-          [this](){
-            scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
-            timer->deleteLater();
-          });
-  timer->setSingleShot(true);
-  timer->start(100);
+  QTimer::singleShot(100, [this](){
+      scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+    });
+//  timer = new QTimer(this);
+//  connect(timer, &QTimer::timeout,
+//          [this](){
+//            scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+//            timer->deleteLater();
+//          });
+//  timer->setSingleShot(true);
+//  timer->start(100);
 #endif
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
@@ -505,14 +513,9 @@ void GuiChatStack::onSendButtonClicked()
   message_editor->text_editor->clear();
 
 #ifdef Q_OS_OSX
-  timer = new QTimer(this);
-  connect(timer, &QTimer::timeout,
-          [this](){
-            scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
-//            timer->deleteLater();//
-          });
-  timer->setSingleShot(true);
-  timer->start(100);
+  QTimer::singleShot(100, [this](){
+      scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
+    });
 #endif
 
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
