@@ -166,8 +166,13 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
             file_progress_label->setHidden(true);
             file_progress_bar->setHidden(true);
             file_progress_bar->setValue(0);
-            file_tran_ani->stop();
-            file_tran_ani->deleteLater();
+
+            if(file_tran_ani != Q_NULLPTR)
+              {
+                file_tran_ani->stop();
+                file_tran_ani->deleteLater();
+                file_tran_ani = Q_NULLPTR;
+              }
           });
 
 
