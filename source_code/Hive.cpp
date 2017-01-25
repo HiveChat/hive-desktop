@@ -1,6 +1,7 @@
 #include "Hive.h"
 
-Hive::Hive(QObject *parent) : QObject(parent)
+Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
+
 {
 
 #ifdef Q_OS_OSX
@@ -102,6 +103,24 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 
   network_manager->udpSendMessage(json_object);
 }
+
+#ifdef Q_OS_OSX
+bool Hive::event(QEvent* event)
+{
+    switch (event->type()) {
+      case QEvent::ApplicationActivate:
+        {
+          gui_central_widget->showNormal();
+          return true;
+        }
+      default:
+          break;
+    }
+
+    return QApplication::event(event);
+}
+#endif
+
 
 //QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)
 //{

@@ -1,15 +1,11 @@
 #include "Hive.h"
+
 #include <QApplication>
-
-#ifndef Q_OS_ANDROID
-#ifndef Q_OS_IOS
-
-#include <QPropertyAnimation>
-
-#endif
-#endif
-
 #include <QSharedMemory>
+#ifndef Q_WS_QWS && Q_WS_QPA
+#include <QPropertyAnimation>
+#endif
+
 
 bool checkSingleInstance(const char* program)
 {
@@ -33,38 +29,33 @@ int loadMyStyle()
   return (0);
 }
 
+
 int main(int argc, char *argv[])
 {
 
-#ifndef Q_OS_ANDROID
-#ifndef Q_OS_IOS
-
+//#ifndef Q_WS_QWS && Q_WS_QPA
 //  if(!checkSingleInstance("topo-client.lock"))
 //    {
 //      return 1;
 //    }
-
-#endif
-#endif
+//#endif
 
 
-  QApplication a(argc, argv);
+//  QApplication a(argc, argv);
 
+
+  Hive hiveApp(argc, argv);
   loadMyStyle();
+  hiveApp.gui_central_widget->show();
 
-  Hive w;
-  w.gui_central_widget->show();
-
-#ifndef Q_OS_ANDROID
-#ifndef Q_OS_IOS
-  QPropertyAnimation animation(w.gui_central_widget, "geometry");
+#ifndef Q_WS_QWS && Q_WS_QPA
+  QPropertyAnimation animation(hiveApp.gui_central_widget, "geometry");
   animation.setDuration(300);
   animation.setStartValue(QRect(120, 80, 0, 0));
   animation.setEndValue(QRect(140, 100, 0, 0));
   animation.setEasingCurve(QEasingCurve::OutBounce);
   animation.start();
 #endif
-#endif
 
-  return a.exec();
+  return hiveApp.exec();
 }

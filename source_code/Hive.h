@@ -15,12 +15,12 @@
 #endif
 
 
-class Hive : public QObject
+class Hive : public QApplication
 {
   Q_OBJECT
 
 public:
-  Hive(QObject *parent = 0);
+  Hive(int &argc, char **argv);
   ~Hive();
 
   GuiCentralWidget *gui_central_widget;
@@ -29,6 +29,9 @@ public:
 
   QThread *data_thread;
   QThread *network_thread;
+
+protected:
+  bool event(QEvent* event);
 
 //private:
 //  QJsonObject wrapTextMessage(const Message::TextMessageStruct &textMessageStruct);

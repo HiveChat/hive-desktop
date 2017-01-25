@@ -1,5 +1,6 @@
 #include "CentralWidget.h"
 
+
 GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   : QWidget(parent)
 {    
@@ -18,7 +19,8 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
                        .arg(GlobalData::current_version[0])
                        .arg(GlobalData::current_version[1])
                        .arg(GlobalData::current_version[2]));
-#ifdef Q_OS_WIN
+
+#ifndef Q_OS_OSX
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
@@ -26,18 +28,18 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   gui_tab_block = new GuiTabBlock(this);
   gui_main_block = new MainBlock(this);
 
-  QFrame *line = new QFrame(this);
-  line->setFrameShape(QFrame::VLine);
-  line->setFrameShadow(QFrame::Plain);
-  line->setFixedWidth(1);
-  line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+//  QFrame *line = new QFrame(this);
+//  line->setFrameShape(QFrame::VLine);
+//  line->setFrameShadow(QFrame::Plain);
+//  line->setFixedWidth(1);
+//  line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   //main_layout
   main_layout = new QHBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(gui_tab_block);
-  main_layout->addWidget(line);
+//  main_layout->addWidget(line);
   main_layout->addWidget(gui_main_block);
 
   //connect
@@ -188,5 +190,6 @@ void GuiCentralWidget::onUpdateAvailable()
       tray_icon->showMessage("Update Available", message);
     }
 }
+
 
 
