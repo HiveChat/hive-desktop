@@ -61,6 +61,7 @@ public:
 
   static QHash<QString, UsrProfileStruct> saved_usr_profile_hash;
   static QHash<QString, UsrData*> online_usr_data_hash;//used
+  static QHash<QString, QList<QPair<int, int>>> file_tran_progress_hash;
 
   ///net
   static QString g_localHostIP;

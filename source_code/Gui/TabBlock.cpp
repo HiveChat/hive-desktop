@@ -137,7 +137,6 @@ void GuiTabBlock::changeBtnLine()
       right_btn_line->setFixedHeight(3);
       right_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(settings_tab);
-
     }
 }
 

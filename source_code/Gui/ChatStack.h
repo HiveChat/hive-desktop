@@ -142,6 +142,7 @@ private:
 
   //Data
   UsrData *usr_data;
+  QPair<int, int> file_tran_progress_pair;
 
   //Function
   void flipUnreadMessage();
@@ -150,6 +151,7 @@ private:
   void flipDownMessage(const bool &clear);
   bool isDisplaying(const QString &usrKey);
   void setUsrData(UsrData *usrData);
+  void updateFileTranProgress();
 
 public slots:
   void onSendButtonClicked();
