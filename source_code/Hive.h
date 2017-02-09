@@ -30,9 +30,6 @@ public:
   QThread *data_thread;
   QThread *network_thread;
 
-protected:
-  bool event(QEvent* event);
-
 //private:
 //  QJsonObject wrapTextMessage(const Message::TextMessageStruct &textMessageStruct);
 //  QJsonObject wrapFileMessage(const Message::FileInfoStruct &fileMessageStruct);

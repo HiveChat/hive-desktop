@@ -361,18 +361,18 @@ void GuiChatStack::setUsrData(UsrData *usrData)
 
 void GuiChatStack::updateFileTranProgress()
 {
-  if(GlobalData::file_tran_progress_hash.contains(usr_data->key()))
-  {
-    if(!GlobalData::file_tran_progress_hash.value(usr_data->key()).isEmpty())
-      {
-        foreach (QPair<int, int> progress_pair, GlobalData::file_tran_progress_hash.value(usr_data->key()))
-          {
-            file_tran_progress_pair.first += progress_pair.first;
-            file_tran_progress_pair.second += progress_pair.second;///////////< not applicable!!!!!!!!!!
+//  if(GlobalData::file_tran_progress_hash.contains(usr_data->key()))
+//  {
+//    if(!GlobalData::file_tran_progress_hash.value(usr_data->key()).isEmpty())
+//      {
+//        foreach (QPair<int, int> progress_pair, GlobalData::file_tran_progress_hash.value(usr_data->key()))
+//          {
+//            file_tran_progress_pair.first += progress_pair.first;
+//            file_tran_progress_pair.second += progress_pair.second;///////////< not applicable!!!!!!!!!!
 
-          }
-      }
-  }
+//          }
+//      }
+//  }
 }
 
 void GuiChatStack::display(const QString &usrKey)
