@@ -2,7 +2,19 @@
 #include <QFileDialog>
 #include <QLabel>
 
-GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
+GuiTabBlock::GuiTabBlock(QWidget *parent)
+  : QWidget(parent)
+  , left_tab_label(new LabelButton(0, this))
+  , mid_tab_label(new LabelButton(70, this))
+  , right_tab_label(new LabelButton(0, this))
+  , tab_label_layout(new QGridLayout())
+  , left_btn_line(new QFrame(this))
+  , mid_btn_line(new QFrame(this))
+  , right_btn_line(new QFrame(this))
+  , home_tab(new HomeTab(this))
+  , chat_tab(new ChatTab(this))
+  , settings_tab(new SettingsTab(this))
+  , tab_stacked_widget(new QStackedWidget(this))
 {
   this->setAutoFillBackground(true);
   QPalette palette;
@@ -10,40 +22,21 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   this->setPalette(palette);
   this->setFixedWidth(250);
 
-  ////label test
-  /// QFileDialog Example
-//  QString fileName = QFileDialog::getOpenFileName(this,"Choose Image","/",("Image File(*.*)")) ;
-//      QImage image ;
-//      image.load(fileName) ;
-
-  ////tab label
-  left_tab_label = new LabelButton(0, this);
-  mid_tab_label = new LabelButton(70, this);
-  right_tab_label = new LabelButton(0, this);
-
   left_tab_label->setDefaultPixmap(":/img/img/home_tab.png");
   left_tab_label->setHoveredPixmap(":/img/img/home_tab.png");
   left_tab_label->setToolTipDuration(1000);
   left_tab_label->setToolTip("home");
-
   mid_tab_label->setDefaultPixmap(":/img/img/chat_tab.png");
   mid_tab_label->setHoveredPixmap(":/img/img/chat_tab.png");
   mid_tab_label->setToolTipDuration(1000);
   mid_tab_label->setToolTip("chat");
-
   right_tab_label->setDefaultPixmap(":/img/img/settings_tab.png");
   right_tab_label->setHoveredPixmap(":/img/img/settings_tab.png");
   right_tab_label->setToolTipDuration(1000);
   right_tab_label->setToolTip("settings");
-
-  connect(left_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
-  connect(mid_tab_label, SIGNAL(entered()), this, SLOT(changeBtnLine()));
-  connect(right_tab_label, SIGNAL(clicked()), this, SLOT(changeBtnLine()));
-
-  ////tab line
-  left_btn_line  = new QFrame(this);
-  mid_btn_line   = new QFrame(this);
-  right_btn_line = new QFrame(this);
+  connect(left_tab_label,  &LabelButton::clicked, this, &GuiTabBlock::changeBtnLine);
+  connect(mid_tab_label,   &LabelButton::entered, this, &GuiTabBlock::changeBtnLine);
+  connect(right_tab_label, &LabelButton::clicked, this, &GuiTabBlock::changeBtnLine);
 
   left_btn_line->setFrameShape(QFrame::HLine);
   left_btn_line->setFrameShadow(QFrame::Plain);
@@ -60,37 +53,23 @@ GuiTabBlock::GuiTabBlock(QWidget *parent) : QWidget(parent)
   right_btn_line->setFixedSize(83,2);
   right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
-  ////tab label layout
-  tab_label_layout = new QGridLayout();
-
   tab_label_layout->setContentsMargins(0,10,0,10);
   tab_label_layout->setHorizontalSpacing(0);
   tab_label_layout->setVerticalSpacing(7);
   tab_label_layout->setAlignment(Qt::AlignTop);
   tab_label_layout->setSizeConstraint(QLayout::SetFixedSize);
-
   tab_label_layout->addWidget(left_tab_label,0,0,Qt::AlignCenter);
   tab_label_layout->addWidget(mid_tab_label,0,1,Qt::AlignCenter);
   tab_label_layout->addWidget(right_tab_label,0,2,Qt::AlignCenter);
-
   tab_label_layout->addWidget(left_btn_line,1,0,Qt::AlignLeft);
   tab_label_layout->addWidget(mid_btn_line,1,1,Qt::AlignCenter);
   tab_label_layout->addWidget(right_btn_line,1,2,Qt::AlignRight);
 
-
-
-  ////tab stacked widget
-  home_tab = new HomeTab();
-  chat_tab = new ChatTab();
-  settings_tab = new SettingsTab();
-
-  tab_stacked_widget = new QStackedWidget(this);
   tab_stacked_widget->addWidget(home_tab);
   tab_stacked_widget->addWidget(chat_tab);
   tab_stacked_widget->addWidget(settings_tab);
 
-  //// main layout
-  main_layout = new QVBoxLayout(this);
+  QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
   main_layout->setAlignment(Qt::AlignTop);
@@ -141,4 +120,8 @@ void GuiTabBlock::changeBtnLine()
 }
 
 
-
+////label test
+/// QFileDialog Example
+//  QString fileName = QFileDialog::getOpenFileName(this,"Choose Image","/",("Image File(*.*)")) ;
+//      QImage image ;
+//      image.load(fileName) ;

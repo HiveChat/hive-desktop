@@ -21,23 +21,11 @@ public:
   MainBlock *gui_main_block;
 
 private:
-  QString usr_key_str;
-  QString usr_name_str;
-  QString avatar_path_str;
-
-  QStringList my_profile_str_list;
-
-  QHBoxLayout *main_layout;
-  QSystemTrayIcon *tray_icon;
-
   QMenu *tray_icon_menu;
   QAction *hide_action;
   QAction *show_action;
   QAction *quit_action;
-
-  void initAction();
-  void initTrayIcon();
-  void loadTimerTask();
+  QSystemTrayIcon *tray_icon;
 
 public slots:
   void onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe);

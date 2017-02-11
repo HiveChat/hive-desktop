@@ -3,14 +3,14 @@
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   : QWidget(parent)
+  , gui_tab_block(new GuiTabBlock(this))
+  , gui_main_block(new MainBlock(this))
+  , hide_action(new QAction(tr("&Hide"), this))
+  , show_action(new QAction(tr("&Show"), this))
+  , quit_action(new QAction(tr("&Quit"), this))
+  , tray_icon_menu(new QMenu(this))
+  , tray_icon(new QSystemTrayIcon(this))
 {    
-  initAction();
-  initTrayIcon();
-  loadTimerTask();
-//! do not delete yet, see if it causes problems.
-//  QPalette palette;
-//  palette.setColor(QPalette::Window, QColor(250,250,250));
-//  this->setPalette(palette);
 
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
@@ -19,92 +19,27 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
                        .arg(GlobalData::current_version[0])
                        .arg(GlobalData::current_version[1])
                        .arg(GlobalData::current_version[2]));
-
 #ifndef Q_OS_OSX
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
-  ////Gui
-  gui_tab_block = new GuiTabBlock(this);
-  gui_main_block = new MainBlock(this);
-
-//  QFrame *line = new QFrame(this);
-//  line->setFrameShape(QFrame::VLine);
-//  line->setFrameShadow(QFrame::Plain);
-//  line->setFixedWidth(1);
-//  line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
-
-  //main_layout
-  main_layout = new QHBoxLayout(this);
+  QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(gui_tab_block);
-//  main_layout->addWidget(line);
   main_layout->addWidget(gui_main_block);
 
-  //connect
-
-  connect(gui_tab_block->chat_tab->comb_scroll_widget, SIGNAL(combWidgetClicked(const QString&)), this, SLOT(onCombWidgetClicked(const QString&)));
-
-  ///buttons~~
-  connect(gui_tab_block->home_tab->welcome_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->home_tab->list_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->home_tab->storage_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-
-
-  connect(gui_tab_block->settings_tab->messaging_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->profile_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->questions_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->update_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-
-}
-
-GuiCentralWidget::~GuiCentralWidget()
-{
-  qDebug()<<"\n@Hive UI is destructed";
-}
-
-void GuiCentralWidget::initAction()
-{
-  hide_action = new QAction(tr("&Hide"), this);
-  connect(hide_action, &QAction::triggered, this, &QWidget::hide);
-
-  show_action = new QAction(tr("&Show"), this);
-  connect(show_action, &QAction::triggered, this, &QWidget::showNormal);
-
-  quit_action = new QAction(tr("&Quit"), this);
-  connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
-}
-
-void GuiCentralWidget::initTrayIcon()
-{
-  tray_icon_menu = new QMenu(this);
   tray_icon_menu->addAction(hide_action);
   tray_icon_menu->addAction(show_action);
   tray_icon_menu->addSeparator();
   tray_icon_menu->addAction(quit_action);
 
-  QIcon icon(":/img/img/tray_0.png");
-
-  tray_icon = new QSystemTrayIcon(this);
-  tray_icon->setIcon(icon);
+  tray_icon->setIcon(QIcon(":/img/img/tray_0.png"));
   tray_icon->setToolTip("Hive!");
   tray_icon->setContextMenu(tray_icon_menu);
   tray_icon->setVisible(true);
   tray_icon->show();
 
-  connect(tray_icon, &QSystemTrayIcon::activated, this, &GuiCentralWidget::showNormal);
-}
-
-void GuiCentralWidget::loadTimerTask()
-{
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout,
           [this]() {
@@ -120,6 +55,36 @@ void GuiCentralWidget::loadTimerTask()
           });
   timer->setSingleShot(false);
   timer->start(2000);
+
+  connect(gui_tab_block->chat_tab->comb_scroll_widget, &ChatTab_comb_scroll_widget::combWidgetClicked,
+          this, &GuiCentralWidget::onCombWidgetClicked);
+
+  connect(gui_tab_block->home_tab->welcome_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+  connect(gui_tab_block->home_tab->list_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+  connect(gui_tab_block->home_tab->storage_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+
+  connect(gui_tab_block->settings_tab->messaging_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+  connect(gui_tab_block->settings_tab->profile_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+  connect(gui_tab_block->settings_tab->questions_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+  connect(gui_tab_block->settings_tab->update_btn, &MenuButton::clicked, 
+          gui_main_block, &MainBlock::displayStaticStack);
+
+  connect(hide_action, &QAction::triggered, this, &QWidget::hide);
+  connect(show_action, &QAction::triggered, this, &QWidget::showNormal);
+  connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
+  connect(tray_icon, &QSystemTrayIcon::activated, this, &GuiCentralWidget::showNormal);
+
+}
+
+GuiCentralWidget::~GuiCentralWidget()
+{
+  qDebug()<<"\n@Hive UI is destructed";
 }
 
 void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe)
