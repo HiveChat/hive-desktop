@@ -7,28 +7,26 @@
  *
  */
 
-
 LabelButton::LabelButton(const int &hoverDelay, QWidget *parent)
+  : hover_delay(hoverDelay)
 {
-  hover_delay = hoverDelay;
   this->setParent(parent);
 }
 
-void LabelButton::setDefaultPixmap(QString path)
+void LabelButton::setDefaultPixmap(const QString &path)
 {
-
   default_pixmap.load(path);
   default_pixmap.setDevicePixelRatio(2.0);
   this->setPixmap(default_pixmap);
 }
 
-void LabelButton::setHoveredPixmap(QString path)
+void LabelButton::setHoveredPixmap(const QString &path)
 {
   hovered_pixmap.load(path);
   hovered_pixmap.setDevicePixelRatio(2.0);
 }
 
-void LabelButton::setPressedPixmap(QString path)
+void LabelButton::setPressedPixmap(const QString &path)
 {
   pressed_pixmap.load(path);
   pressed_pixmap.setDevicePixelRatio(2.0);

@@ -33,9 +33,7 @@ private:
   QHash< GUI::StaticStackType, QWidget*> static_stack_hash;
   GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
   void clearStackMap(GUI::StaticStackType &reservation);
-  void createStaticStack(GUI::StaticStackType staticStackType);
-
-  QVBoxLayout *main_layout;
+  inline void createStaticStack(GUI::StaticStackType staticStackType);
 
 public slots:
   void displayStaticStack(GUI::StaticStackType staticStackType);

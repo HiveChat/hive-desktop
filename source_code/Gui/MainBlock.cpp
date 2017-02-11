@@ -1,20 +1,20 @@
 #include "MainBlock.h"
 
-MainBlock::MainBlock(QWidget *parent) : QWidget(parent)
+MainBlock::MainBlock(QWidget *parent)
+  : QWidget(parent)
+  , gui_chat_stack(new GuiChatStack(this))
+  , main_stacked_widget(new QStackedWidget(this))
 {
-  gui_chat_stack = new GuiChatStack(this);
-  main_stacked_widget = new QStackedWidget(this);
+  this->createStaticStack(GUI::StaticStackType::Home_list);
+  this->createStaticStack(GUI::StaticStackType::Home_Welcome);
+  this->displayStaticStack(GUI::StaticStackType::Home_Welcome);
+
   main_stacked_widget->addWidget(gui_chat_stack);
 
-  main_layout = new QVBoxLayout(this);
+  QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(main_stacked_widget);
-
-
-  createStaticStack(GUI::StaticStackType::Home_list);
-  createStaticStack(GUI::StaticStackType::Home_Welcome);
-  displayStaticStack(GUI::StaticStackType::Home_Welcome);
 }
 
 MainBlock::~MainBlock()
