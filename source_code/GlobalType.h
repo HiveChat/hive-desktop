@@ -65,7 +65,8 @@ namespace Message
   enum MessageType
   {
     TextMessage,
-    FileInfo
+    FileInfo,
+    FileMessage
   };
 
   struct TextMessageStruct
@@ -79,9 +80,9 @@ namespace Message
 
   struct FileInfoStruct
   {
+    int size;
     QString index;
     QString name;
-    int size;
     GUI::BuiltInIconType type;
   };
 

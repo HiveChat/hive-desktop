@@ -35,12 +35,8 @@ ChatTab::ChatTab(QWidget *parent) : QWidget(parent)
   comb_treewidget->setAnimated(true);
   comb_treewidget->setAlternatingRowColors(false);
   comb_treewidget->setFrameStyle(QFrame::NoFrame);
-
   connect(comb_treewidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(onItemClicked(QTreeWidgetItem*, int)));
-
   QTreeWidgetItem *item=new QTreeWidgetItem(comb_treewidget,QStringList(QString("Tree")));
-
-
   for(int i = 0; i <= 10; i++)
     {
       QTreeWidgetItem *item1=new QTreeWidgetItem(item,QStringList(QString("Band")+QString::number(i+1)));

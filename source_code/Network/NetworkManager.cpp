@@ -152,6 +152,10 @@ void NetworkManager::udpProcessUsrLeft(QString *usrKey)
 
 void NetworkManager::udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct)
 {
+//  file_info_struct.index = json_obj.value("index");
+//  file_info_struct.name = json_obj.value("name").toString();
+//  file_info_struct.size = json_obj.value("size").toInt();
+//  file_info_struct.type = (GUI::BuiltInIconType)json_obj.value("type").toInt();
 
 }
 
@@ -332,7 +336,6 @@ void NetworkManager::udpProcessPendingDatagrams()
       QByteArray byte_array;
       in >> byte_array;
 
-      ///new message data structure
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
       if(json_document.isObject())
         {
@@ -368,9 +371,10 @@ void NetworkManager::udpProcessPendingDatagrams()
 
                 break;
               }
-            case FileTran:
+            case FileTranReq:
               {
                 Message::FileInfoStruct file_info_struct;
+                file_info_struct.index = json_obj.value("index").toString();
                 file_info_struct.name = json_obj.value("name").toString();
                 file_info_struct.size = json_obj.value("size").toInt();
                 file_info_struct.type = (GUI::BuiltInIconType)json_obj.value("type").toInt();
@@ -378,6 +382,11 @@ void NetworkManager::udpProcessPendingDatagrams()
                 break;
               }
             case FileReject:
+              {
+
+                break;
+              }
+            case File:
               {
 
                 break;

@@ -29,11 +29,13 @@ public:
 
 private:
   enum BroadcastType{
-    Message,
-    HeartBeat,
-    UsrLeave,
-    FileTran,
-    FileReject
+    Message = 1,
+    HeartBeat = 2,
+    UsrLeave = 3,
+    FileTranReq = 4,
+    FileReject = 5,
+    File = 6,
+
   };
 
   enum NetworkError{
@@ -43,12 +45,12 @@ private:
     TimeOut
   };
 
+  QHash<QString, QHostAddress> ip_address_hash;
+
   ///Thread Tasks
   bool downloaded_update = false;
-  void refreshLocalHostIP();
   void checkUpdate();
   void loadTimerTasks();
-
 
   QNetworkAccessManager *http_update_manager;
   QNetworkReply *http_update_reply;
@@ -68,8 +70,6 @@ private:
   void udpSendFileTran();
   void udpSendFileAccept();
   void TEST_udpsSendMessage(QString to, QString from, QString message);
-
-
 
   ///TCP Server
   qint16 tcp_port = 23232;

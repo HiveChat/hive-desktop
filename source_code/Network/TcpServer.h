@@ -1,6 +1,7 @@
 #ifndef TCPSERVER_H
 #define TCPSERVER_H
 
+#include <QJsonObject>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QThread>

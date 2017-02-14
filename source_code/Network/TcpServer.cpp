@@ -12,8 +12,10 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
       QTcpSocket tcp;
       tcp.setSocketDescriptor(socketDescriptor);
       tcp.disconnectFromHost();
+      qDebug()<<"@TcpServer::incomingConnection(): Denial of Services, tcp_socket_map.size() > maxPendingConnections()";
       return;
   }
+
   QThread *thread = new QThread(this);
   thread->start(QThread::NormalPriority);
 
