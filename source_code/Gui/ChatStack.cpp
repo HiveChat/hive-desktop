@@ -377,7 +377,15 @@ void GuiChatStack::updateFileTranProgress()
 
 void GuiChatStack::display(const QString &usrKey)
 {
-  UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
+  UsrData *temp_usr_data;
+  if(GlobalData::online_usr_data_hash.contains(usrKey))
+    {
+      temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
+    }
+  else
+    {
+      temp_usr_data = GlobalData::offline_usr_data_hash.value(usrKey);
+    }
 
   // if different usr or updated usr is refreshing
   if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())

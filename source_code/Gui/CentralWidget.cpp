@@ -80,6 +80,10 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, this, &GuiCentralWidget::showNormal);
 
+  foreach(UsrData *usrData, GlobalData::offline_usr_data_hash.values())
+    {
+      this->addUsr(usrData);
+    }
 }
 
 GuiCentralWidget::~GuiCentralWidget()

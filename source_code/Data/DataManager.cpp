@@ -5,6 +5,7 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
   initVariable();
   checkFiles();
   loadMySettings();
+  loadUsrList();
   loadFonts();
   loadTimerTasks();
 }
@@ -73,30 +74,23 @@ QJsonDocument DataManager::makeUpdateJson(const int stable[])
 
 ///////////!thread
 
-void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
+void DataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 {
-  QString usr_key = usrProfileStruct->key;
-  QString ip_addr = usrProfileStruct->ip;
-  QString usr_name = usrProfileStruct->name;
-  QString avatar_path = usrProfileStruct->avatar;
+  QString usrKey = usrProfileStruct.key;
+  QString ipAddr = usrProfileStruct.ip;
+  QString usrName = usrProfileStruct.name;
+  QString avatarPath = usrProfileStruct.avatar;
 
-  qDebug()<<ip_addr;
-
-  ///usrKey<<usrName<<ipAddr<<avatarPath
   QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
     }
 
+  QTextStream out(&file);
   QTextStream in(&file);
   QByteArray in_byte_array = in.readAll().toUtf8();
 
-  QTextStream out(&file);
-
-
-
-  ///JSon
   QJsonParseError json_error;
   QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
   if(json_error.error == QJsonParseError::NoError)
@@ -104,14 +98,13 @@ void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
       if(read_json_document.isObject())
         {
           QJsonObject usr_list_json_obj = read_json_document.object();
-          if(!usr_list_json_obj.contains(usr_key))
+          QJsonObject usr_info_json_obj;
+          usr_info_json_obj.insert("usrKey", usrKey);
+          usr_info_json_obj.insert("usrName", usrName);
+          usr_info_json_obj.insert("avatarPath", avatarPath);
+          if(!usr_list_json_obj.contains(usrKey))
             {
-              QJsonObject usr_info_json_obj;
-              usr_info_json_obj.insert("usrKey", usr_key);
-              usr_info_json_obj.insert("usrName", usr_name);
-              usr_info_json_obj.insert("avatarPath", avatar_path);
-
-              usr_list_json_obj.insert(usr_key, usr_info_json_obj);
+              usr_list_json_obj.insert(usrKey, usr_info_json_obj);
 
               QJsonDocument write_json_document;
               write_json_document.setObject(usr_list_json_obj);
@@ -119,30 +112,39 @@ void DataManager::addUsr(UsrProfileStruct *usrProfileStruct)
               file.resize(0);
               out<<write_json_document.toJson()<<endl;
             }
+          else
+            {
+              if(usr_list_json_obj[usrKey] != usr_info_json_obj)
+                {
+                  usr_list_json_obj.remove(usrKey);
+                  usr_list_json_obj.insert(usrKey, usr_info_json_obj);
+
+                  QJsonDocument write_json_document;
+                  write_json_document.setObject(usr_list_json_obj);
+
+                  file.resize(0);
+                  out<<write_json_document.toJson()<<endl;
+                }
+            }
         }
     }
   else
     {
-
       qDebug()<<"else";
       QJsonObject usr_info_json_obj;
-//      usr_info_json_obj.insert("ipAddr", ip_addr);
-      usr_info_json_obj.insert("usrKey", usr_key);
-      usr_info_json_obj.insert("usrName", usr_name);
-      usr_info_json_obj.insert("avatarPath", avatar_path);
+      usr_info_json_obj.insert("usrKey", usrKey);
+      usr_info_json_obj.insert("usrName", usrName);
+      usr_info_json_obj.insert("avatarPath", avatarPath);
 
       QJsonObject usr_list_json_obj;
-      usr_list_json_obj.insert(usr_key, usr_info_json_obj);
+      usr_list_json_obj.insert(usrKey, usr_info_json_obj);
 
       QJsonDocument write_json_document;
       write_json_document.setObject(usr_list_json_obj);
 
-      file.resize(0); //clear all
-      ///QJsonDocument::Compact
-      out<<write_json_document.toJson(QJsonDocument::Indented);
-//      qDebug()<<write_json_document.toJson(QJsonDocument::Compact);
+      file.resize(0);
+      out<<write_json_document.toJson(QJsonDocument::Indented);  ///QJsonDocument::Compact
     }
-
 
   file.flush();
   file.close();
@@ -194,24 +196,21 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct)
   if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct.key))
     {
       qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
-
-      if(usrProfileStruct != *GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->usrProfileStruct())
+      UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
+      if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
         {
-          GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->setUsrProfileStruct(usrProfileStruct);
-
-          GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->usrProfileStruct(), "Thread Data packaging...");
+          recordedUsrData->setUsrProfileStruct(usrProfileStruct);
+          emit usrProfileChanged(recordedUsrData);
           qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
-          emit usrProfileChanged(GlobalData::online_usr_data_hash.value(usrProfileStruct.key));
         }
     }
   else
     {
-      UsrData *user_data = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
-      GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, user_data);
-
-      GlobalData::TEST_printUsrProfileStruct(*GlobalData::online_usr_data_hash.value(usrProfileStruct.key)->usrProfileStruct(), "ThreadData Just packaged");
+      UsrData *userData = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
+      GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, userData);
+      updateUsr(usrProfileStruct);
+      emit usrProfileLoaded(userData);
       qDebug()<<"@ThreadData::onUsrEntered: User profile Created.";
-      emit usrProfileLoaded(GlobalData::online_usr_data_hash.value(usrProfileStruct.key));
 
     }
 
@@ -511,9 +510,8 @@ void DataManager::loadUsrList()
               usr_profile_struct.name = temp_usr_profile_json_obj["usrName"].toString();
               usr_profile_struct.avatar = temp_usr_profile_json_obj["avatarPath"].toString();
 
-              local_usr_profile_hash.insert(*temp_usr_key_str, usr_profile_struct);
-              ////////////must enable!!!!!!!!
-//              emit usrProfileLoaded(&usr_profile_struct);
+              UsrData *usr_data = new UsrData(&GlobalData::settings_struct.profile_key_str, usr_profile_struct, this);
+              GlobalData::offline_usr_data_hash.insert(*temp_usr_key_str, usr_data);
             }
         }
     }

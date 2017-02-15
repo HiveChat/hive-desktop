@@ -39,7 +39,7 @@ UpdateStruct GlobalData::update_struct;
 QUrl GlobalData::update_url = QUrl("http://updates.hivechat.org");
 QUrl GlobalData::download_url = QUrl("http://download.hivechat.org");
 
-QHash<QString, UsrProfileStruct> GlobalData::saved_usr_profile_hash;
+QHash<QString, UsrData*> GlobalData::offline_usr_data_hash;
 QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
 QMultiHash<QString, QPair<int, int>> GlobalData::file_tran_progress_hash;//used
 

@@ -29,7 +29,6 @@ public:
   explicit DataManager(QObject *parent = 0);
   ~DataManager();
 
-  void addUsr(UsrProfileStruct *usrProfileStruct);
   void loadUsrList();
 
 private:
@@ -51,6 +50,7 @@ private:
   void loadUpdates();
   void loadTimerTasks();
 
+  void updateUsr(const UsrProfileStruct &usrProfileStruct);
   void deleteUsr(const QStringList usrInfoStrList);
 
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
@@ -60,9 +60,6 @@ private:
   const QString contacts_file_path = app_data_local_path + "/contacts.json";
   const QString settings_file_path = app_data_local_path + "/settings.json";
   const QString update_file_path = app_data_local_path + "/update.json";
-
-  //data map
-  QHash<QString, UsrProfileStruct> local_usr_profile_hash;
 
   //config map
   QHash<QString, int*> settings_hash_int;

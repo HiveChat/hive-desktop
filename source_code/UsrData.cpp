@@ -2,13 +2,12 @@
 
 
 UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
+  , my_key(myKey)
+  , history_path(usr_path + usr_profile_struct.key)
 {
-  my_key = myKey;
   this->setUsrProfileStruct(usrProfileStruct);
-  history_path = usr_path + usr_profile_struct.key;
   this->checkDir(history_path);
   this->readHistoryBundle();
-
 }
 
 UsrData::UsrData(QObject *parent) : QObject(parent)

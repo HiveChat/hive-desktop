@@ -24,9 +24,8 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
   network_manager = new NetworkManager();
   network_manager->moveToThread(network_thread);
 
-  gui_central_widget = new GuiCentralWidget();
   //QObject not compatible to QWidget para, delete obj manually
-
+  gui_central_widget = new GuiCentralWidget();
 
   ////connect
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");

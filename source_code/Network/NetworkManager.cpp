@@ -30,8 +30,7 @@ NetworkManager::~NetworkManager()
 //         && address != QHostAddress::Null
 //         && address != QHostAddress::LocalHost)
 //        {
-//          if (!address.toString().contains("127.0.")
-//              && !address.toString().contains("169.254."))
+//          if (!address.toString().contains("169.254."))
 //            {
 //              result = address;
 //              break;
@@ -60,14 +59,6 @@ void NetworkManager::checkUpdate()
 
 void NetworkManager::loadTimerTasks()
 {
-//  QTimer *timer_1s = new QTimer(this);
-//  connect(timer_1s, &QTimer::timeout,
-//          [this](){
-//            refreshLocalHostIP();
-//          });
-//  timer_1s->setSingleShot(false);
-//  timer_1s->start(1000);
-
   QTimer *timer_3s = new QTimer(this);
   connect(timer_3s, &QTimer::timeout,
           [this](){
