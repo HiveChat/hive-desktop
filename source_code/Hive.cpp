@@ -103,7 +103,6 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
   network_manager->udpSendMessage(json_object);
 }
 
-#ifdef Q_OS_OSX
 bool Hive::event(QEvent* event)
 {
     switch (event->type()) {
@@ -112,13 +111,22 @@ bool Hive::event(QEvent* event)
           gui_central_widget->showNormal();
           return true;
         }
+#ifdef Q_OS_OSX
+      case QEvent::FileOpen:
+        {
+          QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+          qDebug() << "Open file" << openEvent->file();
+          return true;
+        }
+#endif
       default:
+        {
           break;
+        }
     }
 
     return QApplication::event(event);
 }
-#endif
 
 
 //QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)

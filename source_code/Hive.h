@@ -11,6 +11,7 @@
 #include <QSystemTrayIcon>
 
 #ifdef Q_OS_OSX
+#include <QFileOpenEvent>
 #include <QtMac>
 #endif
 

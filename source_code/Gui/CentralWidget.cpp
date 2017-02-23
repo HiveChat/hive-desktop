@@ -11,7 +11,6 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   , tray_icon_menu(new QMenu(this))
   , tray_icon(new QSystemTrayIcon(this))
 {    
-
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setGeometry(this->x(), this->y(), GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height);

@@ -3,6 +3,7 @@
 
 #include <QVBoxLayout>
 #include <QHostAddress>
+#include <QDragMoveEvent>
 
 #include "GlobalType.h"
 #include "GlobalData.h"
@@ -27,7 +28,7 @@ protected:
   void mouseReleaseEvent(QMouseEvent *);
   void enterEvent(QEvent *);
   void leaveEvent(QEvent *);
-//  void dragMoveEvent(QEvent *);
+  void dragMoveEvent(QEvent *);
 
 private:
   GuiAvatarButton *avatar;
