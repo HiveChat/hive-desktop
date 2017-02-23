@@ -14,6 +14,7 @@ GuiCentralWidget::GuiCentralWidget(QWidget *parent)
 
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
+  this->setGeometry(this->x(), this->y(), GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowTitle(QString("Hive! %1.%2.%3 alpha-test")
                        .arg(GlobalData::current_version[0])
@@ -128,6 +129,11 @@ void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
 
 void GuiCentralWidget::addUsr(UsrData *userData)
 {
+  if(gui_tab_block->chat_tab->comb_scroll_widget->contains(userData->key()))
+    {
+      qDebug()<<"#GuiCentralWidget::addUsr(): Already exists.";
+      return;
+    }
   gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
   gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
 }
@@ -139,6 +145,7 @@ void GuiCentralWidget::delUsr(UsrData *userData)
 
 void GuiCentralWidget::changeUsr(UsrData *userData)
 {
+  qDebug()<<"updated GUI";
   gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
   gui_main_block->gui_chat_stack->refreshProfile(userData->key());
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());

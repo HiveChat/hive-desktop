@@ -19,6 +19,7 @@ public:
   void addComb(UsrProfileStruct *usrProfileStruct);
   void refreshComb(UsrProfileStruct *usrProfileStruct);
   void refreshBadgeNumber(const QString &usrKey, const int &num);
+  bool contains(const QString &usrKey);
 
 private:
   QVBoxLayout *main_layout;

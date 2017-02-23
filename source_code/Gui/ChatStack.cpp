@@ -479,18 +479,11 @@ void GuiChatStack::flipUnreadMessage()
     }
 
 #ifdef Q_OS_OSX
-  QTimer::singleShot(100, [this](){
+  QTimer::singleShot(50, [this](){
       scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
     });
-//  timer = new QTimer(this);
-//  connect(timer, &QTimer::timeout,
-//          [this](){
-//            scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
-//            timer->deleteLater();
-//          });
-//  timer->setSingleShot(true);
-//  timer->start(100);
 #endif
+
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
 

@@ -193,9 +193,21 @@ void DataManager::deleteUsr(const QStringList usrInfoStrList)
 
 void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct)
 {
-  if(GlobalData::online_usr_data_hash.keys().contains(usrProfileStruct.key))
+  if(GlobalData::online_usr_data_hash.contains(usrProfileStruct.key))
     {
-      qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist.";
+      qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist in online list.";
+      UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
+      if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
+        {
+          recordedUsrData->setUsrProfileStruct(usrProfileStruct);
+          emit usrProfileChanged(recordedUsrData);
+          qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
+        }
+    }
+  else if(GlobalData::offline_usr_data_hash.contains(usrProfileStruct.key))
+    {
+      qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist in offline list.";
+      GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, GlobalData::offline_usr_data_hash.value(usrProfileStruct.key));
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
         {

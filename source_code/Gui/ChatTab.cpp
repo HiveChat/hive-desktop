@@ -89,6 +89,11 @@ void ChatTab_comb_scroll_widget::refreshBadgeNumber(const QString &usrKey, const
     }
 }
 
+bool ChatTab_comb_scroll_widget::contains(const QString &usrKey)
+{
+  return comb_widget_hash.contains(usrKey);
+}
+
 void ChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)
 {
   GuiCombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key);

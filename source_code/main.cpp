@@ -51,8 +51,8 @@ int main(int argc, char *argv[])
 #ifndef Q_WS_QWS && Q_WS_QPA
   QPropertyAnimation animation(hiveApp.gui_central_widget, "geometry");
   animation.setDuration(300);
-  animation.setStartValue(QRect(120, 80, 0, 0));
-  animation.setEndValue(QRect(140, 100, 0, 0));
+  animation.setStartValue(QRect(120, 80, GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height));
+  animation.setEndValue(QRect(140, 100, GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height));
   animation.setEasingCurve(QEasingCurve::OutBounce);
   animation.start();
 #endif
