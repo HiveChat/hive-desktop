@@ -4,6 +4,9 @@
 #include <QVBoxLayout>
 #include <QHostAddress>
 #include <QDragMoveEvent>
+#include <QMouseEvent>
+#include <QDrag>
+#include <QPropertyAnimation>
 
 #include "GlobalType.h"
 #include "GlobalData.h"
@@ -11,22 +14,25 @@
 #include "Gui/Frameworks/Widgets/AvatarButton.h"
 #include "Gui/Frameworks/Widgets/BadgeIcon.h"
 
-class GuiCombWidget : public QWidget
+class CombWidget : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
-  ~GuiCombWidget();
+  explicit CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  ~CombWidget();
 
   void setProfile(UsrProfileStruct *usrProfile);
   void setBadgeNumber(const int &num);
 
 protected:
-  void paintEvent(QPaintEvent*);
+  bool mousePressed = false;
+  QMouseEvent *mouseEvent;
 
-  void mouseReleaseEvent(QMouseEvent *);
-  void enterEvent(QEvent *);
+  void paintEvent(QPaintEvent  *event);
+  void mouseReleaseEvent(QMouseEvent *event);
+  void mousePressEvent(QMouseEvent *event);
+  void enterEvent(QEvent *event );
   void leaveEvent(QEvent *);
   void dragMoveEvent(QEvent *);
 

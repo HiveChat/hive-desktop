@@ -28,22 +28,6 @@ ChatTab::ChatTab(QWidget *parent) : QWidget(parent)
   this->setAutoFillBackground(true);
   this->setPalette(palette);
   this->setFixedWidth(250);
-
-
-  /*comb_treewidget = new QTreeWidget(this);
-  comb_treewidget->setHeaderHidden(true);
-  comb_treewidget->setAnimated(true);
-  comb_treewidget->setAlternatingRowColors(false);
-  comb_treewidget->setFrameStyle(QFrame::NoFrame);
-  connect(comb_treewidget, SIGNAL(itemClicked(QTreeWidgetItem*, int)), this, SLOT(onItemClicked(QTreeWidgetItem*, int)));
-  QTreeWidgetItem *item=new QTreeWidgetItem(comb_treewidget,QStringList(QString("Tree")));
-  for(int i = 0; i <= 10; i++)
-    {
-      QTreeWidgetItem *item1=new QTreeWidgetItem(item,QStringList(QString("Band")+QString::number(i+1)));
-      item->addChild(item1);
-    }
-  //comb_treewidget->setFixedWidth(100);
-  */
 }
 
 
@@ -68,11 +52,11 @@ ChatTab_comb_scroll_widget::ChatTab_comb_scroll_widget(QWidget *parent) : QWidge
 void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 {
   qDebug()<<"#GuiChatTab_comb_scroll_widget::addComb(): Adding Comb.";
-  GuiCombWidget *comb_widget = new GuiCombWidget(usrProfileStruct, this);
+  CombWidget *comb_widget = new CombWidget(usrProfileStruct, this);
   comb_widget_hash.insert(usrProfileStruct->key, comb_widget);
   main_layout->addWidget(comb_widget);
 
-  connect(comb_widget, &GuiCombWidget::clicked,
+  connect(comb_widget, &CombWidget::clicked,
           [this](const QString &usrKey){
             emit combWidgetClicked(usrKey);
           });
@@ -80,7 +64,7 @@ void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 
 void ChatTab_comb_scroll_widget::refreshBadgeNumber(const QString &usrKey, const int &num)
 {
-  GuiCombWidget *comb_widget = comb_widget_hash.value(usrKey);
+  CombWidget *comb_widget = comb_widget_hash.value(usrKey);
   comb_widget->setBadgeNumber(num);
   if(num != 0)
     {
@@ -94,9 +78,10 @@ bool ChatTab_comb_scroll_widget::contains(const QString &usrKey)
   return comb_widget_hash.contains(usrKey);
 }
 
+
 void ChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)
 {
-  GuiCombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key);
+  CombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key);
   if(comb_widget != nullptr)
     {
       comb_widget->setProfile(usrProfileStruct);

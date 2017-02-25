@@ -2,7 +2,7 @@
 #include <QDebug>
 
 
-GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
+CombWidget::CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
   : QWidget(parent)
   , avatar(new GuiAvatarButton(80,  this))
   , usr_name_label(new QLabel(this))
@@ -50,12 +50,12 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
 
 }
 
-GuiCombWidget::~GuiCombWidget()
+CombWidget::~CombWidget()
 {
 
 }
 
-void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
+void CombWidget::setProfile(UsrProfileStruct *usrProfile)
 {
   usr_profile = *usrProfile;
 
@@ -86,7 +86,7 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
   return;
 }
 
-void GuiCombWidget::setBadgeNumber(const int &num)
+void CombWidget::setBadgeNumber(const int &num)
 {
   badge_icon->setNumber(num);
 }
@@ -94,41 +94,82 @@ void GuiCombWidget::setBadgeNumber(const int &num)
 
 //////events
 
-void GuiCombWidget::paintEvent(QPaintEvent *)
+void CombWidget::paintEvent(QPaintEvent *event)
 {
   QRectF rectangle(0, 0, this->width(), this->height());
   QPainter painter;
   painter.begin(this);
   painter.setPen(QPen(Qt::NoPen));
-
   painter.setBrush(QBrush(hovered ? hovered_window_color : default_window_color,Qt::SolidPattern));
   painter.drawRoundedRect(rectangle,5,5);
   painter.end();
 }
 
-void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
+void CombWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+  mousePressed = false;
+  this->setHidden(false);
   emit clicked(usr_profile.key);
 }
 
-void GuiCombWidget::enterEvent(QEvent *)
+void CombWidget::mousePressEvent(QMouseEvent *event)
+{
+  mousePressed = true;
+  mouseEvent = event;
+
+  if(event->button() == Qt::LeftButton)
+    {
+      QTimer::singleShot(100, [this](){
+          if(mousePressed)
+            {
+              hovered = true;
+              this->update();
+              this->setHidden(true);
+              QPixmap pixmap = grab(this->rect());//grab(this->rect());
+
+              QByteArray itemData;
+              QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+              dataStream << pixmap << QPoint(mouseEvent->pos() - this->pos());
+
+              QMimeData *mimeData = new QMimeData;
+              mimeData->setData("application/x-dnditemdata", itemData);
+
+              QDrag *drag = new QDrag(this);
+              drag->setMimeData(mimeData);
+              drag->setPixmap(pixmap);
+              drag->setHotSpot(mouseEvent->pos() - this->pos());
+
+              if(drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction)
+                {
+                  this->close();
+                }
+              else
+                {
+                  this->show();
+                }
+            }
+        });
+    }
+}
+
+void CombWidget::enterEvent(QEvent *event)
 {
   hovered = true;
-  update();
+  this->update();
 }
 
-void GuiCombWidget::leaveEvent(QEvent *)
+void CombWidget::leaveEvent(QEvent *event)
 {
   hovered = false;
-  update();
+  this->update();
 }
 
-void GuiCombWidget::dragMoveEvent(QEvent *e)
+void CombWidget::dragMoveEvent(QEvent *event)
 {
 
 }
 
-QString GuiCombWidget::getSubNetStr(const QString &ipAddr)
+QString CombWidget::getSubNetStr(const QString &ipAddr)
 {
   int loop_num = 0;
   QString sub_net_str;

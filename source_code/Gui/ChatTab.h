@@ -6,6 +6,7 @@
 
 #include <QScrollArea>
 #include <QHash>
+#include <QDrag>
 
 class ChatTab_comb_scroll_widget;
 class ChatTab;
@@ -21,9 +22,10 @@ public:
   void refreshBadgeNumber(const QString &usrKey, const int &num);
   bool contains(const QString &usrKey);
 
+
 private:
   QVBoxLayout *main_layout;
-  QHash<QString, GuiCombWidget *> comb_widget_hash;
+  QHash<QString, CombWidget *> comb_widget_hash;
 
 signals:
   void combWidgetClicked(const QString &usrKey);
