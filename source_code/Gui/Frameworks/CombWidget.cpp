@@ -2,21 +2,29 @@
 #include <QDebug>
 
 
-GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
+GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
+  : QWidget(parent)
+  , avatar(new GuiAvatarButton(80,  this))
+  , usr_name_label(new QLabel(this))
+  , ip_addr_label(new QLabel(this))
+  , status_label(new QLabel(this))
 {
+  hover_palette.setColor(QPalette::Window, default_window_color);
+  this->setPalette(hover_palette);
+  this->setMinimumWidth(200);
+  this->setAutoFillBackground(true);
+  this->setAcceptDrops(true);
+  this->setToolTipDuration(1000);
+  setProfile(usrProfileStruct);
+
+
   QPalette usr_name_palette;
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
 
-  ///usrKey<<usrName<<ipAddr<<avatarPathr
-  avatar = new GuiAvatarButton(80,  this);
-  usr_name_label = new QLabel(this);
-  ip_addr_label = new QLabel(this);
-  status_label = new QLabel(offline_str, this);
-
   usr_name_label->setPalette(usr_name_palette);
   usr_name_label->setFont(GlobalData::font_combWidgetUsrName);
-
   ip_addr_label->setFont(GlobalData::font_combWidgetIpAddr);
+  status_label->setText(offline_dot);
 
   net_status_layout = new QHBoxLayout();
   net_status_layout->setAlignment(Qt::AlignLeft);
@@ -35,18 +43,11 @@ GuiCombWidget::GuiCombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent
   main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeft);
   main_layout->addSpacing(10);
-//  main_layout->addWidget(badge_icon, Qt::AlignCenter);
   main_layout->addWidget(avatar);
   main_layout->addLayout(usr_info_layout);
+//  main_layout->addWidget(badge_icon, Qt::AlignCenter);
 
-  hover_palette.setColor(QPalette::Window, default_window_color);
 
-  setProfile(usrProfileStruct);
-
-  this->setMinimumWidth(200);
-  this->setPalette(hover_palette);
-  this->setAutoFillBackground(true);
-  this->setToolTipDuration(1000);
 }
 
 GuiCombWidget::~GuiCombWidget()
@@ -64,7 +65,7 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
 
   if(usr_profile.ip.isEmpty() || usr_profile.ip == "Offline")
     {
-      status_label->setText(offline_str);
+      status_label->setText(offline_dot);
       this->setToolTip("offline");
     }
   else
@@ -72,12 +73,12 @@ void GuiCombWidget::setProfile(UsrProfileStruct *usrProfile)
 
       if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip))
         {
-          status_label->setText(online_str);
+          status_label->setText(online_dot);
           this->setToolTip("online");
         }
       else
         {
-          status_label->setText(unstable_str);
+          status_label->setText(unstable_dot);
           this->setToolTip("not in same subnet");
         }
     }
@@ -96,13 +97,13 @@ void GuiCombWidget::setBadgeNumber(const int &num)
 void GuiCombWidget::paintEvent(QPaintEvent *)
 {
   QRectF rectangle(0, 0, this->width(), this->height());
-  QPainter paint;
-  paint.begin(this);
-  paint.setPen(QPen(Qt::NoPen));
-  paint.setBrush(QBrush(window_color,Qt::SolidPattern));
+  QPainter painter;
+  painter.begin(this);
+  painter.setPen(QPen(Qt::NoPen));
 
-  paint.drawRoundedRect(rectangle,5,5);
-  paint.end();
+  painter.setBrush(QBrush(hovered ? hovered_window_color : default_window_color,Qt::SolidPattern));
+  painter.drawRoundedRect(rectangle,5,5);
+  painter.end();
 }
 
 void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
@@ -112,16 +113,14 @@ void GuiCombWidget::mouseReleaseEvent(QMouseEvent *)
 
 void GuiCombWidget::enterEvent(QEvent *)
 {
-  window_color = hovered_window_color;
-  repaint();
   hovered = true;
+  update();
 }
 
 void GuiCombWidget::leaveEvent(QEvent *)
 {
-  window_color = default_window_color;
-  repaint();
   hovered = false;
+  update();
 }
 
 void GuiCombWidget::dragMoveEvent(QEvent *e)

@@ -40,22 +40,19 @@ private:
   QHBoxLayout *net_status_layout;
   QHBoxLayout *main_layout;
 
-  QString online_str = "<span style=\" color:#39c828;\">●</span>";
-  QString offline_str = "<span style=\" color:#ed403f;\">●</span>";
-  QString unstable_str = "<span style=\" color:#ffb500;\">●</span>";
+  QString online_dot = "<span style=\" color:#39c828;\">●</span>";
+  QString offline_dot = "<span style=\" color:#ed403f;\">●</span>";
+  QString unstable_dot = "<span style=\" color:#ffb500;\">●</span>";
 
 
   QPalette hover_palette;
-  QColor window_color = GlobalData::color_tab;
   QColor default_window_color = GlobalData::color_tab;
   QColor hovered_window_color = QColor(255,175,0,161);
 
-  bool selected = false;
   bool hovered  = false;
 
   ///data
   UsrProfileStruct usr_profile;
-
   QString getSubNetStr(const QString &ipAddr);
 
 
