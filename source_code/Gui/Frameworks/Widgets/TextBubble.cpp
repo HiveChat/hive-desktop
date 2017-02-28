@@ -1,11 +1,11 @@
 #include "TextBubble.h"
 
-TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
+TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
   int maxWidth = 500;
 
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
-  label =  new QLabel(this);
+  label = new QLabel(this);
   label->setText(text);
   label->setFont(GlobalData::font_chatBubble);
   label->adjustSize();
@@ -33,6 +33,7 @@ TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft =
 
 void TextBubble_text_area::paintEvent(QPaintEvent *)
 {
+//  btn->setGeometry(btn->parentWidget()->width()-btn->width(), btn->y(), btn->width(), btn->height());
   label->adjustSize();
 
   QPainter painter(this);

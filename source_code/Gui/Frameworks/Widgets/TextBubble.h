@@ -12,7 +12,7 @@ class TextBubble;
 class GuiFileBubble_file_info;
 class GuiFileBubble;
 
-class TextBubble_text_area : public QLabel
+class TextBubble_text_area : public QWidget
 {
   Q_OBJECT
 
@@ -23,6 +23,7 @@ protected:
   void paintEvent(QPaintEvent *);
 
 private:
+  QString message;
   QHBoxLayout *main_layout;
   QLabel *label;
   QColor *color;

@@ -122,7 +122,7 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
       QTimer::singleShot(100, [this](){
           if(mousePressed)
             {
-              hovered = true;
+              hovered = false;
               this->update();
               this->setHidden(true);
               QPixmap pixmap = grab(this->rect());//grab(this->rect());
@@ -131,7 +131,7 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
               QDataStream dataStream(&itemData, QIODevice::WriteOnly);
               dataStream << pixmap << QPoint(mouseEvent->pos() - this->pos());
 
-              QMimeData *mimeData = new QMimeData;
+              QMimeData *mimeData = new QMimeData();
               mimeData->setData("application/x-dnditemdata", itemData);
 
               QDrag *drag = new QDrag(this);
