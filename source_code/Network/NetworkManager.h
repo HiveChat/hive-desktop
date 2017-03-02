@@ -18,6 +18,7 @@
 #include <QFile>
 #include <QDate>
 #include <QMutex>
+#include <QTimer>
 
 
 class NetworkManager : public QObject

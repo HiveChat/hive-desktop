@@ -12,6 +12,7 @@
 #include <QColor>
 #include <QStandardPaths>
 #include <QDebug>
+#include <QUrl>
 
 
 

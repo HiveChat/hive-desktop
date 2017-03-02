@@ -5,8 +5,8 @@
 #-------------------------------------------------
 
 QT       += core gui
-QT   += network
-QT       += concurrent
+QT	 += network
+#QT       += concurrent
 CONFIG   += c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

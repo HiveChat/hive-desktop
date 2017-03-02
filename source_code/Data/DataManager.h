@@ -20,6 +20,7 @@
 #include <QFontDatabase>
 #include <QHostInfo>
 #include <QTime>
+#include <QTimer>
 
 class DataManager : public QObject
 {

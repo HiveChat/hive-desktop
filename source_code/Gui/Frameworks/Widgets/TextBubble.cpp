@@ -38,15 +38,11 @@ void TextBubble_text_area::paintEvent(QPaintEvent *)
 
   QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
-  //color options:
-  //255,197,28,100
-  //255,215,126
   painter.setBrush(QBrush(*color, Qt::SolidPattern));
   painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
   this->setFixedWidth(label->rect().width()+20);
   this->setFixedHeight(label->rect().height()+20);
 }
-
 
 TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
@@ -88,15 +84,6 @@ TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *pare
 
   this->setParent(parent);
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -153,7 +140,6 @@ void GuiFileBubble_file_info::paintEvent(QPaintEvent *)
 
 GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
-
   ////recently not consider the strip, it's ugly.
 //  if(alignLeft)
 //    {

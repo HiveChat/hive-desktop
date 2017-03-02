@@ -5,6 +5,7 @@
 #include "MainBlock.h"
 
 #include <QSystemTrayIcon>
+#include <QApplication>
 #include <QMenuBar>
 #include <QMenu>
 #include <QAction>

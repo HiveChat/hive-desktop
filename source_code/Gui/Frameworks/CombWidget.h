@@ -7,6 +7,7 @@
 #include <QMouseEvent>
 #include <QDrag>
 #include <QPropertyAnimation>
+#include <QMimeData>
 
 #include "GlobalType.h"
 #include "GlobalData.h"

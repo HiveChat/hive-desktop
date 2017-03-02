@@ -70,7 +70,6 @@ void CombWidget::setProfile(UsrProfileStruct *usrProfile)
     }
   else
     {
-
       if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip))
         {
           status_label->setText(online_dot);

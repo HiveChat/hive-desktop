@@ -2,7 +2,13 @@
 #define DATAUSER_H
 
 #include <QObject>
-#include <QtConcurrent>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QStandardPaths>
+#include <QDir>
+#include <QTextStream>
+#include <QFile>
+#include <QDebug>
 #include "GlobalType.h"
 //#include "ThreadData.h"//delete?
 
