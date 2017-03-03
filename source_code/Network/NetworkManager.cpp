@@ -281,9 +281,10 @@ void NetworkManager::onRedirectFinished()
                     GlobalData::update_struct.version[2] = json_obj.value("alpha_version").toInt();
                     GlobalData::update_struct.message = json_obj.value("message").toString();
                     GlobalData::update_struct.title = json_obj.value("title").toString();
-                    if(memcmp(GlobalData::update_struct.version,
+                    if(/*memcmp(GlobalData::update_struct.version,
                               GlobalData::current_version,
-                              sizeof(GlobalData::current_version)) != 0)
+                              sizeof(GlobalData::current_version)) != 0*/
+                       GlobalData::versionCompare(GlobalData::update_struct.version, GlobalData::current_version))
                       {
                         qDebug()<<"@ThreadNet::onRedirectFinished(): update available";
                         emit updateAvailable();
