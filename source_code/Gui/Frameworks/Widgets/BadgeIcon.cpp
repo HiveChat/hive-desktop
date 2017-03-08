@@ -1,69 +1,53 @@
 #include "BadgeIcon.h"
 #include <QDebug>
 
-GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent) : QWidget(parent)
+GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent)
+  : QWidget(parent)
+  , height(dia)
+  , rectangle(QRect(18, 10, dia, dia))
 {
-  height = dia;
-  num_label = new QLabel(this);
-  QPalette label_palette;
-  label_palette.setColor(QPalette::WindowText, QColor(255, 255, 255));
-  num_label->setPalette(label_palette);
-  QFont label_font = num_label->font();
-  label_font.setPointSize(8);
-  num_label->setFont(label_font);
 }
 
-void GuiBadgeIcon::setNumber(const int &number)
+void GuiBadgeIcon::setNumber(const int &num)
 {
-  qDebug()<<"H" << height;
-  qDebug()<<QString::number(number);
-
-  if(number == 1)
-    {
-      num_label->setText(QString::number(number));
-      num_label->setFrameRect(QRect(22, 12, height, height));
-      num_label->repaint();
-      this->setHidden(false);
-      return;
-    }
-  if(number == 0)
-    {
-      this->setHidden(true);
-      return;
-    }
-  if(number < 10)
-    {
-      num_label->setText(QString::number(number));
-//      num_label->setFrameRect(QRect(22, 10, height, height));
-//      num_label->repaint();
-
-      this->setHidden(false);
-      return;
-    }
-  if(number > 99)
-    {
-      num_label->setText("...");
-      num_label->setFrameRect(QRect(20, 10, height, height));
-      this->setHidden(false);
-      return;
-    }
-  else
-    {
-      num_label->setText(QString::number(number));
-      num_label->setFrameRect(QRect(20, 10, height, height));
-      this->setHidden(false);
-      return;
-    }
+  number = num;
 }
 
 void GuiBadgeIcon::paintEvent(QPaintEvent *)
 {
-  QRectF rectangle(18, 10, height, height);
   QPainter paint;
   paint.begin(this);
   paint.setPen(color);
   paint.setBrush(QBrush(color, Qt::SolidPattern));
   paint.setRenderHint(QPainter::Antialiasing,true);
   paint.drawRoundedRect(rectangle, 7, 7);
+
+  QFont font = this->font();
+  font.setPointSize(8);
+  paint.setPen(QColor(255,255,255));
+  paint.setFont(font);
+  if(number == 0)
+    {
+      this->setHidden(true);
+      return;
+    }
+  else if(number < 10)
+    {
+      paint.drawText(QPoint(22, 20), QString::number(number));
+      this->setHidden(false);
+      return;
+    }
+  else if(number > 99)
+    {
+      paint.drawText(QPoint(21, 18), "...");
+      this->setHidden(false);
+      return;
+    }
+  else
+    {
+      paint.drawText(QPoint(20, 20), QString::number(number));
+      this->setHidden(false);
+      return;
+    }
   paint.end();
 }

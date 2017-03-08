@@ -19,10 +19,8 @@ protected:
 private:
   int number;
   int height;
+  QRectF rectangle;
   QColor color = QColor("#D31111");
-
-  QLabel *num_label;
-
 };
 
 #endif // GUIBADGEICON_H

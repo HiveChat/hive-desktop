@@ -4,16 +4,16 @@
 
 GuiTabBlock::GuiTabBlock(QWidget *parent)
   : QWidget(parent)
+  , settings_tab(new SettingsTab(this))
+  , home_tab(new HomeTab(this))
+  , chat_tab(new ChatTab(this))
+  , tab_label_layout(new QGridLayout())
   , left_tab_label(new LabelButton(0, this))
   , mid_tab_label(new LabelButton(70, this))
   , right_tab_label(new LabelButton(0, this))
-  , tab_label_layout(new QGridLayout())
   , left_btn_line(new QFrame(this))
   , mid_btn_line(new QFrame(this))
   , right_btn_line(new QFrame(this))
-  , home_tab(new HomeTab(this))
-  , chat_tab(new ChatTab(this))
-  , settings_tab(new SettingsTab(this))
   , tab_stacked_widget(new QStackedWidget(this))
 {
   this->setAutoFillBackground(true);
