@@ -6,6 +6,7 @@ GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent)
   , height(dia)
   , rectangle(QRect(18, 10, dia, dia))
 {
+  this->setHidden(true);
 }
 
 void GuiBadgeIcon::setNumber(const int &num)
@@ -15,7 +16,13 @@ void GuiBadgeIcon::setNumber(const int &num)
 
 void GuiBadgeIcon::paintEvent(QPaintEvent *)
 {
-  QPainter paint;
+  if(number == 0)
+    {
+      this->setHidden(true);
+      return;
+    }
+
+  QPainter paint(this);
   paint.begin(this);
   paint.setPen(color);
   paint.setBrush(QBrush(color, Qt::SolidPattern));
@@ -26,26 +33,25 @@ void GuiBadgeIcon::paintEvent(QPaintEvent *)
   font.setPointSize(8);
   paint.setPen(QColor(255,255,255));
   paint.setFont(font);
-  if(number == 0)
-    {
-      this->setHidden(true);
-      return;
-    }
-  else if(number < 10)
+
+  if(number < 10)
     {
       paint.drawText(QPoint(22, 20), QString::number(number));
+      paint.end();
       this->setHidden(false);
       return;
     }
   else if(number > 99)
     {
       paint.drawText(QPoint(21, 18), "...");
+      paint.end();
       this->setHidden(false);
       return;
     }
   else
     {
       paint.drawText(QPoint(20, 20), QString::number(number));
+      paint.end();
       this->setHidden(false);
       return;
     }
