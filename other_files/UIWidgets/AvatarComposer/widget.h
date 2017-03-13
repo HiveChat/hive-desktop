@@ -39,7 +39,7 @@ private:
 
   QString source_image_name;
 
-  bool render_lock;
+  bool render_lock = true;
   bool high_quality_rendering = false;
 
 private slots:

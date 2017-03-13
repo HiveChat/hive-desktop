@@ -20,7 +20,7 @@ AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
   painter.drawEllipse(destination_image.rect());
 
   //GUI Widgets
-  result_label = new QLabel("drag avatar here!", this);
+  result_label = new QLabel("drag image here!", this);
   horinzontal_slider = new QSlider(this);
   horinzontal_slider->setOrientation(Qt::Horizontal);
   horinzontal_slider->setLayoutDirection(Qt::RightToLeft);
@@ -44,7 +44,7 @@ AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
   connect(scale_slider, &QDial::valueChanged, this, &AvatarComposer::render);
   connect(scale_slider, &QDial::sliderReleased, this, &AvatarComposer::highQualityRender);
 
-  setSourceImage("/Users/echo/Desktop/5123.png");
+//  setSourceImage("/Users/echo/Desktop/5123.png");
 
   this->setAcceptDrops(true);
 }
@@ -68,6 +68,7 @@ void AvatarComposer::setSourceImage(const QString &fileName)
       return;
     }
 
+  render_lock = false;
   source_image_name = fileName;
   scaled_source_size = source_image.size().scaled(result_avatar_size, Qt::KeepAspectRatioByExpanding);
   scaled_source_image = source_image.scaled(scaled_source_size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
