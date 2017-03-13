@@ -22,7 +22,7 @@ public:
 private:
   QHash<QString , QString> avatar_hash;
   QList<QRadioButton *> avatar_radio_btn_list;
-  GuiAvatarButton *avatar_btn;
+  AvatarComposer *avatar_composer;
 
 private slots:
   void onRadioClicked(QAbstractButton *abstractButton);

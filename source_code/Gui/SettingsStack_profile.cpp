@@ -20,10 +20,8 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   addTag("User information");
 
   //avatar
-  avatar_btn = new GuiAvatarButton(GlobalData::settings_struct.profile_avatar_str, 100, this);
   QButtonGroup *avatar_option_group = new QButtonGroup(this);
   QVBoxLayout *avatar_option_layout = new QVBoxLayout();
-  avatar_option_layout->addWidget(avatar_btn);
 
   QString current_avatar_name = avatar_hash.key(GlobalData::settings_struct.profile_avatar_str);
 
@@ -36,9 +34,9 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
       avatar_radio_btn_list.append(temp_radio_btn);
     }
 
-  AvatarComposer *composer = new AvatarComposer(QSize(200,200),this);
-  composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
-  addItem("\tAvatar Editor:", composer);
+  avatar_composer = new AvatarComposer(QSize(200,200),this);
+  avatar_composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
+  addItem("\tAvatar Editor:", avatar_composer);
   addItem("\tAvatar:", avatar_option_layout);
 
   //usrname
@@ -74,7 +72,7 @@ GuiSettingsStack_profile::~GuiSettingsStack_profile()
 void GuiSettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
   GlobalData::settings_struct.profile_avatar_str = avatar_hash.value(abstractButton->text());
-  avatar_btn->setAvatar(GlobalData::settings_struct.profile_avatar_str);
+  avatar_composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
   GlobalData::settings_struct.modified_lock = true;
 }
 

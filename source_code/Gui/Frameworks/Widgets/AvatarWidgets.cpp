@@ -169,7 +169,7 @@ void AvatarComposer::wheelEvent(QWheelEvent *event)
      QPoint numDegrees = event->angleDelta() * 0.125;
      scale_slider->setValue(scale_slider->value() + numDegrees.y());
 
-     if(numDegrees.y() == 0)
+//     if(event->phase() == Qt::ScrollEnd)
        {
          high_quality_rendering = true;
        }
