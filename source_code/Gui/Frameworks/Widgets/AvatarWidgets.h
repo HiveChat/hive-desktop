@@ -1,13 +1,47 @@
-#ifndef WIDGET_H
-#define WIDGET_H
+#ifndef GUIAVATARBUTTON_H
+#define GUIAVATARBUTTON_H
 
-#include <QPainter>
-#include <QLabel>
-#include <QSlider>
-#include <QGridLayout>
-#include <QDial>
+#include <QMouseEvent>
 #include <QDragEnterEvent>
 #include <QMimeData>
+
+#include <QSlider>
+#include <QDial>
+#include <QLabel>
+#include <QGridLayout>
+
+#include <QPainter>
+#include <QBitmap>
+
+#include <QDebug>
+
+
+
+class GuiAvatarButton : public QLabel
+{
+  Q_OBJECT
+
+public:
+  GuiAvatarButton(const QString path, const int Diameter, QWidget *parent);
+  GuiAvatarButton(const int Diameter, QWidget *parent);
+
+  void setAvatar(const QString &path);
+
+protected:
+  void mouseReleaseEvent(QMouseEvent *);
+  void enterEvent(QEvent *);
+  void leaveEvent(QEvent *);
+
+private:
+  int diameter;
+
+signals:
+  void clicked();
+
+};
+
+
+
 
 class AvatarComposer : public QWidget
 {
@@ -49,4 +83,4 @@ private slots:
 
 };
 
-#endif // WIDGET_H
+#endif // GUIAVATARBUTTON_H

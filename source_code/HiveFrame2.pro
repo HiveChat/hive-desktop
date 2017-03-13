@@ -52,14 +52,14 @@ SOURCES += \
 \
     Gui/Frameworks/Widgets/TextBubble.cpp \
     Gui/Frameworks/Widgets/LabelButton.cpp \
-    Gui/Frameworks/Widgets/AvatarButton.cpp \
     Gui/Frameworks/Widgets/ColorPicker.cpp \
     Gui/Frameworks/Widgets/BadgeIcon.cpp \
 \
     Network/TcpServer.cpp \
     Network/NetworkManager.cpp \
 \
-    Data/DataManager.cpp
+    Data/DataManager.cpp \
+    Gui/Frameworks/Widgets/AvatarWidgets.cpp
 
 HEADERS  += \
     Hive.h \
@@ -89,14 +89,14 @@ HEADERS  += \
 \
     Gui/Frameworks/Widgets/TextBubble.h \
     Gui/Frameworks/Widgets/LabelButton.h \
-    Gui/Frameworks/Widgets/AvatarButton.h \
     Gui/Frameworks/Widgets/ColorPicker.h \
     Gui/Frameworks/Widgets/BadgeIcon.h \
 \
     Network/TcpServer.h \
     Network/NetworkManager.h \
 \
-    Data/DataManager.h
+    Data/DataManager.h \
+    Gui/Frameworks/Widgets/AvatarWidgets.h
 
 ICON = Src/hive.icns
 

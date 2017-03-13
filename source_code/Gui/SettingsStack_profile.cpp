@@ -36,6 +36,9 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
       avatar_radio_btn_list.append(temp_radio_btn);
     }
 
+  AvatarComposer *composer = new AvatarComposer(QSize(200,200),this);
+  composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
+  addItem("\tAvatar Editor:", composer);
   addItem("\tAvatar:", avatar_option_layout);
 
   //usrname

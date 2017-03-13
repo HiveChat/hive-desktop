@@ -2,7 +2,7 @@
 #define GUIWELCOMESTACK_H
 
 #include "Gui/Frameworks/Widgets/LabelButton.h"
-#include "Gui/Frameworks/Widgets/AvatarButton.h"
+#include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "GlobalData.h"
 
 #include <QStackedLayout>

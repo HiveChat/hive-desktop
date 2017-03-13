@@ -12,7 +12,7 @@
 #include "GlobalType.h"
 #include "GlobalData.h"
 #include "Gui/Frameworks/Widgets/LabelButton.h"
-#include "Gui/Frameworks/Widgets/AvatarButton.h"
+#include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/BadgeIcon.h"
 
 class CombWidget : public QWidget

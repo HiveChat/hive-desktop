@@ -1,7 +1,7 @@
 #ifndef GUISCROLLSTACK_H
 #define GUISCROLLSTACK_H
 
-#include "Gui/Frameworks/Widgets/AvatarButton.h"
+#include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "GlobalData.h"
 
 #include <QFrame>

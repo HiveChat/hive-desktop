@@ -6,7 +6,7 @@
 #include "Data/DataManager.h"
 #include "Gui/Frameworks/ScrollStack.h"
 #include "Gui/Frameworks/Widgets/LabelButton.h"
-#include "Gui/Frameworks/Widgets/AvatarButton.h"
+#include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/TextBubble.h"
 
 #include <QScrollBar>
