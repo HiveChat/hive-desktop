@@ -266,6 +266,7 @@ void DataManager::onUpdatesAvailable()
   QTextStream out(&file);
   QByteArray in_byte_array = in.readAll().toUtf8();
   int write_version[3];
+  memcpy(&write_version, &GlobalData::current_version, sizeof(GlobalData::current_version));
 
   if(!in_byte_array.isEmpty())
     {

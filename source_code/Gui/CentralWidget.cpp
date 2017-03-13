@@ -3,14 +3,22 @@
 
 GuiCentralWidget::GuiCentralWidget(QWidget *parent)
   : QWidget(parent)
-  , gui_tab_block(new GuiTabBlock(this))
-  , gui_main_block(new MainBlock(this))
-  , hide_action(new QAction(tr("&Hide"), this))
-  , show_action(new QAction(tr("&Show"), this))
-  , quit_action(new QAction(tr("&Quit"), this))
-  , tray_icon_menu(new QMenu(this))
-  , tray_icon(new QSystemTrayIcon(this))
+//  , gui_tab_block(new GuiTabBlock(this))
+//  , gui_main_block(new MainBlock(this))
+//  , hide_action(new QAction(tr("&Hide"), this))
+//  , show_action(new QAction(tr("&Show"), this))
+//  , quit_action(new QAction(tr("&Quit"), this))
+//  , tray_icon_menu(new QMenu(this))
+//  , tray_icon(new QSystemTrayIcon(this))
 {    
+  gui_tab_block = new GuiTabBlock(this);
+  gui_main_block = new MainBlock(this);
+  hide_action = new QAction(tr("&Hide"), this);
+  show_action = new QAction(tr("&Show"), this);
+  quit_action = new QAction(tr("&Quit"), this);
+  tray_icon_menu = new QMenu(this);
+  tray_icon = new QSystemTrayIcon(this);
+  
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setGeometry(this->x(), this->y(), GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height);

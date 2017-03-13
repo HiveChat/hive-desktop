@@ -1,10 +1,12 @@
 #include "widget.h"
+#include <QDebug>
 
-Widget::Widget(const QSize &size, QWidget *parent)
+AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
   : QWidget(parent)
-  , image_size(size)
+  , result_avatar_size(size)
 {
-  destination_image = QImage(image_size, QImage::Format_ARGB32_Premultiplied);
+  result_image = QImage(result_avatar_size, QImage::Format_ARGB32_Premultiplied);
+  destination_image = QImage(result_avatar_size, QImage::Format_ARGB32_Premultiplied);
   QPainter painter(&destination_image);
   painter.setRenderHint(QPainter::Antialiasing);
   painter.fillRect(destination_image.rect(), QBrush(Qt::black, Qt::SolidPattern));
@@ -13,17 +15,16 @@ Widget::Widget(const QSize &size, QWidget *parent)
   painter.setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
   painter.drawEllipse(destination_image.rect());
 
-  result_image = QImage(image_size, QImage::Format_ARGB32_Premultiplied);
 
   result_label = new QLabel("drag avatar here!", this);
   horinzontal_slider = new QSlider(this);
   horinzontal_slider->setOrientation(Qt::Horizontal);
-  horinzontal_slider->setRange(0, 99);
+  horinzontal_slider->setLayoutDirection(Qt::RightToLeft);
   vertical_slider = new QSlider(this);
   vertical_slider->setOrientation(Qt::Vertical);
-  vertical_slider->setRange(0, 99);
-  scale_dial = new QDial(this);
-  scale_dial->setRange(100, 200);
+  scale_slider = new QSlider(this);
+  scale_slider->setTickPosition(QSlider::TicksRight);
+  scale_slider->setRange(100, 200);
 
   QGridLayout *grid_layout = new QGridLayout();
   grid_layout->addWidget(result_label, 0, 0, 3, 3, Qt::AlignCenter);
@@ -31,50 +32,90 @@ Widget::Widget(const QSize &size, QWidget *parent)
   grid_layout->addWidget(horinzontal_slider, 2, 1, 5, 1, Qt::AlignCenter);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
-  main_layout->addWidget(scale_dial);
+  main_layout->addWidget(scale_slider);
+  main_layout->addSpacing(30);
   main_layout->addLayout(grid_layout);
 
-  connect(horinzontal_slider, &QSlider::valueChanged, this, &Widget::render);
-  connect(vertical_slider, &QSlider::valueChanged, this, &Widget::render);
-  connect(scale_dial, &QDial::valueChanged, this, &Widget::render);
+  connect(horinzontal_slider, &QSlider::valueChanged, this, &AvatarComposer::render);
+  connect(vertical_slider, &QSlider::valueChanged, this, &AvatarComposer::render);
+  connect(scale_slider, &QDial::valueChanged, this, &AvatarComposer::render);
+  connect(scale_slider, &QDial::sliderReleased, this, &AvatarComposer::onScaleSliderReleased);
 
   setSourceImage("/Users/echo/Desktop/IMG_20170208_134046.jpg");
   render();
 }
 
-Widget::~Widget()
+AvatarComposer::~AvatarComposer()
 {
 
 }
 
-void Widget::setSourceImage(const QString &fileName)
+void AvatarComposer::setSourceImage(const QString &fileName)
 {
   source_image.load(fileName);
-  QPixmap sourcePixmap = QPixmap::fromImage(source_image.scaled(image_size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
-  sourcePixmap.setDevicePixelRatio(2.0);
+  scaled_source_size = source_image.size().scaled(result_avatar_size, Qt::KeepAspectRatioByExpanding);
+  scaled_source_image = source_image.scaled(scaled_source_size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
-
+  horinzontal_slider->setRange(0, scaled_source_size.width() - result_avatar_size.width());
+  vertical_slider->setRange(0, scaled_source_size.height() - result_avatar_size.height());
 }
 
-void Widget::render()
+void AvatarComposer::render()
 {
+  if(render_lock)
+    {
+      return;
+    }
+  else
+    {
+      render_lock = true;
+    }
+
   QPainter painter(&result_image);
-  painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
+  painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setCompositionMode(QPainter::CompositionMode_Source);
   painter.fillRect(result_image.rect(), Qt::transparent);
   painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
   painter.drawImage(0, 0, destination_image);
   painter.setCompositionMode(QPainter::CompositionMode_SourceOut);
-  QImage img = source_image.scaled(QSize(image_size.width() * scale_dial->value()/100, image_size.height() * scale_dial->value()/100), Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
-  painter.drawImage(- img.width()/100*horinzontal_slider->value()
-                    , - img.height()/100*vertical_slider->value()
-                    , img);
+//  qDebug()<<"original: "<<source_image.size();
+
+  if(sender() == scale_slider)
+    {
+      scaled_source_size = QSize(result_avatar_size.width() * scale_slider->value() * 0.01
+                                 , result_avatar_size.height() * scale_slider->value() * 0.01);
+
+      if(scale_slider_released)
+        {
+          scaled_source_image = source_image.scaled(scaled_source_size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+        }
+      else
+        {
+          scaled_source_image = source_image.scaled(scaled_source_size, Qt::KeepAspectRatioByExpanding, Qt::FastTransformation);
+        }
+      horinzontal_slider->setRange(0, scaled_source_image.width() - result_avatar_size.width());
+      vertical_slider->setRange(0, scaled_source_image.height() - result_avatar_size.height());
+    }
+
+  painter.drawImage(- horinzontal_slider->value()
+                    , - vertical_slider->value()
+                    , scaled_source_image);
   painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
   painter.fillRect(result_image.rect(), Qt::transparent);
   painter.end();
 
+
   QPixmap pixmap = QPixmap::fromImage(result_image);
   pixmap.setDevicePixelRatio(2.0);
   result_label->setPixmap(pixmap);
+
+  render_lock = false;
+}
+
+void AvatarComposer::onScaleSliderReleased()
+{
+  scale_slider_released = true;
+  render();
+  scale_slider_released = false;
 }
