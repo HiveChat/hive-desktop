@@ -1,4 +1,4 @@
-#include "widget.h"
+#include "AvatarComposer.h"
 #include <QApplication>
 
 int main(int argc, char *argv[])

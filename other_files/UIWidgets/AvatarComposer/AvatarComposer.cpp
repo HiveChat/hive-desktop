@@ -1,4 +1,4 @@
-#include "widget.h"
+#include "AvatarComposer.h"
 #include <QDebug>
 
 AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
@@ -118,6 +118,7 @@ void AvatarComposer::wheelEvent(QWheelEvent *event)
 
 void AvatarComposer::render()
 {
+  //ensure that this function is finished before a second call
   if(render_lock)
     {
       return;
@@ -143,6 +144,7 @@ void AvatarComposer::render()
       scaled_source_image = source_image.scaled(scaled_source_size
                                                 , Qt::KeepAspectRatioByExpanding
                                                 , high_quality_rendering ? Qt::SmoothTransformation : Qt::FastTransformation);
+      //reset range of slidebar after scaling
       horinzontal_slider->setRange(0, scaled_source_image.width() - result_avatar_size.width());
       vertical_slider->setRange(0, scaled_source_image.height() - result_avatar_size.height());
     }
@@ -162,6 +164,7 @@ void AvatarComposer::render()
 
 void AvatarComposer::highQualityRender()
 {
+  //I know, it's a crap, but works well
   high_quality_rendering = true;
   render();
   high_quality_rendering = false;
