@@ -17,7 +17,7 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 NetworkManager::~NetworkManager()
 {
   udpSendUsrLeave();
-  qDebug()<<"ThreadNet destructed";
+  qDebug()<<"NetworkManager destructed";
 }
 
 //void NetworkManager::refreshLocalHostIP()
@@ -85,7 +85,7 @@ void NetworkManager::udpProcessMessage(const Message::TextMessageStruct &message
         }
       else
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
+          qDebug()<<"@NetworkManager::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
           emit messageRecieved(messageStruct, true);
         }
     }
@@ -93,12 +93,12 @@ void NetworkManager::udpProcessMessage(const Message::TextMessageStruct &message
     {
       if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): me 2 me...";
+          qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
           emit messageRecieved(messageStruct, true);
         }
       else
         {
-          qDebug()<<"@ThreadNet::udpProcessMessage(): Other people sent: "<<messageStruct.message;
+          qDebug()<<"@NetworkManager::udpProcessMessage(): Other people sent: "<<messageStruct.message;
           emit messageRecieved(messageStruct, false);
         }
     }
@@ -117,12 +117,12 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
         {
           GlobalData::g_localHostIP = usrProfileStruct.ip;
         }
-      Log::net(Log::Normal, "ThreadNet::udpProcessHeartBeat()", "got heart beat from myself");
+      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from myself");
       emit usrEnter(usrProfileStruct);
     }
   else
     {
-      Log::net(Log::Normal, "ThreadNet::udpProcessHeartBeat()", "got heart beat from others");
+      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from others");
       emit usrEnter(usrProfileStruct);
     }
 
@@ -134,10 +134,10 @@ void NetworkManager::udpProcessUsrLeft(QString *usrKey)
     {
       emit usrLeft(usrKey);
 
-      qDebug()<<"@ThreadNet::udpProcessUsrLeft(): Myself left.";
+      qDebug()<<"@NetworkManager::udpProcessUsrLeft(): Myself left.";
     }
 
-  qDebug()<<"@ThreadNet::udpProcessUsrLeft(): Someone left.";
+  qDebug()<<"@NetworkManager::udpProcessUsrLeft(): Someone left.";
   emit usrLeft(usrKey);
 }
 
@@ -205,7 +205,7 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
                                          , udp_port);
   if(ret != 0 && ret != -1)
     {
-      qDebug()<<"@ThreadNet::udpSendMessage(): sent!";
+      qDebug()<<"@NetworkManager::udpSendMessage(): sent!";
     }
 }
 
@@ -292,25 +292,25 @@ void NetworkManager::onRedirectFinished()
                               sizeof(GlobalData::current_version)) != 0*/
                        GlobalData::versionCompare(GlobalData::update_struct.version, GlobalData::current_version))
                       {
-                        qDebug()<<"@ThreadNet::onRedirectFinished(): update available";
+                        Log::net(Log::Normal, "NetworkManager::onRedirectFinished()", "update available");
                         emit updateAvailable();
                       }
                     else
                       {
-                        qDebug()<<"@ThreadNet::onRedirectFinished(): already the newest version";
+                        Log::net(Log::Normal, "NetworkManager::onRedirectFinished()", "version already new");
                       }
                   }
                 else
                   {
-                    qDebug()<<"!@ThreadNet::onRedirectFinished(): Update Json Document IS NOT AN OBJECT!";
+                    Log::net(Log::Critical, "NetworkManager::onRedirectFinished()", "Update Json Document IS NOT AN OBJECT!");
                   }
               }
             else
               {
-                qDebug()<<"!@ThreadNet::onRedirectFinished(): Update Json Document Parse ERROR!";
+                Log::net(Log::Critical, "NetworkManager::onRedirectFinished()", "Update Json Document Parse ERROR!");
               }
 
-            qDebug()<<"@ThreadNet: Got update file: "<<http_update_file;
+            qDebug()<<"@NetworkManager: Got update file: "<<http_update_file;
             http_update_manager->deleteLater();
             http_update_reply->deleteLater();
           });
@@ -337,7 +337,7 @@ void NetworkManager::udpProcessPendingDatagrams()
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
       if(json_document.isObject())
         {
-          Log::net(Log::Normal, "ThreadNet::checkJsonObject()", "got message with JSON format");
+          Log::net(Log::Normal, "NetworkManager::checkJsonObject()", "got message with JSON format");
 
           QJsonObject json_obj = json_document.object();
           int type = json_obj.value("msgType").toInt();
@@ -394,7 +394,7 @@ void NetworkManager::udpProcessPendingDatagrams()
         }
       else
         {
-          qWarning()<<"@ThreadNet::checkJsonObject(): message crashed / message from old versions";
+          qWarning()<<"@NetworkManager::checkJsonObject(): message crashed / message from old versions";
         }
     }
 
@@ -412,7 +412,7 @@ void NetworkManager::udpProcessPendingDatagrams()
 //            QJsonDocument json_document = QJsonDocument::fromBinaryData(byte_array);
 //            if(!json_document.isObject())
 //              {
-//                qDebug() << "@ThreadNet::checkJsonObject(): Json object crashed.";
+//                qDebug() << "@NetworkManager::checkJsonObject(): Json object crashed.";
 //                return;
 //              }
 

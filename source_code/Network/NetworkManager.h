@@ -1,5 +1,5 @@
-#ifndef THREADNET_H
-#define THREADNET_H
+#ifndef NETWORKMANAGER_H
+#define NETWORKMANAGER_H
 
 #include "GlobalData.h"
 #include "GlobalType.h"
@@ -110,7 +110,7 @@ signals:
 
 
 
-#endif // THREADNET_H
+#endif // NETWORKMANAGER_H
 
 
 

@@ -10,7 +10,7 @@
 #include <QFile>
 #include <QDebug>
 #include "GlobalType.h"
-//#include "ThreadData.h"//delete?
+//#include "DataManager.h"//delete?
 
 
 

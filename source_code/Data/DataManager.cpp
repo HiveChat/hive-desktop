@@ -13,20 +13,20 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 /////////////thread
 DataManager::~DataManager()
 {
-  qDebug()<<"ThreadData destructed";
+  qDebug()<<"DataManager destructed";
 }
 
 void DataManager::checkSettings()
 {
 //  if(written_settings_struct != GlobalData::g_settings_struct)
 //    {
-//      qDebug()<<"&ThreadData::checkSettings():    written!!!!";
+//      qDebug()<<"&DataManager::checkSettings():    written!!!!";
 //      writeCurrentConfig();
 //      written_settings_struct = GlobalData::g_settings_struct;
 //    }
   if(GlobalData::settings_struct.modified_lock)
     {
-      qDebug()<<"&ThreadData::checkSettings(): Settings changed";
+      qDebug()<<"&DataManager::checkSettings(): Settings changed";
       writeCurrentConfig();
       GlobalData::settings_struct.modified_lock = false;
 //      written_settings_struct = GlobalData::g_settings_struct;
@@ -195,18 +195,18 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logi
 {
   if(GlobalData::online_usr_data_hash.contains(usrProfileStruct.key))
     {
-      Log::net(Log::Normal, "ThreadData::onUsrEntered()", "incoming user already exist in online list");
+      Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in online list");
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
         {
           recordedUsrData->setUsrProfileStruct(usrProfileStruct);
           emit usrProfileChanged(recordedUsrData);
-          Log::net(Log::Normal, "ThreadData::onUsrEntered()", "user profile changed");
+          Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
   else if(GlobalData::offline_usr_data_hash.contains(usrProfileStruct.key))
     {
-      Log::net(Log::Normal, "ThreadData::onUsrEntered()", "incoming user already exist in offline list");
+      Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
       GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, GlobalData::offline_usr_data_hash.value(usrProfileStruct.key));
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
@@ -214,7 +214,7 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logi
           recordedUsrData->setUsrProfileStruct(usrProfileStruct);
           updateUsr(usrProfileStruct);
           emit usrProfileChanged(recordedUsrData);
-          Log::net(Log::Normal, "ThreadData::onUsrEntered()", "user profile changed");
+          Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
   else
@@ -223,7 +223,7 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logi
       GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, userData);
       updateUsr(usrProfileStruct);
       emit usrProfileLoaded(userData);
-      qDebug()<<"@ThreadData::onUsrEntered: User profile Created.";
+      qDebug()<<"@DataManager::onUsrEntered: User profile Created.";
 
     }
 
@@ -354,7 +354,7 @@ bool DataManager::checkDir(const QString &directory)
   return true;
 }
 
-//QString ThreadData::appDataLocalPath()
+//QString DataManager::appDataLocalPath()
 //{
 //  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 //}
@@ -533,7 +533,7 @@ void DataManager::loadUsrList()
     }
   else
     {
-      qDebug()<<"&ThreadData::loadUsrList(): Usr list file broken... Resize to 0.";
+      qDebug()<<"&DataManager::loadUsrList(): Usr list file broken... Resize to 0.";
       file.resize(0);
       return;
     }

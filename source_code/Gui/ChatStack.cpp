@@ -467,7 +467,7 @@ void GuiChatStack::dropEvent(QDropEvent *event)
 
 void GuiChatStack::flipUnreadMessage()
 {
-  qDebug()<<"@GuiChatStack::flipUnreadMessage(): Chat stack is loading unread message...";
+  Log::gui(Log::Normal, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
   if(usr_data->unreadMessageNumber() != 0)
     {
       QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
@@ -494,7 +494,7 @@ void GuiChatStack::flipLatestMessage(const bool &clear)
       chat_widget->clearChatBubbles();
     }
 
-  qDebug()<<"@GuiChatStack::flipLatestMessage(): Chat stack is loading history message...";
+  Log::gui(Log::Normal, "GuiChatStack::flipLatestMessage()", "chat stack is loading latest history message...");
   QJsonArray message_json_array = *usr_data->flipLatest();
   int message_count = message_json_array.count();
   for(int i = 0; i < message_count; i++)
