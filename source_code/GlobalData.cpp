@@ -36,7 +36,7 @@ QPalette GlobalData::palette_txt_brown;
 int GlobalData::current_version[3] = {0, 0, 8};
 Settings::SettingsStruct GlobalData::settings_struct;
 UpdateStruct GlobalData::update_struct;
-QUrl GlobalData::update_url = QUrl("http://updates.hivechat.org");
+QUrl GlobalData::update_url = QUrl("http://updatestest.hivechat.org");
 QUrl GlobalData::download_url = QUrl("http://download.hivechat.org");
 
 QHash<QString, UsrData*> GlobalData::offline_usr_data_hash;

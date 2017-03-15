@@ -59,7 +59,8 @@ SOURCES += \
     Network/NetworkManager.cpp \
 \
     Data/DataManager.cpp \
-    Gui/Frameworks/Widgets/AvatarWidgets.cpp
+    Gui/Frameworks/Widgets/AvatarWidgets.cpp \
+    Log.cpp
 
 HEADERS  += \
     Hive.h \
@@ -96,7 +97,8 @@ HEADERS  += \
     Network/NetworkManager.h \
 \
     Data/DataManager.h \
-    Gui/Frameworks/Widgets/AvatarWidgets.h
+    Gui/Frameworks/Widgets/AvatarWidgets.h \
+    Log.h
 
 ICON = Src/hive.icns
 

@@ -2,6 +2,7 @@
 #define GUISCROLLSTACK_H
 
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
+#include "Log.h"
 #include "GlobalData.h"
 
 #include <QFrame>

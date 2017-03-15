@@ -23,4 +23,24 @@ private:
 
 };
 
+
+
+class TcpSocket : public QTcpSocket
+{
+  Q_OBJECT
+public:
+  explicit TcpSocket(const qintptr &socketDescriptor, QObject *parent = 0);
+
+protected:
+
+private:
+  qintptr socket_descriptor;
+  QHash<QString, QTcpSocket*> tcp_socket_map;
+
+
+
+};
+
+
+
 #endif // TCPSERVER_H

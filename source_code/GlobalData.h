@@ -4,6 +4,7 @@
 
 #include "UsrData.h"
 #include "GlobalType.h"
+#include "Log.h"
 
 #include <QDate>
 #include <QFont>

@@ -33,7 +33,7 @@ void ScrollStack::setSubTitle(const QString &text)
 {
   if(text.isNull() || text.isEmpty())
     {
-      qDebug()<<"GuiScrollStack::setSubTitle(): Empty subtitle";
+      Log::gui(Log::Error, "ScrollStack::setSubTitle", "Empty subtitle");
       return;
     }
   sub_title_qstr = text;

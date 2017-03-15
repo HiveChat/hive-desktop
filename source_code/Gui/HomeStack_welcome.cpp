@@ -130,7 +130,7 @@ void GuiHomeStack_welcome::refreshUI()
       online = true;
       ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
     }
-  qDebug()<<"#GuiWelcomeStack::refresh(): Finished";
+  Log::gui(Log::Normal, "GuiWelcomeStack::refresh()", "Finished");
 }
 
 

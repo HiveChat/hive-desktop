@@ -3,9 +3,9 @@
 
 UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
   , my_key(myKey)
+  , usr_profile_struct(usrProfileStruct)
   , history_path(usr_path + usr_profile_struct.key)
 {
-  this->setUsrProfileStruct(usrProfileStruct);
   this->checkDir(history_path);
   this->readHistoryBundle();
 }

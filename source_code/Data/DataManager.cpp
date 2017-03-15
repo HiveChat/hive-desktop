@@ -191,29 +191,30 @@ void DataManager::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
-void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct)
+void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
 {
   if(GlobalData::online_usr_data_hash.contains(usrProfileStruct.key))
     {
-      qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist in online list.";
+      Log::net(Log::Normal, "ThreadData::onUsrEntered()", "incoming user already exist in online list");
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
         {
           recordedUsrData->setUsrProfileStruct(usrProfileStruct);
           emit usrProfileChanged(recordedUsrData);
-          qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
+          Log::net(Log::Normal, "ThreadData::onUsrEntered()", "user profile changed");
         }
     }
   else if(GlobalData::offline_usr_data_hash.contains(usrProfileStruct.key))
     {
-      qDebug()<<"@ThreadData::onUsrEntered: Incoming user already exist in offline list.";
+      Log::net(Log::Normal, "ThreadData::onUsrEntered()", "incoming user already exist in offline list");
       GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, GlobalData::offline_usr_data_hash.value(usrProfileStruct.key));
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
         {
           recordedUsrData->setUsrProfileStruct(usrProfileStruct);
+          updateUsr(usrProfileStruct);
           emit usrProfileChanged(recordedUsrData);
-          qDebug()<<"@ThreadData::onUsrEntered: User profile Changed.";
+          Log::net(Log::Normal, "ThreadData::onUsrEntered()", "user profile changed");
         }
     }
   else
@@ -312,6 +313,8 @@ void DataManager::onUpdatesAvailable()
             }
         }
     }
+
+  file.resize(0);
 
   out << makeUpdateJson(write_version).toJson(QJsonDocument::Indented) << endl;
 

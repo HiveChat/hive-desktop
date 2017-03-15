@@ -3,6 +3,7 @@
 
 #include "GlobalData.h"
 #include "GlobalType.h"
+#include "Log.h"
 
 #include <QJsonDocument>
 #include <QJsonObject>

@@ -117,12 +117,12 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
         {
           GlobalData::g_localHostIP = usrProfileStruct.ip;
         }
-      qDebug()<<"@ThreadNet::udpProcessHeartBeat(): Myself entered.";
+      Log::net(Log::Normal, "ThreadNet::udpProcessHeartBeat()", "got heart beat from myself");
       emit usrEnter(usrProfileStruct);
     }
   else
     {
-      qDebug()<<"@ThreadNet::udpProcessHeartBeat(): Someone entered.";
+      Log::net(Log::Normal, "ThreadNet::udpProcessHeartBeat()", "got heart beat from others");
       emit usrEnter(usrProfileStruct);
     }
 
@@ -169,7 +169,7 @@ void NetworkManager::udpSendHeartBeat()
                             , udp_port);
   if(ret != 0 && ret != -1)
     {
-      qDebug()<<"@NetworkManager::udpSendHeartBeat(): sent!";
+      Log::net(Log::Normal, "NetworkManager::udpSendHeartBeat()", "heart beat sent");
     }
 
   return;
@@ -253,8 +253,14 @@ void NetworkManager::tcpSendData()
 
 void NetworkManager::onRedirectFinished()
 {
+  if(http_update_reply->error() != QNetworkReply::NoError)
+    {
+      Log::net(Log::Error, "NetworkManager::onRedirectFinished()", QString(http_update_reply->error()));
+      return;
+    }
   QUrl redirectUrl = QString(http_update_reply->rawHeader("Location"));
-  qDebug()<<"@ThreadNet::onRedirectFinished(): Redirect url from http header:"<<redirectUrl.toString();
+
+  Log::net(Log::Error, "NetworkManager::onRedirectFinished()", redirectUrl.toString());
 
   http_update_manager->deleteLater();
   http_update_reply->deleteLater();
@@ -331,7 +337,7 @@ void NetworkManager::udpProcessPendingDatagrams()
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
       if(json_document.isObject())
         {
-          qDebug() << "@ThreadNet::checkJsonObject(): got message with JSON format";
+          Log::net(Log::Normal, "ThreadNet::checkJsonObject()", "got message with JSON format");
 
           QJsonObject json_obj = json_document.object();
           int type = json_obj.value("msgType").toInt();

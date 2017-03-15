@@ -23,7 +23,7 @@ void GuiColorPicker::paintEvent(QPaintEvent *)
 {
   QPainter paint;
   paint.begin(this);
-  paint.setPen(/*QColor(my_color->red()*0.8,my_color->green()*0.8,my_color->blue()*0.8)*/my_color->darker(120));
+  paint.setPen(my_color->darker(120));
   paint.setBrush(QBrush(*my_color,Qt::SolidPattern));
   paint.setRenderHint(QPainter::Antialiasing,true);
   paint.drawRoundedRect(rectangle,5,5);

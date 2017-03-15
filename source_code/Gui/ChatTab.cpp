@@ -14,12 +14,8 @@ ChatTab::ChatTab(QWidget *parent) : QWidget(parent)
   comb_scroll_widget = new ChatTab_comb_scroll_widget();
   comb_scrollarea->setWidget(comb_scroll_widget);
 
-
-  ////main layout
-
   main_layout = new QVBoxLayout(this);
   main_layout->addWidget(comb_scrollarea);
-
   main_layout->setContentsMargins(5,5,5,5);
 
   QPalette palette;

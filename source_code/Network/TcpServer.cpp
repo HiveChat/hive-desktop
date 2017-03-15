@@ -26,3 +26,19 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
 
 
 }
+
+
+
+
+
+
+
+
+
+TcpSocket::TcpSocket(const qintptr &socketDescriptor, QObject *parent)
+  : QTcpSocket(parent)
+  , socket_descriptor(socketDescriptor)
+{
+  this->setSocketDescriptor(socket_descriptor);
+
+}
