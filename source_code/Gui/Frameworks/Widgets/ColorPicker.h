@@ -12,7 +12,7 @@ class GuiColorPicker : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiColorPicker(QColor *object_color, QWidget *parent = 0);
+  explicit GuiColorPicker(QColor *color, QWidget *parent = 0);
   ~GuiColorPicker();
 
   QColor color();
@@ -22,6 +22,7 @@ protected:
   void mouseReleaseEvent(QMouseEvent *);
 
 private:
+  QRect rectangle;
   QColor *my_color;
 
 };

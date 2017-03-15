@@ -1,21 +1,10 @@
 #include "Hive.h"
 
 #include <QApplication>
-#include <QSharedMemory>
 #ifndef Q_WS_QWS && Q_WS_QPA
 #include <QPropertyAnimation>
 #endif
 
-
-bool checkSingleInstance(const char* program)
-{
-    static QSharedMemory shm(program);
-    if(!shm.create(100))
-    {
-        return false;
-    }
-    return true;
-}
 
 int loadMyStyle()
 {
@@ -32,18 +21,6 @@ int loadMyStyle()
 
 int main(int argc, char *argv[])
 {
-
-//#ifndef Q_WS_QWS && Q_WS_QPA
-//  if(!checkSingleInstance("topo-client.lock"))
-//    {
-//      return 1;
-//    }
-//#endif
-
-
-//  QApplication a(argc, argv);
-
-
   Hive hiveApp(argc, argv);
   loadMyStyle();
   hiveApp.gui_central_widget->show();

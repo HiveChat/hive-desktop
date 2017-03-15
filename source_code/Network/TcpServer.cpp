@@ -19,9 +19,10 @@ void TcpServer::incomingConnection(qintptr socketDescriptor)
   QThread *thread = new QThread(this);
   thread->start(QThread::NormalPriority);
 
-  QTcpSocket *tcp_socket = new QTcpSocket();
-  tcp_socket->setSocketDescriptor(socketDescriptor);
-  tcp_socket->moveToThread(thread);
+  QTcpSocket *tcpSocket = new QTcpSocket();
+  tcpSocket->setSocketDescriptor(socketDescriptor);
+  tcpSocket->moveToThread(thread);
+
 
 
 }

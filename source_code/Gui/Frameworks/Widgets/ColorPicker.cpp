@@ -1,11 +1,12 @@
 #include "ColorPicker.h"
 #include "GlobalData.h"
 
-GuiColorPicker::GuiColorPicker(QColor *object_color, QWidget *parent) : QWidget(parent)
+GuiColorPicker::GuiColorPicker(QColor *color, QWidget *parent)
+  : QWidget(parent)
+  , my_color(color)
+  , rectangle(QRect(1, 1, 18, 18))
 {
-  my_color = object_color;
   this->setFixedSize(20,20);
-  this->setParent(parent);
 }
 
 GuiColorPicker::~GuiColorPicker()
@@ -20,11 +21,9 @@ QColor GuiColorPicker::color()
 
 void GuiColorPicker::paintEvent(QPaintEvent *)
 {
-  QRectF rectangle(1, 1, 18, 18);
   QPainter paint;
-
   paint.begin(this);
-  paint.setPen(QColor(my_color->red()*0.8,my_color->green()*0.8,my_color->blue()*0.8));
+  paint.setPen(/*QColor(my_color->red()*0.8,my_color->green()*0.8,my_color->blue()*0.8)*/my_color->darker(120));
   paint.setBrush(QBrush(*my_color,Qt::SolidPattern));
   paint.setRenderHint(QPainter::Antialiasing,true);
   paint.drawRoundedRect(rectangle,5,5);

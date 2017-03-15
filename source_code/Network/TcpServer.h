@@ -17,7 +17,8 @@ protected:
   void incomingConnection(qintptr socketDescriptor);
 
 private:
-  QHash<int, QTcpSocket*> tcp_socket_map;
+  QHash<QString, QTcpSocket*> tcp_socket_map;
+
 
 
 };
