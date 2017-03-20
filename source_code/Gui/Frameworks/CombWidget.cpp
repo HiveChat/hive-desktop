@@ -136,7 +136,7 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
               QDrag *drag = new QDrag(this);
               drag->setMimeData(mimeData);
               drag->setPixmap(pixmap);
-              drag->setHotSpot(mouseEvent->pos() - this->pos());
+              drag->setHotSpot(QPoint(0,0));
 
               if(drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction)
                 {
