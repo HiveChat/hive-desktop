@@ -4,7 +4,7 @@
 #include <QJsonObject>
 #include <QTcpServer>
 #include <QTcpSocket>
-#include <QThread>
+#include <QThreadPool>
 #include <QHash>
 
 class TcpServer : public QTcpServer
@@ -12,11 +12,13 @@ class TcpServer : public QTcpServer
   Q_OBJECT
 public:
   explicit TcpServer(QObject *parent = 0, const int &maxPendingConnections = 100);
+  bool startServer();
 
 protected:
   void incomingConnection(qintptr socketDescriptor);
 
 private:
+  qint16 tcp_port = 23232;
   QHash<QString, QTcpSocket*> tcp_socket_map;
 
 

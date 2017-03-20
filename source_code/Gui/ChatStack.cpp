@@ -98,7 +98,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   file_progress_bar->setMaximumWidth(300);
   file_progress_bar->setHidden(true);
 
-  file_progress_label = new QLabel("376.7M / 0.5G | 10k/s", this);
+  file_progress_label = new QLabel("376.7M / 0.5G | 1.2M/s", this);
   file_progress_label->setHidden(true);
 
   file_tran_ani = new QVariantAnimation(this);
@@ -526,6 +526,12 @@ void GuiChatStack::flipDownMessage(const bool &clear)
 
 void GuiChatStack::onSendButtonClicked()
 {
+  if(!usr_data->isOnline())
+    {
+      Log::gui(Log::Normal, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->name() +"\" not online");
+      return;
+    }
+
   QString message = message_editor->text_editor->toPlainText();
   if(message.isEmpty())
     {

@@ -78,7 +78,7 @@ void CombWidget::setProfile(UsrProfileStruct *usrProfile)
       else
         {
           status_label->setText(unstable_dot);
-          this->setToolTip("not in same subnet");
+          this->setToolTip("different subnet");
         }
     }
 

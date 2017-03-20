@@ -33,6 +33,7 @@ public:
   QJsonArray* flipDown();
 
   UsrProfileStruct* usrProfileStruct(){return &usr_profile_struct;}
+  bool isOnline();
   QString key() {return usr_profile_struct.key;}
   QString name() {return usr_profile_struct.name;}
   QString avatar() {return usr_profile_struct.avatar;}

@@ -5,6 +5,11 @@ TcpServer::TcpServer(QObject *parent, const int &maxPendingConnections) : QTcpSe
   this->setMaxPendingConnections(maxPendingConnections);
 }
 
+bool TcpServer::startServer()
+{
+  return this->listen(QHostAddress::Any, 23232);
+}
+
 void TcpServer::incomingConnection(qintptr socketDescriptor)
 {
   if (tcp_socket_map.size() > maxPendingConnections())//继承重写此函数后，QTcpServer默认的判断最大连接数失效，自己实现

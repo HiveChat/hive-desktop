@@ -59,6 +59,8 @@ void NetworkManager::checkUpdate()
 
 void NetworkManager::loadTimerTasks()
 {
+  udpSendHeartBeat();
+
   QTimer *timer_3s = new QTimer(this);
   connect(timer_3s, &QTimer::timeout,
           [this](){

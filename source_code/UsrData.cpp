@@ -74,6 +74,18 @@ QJsonArray* UsrData::flipDown()
     }
 }
 
+bool UsrData::isOnline()
+{
+  if(usr_profile_struct.ip.isEmpty() || usr_profile_struct.ip == "Offline")
+    {
+      return false;
+    }
+  else
+    {
+      return true;
+    }
+}
+
 
 bool UsrData::checkDir(const QString &directory)
 {
