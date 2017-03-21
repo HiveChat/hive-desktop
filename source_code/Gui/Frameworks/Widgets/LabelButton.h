@@ -18,6 +18,7 @@ public:
   void setPressedPixmap(const QString &path);
   void setDefault();
   void setHovered();
+  void setDisabled(const bool &dis) {disabled = dis;}
 
 signals:
   void clicked();
@@ -36,6 +37,7 @@ private:
   QPixmap pressed_pixmap;
 
   int hover_delay;
+  int disabled = false;
   bool hover_signal_lock;
 
 };

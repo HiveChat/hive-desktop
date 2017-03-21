@@ -34,12 +34,18 @@ void LabelButton::setPressedPixmap(const QString &path)
 
 void LabelButton::setDefault()
 {
-  this->setPixmap(default_pixmap);
+  if(!disabled)
+    {
+      this->setPixmap(default_pixmap);
+    }
 }
 
 void LabelButton::setHovered()
 {
-  this->setPixmap(hovered_pixmap);
+  if(!disabled)
+    {
+      this->setPixmap(hovered_pixmap);
+    }
 }
 
 

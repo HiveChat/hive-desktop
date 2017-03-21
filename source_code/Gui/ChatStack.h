@@ -90,6 +90,7 @@ protected:
 private:
   QVBoxLayout *edit_layout;
   QHBoxLayout *tool_layout;
+  QHBoxLayout *main_layout;
 
   LabelButton *expression_label;
   LabelButton *image_label;
@@ -97,12 +98,7 @@ private:
   QProgressBar *file_progress_bar;
   QLabel *file_progress_label;
 
-
-
-
   QVariantAnimation *file_tran_ani;
-
-  QHBoxLayout *main_layout;
 
   bool control_pressed = false;
   bool file_label_hovered = false;
@@ -143,6 +139,11 @@ private:
   //Data
   UsrData *usr_data;
   QPair<int, int> file_tran_progress_pair;
+
+  int click_num = 0;
+  QTime first_click_time;
+  bool easter_animating = false;
+  bool key_lock = false;
 
   //Function
   void flipUnreadMessage();

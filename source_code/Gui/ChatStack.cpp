@@ -526,9 +526,64 @@ void GuiChatStack::flipDownMessage(const bool &clear)
 
 void GuiChatStack::onSendButtonClicked()
 {
+  if(key_lock)
+    {
+      return;
+    }
+  if(easter_animating)
+    {
+      return;
+    }
+
+  key_lock = true;
+
   if(!usr_data->isOnline())
     {
+      if(click_num == 0)
+        {
+          first_click_time = QTime::currentTime();
+          click_num ++;
+        }
+      else if(click_num == 30)
+        {
+          if(first_click_time.addSecs(6) >= QTime::currentTime())
+            {
+              qDebug()<<click_num;
+              easter_animating = true;
+              message_editor->send_btn->setHovered();
+              message_editor->send_btn->setDisabled(true);
+              QVariantAnimation *animation = new QVariantAnimation(this);
+              animation->setStartValue(0);
+              animation->setEndValue(50);
+              animation->setDuration(3000);
+              animation->setEasingCurve(QEasingCurve::OutCirc);
+              connect(animation, &QVariantAnimation::valueChanged,
+                      [this](QVariant value) {
+                        message_editor->send_btn->setGeometry(message_editor->send_btn->x(),
+                                                              message_editor->send_btn->y() + value.toInt(),
+                                                              message_editor->send_btn->width(),
+                                                              message_editor->send_btn->height());
+                      });
+              connect(animation, &QVariantAnimation::finished,
+                      [this]{
+                        message_editor->send_btn->setHidden(true);
+                      });
+              animation->start();
+              click_num ++;
+            }
+          else
+            {
+              click_num = 0;
+            }
+        }
+      else if(click_num < 30)
+        {
+          click_num ++;
+        }
+
       Log::gui(Log::Normal, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->name() +"\" not online");
+
+      key_lock = false;
       return;
     }
 
@@ -536,6 +591,8 @@ void GuiChatStack::onSendButtonClicked()
   if(message.isEmpty())
     {
       scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
+
+      key_lock = false;
       return;
     }
 
@@ -549,11 +606,17 @@ void GuiChatStack::onSendButtonClicked()
 #endif
 
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
+
+  key_lock = false;
 }
 
 void GuiChatStack::onKeyEnterTriggered(bool &pressed)
 {
-  qDebug()<<"enter key pressed";
+  if(easter_animating)
+    {
+      return;
+    }
+
   if(pressed)
     {
       message_editor->send_btn->setHovered();

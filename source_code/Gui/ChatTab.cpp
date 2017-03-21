@@ -42,7 +42,6 @@ ChatTab_comb_scroll_widget::ChatTab_comb_scroll_widget(QWidget *parent) : QWidge
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
-
 }
 
 void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
