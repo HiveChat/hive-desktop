@@ -1,4 +1,6 @@
 # Hive!
+> Please go to the [official website](https://hivechat.org)!
+
 * Hive! is a LAN chat software. This is a free software.
 * Hive is written by pure Qt C++ without design forms.
 
@@ -29,4 +31,9 @@
 ## Star me!
 [![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)](#)
 [![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)](https://github.com/Ultrasilicon)
+
+
+
+
+
 
