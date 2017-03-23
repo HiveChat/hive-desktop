@@ -3,7 +3,7 @@
 TcpServer::TcpServer()
 {
   thread_pool = new QThreadPool(this);
-  thread_pool->setMaxThreadCount(2);
+  thread_pool->setMaxThreadCount(10);
   this->listen(QHostAddress::Any, 23233);
 
 }
@@ -17,7 +17,7 @@ void TcpServer::incomingConnection(qintptr handle)
       thread_pool->start(run);
     }
   else
-    {
+    {      
       QTcpSocket *tcpSocket = new QTcpSocket();
       tcp_socket_hash.insert(handle, tcpSocket);
       connect(tcpSocket, &QTcpSocket::readyRead, this, &TcpServer::readData);

@@ -6,7 +6,6 @@ ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : Q
 {
   //test
 
-
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, Qt::white);
   this->setAutoFillBackground(true);
