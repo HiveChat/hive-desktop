@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QByteArray>
 #include <QDebug>
+#include <QCryptographicHash>
 
 
 class HiveTcpProtocal : public QObject
@@ -18,8 +19,12 @@ class HiveTcpProtocal : public QObject
     FileEnd,
   };
 
+
 public:
-  explicit HiveTcpProtocal(QObject *parent = 0);
+  explicit HiveTcpProtocal(const DataType &dataType, QObject *parent = 0);
+
+  void setFileInfo();
+  QByteArray getBuffer();
 
 private:
   int buffer_size;
@@ -27,6 +32,8 @@ private:
   QJsonObject buffer_json_obj;
 
   DataType data_type;
+
+  QString getMd5(const QString &data);
 
 };
 
