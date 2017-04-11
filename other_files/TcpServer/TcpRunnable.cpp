@@ -1,28 +1,38 @@
 #include "TcpRunnable.h"
 #include <QDebug>
 
-TcpRunnable::TcpRunnable(QTcpSocket *tcpSocket)
+TcpRunnable::TcpRunnable(QTcpSocket *tcpSocket, const Task &task, const QByteArray &data)
   : tcp_socket(tcpSocket)
+  , tcp_task(task)
+  , buffer(data)
 {
-
 }
 
 void TcpRunnable::run()
 {
+  switch (tcp_task) {
+    case Read:
+      {
 
-  for(int i = 0; i < 10000000; i++)
-    {
-      if(tcp_socket->state() == QTcpSocket::ConnectedState)
-        {
-          tcp_socket->write("hello?");
-          tcp_socket->flush();
-//          tcp_socket->waitForBytesWritten(500);
+        break;
+      }
+    case Write:
+      {
+        if(tcp_socket->state() == QTcpSocket::ConnectedState)
+          {
+            tcp_socket->write(buffer);
+            tcp_socket->flush();
+            tcp_socket->waitForBytesWritten(100);
+            qDebug().noquote()<<"Socket:"<<tcp_socket->socketDescriptor()<< "done!";
+          }
 
-          qDebug().noquote()<<"Socket:"<<tcp_socket->socketDescriptor()<< "count: " << i;
-        }
+        break;
+      }
+    default:
+      break;
     }
 
-  qDebug().noquote()<<"Socket:"<<tcp_socket->socketDescriptor()<< "done!";
+
 }
 
 

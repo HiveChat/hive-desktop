@@ -1,6 +1,6 @@
-#include "HiveTcpProtocal.h"
+#include "TcpPacket.h"
 
-HiveTcpProtocal::HiveTcpProtocal(const DataType &dataType, QObject *parent)
+TcpPacket::TcpPacket(const DataType &dataType, QObject *parent)
   : QObject(parent)
   , data_type(dataType)
 {
@@ -10,11 +10,7 @@ HiveTcpProtocal::HiveTcpProtocal(const DataType &dataType, QObject *parent)
 
         break;
       }
-    case FileEnd:
-      {
 
-        break;
-      }
     case FileHead:
       {
 
@@ -25,16 +21,16 @@ HiveTcpProtocal::HiveTcpProtocal(const DataType &dataType, QObject *parent)
     }
 }
 
-void HiveTcpProtocal::setFileInfo()
+void TcpPacket::setFileInfo()
 {
 }
 
-QByteArray HiveTcpProtocal::getBuffer()
+QByteArray TcpPacket::getBuffer()
 {
   return buffer;
 }
 
-QString HiveTcpProtocal::getMd5(const QString &data)
+QString TcpPacket::getMd5(const QByteArray &data)
 {
   return QCryptographicHash::hash(data, QCryptographicHash::Md5);
 }

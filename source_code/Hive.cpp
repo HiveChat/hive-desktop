@@ -116,6 +116,7 @@ bool Hive::event(QEvent* event)
         {
           QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
           qDebug() << "Open file" << openEvent->file();
+          gui_central_widget->setWindowTitle(QString(openEvent->file()));
           return true;
         }
 #endif

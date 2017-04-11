@@ -201,9 +201,18 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
   QJsonDocument json_doc(json_obj);
 
   out << json_doc.toJson();
+
+  if(!GlobalData::online_usr_data_hash.contains(json_obj["receiver"].toString()))
+    {
+      Log::net(Log::Critical, "NetworkManager::udpSendMessage()", "sending to usr out of online_usr_data_hash failed!");
+      return;
+    }
+
+  QString usrIp = GlobalData::online_usr_data_hash.value(json_obj["receiver"].toString())->ip();
+
   qint64 ret = udp_socket->writeDatagram(data
                                          , data.length()
-                                         , QHostAddress::Broadcast
+                                         , usrIp.isEmpty() ? QHostAddress::Broadcast : QHostAddress(usrIp)
                                          , udp_port);
   if(ret != 0 && ret != -1)
     {

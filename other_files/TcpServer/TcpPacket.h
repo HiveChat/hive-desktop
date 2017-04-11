@@ -9,19 +9,18 @@
 #include <QCryptographicHash>
 
 
-class HiveTcpProtocal : public QObject
+class TcpPacket : public QObject
 {
   Q_OBJECT
 
   enum DataType {
     FileHead,
-    File,
-    FileEnd,
+    File
   };
 
 
 public:
-  explicit HiveTcpProtocal(const DataType &dataType, QObject *parent = 0);
+  explicit TcpPacket(const DataType &dataType, QObject *parent = 0);
 
   void setFileInfo();
   QByteArray getBuffer();
@@ -33,7 +32,7 @@ private:
 
   DataType data_type;
 
-  QString getMd5(const QString &data);
+  QString getMd5(const QByteArray &data);
 
 };
 

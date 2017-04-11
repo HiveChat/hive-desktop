@@ -28,7 +28,7 @@ private:
   QAction *quit_action;
   QSystemTrayIcon *tray_icon;
 
-public slots:
+public slots:  
   void onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe);
   void onCombWidgetClicked(const QString &usrKey);
   void addUsr(UsrData *userData);

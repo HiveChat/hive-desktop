@@ -6,10 +6,20 @@ TcpServer::TcpServer()
   thread_pool->setMaxThreadCount(10);
   this->listen(QHostAddress::Any, 23233);
 
+//  connectToPeer(".");
+
+}
+
+bool TcpServer::connectToPeer(const QString &usrKey)
+{
+  QTcpSocket *tcpSocket = new QTcpSocket();
+  tcpSocket->connectToHost(QHostAddress("192.168.21.100"), 23233);
+  connect(tcpSocket, SIGNAL(connected()), tcpSocket, SLOT(write("helloTim")));
 }
 
 void TcpServer::incomingConnection(qintptr handle)
 {
+  qDebug()<<handle;
   if(tcp_socket_hash.contains(handle))
     {
       TcpRunnable *run = new TcpRunnable(tcp_socket_hash.value(handle));
@@ -29,8 +39,6 @@ void TcpServer::incomingConnection(qintptr handle)
               });
       tcpSocket->setSocketDescriptor(handle);
 
-
-
       TcpRunnable *run = new TcpRunnable(tcpSocket);
       run->setAutoDelete(true);
       thread_pool->start(run);
@@ -39,7 +47,7 @@ void TcpServer::incomingConnection(qintptr handle)
 
 void TcpServer::readData()
 {
-
+  qDebug()<<tcp_socket_hash.values().first()->readAll();
 }
 
 

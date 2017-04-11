@@ -8,13 +8,20 @@
 
 class TcpRunnable : public QRunnable
 {
+  enum Task{
+    Read,
+    Write
+  };
+
 public:
-  explicit TcpRunnable(QTcpSocket *tcpSocket);
+  explicit TcpRunnable(QTcpSocket *tcpSocket, const Task &task, const QByteArray &data);
 
 protected:
   void run();
 
 private:
+  Task tcp_task;
+  QByteArray buffer;
   QTcpSocket *tcp_socket;
 
 };

@@ -13,12 +13,13 @@ class TcpServer : public QTcpServer
 {
 public:
   explicit TcpServer();
+  bool connectToPeer(const QString &usrKey);
 
 protected:
   void incomingConnection(qintptr handle);
 
 private:
-  QHash<qintptr, QTcpSocket *> tcp_socket_hash;
+  QHash<QString, QTcpSocket *> tcp_socket_hash;
   QHash<QString, qintptr> socket_discriptor_hash;
   QThreadPool *thread_pool;
 
