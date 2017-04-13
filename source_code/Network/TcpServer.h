@@ -1,48 +1,56 @@
-#ifndef TCPSERVER_H
-#define TCPSERVER_H
+#ifndef SERVER_H
+#define SERVER_H
 
-#include <QJsonObject>
+#include <QHash>
 #include <QTcpServer>
 #include <QTcpSocket>
+#include <QRunnable>
 #include <QThreadPool>
-#include <QHash>
+
+class TcpServer;
+class TcpRunnable;
+
+class TcpRunnable : public QRunnable
+{
+  enum Task{
+    Read,
+    Write
+  };
+
+public:
+  explicit TcpRunnable(QTcpSocket *tcpSocket, const Task &task, const QByteArray &data);
+
+protected:
+  void run();
+
+private:
+  Task tcp_task;
+  QByteArray buffer;
+  QTcpSocket *tcp_socket;
+
+};
+
+
 
 class TcpServer : public QTcpServer
 {
   Q_OBJECT
+
 public:
-  explicit TcpServer(QObject *parent = 0, const int &maxPendingConnections = 100);
-  bool startServer();
+  explicit TcpServer();
+  bool connectToPeer(const QString &usrKey);
 
 protected:
-  void incomingConnection(qintptr socketDescriptor);
+  void incomingConnection(qintptr handle);
 
 private:
-  qint16 tcp_port = 23232;
-  QHash<QString, QTcpSocket*> tcp_socket_map;
+  QHash<QString, QTcpSocket *> tcp_socket_hash;
+  QHash<QString, qintptr> socket_discriptor_hash;
+  QThreadPool *thread_pool;
 
-
+private slots:
+  void readData();
 
 };
 
-
-
-class TcpSocket : public QTcpSocket
-{
-  Q_OBJECT
-public:
-  explicit TcpSocket(const qintptr &socketDescriptor, QObject *parent = 0);
-
-protected:
-
-private:
-  qintptr socket_descriptor;
-  QHash<QString, QTcpSocket*> tcp_socket_map;
-
-
-
-};
-
-
-
-#endif // TCPSERVER_H
+#endif // SERVER_H

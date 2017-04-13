@@ -20,6 +20,7 @@ bool TcpServer::connectToPeer(const QString &usrKey)
 void TcpServer::incomingConnection(qintptr handle)
 {
   qDebug()<<handle;
+
   if(tcp_socket_hash.contains(handle))
     {
       TcpRunnable *run = new TcpRunnable(tcp_socket_hash.value(handle));

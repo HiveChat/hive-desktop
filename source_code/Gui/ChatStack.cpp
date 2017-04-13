@@ -137,6 +137,14 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   main_layout->addLayout(edit_layout);
   main_layout->addWidget(send_btn);
 
+  connect(file_label, &LabelButton::clicked,
+          [this]() {
+            QString directory =
+            QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, tr("Find Files")
+                                     , QStandardPaths::writableLocation(QStandardPaths::HomeLocation)));
+          }
+
+          );
 
 
   connect(file_label, &LabelButton::entered,

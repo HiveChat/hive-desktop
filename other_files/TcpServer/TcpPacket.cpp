@@ -10,7 +10,6 @@ TcpPacket::TcpPacket(const DataType &dataType, QObject *parent)
 
         break;
       }
-
     case FileHead:
       {
 

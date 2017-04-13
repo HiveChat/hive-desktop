@@ -9,6 +9,7 @@
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/TextBubble.h"
 
+#include <QFileDialog>
 #include <QScrollBar>
 #include <QTextEdit>
 #include <QDragEnterEvent>
@@ -80,14 +81,17 @@ public:
   explicit GuiChatStack_message_editor(QWidget *parent = 0);
   ~GuiChatStack_message_editor();
 
-  LabelButton *send_btn;
+  QString currentFileName() {return current_file_name;}
+
   GuiTextEdit *text_editor;
+  LabelButton *send_btn;
 
 protected:
 /// An old way to capture QEvent outside the class!
   bool eventFilter(QObject *obj, QEvent *e);
 
 private:
+
   QVBoxLayout *edit_layout;
   QHBoxLayout *tool_layout;
   QHBoxLayout *main_layout;
@@ -100,10 +104,13 @@ private:
 
   QVariantAnimation *file_tran_ani;
 
+  QString current_file_name;
+
   bool control_pressed = false;
   bool file_label_hovered = false;
 
 signals:
+  void sendFile();
   void sendTriggered();
 
 };
