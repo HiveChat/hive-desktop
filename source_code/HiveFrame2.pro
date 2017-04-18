@@ -61,6 +61,7 @@ SOURCES += \
     Data/DataManager.cpp \
     Gui/Frameworks/Widgets/AvatarWidgets.cpp \
     Log.cpp
+\
 
 HEADERS  += \
     Hive.h \

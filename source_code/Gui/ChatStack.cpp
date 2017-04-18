@@ -544,6 +544,7 @@ void GuiChatStack::onSendButtonClicked()
 
   key_lock = true;
 
+
   if(!usr_data->isOnline())
     {
       if(click_num == 0)

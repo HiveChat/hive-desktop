@@ -468,6 +468,11 @@ void DataManager::loadMySettings()
               *var = usr_list_json_obj[settings_hash_qstring.key(var)].toString();
             }
 
+//          foreach (QString *key, settings_hash_qstring.keys())
+//            {
+//              settings_hash_qstring.value(key) = usr_list_json_obj[key].toString();
+//            } //better
+
           foreach(QColor *var, settings_hash_qcolor.values())
             {
               *var = QColor(usr_list_json_obj[settings_hash_qcolor.key(var)].toString());
