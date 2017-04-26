@@ -1,9 +1,9 @@
-#include <QApplication>
+#include "Hive.h"
 
 
 int main(int argc, char *argv[])
 {
-  QApplication a(argc, argv);
+  HiveApp hiveApp(argc, argv);
 
-  return a.exec();
+  return hiveApp.exec();
 }

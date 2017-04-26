@@ -11,6 +11,7 @@
 
 #include <QFileDialog>
 #include <QScrollBar>
+#include <QScrollArea>
 #include <QTextEdit>
 #include <QDragEnterEvent>
 #include <QMimeData>

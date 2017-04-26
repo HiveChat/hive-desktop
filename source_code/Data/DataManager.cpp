@@ -239,10 +239,12 @@ void DataManager::onMessageCome(const Message::TextMessageStruct &messageStruct,
 {
   if(fromMe)
     {
+      qDebug()<<"fromme";
       GlobalData::online_usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
     }
   else
     {
+      qDebug()<<"notfromme";
       GlobalData::online_usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
     }
   emit messageLoaded(messageStruct, fromMe);

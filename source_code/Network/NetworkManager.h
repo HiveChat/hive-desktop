@@ -3,6 +3,7 @@
 
 #include "GlobalData.h"
 #include "GlobalType.h"
+#include "TcpServer.h"
 #include "Log.h"
 
 #include <QJsonDocument>
@@ -78,8 +79,7 @@ private:
   QString file_name;
   QFile *local_file;
 
-  QTcpServer *tcp_server;
-  QTcpSocket *tcp_socket;
+  TcpServer *tcp_server;
 
   void tcpCloseConnection();
 

@@ -38,6 +38,7 @@ ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : Q
   main_layout->addWidget(bottom_line);
 
 
+
 }
 
 ChatStack_chat_widget::~ChatStack_chat_widget()
@@ -323,6 +324,10 @@ GuiChatStack::GuiChatStack(QWidget *parent)
           this, &GuiChatStack::onSendButtonClicked);
   connect(message_editor->send_btn, &LabelButton::clicked,
           this, &GuiChatStack::onSendButtonClicked);
+//  connect(scroll_area->verticalScrollBar(), &QScrollBar::sliderReleased,
+//          [this](){
+//            Log::gui(Log::Normal, "hello()", "hello");
+//          });
 
   this->setParent(parent);
 }

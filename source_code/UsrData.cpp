@@ -1,7 +1,8 @@
 #include "UsrData.h"
 
 
-UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent) : QObject(parent)
+UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent)
+  : QObject(parent)
   , my_key(myKey)
   , usr_profile_struct(usrProfileStruct)
   , history_path(usr_path + usr_profile_struct.key)

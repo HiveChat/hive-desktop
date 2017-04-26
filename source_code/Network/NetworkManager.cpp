@@ -3,8 +3,7 @@
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
-  tcp_server = new QTcpServer(this);
-  connect(tcp_server, SIGNAL(newConnection()), this, SLOT(tcpSendData()));
+  tcp_server = new TcpServer();
 
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
@@ -344,6 +343,9 @@ void NetworkManager::udpProcessPendingDatagrams()
 
       QByteArray byte_array;
       in >> byte_array;
+
+      qDebug()<<byte_array;
+
 
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
       if(json_document.isObject())

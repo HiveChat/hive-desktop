@@ -3,7 +3,6 @@
 Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
 
 {
-
 #ifdef Q_OS_OSX
 
   QApplication::setQuitOnLastWindowClosed(false);

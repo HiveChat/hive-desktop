@@ -95,10 +95,12 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
 {
   if(fromMe)
     {
+      qDebug()<<"-------------------fromme";
       gui_main_block->gui_chat_stack->refreshMessage(messageStruct.reciever);
     }
   else
     {
+      qDebug()<<"------------------";
       //if not displaying the usr
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {

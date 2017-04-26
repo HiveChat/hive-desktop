@@ -43,7 +43,6 @@ public:
 
 
 private:
-
   UsrProfileStruct usr_profile_struct;
 
   const int max_bundle_capacity = 100;
