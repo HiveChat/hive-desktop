@@ -2,8 +2,8 @@
 #define DATAMANAGER_H
 
 #include "AppData.h"
-#include <QDebug>
 
+#include <QDebug>
 #include <QObject>
 
 class DataManager : public QObject

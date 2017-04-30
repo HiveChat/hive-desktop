@@ -1,3 +1,4 @@
 #include "AppData.h"
 
-int AppData::a = 9;
+
+int AppData::a = 6;

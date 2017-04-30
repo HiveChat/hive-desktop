@@ -6,10 +6,13 @@
 
 CONFIG   += c++14
 
-QT       += core gui network
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui network widgets
+
 macx{
     QT   += macextras
+
+    LIBS += -L /usr/local/lib/
+    INCLUDEPATH += /usr/local/include/
 }
 
 

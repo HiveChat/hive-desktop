@@ -207,7 +207,6 @@ QBoxLayout *ScrollStack::addItem(const QString &text, const QString &string, con
   layout->setSpacing(80);
   layout->addWidget(text_label);
   layout->addWidget(string_label);
-
   central_layout->addSpacing(10);
   central_layout->addLayout(layout);
 
