@@ -13,8 +13,11 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 macx{
     QT   += macextras
-#    INCLUDEPATH += /usr/include
+
+    INCLUDEPATH += /usr/local/include/
+    QMAKE_LFLAGS += -L/usr/local/lib -lboost_system
 }
+
 
 win32{
     RC_FILE = /Src/hive.rc
