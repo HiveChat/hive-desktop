@@ -80,7 +80,7 @@ private:
   QString file_name;
   QFile *local_file;
 
-  TcpServer *tcp_server;
+  UvTcpServer *uv_tcp_server;
 
   void tcpCloseConnection();
 

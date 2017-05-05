@@ -3,7 +3,7 @@
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
-  UvTcpServer *uv_tcp_server = new UvTcpServer(this);
+  uv_tcp_server = new UvTcpServer(this);
   uv_tcp_server->start();
 //  tcp_server = new TcpServer();
 //  QThread *serverThread = new QThread(this);
@@ -22,6 +22,13 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 
 NetworkManager::~NetworkManager()
 {
+  uv_tcp_server->quit();
+
+  if(!uv_tcp_server->wait(500))
+    {
+      uv_tcp_server->terminate();
+      uv_tcp_server->wait();
+    }
   udpSendUsrLeave();
   qDebug()<<"NetworkManager destructed";
 }
