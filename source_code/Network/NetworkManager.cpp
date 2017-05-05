@@ -3,7 +3,14 @@
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
-  tcp_server = new TcpServer();
+  UvTcpServer *uv_tcp_server = new UvTcpServer(this);
+  uv_tcp_server->start();
+//  tcp_server = new TcpServer();
+//  QThread *serverThread = new QThread(this);
+//  tcp_server->moveToThread(serverThread);
+//  serverThread->start();
+
+//  tcp_server->start();
 
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);

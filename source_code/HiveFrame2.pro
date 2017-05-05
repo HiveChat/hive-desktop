@@ -16,6 +16,8 @@ macx{
 
     INCLUDEPATH += /usr/local/include/
     QMAKE_LFLAGS += -L/usr/local/lib -lboost_system
+    QMAKE_LFLAGS += -L/usr/local/lib -luv
+
 }
 
 
@@ -63,7 +65,8 @@ SOURCES += \
 \
     Data/DataManager.cpp \
     Gui/Frameworks/Widgets/AvatarWidgets.cpp \
-    Log.cpp
+    Log.cpp \
+    UvTcpServer.cpp
 \
 
 HEADERS  += \
@@ -102,7 +105,8 @@ HEADERS  += \
 \
     Data/DataManager.h \
     Gui/Frameworks/Widgets/AvatarWidgets.h \
-    Log.h
+    Log.h \
+    UvTcpServer.h
 
 ICON = Src/hive.icns
 
