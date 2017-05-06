@@ -1,8 +1,10 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
-#define DEFAULT_PORT 7000
-#define DEFAULT_BACKLOG 128
+#define TCP_PORT 23232
+#define TCP_BACKLOG 128
+
+#include "Log.h"
 
 #include <QThread>
 #include <QDebug>
