@@ -27,6 +27,7 @@
 
 ## Dependency:
 * Qt5
+* libuv
 
 ## Star me!
 [![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)](#)

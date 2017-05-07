@@ -25,8 +25,8 @@ private:
   static struct sockaddr_in addr;
 
   static void onNewConnection(uv_stream_t *server, int status);
-  static void echoRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
-  static void echoWrite(uv_write_t *req, int status);
+  static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
+  static void tcpWrite(uv_write_t *req, int status);
   static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
   static void freeWriteReq(uv_write_t *req);
 

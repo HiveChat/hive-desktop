@@ -36,15 +36,15 @@ void UvTcpServer::onNewConnection(uv_stream_t *server, int status)
 {
   if(status < 0)
     {
-          fprintf(stderr, "New connection error %s\n", uv_strerror(status));
-          return;
+      fprintf(stderr, "New connection error %s\n", uv_strerror(status));
+      return;
     }
 
   uv_tcp_t *client = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
   uv_tcp_init(loop, client);
-  if (uv_accept(server, (uv_stream_t*) client) == 0)
+  if (uv_accept(server, (uv_stream_t*)client) == 0)
     {
-      uv_read_start((uv_stream_t*) client, allocBuffer, echoRead);
+      uv_read_start((uv_stream_t*)client, allocBuffer, tcpRead);
     }
   else
     {
@@ -52,24 +52,33 @@ void UvTcpServer::onNewConnection(uv_stream_t *server, int status)
     }
 }
 
-void UvTcpServer::echoRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
+void UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 {
   if (nread > 0) {
-      write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t));
+      sockaddr_storage *sockAddr = (sockaddr_storage*)malloc(sizeof(sockaddr_storage));
+//      uv_tcp_getsockname((uv_tcp_t*)client, sockAddr, 9);
+
+      write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
+      QByteArray byteArray(buf->base, nread);
+      qDebug()<<(void*)&client;
       req->buf = uv_buf_init(buf->base, nread);
-      uv_write((uv_write_t*) req, client, &req->buf, 1, echoWrite);
+//      qDebug()<<"FD: "<<uv_tcp_getsockname();
+      uv_write((uv_write_t*)req, client, &req->buf, 1, tcpWrite);
+
       return;
   }
   if (nread < 0) {
       if (nread != UV_EOF)
+        {
           fprintf(stderr, "Read error %s\n", uv_err_name(nread));
-      uv_close((uv_handle_t*) client, NULL);
+        }
+      uv_close((uv_handle_t*)client, NULL);
   }
 
   free(buf->base);
 }
 
-void UvTcpServer::echoWrite(uv_write_t *req, int status)
+void UvTcpServer::tcpWrite(uv_write_t *req, int status)
 {
   if (status)
     {

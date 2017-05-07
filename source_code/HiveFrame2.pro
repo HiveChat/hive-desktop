@@ -7,7 +7,8 @@
 QT       += core gui
 QT	 += network
 #QT       += concurrent
-CONFIG   += c++11
+
+CONFIG   += c++14
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -15,7 +16,6 @@ macx{
     QT   += macextras
 
     INCLUDEPATH += /usr/local/include/
-    QMAKE_LFLAGS += -L/usr/local/lib -lboost_system
     QMAKE_LFLAGS += -L/usr/local/lib -luv
 
 }
@@ -60,7 +60,6 @@ SOURCES += \
     Gui/Frameworks/Widgets/ColorPicker.cpp \
     Gui/Frameworks/Widgets/BadgeIcon.cpp \
 \
-    Network/TcpServer.cpp \
     Network/NetworkManager.cpp \
 \
     Data/DataManager.cpp \
@@ -100,7 +99,6 @@ HEADERS  += \
     Gui/Frameworks/Widgets/ColorPicker.h \
     Gui/Frameworks/Widgets/BadgeIcon.h \
 \
-    Network/TcpServer.h \
     Network/NetworkManager.h \
 \
     Data/DataManager.h \

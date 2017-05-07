@@ -4,7 +4,6 @@
 #include "GlobalData.h"
 #include "GlobalType.h"
 #include "UvTcpServer.h"
-#include "TcpServer.h"
 #include "Log.h"
 
 #include <QJsonDocument>
