@@ -35,7 +35,7 @@ protected:
   void mousePressEvent(QMouseEvent *event);
   void enterEvent(QEvent *event );
   void leaveEvent(QEvent *);
-  void dragMoveEvent(QEvent *);
+  void dragMoveEvent(QEvent *event);
 
 private:
   GuiAvatarButton *avatar;

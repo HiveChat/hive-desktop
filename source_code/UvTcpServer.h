@@ -5,9 +5,11 @@
 #define TCP_BACKLOG 128
 
 #include "Log.h"
+#include "HiveProtocol.h"
 
 #include <QThread>
 #include <QDebug>
+#include <QHash>
 
 #include <uv.h>
 
@@ -21,8 +23,11 @@ protected:
   void run();
 
 private:
+  static HiveProtocol *hive_protocol;
   static uv_loop_t *loop;
   static struct sockaddr_in addr;
+
+  static QHash<int, QByteArray> buffer_hash;
 
   static void onNewConnection(uv_stream_t *server, int status);
   static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
@@ -34,6 +39,7 @@ private:
     uv_write_t req;
     uv_buf_t buf;
   } write_req_t;
+
 
 
 };

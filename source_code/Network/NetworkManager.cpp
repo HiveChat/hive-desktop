@@ -221,7 +221,7 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
       return;
     }
 
-  QString usrIp = GlobalData::online_usr_data_hash.value(json_obj["receiver"].toString())->ip();
+  QString usrIp = GlobalData::online_usr_data_hash.value(json_obj["receiver"].toString())->getIp();
 
   qint64 ret = udp_socket->writeDatagram(data
                                          , data.length()

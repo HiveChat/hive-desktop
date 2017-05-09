@@ -197,7 +197,7 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logi
     {
       Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in online list");
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
-      if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
+      if(usrProfileStruct != *recordedUsrData->getUsrProfileStruct())
         {
           recordedUsrData->setUsrProfileStruct(usrProfileStruct);
           emit usrProfileChanged(recordedUsrData);
@@ -209,7 +209,7 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logi
       Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
       GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, GlobalData::offline_usr_data_hash.value(usrProfileStruct.key));
       UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
-      if(usrProfileStruct != *recordedUsrData->usrProfileStruct())
+      if(usrProfileStruct != *recordedUsrData->getUsrProfileStruct())
         {
           recordedUsrData->setUsrProfileStruct(usrProfileStruct);
           updateUsr(usrProfileStruct);

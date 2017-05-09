@@ -345,9 +345,9 @@ bool GuiChatStack::refreshProfile(const QString &usrKey)
     }
   else
     {
-      this->setIcon(usr_data->avatar());
-      this->setTitle(usr_data->name());
-      this->setSubTitle(usr_data->ip());
+      this->setIcon(usr_data->getAvatar());
+      this->setTitle(usr_data->getName());
+      this->setSubTitle(usr_data->getIp());
       return true;
     }
 }
@@ -400,16 +400,16 @@ void GuiChatStack::display(const QString &usrKey)
     }
 
   // if different usr or updated usr is refreshing
-  if(*usr_data->usrProfileStruct() != *temp_usr_data->usrProfileStruct())
+  if(*usr_data->getUsrProfileStruct() != *temp_usr_data->getUsrProfileStruct())
     {
-      if(usr_data->key() != temp_usr_data->key())
+      if(usr_data->getKey() != temp_usr_data->getKey())
         {
           // can you read this?
-          if(message_hash.contains(usr_data->key()))
+          if(message_hash.contains(usr_data->getKey()))
             {
-              message_hash.take(usr_data->key());
+              message_hash.take(usr_data->getKey());
             }
-          message_hash.insert(usr_data->key(), message_editor->text_editor->toPlainText());
+          message_hash.insert(usr_data->getKey(), message_editor->text_editor->toPlainText());
 
 
           this->setUsrData(temp_usr_data);
@@ -453,7 +453,7 @@ void GuiChatStack::display(const QString &usrKey)
 
 bool GuiChatStack::isDisplaying(const QString &usrKey)
 {
-  return (usrKey == usr_data->key());
+  return (usrKey == usr_data->getKey());
 }
 
 void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
@@ -480,7 +480,7 @@ void GuiChatStack::dropEvent(QDropEvent *event)
 void GuiChatStack::flipUnreadMessage()
 {
   Log::gui(Log::Normal, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
-  if(usr_data->unreadMessageNumber() != 0)
+  if(usr_data->getUnreadMessageNumber() != 0)
     {
       QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
       foreach (QJsonObject history_json_obj, *message_list)
@@ -594,7 +594,7 @@ void GuiChatStack::onSendButtonClicked()
           click_num ++;
         }
 
-      Log::gui(Log::Normal, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->name() +"\" not online");
+      Log::gui(Log::Normal, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->getName() +"\" not online");
 
       key_lock = false;
       return;
@@ -609,7 +609,7 @@ void GuiChatStack::onSendButtonClicked()
       return;
     }
 
-  emit sendMessage(usr_data->key(), message);
+  emit sendMessage(usr_data->getKey(), message);
   message_editor->text_editor->clear();
 
 #ifdef Q_OS_OSX

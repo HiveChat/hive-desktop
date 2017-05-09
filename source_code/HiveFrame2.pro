@@ -65,7 +65,8 @@ SOURCES += \
     Data/DataManager.cpp \
     Gui/Frameworks/Widgets/AvatarWidgets.cpp \
     Log.cpp \
-    UvTcpServer.cpp
+    UvTcpServer.cpp \
+    HiveProtocol.cpp
 \
 
 HEADERS  += \
@@ -104,7 +105,8 @@ HEADERS  += \
     Data/DataManager.h \
     Gui/Frameworks/Widgets/AvatarWidgets.h \
     Log.h \
-    UvTcpServer.h
+    UvTcpServer.h \
+    HiveProtocol.h
 
 ICON = Src/hive.icns
 

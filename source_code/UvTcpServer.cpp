@@ -1,5 +1,7 @@
 #include "UvTcpServer.h"
 
+
+HiveProtocol* UvTcpServer::hive_protocol = new HiveProtocol();
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
 
@@ -54,19 +56,19 @@ void UvTcpServer::onNewConnection(uv_stream_t *server, int status)
 
 void UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 {
-  if (nread > 0) {
-      sockaddr_storage *sockAddr = (sockaddr_storage*)malloc(sizeof(sockaddr_storage));
-//      uv_tcp_getsockname((uv_tcp_t*)client, sockAddr, 9);
+  if (nread > 0)
+    {
+      int socketDiscriptor;
+      uv_fileno((uv_handle_t *)client, &socketDiscriptor);
+      qDebug()<<socketDiscriptor;
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       QByteArray byteArray(buf->base, nread);
-      qDebug()<<(void*)&client;
       req->buf = uv_buf_init(buf->base, nread);
-//      qDebug()<<"FD: "<<uv_tcp_getsockname();
       uv_write((uv_write_t*)req, client, &req->buf, 1, tcpWrite);
 
       return;
-  }
+    }
   if (nread < 0) {
       if (nread != UV_EOF)
         {

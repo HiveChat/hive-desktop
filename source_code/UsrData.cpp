@@ -146,25 +146,21 @@ void UsrData::readHistoryBundle()
   current_history_bundle_index = latest_history_bundle_index;
 }
 
-void UsrData::refreshUsrProfile(const UsrProfileStruct &usrProfileStruct)
-{
-  usr_profile_struct = usrProfileStruct;
-}
-
 QJsonObject UsrData::getMessageJsonObject(const Message::TextMessageStruct &messageStruct)
 {
-  bool fromMe = (messageStruct.sender == my_key);
   QJsonObject json_object;
-  json_object.insert("fromMe", fromMe);
+  json_object.insert("fromMe", messageStruct.sender == my_key);
   json_object.insert("message", messageStruct.message);
+  json_object.insert("time", messageStruct.time);
+  json_object.insert("index", messageStruct.index);
   json_object.insert("time", messageStruct.time);
 
   return json_object;
 }
 
-void UsrData::makeHistoryBundle(int num)
+void UsrData::makeHistoryBundle(const int &index)
 {
-  QString file_path = QString(history_path+"/%0.json").arg(QString::number(num));
+  QString file_path = QString(history_path+"/%0.json").arg(QString::number(index));
   qDebug()<<"#UsrData::makeHistoryFile(int num): Make new history:";
   qDebug()<<file_path;
 
@@ -237,18 +233,14 @@ void UsrData::saveHistoryBundle()
 //  QtConcurrent::run(lambda);
 }
 
-void UsrData::recordMessage(const Message::TextMessageStruct &messageStruct, bool fromMe)
+void UsrData::recordMessage(const Message::TextMessageStruct &messageStruct)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {
       saveHistoryBundle();
     }
-  QJsonObject message_json_obj;
-  message_json_obj.insert("message", messageStruct.message);
-  message_json_obj.insert("fromMe", fromMe);
-  message_json_obj.insert("time", messageStruct.time);
 
-  latest_history_json_array.append(message_json_obj);
+  latest_history_json_array.append(getMessageJsonObject(messageStruct));
 
   saveHistoryBundle();
 }

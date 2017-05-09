@@ -105,17 +105,17 @@ void GuiCentralWidget::onMessageReceived(const Message::TextMessageStruct &messa
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {
           UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(messageStruct.sender);
-          gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->unreadMessageNumber());
+          gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
           if(GlobalData::settings_struct.notification.message_notification
              && GlobalData::settings_struct.update.auto_check_update)
             {
               if(GlobalData::settings_struct.notification.message_detail_notification)
                 {
-                  tray_icon->showMessage(temp_usr_data->name(), messageStruct.message);
+                  tray_icon->showMessage(temp_usr_data->getName(), messageStruct.message);
                 }
               else
                 {
-                  tray_icon->showMessage(temp_usr_data->name(), "new message");
+                  tray_icon->showMessage(temp_usr_data->getName(), "new message");
                 }
             }
         }
@@ -130,13 +130,13 @@ void GuiCentralWidget::onCombWidgetClicked(const QString &usrKey)
 
 void GuiCentralWidget::addUsr(UsrData *userData)
 {
-  if(gui_tab_block->chat_tab->comb_scroll_widget->contains(userData->key()))
+  if(gui_tab_block->chat_tab->comb_scroll_widget->contains(userData->getKey()))
     {
       qDebug()<<"#GuiCentralWidget::addUsr(): Already exists.";
       return;
     }
-  gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->usrProfileStruct());
-  gui_main_block->gui_home_stack_list->addUsr(userData->usrProfileStruct());
+  gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->getUsrProfileStruct());
+  gui_main_block->gui_home_stack_list->addUsr(userData->getUsrProfileStruct());
 }
 
 void GuiCentralWidget::delUsr(UsrData *userData)
@@ -147,9 +147,9 @@ void GuiCentralWidget::delUsr(UsrData *userData)
 void GuiCentralWidget::changeUsr(UsrData *userData)
 {
   qDebug()<<"updated GUI";
-  gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->usrProfileStruct());
-  gui_main_block->gui_chat_stack->refreshProfile(userData->key());
-  gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->usrProfileStruct());
+  gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfileStruct());
+  gui_main_block->gui_chat_stack->refreshProfile(userData->getKey());
+  gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->getUsrProfileStruct());
 }
 
 void GuiCentralWidget::onUpdateAvailable()
