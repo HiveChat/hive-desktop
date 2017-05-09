@@ -3,15 +3,16 @@
 
 UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent)
   : QObject(parent)
-  , my_key(myKey)
   , usr_profile_struct(usrProfileStruct)
   , history_path(usr_path + usr_profile_struct.key)
+  , my_key(myKey)
 {
   this->checkDir(history_path);
   this->readHistoryBundle();
 }
 
-UsrData::UsrData(QObject *parent) : QObject(parent)
+UsrData::UsrData(QObject *parent)
+  : QObject(parent)
 {
 }
 
@@ -149,11 +150,10 @@ void UsrData::readHistoryBundle()
 QJsonObject UsrData::getMessageJsonObject(const Message::TextMessageStruct &messageStruct)
 {
   QJsonObject json_object;
-  json_object.insert("fromMe", messageStruct.sender == my_key);
+  json_object.insert("fromMe", messageStruct.sender == *my_key);
   json_object.insert("message", messageStruct.message);
   json_object.insert("time", messageStruct.time);
   json_object.insert("index", messageStruct.index);
-  json_object.insert("time", messageStruct.time);
 
   return json_object;
 }

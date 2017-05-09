@@ -39,7 +39,6 @@ public:
   explicit TextBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
   TextBubble_text_area *text_area;
 
-
 private:
   QHBoxLayout *main_layout;
   QPixmap strip_pixmap;
