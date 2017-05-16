@@ -54,7 +54,7 @@ class Bee
 public:
   explicit Bee(const int &socketDiscriptor);
 
-  bool readBuffer(const QString &buffer);
+  bool readBuffer(const QString &data);
 
   bool isLeaving();
   bool isIdentified();
@@ -63,8 +63,11 @@ private:
   int socket_descriptor;
   UsrData *usr_data = nullptr;
   QString buffer;
+  int read_size = 0;
 
   bool is_leaving;
+
+  inline void decodePacket(const QString &data);
 
 };
 

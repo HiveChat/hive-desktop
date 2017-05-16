@@ -130,13 +130,34 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 
 
 Bee::Bee(const int &socketDiscriptor)
+  : socket_descriptor(socketDiscriptor)
 {
-
 }
 
-bool Bee::readBuffer(const QString &buffer)
+bool Bee::readBuffer(const QString &data)
 {
+  if(read_size == 0)
+    {
+      buffer = data;
+      int newSize = QString::number(buffer.mid(0, 31));
+      if(newSize != 0)
+        {
+          read_size = newSize;
 
+          if(buffer.size() < read_size + 32)
+            {
+              return;
+            }
+          if(buffer.size() >= read_size + 32)
+            {
+
+            }
+        }
+      else
+        {
+          Log::net(Log::Critical, "Bee::readBuffer()", "Data corrupted!!");
+        }
+    }
 }
 
 bool Bee::isLeaving()
@@ -147,4 +168,17 @@ bool Bee::isLeaving()
 bool Bee::isIdentified()
 {
   return usr_data == nullptr;
+}
+
+void Bee::decodePacket(const QString &data)
+{
+  QJsonParseError json_error;
+  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
+  if(json_error.error == QJsonParseError::NoError)
+    {
+      if(read_json_document.isObject())
+        {
+
+        }
+    }
 }
