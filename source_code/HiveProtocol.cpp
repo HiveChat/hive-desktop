@@ -23,7 +23,4 @@ void HiveProtocol::append(const QByteArray &data, const int &socketDiscriptor, Q
 
 //    }
 
-
-
-
 }

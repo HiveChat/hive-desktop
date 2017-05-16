@@ -10,7 +10,8 @@ UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
 
 }
 
-void UvTcpServer::run()
+void
+UvTcpServer::run()
 {
   Log::net(Log::Normal, "UvTcpServer::run()", "Thread Started");
 
@@ -34,7 +35,8 @@ void UvTcpServer::run()
 
 }
 
-void UvTcpServer::onNewConnection(uv_stream_t *server, int status)
+void
+UvTcpServer::onNewConnection(uv_stream_t *server, int status)
 {
   if(status < 0)
     {
@@ -54,16 +56,26 @@ void UvTcpServer::onNewConnection(uv_stream_t *server, int status)
     }
 }
 
-void UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
+void
+UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 {
   if (nread > 0)
     {
-      int socketDiscriptor;
-      uv_fileno((uv_handle_t *)client, &socketDiscriptor);
-      qDebug()<<socketDiscriptor;
+      int socketDiscriptor = getSocketDescriptor(client);
+
+//      if(connection_hash.contains(socketDiscriptor))
+//        {
+//          QByteArray *array = &buffer_hash.value(socketDiscriptor);
+//          array->append(buf->base, nread);
+
+
+//        }
+//      QString data(buf->base, nread);
+//      int readSize = QString::number(data.remove(0, 32));
+
+
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
-      QByteArray byteArray(buf->base, nread);
       req->buf = uv_buf_init(buf->base, nread);
       uv_write((uv_write_t*)req, client, &req->buf, 1, tcpWrite);
 
@@ -80,7 +92,8 @@ void UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *bu
   free(buf->base);
 }
 
-void UvTcpServer::tcpWrite(uv_write_t *req, int status)
+void
+UvTcpServer::tcpWrite(uv_write_t *req, int status)
 {
   if (status)
     {
@@ -89,16 +102,49 @@ void UvTcpServer::tcpWrite(uv_write_t *req, int status)
   freeWriteReq(req);
 }
 
-void UvTcpServer::allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
+void
+UvTcpServer::allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
 {
   buf->base = (char*) malloc(suggested_size);
   buf->len = suggested_size;
 }
 
-void UvTcpServer::freeWriteReq(uv_write_t *req)
+void
+UvTcpServer::freeWriteReq(uv_write_t *req)
 {
   write_req_t *wr = (write_req_t*) req;
   free(wr->buf.base);
   free(wr);
 }
 
+int
+UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
+{
+  int fd;
+  uv_fileno((uv_handle_t *)handle, &fd);
+  return fd;
+}
+
+
+
+
+
+Bee::Bee(const int &socketDiscriptor)
+{
+
+}
+
+bool Bee::readBuffer(const QString &buffer)
+{
+
+}
+
+bool Bee::isLeaving()
+{
+  return is_leaving;
+}
+
+bool Bee::isIdentified()
+{
+  return usr_data == nullptr;
+}

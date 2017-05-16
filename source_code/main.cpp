@@ -6,7 +6,6 @@
 #endif
 
 
-
 int loadMyStyle()
 {
   QFile qss(":/qss/qss/comb_treewidget.qss");
@@ -22,18 +21,6 @@ int loadMyStyle()
 
 int main(int argc, char *argv[])
 {
-  QString str = "Tim is stupid.";
-  QByteArray sizeNum;
-  sizeNum.append(str);
-
-  QByteArray out_array;
-  QDataStream out(&out_array, QIODevice::ReadWrite);
-  out << sizeNum.size();
-
-
-  qDebug()<<out;
-
-
   Hive hiveApp(argc, argv);
   loadMyStyle();
   hiveApp.gui_central_widget->show();
