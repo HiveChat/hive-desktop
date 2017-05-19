@@ -34,11 +34,11 @@ private:
   static QHash<int, QByteArray> buffer_hash;
   static QHash<int, UsrData*> connection_hash;
 
-  static void onNewConnection(uv_stream_t *server, int status);
-  static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
-  static void tcpWrite(uv_write_t *req, int status);
-  static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
-  static void freeWriteReq(uv_write_t *req);
+  inline static void onNewConnection(uv_stream_t *server, int status);
+  inline static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
+  inline static void tcpWrite(uv_write_t *req, int status);
+  inline static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
+  inline static void freeWriteReq(uv_write_t *req);
 
   inline static int getSocketDescriptor(uv_stream_t *client);
 
@@ -60,6 +60,14 @@ public:
   bool isIdentified();
 
 private:
+  enum MessageType {
+    FileInfo = 0,
+    FileContent = 1,
+    FileAccept = 2,
+    FileReject = 3,
+    ErrorDelivery = 4,
+  };
+
   int socket_descriptor;
   UsrData *usr_data = nullptr;
   QString buffer;
@@ -67,7 +75,7 @@ private:
 
   bool is_leaving;
 
-  inline void decodePacket(const QString &data);
+  inline bool decodePacket(const QString &data);
 
 };
 

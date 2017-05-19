@@ -139,14 +139,14 @@ bool Bee::readBuffer(const QString &data)
   if(read_size == 0)
     {
       buffer = data;
-      int newSize = QString::number(buffer.mid(0, 31));
+      int newSize = buffer.mid(0, 31).toInt();
       if(newSize != 0)
         {
           read_size = newSize;
 
           if(buffer.size() < read_size + 32)
             {
-              return;
+              return false;
             }
           if(buffer.size() >= read_size + 32)
             {
@@ -170,15 +170,48 @@ bool Bee::isIdentified()
   return usr_data == nullptr;
 }
 
-void Bee::decodePacket(const QString &data)
+bool Bee::decodePacket(const QString &data)
 {
-  QJsonParseError json_error;
-  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-  if(json_error.error == QJsonParseError::NoError)
+  QByteArray byteArray = data.toLatin1();
+  QJsonParseError jsonError;
+  QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
+  if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
     {
-      if(read_json_document.isObject())
-        {
-
-        }
+      Log::net(Log::Critical, "Bee::decodePacket()", jsonError.errorString());
+      return false;
     }
+
+  QJsonObject packetJson;
+  MessageType messageType = (MessageType)packetJson.value("type").toInt();
+  switch (messageType) {
+    case MessageType::FileContent:
+      {
+
+        break;
+      }
+    case MessageType::FileReject:
+      {        
+
+        break;
+      }
+    case MessageType::FileAccept:
+      {
+
+        break;
+      }
+    case MessageType::FileInfo:
+      {
+
+        break;
+      }
+    case MessageType::ErrorDelivery:
+      {
+
+        break;
+      }
+  }
+
+
+
+
 }
