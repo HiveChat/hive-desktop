@@ -7,6 +7,7 @@
 #include "Log.h"
 #include "HiveProtocol.h"
 #include "UsrData.h"
+#include "GlobalData.h"
 
 #include <QThread>
 #include <QDebug>
@@ -65,7 +66,7 @@ private:
     FileContent = 1,
     FileAccept = 2,
     FileReject = 3,
-    ErrorDelivery = 4,
+    ErrorDelivery = 6,
   };
 
   int socket_descriptor;

@@ -138,26 +138,21 @@ bool Bee::readBuffer(const QString &data)
 {
   if(read_size == 0)
     {
-      buffer = data;
-      int newSize = buffer.mid(0, 31).toInt();
-      if(newSize != 0)
-        {
-          read_size = newSize;
-
-          if(buffer.size() < read_size + 32)
-            {
-              return false;
-            }
-          if(buffer.size() >= read_size + 32)
-            {
-
-            }
-        }
-      else
-        {
-          Log::net(Log::Critical, "Bee::readBuffer()", "Data corrupted!!");
-        }
+      buffer = data.mid(32, -1);
+      read_size = data.mid(0, 31).toInt();
     }
+  else
+    {
+      buffer.append(data.mid(32, -1));
+    }
+
+  if(buffer.size() < read_size)
+    {
+      return false;
+    }
+
+  decodePacket(buffer.remove(0, read_size - 1));
+  read_size = 0;
 }
 
 bool Bee::isLeaving()
@@ -182,9 +177,20 @@ bool Bee::decodePacket(const QString &data)
     }
 
   QJsonObject packetJson;
+  QString receiverKey = packetJson.value("receiver").toString();
+  if(receiverKey != GlobalData::settings_struct.profile_key_str)
+    {
+      Log::net(Log::Error, "Bee::decodePacket()", "Package delivered to wrong person!");
+      return false;
+    }
   MessageType messageType = (MessageType)packetJson.value("type").toInt();
   switch (messageType) {
     case MessageType::FileContent:
+      {
+
+        break;
+      }
+    case MessageType::FileInfo:
       {
 
         break;
@@ -195,11 +201,6 @@ bool Bee::decodePacket(const QString &data)
         break;
       }
     case MessageType::FileAccept:
-      {
-
-        break;
-      }
-    case MessageType::FileInfo:
       {
 
         break;
