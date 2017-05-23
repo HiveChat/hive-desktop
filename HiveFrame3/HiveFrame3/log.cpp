@@ -1,4 +1,4 @@
-#include "Log.h"
+#include "log.h"
 
 void Log::gui(const Level &level, const QString &function, const QString &str)
 {

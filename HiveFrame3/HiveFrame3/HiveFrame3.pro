@@ -32,13 +32,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp \
-    Hive.cpp \
-    Log.cpp \
-    DataManager.cpp \
-    AppData.cpp
+    hive.cpp \
+    log.cpp \
+    global_variable.cpp \
+    app_data_manager.cpp
 
 HEADERS  += \
-    Hive.h \
-    Log.h \
-    DataManager.h \
-    AppData.h
+    hive.h \
+    log.h \
+    global_variable.h \
+    app_data_manager.h

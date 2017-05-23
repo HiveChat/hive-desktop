@@ -195,7 +195,7 @@ QBoxLayout *ScrollStack::addItem(const QString &text, const QString &string, con
 
   QLabel *string_label = new QLabel(string, this);
 #ifdef Q_OS_WIN
-  string_label->setFont(GlobalData::font_scrollStackSubtitle);
+  string_label->setFont(GlobalData::font_chatTextEditor);
 #endif
   string_label->setWordWrap(wrapping);
   string_label->adjustSize();

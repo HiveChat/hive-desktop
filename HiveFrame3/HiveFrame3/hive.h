@@ -1,8 +1,8 @@
 #ifndef HIVE_H
 #define HIVE_H
 
-#include "Log.h"
-#include "DataManager.h"
+#include "log.h"
+#include "app_data_manager.h"
 
 #include <QApplication>
 #include <QThread>
@@ -22,10 +22,10 @@ protected:
   bool event(QEvent* event);
 
 private:
-  QThread *data_thread;
-  QThread *net_thread;
+  QThread *thread_data;
+  QThread *thread_net;
 
-  DataManager *data_manager;
+  AppDataManager *data_manager;
 
 signals:
 

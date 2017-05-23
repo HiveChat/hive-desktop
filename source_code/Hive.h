@@ -25,7 +25,7 @@ public:
   ~Hive();
 
   GuiCentralWidget *gui_central_widget;
-  DataManager *data_manager;
+  AppDataManager *data_manager;
   NetworkManager *network_manager;
 
   QThread *data_thread;

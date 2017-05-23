@@ -53,7 +53,7 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   QTimer *repaint_timer = new QTimer(this);
   connect(repaint_timer, &QTimer::timeout,
           [this](){
-            this->repaint();
+            this->update();
           });
   repaint_timer->setSingleShot(false);
   repaint_timer->start(200);

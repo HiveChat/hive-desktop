@@ -1,6 +1,6 @@
 #include "DataManager.h"
 
-DataManager::DataManager(QObject *parent) : QObject(parent)
+AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 {
   initVariable();
   checkFiles();
@@ -11,12 +11,12 @@ DataManager::DataManager(QObject *parent) : QObject(parent)
 }
 
 /////////////thread
-DataManager::~DataManager()
+AppDataManager::~AppDataManager()
 {
   qDebug()<<"DataManager destructed";
 }
 
-void DataManager::checkSettings()
+void AppDataManager::checkSettings()
 {
 //  if(written_settings_struct != GlobalData::g_settings_struct)
 //    {
@@ -34,7 +34,7 @@ void DataManager::checkSettings()
     }
 }
 
-QJsonObject DataManager::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
+QJsonObject AppDataManager::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
 {
   QJsonObject profile_json_obj;
   profile_json_obj.insert("usrName", usrProfileStruct.name);
@@ -46,7 +46,7 @@ QJsonObject DataManager::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
   return usr_profile_json_obj;
 }
 
-QJsonDocument DataManager::makeUsrList(QList<QJsonObject> &usr_profile_list)
+QJsonDocument AppDataManager::makeUsrList(QList<QJsonObject> &usr_profile_list)
 {
   QJsonArray usr_list_json_array;
   foreach (QJsonObject json_obj, usr_profile_list)
@@ -59,7 +59,7 @@ QJsonDocument DataManager::makeUsrList(QList<QJsonObject> &usr_profile_list)
   return json_doc;
 }
 
-QJsonDocument DataManager::makeUpdateJson(const int stable[])
+QJsonDocument AppDataManager::makeUpdateJson(const int stable[])
 {
   QJsonObject write_json_obj;
   write_json_obj.insert("stable_version", QJsonValue(stable[0]));
@@ -74,7 +74,7 @@ QJsonDocument DataManager::makeUpdateJson(const int stable[])
 
 ///////////!thread
 
-void DataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
+void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 {
   QString usrKey = usrProfileStruct.key;
   QString ipAddr = usrProfileStruct.ip;
@@ -151,7 +151,7 @@ void DataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 
 }
 
-void DataManager::deleteUsr(const QStringList usrInfoStrList)
+void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 {
   QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -191,7 +191,7 @@ void DataManager::deleteUsr(const QStringList usrInfoStrList)
   file.flush();
 }
 
-void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
+void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
 {
   if(GlobalData::online_usr_data_hash.contains(usrProfileStruct.key))
     {
@@ -230,12 +230,12 @@ void DataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logi
   return;
 }
 
-void DataManager::onUsrLeft(QString *usrKey)
+void AppDataManager::onUsrLeft(QString *usrKey)
 {
 
 }
 
-void DataManager::onMessageCome(const Message::TextMessageStruct &messageStruct, bool fromMe)
+void AppDataManager::onMessageCome(const Message::TextMessageStruct &messageStruct, bool fromMe)
 {
   if(fromMe)
     {
@@ -250,7 +250,7 @@ void DataManager::onMessageCome(const Message::TextMessageStruct &messageStruct,
   emit messageLoaded(messageStruct, fromMe);
 }
 
-void DataManager::onUpdatesAvailable()
+void AppDataManager::onUpdatesAvailable()
 {
   if(GlobalData::update_struct.version[0] == 0
      && GlobalData::update_struct.version[1] == 0
@@ -326,14 +326,14 @@ void DataManager::onUpdatesAvailable()
   emit updatesAvailable();
 }
 
-void DataManager::checkFiles()
+void AppDataManager::checkFiles()
 {
   checkDir(app_data_local_path);
   checkDir(usr_path);
   checkDir(log_path);
 }
 
-void DataManager::loadDefaultGlobalData()
+void AppDataManager::loadDefaultGlobalData()
 {
   makeUsrKey();
   GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
@@ -341,7 +341,7 @@ void DataManager::loadDefaultGlobalData()
 }
 
 
-bool DataManager::checkDir(const QString &directory)
+bool AppDataManager::checkDir(const QString &directory)
 {
   QDir dir(directory);
   if(!dir.exists())
@@ -361,7 +361,7 @@ bool DataManager::checkDir(const QString &directory)
 //  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 //}
 
-QJsonDocument DataManager::makeUsrProfile()
+QJsonDocument AppDataManager::makeUsrProfile()
 {
   loadDefaultGlobalData();
 
@@ -382,7 +382,7 @@ QJsonDocument DataManager::makeUsrProfile()
   return write_json_document;
 }
 
-void DataManager::makeUsrKey()
+void AppDataManager::makeUsrKey()
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -396,7 +396,7 @@ void DataManager::makeUsrKey()
   qDebug()<<GlobalData::settings_struct.profile_key_str;
 }
 
-void DataManager::initVariable()
+void AppDataManager::initVariable()
 {
   //When adding global variable to settings, choose a map with corresponding data type below.
   //When adding map, go to register in loadMySettings() to enable reaing from disk.
@@ -439,7 +439,7 @@ void DataManager::initVariable()
 
 }
 
-void DataManager::loadMySettings()
+void AppDataManager::loadMySettings()
 {
   QFile file(settings_file_path);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -503,7 +503,7 @@ void DataManager::loadMySettings()
   file.close();
 }
 
-void DataManager::loadUsrList()
+void AppDataManager::loadUsrList()
 {
   QFile file(contacts_file_path);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -549,7 +549,7 @@ void DataManager::loadUsrList()
   file.close();
 }
 
-void DataManager::writeCurrentConfig()
+void AppDataManager::writeCurrentConfig()
 {
   qDebug()<<"&DataManager::writeCurrentConfig() invoked";
 
@@ -592,7 +592,7 @@ void DataManager::writeCurrentConfig()
   file.close();
 }
 
-void DataManager::loadFonts()
+void AppDataManager::loadFonts()
 {
 
 #ifdef Q_OS_WIN
@@ -634,7 +634,7 @@ void DataManager::loadFonts()
 
   font_id = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
   font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
-  GlobalData::font_main = QFont(font_family, 10);
+  GlobalData::font_main = QFont(font_family);
   GlobalData::font_chatBubble = GlobalData::font_main;
   GlobalData::font_chatBubble.setPointSize(14);
   GlobalData::font_combWidgetUsrName = GlobalData::font_main;
@@ -652,7 +652,7 @@ void DataManager::loadFonts()
 
 }
 
-void DataManager::loadUpdates()
+void AppDataManager::loadUpdates()
 {
   QFile file(update_file_path);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -695,7 +695,7 @@ void DataManager::loadUpdates()
   file.flush();
 }
 
-void DataManager::loadTimerTasks()
+void AppDataManager::loadTimerTasks()
 {
   QTimer *check_settings_timer = new QTimer(this);
   connect(check_settings_timer, &QTimer::timeout,

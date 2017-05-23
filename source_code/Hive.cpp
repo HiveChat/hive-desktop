@@ -14,7 +14,7 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
   data_thread = new QThread(this);
   data_thread->start();
 
-  data_manager = new DataManager();
+  data_manager = new AppDataManager();
   data_manager->moveToThread(data_thread);
 
   network_thread = new QThread(this);
@@ -30,20 +30,20 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
   qRegisterMetaType<Message::TextMessageStruct> ("Message::TextMessageStruct");
 
-  connect(data_manager, &DataManager::updatesAvailable,
+  connect(data_manager, &AppDataManager::updatesAvailable,
           gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
           Qt::AutoConnection);
 
   connect(network_manager, &NetworkManager::usrEnter,
-          data_manager, &DataManager::onUsrEntered,
+          data_manager, &AppDataManager::onUsrEntered,
           Qt::AutoConnection);
   connect(network_manager, &NetworkManager::updateAvailable,
-          data_manager, &DataManager::onUpdatesAvailable,
+          data_manager, &AppDataManager::onUpdatesAvailable,
           Qt::AutoConnection);
-  connect(data_manager, &DataManager::usrProfileLoaded,
+  connect(data_manager, &AppDataManager::usrProfileLoaded,
           gui_central_widget, &GuiCentralWidget::addUsr,
           Qt::AutoConnection);
-  connect(data_manager, &DataManager::usrProfileChanged,
+  connect(data_manager, &AppDataManager::usrProfileChanged,
           gui_central_widget, &GuiCentralWidget::changeUsr,
           Qt::AutoConnection);
 
@@ -51,9 +51,9 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
           this, &Hive::onTextMessageToSend,
           Qt::AutoConnection);
   connect(network_manager, &NetworkManager::messageRecieved,
-          data_manager, &DataManager::onMessageCome,
+          data_manager, &AppDataManager::onMessageCome,
           Qt::AutoConnection);
-  connect(data_manager, &DataManager::messageLoaded,
+  connect(data_manager, &AppDataManager::messageLoaded,
           gui_central_widget, &GuiCentralWidget::onMessageReceived,
           Qt::AutoConnection);
 

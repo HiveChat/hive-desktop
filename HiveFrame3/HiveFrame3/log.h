@@ -18,6 +18,9 @@ namespace Log
   void net(const Level &level, const QString &function, const QString &str);
   void dat(const Level &level, const QString &function, const QString &str);
 
+
+  void hello();
+
 }
 
 #endif // LOG_H

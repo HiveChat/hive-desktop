@@ -1,16 +1,16 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include "AppData.h"
+#include "global_variable.h"
 
 #include <QDebug>
 #include <QObject>
 
-class DataManager : public QObject
+class AppDataManager : public QObject
 {
   Q_OBJECT
 public:
-  explicit DataManager(QObject *parent = 0);
+  explicit AppDataManager(QObject *parent = 0);
 
   void init();
 

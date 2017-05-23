@@ -22,37 +22,37 @@
 #include <QTime>
 #include <QTimer>
 
-class DataManager : public QObject
+class AppDataManager : public QObject
 {
   Q_OBJECT
 
 public:
-  explicit DataManager(QObject *parent = 0);
-  ~DataManager();
+  explicit AppDataManager(QObject *parent = 0);
+  ~AppDataManager();
 
-  void loadUsrList();
 
 private:
 
   void checkSettings();
-  static bool checkDir(const QString &directory);
+  inline static bool checkDir(const QString &directory);
 
   QJsonDocument makeUsrProfile();
   QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
   QJsonDocument makeUsrList(QList<QJsonObject> &usr_profile_list);
   QJsonDocument makeUpdateJson(const int stable[]);
 
-  void makeUsrKey();
-  void initVariable();
-  void checkFiles();
-  void loadDefaultGlobalData();
-  void loadMySettings();
-  void loadFonts();
-  void loadUpdates();
-  void loadTimerTasks();
+  inline void makeUsrKey();
+  inline void initVariable();
+  inline void checkFiles();
+  inline void loadDefaultGlobalData();
+  inline void loadMySettings();
+  inline void loadUsrList();
+  inline void loadFonts();
+  inline void loadUpdates();
+  inline void loadTimerTasks();
 
-  void updateUsr(const UsrProfileStruct &usrProfileStruct);
-  void deleteUsr(const QStringList usrInfoStrList);
+  inline void updateUsr(const UsrProfileStruct &usrProfileStruct);
+  inline void deleteUsr(const QStringList usrInfoStrList);
 
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   const QString usr_path = app_data_local_path + "/usr/";

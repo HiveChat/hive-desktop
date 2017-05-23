@@ -1,4 +1,4 @@
-#include "Hive.h"
+#include "hive.h"
 
 
 HiveApp::HiveApp(int &argc, char **argv)
@@ -9,9 +9,9 @@ HiveApp::HiveApp(int &argc, char **argv)
   QtMac::setBadgeLabelText("Hi");
 #endif
 
-  data_thread = new QThread(this);
-  data_manager = new DataManager();
-  data_manager->moveToThread(data_thread);
+  thread_net = new QThread(this);
+  data_manager = new AppDataManager();
+  data_manager->moveToThread(thread_net);
 
 
 
