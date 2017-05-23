@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core
+QT	 += gui
 QT	 += network
 #QT       += concurrent
 
@@ -19,7 +20,6 @@ macx{
     QMAKE_LFLAGS += -L/usr/local/lib -luv
 
 }
-
 
 win32{
     RC_FILE = /Src/hive.rc

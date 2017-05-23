@@ -14,10 +14,13 @@ QColor GlobalVar::gui_color_bkg_combScrollArea = Qt::transparent;
 QColor GlobalVar::gui_color_bkg_chatBubbleIn = GUI_COLOR_LIGHT_YELLOW;
 QColor GlobalVar::gui_color_bkg_chatBubbleOut = GUI_COLOR_LIGHT_GREY;
 
-bool GlobalVar::set_notify_update;
-bool GlobalVar::set_notify_message;
-bool GlobalVar::set_notify_message_content;
-bool GlobalVar::set_update_check;
-bool GlobalVar::set_update_auto;
-
-
+bool GlobalVar::set_notify_update = true;
+bool GlobalVar::set_notify_message = true;
+bool GlobalVar::set_notify_message_content = true;
+bool GlobalVar::set_update_check = true;
+bool GlobalVar::set_update_auto = false;
+bool GlobalVar::set_window_width = 900;
+bool GlobalVar::set_window_height = 600;
+bool GlobalVar::set_profile_avatar;
+bool GlobalVar::set_profile_name;
+bool GlobalVar::set_profile_id;

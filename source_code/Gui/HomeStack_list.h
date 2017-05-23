@@ -4,40 +4,40 @@
 #include "Gui/Frameworks/ScrollStack.h"
 #include "GlobalData.h"
 
-class GuiHomeStack_list;
-class GuiListItem;
+class HomeStack_list;
+class ListItem;
 
 
-class GuiListItem : public QWidget
+class ListItem : public QWidget
 {
   Q_OBJECT
 public:
-  explicit GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
-  ~GuiListItem();
+  explicit ListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  ~ListItem();
 
   void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
 
 private:
-  GuiAvatarButton *avatar_button;
+  AvatarButton *avatar_button;
   QLabel *name_label;
   QLabel *ip_label;
 
 };
 
 
-class GuiHomeStack_list : public ScrollStack
+class HomeStack_list : public ScrollStack
 {
   Q_OBJECT
 
 public:
-  explicit GuiHomeStack_list(QWidget *parent);
-  ~GuiHomeStack_list();
+  explicit HomeStack_list(QWidget *parent);
+  ~HomeStack_list();
 
   void addUsr(UsrProfileStruct *usrProfileStruct);
   void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
 
 private:
-  QHash<QString, GuiListItem*> list_item_hash;
+  QHash<QString, ListItem*> list_item_hash;
 };
 
 

@@ -5,11 +5,11 @@
 #include <QCheckBox>
 #include <QPushButton>
 
-class GuiSettingsStack_update : public ScrollStack
+class SettingsStack_update : public ScrollStack
 {
   Q_OBJECT
 public:
-  explicit GuiSettingsStack_update(QWidget *parent = 0);
+  explicit SettingsStack_update(QWidget *parent = 0);
 
 private:
   QLabel *update_available_label;

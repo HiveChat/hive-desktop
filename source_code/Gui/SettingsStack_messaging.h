@@ -7,17 +7,17 @@
 #include <QCheckBox>
 #include <QDir>
 
-class GuiSettingsStack_messaging : public ScrollStack
+class SettingsStack_messaging : public ScrollStack
 {
   Q_OBJECT
 
 public:
-  explicit GuiSettingsStack_messaging(QWidget *parent = 0);
-  ~GuiSettingsStack_messaging();
+  explicit SettingsStack_messaging(QWidget *parent = 0);
+  ~SettingsStack_messaging();
 
 private:
-  GuiColorPicker *in_bubble_picker;
-  GuiColorPicker *out_bubble_picker;
+  ColorPicker *in_bubble_picker;
+  ColorPicker *out_bubble_picker;
 
   QPushButton *clear_btn;
   int make_sure = 0;

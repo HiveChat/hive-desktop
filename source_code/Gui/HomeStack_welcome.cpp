@@ -1,6 +1,6 @@
 #include "HomeStack_welcome.h"
 
-GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
+HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255,255));
@@ -10,7 +10,7 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
   ////profile widget
   profile_widget = new QWidget(this);
 
-  my_avatar = new GuiAvatarButton(GlobalData::settings_struct.profile_avatar_str,175,this);
+  my_avatar = new AvatarButton(GlobalData::settings_struct.profile_avatar_str,175,this);
   my_avatar->setAlignment(Qt::AlignHCenter);
 
   welcome_label = new QLabel(this);
@@ -46,7 +46,7 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
 
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout,
-          this, &GuiHomeStack_welcome::refreshUI);
+          this, &HomeStack_welcome::refreshUI);
   timer->setSingleShot(false);
   timer->start(1000);
 
@@ -61,7 +61,7 @@ GuiHomeStack_welcome::GuiHomeStack_welcome(QWidget *parent) : QWidget(parent)
 
 }
 
-void GuiHomeStack_welcome::paintEvent(QPaintEvent *)
+void HomeStack_welcome::paintEvent(QPaintEvent *)
 {
   if(online)
     {
@@ -94,7 +94,7 @@ void GuiHomeStack_welcome::paintEvent(QPaintEvent *)
     }
 }
 
-void GuiHomeStack_welcome::refreshUI()
+void HomeStack_welcome::refreshUI()
 {
   int current_hour = QTime::currentTime().toString("hh").toInt();
   if(current_hour >= 4 && current_hour <= 12)

@@ -38,11 +38,11 @@ protected:
   void dragMoveEvent(QEvent *event);
 
 private:
-  GuiAvatarButton *avatar;
+  AvatarButton *avatar;
   QLabel *usr_name_label;
   QLabel *ip_addr_label;
   QLabel *status_label;
-  GuiBadgeIcon *badge_icon;
+  BadgeIcon *badge_icon;
   QVBoxLayout *usr_info_layout;
   QHBoxLayout *net_status_layout;
   QHBoxLayout *main_layout;

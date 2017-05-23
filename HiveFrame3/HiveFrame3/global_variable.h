@@ -31,6 +31,13 @@ public:
   static bool set_notify_message_content;
   static bool set_update_check;
   static bool set_update_auto;
+  static bool set_window_width;
+  static bool set_window_height;
+  static bool set_profile_avatar;
+  static bool set_profile_name;
+  static bool set_profile_id;
+
+
 
 };
 
@@ -38,20 +45,4 @@ public:
 
 
 
-struct SettingsStruct
-{
-  bool modified_lock;
 
-  int window_width;
-  int window_height;
-
-  QColor chat_bubble_color_i;
-  QColor chat_bubble_color_o;
-
-  QString profile_avatar_str;
-  QString profile_name_str;
-  QString profile_key_str;
-
-  Notification notification;
-  Update update;
-};

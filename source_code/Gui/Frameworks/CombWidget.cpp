@@ -4,7 +4,7 @@
 
 CombWidget::CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
   : QWidget(parent)
-  , avatar(new GuiAvatarButton(80,  this))
+  , avatar(new AvatarButton(80,  this))
   , usr_name_label(new QLabel(this))
   , ip_addr_label(new QLabel(this))
   , status_label(new QLabel(this))
@@ -36,7 +36,7 @@ CombWidget::CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
   usr_info_layout->addWidget(usr_name_label);
   usr_info_layout->addLayout(net_status_layout);
 
-  badge_icon = new GuiBadgeIcon(14, this);
+  badge_icon = new BadgeIcon(14, this);
   badge_icon->setNumber(0);
 
 

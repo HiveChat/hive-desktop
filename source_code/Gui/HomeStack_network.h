@@ -3,10 +3,10 @@
 
 #include "Gui/Frameworks/ScrollStack.h"
 
-class GuiHomeStack_network : public ScrollStack
+class HomeStack_network : public ScrollStack
 {
 public:
-  GuiHomeStack_network(QWidget *parent);
+  HomeStack_network(QWidget *parent);
 };
 
 #endif // GUIHOMESTACK_NETWORK_H

@@ -24,14 +24,14 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
   network_manager->moveToThread(network_thread);
 
   //QObject not compatible to QWidget para, delete obj manually
-  gui_central_widget = new GuiCentralWidget();
+  gui_central_widget = new CentralWidget();
 
   ////connect
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
   qRegisterMetaType<Message::TextMessageStruct> ("Message::TextMessageStruct");
 
   connect(data_manager, &AppDataManager::updatesAvailable,
-          gui_central_widget, &GuiCentralWidget::onUpdateAvailable,
+          gui_central_widget, &CentralWidget::onUpdateAvailable,
           Qt::AutoConnection);
 
   connect(network_manager, &NetworkManager::usrEnter,
@@ -41,10 +41,10 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
           data_manager, &AppDataManager::onUpdatesAvailable,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::usrProfileLoaded,
-          gui_central_widget, &GuiCentralWidget::addUsr,
+          gui_central_widget, &CentralWidget::addUsr,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::usrProfileChanged,
-          gui_central_widget, &GuiCentralWidget::changeUsr,
+          gui_central_widget, &CentralWidget::changeUsr,
           Qt::AutoConnection);
 
   connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
@@ -54,7 +54,7 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
           data_manager, &AppDataManager::onMessageCome,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::messageLoaded,
-          gui_central_widget, &GuiCentralWidget::onMessageReceived,
+          gui_central_widget, &CentralWidget::onMessageReceived,
           Qt::AutoConnection);
 
 #ifdef Q_OS_OSX

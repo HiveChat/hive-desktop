@@ -1,7 +1,7 @@
 #include "BadgeIcon.h"
 #include <QDebug>
 
-GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent)
+BadgeIcon::BadgeIcon(const int &dia, QWidget *parent)
   : QWidget(parent)
   , height(dia)
   , rectangle(QRect(18, 10, dia, dia))
@@ -9,12 +9,12 @@ GuiBadgeIcon::GuiBadgeIcon(const int &dia, QWidget *parent)
   this->setHidden(true);
 }
 
-void GuiBadgeIcon::setNumber(const int &num)
+void BadgeIcon::setNumber(const int &num)
 {
   number = num;
 }
 
-void GuiBadgeIcon::paintEvent(QPaintEvent *)
+void BadgeIcon::paintEvent(QPaintEvent *)
 {
   if(number == 0)
     {

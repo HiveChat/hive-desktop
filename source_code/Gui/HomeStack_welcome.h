@@ -11,12 +11,12 @@
 #include <QTime>
 #include <QDebug>
 
-class GuiHomeStack_welcome : public QWidget
+class HomeStack_welcome : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiHomeStack_welcome(QWidget *parent = 0);
+  explicit HomeStack_welcome(QWidget *parent = 0);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -32,7 +32,7 @@ private:
   QLabel *host_name_label;
   QLabel *background_label;
 
-  GuiAvatarButton *my_avatar;
+  AvatarButton *my_avatar;
 
   QColor blur_color;
 

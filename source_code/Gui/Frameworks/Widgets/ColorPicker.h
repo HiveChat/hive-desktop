@@ -7,13 +7,13 @@
 #include <QColorDialog>
 #include "GlobalData.h"
 
-class GuiColorPicker : public QWidget
+class ColorPicker : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiColorPicker(QColor *color, QWidget *parent = 0);
-  ~GuiColorPicker();
+  explicit ColorPicker(QColor *color, QWidget *parent = 0);
+  ~ColorPicker();
 
   QColor color();
 

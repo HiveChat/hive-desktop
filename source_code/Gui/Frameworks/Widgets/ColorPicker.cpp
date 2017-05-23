@@ -1,7 +1,7 @@
 #include "ColorPicker.h"
 #include "GlobalData.h"
 
-GuiColorPicker::GuiColorPicker(QColor *color, QWidget *parent)
+ColorPicker::ColorPicker(QColor *color, QWidget *parent)
   : QWidget(parent)
   , my_color(color)
   , rectangle(QRect(1, 1, 18, 18))
@@ -9,17 +9,17 @@ GuiColorPicker::GuiColorPicker(QColor *color, QWidget *parent)
   this->setFixedSize(20,20);
 }
 
-GuiColorPicker::~GuiColorPicker()
+ColorPicker::~ColorPicker()
 {
 
 }
 
-QColor GuiColorPicker::color()
+QColor ColorPicker::color()
 {
   return *my_color;
 }
 
-void GuiColorPicker::paintEvent(QPaintEvent *)
+void ColorPicker::paintEvent(QPaintEvent *)
 {
   QPainter paint;
   paint.begin(this);
@@ -30,7 +30,7 @@ void GuiColorPicker::paintEvent(QPaintEvent *)
   paint.end();
 }
 
-void GuiColorPicker::mouseReleaseEvent(QMouseEvent *ev)
+void ColorPicker::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
     {

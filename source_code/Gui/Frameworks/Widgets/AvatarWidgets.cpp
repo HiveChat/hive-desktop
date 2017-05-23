@@ -1,7 +1,7 @@
 #include "AvatarWidgets.h"
 
 
-GuiAvatarButton::GuiAvatarButton(const QString path, const int Diameter, QWidget *parent)
+AvatarButton::AvatarButton(const QString path, const int Diameter, QWidget *parent)
 {
   diameter = Diameter;
   setAvatar(path);
@@ -9,13 +9,13 @@ GuiAvatarButton::GuiAvatarButton(const QString path, const int Diameter, QWidget
   this->setParent(parent);
 }
 
-GuiAvatarButton::GuiAvatarButton(const int Diameter, QWidget *parent)
+AvatarButton::AvatarButton(const int Diameter, QWidget *parent)
 {
   diameter = Diameter;
   this->setParent(parent);
 }
 
-void GuiAvatarButton::setAvatar(const QString &path)
+void AvatarButton::setAvatar(const QString &path)
 {
   QBitmap mask(QSize(diameter,diameter));
   QPainter painter(&mask);
@@ -38,19 +38,19 @@ void GuiAvatarButton::setAvatar(const QString &path)
 
 ////////////events
 
-void GuiAvatarButton::mouseReleaseEvent(QMouseEvent *ev)
+void AvatarButton::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
   emit clicked();
 }
 
-void GuiAvatarButton::enterEvent(QEvent *)
+void AvatarButton::enterEvent(QEvent *)
 {
   //setState1();
   //emit entered();
 }
 
-void GuiAvatarButton::leaveEvent(QEvent *)
+void AvatarButton::leaveEvent(QEvent *)
 {
   //setState0();
   //emit left();

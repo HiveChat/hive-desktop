@@ -1,9 +1,9 @@
 #include "HomeStack_list.h"
 #include <QDebug>
 
-GuiListItem::GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
+ListItem::ListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
-  avatar_button = new GuiAvatarButton(":/avatar/avatar/default.png", 90, this);
+  avatar_button = new AvatarButton(":/avatar/avatar/default.png", 90, this);
   name_label = new QLabel("Loading...", this);
   ip_label = new QLabel("Loading...", this);
 
@@ -19,12 +19,12 @@ GuiListItem::GuiListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent) : 
   refreshUsrProfile(usrProfileStruct);
 }
 
-GuiListItem::~GuiListItem()
+ListItem::~ListItem()
 {
 
 }
 
-void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+void ListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
   avatar_button->setAvatar(usrProfileStruct->avatar);
   name_label->setText(usrProfileStruct->name);
@@ -34,7 +34,7 @@ void GuiListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 
 ////////////////////////////////////////////////////////////////////////
 
-GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
+HomeStack_list::HomeStack_list(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -46,19 +46,19 @@ GuiHomeStack_list::GuiHomeStack_list(QWidget *parent)
   this->setParent(parent);
 }
 
-GuiHomeStack_list::~GuiHomeStack_list()
+HomeStack_list::~HomeStack_list()
 {
 
 }
 
-void GuiHomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
+void HomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
 {
-  GuiListItem *list_item = new GuiListItem(usrProfileStruct, this);
+  ListItem *list_item = new ListItem(usrProfileStruct, this);
   list_item_hash.insert(usrProfileStruct->key, list_item);
   central_layout->addWidget(list_item);
 }
 
-void GuiHomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+void HomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
 {
   list_item_hash.value(usrProfileStruct->key)->refreshUsrProfile(usrProfileStruct);
 }

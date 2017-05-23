@@ -75,7 +75,7 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
   top_frame->setAutoFillBackground(true);
   top_frame->setFixedHeight(69);
 
-  icon_btn = new GuiAvatarButton(90, this);
+  icon_btn = new AvatarButton(90, this);
   icon_btn->setAlignment(Qt::AlignLeft);
 
   top_frame_main_layout = new QHBoxLayout(top_frame);

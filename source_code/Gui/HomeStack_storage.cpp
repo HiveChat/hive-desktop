@@ -1,6 +1,6 @@
 #include "HomeStack_storage.h"
 
-GuiHomeStack_storage::GuiHomeStack_storage(QWidget *parent)
+HomeStack_storage::HomeStack_storage(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
   this->setIcon(":/img/img/storage.png");

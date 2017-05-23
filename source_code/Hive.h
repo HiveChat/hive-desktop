@@ -24,7 +24,7 @@ public:
   Hive(int &argc, char **argv);
   ~Hive();
 
-  GuiCentralWidget *gui_central_widget;
+  CentralWidget *gui_central_widget;
   AppDataManager *data_manager;
   NetworkManager *network_manager;
 

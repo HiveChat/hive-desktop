@@ -1,6 +1,6 @@
 #include "SettingsStack_messaging.h"
 
-GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
+SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -9,9 +9,9 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
   setSubTitle("messaging");
 
   addTag("Text Bubble");
-  in_bubble_picker = new GuiColorPicker(&GlobalData::settings_struct.chat_bubble_color_i, this);
+  in_bubble_picker = new ColorPicker(&GlobalData::settings_struct.chat_bubble_color_i, this);
   addItem("\tReceived message bubble colour:", in_bubble_picker);
-  out_bubble_picker = new GuiColorPicker(&GlobalData::settings_struct.chat_bubble_color_o, this);
+  out_bubble_picker = new ColorPicker(&GlobalData::settings_struct.chat_bubble_color_o, this);
   addItem("\tSent message bubble colour:       ", out_bubble_picker);
   QPushButton *push_btn = new QPushButton("reset", this);
   push_btn->setMaximumWidth(70);
@@ -87,7 +87,7 @@ GuiSettingsStack_messaging::GuiSettingsStack_messaging(QWidget *parent)
   this->setParent(parent);
 }
 
-GuiSettingsStack_messaging::~GuiSettingsStack_messaging()
+SettingsStack_messaging::~SettingsStack_messaging()
 {
 
 }

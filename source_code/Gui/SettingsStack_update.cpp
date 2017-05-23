@@ -1,6 +1,6 @@
 #include "SettingsStack_update.h"
 
-GuiSettingsStack_update::GuiSettingsStack_update(QWidget *parent)
+SettingsStack_update::SettingsStack_update(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 

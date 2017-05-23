@@ -47,7 +47,7 @@ protected:
   QString sub_title_qstr = "";
   LayoutStyle layout_style = LayoutStyle::Linear;
 
-  GuiAvatarButton *icon_btn;
+  AvatarButton *icon_btn;
   QLabel *composite_title_label;
   QLabel *title_label;
   QLabel *sub_title_label;

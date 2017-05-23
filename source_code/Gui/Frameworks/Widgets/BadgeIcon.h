@@ -5,11 +5,11 @@
 #include <QPainter>
 
 
-class GuiBadgeIcon : public QWidget
+class BadgeIcon : public QWidget
 {
   Q_OBJECT
 public:
-  explicit GuiBadgeIcon(const int &dia,QWidget *parent = 0);
+  explicit BadgeIcon(const int &dia,QWidget *parent = 0);
 
   void setNumber(const int &number);
 

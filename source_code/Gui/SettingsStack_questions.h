@@ -4,13 +4,13 @@
 #include "Gui/Frameworks/ScrollStack.h"
 #include "GlobalData.h"
 
-class GuiSettingsStack_questions : public ScrollStack
+class SettingsStack_questions : public ScrollStack
 {
   Q_OBJECT
 
 public:
-  explicit GuiSettingsStack_questions(QWidget *parent = 0);
-  ~GuiSettingsStack_questions();
+  explicit SettingsStack_questions(QWidget *parent = 0);
+  ~SettingsStack_questions();
 
 };
 

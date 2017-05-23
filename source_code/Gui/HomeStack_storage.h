@@ -3,12 +3,12 @@
 
 #include "Gui/Frameworks/ScrollStack.h"
 
-class GuiHomeStack_storage : public ScrollStack
+class HomeStack_storage : public ScrollStack
 {
 //  Q_OBJECT
 
 public:
-  GuiHomeStack_storage(QWidget *parent);
+  HomeStack_storage(QWidget *parent);
 };
 
 #endif // GUIHOMESTACK_STORAGE_H

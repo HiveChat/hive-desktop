@@ -17,13 +17,13 @@
 
 
 
-class GuiAvatarButton : public QLabel
+class AvatarButton : public QLabel
 {
   Q_OBJECT
 
 public:
-  GuiAvatarButton(const QString path, const int Diameter, QWidget *parent);
-  GuiAvatarButton(const int Diameter, QWidget *parent);
+  AvatarButton(const QString path, const int Diameter, QWidget *parent);
+  AvatarButton(const int Diameter, QWidget *parent);
 
   void setAvatar(const QString &path);
 

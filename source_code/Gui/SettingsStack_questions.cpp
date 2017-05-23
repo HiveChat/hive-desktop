@@ -1,7 +1,7 @@
 #include "SettingsStack_questions.h"
 
 
-GuiSettingsStack_questions::GuiSettingsStack_questions(QWidget *parent)
+SettingsStack_questions::SettingsStack_questions(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -22,7 +22,7 @@ GuiSettingsStack_questions::GuiSettingsStack_questions(QWidget *parent)
   this->setParent(parent);
 }
 
-GuiSettingsStack_questions::~GuiSettingsStack_questions()
+SettingsStack_questions::~SettingsStack_questions()
 {
 
 }

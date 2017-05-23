@@ -11,13 +11,13 @@
 #include <QLineEdit>
 
 
-class GuiSettingsStack_profile : public ScrollStack
+class SettingsStack_profile : public ScrollStack
 {
   Q_OBJECT
 
 public:
-  explicit GuiSettingsStack_profile(QWidget *parent = 0);
-  ~GuiSettingsStack_profile();
+  explicit SettingsStack_profile(QWidget *parent = 0);
+  ~SettingsStack_profile();
 
 private:
   QHash<QString , QString> avatar_hash;

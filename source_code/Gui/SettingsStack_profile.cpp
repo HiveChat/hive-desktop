@@ -1,6 +1,6 @@
 #include "SettingsStack_profile.h"
 
-GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
+SettingsStack_profile::SettingsStack_profile(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -56,12 +56,12 @@ GuiSettingsStack_profile::GuiSettingsStack_profile(QWidget *parent)
   connect(avatar_option_group, SIGNAL(buttonClicked(QAbstractButton*)),
           this, SLOT(onRadioClicked(QAbstractButton*)));
   connect(usr_name_line_edit, &QLineEdit::textEdited,
-          this, &GuiSettingsStack_profile::onUsrNameChanged);
+          this, &SettingsStack_profile::onUsrNameChanged);
 
   this->setParent(parent);
 }
 
-GuiSettingsStack_profile::~GuiSettingsStack_profile()
+SettingsStack_profile::~SettingsStack_profile()
 {
   foreach (QRadioButton *object, avatar_radio_btn_list)
     {
@@ -69,14 +69,14 @@ GuiSettingsStack_profile::~GuiSettingsStack_profile()
     }
 }
 
-void GuiSettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
+void SettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
   GlobalData::settings_struct.profile_avatar_str = avatar_hash.value(abstractButton->text());
   avatar_composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
   GlobalData::settings_struct.modified_lock = true;
 }
 
-void GuiSettingsStack_profile::onUsrNameChanged(QString usr_name)
+void SettingsStack_profile::onUsrNameChanged(QString usr_name)
 {
   GlobalData::settings_struct.profile_name_str = usr_name;
   GlobalData::settings_struct.modified_lock = true;
