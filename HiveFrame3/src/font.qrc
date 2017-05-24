@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/font">
+        <file>font/Futura.ttc</file>
+        <file>font/GillSans.ttc</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,51 @@
+<RCC>
+    <qresource prefix="/img">
+        <file>img/icon.png</file>
+        <file>img/expression_label_0.png</file>
+        <file>img/expression_label_1.png</file>
+        <file>img/file_label_0.png</file>
+        <file>img/file_label_1.png</file>
+        <file>img/image_label_0.png</file>
+        <file>img/image_label_1.png</file>
+        <file>img/chat_tab.png</file>
+        <file>img/home_tab.png</file>
+        <file>img/send_button_0.png</file>
+        <file>img/send_button_1.png</file>
+        <file>img/welcome_stack_background.png</file>
+        <file>img/settings_tab.png</file>
+        <file>img/welcome_0.png</file>
+        <file>img/storage_0.png</file>
+        <file>img/storage_1.png</file>
+        <file>img/messaging_0.png</file>
+        <file>img/messaging_1.png</file>
+        <file>img/profile_0.png</file>
+        <file>img/profile_1.png</file>
+        <file>img/style_0.png</file>
+        <file>img/style_1.png</file>
+        <file>img/storage.png</file>
+        <file>img/messaging.png</file>
+        <file>img/welcome_1.png</file>
+        <file>img/profile.png</file>
+        <file>img/question_0.png</file>
+        <file>img/question_1.png</file>
+        <file>img/question.png</file>
+        <file>img/list_0.png</file>
+        <file>img/list_1.png</file>
+        <file>img/list.png</file>
+        <file>img/corner_honey.png</file>
+        <file>img/tray_0.png</file>
+        <file>img/update_0.png</file>
+        <file>img/update_1.png</file>
+        <file>img/update.png</file>
+    </qresource>
+    <qresource prefix="/avatar">
+        <file>avatar/bee.png</file>
+        <file>avatar/ladybug.png</file>
+        <file>avatar/sunflower.png</file>
+        <file>avatar/worm.png</file>
+        <file>avatar/disk.png</file>
+        <file>avatar/fat.png</file>
+        <file>avatar/default.png</file>
+        <file>avatar/spider.png</file>
+    </qresource>
+</RCC>

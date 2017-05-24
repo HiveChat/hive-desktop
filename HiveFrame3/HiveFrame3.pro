@@ -6,15 +6,21 @@
 
 CONFIG   += c++14
 
-QT       += core gui network widgets
+QT       += core
+QT	 += gui
+QT	 += network
 
 macx{
     QT   += macextras
 
-    LIBS += -L /usr/local/lib/
     INCLUDEPATH += /usr/local/include/
+    QMAKE_LFLAGS += -L/usr/local/lib -luv
+
 }
 
+win32{
+    RC_FILE = /Src/hive.rc
+}
 
 TARGET = Hive!
 TEMPLATE = app
@@ -34,11 +40,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     hive.cpp \
     log.cpp \
-    global_variable.cpp \
-    app_data_manager.cpp
+    app_data_manager.cpp \
+    global_var.cpp
 
 HEADERS  += \
     hive.h \
     log.h \
-    global_variable.h \
-    app_data_manager.h
+    app_data_manager.h \
+    global_var.h
+
+RESOURCES += \
+    src/qss.qrc \
+    src/img.qrc \
+    src/font.qrc
+
+ICON = src/hive.icns
+

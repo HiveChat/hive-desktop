@@ -1,7 +1,7 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include "global_variable.h"
+#include "global_var.h"
 
 #include <QDebug>
 #include <QObject>
