@@ -8,6 +8,7 @@ CONFIG   += c++14
 
 QT       += core
 QT	 += gui
+QT	 += widgets
 QT	 += network
 
 macx{

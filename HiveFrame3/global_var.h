@@ -1,7 +1,9 @@
 #ifndef APPDATA_H
 #define APPDATA_H
 
+
 #include <QFont>
+#include <QColor>
 
 #define GUI_COLOR_DARK_GREY QColor(100,100,100)
 #define GUI_COLOR_LIGHT_GREY QColor(225,225,225)
