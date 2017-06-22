@@ -23,6 +23,7 @@ class UvTcpServer : public QThread
   Q_OBJECT
 public:
   explicit UvTcpServer(QObject *parent = 0);
+  ~UvTcpServer();
 
 protected:
   void run();

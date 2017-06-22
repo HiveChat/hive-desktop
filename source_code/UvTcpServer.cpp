@@ -10,6 +10,12 @@ UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
 
 }
 
+UvTcpServer::~UvTcpServer()
+{
+  uv_loop_close(loop);
+  qDebug()<<"uv loop closed";
+}
+
 void
 UvTcpServer::run()
 {
@@ -44,6 +50,9 @@ UvTcpServer::onNewConnection(uv_stream_t *server, int status)
       return;
     }
 
+  int socketDiscriptor = getSocketDescriptor(server);
+  Log::net(Log::Normal, "UvTcpServer::onNewConnection()", "Socket discriptor: " + QString::number(socketDiscriptor));
+
   uv_tcp_t *client = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
   uv_tcp_init(loop, client);
   if (uv_accept(server, (uv_stream_t*)client) == 0)
@@ -63,11 +72,13 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
     {
       int socketDiscriptor = getSocketDescriptor(client);
 
+      Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Socket discriptor: " + QString::number(socketDiscriptor));
+
+
 //      if(connection_hash.contains(socketDiscriptor))
 //        {
 //          QByteArray *array = &buffer_hash.value(socketDiscriptor);
 //          array->append(buf->base, nread);
-
 
 //        }
 //      QString data(buf->base, nread);
@@ -86,8 +97,11 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
         {
           fprintf(stderr, "Read error %s\n", uv_err_name(nread));
         }
-      uv_close((uv_handle_t*)client, NULL);
-  }
+      int socketDiscriptor = getSocketDescriptor(client);
+      Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Disconnected from discriptor: " + QString::number(socketDiscriptor));
+
+      uv_close((uv_handle_t*)client, NULL); // NULL is a close callback
+    }
 
   free(buf->base);
 }
@@ -134,16 +148,16 @@ Bee::Bee(const int &socketDiscriptor)
 {
 }
 
-bool Bee::readBuffer(const QString &data)
+bool Bee::readBuffer(const QString &data) //recursion decode here!!!!
 {
   if(read_size == 0)
     {
-      buffer = data.mid(32, -1);
       read_size = data.mid(0, 31).toInt();
+      buffer = data.mid(32, -1);
     }
   else
     {
-      buffer.append(data.mid(32, -1));
+      buffer.append(data);
     }
 
   if(buffer.size() < read_size)
@@ -151,8 +165,30 @@ bool Bee::readBuffer(const QString &data)
       return false;
     }
 
-  decodePacket(buffer.remove(0, read_size - 1));
+  if(!decodePacket(buffer.remove(0, read_size - 1)))
+    {
+      read_size = 0;
+      Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
+
+      return false;
+    }
   read_size = 0;
+
+  if(buffer.size() > 0)
+    {
+      if(buffer.count() >= 32)
+        {
+          read_size
+        }
+
+      return true;
+    }
+
+    {
+      decodePacket(buffer.remove(0, read_size - 1));
+      read_size = 0;
+
+    }
 }
 
 bool Bee::isLeaving()

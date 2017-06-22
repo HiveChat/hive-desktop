@@ -29,6 +29,7 @@ NetworkManager::~NetworkManager()
       uv_tcp_server->terminate();
       uv_tcp_server->wait();
     }
+
   udpSendUsrLeave();
   qDebug()<<"NetworkManager destructed";
 }

@@ -64,6 +64,7 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
 
 Hive::~Hive()
 {
+  Log::gui(Log::Normal, "Hive::~Hive()", "Destroying App");
 #ifdef Q_OS_OSX
 
   QtMac::setBadgeLabelText("Bye");
@@ -78,17 +79,22 @@ Hive::~Hive()
 
   if(!network_thread->wait(500))
     {
+      Log::gui(Log::Error, "Hive::~Hive()", "Network thread is terminated due to timeout.");
       network_thread->terminate();
       network_thread->wait();
     }
   if(!data_thread->wait(500))
     {
+      Log::gui(Log::Error, "Hive::~Hive()", "Data thread is terminated due to timeout.");
       data_thread->terminate();
       data_thread->wait();
     }
 
   network_manager->deleteLater();
   data_manager->deleteLater();
+
+  Log::gui(Log::Normal, "Hive::~Hive()", "Destroyed App");
+
 }
 
 
