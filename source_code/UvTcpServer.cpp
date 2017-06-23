@@ -82,7 +82,7 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 
 //        }
 //      QString data(buf->base, nread);
-//      int readSize = QString::number(data.remove(0, 32));
+//      int readSize = QString::number(data.remove(0, 16));
 
 
 
@@ -150,45 +150,47 @@ Bee::Bee(const int &socketDiscriptor)
 
 bool Bee::readBuffer(const QString &data) //recursion decode here!!!!
 {
+  buffer.append(data);
+
+  //if size header is 0
   if(read_size == 0)
     {
-      read_size = data.mid(0, 31).toInt();
-      buffer = data.mid(32, -1);
-    }
-  else
-    {
-      buffer.append(data);
+      //if 16 digit size header is not complete, return
+      if(buffer.size() < 16)
+        {
+          return false;
+        }
+      else
+        {
+          read_size = buffer.mid(0, 16).toInt();
+        }
     }
 
+  //if data is not complete, return
   if(buffer.size() < read_size)
     {
       return false;
     }
-
-  if(!decodePacket(buffer.remove(0, read_size - 1)))
+  else //else read
     {
+      QString packet = buffer.mid(0, read_size);
+      buffer.remove(0, read_size);
       read_size = 0;
-      Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
 
-      return false;
-    }
-  read_size = 0;
-
-  if(buffer.size() > 0)
-    {
-      if(buffer.count() >= 32)
+      if(!decodePacket(packet))
         {
-          read_size
+          Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
+
+          return false;
         }
 
-      return true;
-    }
-
-    {
-      decodePacket(buffer.remove(0, read_size - 1));
-      read_size = 0;
 
     }
+
+  return true;
+
+
+
 }
 
 bool Bee::isLeaving()
