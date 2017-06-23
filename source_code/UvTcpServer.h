@@ -21,6 +21,13 @@ class Bee;
 class UvTcpServer : public QThread
 {
   Q_OBJECT
+
+  typedef int SocketDescriptor;
+  typedef struct {
+    uv_write_t req;
+    uv_buf_t buf;
+  } write_req_t;
+
 public:
   explicit UvTcpServer(QObject *parent = 0);
   ~UvTcpServer();
@@ -33,8 +40,8 @@ private:
   static uv_loop_t *loop;
   static struct sockaddr_in addr;
 
-  static QHash<int, QByteArray> buffer_hash;
-  static QHash<int, UsrData*> connection_hash;
+  static QHash<SocketDescriptor, Bee*> bee_hash;
+  static QHash<SocketDescriptor, UsrData*> usr_data_hash;
 
   inline static void onNewConnection(uv_stream_t *server, int status);
   inline static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
@@ -44,10 +51,6 @@ private:
 
   inline static int getSocketDescriptor(uv_stream_t *client);
 
-  typedef struct {
-    uv_write_t req;
-    uv_buf_t buf;
-  } write_req_t;
 };
 
 

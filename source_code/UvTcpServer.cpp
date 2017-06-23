@@ -4,6 +4,9 @@
 HiveProtocol* UvTcpServer::hive_protocol = new HiveProtocol();
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
+QHash<UvTcpServer::SocketDescriptor, Bee*> UvTcpServer::bee_hash;
+QHash<UvTcpServer::SocketDescriptor, UsrData*> UvTcpServer::usr_data_hash;
+
 
 UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
 {
@@ -50,9 +53,6 @@ UvTcpServer::onNewConnection(uv_stream_t *server, int status)
       return;
     }
 
-  int socketDiscriptor = getSocketDescriptor(server);
-  Log::net(Log::Normal, "UvTcpServer::onNewConnection()", "Socket discriptor: " + QString::number(socketDiscriptor));
-
   uv_tcp_t *client = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
   uv_tcp_init(loop, client);
   if (uv_accept(server, (uv_stream_t*)client) == 0)
@@ -70,7 +70,13 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 {
   if (nread > 0)
     {
-      int socketDiscriptor = getSocketDescriptor(client);
+      SocketDescriptor socketDiscriptor = getSocketDescriptor(client);
+
+      Bee *bee = new Bee(socketDiscriptor); ///We should pass *client to Bee, not fd. bacause Bee should have member functions caalled read and write.
+      bee_hash.insert(socketDiscriptor, bee);
+
+      uv_buf_t buffer = uv_buf_init(buf->base, nread);
+      bee->readBuffer(QString::fromUtf8(buffer.base, buffer.len));
 
       Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Socket discriptor: " + QString::number(socketDiscriptor));
 
@@ -183,14 +189,10 @@ bool Bee::readBuffer(const QString &data) //recursion decode here!!!!
 
           return false;
         }
-
-
     }
 
-  return true;
 
-
-
+  return readBuffer("");
 }
 
 bool Bee::isLeaving()
