@@ -1,5 +1,5 @@
 # Hive!
-> Please go to the [official website](https://hivechat.org)!
+> Please visit [https://hivechat.org](https://hivechat.org) to lean more about Hive!
 
 * Hive! is a LAN chat software. This is a free software.
 * Hive is written by Qt C++ (without QML).
@@ -16,9 +16,8 @@
 
 
 ## Download:
-* This programme is NOT finished yet.
-* But there are some pre-releases, whose functions might be incomplete.
-* Download now: http://hivechat.org
+* Hive is still in stage alpha, and some functions might not work properly in the latest commits, so please go to releases to download the executives or codes. 
+* Downloads: [Official Website](https://hivechat.org) 
 
 ## Features:
 1. Clean & cute user interface
