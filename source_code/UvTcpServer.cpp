@@ -55,6 +55,8 @@ UvTcpServer::onNewConnection(uv_stream_t *server, int status)
 
   uv_tcp_t *client = (uv_tcp_t*)malloc(sizeof(uv_tcp_t));
   uv_tcp_init(loop, client);
+
+
   if (uv_accept(server, (uv_stream_t*)client) == 0)
     {
       uv_read_start((uv_stream_t*)client, allocBuffer, tcpRead);
@@ -71,26 +73,21 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
   if (nread > 0)
     {
       SocketDescriptor socketDiscriptor = getSocketDescriptor(client);
-
-      Bee *bee = new Bee(socketDiscriptor); ///We should pass *client to Bee, not fd. bacause Bee should have member functions caalled read and write.
-      bee_hash.insert(socketDiscriptor, bee);
-
-      uv_buf_t buffer = uv_buf_init(buf->base, nread);
-      bee->readBuffer(QString::fromUtf8(buffer.base, buffer.len));
+      Bee *bee;
+      if(bee_hash.contains(socketDiscriptor))
+        {
+          bee = bee_hash.value(socketDiscriptor);
+        }
+      else
+        {
+          bee = new Bee(client, socketDiscriptor);
+          bee_hash.insert(socketDiscriptor, bee);
+        }
 
       Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Socket discriptor: " + QString::number(socketDiscriptor));
 
-
-//      if(connection_hash.contains(socketDiscriptor))
-//        {
-//          QByteArray *array = &buffer_hash.value(socketDiscriptor);
-//          array->append(buf->base, nread);
-
-//        }
-//      QString data(buf->base, nread);
-//      int readSize = QString::number(data.remove(0, 16));
-
-
+      uv_buf_t buffer = uv_buf_init(buf->base, nread);
+      bee->read(QString::fromUtf8(buffer.base, buffer.len));
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       req->buf = uv_buf_init(buf->base, nread);
@@ -149,12 +146,13 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 
 
 
-Bee::Bee(const int &socketDiscriptor)
-  : socket_descriptor(socketDiscriptor)
+Bee::Bee(uv_stream_t *tcpHandle, const int &fd)
+  : tcp_handle(tcpHandle)
+  , socket_descriptor(fd)
 {
 }
 
-bool Bee::readBuffer(const QString &data) //recursion decode here!!!!
+bool Bee::read(const QString &data) //recursion decode
 {
   buffer.append(data);
 
@@ -192,7 +190,12 @@ bool Bee::readBuffer(const QString &data) //recursion decode here!!!!
     }
 
 
-  return readBuffer("");
+  return read("");
+}
+
+bool Bee::write(const QString &data)
+{
+
 }
 
 bool Bee::isLeaving()

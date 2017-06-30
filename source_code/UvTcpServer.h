@@ -57,9 +57,10 @@ private:
 class Bee
 {
 public:
-  explicit Bee(const int &socketDiscriptor);
+  explicit Bee(uv_stream_t *tcpHandle, const int &fd);
 
-  bool readBuffer(const QString &data);
+  bool read(const QString &data);
+  bool write(const QString & data);
 
   bool isLeaving();
   bool isIdentified();
@@ -74,6 +75,7 @@ private:
   };
 
   int socket_descriptor;
+  uv_stream_t *tcp_handle;
   UsrData *usr_data = nullptr;
   QString buffer;
   int read_size = 0;
