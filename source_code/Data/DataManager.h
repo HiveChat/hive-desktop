@@ -21,6 +21,7 @@
 #include <QHostInfo>
 #include <QTime>
 #include <QTimer>
+#include <QUuid>
 
 class AppDataManager : public QObject
 {
@@ -36,12 +37,12 @@ private:
   void checkSettings();
   inline static bool checkDir(const QString &directory);
 
-  QJsonDocument makeUsrProfile();
-  QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
-  QJsonDocument makeUsrList(QList<QJsonObject> &usr_profile_list);
-  QJsonDocument makeUpdateJson(const int stable[]);
+  inline QJsonDocument makeUsrProfile();
+  inline QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
+  inline QJsonDocument makeUsrList(QList<QJsonObject> &usr_profile_list);
+  inline QJsonDocument makeUpdateJson(const int stable[]);
+  inline QString makeUsrKey();
 
-  inline void makeUsrKey();
   inline void initVariable();
   inline void checkFiles();
   inline void loadDefaultGlobalData();

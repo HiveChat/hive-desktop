@@ -335,7 +335,7 @@ void AppDataManager::checkFiles()
 
 void AppDataManager::loadDefaultGlobalData()
 {
-  makeUsrKey();
+  GlobalData::settings_struct.profile_key_str = makeUsrKey();
   GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
   GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
 }
@@ -382,18 +382,18 @@ QJsonDocument AppDataManager::makeUsrProfile()
   return write_json_document;
 }
 
-void AppDataManager::makeUsrKey()
+QString AppDataManager::makeUsrKey()
 {
-  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-  GlobalData::settings_struct.profile_key_str.clear();
+//  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
+//  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+//  GlobalData::settings_struct.profile_key_str.clear();
 
-  for(int i = 0; i < 32; i ++)
-    {
-      GlobalData::settings_struct.profile_key_str.append(alphabet_char[qrand()%63]);
-    }
+//  for(int i = 0; i < 32; i ++)
+//    {
+//      GlobalData::settings_struct.profile_key_str.append(alphabet_char[qrand()%63]);
+//    }
 
-  qDebug()<<GlobalData::settings_struct.profile_key_str;
+  return QUuid::createUuid().toString();
 }
 
 void AppDataManager::initVariable()
