@@ -17,10 +17,8 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
   connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
 
   loopback_udp_socket = new QUdpSocket(this);
-  loopback_udp_socket->bind(QHostAddress::LocalHost, loopback_udp_port);
+  qDebug()<< loopback_udp_socket->bind(QHostAddress("127.0.0.1"), loopback_udp_port);
   connect(loopback_udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
-
-
 
   checkUpdate();
   loadTimerTasks();
@@ -222,6 +220,16 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
 
   out << json_doc.toJson();
 
+  if(json_obj.value("sender") == json_obj.value("receiver"))
+    {
+      qDebug()<<"out:" << json_obj.value("message").toString();
+      qint64 ret = loopback_udp_socket->writeDatagram(data
+                                             , data.length()
+                                             , QHostAddress("127.0.0.1")
+                                             , 5000);
+      return;
+    }
+
   if(!GlobalData::online_usr_data_hash.contains(json_obj["receiver"].toString()))
     {
       Log::net(Log::Critical, "NetworkManager::udpSendMessage()", "sending to usr out of online_usr_data_hash failed!");
@@ -354,6 +362,22 @@ void NetworkManager::tcpCloseConnection()
 
 void NetworkManager::udpProcessPendingDatagrams()
 {
+  qDebug()<<"udp";
+  while(loopback_udp_socket->hasPendingDatagrams())
+    {
+      QByteArray datagram;
+      datagram.resize(loopback_udp_socket->pendingDatagramSize());
+      QHostAddress sender_address;
+      loopback_udp_socket->readDatagram(datagram.data(), datagram.size(), &sender_address);
+      QDataStream in(&datagram, QIODevice::ReadOnly);
+
+      QByteArray byte_array;
+      in >> byte_array;
+
+
+      qDebug()<<byte_array;
+    }
+
   while(udp_socket->hasPendingDatagrams())
     {
       QByteArray datagram;
