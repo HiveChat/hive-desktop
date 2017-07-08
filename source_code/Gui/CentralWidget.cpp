@@ -46,7 +46,6 @@ CentralWidget::CentralWidget(QWidget *parent)
             if(GlobalData::settings_struct.window_height != this->height()
                || GlobalData::settings_struct.window_width != this->width())
               {
-                qDebug()<<"timereferwfewfefefe";
                 GlobalData::settings_struct.window_height = this->height();
                 GlobalData::settings_struct.window_width = this->width();
 

@@ -359,9 +359,6 @@ void NetworkManager::udpProcessPendingDatagrams()
       QByteArray byte_array;
       in >> byte_array;
 
-      qDebug()<<byte_array;
-
-
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
       if(json_document.isObject())
         {

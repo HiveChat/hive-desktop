@@ -76,15 +76,15 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
       Bee *bee;
       if(bee_hash.contains(socketDiscriptor))
         {
+          Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form old user: " + QString::number(socketDiscriptor));
           bee = bee_hash.value(socketDiscriptor);
         }
       else
         {
+          Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form new user: " + QString::number(socketDiscriptor));
           bee = new Bee(client, socketDiscriptor);
           bee_hash.insert(socketDiscriptor, bee);
         }
-
-      Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Socket discriptor: " + QString::number(socketDiscriptor));
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
       bee->read(QString::fromUtf8(buffer.base, buffer.len));
@@ -154,6 +154,8 @@ Bee::Bee(uv_stream_t *tcpHandle, const int &fd)
 
 bool Bee::read(const QString &data) //recursion decode
 {
+  Log::net(Log::Normal, "Bee::read()", "Stream: " + data);
+
   buffer.append(data);
 
   //if size header is 0
@@ -162,17 +164,21 @@ bool Bee::read(const QString &data) //recursion decode
       //if 16 digit size header is not complete, return
       if(buffer.size() < 16)
         {
+          Log::net(Log::Normal, "Bee::read()", "Failed: value \"size\" in header is not complete");
           return false;
         }
       else
         {
           read_size = buffer.mid(0, 16).toInt();
+          buffer.remove(0, 16);
+          Log::net(Log::Normal, "Bee::read()", "Member read_size is set to " + QString::number(read_size));
         }
     }
 
   //if data is not complete, return
   if(buffer.size() < read_size)
     {
+      Log::net(Log::Normal, "Bee::read()", "Failed: buffer not filled.");
       return false;
     }
   else //else read
@@ -180,6 +186,8 @@ bool Bee::read(const QString &data) //recursion decode
       QString packet = buffer.mid(0, read_size);
       buffer.remove(0, read_size);
       read_size = 0;
+
+      Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
 
       if(!decodePacket(packet))
         {
@@ -216,6 +224,7 @@ bool Bee::decodePacket(const QString &data)
   if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
     {
       Log::net(Log::Critical, "Bee::decodePacket()", jsonError.errorString());
+      Log::net(Log::Critical, "Bee::decodePacket()", "Stream: " + data);
       return false;
     }
 
