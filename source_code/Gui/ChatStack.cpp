@@ -405,24 +405,24 @@ void GuiChatStack::display(const QString &usrKey)
       if(usr_data->getKey() != temp_usr_data->getKey())
         {
           // can you read this?
-          if(message_hash.contains(usr_data->getKey()))
+          if(editing_message_hash.contains(usr_data->getKey()))
             {
-              message_hash.take(usr_data->getKey());
+              editing_message_hash.take(usr_data->getKey());
             }
-          message_hash.insert(usr_data->getKey(), message_editor->text_editor->toPlainText());
+          editing_message_hash.insert(usr_data->getKey(), message_editor->text_editor->toPlainText());
 
 
           this->setUsrData(temp_usr_data);
 
 
-          if(message_hash.contains(usrKey))
+          if(editing_message_hash.contains(usrKey))
             {
-              message_editor->text_editor->setText(message_hash.value(usrKey));
+              message_editor->text_editor->setText(editing_message_hash.value(usrKey));
             }
           else
             {
               message_editor->text_editor->clear();
-              message_hash.insert(usrKey, "");
+              editing_message_hash.insert(usrKey, "");
             }
 
 

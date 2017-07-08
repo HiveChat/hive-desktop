@@ -139,7 +139,7 @@ protected:
 private:
   //UI
   QHash<QString, ChatStack_chat_widget*> chat_widget_hash;
-  QHash<QString, QString> message_hash;
+  QHash<QString, QString> editing_message_hash;
 
   ChatStack_chat_widget *chat_widget;
   GuiChatStack_message_editor *message_editor;
