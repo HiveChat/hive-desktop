@@ -21,7 +21,8 @@ public:
   explicit HomeStack_welcome(QWidget *parent = 0);
 
 protected:
-  void paintEvent(QPaintEvent *);
+  void mouseReleaseEvent(QMouseEvent *);
+
 
 private:
   QHBoxLayout *bottom_layout;

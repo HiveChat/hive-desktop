@@ -9,7 +9,7 @@ Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
   QtMac::setBadgeLabelText("Hi");
 #endif
 
-  qDebug()<<this->thread()->currentThreadId();
+  qDebug()<< "xx:xx:xx GUI_NORM  Hive::Hive() Main Thread Started: "<< this->thread()->currentThreadId();
 
   data_thread = new QThread(this);
   data_thread->start();

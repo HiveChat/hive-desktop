@@ -50,62 +50,27 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
   timer->setSingleShot(false);
   timer->start(1000);
 
-  QTimer *repaint_timer = new QTimer(this);
-  connect(repaint_timer, &QTimer::timeout,
-          [this](){
-            this->update();
-          });
-  repaint_timer->setSingleShot(false);
-  repaint_timer->start(200);
-
-  QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
-    file_tran_ani->setStartValue(255);
-    file_tran_ani->setEndValue(150);
-    file_tran_ani->setDuration(3000);
-    file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
-    connect(file_tran_ani, &QVariantAnimation::valueChanged,
-            [this](QVariant value) {
-              QPalette palette;
-              palette.setColor(QPalette::Window, QColor(255,255,255,value.toInt()));
-              this->setPalette(palette);
-            });
-    file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
-
-
 }
 
-void HomeStack_welcome::paintEvent(QPaintEvent *)
+void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *ev)
 {
-  if(online)
+  if(ev->button() == Qt::LeftButton)
     {
-      QPoint avatar_center = my_avatar->mapToParent(my_avatar->rect().center());
-      QPainter painter(this);
-      painter.setPen(QPen(Qt::NoPen));
-      QRadialGradient radialGradient(avatar_center, radial_radius);
-      radialGradient.setColorAt(0.4, QColor("#fff1d8"));
-      radialGradient.setColorAt(1.0, Qt::transparent);
-      painter.setBrush(QBrush(radialGradient));
-      painter.drawEllipse(avatar_center, 100, 100);
-
-      if(radial_radius > 75)
-        {
-          enlarge = false;
-        }
-      if(radial_radius < 50)
-        {
-          enlarge = true;
-        }
-
-      if(enlarge)
-        {
-          radial_radius  = radial_radius + 1;
-        }
-      else
-        {
-          radial_radius = radial_radius - 1;
-        }
+      QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
+      file_tran_ani->setStartValue(255);
+      file_tran_ani->setEndValue(0);
+      file_tran_ani->setDuration(3000);
+      file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
+      connect(file_tran_ani, &QVariantAnimation::valueChanged,
+              [this](QVariant value) {
+                QPalette palette;
+                palette.setColor(QPalette::Window, QColor(255,255,255,value.toInt()));
+                this->setPalette(palette);
+              });
+      file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
+
 
 void HomeStack_welcome::refreshUI()
 {
