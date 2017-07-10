@@ -1,9 +1,7 @@
 #include "Hive.h"
 
 #include <QApplication>
-#ifndef Q_WS_QWS && Q_WS_QPA
-#include <QPropertyAnimation>
-#endif
+
 
 
 int loadMyStyle()
@@ -24,15 +22,6 @@ int main(int argc, char *argv[])
   Hive hiveApp(argc, argv);
   loadMyStyle();
   hiveApp.gui_central_widget->show();
-
-#ifndef Q_WS_QWS && Q_WS_QPA
-  QPropertyAnimation animation(hiveApp.gui_central_widget, "geometry");
-  animation.setDuration(300);
-  animation.setStartValue(QRect(120, 80, GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height));
-  animation.setEndValue(QRect(140, 100, GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height));
-  animation.setEasingCurve(QEasingCurve::OutBounce);
-  animation.start();
-#endif
 
   return hiveApp.exec();
 }

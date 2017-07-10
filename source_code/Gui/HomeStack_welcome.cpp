@@ -59,6 +59,20 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
   repaint_timer->start(200);
 
 
+  QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
+  file_tran_ani->setStartValue(255);
+  file_tran_ani->setEndValue(150);
+  file_tran_ani->setDuration(3000);
+  file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
+  connect(file_tran_ani, &QVariantAnimation::valueChanged,
+          [this](QVariant value) {
+            QPalette palette;
+            palette.setColor(QPalette::Window, QColor(255,255,255,value.toInt()));
+            this->setPalette(palette);
+          });
+  file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
+
+
 }
 
 void HomeStack_welcome::paintEvent(QPaintEvent *)

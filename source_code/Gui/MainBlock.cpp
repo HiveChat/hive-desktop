@@ -10,6 +10,8 @@ MainBlock::MainBlock(QWidget *parent)
   this->displayStaticStack(GUI::StaticStackType::Home_Welcome);
 
   main_stacked_widget->addWidget(gui_chat_stack);
+  main_stacked_widget->stackUnder(main_stacked_widget->widget(0));
+  main_stacked_widget->widget(0)->deleteLater();
 
   QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setMargin(0);
