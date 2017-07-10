@@ -218,7 +218,7 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
   json_obj.insert("msgType", Message);
   QJsonDocument json_doc(json_obj);
 
-  out << json_doc.toJson();
+  out << json_doc.toJson(QJsonDocument::Compact);
 
   if(json_obj.value("sender") == json_obj.value("receiver"))
     {
@@ -375,7 +375,7 @@ void NetworkManager::udpProcessPendingDatagrams()
       in >> byte_array;
 
 
-      qDebug()<<byte_array;
+      qDebug()<<"ININININ"<<byte_array;
     }
 
   while(udp_socket->hasPendingDatagrams())
