@@ -62,8 +62,6 @@ private:
   ///UDP Socket
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
-  quint16 loopback_udp_port = 23233;
-  QUdpSocket *loopback_udp_socket;
   void udpProcessMessage(const Message::TextMessageStruct &messageStruct);
   void udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);

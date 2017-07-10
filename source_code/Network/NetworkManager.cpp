@@ -14,11 +14,7 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
-  connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
-
-  loopback_udp_socket = new QUdpSocket(this);
-  qDebug()<< loopback_udp_socket->bind(QHostAddress("127.0.0.1"), loopback_udp_port);
-  connect(loopback_udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
+  connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
 
   checkUpdate();
   loadTimerTasks();
@@ -218,17 +214,7 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
   json_obj.insert("msgType", Message);
   QJsonDocument json_doc(json_obj);
 
-  out << json_doc.toJson(QJsonDocument::Compact);
-
-  if(json_obj.value("sender") == json_obj.value("receiver"))
-    {
-      qDebug()<<"out:" << json_obj.value("message").toString();
-      qint64 ret = loopback_udp_socket->writeDatagram(data
-                                             , data.length()
-                                             , QHostAddress("127.0.0.1")
-                                             , 5000);
-      return;
-    }
+  out << json_doc.toJson();
 
   if(!GlobalData::online_usr_data_hash.contains(json_obj["receiver"].toString()))
     {
@@ -362,22 +348,6 @@ void NetworkManager::tcpCloseConnection()
 
 void NetworkManager::udpProcessPendingDatagrams()
 {
-  qDebug()<<"udp";
-  while(loopback_udp_socket->hasPendingDatagrams())
-    {
-      QByteArray datagram;
-      datagram.resize(loopback_udp_socket->pendingDatagramSize());
-      QHostAddress sender_address;
-      loopback_udp_socket->readDatagram(datagram.data(), datagram.size(), &sender_address);
-      QDataStream in(&datagram, QIODevice::ReadOnly);
-
-      QByteArray byte_array;
-      in >> byte_array;
-
-
-      qDebug()<<"ININININ"<<byte_array;
-    }
-
   while(udp_socket->hasPendingDatagrams())
     {
       QByteArray datagram;
