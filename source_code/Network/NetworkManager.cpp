@@ -14,7 +14,7 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
-  connect(udp_socket, SIGNAL(readyRead()), this, SLOT(udpProcessPendingDatagrams()));
+  connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
 
   checkUpdate();
   loadTimerTasks();

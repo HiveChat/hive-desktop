@@ -8,8 +8,10 @@
 #include <QStackedLayout>
 #include <QRadialGradient>
 #include <QPainter>
+#include <QVariantAnimation>
 #include <QTime>
 #include <QDebug>
+
 
 class HomeStack_welcome : public QWidget
 {
