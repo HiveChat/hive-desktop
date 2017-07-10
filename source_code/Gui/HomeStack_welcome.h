@@ -10,6 +10,7 @@
 #include <QPainter>
 #include <QTime>
 #include <QDebug>
+#include <QVariantAnimation>
 
 class HomeStack_welcome : public QWidget
 {
