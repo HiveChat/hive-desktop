@@ -30,7 +30,7 @@ private:
   bool hovered = false;
 
   int width;
-  int height = 40;
+  int height = 30;
 
   QString text;
   QFont font;

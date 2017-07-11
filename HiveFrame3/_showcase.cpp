@@ -9,7 +9,7 @@ _Showcase::_Showcase(QWidget *parent) : QWidget(parent)
 
   QLabel *lb = new QLabel("hello", this);
   bt1 = new Button("hello", this);
-  bt2 = new Button("hello", this);
+  bt2 = new Button("hello dsa g fdsgd gregewr gr ewger g ew g reg rewg  g rewgerw gerg dagf dg fdsg", this);
 
   QHBoxLayout *mainLayout = new QHBoxLayout(this);
   mainLayout->addWidget(lb);
