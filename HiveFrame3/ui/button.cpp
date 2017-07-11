@@ -17,7 +17,7 @@ Button::Button(const QString &txt, QWidget *parent)
 {
   setFont("Gill Sans Light", 13);
   setText(txt);
-//  this->setMinimumSize(QSize(width, height));
+  this->setMinimumSize(QSize(width, height));
   this->setAutoFillBackground(true);
 }
 
@@ -39,6 +39,36 @@ void Button::setText(const QString &str)
   updateTextRect();
 }
 
+void Button::setPalette(const Button::Palette &palette, const QColor &color)
+{
+  switch (palette) {
+    case Palette::BackgroundDefault:
+      {
+        background_default_color = color;
+        break;
+      }
+    case Palette::BackgroundHovered:
+      {
+        background_hovered_color = color;
+        break;
+      }
+      break;
+    case Palette::ForegroundDefault:
+      {
+        foreground_default_color = color;
+        break;
+      }
+      break;
+    case Palette::ForegroundHovered:
+      {
+        foreground_hovered_color = color;
+        break;
+      }
+    default:
+      break;
+    }
+}
+
 void Button::paintEvent(QPaintEvent *)
 {
   QPainter painter;
@@ -46,7 +76,7 @@ void Button::paintEvent(QPaintEvent *)
   painter.setPen(Qt::NoPen);
   painter.setBrush(QBrush(hovered ? background_hovered_color :background_default_color, Qt::SolidPattern));
   painter.setRenderHint(QPainter::Antialiasing,true);
-  painter.drawRoundedRect(QRect(1, (this->rect().height() - height) * 0.5, this->rect().width() - 1, height - 1),10,10);
+  painter.drawRoundedRect(background_rect,5,5);
   QTextOption textOption;
   textOption.setAlignment(Qt::AlignCenter);
   textOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
@@ -54,6 +84,12 @@ void Button::paintEvent(QPaintEvent *)
   painter.setPen(hovered ? foreground_hovered_color : foreground_default_color);
   painter.drawText(this->rect(), text, textOption);
   painter.end();
+}
+
+void Button::resizeEvent(QResizeEvent *ev)
+{
+  background_rect = QRect(1, (this->rect().height() - height) * 0.5 + 1, this->rect().width() - 1, height - 1);
+  QOpenGLWidget::resizeEvent(ev);
 }
 
 void Button::mousePressEvent(QMouseEvent *)
