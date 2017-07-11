@@ -1,6 +1,5 @@
 #include "UvTcpServer.h"
 
-
 HiveProtocol* UvTcpServer::hive_protocol = new HiveProtocol();
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
@@ -10,13 +9,16 @@ QHash<UvTcpServer::SocketDescriptor, UsrData*> UvTcpServer::usr_data_hash;
 
 UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
 {
-
 }
 
 UvTcpServer::~UvTcpServer()
 {
-  uv_loop_close(loop);
-  qDebug()<<"uv loop closed";
+}
+
+void UvTcpServer::closeUvLoop()
+{
+  uv_stop(loop);
+  Log::net(Log::Normal, "UvTcpServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
 void
@@ -201,7 +203,7 @@ bool Bee::read(const QString &data) //recursion decode
   return read("");
 }
 
-bool Bee::write(const QString &data)
+bool Bee::write(const MessageType &MsgType, const QString &data)
 {
 
 }

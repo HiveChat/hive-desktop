@@ -22,6 +22,9 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 
 NetworkManager::~NetworkManager()
 {
+  udpSendUsrLeave();
+
+  uv_tcp_server->closeUvLoop();
   uv_tcp_server->quit();
 
   if(!uv_tcp_server->wait(500))
@@ -30,8 +33,8 @@ NetworkManager::~NetworkManager()
       uv_tcp_server->wait();
     }
 
-  udpSendUsrLeave();
-  qDebug()<<"NetworkManager destructed";
+  Log::gui(Log::Normal, "NetworkManager::~NetworkManager()", "Successfully destroyed NetworkManager...");
+
 }
 
 //void NetworkManager::refreshLocalHostIP()

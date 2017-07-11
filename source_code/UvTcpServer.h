@@ -32,6 +32,8 @@ public:
   explicit UvTcpServer(QObject *parent = 0);
   ~UvTcpServer();
 
+  void closeUvLoop();
+
 protected:
   void run();
 
@@ -56,16 +58,6 @@ private:
 
 class Bee
 {
-public:
-  explicit Bee(uv_stream_t *tcpHandle, const int &fd);
-
-  bool read(const QString &data);
-  bool write(const QString & data);
-
-  bool isLeaving();
-  bool isIdentified();
-
-private:
   enum MessageType {
     FileInfo = 0,
     FileContent = 1,
@@ -73,6 +65,17 @@ private:
     FileReject = 3,
     ErrorDelivery = 6,
   };
+
+public:
+  explicit Bee(uv_stream_t *tcpHandle, const int &fd);
+
+  bool read(const QString &data);
+  bool write(const Bee::MessageType &MsgType, const QString &data);
+
+  bool isLeaving();
+  bool isIdentified();
+
+private:
 
   int socket_descriptor;
   uv_stream_t *tcp_handle;

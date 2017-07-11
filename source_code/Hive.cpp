@@ -66,7 +66,6 @@ Hive::~Hive()
 {
   Log::gui(Log::Normal, "Hive::~Hive()", "Destroying App");
 #ifdef Q_OS_OSX
-
   QtMac::setBadgeLabelText("Bye");
 #endif
 
@@ -90,8 +89,15 @@ Hive::~Hive()
       data_thread->wait();
     }
 
-  network_manager->deleteLater();
-  data_manager->deleteLater();
+//  Log::gui(Log::Normal, "Hive::~Hive()", "Destroying NetworkManager...");
+//  network_manager->~NetworkManager();
+//  Log::gui(Log::Normal, "Hive::~Hive()", "Destroying AppDataManager...");
+//  data_manager->~AppDataManager();
+
+  network_thread->deleteLater();
+  data_thread->deleteLater();
+
+
 
   Log::gui(Log::Normal, "Hive::~Hive()", "Destroyed App");
 

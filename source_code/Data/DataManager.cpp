@@ -13,7 +13,7 @@ AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 /////////////thread
 AppDataManager::~AppDataManager()
 {
-  qDebug()<<"DataManager destructed";
+  Log::gui(Log::Normal, "AppDataManager::~AppDataManager()", "Successfully destroyed AppDataManager...");
 }
 
 void AppDataManager::checkSettings()
