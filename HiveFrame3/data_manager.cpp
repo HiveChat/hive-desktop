@@ -1,4 +1,4 @@
-#include "app_data_manager.h"
+#include "data_manager.h"
 
 AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 {

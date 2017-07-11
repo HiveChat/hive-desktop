@@ -8,6 +8,7 @@ CONFIG   += c++14
 
 QT       += core
 QT	 += gui
+QT	 += opengl
 QT	 += widgets
 QT	 += network
 
@@ -41,14 +42,18 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     hive.cpp \
     log.cpp \
-    app_data_manager.cpp \
-    global_var.cpp
+    global_var.cpp \
+    ui/button.cpp \
+    data_manager.cpp \
+    _showcase.cpp
 
 HEADERS  += \
     hive.h \
     log.h \
-    app_data_manager.h \
-    global_var.h
+    global_var.h \
+    ui/button.h \
+    data_manager.h \
+    _showcase.h
 
 RESOURCES += \
     src/qss.qrc \

@@ -62,7 +62,7 @@ void AvatarButton::leaveEvent(QEvent *)
 
 
 AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
-  : QWidget(parent)
+  : QOpenGLWidget(parent)
   , result_avatar_size(size)
 {
   //result_image is the final result

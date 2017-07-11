@@ -5,6 +5,7 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 
+#include <QOpenGLWidget>
 #include <QSlider>
 #include <QDial>
 #include <QLabel>
@@ -43,7 +44,7 @@ signals:
 
 
 
-class AvatarComposer : public QWidget
+class AvatarComposer : public QOpenGLWidget
 {
   Q_OBJECT
 

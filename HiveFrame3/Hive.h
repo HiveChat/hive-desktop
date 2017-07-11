@@ -2,7 +2,8 @@
 #define HIVE_H
 
 #include "log.h"
-#include "app_data_manager.h"
+#include "data_manager.h"
+#include "_showcase.h"
 
 #include <QApplication>
 #include <QThread>
@@ -12,16 +13,20 @@
 #include <QtMac>
 #endif
 
-class HiveApp : public QApplication
+class Hive : public QApplication
 {
   Q_OBJECT
 public:
-  explicit HiveApp(int &argc, char **argv);
+  explicit Hive(int &argc, char **argv);
+  ~Hive();
+
+  _Showcase *central_widget;
 
 protected:
   bool event(QEvent* event);
 
 private:
+
   QThread *thread_data;
   QThread *thread_net;
 

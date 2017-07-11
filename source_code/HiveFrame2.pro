@@ -7,6 +7,7 @@
 QT       += core
 QT	 += gui
 QT	 += network
+QT	 += opengl
 #QT       += concurrent
 
 CONFIG   += c++14
