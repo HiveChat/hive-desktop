@@ -18,7 +18,7 @@ macx{
     QT   += macextras
 
     INCLUDEPATH += /usr/local/include/
-    QMAKE_LFLAGS += -L/usr/local/lib -luv -lopencv_core
+    QMAKE_LFLAGS += -L/usr/local/lib -luv
 
 }
 

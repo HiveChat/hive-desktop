@@ -26,8 +26,8 @@ private:
 
   cv::Mat screenshot_mat;
 
-  cv::Mat qImage2cvMat(QImage screenshot_mat);
-  QImage cvMat2QImage(const cv::Mat& mat);
+//  cv::Mat qImage2cvMat(QImage screenshot_mat);
+//  QImage cvMat2QImage(const cv::Mat& mat);
 };
 
 #endif // _SHOWCASE_H

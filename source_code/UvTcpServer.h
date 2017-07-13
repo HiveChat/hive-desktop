@@ -5,7 +5,6 @@
 #define TCP_BACKLOG 128
 
 #include "Log.h"
-#include "HiveProtocol.h"
 #include "UsrData.h"
 #include "GlobalData.h"
 
