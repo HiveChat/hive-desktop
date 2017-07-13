@@ -38,7 +38,6 @@ protected:
   void run();
 
 private:
-  static HiveProtocol *hive_protocol;
   static uv_loop_t *loop;
   static struct sockaddr_in addr;
 

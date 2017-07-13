@@ -3,6 +3,7 @@
 
 #include <QOpenGLWidget>
 #include <QResizeEvent>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QStaticText>
 #include <QFontMetrics>
@@ -24,7 +25,7 @@ public:
   explicit Button(const QString &txt, int w = 0, int h = 100, QWidget *parent = 0);
   explicit Button(const QString &txt, QWidget *parent = 0);
 
-  void setFont(const QFont &font);
+  void setFont(const QFont &f);
   void setFont(const QString &family, const int &pixelSize);
   void setText(const QString &str);
 
@@ -36,8 +37,8 @@ protected:
   void resizeEvent(QResizeEvent *ev);
   void mousePressEvent(QMouseEvent *);
   void mouseReleaseEvent(QMouseEvent *);
-  void enterEvent(QEvent *);
-  void leaveEvent(QEvent *);
+  void enterEvent(QEvent *ev);
+  void leaveEvent(QEvent *ev);
 
 private:
   bool hovered = false;

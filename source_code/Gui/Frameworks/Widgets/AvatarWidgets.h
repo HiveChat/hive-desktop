@@ -7,6 +7,7 @@
 
 #include <QOpenGLWidget>
 #include <QSlider>
+#include <QScrollBar>
 #include <QDial>
 #include <QLabel>
 #include <QGridLayout>
@@ -44,7 +45,7 @@ signals:
 
 
 
-class AvatarComposer : public QOpenGLWidget
+class AvatarComposer : public QWidget
 {
   Q_OBJECT
 

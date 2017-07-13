@@ -50,6 +50,8 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
   timer->setSingleShot(false);
   timer->start(1000);
 
+
+
 }
 
 void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *ev)
@@ -109,6 +111,7 @@ void HomeStack_welcome::refreshUI()
       ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
     }
   Log::gui(Log::Normal, "GuiWelcomeStack::refresh()", "Finished");
+
 }
 
 

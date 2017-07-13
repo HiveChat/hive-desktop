@@ -18,7 +18,7 @@ macx{
     QT   += macextras
 
     INCLUDEPATH += /usr/local/include/
-    QMAKE_LFLAGS += -L/usr/local/lib -luv
+    QMAKE_LFLAGS += -L/usr/local/lib -luv -lopencv_core
 
 }
 
@@ -66,8 +66,7 @@ SOURCES += \
     Data/DataManager.cpp \
     Gui/Frameworks/Widgets/AvatarWidgets.cpp \
     Log.cpp \
-    UvTcpServer.cpp \
-    HiveProtocol.cpp
+    UvTcpServer.cpp
 \
 
 HEADERS  += \
@@ -106,8 +105,7 @@ HEADERS  += \
     Data/DataManager.h \
     Gui/Frameworks/Widgets/AvatarWidgets.h \
     Log.h \
-    UvTcpServer.h \
-    HiveProtocol.h
+    UvTcpServer.h
 
 ICON = Src/hive.icns
 

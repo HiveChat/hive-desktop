@@ -22,9 +22,9 @@ MainBlock::~MainBlock()
 
 }
 
-void MainBlock::clearStackMap( GUI::StaticStackType &reservation)
+void MainBlock::clearStackMap(GUI::StaticStackType &reservation)
 {
-  foreach ( GUI::StaticStackType temp_static_stack_type, static_stack_hash.keys())
+  foreach(GUI::StaticStackType temp_static_stack_type, static_stack_hash.keys())
     {
       if(temp_static_stack_type == GUI::StaticStackType::Home_Welcome
          || temp_static_stack_type == GUI::StaticStackType::Home_list

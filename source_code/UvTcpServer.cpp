@@ -1,6 +1,5 @@
 #include "UvTcpServer.h"
 
-HiveProtocol* UvTcpServer::hive_protocol = new HiveProtocol();
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
 QHash<UvTcpServer::SocketDescriptor, Bee*> UvTcpServer::bee_hash;

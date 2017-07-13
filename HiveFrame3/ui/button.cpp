@@ -21,8 +21,10 @@ Button::Button(const QString &txt, QWidget *parent)
   this->setAutoFillBackground(true);
 }
 
-void Button::setFont(const QFont &font)
+void Button::setFont(const QFont &f)
 {
+  font = f;
+  updateTextRect();
 
 }
 
@@ -102,13 +104,13 @@ void Button::mouseReleaseEvent(QMouseEvent *)
   emit clicked();
 }
 
-void Button::enterEvent(QEvent *)
+void Button::enterEvent(QEvent *ev)
 {
   hovered = true;
   this->update();
 }
 
-void Button::leaveEvent(QEvent *)
+void Button::leaveEvent(QEvent *ev)
 {
   hovered = false;
   this->update();
