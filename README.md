@@ -28,6 +28,26 @@
 * Qt5
 * libuv (since 0.0.8)
 
+## Building Hive<sup>0.0.7</sup> or lower:
+1. Download Qt5 from [Qt.io](https://qt.io) and install.
+2. Build Hive using QtCreator or commands.
+
+## Building Hive<sup>0.0.8</sup>:
+### MacOS:
+1. Install [libuv](https://github.com/libuv/libuv) using [Homebrew](https://brew.sh) `brew install libuv`
+2. Download Qt5 from [Qt.io](https://qt.io) and install.
+3. Build Hive using QtCreator or commands.
+
+### Windows:
+1. Follow the [instructions](https://github.com/libuv/libuv) to install libuv
+2. Download Qt5 from [Qt.io](https://qt.io) and install.
+3. Build Hive using QtCreator or commands.
+
+### Linux:
+1. Follow the [instructions](https://github.com/libuv/libuv) to install libuv
+2. Download Qt5 from [Qt.io](https://qt.io) and install.
+3. Build Hive using QtCreator or commands.
+
 ## Star me!
 [![GitHub stars](https://img.shields.io/github/stars/HiveChat/Hive-desktop.svg?style=social&label=Star)](#)
 [![GitHub followers](https://img.shields.io/github/followers/ultrasilicon.svg?style=social&label=Follow)](https://github.com/Ultrasilicon)
