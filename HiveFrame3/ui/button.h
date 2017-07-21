@@ -8,6 +8,7 @@
 #include <QStaticText>
 #include <QFontMetrics>
 #include <QDebug>
+#include <QPaintEngine>
 
 
 class Button : public QOpenGLWidget

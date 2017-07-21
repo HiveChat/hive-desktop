@@ -85,6 +85,11 @@ void Button::paintEvent(QPaintEvent *)
   painter.setFont(font);
   painter.setPen(hovered ? foreground_hovered_color : foreground_default_color);
   painter.drawText(this->rect(), text, textOption);
+  if (painter.paintEngine()->type() != QPaintEngine::OpenGL2) {
+          qWarning("OpenGLScene: drawBackground needs a QGLWidget to be set as viewport on the graphics view");
+          qDebug()<<painter.paintEngine()->type();
+          return;
+      }
   painter.end();
 }
 

@@ -264,8 +264,4 @@ bool Bee::decodePacket(const QString &data)
         break;
       }
   }
-
-
-
-
 }

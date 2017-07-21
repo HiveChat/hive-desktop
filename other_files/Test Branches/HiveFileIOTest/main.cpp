@@ -7,14 +7,13 @@ int main(int argc, char *argv[])
 {
   QCoreApplication a(argc, argv);
 
-  QFile file("/Users/echo/Desktop/AP\ Statistcs.pdf");
+  QFile file("/Users/echo/Downloads/pipesocks-2.3-macOS.dmg");
   if(!file.open(QIODevice::ReadOnly))
     {
       return 1;
     }
-  qDebug()<<"1";
 
-  QFile dest("/Volumes/Data\ Lot/5122.base64");
+  QFile dest("/Volumes/VirtualDisk/out.str");
   if(!dest.open(QIODevice::WriteOnly))
     {
       return 1;
@@ -22,7 +21,10 @@ int main(int argc, char *argv[])
 
   while(!file.atEnd())
     {
-      qDebug()<<dest.write(file.read(10000000).toBase64());
+      qDebug()<<"loop";
+      std::string str = file.read(10000000).toStdString();
+      qDebug()<<dest.write(str.c_str(), str.size());
+//      qDebug()<<str;
     }
 
   dest.flush();
@@ -33,23 +35,26 @@ int main(int argc, char *argv[])
 
 
 
-  QFile input("/Volumes/Data\ Lot/5122.base64");
+  QFile input("/Volumes/VirtualDisk/out.str");
   if(!input.open(QIODevice::ReadOnly))
     {
       return 1;
     }
 
-  QFile output("/Volumes/Data\ Lot/5123_rec.pdf");
+  QFile output("/Volumes/VirtualDisk/out.dmg");
   if(!output.open(QIODevice::WriteOnly | QIODevice::Text))
     {
       return 1;
     }
   while(!input.atEnd())
     {
-      output.write(QByteArray::fromBase64(input.read(13333336)));
+      output.write(QByteArray(input.read(13333336)));
     }
 
+  output.flush();
   output.close();
+
+  input.flush();
   input.close();
 
 

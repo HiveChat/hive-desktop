@@ -21,6 +21,7 @@ _Showcase::_Showcase(QWidget *parent) : QWidget(parent)
   mainLayout->addWidget(bt1);
   mainLayout->addWidget(bt2);
 
+
 //  screenshot_mat = qImage2cvMat(this->grab(this->rect()).toImage());
 
 //  cvSmooth(screenshot_mat,newimage,CV_BLUR,3,3,0,0);
