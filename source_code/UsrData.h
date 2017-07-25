@@ -46,7 +46,6 @@ private:
   const QString usr_path = app_data_local_path + "/usr/";
   UsrProfileStruct usr_profile_struct;
   QString history_path;
-  QString usr_key;
   QString *my_key;
 
   const int max_bundle_capacity = 100;

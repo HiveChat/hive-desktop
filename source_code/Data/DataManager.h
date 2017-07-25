@@ -78,7 +78,6 @@ public slots:
 private slots:
   void writeCurrentConfig();
 
-
 signals:
   void updatesAvailable();
   void usrProfileLoaded(UsrData *userData);

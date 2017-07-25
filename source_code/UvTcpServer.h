@@ -14,10 +14,46 @@
 
 #include <uv.h>
 
-class UvTcpServer;
 class Bee;
+class UvTcpServer;
 
-class UvTcpServer : public QThread
+class Bee
+{
+
+  enum MessageType {
+    FileInfo = 0,
+    FileContent = 1,
+    FileAccept = 2,
+    FileReject = 3,
+    ErrorDelivery = 6,
+  };
+
+public:
+//  explicit Bee(uv_stream_t *tcpHandle, const int &fd);
+
+  bool read(const QString &data);
+  bool write(const Bee::MessageType &MsgType, const QString &data);
+
+  bool isLeaving();
+  bool isIdentified();
+
+private:
+
+  int socket_descriptor;
+  uv_stream_t *tcp_handle;
+  UsrData *usr_data = nullptr;
+  QString buffer;
+  int read_size = 0;
+
+  bool is_leaving;
+
+  inline bool decodePacket(const QString &data);
+
+};
+
+class UvTcpServer
+    : public QThread
+    , public Bee
 {
   Q_OBJECT
 
@@ -41,7 +77,7 @@ private:
   static struct sockaddr_in addr;
 
   static QHash<SocketDescriptor, Bee*> bee_hash;
-  static QHash<SocketDescriptor, UsrData*> usr_data_hash;
+  static QHash<QString, SocketDescriptor> key_sd_hash;
 
   inline static void onNewConnection(uv_stream_t *server, int status);
   inline static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
@@ -50,40 +86,6 @@ private:
   inline static void freeWriteReq(uv_write_t *req);
 
   inline static int getSocketDescriptor(uv_stream_t *client);
-
-};
-
-
-class Bee
-{
-  enum MessageType {
-    FileInfo = 0,
-    FileContent = 1,
-    FileAccept = 2,
-    FileReject = 3,
-    ErrorDelivery = 6,
-  };
-
-public:
-  explicit Bee(uv_stream_t *tcpHandle, const int &fd);
-
-  bool read(const QString &data);
-  bool write(const Bee::MessageType &MsgType, const QString &data);
-
-  bool isLeaving();
-  bool isIdentified();
-
-private:
-
-  int socket_descriptor;
-  uv_stream_t *tcp_handle;
-  UsrData *usr_data = nullptr;
-  QString buffer;
-  int read_size = 0;
-
-  bool is_leaving;
-
-  inline bool decodePacket(const QString &data);
 
 };
 

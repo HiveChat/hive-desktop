@@ -3,7 +3,7 @@
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
 QHash<UvTcpServer::SocketDescriptor, Bee*> UvTcpServer::bee_hash;
-QHash<UvTcpServer::SocketDescriptor, UsrData*> UvTcpServer::usr_data_hash;
+QHash<QString, UvTcpServer::SocketDescriptor> UvTcpServer::key_sd_hash;
 
 
 UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
@@ -14,7 +14,8 @@ UvTcpServer::~UvTcpServer()
 {
 }
 
-void UvTcpServer::closeUvLoop()
+void
+UvTcpServer::closeUvLoop()
 {
   uv_stop(loop);
   Log::net(Log::Normal, "UvTcpServer::closeUvLoop()", "Successfully closed uv event loop.");
@@ -23,6 +24,7 @@ void UvTcpServer::closeUvLoop()
 void
 UvTcpServer::run()
 {
+  qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Normal, "UvTcpServer::run()", "Thread Started");
 
   loop = uv_default_loop();
@@ -58,7 +60,7 @@ UvTcpServer::onNewConnection(uv_stream_t *server, int status)
   uv_tcp_init(loop, client);
 
 
-  if (uv_accept(server, (uv_stream_t*)client) == 0)
+  if(uv_accept(server, (uv_stream_t*)client) == 0)
     {
       uv_read_start((uv_stream_t*)client, allocBuffer, tcpRead);
     }
@@ -83,7 +85,7 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
       else
         {
           Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form new user: " + QString::number(socketDiscriptor));
-          bee = new Bee(client, socketDiscriptor);
+//          bee = new Bee(client, socketDiscriptor);
           bee_hash.insert(socketDiscriptor, bee);
         }
 
@@ -92,6 +94,7 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       req->buf = uv_buf_init(buf->base, nread);
+
       uv_write((uv_write_t*)req, client, &req->buf, 1, tcpWrite);
 
       return;
@@ -147,11 +150,11 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 
 
 
-Bee::Bee(uv_stream_t *tcpHandle, const int &fd)
-  : tcp_handle(tcpHandle)
-  , socket_descriptor(fd)
-{
-}
+//Bee::Bee(uv_stream_t *tcpHandle, const int &fd)
+//  : tcp_handle(tcpHandle)
+//  , socket_descriptor(fd)
+//{
+//}
 
 bool Bee::read(const QString &data) //recursion decode
 {
@@ -193,6 +196,7 @@ bool Bee::read(const QString &data) //recursion decode
       if(!decodePacket(packet))
         {
           Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
+          buffer.clear();
 
           return false;
         }
