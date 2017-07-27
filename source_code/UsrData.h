@@ -2,6 +2,7 @@
 #define DATAUSER_H
 
 #include "GlobalType.h"
+#include "Log.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -11,6 +12,11 @@
 #include <QStandardPaths>
 
 #include <QDebug>
+#include <QThread>
+
+
+class MessageHelper;
+//class
 
 class UsrData;
 

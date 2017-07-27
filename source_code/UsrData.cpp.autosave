@@ -184,7 +184,7 @@ void UsrData::makeHistoryBundle(const int &index)
 
 void UsrData::saveHistoryBundle()
 {
-  qDebug()<<"UsrData::saveHistoryBundle()"<< "current thread:" << this->thread()->currentThreadId();
+//  qDebug()<<"UsrData::saveHistoryBundle()"<< "current thread:" << this->thread()->currentThreadId();
 //  auto lambda = [&]()
 //    {
       QString file_path = QString(history_path+"/%1.json").arg(current_history_bundle_index);
