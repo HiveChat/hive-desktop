@@ -2,33 +2,14 @@
 #define GUICHATBUBBLE_H
 
 #include "GlobalData.h"
-#include <QLabel>
+#include <QWidget>
+#include <QResizeEvent>
+#include <QMouseEvent>
 #include <QPainter>
-#include <QHBoxLayout>
-
-class TextBubble_text_area;
-class TextBubble;
-
-class GuiFileBubble_file_info;
-class GuiFileBubble;
-
-class TextBubble_text_area : public QWidget
-{
-  Q_OBJECT
-
-public:
-  explicit TextBubble_text_area(const QString &text, bool alignLeft, QWidget *parent = 0);
-
-protected:
-  void paintEvent(QPaintEvent *);
-
-private:
-  QString message;
-  QHBoxLayout *main_layout;
-  QLabel *label;
-  QColor *color;
-
-};
+#include <QStaticText>
+#include <QFontMetrics>
+#include <QDebug>
+#include <QPaintEngine>
 
 
 class TextBubble : public QWidget
@@ -36,47 +17,51 @@ class TextBubble : public QWidget
   Q_OBJECT
 
 public:
-  explicit TextBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
-  TextBubble_text_area *text_area;
+  enum Palette{
+    BackgroundDefault = 0,
+    BackgroundHovered = 1,
+    ForegroundDefault = 2,
+    ForegroundHovered = 3
+  };
 
-private:
-  QHBoxLayout *main_layout;
-  QPixmap strip_pixmap;
-  QLabel *strip;////this hurts my heart!
-};
+  explicit TextBubble(const QString &txt, int w = 0, int h = 100, QWidget *parent = 0);
+  explicit TextBubble(const QString &txt, QWidget *parent = 0);
 
+  void setFont(const QFont &f);
+  void setFont(const QString &family, const int &pixelSize);
+  void setText(const QString &str);
 
-class GuiFileBubble_file_info : public QLabel
-{
-  Q_OBJECT
+  void setPalette(const Palette &palette, const QColor &color);
 
-public:
-  explicit GuiFileBubble_file_info(const QString &text, bool alignLeft, QWidget *parent = 0);
 
 protected:
   void paintEvent(QPaintEvent *);
+  void resizeEvent(QResizeEvent *ev);
+  void mousePressEvent(QMouseEvent *);
+  void mouseReleaseEvent(QMouseEvent *);
+//  void enterEvent(QEvent *ev);
+//  void leaveEvent(QEvent *ev);
 
 private:
-  QHBoxLayout *main_layout;
+  bool hovered = false;
 
-  QLabel *label;
-  QColor *color;
+  int max_width = 400;
+  int width = 0;
+  int height = 30;
 
+  QRect background_rect;
+
+  QString text;
+  QFont font;
+
+  QColor background_default_color = QColor(245,245,245);
+  QColor foreground_default_color = QColor(140,140,140);
+
+  void updateTextRect();
+
+signals:
+  void clicked();
 };
 
-class GuiFileBubble : public QWidget
-{
-  Q_OBJECT
-
-public:
-  explicit GuiFileBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
-  GuiFileBubble_file_info *file_info;
-
-
-private:
-  QHBoxLayout *main_layout;
-  QPixmap strip_pixmap;
-  QLabel *strip;////this hurts my heart!
-};
 
 #endif // GUICHATBUBBLE_H

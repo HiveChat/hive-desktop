@@ -1,181 +1,132 @@
 #include "TextBubble.h"
 
-TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+TextBubble::TextBubble(const QString &txt, int w, int h, QWidget *parent)
+  : QWidget(parent)
+  , width(w)
+  , height(h)
+  , text(txt)
 {
-  int maxWidth = 500;
-
-  //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
-  label = new QLabel(this);
-  label->setText(text);
-  label->setFont(GlobalData::font_chatBubble);
-  label->adjustSize();
-  label->setWordWrap(true);
-  label->setTextInteractionFlags(Qt::TextSelectableByMouse);
-  label->setCursor(QCursor(Qt::IBeamCursor));
-
-  main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(10,10,10,15);
-  main_layout->addWidget(label);
-
-  if(alignLeft)
-    {
-      color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
-      main_layout->setAlignment(Qt::AlignLeft);
-    }
-  else
-    {
-      color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
-      main_layout->setAlignment(Qt::AlignRight);
-    }
-
-  this->setFixedWidth(maxWidth);
+  setFont("Gill Sans Light", 13);
+  setText(txt);
+  this->setFixedSize(QSize(w,h));
+  this->setAutoFillBackground(false);
 }
 
-void TextBubble_text_area::paintEvent(QPaintEvent *)
+TextBubble::TextBubble(const QString &txt, QWidget *parent)
+  : QWidget(parent)
 {
-//  btn->setGeometry(btn->parentWidget()->width()-btn->width(), btn->y(), btn->width(), btn->height());
-  label->adjustSize();
-
-  QPainter painter(this);
-  painter.setPen(QPen(Qt::NoPen));
-  painter.setBrush(QBrush(*color, Qt::SolidPattern));
-  painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
-  this->setFixedWidth(label->rect().width()+20);
-  this->setFixedHeight(label->rect().height()+20);
+  setFont("Gill Sans Light", 13);
+  setText(txt);
+  this->setMinimumSize(QSize(width, height));
+  this->setAutoFillBackground(false);
 }
 
-TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+void TextBubble::setFont(const QFont &f)
 {
-
-  ////recently not consider the strip, it's ugly.
-//  if(alignLeft)
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
-//    }
-//  else
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
-//    }
-
-//  strip_pixmap.setDevicePixelRatio(2.0);
-//  strip = new QLabel();
-//  strip->setPixmap(strip_pixmap);
-//  strip->setAlignment(Qt::AlignTop);
-//  strip->setContentsMargins(0,10,0,0);
-
-  text_area = new TextBubble_text_area(text, alignLeft, this);
-
-  main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(0,0,0,0);
-  main_layout->setSpacing(10);
-
-  if(alignLeft)
-    {
-      main_layout->setAlignment(Qt::AlignLeft);
-      //main_layout->addWidget(strip);
-      main_layout->addWidget(text_area);
-    }
-  else
-    {
-      main_layout->setAlignment(Qt::AlignRight);
-      main_layout->addWidget(text_area);
-      //main_layout->addWidget(strip);
-    }
-
-  this->setParent(parent);
-}
-
-
-
-
-
-GuiFileBubble_file_info::GuiFileBubble_file_info(const QString &text, bool alignLeft = true, QWidget *parent) : QLabel(parent)
-{
-  int maxWidth = 500;
-
-  //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
-  QPixmap file_icon(":/icon/icon/doc.png");
-  file_icon.setDevicePixelRatio(2.0);
-  label =  new QLabel(this);
-  label->setPixmap(file_icon);
-//  label->adjustSize();
-//  label->setWordWrap(true);
-//  label->setTextInteractionFlags(Qt::TextSelectableByMouse);
-//  label->setCursor(QCursor(Qt::IBeamCursor));
-
-  main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(10,10,10,15);
-  main_layout->addWidget(label);
-
-  if(alignLeft)
-    {
-      color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
-      main_layout->setAlignment(Qt::AlignLeft);
-    }
-  else
-    {
-      color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
-      main_layout->setAlignment(Qt::AlignRight);
-    }
-
-  this->setFixedWidth(maxWidth);
-}
-
-void GuiFileBubble_file_info::paintEvent(QPaintEvent *)
-{
-  label->adjustSize();
-
-  QPainter painter(this);
-  painter.setPen(QPen(Qt::NoPen));
-  //color options:
-  //255,197,28,100
-  //255,215,126
-  painter.setBrush(QBrush(*color, Qt::SolidPattern));
-  painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
-  this->setFixedWidth(label->rect().width()+20);
-  this->setFixedHeight(label->rect().height()+20);
+  font = f;
+  updateTextRect();
 
 }
 
-
-GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+void TextBubble::setFont(const QString &family, const int &pixelSize)
 {
-  ////recently not consider the strip, it's ugly.
-//  if(alignLeft)
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
-//    }
-//  else
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
-//    }
+  font.setFamily(family);
+  font.setPixelSize(14);
+  updateTextRect();
+}
 
-//  strip_pixmap.setDevicePixelRatio(2.0);
-//  strip = new QLabel();
-//  strip->setPixmap(strip_pixmap);
-//  strip->setAlignment(Qt::AlignTop);
-//  strip->setContentsMargins(0,10,0,0);
+void TextBubble::setText(const QString &str)
+{
+  text = str;
+  updateTextRect();
+}
 
-  file_info = new GuiFileBubble_file_info(text, alignLeft, this);
-
-  main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(0,0,0,0);
-  main_layout->setSpacing(10);
-
-  if(alignLeft)
-    {
-      main_layout->setAlignment(Qt::AlignLeft);
-      //main_layout->addWidget(strip);
-      main_layout->addWidget(file_info);
+void TextBubble::setPalette(const TextBubble::Palette &palette, const QColor &color)
+{
+  switch (palette) {
+    case Palette::BackgroundDefault:
+      {
+        background_default_color = color;
+        break;
+      }
+    case Palette::ForegroundDefault:
+      {
+        foreground_default_color = color;
+        break;
+      }
+    default:
+      break;
     }
-  else
-    {
-      main_layout->setAlignment(Qt::AlignRight);
-      main_layout->addWidget(file_info);
-      //main_layout->addWidget(strip);
-    }
+}
 
-  this->setParent(parent);
+void TextBubble::paintEvent(QPaintEvent *)
+{
+  QPainter painter;
+  painter.begin(this);
+  painter.setPen(Qt::NoPen);
+  painter.setBrush(QBrush(background_default_color, Qt::SolidPattern));
+  painter.setRenderHint(QPainter::Antialiasing,true);
+  painter.drawRoundedRect(background_rect,5,5);
+  QTextOption textOption;
+  textOption.setAlignment(Qt::AlignLeft);
+  textOption.setWrapMode(QTextOption::WrapAtWordBoundaryOrAnywhere);
+  painter.setFont(font);
+  painter.setPen(foreground_default_color);
+  painter.drawText(QRect(background_rect.x()+5, background_rect.y()+5, background_rect.width()-10, background_rect.height()-10), text, textOption);
+//  if (painter.paintEngine()->type() != QPaintEngine::OpenGL2) {
+//          qWarning("OpenGLScene: drawBackground needs a QGLWidget to be set as viewport on the graphics view");
+//          qDebug()<<painter.paintEngine()->type();
+//          return;
+//      }
+  painter.end();
+}
+
+void TextBubble::resizeEvent(QResizeEvent *ev)
+{
+  background_rect = QRect(1, 1, width + 2, height + 2);
+  QWidget::resizeEvent(ev);
+}
+
+void TextBubble::mousePressEvent(QMouseEvent *)
+{
+
+}
+
+void TextBubble::mouseReleaseEvent(QMouseEvent *)
+{
+  emit clicked();
+}
+
+//void TextBubble::enterEvent(QEvent *ev)
+//{
+//  hovered = true;
+//  this->update();
+//}
+
+//void TextBubble::leaveEvent(QEvent *ev)
+//{
+//  hovered = false;
+//  this->update();
+//}
+
+void TextBubble::updateTextRect()
+{
+  QFontMetrics metrics(font);
+
+  int lineCount = 0;
+
+  do
+    {
+      width = metrics.width(text) + 15 - lineCount * max_width;
+      lineCount ++;
+    }
+  while(width > max_width);
+
+  height *= lineCount;
+
+  this->setFixedSize(QSize(width, height));
+
+  update();
 }
 
 
