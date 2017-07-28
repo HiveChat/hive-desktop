@@ -3,13 +3,14 @@
 
 #include "./ui/button.h"
 #include <QHBoxLayout>
+#include <QOpenGLWidget>
 #include <QLabel>
 
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
-class _Showcase : public QWidget
+class _Showcase : public QOpenGLWidget
 {
   Q_OBJECT
 public:

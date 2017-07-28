@@ -48,7 +48,7 @@ ChatStack_chat_widget::~ChatStack_chat_widget()
 
 void ChatStack_chat_widget::clearChatBubbles()
 {
-  foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
+  foreach (QPushButton *temp_chat_bubble_pointer, chat_bubble_list)
     {
       if(temp_chat_bubble_pointer != nullptr)
         {
@@ -60,10 +60,14 @@ void ChatStack_chat_widget::clearChatBubbles()
 
 void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
 {
-  gui_chat_bubble = new TextBubble(message, !fromMe, this);
+//  gui_chat_bubble = new TextBubble(message, !fromMe, this);
+  gui_chat_bubble = new QPushButton(message, this);
+  QSizePolicy p;
+  p.setHorizontalPolicy(QSizePolicy::Fixed);
+  gui_chat_bubble->setSizePolicy(p);
   chat_bubble_list.append(gui_chat_bubble);
 
-  chat_bubble_layout->addWidget(gui_chat_bubble);
+  chat_bubble_layout->addWidget(gui_chat_bubble, fromMe ? Qt::AlignRight : Qt::AlignRight);
 }
 
 //////////////////////////bottom//////////////////////////////////////

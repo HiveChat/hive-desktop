@@ -1,6 +1,6 @@
 #include "TextBubble.h"
 
-TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+TextBubble::TextBubble(const QString &text, bool alignLeft = false, QWidget *parent) : QWidget(parent)
 {
   int maxWidth = 500;
 
@@ -13,25 +13,25 @@ TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft =
   label->setTextInteractionFlags(Qt::TextSelectableByMouse);
   label->setCursor(QCursor(Qt::IBeamCursor));
 
-  main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(10,10,10,15);
-  main_layout->addWidget(label);
+//  main_layout = new QHBoxLayout(this);
+//  main_layout->setContentsMargins(10,10,10,15);
+//  main_layout->addWidget(label);
 
   if(alignLeft)
     {
       color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
-      main_layout->setAlignment(Qt::AlignLeft);
+//      main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
       color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
-      main_layout->setAlignment(Qt::AlignRight);
+//      main_layout->setAlignment(Qt::AlignRight);
     }
 
   this->setFixedWidth(maxWidth);
 }
 
-void TextBubble_text_area::paintEvent(QPaintEvent *)
+void TextBubble::paintEvent(QPaintEvent *)
 {
 //  btn->setGeometry(btn->parentWidget()->width()-btn->width(), btn->y(), btn->width(), btn->height());
   label->adjustSize();
@@ -44,46 +44,46 @@ void TextBubble_text_area::paintEvent(QPaintEvent *)
   this->setFixedHeight(label->rect().height()+20);
 }
 
-TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
-{
+//TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+//{
 
-  ////recently not consider the strip, it's ugly.
+//  ////recently not consider the strip, it's ugly.
+////  if(alignLeft)
+////    {
+////      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
+////    }
+////  else
+////    {
+////      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
+////    }
+
+////  strip_pixmap.setDevicePixelRatio(2.0);
+////  strip = new QLabel();
+////  strip->setPixmap(strip_pixmap);
+////  strip->setAlignment(Qt::AlignTop);
+////  strip->setContentsMargins(0,10,0,0);
+
+//  text_area = new TextBubble_text_area(text, alignLeft, this);
+
+//  main_layout = new QHBoxLayout(this);
+//  main_layout->setContentsMargins(0,0,0,0);
+//  main_layout->setSpacing(10);
+
 //  if(alignLeft)
 //    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
+//      main_layout->setAlignment(Qt::AlignLeft);
+//      //main_layout->addWidget(strip);
+//      main_layout->addWidget(text_area);
 //    }
 //  else
 //    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
+//      main_layout->setAlignment(Qt::AlignRight);
+//      main_layout->addWidget(text_area);
+//      //main_layout->addWidget(strip);
 //    }
 
-//  strip_pixmap.setDevicePixelRatio(2.0);
-//  strip = new QLabel();
-//  strip->setPixmap(strip_pixmap);
-//  strip->setAlignment(Qt::AlignTop);
-//  strip->setContentsMargins(0,10,0,0);
-
-  text_area = new TextBubble_text_area(text, alignLeft, this);
-
-  main_layout = new QHBoxLayout(this);
-  main_layout->setContentsMargins(0,0,0,0);
-  main_layout->setSpacing(10);
-
-  if(alignLeft)
-    {
-      main_layout->setAlignment(Qt::AlignLeft);
-      //main_layout->addWidget(strip);
-      main_layout->addWidget(text_area);
-    }
-  else
-    {
-      main_layout->setAlignment(Qt::AlignRight);
-      main_layout->addWidget(text_area);
-      //main_layout->addWidget(strip);
-    }
-
-  this->setParent(parent);
-}
+//  this->setParent(parent);
+//}
 
 
 
