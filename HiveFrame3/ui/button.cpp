@@ -9,7 +9,7 @@ Button::Button(const QString &txt, int w, int h, QWidget *parent)
   setFont("Gill Sans Light", 14);
   setText(txt);
   this->setFixedSize(QSize(w,h));
-  this->setAutoFillBackground(false);
+  this->setAutoFillBackground(true);
 }
 
 Button::Button(const QString &txt, QWidget *parent)
@@ -18,7 +18,7 @@ Button::Button(const QString &txt, QWidget *parent)
   setFont("Gill Sans Light", 13);
   setText(txt);
   this->setMinimumSize(QSize(width, height));
-  this->setAutoFillBackground(false);
+  this->setAutoFillBackground(true);
 }
 
 void Button::setFont(const QFont &f)

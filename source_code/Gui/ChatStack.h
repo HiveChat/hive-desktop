@@ -9,8 +9,6 @@
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/TextBubble.h"
 
-#include <QPushButton>
-
 #include <QFileDialog>
 #include <QScrollBar>
 #include <QScrollArea>
@@ -65,9 +63,9 @@ public:
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *chat_bubble_layout;
-  QPushButton *gui_chat_bubble;
+  TextBubble *gui_chat_bubble;
 
-  QList<QPushButton*> chat_bubble_list;
+  QList<TextBubble*> chat_bubble_list;
 
 public slots:
   void addChatBubble(const QString &message, const bool &fromMe);

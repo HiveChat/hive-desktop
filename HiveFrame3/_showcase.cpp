@@ -1,13 +1,11 @@
 #include "_showcase.h"
 
-_Showcase::_Showcase(QWidget *parent) : QOpenGLWidget(parent)
+_Showcase::_Showcase(QWidget *parent) : QWidget(parent)
 {
-
-
   QPalette palette;
   palette.setColor(QPalette::Window, Qt::white);
-  this->setAutoFillBackground(true);
   this->setPalette(palette);
+  this->setAutoFillBackground(true);
 
   bt1 = new Button("cancel", this);
   bt1->setPalette(Button::ForegroundHovered, QColor("#f7a527"));
