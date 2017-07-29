@@ -19,11 +19,11 @@ macx{
 
     INCLUDEPATH += /usr/local/include/
     QMAKE_LFLAGS += -L/usr/local/lib -luv
-
 }
 
 win32{
-    RC_FILE = /Src/hive.rc
+    QMAKE_LFLAGS += -L../dependency/win32/libuv -luv
+    RC_FILE = ./Src/hive.rc
 }
 
 TARGET = Hive!

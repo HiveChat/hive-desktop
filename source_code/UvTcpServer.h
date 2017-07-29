@@ -12,7 +12,11 @@
 #include <QDebug>
 #include <QHash>
 
+#ifdef Q_OS_WIN
+#include "../dependency/win32/libuv/include/uv.h"
+#else
 #include <uv.h>
+#endif
 
 class Bee;
 class UvTcpServer;

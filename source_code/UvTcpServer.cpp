@@ -142,7 +142,7 @@ int
 UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 {
   int fd;
-  uv_fileno((uv_handle_t *)handle, &fd);
+  uv_fileno((uv_handle_t *)handle, (void**)&fd);
   return fd;
 }
 
@@ -253,7 +253,7 @@ bool Bee::decodePacket(const QString &data)
         break;
       }
     case MessageType::FileReject:
-      {        
+      {
 
         break;
       }
