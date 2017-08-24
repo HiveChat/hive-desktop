@@ -1,5 +1,6 @@
 #include "UvTcpServer.h"
 
+
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
 QHash<UvTcpServer::SocketDescriptor, Bee*> UvTcpServer::bee_hash;
@@ -142,7 +143,7 @@ int
 UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 {
   int fd;
-  uv_fileno((uv_handle_t *)handle, (void**)&fd);
+  uv_fileno((uv_handle_t *)handle, &fd);
   return fd;
 }
 

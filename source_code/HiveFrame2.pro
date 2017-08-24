@@ -6,13 +6,13 @@
 
 QT       += core
 QT	 += gui
+QT       += widgets
 QT	 += network
 QT	 += opengl
 #QT       += concurrent
 
 CONFIG   += c++14
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 macx{
     QT   += macextras
@@ -21,10 +21,17 @@ macx{
     QMAKE_LFLAGS += -L/usr/local/lib -luv
 }
 
+unix{
+    INCLUDEPATH += /usr/local/include/
+    LIBS  += -L/usr/local/lib -luv
+    QMAKE_LFLAGS += -L/usr/local/lib -luv
+}
+
 win32{
     QMAKE_LFLAGS += -L../dependency/win32/libuv -luv
     RC_FILE = ./Src/hive.rc
 }
+
 
 TARGET = Hive!
 TEMPLATE = app
