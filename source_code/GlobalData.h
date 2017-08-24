@@ -22,6 +22,7 @@ class GlobalData
 public:
   ///UI
 
+  static int window_dpr;
   static int window_defaultWidth;
   static int window_defaultHeight;
 

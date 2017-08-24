@@ -32,14 +32,14 @@ MenuButton::~MenuButton()
 void MenuButton::setDefaultPixmap(QString path)
 {
   default_pixmap.load(path);
-  default_pixmap.setDevicePixelRatio(2.0);
+  default_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
   setDefault();
 }
 
 void MenuButton::setHoveredPixmap(QString path)
 {
   hovered_pixmap.load(path);
-  hovered_pixmap.setDevicePixelRatio(2.0);
+  hovered_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
 }
 
 

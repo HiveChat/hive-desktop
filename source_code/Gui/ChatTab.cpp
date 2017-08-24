@@ -60,6 +60,7 @@ void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 void ChatTab_comb_scroll_widget::refreshBadgeNumber(const QString &usrKey, const int &num)
 {
   CombWidget *comb_widget = comb_widget_hash.value(usrKey);
+  qDebug()<<"badge:" <<num;
   comb_widget->setBadgeNumber(num);
   if(num != 0)
     {

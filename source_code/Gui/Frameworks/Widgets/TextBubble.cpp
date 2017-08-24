@@ -57,7 +57,7 @@ TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *pare
 //      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
 //    }
 
-//  strip_pixmap.setDevicePixelRatio(2.0);
+//  strip_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
 //  strip = new QLabel();
 //  strip->setPixmap(strip_pixmap);
 //  strip->setAlignment(Qt::AlignTop);
@@ -95,7 +95,7 @@ GuiFileBubble_file_info::GuiFileBubble_file_info(const QString &text, bool align
 
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
   QPixmap file_icon(":/icon/icon/doc.png");
-  file_icon.setDevicePixelRatio(2.0);
+  file_icon.setDevicePixelRatio(GlobalData::window_dpr);
   label =  new QLabel(this);
   label->setPixmap(file_icon);
 //  label->adjustSize();
@@ -150,7 +150,7 @@ GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget
 //      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
 //    }
 
-//  strip_pixmap.setDevicePixelRatio(2.0);
+//  strip_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
 //  strip = new QLabel();
 //  strip->setPixmap(strip_pixmap);
 //  strip->setAlignment(Qt::AlignTop);

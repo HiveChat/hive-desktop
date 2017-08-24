@@ -3,6 +3,7 @@
 Hive::Hive(int &argc, char **argv) : QApplication(argc, argv)
 
 {
+  GlobalData::window_dpr = this->devicePixelRatio();
 #ifdef Q_OS_OSX
 
   QApplication::setQuitOnLastWindowClosed(false);

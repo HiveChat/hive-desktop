@@ -1,6 +1,8 @@
 #ifndef GuiLabelButton_H
 #define GuiLabelButton_H
 
+#include "GlobalData.h"
+
 #include <QLabel>
 #include <QMouseEvent>
 #include <QTimer>

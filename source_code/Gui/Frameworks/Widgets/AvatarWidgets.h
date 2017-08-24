@@ -1,6 +1,8 @@
 #ifndef GUIAVATARBUTTON_H
 #define GUIAVATARBUTTON_H
 
+#include "GlobalData.h"
+
 #include <QMouseEvent>
 #include <QDragEnterEvent>
 #include <QMimeData>

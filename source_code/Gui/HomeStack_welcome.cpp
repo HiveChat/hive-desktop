@@ -31,7 +31,7 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
 
   background_label = new QLabel(this);
   QPixmap background_pixmap(":/img/img/welcome_stack_background.png");
-  background_pixmap.setDevicePixelRatio(2.0);
+  background_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
   background_label->setPixmap(background_pixmap);
   background_label->setAlignment(Qt::AlignRight|Qt::AlignBottom);
 
