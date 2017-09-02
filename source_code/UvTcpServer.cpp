@@ -3,7 +3,7 @@
 
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
-QHash<UvTcpServer::SocketDescriptor, Bee*> UvTcpServer::bee_hash;
+QHash<UvTcpServer::SocketDescriptor, HiveConnection*> UvTcpServer::bee_hash;
 QHash<QString, UvTcpServer::SocketDescriptor> UvTcpServer::key_sd_hash;
 
 
@@ -77,21 +77,21 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
   if (nread > 0)
     {
       SocketDescriptor socketDiscriptor = getSocketDescriptor(client);
-      Bee *bee;
+      HiveConnection *hiveConnection;
       if(bee_hash.contains(socketDiscriptor))
         {
           Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form old user: " + QString::number(socketDiscriptor));
-          bee = bee_hash.value(socketDiscriptor);
+          hiveConnection = bee_hash.value(socketDiscriptor);
         }
       else
         {
           Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form new user: " + QString::number(socketDiscriptor));
-//          bee = new Bee(client, socketDiscriptor);
-          bee_hash.insert(socketDiscriptor, bee);
+          hiveConnection = new HiveConnection(client, socketDiscriptor);
+          bee_hash.insert(socketDiscriptor, hiveConnection);
         }
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
-      bee->read(QString::fromUtf8(buffer.base, buffer.len));
+      hiveConnection->read(QString::fromUtf8(buffer.base, buffer.len));
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       req->buf = uv_buf_init(buf->base, nread);
@@ -151,15 +151,22 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 
 
 
-//Bee::Bee(uv_stream_t *tcpHandle, const int &fd)
+//HiveConnection::HiveConnection(uv_stream_t *tcpHandle, const int &fd)
 //  : tcp_handle(tcpHandle)
 //  , socket_descriptor(fd)
 //{
 //}
 
-bool Bee::read(const QString &data) //recursion decode
+bool HiveConnection::read(const QString &data) //recursion decode
 {
+  if(data.isEmpty())
+    {
+      Log::net(Log::Error, "Bee:read()", "data empty");
+      return false;
+    }
+
   Log::net(Log::Normal, "Bee::read()", "Stream: " + data);
+  Log::net(Log::Normal, "Bee::read()", "Current Buffer: " + buffer);
 
   buffer.append(data);
 
@@ -207,23 +214,24 @@ bool Bee::read(const QString &data) //recursion decode
   return read("");
 }
 
-bool Bee::write(const MessageType &MsgType, const QString &data)
+bool HiveConnection::write(const MessageType &MsgType, const QString &data)
 {
 
 }
 
-bool Bee::isLeaving()
+bool HiveConnection::isLeaving()
 {
   return is_leaving;
 }
 
-bool Bee::isIdentified()
+bool HiveConnection::isIdentified()
 {
   return usr_data == nullptr;
 }
 
-bool Bee::decodePacket(const QString &data)
+bool HiveConnection::decodePacket(const QString &data)
 {
+  qDebug()<<data;
   QByteArray byteArray = data.toLatin1();
   QJsonParseError jsonError;
   QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
@@ -241,14 +249,15 @@ bool Bee::decodePacket(const QString &data)
       Log::net(Log::Error, "Bee::decodePacket()", "Package delivered to wrong person!");
       return false;
     }
-  MessageType messageType = (MessageType)packetJson.value("type").toInt();
+  MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
   switch (messageType) {
-    case MessageType::FileContent:
+    case MessageType::FileInfo:
       {
+        Log::net(Log::Normal, "HiveConnection::decodePacket()", "File info received.");
 
         break;
       }
-    case MessageType::FileInfo:
+    case MessageType::FileContent:
       {
 
         break;

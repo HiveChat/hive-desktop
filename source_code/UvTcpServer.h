@@ -18,10 +18,10 @@
 #include <uv.h>
 #endif
 
-class Bee;
+class HiveConnection;
 class UvTcpServer;
 
-class Bee
+class HiveConnection
 {
 
   enum MessageType {
@@ -33,10 +33,10 @@ class Bee
   };
 
 public:
-//  explicit Bee(uv_stream_t *tcpHandle, const int &fd);
+//  explicit HiveConnection(uv_stream_t *tcpHandle, const int &fd);
 
   bool read(const QString &data);
-  bool write(const Bee::MessageType &MsgType, const QString &data);
+  bool write(const HiveConnection::MessageType &MsgType, const QString &data);
 
   bool isLeaving();
   bool isIdentified();
@@ -46,7 +46,7 @@ private:
   int socket_descriptor;
   uv_stream_t *tcp_handle;
   UsrData *usr_data = nullptr;
-  QString buffer;
+//  QString buffer; //using inheritance, not private variables in theory, leave the error until private data is fully separated.
   int read_size = 0;
 
   bool is_leaving;
@@ -57,7 +57,7 @@ private:
 
 class UvTcpServer
     : public QThread
-    , public Bee
+    , public HiveConnection
 {
   Q_OBJECT
 
@@ -80,7 +80,7 @@ private:
   static uv_loop_t *loop;
   static struct sockaddr_in addr;
 
-  static QHash<SocketDescriptor, Bee*> bee_hash;
+  static QHash<SocketDescriptor, HiveConnection*> bee_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
   inline static void onNewConnection(uv_stream_t *server, int status);
