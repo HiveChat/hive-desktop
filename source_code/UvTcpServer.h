@@ -18,10 +18,10 @@
 #include <uv.h>
 #endif
 
-class HiveConnection;
+class HiveProtocol;
 class UvTcpServer;
 
-class HiveConnection
+class HiveProtocol
 {
 
   enum MessageType {
@@ -32,11 +32,16 @@ class HiveConnection
     ErrorDelivery = 6,
   };
 
+
 public:
+  struct HiveClient{
+    QString buffer;
+    int readSize = 0;
+  };
 //  explicit HiveConnection(uv_stream_t *tcpHandle, const int &fd);
 
-  bool read(const QString &data);
-  bool write(const HiveConnection::MessageType &MsgType, const QString &data);
+  static bool read(const QString &data, HiveClient *clientBuffer);
+  bool write(const HiveProtocol::MessageType &MsgType, const QString &data);
 
   bool isLeaving();
   bool isIdentified();
@@ -51,13 +56,13 @@ private:
 
   bool is_leaving;
 
-  inline bool decodePacket(const QString &data);
+  static inline bool decodePacket(const QString &data);
 
 };
 
 class UvTcpServer
     : public QThread
-    , public HiveConnection
+    , public HiveProtocol
 {
   Q_OBJECT
 
@@ -80,7 +85,7 @@ private:
   static uv_loop_t *loop;
   static struct sockaddr_in addr;
 
-  static QHash<SocketDescriptor, HiveConnection*> bee_hash;
+  static QHash<SocketDescriptor, HiveProtocol::HiveClient*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
   inline static void onNewConnection(uv_stream_t *server, int status);

@@ -3,7 +3,7 @@
 
 uv_loop_t* UvTcpServer::loop;
 struct sockaddr_in UvTcpServer::addr;
-QHash<UvTcpServer::SocketDescriptor, HiveConnection*> UvTcpServer::bee_hash;
+QHash<UvTcpServer::SocketDescriptor, HiveProtocol::HiveClient*> UvTcpServer::buffer_hash;
 QHash<QString, UvTcpServer::SocketDescriptor> UvTcpServer::key_sd_hash;
 
 
@@ -77,21 +77,21 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
   if (nread > 0)
     {
       SocketDescriptor socketDiscriptor = getSocketDescriptor(client);
-      HiveConnection *hiveConnection;
-      if(bee_hash.contains(socketDiscriptor))
+      HiveClient *hiveClient;
+      if(buffer_hash.contains(socketDiscriptor))
         {
           Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form old user: " + QString::number(socketDiscriptor));
-          hiveConnection = bee_hash.value(socketDiscriptor);
+          hiveClient = buffer_hash.value(socketDiscriptor);
         }
       else
         {
           Log::net(Log::Normal, "UvTcpServer::tcpRead()", "Reading message form new user: " + QString::number(socketDiscriptor));
-          hiveConnection = new HiveConnection(client, socketDiscriptor);
-          bee_hash.insert(socketDiscriptor, hiveConnection);
+          hiveClient = new HiveClient();
+          buffer_hash.insert(socketDiscriptor, hiveClient);
         }
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
-      hiveConnection->read(QString::fromUtf8(buffer.base, buffer.len));
+      read(QString::fromUtf8(buffer.base, buffer.len), hiveClient);
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       req->buf = uv_buf_init(buf->base, nread);
@@ -157,7 +157,7 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 //{
 //}
 
-bool HiveConnection::read(const QString &data) //recursion decode
+bool HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursion decode
 {
   if(data.isEmpty())
     {
@@ -166,70 +166,70 @@ bool HiveConnection::read(const QString &data) //recursion decode
     }
 
   Log::net(Log::Normal, "Bee::read()", "Stream: " + data);
-  Log::net(Log::Normal, "Bee::read()", "Current Buffer: " + buffer);
+  Log::net(Log::Normal, "Bee::read()", "Current Buffer: " + clientBuffer->buffer);
 
-  buffer.append(data);
+  clientBuffer->buffer.append(data);
 
   //if size header is 0
-  if(read_size == 0)
+  if(clientBuffer->readSize == 0)
     {
       //if 16 digit size header is not complete, return
-      if(buffer.size() < 16)
+      if(clientBuffer->buffer.size() < 16)
         {
           Log::net(Log::Normal, "Bee::read()", "Failed: value \"size\" in header is not complete");
           return false;
         }
       else
         {
-          read_size = buffer.mid(0, 16).toInt();
-          buffer.remove(0, 16);
-          Log::net(Log::Normal, "Bee::read()", "Member read_size is set to " + QString::number(read_size));
+          clientBuffer->readSize = clientBuffer->buffer.mid(0, 16).toInt();
+          clientBuffer->buffer.remove(0, 16);
+          Log::net(Log::Normal, "Bee::read()", "Member read_size is set to " + QString::number(clientBuffer->readSize));
         }
     }
 
   //if data is not complete, return
-  if(buffer.size() < read_size)
+  if(clientBuffer->buffer.size() < clientBuffer->readSize)
     {
       Log::net(Log::Normal, "Bee::read()", "Failed: buffer not filled.");
       return false;
     }
   else //else read
     {
-      QString packet = buffer.mid(0, read_size);
-      buffer.remove(0, read_size);
-      read_size = 0;
+      QString packet = clientBuffer->buffer.mid(0, clientBuffer->readSize);
+      clientBuffer->buffer.remove(0, clientBuffer->readSize);
+      clientBuffer->readSize = 0;
 
       Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
 
       if(!decodePacket(packet))
         {
           Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
-          buffer.clear();
+          clientBuffer->buffer.clear();
 
           return false;
         }
     }
 
 
-  return read("");
+  return read("", clientBuffer);
 }
 
-bool HiveConnection::write(const MessageType &MsgType, const QString &data)
+bool HiveProtocol::write(const MessageType &MsgType, const QString &data)
 {
 
 }
 
-bool HiveConnection::isLeaving()
+bool HiveProtocol::isLeaving()
 {
   return is_leaving;
 }
 
-bool HiveConnection::isIdentified()
+bool HiveProtocol::isIdentified()
 {
   return usr_data == nullptr;
 }
 
-bool HiveConnection::decodePacket(const QString &data)
+bool HiveProtocol::decodePacket(const QString &data)
 {
   qDebug()<<data;
   QByteArray byteArray = data.toLatin1();
