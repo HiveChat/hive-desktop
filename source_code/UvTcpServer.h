@@ -23,7 +23,6 @@ class UvTcpServer;
 
 class HiveProtocol
 {
-
   enum MessageType {
     FileInfo = 0,
     FileContent = 1,
@@ -32,31 +31,27 @@ class HiveProtocol
     ErrorDelivery = 6,
   };
 
-
 public:
   struct HiveClient{
     QString buffer;
     int readSize = 0;
   };
-//  explicit HiveConnection(uv_stream_t *tcpHandle, const int &fd);
 
   static bool read(const QString &data, HiveClient *clientBuffer);
-  bool write(const HiveProtocol::MessageType &MsgType, const QString &data);
-
-  bool isLeaving();
-  bool isIdentified();
+  static bool write(const HiveProtocol::MessageType &MsgType, const QString &data);
 
 private:
 
-  int socket_descriptor;
-  uv_stream_t *tcp_handle;
-  UsrData *usr_data = nullptr;
-//  QString buffer; //using inheritance, not private variables in theory, leave the error until private data is fully separated.
-  int read_size = 0;
-
-  bool is_leaving;
-
   static inline bool decodePacket(const QString &data);
+
+//using inheritance, not private variables in theory, leave the error until private data is fully separated.
+//  int socket_descriptor;
+//  uv_stream_t *tcp_handle;
+//  UsrData *usr_data = nullptr;
+//  QString buffer;
+//  int read_size = 0;
+//  bool is_leaving;
+
 
 };
 
@@ -81,7 +76,7 @@ public:
 protected:
   void run();
 
-private:
+private:  
   static uv_loop_t *loop;
   static struct sockaddr_in addr;
 

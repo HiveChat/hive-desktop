@@ -32,10 +32,8 @@ UvTcpServer::run()
 
   uv_tcp_t server;
   uv_tcp_init(loop, &server);
-
   uv_ip4_addr("0.0.0.0", TCP_PORT, &addr);
   uv_tcp_bind(&server, (const struct sockaddr*)&addr, 0);
-
   int r = uv_listen((uv_stream_t*)&server, TCP_BACKLOG, onNewConnection);
   if(r)
     {
@@ -151,15 +149,15 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 
 
 
-//HiveConnection::HiveConnection(uv_stream_t *tcpHandle, const int &fd)
-//  : tcp_handle(tcpHandle)
-//  , socket_descriptor(fd)
-//{
-//}
 
-bool HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursion decode
+
+
+bool
+HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursion decode
 {
-  if(data.isEmpty())
+  qDebug()<<"\n\n";
+  Log::net(Log::Normal, "Bee::read()", "New READ section begins");
+  if(data.isEmpty() && clientBuffer->buffer.isEmpty())
     {
       Log::net(Log::Error, "Bee:read()", "data empty");
       return false;
@@ -183,7 +181,7 @@ bool HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursi
         {
           clientBuffer->readSize = clientBuffer->buffer.mid(0, 16).toInt();
           clientBuffer->buffer.remove(0, 16);
-          Log::net(Log::Normal, "Bee::read()", "Member read_size is set to " + QString::number(clientBuffer->readSize));
+          Log::net(Log::Normal, "Bee::read()", "Member clientBuffer->readSize is set to " + QString::number(clientBuffer->readSize));
         }
     }
 
@@ -195,8 +193,8 @@ bool HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursi
     }
   else //else read
     {
-      QString packet = clientBuffer->buffer.mid(0, clientBuffer->readSize);
-      clientBuffer->buffer.remove(0, clientBuffer->readSize);
+      QString packet = clientBuffer->buffer.mid(0, clientBuffer->readSize - 1);
+      clientBuffer->buffer.remove(0, clientBuffer->readSize - 1);
       clientBuffer->readSize = 0;
 
       Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
@@ -206,6 +204,8 @@ bool HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursi
           Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
           clientBuffer->buffer.clear();
 
+          //have to reset the connection!
+
           return false;
         }
     }
@@ -214,39 +214,29 @@ bool HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursi
   return read("", clientBuffer);
 }
 
-bool HiveProtocol::write(const MessageType &MsgType, const QString &data)
+bool
+HiveProtocol::write(const MessageType &MsgType, const QString &data)
 {
 
 }
 
-bool HiveProtocol::isLeaving()
+bool
+HiveProtocol::decodePacket(const QString &data)
 {
-  return is_leaving;
-}
-
-bool HiveProtocol::isIdentified()
-{
-  return usr_data == nullptr;
-}
-
-bool HiveProtocol::decodePacket(const QString &data)
-{
-  qDebug()<<data;
   QByteArray byteArray = data.toLatin1();
   QJsonParseError jsonError;
   QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
   if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
     {
-      Log::net(Log::Critical, "Bee::decodePacket()", jsonError.errorString());
-      Log::net(Log::Critical, "Bee::decodePacket()", "Stream: " + data);
+      Log::net(Log::Critical, "HiveProtocol::decodePacket()", QString(jsonError.errorString() + " in stream: " + data));
       return false;
     }
 
-  QJsonObject packetJson;
+  QJsonObject packetJson = readJsonDocument.object();
   QString receiverKey = packetJson.value("receiver").toString();
   if(receiverKey != GlobalData::settings_struct.profile_key_str)
     {
-      Log::net(Log::Error, "Bee::decodePacket()", "Package delivered to wrong person!");
+      Log::net(Log::Error, "HiveProtocol::decodePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
       return false;
     }
   MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
@@ -278,4 +268,5 @@ bool HiveProtocol::decodePacket(const QString &data)
         break;
       }
   }
+  return true;
 }

@@ -12,14 +12,11 @@
 #include <QHostInfo>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
-#include <QTcpServer>
-#include <QTcpSocket>
 #include <QUdpSocket>
 #include <QNetworkInterface>
 #include <QDataStream>
 #include <QFile>
 #include <QDate>
-#include <QMutex>
 #include <QTimer>
 
 
