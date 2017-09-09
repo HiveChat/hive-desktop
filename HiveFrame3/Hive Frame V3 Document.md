@@ -34,6 +34,7 @@ QColor | gui_color_bkg_chatBubbleOut | RGBA: 225,225,225,255 | Background color 
 ### File Info
 Key | type | Note
 ------- | ------- | -------
+index | int | 16 digit random number
 sender | string | Sender
 receiver | string | Receiver
 name | string | File Name
@@ -43,6 +44,7 @@ md5 | str | File Md5
 ### FileContent
 Key | type | Note
 ------- | ------- | -------
+index | int | 16 digit random number
 sender | string | Sender
 receiver | string | Receiver
 content | string | File Segment in Base64
@@ -52,6 +54,7 @@ md5 | str | File Md5 (as identification)
 ### FileAccept
 Key | type | Note
 ------- | ------- | -------
+index | int | 16 digit random number
 sender | string | Sender
 receiver | string | Receiver
 md5 | str | File Md5
@@ -60,12 +63,19 @@ position | int | The position to start transfer
 ### FileReject
 Key | type | Note
 ------- | ------- | -------
+index | int | 16 digit random number
 sender | string | Sender
 receiver | string | Receiver
 md5 | str | File Md5
 reason | int | Enum reason for rejecting
 
 ### ErrorDelivery
+Key | type | Note
+------- | ------- | -------
+index | int | 16 digit random number
+sender | string | Sender
+receiver | string | Receiver
+
 
 ## UDP JSON Packages
 ### Heart Beat

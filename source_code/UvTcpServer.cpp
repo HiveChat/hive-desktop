@@ -7,6 +7,134 @@ QHash<UvTcpServer::SocketDescriptor, HiveProtocol::HiveClient*> UvTcpServer::buf
 QHash<QString, UvTcpServer::SocketDescriptor> UvTcpServer::key_sd_hash;
 
 
+
+bool
+HiveProtocol::readTcp(const QString &data, HiveClient *clientBuffer) //recursion decode
+{
+  qDebug()<<"\n\n";
+  Log::net(Log::Normal, "Bee::read()", "New READ section begins");
+  if(data.isEmpty() && clientBuffer->buffer.isEmpty())
+    {
+      Log::net(Log::Error, "Bee:read()", "data empty");
+      return false;
+    }
+
+  Log::net(Log::Normal, "Bee::read()", "Stream: " + data);
+  Log::net(Log::Normal, "Bee::read()", "Current Buffer Size: " + QString::number( clientBuffer->buffer.size()));
+
+  clientBuffer->buffer.append(data);
+
+  //if size header is 0
+  if(clientBuffer->readSize == 0)
+    {
+      //if 16 digit size header is not complete, return
+      if(clientBuffer->buffer.size() < 16)
+        {
+          Log::net(Log::Normal, "Bee::read()", "Failed: value \"size\" in header is not complete");
+          return false;
+        }
+      else
+        {
+          clientBuffer->readSize = clientBuffer->buffer.mid(0, 16).toInt();
+          clientBuffer->buffer.remove(0, 16);
+          Log::net(Log::Normal, "Bee::read()", "Member clientBuffer->readSize is set to " + QString::number(clientBuffer->readSize));
+        }
+    }
+
+  //if data is not complete, return
+  if(clientBuffer->buffer.size() < clientBuffer->readSize)
+    {
+      Log::net(Log::Normal, "Bee::read()", "Failed: buffer not filled.");
+      return false;
+    }
+  else //else read
+    {
+      QString packet = clientBuffer->buffer.mid(0, clientBuffer->readSize - 1);
+      clientBuffer->buffer.remove(0, clientBuffer->readSize - 1);
+      clientBuffer->readSize = 0;
+
+      Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
+
+      if(!decodeTcpPacket(packet))
+        {
+          Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
+          clientBuffer->buffer.clear();
+
+          //have to reset the connection!
+
+          return false;
+        }
+    }
+
+
+  return readTcp("", clientBuffer);
+}
+
+bool
+HiveProtocol::writeTcp(const MessageType &MsgType, const QString &data)
+{
+
+}
+
+bool
+HiveProtocol::decodeTcpPacket(const QString &data)
+{
+  QByteArray byteArray = data.toLatin1();
+  QJsonParseError jsonError;
+  QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
+  if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
+    {
+      Log::net(Log::Critical, "HiveProtocol::decodePacket()", QString(jsonError.errorString() + " in stream: " + data));
+      return false;
+    }
+
+  QJsonObject packetJson = readJsonDocument.object();
+  QString receiverKey = packetJson.value("receiver").toString();
+  if(receiverKey != GlobalData::settings_struct.profile_key_str)
+    {
+      Log::net(Log::Error, "HiveProtocol::decodePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
+      return false;
+    }
+  MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
+  switch (messageType) {
+    case MessageType::FileInfo:
+      {
+        Log::net(Log::Normal, "HiveConnection::decodePacket()", "File info received.");
+
+        break;
+      }
+    case MessageType::FileContent:
+      {
+
+        break;
+      }
+    case MessageType::FileReject:
+      {
+
+        break;
+      }
+    case MessageType::FileAccept:
+      {
+
+        break;
+      }
+    case MessageType::ErrorDelivery:
+      {
+
+        break;
+      }
+  }
+  return true;
+}
+
+
+
+
+
+
+
+
+
 UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
 {
 }
@@ -89,7 +217,7 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
         }
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
-      read(QString::fromUtf8(buffer.base, buffer.len), hiveClient);
+      readTcp(QString::fromUtf8(buffer.base, buffer.len), hiveClient);
 
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       req->buf = uv_buf_init(buf->base, nread);
@@ -151,122 +279,3 @@ UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
 
 
 
-
-bool
-HiveProtocol::read(const QString &data, HiveClient *clientBuffer) //recursion decode
-{
-  qDebug()<<"\n\n";
-  Log::net(Log::Normal, "Bee::read()", "New READ section begins");
-  if(data.isEmpty() && clientBuffer->buffer.isEmpty())
-    {
-      Log::net(Log::Error, "Bee:read()", "data empty");
-      return false;
-    }
-
-  Log::net(Log::Normal, "Bee::read()", "Stream: " + data);
-  Log::net(Log::Normal, "Bee::read()", "Current Buffer: " + clientBuffer->buffer);
-
-  clientBuffer->buffer.append(data);
-
-  //if size header is 0
-  if(clientBuffer->readSize == 0)
-    {
-      //if 16 digit size header is not complete, return
-      if(clientBuffer->buffer.size() < 16)
-        {
-          Log::net(Log::Normal, "Bee::read()", "Failed: value \"size\" in header is not complete");
-          return false;
-        }
-      else
-        {
-          clientBuffer->readSize = clientBuffer->buffer.mid(0, 16).toInt();
-          clientBuffer->buffer.remove(0, 16);
-          Log::net(Log::Normal, "Bee::read()", "Member clientBuffer->readSize is set to " + QString::number(clientBuffer->readSize));
-        }
-    }
-
-  //if data is not complete, return
-  if(clientBuffer->buffer.size() < clientBuffer->readSize)
-    {
-      Log::net(Log::Normal, "Bee::read()", "Failed: buffer not filled.");
-      return false;
-    }
-  else //else read
-    {
-      QString packet = clientBuffer->buffer.mid(0, clientBuffer->readSize - 1);
-      clientBuffer->buffer.remove(0, clientBuffer->readSize - 1);
-      clientBuffer->readSize = 0;
-
-      Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
-
-      if(!decodePacket(packet))
-        {
-          Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
-          clientBuffer->buffer.clear();
-
-          //have to reset the connection!
-
-          return false;
-        }
-    }
-
-
-  return read("", clientBuffer);
-}
-
-bool
-HiveProtocol::write(const MessageType &MsgType, const QString &data)
-{
-
-}
-
-bool
-HiveProtocol::decodePacket(const QString &data)
-{
-  QByteArray byteArray = data.toLatin1();
-  QJsonParseError jsonError;
-  QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
-  if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
-    {
-      Log::net(Log::Critical, "HiveProtocol::decodePacket()", QString(jsonError.errorString() + " in stream: " + data));
-      return false;
-    }
-
-  QJsonObject packetJson = readJsonDocument.object();
-  QString receiverKey = packetJson.value("receiver").toString();
-  if(receiverKey != GlobalData::settings_struct.profile_key_str)
-    {
-      Log::net(Log::Error, "HiveProtocol::decodePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
-      return false;
-    }
-  MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
-  switch (messageType) {
-    case MessageType::FileInfo:
-      {
-        Log::net(Log::Normal, "HiveConnection::decodePacket()", "File info received.");
-
-        break;
-      }
-    case MessageType::FileContent:
-      {
-
-        break;
-      }
-    case MessageType::FileReject:
-      {
-
-        break;
-      }
-    case MessageType::FileAccept:
-      {
-
-        break;
-      }
-    case MessageType::ErrorDelivery:
-      {
-
-        break;
-      }
-  }
-  return true;
-}
