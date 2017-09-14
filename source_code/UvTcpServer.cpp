@@ -55,7 +55,7 @@ HiveProtocol::readTcp(const QString &data, HiveClient *clientBuffer) //recursion
 
       Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
 
-      if(!decodeTcpPacket(packet))
+      if(!decodePacket(packet))
         {
           Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
           clientBuffer->buffer.clear();
@@ -77,7 +77,7 @@ HiveProtocol::writeTcp(const MessageType &MsgType, const QString &data)
 }
 
 bool
-HiveProtocol::decodeTcpPacket(const QString &data)
+HiveProtocol::decodePacket(const QString &data)
 {
   QByteArray byteArray = data.toLatin1();
   QJsonParseError jsonError;
@@ -125,6 +125,110 @@ HiveProtocol::decodeTcpPacket(const QString &data)
       }
   }
   return true;
+}
+
+bool
+HiveProtocol::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
+{
+  if(usrProfileStruct.key.isEmpty())
+    {
+      return;
+    }
+
+  if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
+    {
+      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
+        {
+          GlobalData::g_localHostIP = usrProfileStruct.ip;
+        }
+      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from myself");
+//      emit usrEnter(usrProfileStruct); << FIX HERE!!
+    }
+  else
+    {
+      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from others");
+//      emit usrEnter(usrProfileStruct); << FIX HERE!!
+    }
+}
+
+bool
+HiveProtocol::processUsrLeave(QString *usrKey)
+{
+  if(*usrKey == GlobalData::settings_struct.profile_key_str)
+    {
+//      emit usrLeft(usrKey); << FIX HERE!!
+
+      qDebug()<<"@NetworkManager::udpProcessUsrLeft(): Myself left.";
+    }
+
+  qDebug()<<"@NetworkManager::udpProcessUsrLeft(): Someone left.";
+//  emit usrLeft(usrKey); << FIX HERE!!
+}
+
+bool
+HiveProtocol::processErrorDelivery()
+{
+
+}
+
+bool
+HiveProtocol::processMessage()
+{
+//  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
+//    {
+//      return;
+//    }
+
+//  if(messageStruct.reciever != GlobalData::settings_struct.profile_key_str)
+//    {
+//      if(messageStruct.sender != GlobalData::settings_struct.profile_key_str)
+//        {
+//          //no sniffing man!
+//          return;
+//        }
+//      else
+//        {
+//          qDebug()<<"@NetworkManager::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
+//          emit messageRecieved(messageStruct, true);
+//        }
+//    }
+//  else
+//    {
+//      if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
+//        {
+//          qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
+//          emit messageRecieved(messageStruct, true);
+//        }
+//      else
+//        {
+//          qDebug()<<"@NetworkManager::udpProcessMessage(): Other people sent: "<<messageStruct.message;
+//          emit messageRecieved(messageStruct, false);
+//        }
+//    }
+}
+
+bool
+HiveProtocol::processFileInfo()
+{
+
+}
+
+bool
+HiveProtocol::processFileContent()
+{
+
+}
+
+bool
+HiveProtocol::processFileAccept()
+{
+
+}
+
+bool
+HiveProtocol::processFileReject()
+{
+
 }
 
 

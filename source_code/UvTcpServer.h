@@ -4,6 +4,8 @@
 #define TCP_PORT 23232
 #define TCP_BACKLOG 128
 
+#define UDP_PORT 23232
+
 #include "Log.h"
 #include "UsrData.h"
 #include "GlobalData.h"
@@ -45,7 +47,16 @@ public:
 
 private:
 
-  static inline bool decodeTcpPacket(const QString &data);
+  static inline bool decodePacket(const QString &data);
+  static inline bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
+  static inline bool processUsrLeave(QString *usrKey);
+  static inline bool processErrorDelivery();
+  static inline bool processMessage();
+  static inline bool processFileInfo();
+  static inline bool processFileContent();
+  static inline bool processFileAccept();
+  static inline bool processFileReject();
+
 
 //using inheritance, not private variables in theory, leave the error until private data is fully separated.
 //  int socket_descriptor;

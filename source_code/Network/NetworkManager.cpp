@@ -5,12 +5,6 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
   uv_tcp_server = new UvTcpServer(this);
   uv_tcp_server->start();
-//  tcp_server = new TcpServer();
-//  QThread *serverThread = new QThread(this);
-//  tcp_server->moveToThread(serverThread);
-//  serverThread->start();
-
-//  tcp_server->start();
 
   udp_socket = new QUdpSocket(this);
   udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
@@ -149,7 +143,7 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
 
 void NetworkManager::udpProcessUsrLeft(QString *usrKey)
 {
-  if(usrKey == GlobalData::settings_struct.profile_key_str)
+  if(*usrKey == GlobalData::settings_struct.profile_key_str)
     {
       emit usrLeft(usrKey);
 
