@@ -31,6 +31,12 @@ QColor | gui_color_bkg_chatBubbleOut | RGBA: 225,225,225,255 | Background color 
 
 
 ## TCP JSON Packages
+### Heart Beat
+Key | type | Note
+------- | ------- | -------
+key | string | User key
+name | string | User name
+time | int | UNIX time stamp
 ### File Info
 Key | type | Note
 ------- | ------- | -------

@@ -2,7 +2,6 @@
 
 
 uv_loop_t* UvTcpServer::loop;
-struct sockaddr_in UvTcpServer::addr;
 QHash<UvTcpServer::SocketDescriptor, HiveProtocol::HiveClient*> UvTcpServer::buffer_hash;
 QHash<QString, UvTcpServer::SocketDescriptor> UvTcpServer::key_sd_hash;
 
@@ -30,11 +29,20 @@ UvTcpServer::run()
 
   loop = uv_default_loop();
 
-  uv_tcp_t server;
-  uv_tcp_init(loop, &server);
-  uv_ip4_addr("0.0.0.0", TCP_PORT, &addr);
-  uv_tcp_bind(&server, (const struct sockaddr*)&addr, 0);
-  int r = uv_listen((uv_stream_t*)&server, TCP_BACKLOG, onNewConnection);
+  struct sockaddr_in udpAddr;
+  uv_ip4_addr("0.0.0.0", UDP_PORT, &udpAddr);
+  uv_udp_t udpServer;
+  uv_udp_init(loop, &udpServer);
+  uv_udp_bind(&udpServer, (const struct sockaddr *)&udpAddr, UV_UDP_REUSEADDR);
+//  uv_udp_recv_start(&udpServer, alloc_buffer, on_read);
+
+
+  struct sockaddr_in tcpAddr;
+  uv_ip4_addr("0.0.0.0", TCP_PORT, &tcpAddr);
+  uv_tcp_t tcp_server;
+  uv_tcp_init(loop, &tcp_server);
+  uv_tcp_bind(&tcp_server, (const struct sockaddr*)&tcpAddr, 0);
+  int r = uv_listen((uv_stream_t*)&tcp_server, TCP_BACKLOG, onNewConnection);
   if(r)
     {
       Log::net(Log::Error, "UvTcpServer::run()", QString("Listen error: " + QString(uv_strerror(r))));

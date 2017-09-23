@@ -1,10 +1,10 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
+#define UDP_PORT 23232
+
 #define TCP_PORT 23232
 #define TCP_BACKLOG 128
-
-#define UDP_PORT 23232
 
 #include "HiveProtocol.h"
 
@@ -44,7 +44,6 @@ protected:
 
 private:  
   static uv_loop_t *loop;
-  static struct sockaddr_in addr;
 
   static QHash<SocketDescriptor, HiveProtocol::HiveClient*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;

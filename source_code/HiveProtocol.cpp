@@ -89,6 +89,11 @@ HiveProtocol::decodePacket(const QString &data)
     }
   MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
   switch (messageType) {
+    case MessageType::TextMessage:
+      {
+        processTextMessage();
+        break;
+      }
     case MessageType::FileInfo:
       {
         Log::net(Log::Normal, "HiveConnection::decodePacket()", "File info received.");
@@ -164,7 +169,7 @@ HiveProtocol::processErrorDelivery()
 }
 
 bool
-HiveProtocol::processMessage()
+HiveProtocol::processTextMessage()
 {
 //  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
 //    {

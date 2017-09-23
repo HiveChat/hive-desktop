@@ -11,7 +11,9 @@ class HiveProtocol
     HeartBeat = 0,
     UsrLeave = 1,
     ErrorDelivery = 10,
-    Message = 20,
+    TextMessage = 20,
+    PhotoMessage = 21,
+    VideoMessage = 22,
     FileInfo = 30,
     FileContent = 31,
     FileAccept = 32,
@@ -19,23 +21,69 @@ class HiveProtocol
   };
 
 
-
 public:
-  struct TextMessageStruct{
-    QString index;
-    QString reciever;
-    QString sender;
-    QString message;
-    QString time;
-  };
-
   struct HiveClient{
     QString buffer;
     int readSize = 0;
   };
 
+  struct HiveHeartBeat{
+    QString receiver;
+    QString sender;
+    int time;
+  };
+
+  struct HiveTextMessage{
+    int index;
+    QString reciever;
+    QString sender;
+    QString message;
+    int time;
+  };
+
+  struct HiveFileInfo{
+    int index;
+    QString reciever;
+    QString sender;
+    QString name;
+    QByteArray md5;
+    int size;
+  };
+
+  struct HiveFileContent{
+    int index;
+    QString reciever;
+    QString sender;
+    QString content;
+    QByteArray md5;
+  };
+
+  struct HiveFileAccept{
+    int index;
+    QString reciever;
+    QString sender;
+    QByteArray md5;
+  };
+
+  struct HiveFileReject{
+    int index;
+    QString reciever;
+    QString sender;
+    QByteArray md5;
+    int reason;
+  };
+
+  struct HiveErrorDelivery{
+    int index;
+    QString reciever;
+    QString sender;
+    // << Build Protocol
+  };
+
+
   static bool readTcp(const QString &data, HiveClient *clientBuffer);
   static bool writeTcp(const HiveProtocol::MessageType &MsgType, const QString &data);
+
 
 private:
 
@@ -43,7 +91,7 @@ private:
   static inline bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
   static inline bool processUsrLeave(QString *usrKey);
   static inline bool processErrorDelivery();
-  static inline bool processMessage();
+  static inline bool processTextMessage();
   static inline bool processFileInfo();
   static inline bool processFileContent();
   static inline bool processFileAccept();
