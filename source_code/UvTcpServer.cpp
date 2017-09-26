@@ -1,28 +1,28 @@
 #include "UvTcpServer.h"
 
 
-uv_loop_t* UvTcpServer::loop;
-QHash<UvTcpServer::SocketDescriptor, HiveProtocol::HiveClient*> UvTcpServer::buffer_hash;
-QHash<QString, UvTcpServer::SocketDescriptor> UvTcpServer::key_sd_hash;
+uv_loop_t* UvServer::loop;
+QHash<UvServer::SocketDescriptor, HiveProtocol::HiveClient*> UvServer::buffer_hash;
+QHash<QString, UvServer::SocketDescriptor> UvServer::key_sd_hash;
 
 
-UvTcpServer::UvTcpServer(QObject *parent) : QThread(parent)
+UvServer::UvServer(QObject *parent) : QThread(parent)
 {
 }
 
-UvTcpServer::~UvTcpServer()
+UvServer::~UvServer()
 {
 }
 
 void
-UvTcpServer::closeUvLoop()
+UvServer::closeUvLoop()
 {
   uv_stop(loop);
   Log::net(Log::Normal, "UvTcpServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
 void
-UvTcpServer::run()
+UvServer::run()
 {
   qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Normal, "UvTcpServer::run()", "Thread Started");
@@ -55,7 +55,7 @@ UvTcpServer::run()
 }
 
 void
-UvTcpServer::onNewConnection(uv_stream_t *server, int status)
+UvServer::onNewConnection(uv_stream_t *server, int status)
 {
   if(status < 0)
     {
@@ -78,7 +78,7 @@ UvTcpServer::onNewConnection(uv_stream_t *server, int status)
 }
 
 void
-UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
+UvServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 {
   if (nread > 0)
     {
@@ -121,7 +121,7 @@ UvTcpServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 }
 
 void
-UvTcpServer::tcpWrite(uv_write_t *req, int status)
+UvServer::tcpWrite(uv_write_t *req, int status)
 {
   if (status)
     {
@@ -131,14 +131,14 @@ UvTcpServer::tcpWrite(uv_write_t *req, int status)
 }
 
 void
-UvTcpServer::allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
+UvServer::allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
 {
   buf->base = (char*) malloc(suggested_size);
   buf->len = suggested_size;
 }
 
 void
-UvTcpServer::freeWriteReq(uv_write_t *req)
+UvServer::freeWriteReq(uv_write_t *req)
 {
   write_req_t *wr = (write_req_t*) req;
   free(wr->buf.base);
@@ -146,7 +146,7 @@ UvTcpServer::freeWriteReq(uv_write_t *req)
 }
 
 int
-UvTcpServer::getSocketDescriptor(uv_stream_t *handle)
+UvServer::getSocketDescriptor(uv_stream_t *handle)
 {
   int fd;
   uv_fileno((uv_handle_t *)handle, &fd);

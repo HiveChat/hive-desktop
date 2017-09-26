@@ -18,10 +18,10 @@
 #include <uv.h>
 #endif
 
-class UvTcpServer;
+class UvServer;
 
 
-class UvTcpServer
+class UvServer
     : public QThread
     , public HiveProtocol
 {
@@ -34,8 +34,8 @@ class UvTcpServer
   } write_req_t;
 
 public:
-  explicit UvTcpServer(QObject *parent = 0);
-  ~UvTcpServer();
+  explicit UvServer(QObject *parent = 0);
+  ~UvServer();
 
   void closeUvLoop();
 

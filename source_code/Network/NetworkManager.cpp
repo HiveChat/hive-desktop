@@ -3,7 +3,7 @@
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
-  uv_tcp_server = new UvTcpServer(this);
+  uv_tcp_server = new UvServer(this);
   uv_tcp_server->start();
 
   udp_socket = new QUdpSocket(this);
@@ -223,11 +223,11 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
 
   qint64 ret = udp_socket->writeDatagram(data
                                          , data.length()
-                                         , usrIp.isEmpty() ? QHostAddress::Broadcast : QHostAddress(usrIp)
+                                         , usrIp.isEmpty() || usrIp == GlobalData::g_localHostIP  ? QHostAddress::Broadcast : QHostAddress(usrIp)
                                          , udp_port);
   if(ret != 0 && ret != -1)
     {
-      qDebug()<<"@NetworkManager::udpSendMessage(): sent!";
+      qDebug()<<"@NetworkManager::udpSendMessage(): sent to "<<usrIp;
     }
 }
 

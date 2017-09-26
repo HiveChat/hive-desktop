@@ -76,7 +76,7 @@ private:
   QString file_name;
   QFile *local_file;
 
-  UvTcpServer *uv_tcp_server;
+  UvServer *uv_tcp_server;
 
   void tcpCloseConnection();
 
