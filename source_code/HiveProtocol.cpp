@@ -47,7 +47,7 @@ HiveProtocol::readTcp(const QString &data, HiveClient *clientBuffer) //recursion
 
       Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
 
-      if(!decodePacket(packet))
+      if(!decodeHivePacket(packet))
         {
           Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
           clientBuffer->buffer.clear();
@@ -69,7 +69,7 @@ HiveProtocol::writeTcp(const MessageType &MsgType, const QString &data)
 }
 
 bool
-HiveProtocol::decodePacket(const QString &data)
+HiveProtocol::decodeHivePacket(const QString &data)
 {
   QByteArray byteArray = data.toLatin1();
   QJsonParseError jsonError;

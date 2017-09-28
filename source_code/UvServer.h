@@ -38,6 +38,7 @@ public:
   ~UvServer();
 
   void closeUvLoop();
+  void write();
 
 protected:
   void run();
@@ -48,11 +49,16 @@ private:
   static QHash<SocketDescriptor, HiveProtocol::HiveClient*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
-  inline static void onNewConnection(uv_stream_t *server, int status);
+  inline static void udpRead(uv_udp_t *req, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
+  inline static void udpWrite();
+  inline static void tcpNewConnection(uv_stream_t *server, int status);
   inline static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
-  inline static void tcpWrite(uv_write_t *req, int status);
+  inline static void tcpWriten(uv_write_t *req, int status);
+
   inline static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
   inline static void freeWriteReq(uv_write_t *req);
+
+
 
   inline static int getSocketDescriptor(uv_stream_t *client);
 

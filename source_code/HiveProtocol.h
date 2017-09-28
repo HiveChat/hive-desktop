@@ -22,6 +22,12 @@ class HiveProtocol
 
 
 public:
+  enum BaseProtocol{
+    Any = 0,
+    Udp = 1,
+    Tcp = 2
+  };
+
   struct HiveClient{
     QString buffer;
     int readSize = 0;
@@ -85,9 +91,9 @@ public:
   static bool writeTcp(const HiveProtocol::MessageType &MsgType, const QString &data);
 
 
-private:
+protected:
 
-  static inline bool decodePacket(const QString &data);
+  static inline bool decodeHivePacket(const QString &data);
   static inline bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
   static inline bool processUsrLeave(QString *usrKey);
   static inline bool processErrorDelivery();
