@@ -73,6 +73,8 @@ Hive::~Hive()
   gui_central_widget->close();
   gui_central_widget->deleteLater();
 
+  data_manager->deleteLater();
+  network_manager->deleteLater();
 
   network_thread->quit();
   data_thread->quit();

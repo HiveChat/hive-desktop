@@ -3,11 +3,11 @@
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
-  uv_tcp_server = new UvServer(this);
-  uv_tcp_server->start();
+  uv_server = new UvServer(this);
+  uv_server->start();
 
   udp_socket = new QUdpSocket(this);
-  udp_socket->bind(udp_port, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+  udp_socket->bind(23232, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
   connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
 
   checkUpdate();
@@ -18,13 +18,13 @@ NetworkManager::~NetworkManager()
 {
   udpSendUsrLeave();
 
-  uv_tcp_server->closeUvLoop();
-  uv_tcp_server->quit();
+  uv_server->quit();
 
-  if(!uv_tcp_server->wait(500))
+  if(!uv_server->wait(500))
     {
-      uv_tcp_server->terminate();
-      uv_tcp_server->wait();
+      uv_server->terminate();
+      uv_server->wait(500);
+      Log::gui(Log::Normal, "NetworkManager::~NetworkManager()", "Fail to quit UvServer, destryoing it...");
     }
 
   Log::gui(Log::Normal, "NetworkManager::~NetworkManager()", "Successfully destroyed NetworkManager...");
@@ -179,8 +179,8 @@ void NetworkManager::udpSendHeartBeat()
   qint64 ret = udp_socket->writeDatagram(data
                             , data.length()
                             , QHostAddress::Broadcast
-                            , udp_port);
-  if(ret != 0 && ret != -1)
+                            , 23232);
+  if(ret > 0)
     {
       Log::net(Log::Normal, "NetworkManager::udpSendHeartBeat()", "heart beat sent");
     }
@@ -223,7 +223,7 @@ void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
 
   qint64 ret = udp_socket->writeDatagram(data
                                          , data.length()
-                                         , usrIp.isEmpty() || usrIp == GlobalData::g_localHostIP  ? QHostAddress::Broadcast : QHostAddress(usrIp)
+                                         , usrIp.isEmpty() || usrIp == GlobalData::g_localHostIP ? QHostAddress::Broadcast : QHostAddress(usrIp)
                                          , udp_port);
   if(ret != 0 && ret != -1)
     {
@@ -255,8 +255,6 @@ void NetworkManager::TEST_udpsSendMessage(QString to, QString from, QString mess
   out << Message << to << from << message;
   udp_socket->writeDatagram(data,data.length(),QHostAddress::Broadcast, udp_port);
 }
-
-
 
 void NetworkManager::udpProcessFileReject()
 {

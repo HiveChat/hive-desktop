@@ -37,8 +37,8 @@ public:
   explicit UvServer(QObject *parent = 0);
   ~UvServer();
 
-  void closeUvLoop();
   void write();
+  void quit();
 
 protected:
   void run();

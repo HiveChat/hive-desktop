@@ -12,13 +12,7 @@ UvServer::UvServer(QObject *parent) : QThread(parent)
 
 UvServer::~UvServer()
 {
-}
 
-void
-UvServer::closeUvLoop()
-{
-  uv_stop(loop);
-  Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
 void
@@ -37,6 +31,21 @@ UvServer::run()
   uv_udp_recv_start(&udpServer, allocBuffer, udpRead);
 
 
+  //< udp test
+  uv_buf_t buffer;
+  allocBuffer(NULL, 256, &buffer);
+  memset(buffer.base, 8, buffer.len);
+
+  uv_udp_send_t send_req;
+  uv_buf_t discover_msg = buffer;
+
+  struct sockaddr_in send_addr;
+  uv_ip4_addr("127.0.0.1", 23232, &send_addr);
+  uv_udp_send(&send_req, &udpServer, &discover_msg, 1, (const struct sockaddr *)&send_addr, NULL);
+
+
+
+
   struct sockaddr_in tcpAddr;
   uv_ip4_addr("0.0.0.0", TCP_PORT, &tcpAddr);
   uv_tcp_t tcp_server;
@@ -49,29 +58,37 @@ UvServer::run()
       fprintf(stderr, "Listen error %s\n", uv_strerror(r));
     }
   uv_run(loop, UV_RUN_DEFAULT);
-
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
 
+}
+
+void UvServer::quit()
+{
+  uv_stop(loop);
+  Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
+
+  QThread::quit();
 }
 
 void
 UvServer::udpRead(uv_udp_t *req, ssize_t nread, const uv_buf_t *buffer, const struct sockaddr *addr, unsigned flags)
 {
-  if (nread >= 0 && addr) //addr sometimes is a nullptr
+  if(nread >= 0 && addr) //addr sometimes is a nullptr
     {
       char sender[17] = { 0 };
       uv_ip4_name((const struct sockaddr_in*)addr, sender, 16);
       fprintf(stderr, "Recv from %s\n", sender);
-      qDebug()<<QString::fromStdString(buffer->base);
+      qDebug()<<"base:"<<buffer->base;
       qDebug()<<decodeHivePacket(QString::fromStdString(buffer->base));
     }
   else
     {
       fprintf(stderr, "UDP Read error %s\n", uv_err_name(nread));
 //      uv_close((uv_handle_t*) req, NULL);
-      free(buffer->base);
-      return;
     }
+
+  free(buffer->base);
+  return;
 }
 
 void UvServer::udpWrite()
