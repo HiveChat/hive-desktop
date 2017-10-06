@@ -30,21 +30,21 @@ UvServer::run()
   uv_udp_bind(&udpServer, (const struct sockaddr *)&udpAddr, UV_UDP_REUSEADDR);
   uv_udp_recv_start(&udpServer, allocBuffer, udpRead);
 
-
   //< udp test
   uv_buf_t buffer;
   allocBuffer(NULL, 256, &buffer);
   memset(buffer.base, 8, buffer.len);
 
+  qDebug()<<buffer.base;
+
   uv_udp_send_t send_req;
   uv_buf_t discover_msg = buffer;
 
   struct sockaddr_in send_addr;
-  uv_ip4_addr("127.0.0.1", 23232, &send_addr);
+  uv_ip4_addr("255.255.255.255", 23232, &send_addr);
   uv_udp_send(&send_req, &udpServer, &discover_msg, 1, (const struct sockaddr *)&send_addr, NULL);
 
-
-
+  //< udp test end
 
   struct sockaddr_in tcpAddr;
   uv_ip4_addr("0.0.0.0", TCP_PORT, &tcpAddr);
