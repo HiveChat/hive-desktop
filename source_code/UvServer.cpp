@@ -15,6 +15,14 @@ UvServer::~UvServer()
 
 }
 
+void UvServer::quit()
+{
+  uv_stop(loop);
+  Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
+
+  QThread::quit();
+}
+
 void
 UvServer::run()
 {
@@ -31,18 +39,19 @@ UvServer::run()
   uv_udp_recv_start(&udpServer, allocBuffer, udpRead);
 
   //< udp test
-  uv_buf_t buffer;
-  allocBuffer(NULL, 256, &buffer);
-  memset(buffer.base, 8, buffer.len);
+  for(int i = 0; i < 100; i ++)
+    {
+      uv_buf_t buffer;
+      allocBuffer(NULL, 256, &buffer);
+      buffer.base = "hellkavjklanvafklndlanldv))))))))))))))))))))";
 
-  qDebug()<<buffer.base;
+      uv_udp_send_t send_req;
+      uv_buf_t discover_msg = buffer;
 
-  uv_udp_send_t send_req;
-  uv_buf_t discover_msg = buffer;
-
-  struct sockaddr_in send_addr;
-  uv_ip4_addr("255.255.255.255", 23232, &send_addr);
-  uv_udp_send(&send_req, &udpServer, &discover_msg, 1, (const struct sockaddr *)&send_addr, NULL);
+      struct sockaddr_in send_addr;
+      uv_ip4_addr("255.255.255.255", 23232, &send_addr);
+      uv_udp_send(&send_req, &udpServer, &discover_msg, 1, (const struct sockaddr *)&send_addr, NULL);
+    }
 
   //< udp test end
 
@@ -62,24 +71,18 @@ UvServer::run()
 
 }
 
-void UvServer::quit()
-{
-  uv_stop(loop);
-  Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
-
-  QThread::quit();
-}
-
 void
-UvServer::udpRead(uv_udp_t *req, ssize_t nread, const uv_buf_t *buffer, const struct sockaddr *addr, unsigned flags)
+UvServer::udpRead(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const struct sockaddr *addr, unsigned flags)
 {
   if(nread >= 0 && addr) //addr sometimes is a nullptr
     {
       char sender[17] = { 0 };
       uv_ip4_name((const struct sockaddr_in*)addr, sender, 16);
       fprintf(stderr, "Recv from %s\n", sender);
-      qDebug()<<"base:"<<buffer->base;
-      qDebug()<<decodeHivePacket(QString::fromStdString(buffer->base));
+
+      uv_buf_t buffer = uv_buf_init(buf->base, nread);
+      qDebug()<<"base size: "<< nread<<"base content: "<<QString::fromLatin1(buffer.base);
+      qDebug()<<decodeHivePacket(QString::fromStdString(buffer.base));
     }
   else
     {
@@ -87,7 +90,7 @@ UvServer::udpRead(uv_udp_t *req, ssize_t nread, const uv_buf_t *buffer, const st
 //      uv_close((uv_handle_t*) req, NULL);
     }
 
-  free(buffer->base);
+  free(buf->base);
   return;
 }
 
@@ -148,7 +151,8 @@ UvServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
 
       return;
     }
-  if(nread < 0) {
+  if(nread < 0)
+    {
       if (nread != UV_EOF)
         {
           fprintf(stderr, "TCP Read error %s\n", uv_err_name(nread));

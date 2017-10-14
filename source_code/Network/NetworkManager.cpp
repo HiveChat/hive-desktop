@@ -7,8 +7,8 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
   uv_server->start();
 
   udp_socket = new QUdpSocket(this);
-  udp_socket->bind(23232, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
-  connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
+//  udp_socket->bind(23232, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+//  connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
 
   checkUpdate();
   loadTimerTasks();
