@@ -96,7 +96,7 @@ HiveProtocol::decodeHivePacket(const QString &data)
       }
     case MessageType::FileInfo:
       {
-        Log::net(Log::Normal, "HiveConnection::decodePacket()", "File info received.");
+        Log::net(Log::Normal, "HiveProtocol::decodePacket()", "File info received.");
 
         break;
       }
@@ -138,12 +138,12 @@ HiveProtocol::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
         {
           GlobalData::g_localHostIP = usrProfileStruct.ip;
         }
-      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from myself");
+      Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from myself");
 //      emit usrEnter(usrProfileStruct); << FIX HERE!!
     }
   else
     {
-      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from others");
+      Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from others");
 //      emit usrEnter(usrProfileStruct); << FIX HERE!!
     }
 }
@@ -155,10 +155,10 @@ HiveProtocol::processUsrLeave(QString *usrKey)
     {
 //      emit usrLeft(usrKey); << FIX HERE!!
 
-      qDebug()<<"@NetworkManager::udpProcessUsrLeft(): Myself left.";
+      qDebug()<<"@HiveProtocol::udpProcessUsrLeft(): Myself left.";
     }
 
-  qDebug()<<"@NetworkManager::udpProcessUsrLeft(): Someone left.";
+  qDebug()<<"@HiveProtocol::udpProcessUsrLeft(): Someone left.";
 //  emit usrLeft(usrKey); << FIX HERE!!
 }
 

@@ -83,27 +83,19 @@ Hive::~Hive()
     {
       Log::gui(Log::Error, "Hive::~Hive()", "Network thread is terminated due to timeout.");
       network_thread->terminate();
-      network_thread->wait();
+      network_thread->wait(500);
     }
   if(!data_thread->wait(500))
     {
       Log::gui(Log::Error, "Hive::~Hive()", "Data thread is terminated due to timeout.");
       data_thread->terminate();
-      data_thread->wait();
+      data_thread->wait(100);
     }
-
-//  Log::gui(Log::Normal, "Hive::~Hive()", "Destroying NetworkManager...");
-//  network_manager->~NetworkManager();
-//  Log::gui(Log::Normal, "Hive::~Hive()", "Destroying AppDataManager...");
-//  data_manager->~AppDataManager();
 
   network_thread->deleteLater();
   data_thread->deleteLater();
 
-
-
   Log::gui(Log::Normal, "Hive::~Hive()", "Destroyed App");
-
 }
 
 

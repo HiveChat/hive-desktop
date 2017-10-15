@@ -6,12 +6,12 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
   uv_server = new UvServer(this);
   uv_server->start();
 
-  udp_socket = new QUdpSocket(this);
-//  udp_socket->bind(23232, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
+//  udp_socket = new QUdpSocket(this);
+//  udp_socket->bind(9008, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint);
 //  connect(udp_socket, &QUdpSocket::readyRead, this, &NetworkManager::udpProcessPendingDatagrams);
 
   checkUpdate();
-  loadTimerTasks();
+//  loadTimerTasks();
 }
 
 NetworkManager::~NetworkManager()
@@ -166,6 +166,7 @@ void NetworkManager::udpProcessFileTran(const Message::FileInfoStruct &fileInfoS
 ///UDP Action
 void NetworkManager::udpSendHeartBeat()
 {
+  return;
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
@@ -190,6 +191,7 @@ void NetworkManager::udpSendHeartBeat()
 
 void NetworkManager::udpSendUsrLeave()
 {
+  return;
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
   out << UsrLeave << GlobalData::settings_struct.profile_key_str;
@@ -203,6 +205,7 @@ void NetworkManager::udpSendUsrLeave()
 
 void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
 {
+  return;
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
