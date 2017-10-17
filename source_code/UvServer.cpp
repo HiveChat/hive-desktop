@@ -2,6 +2,8 @@
 
 
 uv_loop_t* UvServer::loop;
+uv_tcp_t* UvServer::tcp_server;
+uv_udp_t* UvServer::udp_server;
 QHash<UvServer::SocketDescriptor, HiveProtocol::HiveClient*> UvServer::buffer_hash;
 QHash<QString, UvServer::SocketDescriptor> UvServer::key_sd_hash;
 
@@ -20,8 +22,6 @@ void UvServer::quit()
 {
   uv_stop(loop);
   Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
-
-  QThread::quit();
 }
 
 void
@@ -35,16 +35,22 @@ UvServer::run()
   struct sockaddr_in udpAddr;
   uv_ip4_addr("0.0.0.0", UDP_PORT, &udpAddr);
   uv_udp_t udpServer;
+  udp_server = &udpServer;
   uv_udp_init(loop, &udpServer);
-  uv_udp_bind(&udpServer, (const struct sockaddr *)&udpAddr, UV_UDP_REUSEADDR);
+  uv_udp_bind(&udpServer, (const struct sockaddr*) &udpAddr, UV_UDP_REUSEADDR);
   uv_udp_recv_start(&udpServer, allocBuffer, udpRead);
+
+  uv_timer_t heartBeatTimer;
+  uv_timer_init(loop, &heartBeatTimer);
+  uv_timer_start(&heartBeatTimer, udpHeartBeatCb, 3000, 1000);
 
   struct sockaddr_in tcpAddr;
   uv_ip4_addr("0.0.0.0", TCP_PORT, &tcpAddr);
-  uv_tcp_t tcp_server;
-  uv_tcp_init(loop, &tcp_server);
-  uv_tcp_bind(&tcp_server, (const struct sockaddr*)&tcpAddr, 0);
-  int r = uv_listen((uv_stream_t*)&tcp_server, TCP_BACKLOG, tcpNewConnection);
+  uv_tcp_t tcpServer;
+  tcp_server = &tcpServer;
+  uv_tcp_init(loop, &tcpServer);
+  uv_tcp_bind(&tcpServer, (const struct sockaddr*) &tcpAddr, 0);
+  int r = uv_listen((uv_stream_t*) &tcpServer, TCP_BACKLOG, tcpNewConnection);
   if(r)
     {
       Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
@@ -84,7 +90,7 @@ void UvServer::udpWrite()
 }
 
 void
-UvServer::tcpNewConnection(uv_stream_t *server, int status)
+UvServer::tcpNewConnection(uv_stream_t *handle, int status)
 {
   if(status < 0)
     {
@@ -96,7 +102,7 @@ UvServer::tcpNewConnection(uv_stream_t *server, int status)
   uv_tcp_init(loop, client);
 
 
-  if(uv_accept(server, (uv_stream_t*)client) == 0)
+  if(uv_accept(handle, (uv_stream_t*)client) == 0)
     {
       uv_read_start((uv_stream_t*)client, allocBuffer, tcpRead);
     }
@@ -107,11 +113,11 @@ UvServer::tcpNewConnection(uv_stream_t *server, int status)
 }
 
 void
-UvServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
+UvServer::tcpRead(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
   if(nread > 0)
     {
-      SocketDescriptor socketDiscriptor = getSocketDescriptor(client);
+      SocketDescriptor socketDiscriptor = getSocketDescriptor(handle);
       HiveClient *hiveClient;
       if(buffer_hash.contains(socketDiscriptor))
         {
@@ -131,7 +137,7 @@ UvServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
       // << echo server
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
       req->buf = uv_buf_init(buf->base, nread);
-      uv_write((uv_write_t*)req, client, &req->buf, 1, tcpWriten);
+      uv_write((uv_write_t*)req, handle, &req->buf, 1, tcpWriten);
 
       return;
     }
@@ -141,23 +147,35 @@ UvServer::tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf)
         {
           fprintf(stderr, "TCP Read error %s\n", uv_err_name(nread));
         }
-      int socketDiscriptor = getSocketDescriptor(client);
+      int socketDiscriptor = getSocketDescriptor(handle);
       Log::net(Log::Normal, "UvServer::tcpRead()", "Disconnected from discriptor: " + QString::number(socketDiscriptor));
 
-      uv_close((uv_handle_t*)client, NULL); // NULL is a close callback
+      uv_close((uv_handle_t*)handle, NULL); // NULL is a close callback
     }
 
   free(buf->base);
 }
 
 void
-UvServer::tcpWriten(uv_write_t *req, int status)
+UvServer::tcpWriten(uv_write_t *handle, int status)
 {
   if (status)
     {
       fprintf(stderr, "Write error %s\n", uv_strerror(status));
     }
-  freeWriteReq(req);
+  freeWriteReq(handle);
+}
+
+void UvServer::udpHeartBeatCb(uv_timer_t *handle)
+{
+  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
+  uv_udp_send_t send_req;
+  QByteArray data = makeHeartBeat();
+  uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
+
+  struct sockaddr_in send_addr;
+  uv_ip4_addr("255.255.255.255", 23232, &send_addr);
+//  uv_udp_send(&send_req, udp_server, &discover_msg, 1, (const struct sockaddr *)&send_addr, NULL);
 }
 
 void
@@ -168,20 +186,11 @@ UvServer::allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf)
 }
 
 void
-UvServer::freeWriteReq(uv_write_t *req)
+UvServer::freeWriteReq(uv_write_t *handle)
 {
-  write_req_t *wr = (write_req_t*) req;
+  write_req_t *wr = (write_req_t*) handle;
   free(wr->buf.base);
   free(wr);
-}
-
-void UvServer::onUdpSent(uv_udp_send_t *req, int status)
-{
-  if (status)
-    {
-      fprintf(stderr, "Write error %s\n", uv_strerror(status));
-    }
-  qDebug()<<"uvudp sent";
 }
 
 int

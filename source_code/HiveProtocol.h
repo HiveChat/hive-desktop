@@ -103,6 +103,8 @@ protected:
   static inline bool processFileAccept();
   static inline bool processFileReject();
 
+  static QByteArray makeHeartBeat();
+
 
 //using inheritance, not private variables in theory, leave the error until private data is fully separated.
 //  int socket_descriptor;

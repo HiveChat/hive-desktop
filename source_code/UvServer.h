@@ -45,20 +45,23 @@ protected:
 
 private:  
   static uv_loop_t *loop;
+  static uv_tcp_t *tcp_server;
+  static uv_udp_t *udp_server;
 
   static QHash<SocketDescriptor, HiveProtocol::HiveClient*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
   static void udpRead(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
   static void udpWrite();
-  static void tcpNewConnection(uv_stream_t *server, int status);
-  static void tcpRead(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
-  static void tcpWriten(uv_write_t *req, int status);
+  static void tcpNewConnection(uv_stream_t *handle, int status);
+  static void tcpRead(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
+  static void tcpWriten(uv_write_t *handle, int status);
+
+  static void udpHeartBeatCb(uv_timer_t *handle);
 
   static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
-  static void freeWriteReq(uv_write_t *req);
+  static void freeWriteReq(uv_write_t *handle);
 
-  static void onUdpSent(uv_udp_send_t* req, int status);
 
   static int getSocketDescriptor(uv_stream_t *client);
 

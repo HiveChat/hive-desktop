@@ -228,5 +228,19 @@ HiveProtocol::processFileReject()
 
 }
 
+QByteArray HiveProtocol::makeHeartBeat()
+{
+  QByteArray data;
+  QDataStream out(&data, QIODevice::WriteOnly);
+
+  QJsonObject json_obj;
+  json_obj.insert("key", GlobalData::settings_struct.profile_key_str);
+  json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
+  json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
+  json_obj.insert("msgType", HeartBeat);
+  QJsonDocument json_doc(json_obj);
+  return json_doc.toJson();
+}
+
 
 

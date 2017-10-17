@@ -31,7 +31,7 @@ void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
   usr_profile_struct = usrProfileStruct;
 }
 
-QList<QJsonObject> *UsrData::retrieveUnreadMessage()
+QList<QJsonObject>* UsrData::retrieveUnreadMessage()
 {
   unread_message_buffer_list = unread_message_list;
   recordMessage(unread_message_list);
