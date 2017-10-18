@@ -58,12 +58,14 @@ private:
   static void tcpWriten(uv_write_t *handle, int status);
 
   static void udpHeartBeatCb(uv_timer_t *handle);
+  static void udpWriten(uv_udp_send_t *req, int status);
 
   static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
   static void freeWriteReq(uv_write_t *handle);
 
 
-  static int getSocketDescriptor(uv_stream_t *client);
+  static int getSocketDescriptor(uv_handle_t *client);
+
 
 };
 
