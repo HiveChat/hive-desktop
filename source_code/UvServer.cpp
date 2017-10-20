@@ -44,11 +44,10 @@ UvServer::run()
 
   struct sockaddr_in tcpAddr;
   uv_ip4_addr("0.0.0.0", TCP_PORT, &tcpAddr);
-  uv_tcp_t tcpServer;
-  tcp_server = &tcpServer;
-  uv_tcp_init(loop, &tcpServer);
-  uv_tcp_bind(&tcpServer, (const struct sockaddr*) &tcpAddr, 0);
-  int r = uv_listen((uv_stream_t*) &tcpServer, TCP_BACKLOG, tcpNewConnection);
+  tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
+  uv_tcp_init(loop, tcp_server);
+  uv_tcp_bind(tcp_server, (const struct sockaddr*) &tcpAddr, 0);
+  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnection);
   if(r)
     {
       Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
@@ -56,9 +55,9 @@ UvServer::run()
     }
 
 
-  uv_timer_t heartBeatTimer;
-  uv_timer_init(loop, &heartBeatTimer);
-  uv_timer_start(&heartBeatTimer, udpHeartBeatCb, 3000, 1000);
+  uv_timer_t *heartBeatTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+  uv_timer_init(loop, heartBeatTimer);
+//  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 0);
 
 
   uv_run(loop, UV_RUN_DEFAULT);
@@ -187,13 +186,13 @@ void UvServer::udpHeartBeatCb(uv_timer_t *handle)
 
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
-  uv_udp_send_t send_req;
-  QByteArray data = makeHeartBeat();
-  uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
+//  uv_udp_send_t send_req;
+//  QByteArray data = makeHeartBeat();
+//  uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
 
-  struct sockaddr_in send_addr;
-  uv_ip4_addr("255.255.255.255", 23232, &send_addr);
-  uv_udp_send(&send_req, udp_server, &discover_msg, 1, (const struct sockaddr *)&send_addr, udpWriten);
+//  struct sockaddr_in send_addr;
+//  uv_ip4_addr("255.255.255.255", 23232, &send_addr);
+//  uv_udp_send(&send_req, udp_server, &discover_msg, 1, (const struct sockaddr *)&send_addr, udpWriten);
 }
 
 void UvServer::udpWriten(uv_udp_send_t *req, int status)
