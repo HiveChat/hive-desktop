@@ -33,20 +33,20 @@ UvServer::run()
 
   loop = uv_default_loop();
 
-  struct sockaddr_in udpAddr;
-  uv_ip4_addr("0.0.0.0", UDP_PORT, &udpAddr);
+  struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
+  uv_ip4_addr("0.0.0.0", UDP_PORT, udpAddr);
   udp_server = (uv_udp_t*) malloc(sizeof(uv_udp_t));
   uv_udp_init(loop, udp_server);
-  uv_udp_bind(udp_server, (const struct sockaddr*) &udpAddr, UV_UDP_REUSEADDR);
+  uv_udp_bind(udp_server, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
   uv_udp_recv_start(udp_server, allocBuffer, udpRead);
   uv_udp_set_broadcast(udp_server, 1);
 
 
-  struct sockaddr_in tcpAddr;
-  uv_ip4_addr("0.0.0.0", TCP_PORT, &tcpAddr);
+  struct sockaddr_in *tcpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
+  uv_ip4_addr("0.0.0.0", TCP_PORT, tcpAddr);
   tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
   uv_tcp_init(loop, tcp_server);
-  uv_tcp_bind(tcp_server, (const struct sockaddr*) &tcpAddr, 0);
+  uv_tcp_bind(tcp_server, (const struct sockaddr*) tcpAddr, 0);
   int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnection);
   if(r)
     {
@@ -57,7 +57,7 @@ UvServer::run()
 
   uv_timer_t *heartBeatTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heartBeatTimer);
-//  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 0);
+  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 1000);
 
 
   uv_run(loop, UV_RUN_DEFAULT);
@@ -173,26 +173,24 @@ UvServer::tcpWriten(uv_write_t *handle, int status)
 void UvServer::udpHeartBeatCb(uv_timer_t *handle)
 {
 
+///successful test code for timer not crashing
 //  struct sockaddr_in send2;
 //  printf("%d", uv_ip4_addr("255.255.255.255", 23232, &send2));
-
-//  uv_udp_send_t req2;
-
+//  uv_udp_send_t *req2 = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
 //  uv_buf_t buffer;
 //  char text[] = "hello?? :)\0";
 //  buffer = uv_buf_init(&text[0], sizeof(text) - 1);
+//  uv_udp_send(req2, udp_server, &buffer, 1, (const struct sockaddr *)&send2, udpWriten);
 
-//  uv_udp_send(&req2, udp_server, &buffer, 1, (const struct sockaddr *)&send2, udpWriten);
+  uv_udp_send_t *send_req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
+  QByteArray data = makeHeartBeat();
+  uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
 
+  struct sockaddr_in addr;
+  uv_ip4_addr("255.255.255.255", 23232, &addr);
+  uv_udp_send(send_req, udp_server, &discover_msg, 1, (const struct sockaddr *)&addr, udpWriten);
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
-//  uv_udp_send_t send_req;
-//  QByteArray data = makeHeartBeat();
-//  uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
-
-//  struct sockaddr_in send_addr;
-//  uv_ip4_addr("255.255.255.255", 23232, &send_addr);
-//  uv_udp_send(&send_req, udp_server, &discover_msg, 1, (const struct sockaddr *)&send_addr, udpWriten);
 }
 
 void UvServer::udpWriten(uv_udp_send_t *req, int status)
@@ -202,6 +200,7 @@ void UvServer::udpWriten(uv_udp_send_t *req, int status)
       fprintf(stderr, "Send error %s\n", uv_strerror(status));
       return;
     }
+  free(req); //<<not sure
   Log::net(Log::Normal, "UvServer::udpWriten()", "UDP message successfully sent!");
 }
 
