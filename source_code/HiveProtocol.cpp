@@ -76,7 +76,7 @@ HiveProtocol::decodeHivePacket(const QString &data)
   QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
   if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
     {
-      Log::net(Log::Critical, "HiveProtocol::decodePacket()", QString(jsonError.errorString() + " in stream: " + data));
+      Log::net(Log::Critical, "HiveProtocol::decodeHivePacket()", QString(jsonError.errorString() + " in stream: " + data));
       return false;
     }
 
@@ -84,7 +84,7 @@ HiveProtocol::decodeHivePacket(const QString &data)
   QString receiverKey = packetJson.value("receiver").toString();
   if(receiverKey != GlobalData::settings_struct.profile_key_str)
     {
-      Log::net(Log::Error, "HiveProtocol::decodePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
+      Log::net(Log::Error, "HiveProtocol::decodeHivePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
       return false;
     }
   MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
@@ -96,7 +96,7 @@ HiveProtocol::decodeHivePacket(const QString &data)
       }
     case MessageType::FileInfo:
       {
-        Log::net(Log::Normal, "HiveProtocol::decodePacket()", "File info received.");
+        Log::net(Log::Normal, "HiveProtocol::decodeHivePacket()", "File info received.");
 
         break;
       }
@@ -239,7 +239,7 @@ QByteArray HiveProtocol::makeHeartBeat()
   json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
   json_obj.insert("msgType", HeartBeat);
   QJsonDocument json_doc(json_obj);
-  return json_doc.toJson();
+  return json_doc.toJson() + '\0';
 }
 
 

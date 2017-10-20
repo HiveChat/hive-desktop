@@ -76,7 +76,7 @@ UvServer::udpRead(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const st
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
       qDebug()<<"base size: "<< nread<<"base content: "<<QString::fromLatin1(buffer.base);
-      qDebug()<<decodeHivePacket(QString::fromStdString(buffer.base));
+      qDebug()<<decodeHivePacket(buffer.base);
     }
   else
     {
