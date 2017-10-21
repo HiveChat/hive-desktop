@@ -57,7 +57,7 @@ UvServer::run()
 
   uv_timer_t *heartBeatTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heartBeatTimer);
-  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 1000);
+  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 10);
 
 
   uv_run(loop, UV_RUN_DEFAULT);

@@ -82,7 +82,8 @@ HiveProtocol::decodeHivePacket(const QString &data)
 
   QJsonObject packetJson = readJsonDocument.object();
   QString receiverKey = packetJson.value("receiver").toString();
-  if(receiverKey != GlobalData::settings_struct.profile_key_str)
+  if(receiverKey != GlobalData::settings_struct.profile_key_str
+     && receiverKey != "{00000000-0000-0000-0000-000000000000}")
     {
       Log::net(Log::Error, "HiveProtocol::decodeHivePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
       return false;
@@ -234,13 +235,14 @@ QByteArray HiveProtocol::makeHeartBeat()
   QDataStream out(&data, QIODevice::WriteOnly);
 
   QJsonObject json_obj;
-  json_obj.insert("key", GlobalData::settings_struct.profile_key_str);
+  json_obj.insert("sender", GlobalData::settings_struct.profile_key_str);
+  json_obj.insert("receiver", "{00000000-0000-0000-0000-000000000000}");
   json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
   json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
   json_obj.insert("msgType", HeartBeat);
   QJsonDocument json_doc(json_obj);
   return json_doc.toJson() + '\0';
+
+
 }
-
-
 

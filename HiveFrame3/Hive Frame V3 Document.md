@@ -87,6 +87,8 @@ receiver | string | Receiver
 ### Heart Beat
 Key | type | Note
 ------- | ------- | -------
+sender | string | Sender
+receiver | string | Receiver
 key | string | User key
 name | string | User name
 avatar | string | Avatar Selection
