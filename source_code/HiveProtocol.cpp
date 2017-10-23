@@ -229,20 +229,25 @@ HiveProtocol::processFileReject()
 
 }
 
-QByteArray HiveProtocol::makeHeartBeat()
+QByteArray HiveProtocol::encodeHeartBeat()
 {
-  QByteArray data;
-  QDataStream out(&data, QIODevice::WriteOnly);
+  QJsonObject jsonObj;
+  jsonObj.insert("sender", GlobalData::settings_struct.profile_key_str);
+  jsonObj.insert("receiver", "{00000000-0000-0000-0000-000000000000}");
+  jsonObj.insert("name", GlobalData::settings_struct.profile_name_str);
+  jsonObj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
+  jsonObj.insert("msgType", MessageType::HeartBeat);
+  QJsonDocument jsonDoc(jsonObj);
 
-  QJsonObject json_obj;
-  json_obj.insert("sender", GlobalData::settings_struct.profile_key_str);
-  json_obj.insert("receiver", "{00000000-0000-0000-0000-000000000000}");
-  json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
-  json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
-  json_obj.insert("msgType", HeartBeat);
-  QJsonDocument json_doc(json_obj);
-  return json_doc.toJson() + '\0';
-
-
+  return jsonDoc.toJson() + '\0';
 }
 
+QByteArray HiveProtocol::encodeTextMessage(const QJsonObject &msg)
+{
+  QJsonObject jsonObj = msg;
+  jsonObj.insert("index", QJsonValue(GlobalData::getRandomString(8)));
+  jsonObj.insert("msgType", MessageType::TextMessage);
+  QJsonDocument jsonDoc(jsonObj);
+
+  return jsonDoc.toJson() + '\0';
+}

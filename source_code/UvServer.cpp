@@ -25,6 +25,28 @@ void UvServer::quit()
   Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
+void UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
+{
+  switch (protocol) {
+    case BaseProtocol::Udp:
+      {
+
+
+        break;
+      }
+    case BaseProtocol::Tcp:
+      {
+
+        break;
+      }
+    default:
+      {
+
+        break;
+      }
+    }
+}
+
 void
 UvServer::run()
 {
@@ -183,7 +205,7 @@ void UvServer::udpHeartBeatCb(uv_timer_t *handle)
 //  uv_udp_send(req2, udp_server, &buffer, 1, (const struct sockaddr *)&send2, udpWriten);
 
   uv_udp_send_t *send_req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
-  QByteArray data = makeHeartBeat();
+  QByteArray data = encodeHeartBeat();
   uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
 
   struct sockaddr_in addr;

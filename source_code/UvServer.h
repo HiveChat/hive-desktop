@@ -20,7 +20,6 @@
 
 class UvServer;
 
-
 class UvServer
     : public QThread
     , public HiveProtocol
@@ -37,8 +36,9 @@ public:
   explicit UvServer(QObject *parent = 0);
   ~UvServer();
 
-//  void write(); << add slot for writing message
   void quit();
+
+  void sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol = BaseProtocol::Udp);
 
 protected:
   void run();
