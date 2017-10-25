@@ -30,8 +30,14 @@ void UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &proto
   switch (protocol) {
     case BaseProtocol::Udp:
       {
+        uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
+        QByteArray dat = encodeTextMessage(msg);
+        uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
+        struct sockaddr_in addr;
+        uv_ip4_addr("255.255.255.255", 23232, &addr);
+        uv_udp_send(req, udp_server, &msg, 1, (const struct sockaddr *)&addr, udpWriten);
 
-
+        Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
         break;
       }
     case BaseProtocol::Tcp:
@@ -76,10 +82,9 @@ UvServer::run()
       fprintf(stderr, "Listen error %s\n", uv_strerror(r));
     }
 
-
   uv_timer_t *heartBeatTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heartBeatTimer);
-  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 10);
+  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 3000);
 
 
   uv_run(loop, UV_RUN_DEFAULT);
@@ -204,13 +209,13 @@ void UvServer::udpHeartBeatCb(uv_timer_t *handle)
 //  buffer = uv_buf_init(&text[0], sizeof(text) - 1);
 //  uv_udp_send(req2, udp_server, &buffer, 1, (const struct sockaddr *)&send2, udpWriten);
 
-  uv_udp_send_t *send_req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
-  QByteArray data = encodeHeartBeat();
-  uv_buf_t discover_msg = uv_buf_init(data.data(), data.count());
+  uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
+  QByteArray dat = encodeHeartBeat();
+  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
 
   struct sockaddr_in addr;
   uv_ip4_addr("255.255.255.255", 23232, &addr);
-  uv_udp_send(send_req, udp_server, &discover_msg, 1, (const struct sockaddr *)&addr, udpWriten);
+  uv_udp_send(req, udp_server, &msg, 1, (const struct sockaddr *)&addr, udpWriten);
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }

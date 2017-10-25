@@ -203,13 +203,16 @@ void NetworkManager::udpSendUsrLeave()
   qDebug()<<"@sendUsrLeave(): Finished!";
 }
 
-void NetworkManager::udpSendMessage(const QJsonObject &jsonObj)
+void NetworkManager::udpSendMessage(const QJsonObject &msg)
 {
+  uv_server->sendTextMessage(msg);
   return;
+
+
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
 
-  QJsonObject json_obj = jsonObj;
+  QJsonObject json_obj = msg;
   json_obj.insert("index", QJsonValue(GlobalData::getRandomString(8)));
   json_obj.insert("msgType", Message);
   QJsonDocument json_doc(json_obj);

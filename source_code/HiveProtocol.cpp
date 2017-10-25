@@ -90,6 +90,16 @@ HiveProtocol::decodeHivePacket(const QString &data)
     }
   MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
   switch (messageType) {
+    case MessageType::HeartBeat:
+      {
+        UsrProfileStruct usr_profile;
+//        usr_profile.ip = packetJson.value("sender").remove("::ffff:");
+        usr_profile.key = packetJson.value("sender").toString();
+        usr_profile.name = packetJson.value("name").toString();
+        usr_profile.avatar = packetJson.value("avatar").toString();
+        processHeartBeat(usr_profile);
+        break;
+      }
     case MessageType::TextMessage:
       {
         processTextMessage();
