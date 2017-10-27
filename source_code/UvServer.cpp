@@ -66,7 +66,7 @@ UvServer::run()
   udp_server = (uv_udp_t*) malloc(sizeof(uv_udp_t));
   uv_udp_init(loop, udp_server);
   uv_udp_bind(udp_server, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
-  uv_udp_recv_start(udp_server, allocBuffer, udpRead);
+  uv_udp_recv_start(udp_server, allocBuffer, udpReadCb);
   uv_udp_set_broadcast(udp_server, 1);
 
 
@@ -93,22 +93,22 @@ UvServer::run()
 }
 
 void
-UvServer::udpRead(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const struct sockaddr *addr, unsigned flags)
+UvServer::udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const struct sockaddr *addr, unsigned flags)
 {
   if(nread >= 0 && addr) //addr sometimes is a nullptr
     {
-      char sender[17] = { 0 };
-      uv_ip4_name((const struct sockaddr_in*)addr, sender, 16);
-      fprintf(stderr, "Recv from %s\n", sender);
+      char senderAddr[17] = { 0 };
+      uv_ip4_name((const struct sockaddr_in*)addr, senderAddr, 16);
+      fprintf(stderr, "Recv from %s\n", senderAddr);
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
       qDebug()<<"base size: "<< nread<<"base content: "<<QString::fromLatin1(buffer.base);
-      qDebug()<<decodeHivePacket(buffer.base);
+      qDebug()<<decodeHivePacket(buffer.base, &senderAddr[0]);
     }
   else
     {
       fprintf(stderr, "UDP Read error %s\n", uv_err_name(nread));
-//      uv_close((uv_handle_t*) req, NULL);
+//      uv_close((uv_handle_t*) handle, NULL);
     }
 
   free(buf->base);
@@ -135,7 +135,7 @@ UvServer::tcpNewConnection(uv_stream_t *handle, int status)
 
   if(uv_accept(handle, (uv_stream_t*)client) == 0)
     {
-      uv_read_start((uv_stream_t*)client, allocBuffer, tcpRead);
+      uv_read_start((uv_stream_t*)client, allocBuffer, tcpReadCb);
     }
   else
     {
@@ -144,7 +144,7 @@ UvServer::tcpNewConnection(uv_stream_t *handle, int status)
 }
 
 void
-UvServer::tcpRead(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+UvServer::tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
   if(nread > 0)
     {
@@ -163,7 +163,7 @@ UvServer::tcpRead(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
         }
 
       uv_buf_t buffer = uv_buf_init(buf->base, nread);
-      readTcp(QString::fromUtf8(buffer.base, buffer.len), hiveClient);
+      decodeTcp(QString::fromUtf8(buffer.base, buffer.len), hiveClient);
 
       // << echo server
       write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));

@@ -51,10 +51,10 @@ private:
   static QHash<SocketDescriptor, HiveProtocol::HiveClient*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
-  static void udpRead(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
+  static void udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
   static void udpWrite();
   static void tcpNewConnection(uv_stream_t *handle, int status);
-  static void tcpRead(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
+  static void tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
   static void tcpWriten(uv_write_t *handle, int status);
 
   static void udpHeartBeatCb(uv_timer_t *handle);

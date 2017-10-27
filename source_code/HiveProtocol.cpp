@@ -1,7 +1,7 @@
 #include "HiveProtocol.h"
 
 bool
-HiveProtocol::readTcp(const QString &data, HiveClient *clientBuffer) //recursion decode
+HiveProtocol::decodeTcp(const QString &data, HiveClient *clientBuffer) //recursion decode
 {
   qDebug()<<"\n\n";
   Log::net(Log::Normal, "Bee::read()", "New READ section begins");
@@ -59,7 +59,12 @@ HiveProtocol::readTcp(const QString &data, HiveClient *clientBuffer) //recursion
     }
 
 
-  return readTcp("", clientBuffer);
+  return decodeTcp("", clientBuffer);
+}
+
+bool HiveProtocol::decodeUdp(const QString &data, const char *addr)
+{
+  decodeHivePacket(data, QString::fromUtf8(addr));
 }
 
 bool
@@ -69,7 +74,7 @@ HiveProtocol::writeTcp(const MessageType &MsgType, const QString &data)
 }
 
 bool
-HiveProtocol::decodeHivePacket(const QString &data)
+HiveProtocol::decodeHivePacket(const QString &data, const QString &addr)
 {
   QByteArray byteArray = data.toLatin1();
   QJsonParseError jsonError;
@@ -93,7 +98,7 @@ HiveProtocol::decodeHivePacket(const QString &data)
     case MessageType::HeartBeat:
       {
         UsrProfileStruct usr_profile;
-//        usr_profile.ip = packetJson.value("sender").remove("::ffff:");
+        usr_profile.ip = addr;
         usr_profile.key = packetJson.value("sender").toString();
         usr_profile.name = packetJson.value("name").toString();
         usr_profile.avatar = packetJson.value("avatar").toString();

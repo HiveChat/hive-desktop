@@ -87,13 +87,14 @@ public:
   };
 
 
-  static bool readTcp(const QString &data, HiveClient *clientBuffer);
+  static bool decodeTcp(const QString &data, HiveClient *clientBuffer);
+  static bool decodeUdp(const QString &data, const char *addr);
   static bool writeTcp(const HiveProtocol::MessageType &MsgType, const QString &data);
 
 
 protected:
 
-  static inline bool decodeHivePacket(const QString &data);
+  static inline bool decodeHivePacket(const QString &data, const QString &addr = "");
   static inline bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
   static inline bool processUsrLeave(QString *usrKey);
   static inline bool processErrorDelivery();
