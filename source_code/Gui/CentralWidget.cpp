@@ -90,7 +90,7 @@ CentralWidget::~CentralWidget()
   qDebug()<<"\n@Hive UI is destructed";
 }
 
-void CentralWidget::onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe)
+void CentralWidget::onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe)
 {
   if(fromMe)
     {

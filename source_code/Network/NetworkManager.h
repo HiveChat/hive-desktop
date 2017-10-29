@@ -27,6 +27,9 @@ public:
   explicit NetworkManager(QObject *parent = 0);
   ~NetworkManager();
 
+  UvServer *uv_server;
+
+
 private:
   enum BroadcastType{
     Message = 1,
@@ -59,10 +62,10 @@ private:
   ///UDP Socket
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
-  void udpProcessMessage(const Message::TextMessageStruct &messageStruct);
+  void udpProcessMessage(const Message::TextMessage &messageStruct);
   void udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
-  void udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct);
+  void udpProcessFileTran(const Message::TextMessage &fileInfoStruct);
   void udpProcessFileReject();
 
   void udpSendHeartBeat();
@@ -76,7 +79,6 @@ private:
   QString file_name;
   QFile *local_file;
 
-  UvServer *uv_server;
 
   void tcpCloseConnection();
 
@@ -94,9 +96,9 @@ private slots:
 
 
 signals:
-  void messageReceived(const QJsonObject &jsonObj, const Message::MessageType &messageType);
+  void messageReceived(const QJsonObject &jsonObj, const MessageType &msgType);
 
-  void messageRecieved(const Message::TextMessageStruct &messageStruct, bool fromMe);//<
+  void messageRecieved(const Message::TextMessage &messageStruct, bool fromMe);//<
   void usrEnter(const UsrProfileStruct &usrProfileStruct);
   void usrLeft(QString *usrKey);
 

@@ -72,7 +72,7 @@ private:
 public slots:
   void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
   void onUsrLeft(QString *usrKey);
-  void onMessageCome(const Message::TextMessageStruct &messageStruct, bool fromMe);
+  void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
   void onUpdatesAvailable();
 
 private slots:
@@ -82,7 +82,7 @@ signals:
   void updatesAvailable();
   void usrProfileLoaded(UsrData *userData);
   void usrProfileChanged(UsrData *userData);
-  void messageLoaded(Message::TextMessageStruct messageStrList, bool fromMe);
+  void messageLoaded(Message::TextMessage messageStrList, bool fromMe);
 
 
 };

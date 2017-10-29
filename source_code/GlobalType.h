@@ -60,34 +60,6 @@ struct UpdateStruct
   QString title;
 };
 
-namespace Message
-{
-  enum MessageType
-  {
-    TextMessage,
-    FileInfo,
-    FileMessage
-  };
-
-  struct TextMessageStruct
-  {
-    QString index;
-    QString reciever;
-    QString sender;
-    QString message;
-    QString time;
-  };
-
-  struct FileInfoStruct
-  {
-    int size;
-    QString index;
-    QString name;
-    GUI::BuiltInIconType type;
-  };
-
-}
-
 namespace Settings
 {
   struct Notification

@@ -19,9 +19,11 @@ class HomeStack_welcome : public QWidget
 
 public:
   explicit HomeStack_welcome(QWidget *parent = 0);
+  void test(){printf("haha----------------------------------------------");}
 
 protected:
   void mouseReleaseEvent(QMouseEvent *);
+
 
 
 private:

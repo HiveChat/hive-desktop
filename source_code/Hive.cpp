@@ -29,15 +29,15 @@ Hive::Hive(int &argc, char **argv)
 
   ////connect
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
-  qRegisterMetaType<Message::TextMessageStruct> ("Message::TextMessageStruct");
+  qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   connect(data_manager, &AppDataManager::updatesAvailable,
           gui_central_widget, &CentralWidget::onUpdateAvailable,
           Qt::AutoConnection);
 
-  connect(network_manager, &NetworkManager::usrEnter,
-          data_manager, &AppDataManager::onUsrEntered,
-          Qt::AutoConnection);
+//  connect(network_manager->uv_server, &UvServer::usrEntered,
+//          data_manager, &AppDataManager::onUsrEntered,
+//          Qt::AutoConnection);
   connect(network_manager, &NetworkManager::updateAvailable,
           data_manager, &AppDataManager::onUpdatesAvailable,
           Qt::AutoConnection);
@@ -137,7 +137,7 @@ bool Hive::event(QEvent* event)
 }
 
 
-//QJsonObject Hive::wrapTextMessage(const Message::TextMessageStruct &messageStruct)
+//QJsonObject Hive::wrapTextMessage(const Message::TextMessage &messageStruct)
 //{
 //  QJsonObject json_object;
 //  json_object.insert("sender", messageStruct.sender);

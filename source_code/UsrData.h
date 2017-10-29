@@ -3,6 +3,7 @@
 
 #include "GlobalType.h"
 #include "Log.h"
+#include "Message.h"
 
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -29,7 +30,7 @@ public:
   explicit UsrData(QObject *parent = 0);
   ~UsrData();
 
-  void addUnreadMessage(const Message::TextMessageStruct &message);
+  void addUnreadMessage(const Message::TextMessage &message);
   void setUsrProfileStruct(const UsrProfileStruct &getUsrProfileStruct);
 
   QJsonArray* flipLatest();
@@ -64,12 +65,12 @@ private:
 
   //Funciton
   inline bool checkDir(const QString &directory);
-  inline QJsonObject getMessageJsonObject(const Message::TextMessageStruct &messageStruct);
+  inline QJsonObject getMessageJsonObject(const Message::TextMessage &messageStruct);
 
   inline void readHistoryBundle();
   inline void makeHistoryBundle(const int &index);
   inline void saveHistoryBundle();
-  inline void recordMessage(const Message::TextMessageStruct &messageStruct);
+  inline void recordMessage(const Message::TextMessage &messageStruct);
   inline void recordMessage(const QJsonObject &messageJsonObject);
   inline void recordMessage(const QList<QJsonObject> &messageJsonObjectList);
 

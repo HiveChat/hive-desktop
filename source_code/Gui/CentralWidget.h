@@ -29,7 +29,7 @@ private:
   QSystemTrayIcon *tray_icon;
 
 public slots:  
-  void onMessageReceived(const Message::TextMessageStruct &messageStruct, const bool &fromMe);
+  void onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe);
   void onCombWidgetClicked(const QString &usrKey);
   void addUsr(UsrData *userData);
   void delUsr(UsrData *userData);

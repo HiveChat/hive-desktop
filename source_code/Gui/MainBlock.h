@@ -30,7 +30,7 @@ public:
   HomeStack_list *gui_home_stack_list;
 
 private:
-  QHash< GUI::StaticStackType, QWidget*> static_stack_hash;
+  QHash<GUI::StaticStackType, QWidget*> static_stack_hash;
   GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
   void clearStackMap(GUI::StaticStackType &reservation);
   inline void createStaticStack(GUI::StaticStackType staticStackType);

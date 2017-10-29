@@ -37,7 +37,7 @@ protected:
 
 
 //private:
-//  QJsonObject wrapTextMessage(const Message::TextMessageStruct &textMessageStruct);
+//  QJsonObject wrapTextMessage(const Message::TextMessage &textMessageStruct);
 //  QJsonObject wrapFileMessage(const Message::FileInfoStruct &fileMessageStruct);
 
 private slots:

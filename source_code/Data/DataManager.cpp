@@ -235,7 +235,7 @@ void AppDataManager::onUsrLeft(QString *usrKey)
 
 }
 
-void AppDataManager::onMessageCome(const Message::TextMessageStruct &messageStruct, bool fromMe)
+void AppDataManager::onMessageCome(const Message::TextMessage &messageStruct, bool fromMe)
 {
   if(fromMe)
     {

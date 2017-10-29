@@ -1,7 +1,7 @@
-#include "HiveProtocol.h"
+#include "HiveServer.h"
 
 bool
-HiveProtocol::decodeTcp(const QString &data, HiveClient *clientBuffer) //recursion decode
+HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //recursion decode
 {
   qDebug()<<"\n\n";
   Log::net(Log::Normal, "Bee::read()", "New READ section begins");
@@ -58,7 +58,6 @@ HiveProtocol::decodeTcp(const QString &data, HiveClient *clientBuffer) //recursi
         }
     }
 
-
   return decodeTcp("", clientBuffer);
 }
 
@@ -68,7 +67,7 @@ bool HiveProtocol::decodeUdp(const QString &data, const char *addr)
 }
 
 bool
-HiveProtocol::writeTcp(const MessageType &MsgType, const QString &data)
+HiveProtocol::writeTcp(const MessageType &msgType, const QString &data)
 {
 
 }
@@ -155,12 +154,12 @@ HiveProtocol::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
           GlobalData::g_localHostIP = usrProfileStruct.ip;
         }
       Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from myself");
-//      emit usrEnter(usrProfileStruct); << FIX HERE!!
+//      emit getInstance()->usrEntered(usrProfileStruct);
     }
   else
     {
       Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from others");
-//      emit usrEnter(usrProfileStruct); << FIX HERE!!
+//      emit getInstance()->usrEntered(usrProfileStruct);
     }
 }
 

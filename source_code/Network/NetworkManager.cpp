@@ -82,7 +82,7 @@ void NetworkManager::loadTimerTasks()
 }
 
 ///udp process
-void NetworkManager::udpProcessMessage(const Message::TextMessageStruct &messageStruct)
+void NetworkManager::udpProcessMessage(const Message::TextMessage &messageStruct)
 {
   if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
     {
@@ -154,7 +154,7 @@ void NetworkManager::udpProcessUsrLeft(QString *usrKey)
   emit usrLeft(usrKey);
 }
 
-void NetworkManager::udpProcessFileTran(const Message::FileInfoStruct &fileInfoStruct)
+void NetworkManager::udpProcessFileTran(const Message::TextMessage &fileInfoStruct)
 {
 //  file_info_struct.index = json_obj.value("index");
 //  file_info_struct.name = json_obj.value("name").toString();
@@ -371,9 +371,9 @@ void NetworkManager::udpProcessPendingDatagrams()
           switch (type) {
             case Message:
               {
-                Message::TextMessageStruct message;
-                message.index = json_obj.value("index").toString();
-                message.time = json_obj.value("time").toString();
+                Message::TextMessage message;
+                message.index = json_obj.value("index").toInt();
+                message.time = json_obj.value("time").toInt();
                 message.reciever = json_obj.value("receiver").toString();
                 message.sender = json_obj.value("sender").toString();
                 message.message = json_obj.value("message").toString();
@@ -397,12 +397,12 @@ void NetworkManager::udpProcessPendingDatagrams()
               }
             case FileTranReq:
               {
-                Message::FileInfoStruct file_info_struct;
-                file_info_struct.index = json_obj.value("index").toString();
-                file_info_struct.name = json_obj.value("name").toString();
-                file_info_struct.size = json_obj.value("size").toInt();
-                file_info_struct.type = (GUI::BuiltInIconType)json_obj.value("type").toInt();
-                udpProcessFileTran(file_info_struct);
+//                Message::FileInfoStruct file_info_struct;
+//                file_info_struct.index = json_obj.value("index").toString();
+//                file_info_struct.name = json_obj.value("name").toString();
+//                file_info_struct.size = json_obj.value("size").toInt();
+//                file_info_struct.type = (GUI::BuiltInIconType)json_obj.value("type").toInt();
+//                udpProcessFileTran(file_info_struct);
                 break;
               }
             case FileReject:
@@ -444,7 +444,7 @@ void NetworkManager::udpProcessPendingDatagrams()
 
 //            QJsonObject json_obj = json_document.object();
 
-//            Message::TextMessageStruct message;
+//            Message::TextMessage message;
 //            message.index = json_obj.value("index").toString();
 //            message.reciever = json_obj.value("receiver").toString();
 //            message.sender = json_obj.value("sender").toString();

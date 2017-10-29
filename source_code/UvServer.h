@@ -6,7 +6,7 @@
 #define TCP_PORT 23232
 #define TCP_BACKLOG 128
 
-#include "HiveProtocol.h"
+#include "HiveServer.h"
 
 #include <QThread>
 #include <QDebug>
@@ -48,17 +48,16 @@ private:
   static uv_tcp_t *tcp_server;
   static uv_udp_t *udp_server;
 
-  static QHash<SocketDescriptor, HiveProtocol::HiveClient*> buffer_hash;
+  static QHash<SocketDescriptor, HiveProtocol::HiveClientBuffer*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
-  static void udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
-  static void udpWrite();
-  static void tcpNewConnection(uv_stream_t *handle, int status);
+  static void tcpListenCb(uv_stream_t *handle, int status);
   static void tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
-  static void tcpWriten(uv_write_t *handle, int status);
+  static void tcpWriteCb(uv_write_t *handle, int status);
+  static void udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
+  static void udpWriteCb(uv_udp_send_t *handle, int status);
 
   static void udpHeartBeatCb(uv_timer_t *handle);
-  static void udpWriten(uv_udp_send_t *req, int status);
 
   static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
   static void freeWriteReq(uv_write_t *handle);

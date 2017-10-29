@@ -21,7 +21,7 @@ UsrData::~UsrData()
   recordMessage(unread_message_list);
 }
 
-void UsrData::addUnreadMessage(const Message::TextMessageStruct &message)
+void UsrData::addUnreadMessage(const Message::TextMessage &message)
 {
   unread_message_list.append(getMessageJsonObject(message));
 }
@@ -147,7 +147,7 @@ void UsrData::readHistoryBundle()
   current_history_bundle_index = latest_history_bundle_index;
 }
 
-QJsonObject UsrData::getMessageJsonObject(const Message::TextMessageStruct &messageStruct)
+QJsonObject UsrData::getMessageJsonObject(const Message::TextMessage &messageStruct)
 {
   QJsonObject json_object;
   json_object.insert("fromMe", messageStruct.sender == *my_key);
@@ -234,7 +234,7 @@ void UsrData::saveHistoryBundle()
 //  QtConcurrent::run(lambda);
 }
 
-void UsrData::recordMessage(const Message::TextMessageStruct &messageStruct)
+void UsrData::recordMessage(const Message::TextMessage &messageStruct)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {
