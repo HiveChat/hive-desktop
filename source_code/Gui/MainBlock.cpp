@@ -51,9 +51,6 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
         main_stacked_widget->addWidget(gui_home_stack_welcome);
         main_stacked_widget->setCurrentWidget(gui_home_stack_welcome);
 
-        HomeStack_welcome* temp = (HomeStack_welcome*)static_stack_hash.value(staticStackType);
-        temp->test();
-
         return;
       }
 
