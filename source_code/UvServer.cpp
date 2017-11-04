@@ -118,9 +118,10 @@ UvServer::tcpListenCb(uv_stream_t *handle, int status)
 void
 UvServer::tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
+  SocketDescriptor socketDiscriptor = getSocketDescriptor((uv_handle_t *)handle);
+
   if(nread > 0)
     {
-      SocketDescriptor socketDiscriptor = getSocketDescriptor((uv_handle_t *)handle);
       HiveClientBuffer *hiveClient;
       if(buffer_hash.contains(socketDiscriptor))
         {
@@ -150,7 +151,6 @@ UvServer::tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
         {
           fprintf(stderr, "TCP Read error %s\n", uv_err_name(nread));
         }
-      int socketDiscriptor = getSocketDescriptor((uv_handle_t *)handle);
       Log::net(Log::Normal, "UvServer::tcpRead()", "Disconnected from discriptor: " + QString::number(socketDiscriptor));
 
       uv_close((uv_handle_t*)handle, NULL); // NULL is a close callback
@@ -166,6 +166,7 @@ UvServer::tcpWriteCb(uv_write_t *handle, int status)
     {
       fprintf(stderr, "Write error %s\n", uv_strerror(status));
     }
+
   freeWriteReq(handle);
 }
 
@@ -205,7 +206,7 @@ void UvServer::udpWriteCb(uv_udp_send_t *handle, int status)
 
 void UvServer::udpHeartBeatCb(uv_timer_t *handle)
 {
-
+  qDebug()<<"----------"<<UV_EOF;
 ///successful test code for timer not crashing
 //  struct sockaddr_in send2;
 //  printf("%d", uv_ip4_addr("255.255.255.255", 23232, &send2));

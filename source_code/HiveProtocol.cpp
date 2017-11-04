@@ -1,4 +1,4 @@
-#include "HiveServer.h"
+#include "HiveProtocol.h"
 
 bool
 HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //recursion decode

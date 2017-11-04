@@ -6,7 +6,7 @@
 #define TCP_PORT 23232
 #define TCP_BACKLOG 128
 
-#include "HiveServer.h"
+#include "HiveProtocol.h"
 
 #include <QThread>
 #include <QDebug>

@@ -3,22 +3,6 @@
 
 #define crypto_generichash_HEXBYTES (crypto_generichash_BYTES * 2 + 1)
 
-typedef unsigned char UCHAR;
-
-char* to_hex( char hex[], const UCHAR bin[], size_t length )
-{
-	int i;
-	UCHAR *p0 = (UCHAR *)bin;
-	char *p1 = hex;
-
-	for( i = 0; i < length; i++ ) {
-		snprintf( p1, 3, "%02x", *p0 );
-		p0 += 1;
-		p1 += 2;
-	}
-
-	return hex;
-}
 
 int main()
 {
@@ -27,7 +11,9 @@ int main()
         return 1;
 	}
 
-    unsigned char client_publickey[crypto_box_PUBLICKEYBYTES]; 
+	while(1)
+	{
+	unsigned char client_publickey[crypto_box_PUBLICKEYBYTES]; 
     unsigned char client_secretkey[crypto_box_SECRETKEYBYTES]; 
     unsigned char server_publickey[crypto_box_PUBLICKEYBYTES]; 
     unsigned char server_secretkey[crypto_box_SECRETKEYBYTES]; 
@@ -74,5 +60,9 @@ int main()
     sodium_bin2hex(&server_hex[0], crypto_generichash_HEXBYTES, &sharedkey_by_server[0], crypto_generichash_BYTES);
     printf("Client Shared Key: %s\n", client_hex);
     printf("Server Shared Key: %s\n", server_hex);
+	
+	}
+
+
     return 0;
 }
