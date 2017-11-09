@@ -75,7 +75,7 @@ UvServer::run()
   tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
   uv_tcp_init(loop, tcp_server);
   uv_tcp_bind(tcp_server, (const struct sockaddr*) tcpAddr, 0);
-  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpListenCb);
+  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnectionCb);
   if(r)
     {
       Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
@@ -93,7 +93,7 @@ UvServer::run()
 }
 
 void
-UvServer::tcpListenCb(uv_stream_t *handle, int status)
+UvServer::tcpNewConnectionCb(uv_stream_t *handle, int status)
 {
   if(status < 0)
     {

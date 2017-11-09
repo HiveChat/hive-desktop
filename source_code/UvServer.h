@@ -51,7 +51,7 @@ private:
   static QHash<SocketDescriptor, HiveProtocol::HiveClientBuffer*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
 
-  static void tcpListenCb(uv_stream_t *handle, int status);
+  static void tcpNewConnectionCb(uv_stream_t *handle, int status);
   static void tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
   static void tcpWriteCb(uv_write_t *handle, int status);
   static void udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
@@ -63,7 +63,7 @@ private:
   static void freeWriteReq(uv_write_t *handle);
 
 
-  static int getSocketDescriptor(uv_handle_t *client);
+  static int getSocketDescriptor(uv_handle_t *handle);
 
 
 };
