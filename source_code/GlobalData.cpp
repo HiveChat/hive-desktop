@@ -42,7 +42,7 @@ QUrl GlobalData::download_url = QUrl("http://download.hivechat.org");
 
 QHash<QString, UsrData*> GlobalData::offline_usr_data_hash;
 QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
-QMultiHash<QString, QPair<int, int>> GlobalData::file_tran_progress_hash;//used
+QMultiHash<QString, QPair<int, int> > GlobalData::file_tran_progress_hash;//used
 
 
 ///netr
