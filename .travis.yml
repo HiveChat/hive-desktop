@@ -1,0 +1,21 @@
+sudo: required
+dist: trusty
+compiler: gcc
+language: cpp
+
+before_install:
+ - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+ - sudo apt-get update -qq
+ - sudo apt-get install qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev
+ - sudo apt-get install qt5-default qttools5-dev-tools
+ - sudo add-apt-repository ppa:chris-lea/libsodium;
+ - sudo echo "deb http://ppa.launchpad.net/chris-lea/libsodium/ubuntu trusty main" >> /etc/apt/sources.list;
+ - sudo echo "deb-src http://ppa.launchpad.net/chris-lea/libsodium/ubuntu trusty main" >> /etc/apt/sources.list;
+ - sudo apt-get update && sudo apt-get install libsodium-dev;
+
+script:
+  - source /opt/qt55/bin/qt55-env.sh
+  - cd source_code
+  - qmake -project
+  - qmake HiveFrame2.pro
+  - make -j4
