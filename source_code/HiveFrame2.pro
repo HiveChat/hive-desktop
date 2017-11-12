@@ -76,7 +76,8 @@ SOURCES += \
     UvServer.cpp \
     HiveProtocol.cpp \
     TcpServer.cpp \
-    TcpSocket.cpp
+    TcpSocket.cpp \
+    UdpSocket.cpp
 \
 
 HEADERS  += \
@@ -119,7 +120,8 @@ HEADERS  += \
     Message.h \
     HiveProtocol.h \
     TcpServer.h \
-    TcpSocket.h
+    TcpSocket.h \
+    UdpSocket.h
 
 ICON = Src/hive.icns
 

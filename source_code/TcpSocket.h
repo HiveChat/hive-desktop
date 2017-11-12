@@ -14,13 +14,21 @@ class TcpSocket
   } write_req_t;
 
 public:
-  TcpSocket(uv_stream_t *handle, int status, uv_loop_t *loop);
+  TcpSocket(uv_loop_t *loop);
+
+  uv_tcp_t* getSocket();
+  static int getSocketDescriptor();
+
+
+  void start();
+  void close();
 
 private:
   static uv_tcp_t* uv_tcp_socket;
   static uv_loop_t* uv_loop;
 
   static void tcpRead(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
+  static void tcpWrite(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
   static void tcpWriteCb(uv_write_t *handle, int status);
   static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
   static void freeWriteReq(uv_write_t *handle);
