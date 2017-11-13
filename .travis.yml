@@ -15,6 +15,7 @@ before_install:
  - sudo apt-get install nodejs npm
  - sudo npm install -g node-gyp && alias gyp="node-gyp"
  - cd libuv && sudo ./gyp_uv.py -f make && sudo BUILDTYPE=Release make -C out
+ - cd ..
 
 script:
   - cd source_code
