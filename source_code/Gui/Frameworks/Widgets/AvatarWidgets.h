@@ -7,7 +7,6 @@
 #include <QDragEnterEvent>
 #include <QMimeData>
 
-#include <QOpenGLWidget>
 #include <QSlider>
 #include <QScrollBar>
 #include <QDial>
