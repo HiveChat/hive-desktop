@@ -1,6 +1,7 @@
 #ifndef GUIMAINBLOCK_H
 #define GUIMAINBLOCK_H
 
+#include "GlobalType.h"
 #include "ChatStack.h"
 #include "Gui/Frameworks/Widgets/ColorPicker.h"
 
@@ -15,6 +16,7 @@
 #include <QStackedWidget>
 #include <QList>
 #include <QHash>
+
 
 class MainBlock : public QWidget
 {
