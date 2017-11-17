@@ -11,7 +11,6 @@ class TcpServer
 public:
   TcpServer(const char* ipAddr, const int &port, const int &backLog, uv_loop_t *loop);
 
-
 private:
   static uv_tcp_t* uv_tcp_server;
   static uv_loop_t* uv_loop;

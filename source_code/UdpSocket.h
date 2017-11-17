@@ -10,6 +10,8 @@ class UdpSocket
 public:
   UdpSocket(const char* ipAddr, const int &port, uv_loop_t *loop);
 
+  void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
+
 private:
   static bool keep_alive;
   static uv_udp_t* uv_udp_socket;

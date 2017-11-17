@@ -17,6 +17,11 @@ UdpSocket::UdpSocket(const char *ipAddr, const int &port, uv_loop_t *loop)
   uv_udp_set_broadcast(uv_udp_socket, 1);
 }
 
+void UdpSocket::write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+{
+
+}
+
 void UdpSocket::udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
 {
   if(nread >= 0 && addr) //addr sometimes is a nullptr
