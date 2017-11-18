@@ -68,7 +68,12 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
               }
             if(make_sure == 2)
               {
-                QDir dir(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation).append("/usr/"));
+#ifndef Q_OS_WIN
+                const QString appDataLocalPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
+                const QString appDataLocalPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
+                QDir dir(appDataLocalPath.append("/usr/"));
                 if(dir.removeRecursively())
                   {
                     clear_btn->setText("cleared");
