@@ -25,7 +25,7 @@ unix{
     INCLUDEPATH += /usr/local/include/
     LIBS  += -L/usr/local/lib -luv
     QMAKE_LFLAGS += -L/usr/local/lib -luv
-    QMAKE_CXXFLAGS += -std=c++14
+    QMAKE_CXXFLAGS += -std=c++11
 }
 
 win32{
