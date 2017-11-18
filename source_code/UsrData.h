@@ -49,7 +49,12 @@ public:
 
 private:
 
+#ifndef Q_OS_WIN
+  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
+
   const QString usr_path = app_data_local_path + "/usr/";
   UsrProfileStruct usr_profile_struct;
   QString history_path;

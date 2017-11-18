@@ -55,7 +55,12 @@ private:
   inline void updateUsr(const UsrProfileStruct &usrProfileStruct);
   inline void deleteUsr(const QStringList usrInfoStrList);
 
+#ifndef Q_OS_WIN
+  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
+
   const QString usr_path = app_data_local_path + "/usr/";
   const QString log_path = app_data_local_path + "/log/";
 
