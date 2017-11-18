@@ -25,6 +25,7 @@ unix{
     INCLUDEPATH += /usr/local/include/
     LIBS  += -L/usr/local/lib -luv
     QMAKE_LFLAGS += -L/usr/local/lib -luv
+    QMAKE_CXXFLAGS += -std=c++14
 }
 
 win32{
@@ -77,7 +78,8 @@ SOURCES += \
     HiveProtocol.cpp \
     TcpServer.cpp \
     TcpSocket.cpp \
-    UdpSocket.cpp
+    UdpSocket.cpp \
+    AbstractSocket.cpp
 \
 
 HEADERS  += \
@@ -121,7 +123,8 @@ HEADERS  += \
     HiveProtocol.h \
     TcpServer.h \
     TcpSocket.h \
-    UdpSocket.h
+    UdpSocket.h \
+    AbstractSocket.h
 
 ICON = Src/hive.icns
 
