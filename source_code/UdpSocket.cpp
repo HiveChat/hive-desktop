@@ -1,7 +1,7 @@
 #include "UdpSocket.h"
 
 bool UdpSocket::keep_alive;
-uv_udp_t* UdpSocket::uv_udp_socket;
+uv_udp_t* UdpSocket::udp_socket;
 uv_loop_t* UdpSocket::uv_loop;
 
 
@@ -10,19 +10,25 @@ UdpSocket::UdpSocket(const char *ipAddr, const int &port, uv_loop_t *loop)
   uv_loop = loop;
   struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
   uv_ip4_addr(ipAddr, port, udpAddr);
-  uv_udp_socket = (uv_udp_t*) malloc(sizeof(uv_udp_t));
-  uv_udp_init(loop, uv_udp_socket);
-  uv_udp_bind(uv_udp_socket, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
-  uv_udp_recv_start(uv_udp_socket, allocBuffer, udpReadCb);
-  uv_udp_set_broadcast(uv_udp_socket, 1);
+  udp_socket = (uv_udp_t*) malloc(sizeof(uv_udp_t));
+  uv_udp_init(loop, udp_socket);
+  uv_udp_bind(udp_socket, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
+  uv_udp_recv_start(udp_socket, allocBuffer, read);
+  uv_udp_set_broadcast(udp_socket, 1);
 }
 
-void UdpSocket::write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+void UdpSocket::write(const uv_buf_t *buf)
 {
+  uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
+  uv_buf_t msg = uv_buf_init(buf->base, buf->len);
+  struct sockaddr_in addr;
+  uv_ip4_addr("255.255.255.255", 23232, &addr);
+  uv_udp_send(req, udp_socket, &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
 
+  Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
 }
 
-void UdpSocket::udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
+void UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
 {
   if(nread >= 0 && addr) //addr sometimes is a nullptr
     {
@@ -44,6 +50,11 @@ void UdpSocket::udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, 
 
   free(buf->base);
   return;
+}
+
+void UdpSocket::writeCb(uv_udp_send_t *req, int status)
+{
+
 }
 
 void UdpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)

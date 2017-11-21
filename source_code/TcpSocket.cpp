@@ -1,29 +1,29 @@
 #include "TcpSocket.h"
 
-uv_tcp_t* TcpSocket::uv_tcp_socket;
+uv_tcp_t* TcpSocket::tcp_socket;
 uv_loop_t* TcpSocket::uv_loop;
 
 TcpSocket::TcpSocket(uv_loop_t *loop)
 {
   uv_loop = loop;
-  uv_tcp_socket = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
-  uv_tcp_init(uv_loop, uv_tcp_socket);
+  tcp_socket = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
+  uv_tcp_init(uv_loop, tcp_socket);
 
 }
 
 uv_tcp_t *TcpSocket::getSocket()
 {
-  return uv_tcp_socket;
+  return tcp_socket;
 }
 
 void TcpSocket::start()
 {
-  uv_read_start((uv_stream_t*)uv_tcp_socket, allocBuffer, read);
+  uv_read_start((uv_stream_t*)tcp_socket, allocBuffer, read);
 }
 
 void TcpSocket::close()
 {
-  uv_close((uv_handle_t*) uv_tcp_socket, NULL);
+  uv_close((uv_handle_t*) tcp_socket, NULL);
 }
 
 void TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
@@ -50,12 +50,12 @@ void TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
   free(buf->base);
 }
 
-void TcpSocket::write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+void TcpSocket::write(const uv_buf_t *buf)
 {
   //< uv_tcp_t ?
   write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
-  req->buf = uv_buf_init(buf->base, nread);
-  uv_write((uv_write_t*)req, handle, &req->buf, 1, writeCb);
+  req->buf = uv_buf_init(buf->base, buf->len);
+  uv_write((uv_write_t*)req, tcp_socket, &req->buf, 1, writeCb);
 }
 
 void TcpSocket::writeCb(uv_write_t *handle, int status)
@@ -84,6 +84,6 @@ void TcpSocket::freeWriteReq(uv_write_t *handle)
 int TcpSocket::getSocketDescriptor()
 {
   int fd;
-  uv_fileno((uv_handle_t*) uv_tcp_socket, &fd);
+  uv_fileno((uv_handle_t*) tcp_socket, &fd);
   return fd;
 }
