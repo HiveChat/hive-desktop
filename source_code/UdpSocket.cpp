@@ -5,9 +5,10 @@ uv_udp_t* UdpSocket::udp_socket;
 uv_loop_t* UdpSocket::uv_loop;
 
 
-UdpSocket::UdpSocket(const char *ipAddr, const int &port, uv_loop_t *loop)
+UdpSocket::UdpSocket(const char *ipAddr, const int &port, const bool keepAlive, uv_loop_t *loop)
 {
   uv_loop = loop;
+  keep_alive = keepAlive;
   struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
   uv_ip4_addr(ipAddr, port, udpAddr);
   udp_socket = (uv_udp_t*) malloc(sizeof(uv_udp_t));
@@ -17,13 +18,13 @@ UdpSocket::UdpSocket(const char *ipAddr, const int &port, uv_loop_t *loop)
   uv_udp_set_broadcast(udp_socket, 1);
 }
 
-void UdpSocket::write(const uv_buf_t *buf)
+void UdpSocket::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
 {
   uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
   uv_buf_t msg = uv_buf_init(buf->base, buf->len);
   struct sockaddr_in addr;
-  uv_ip4_addr("255.255.255.255", 23232, &addr);
-  uv_udp_send(req, udp_socket, &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
+  uv_ip4_addr(ipAddr, port, &addr);
+  uv_udp_send(req, udp_socket, &msg, 1, (const struct sockaddr *)&addr, writeCb);
 
   Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
 }
@@ -54,7 +55,11 @@ void UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const
 
 void UdpSocket::writeCb(uv_udp_send_t *req, int status)
 {
-
+  if(!keep_alive)
+    {
+      free(req->bufs->base);
+      free(req);
+    }
 }
 
 void UdpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)

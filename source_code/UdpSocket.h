@@ -8,9 +8,11 @@
 class UdpSocket
 {
 public:
-  UdpSocket(const char* ipAddr, const int &port, uv_loop_t *loop);
+  UdpSocket(const char* ipAddr, const int &port, const bool keepAlive, uv_loop_t *loop);
 
-  void write(const uv_buf_t *buf);
+  void write(const char *ipAddr, const int &port, const uv_buf_t *buf);
+
+  uv_udp_t* getSocket() {return udp_socket;}
 
 private:
   static bool keep_alive;

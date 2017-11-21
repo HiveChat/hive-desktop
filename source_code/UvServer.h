@@ -7,6 +7,7 @@
 #define TCP_BACKLOG 128
 
 #include "HiveProtocol.h"
+#include "UdpSocket.h"
 
 #include <QThread>
 #include <QDebug>
@@ -46,7 +47,7 @@ protected:
 private:  
   static uv_loop_t *loop;
   static uv_tcp_t *tcp_server;
-  static uv_udp_t *udp_server;
+  static UdpSocket *udp_server;
 
   static QHash<SocketDescriptor, HiveProtocol::HiveClientBuffer*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;

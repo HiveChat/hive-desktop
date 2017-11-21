@@ -55,7 +55,7 @@ void TcpSocket::write(const uv_buf_t *buf)
   //< uv_tcp_t ?
   write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
   req->buf = uv_buf_init(buf->base, buf->len);
-  uv_write((uv_write_t*)req, tcp_socket, &req->buf, 1, writeCb);
+  uv_write((uv_write_t*)req, (uv_stream_t*)tcp_socket, &req->buf, 1, writeCb);
 }
 
 void TcpSocket::writeCb(uv_write_t *handle, int status)
