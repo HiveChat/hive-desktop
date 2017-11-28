@@ -8,6 +8,7 @@
 
 #include "HiveProtocol.h"
 #include "UdpSocket.h"
+#include "TcpServer.h"
 
 #include <QThread>
 #include <QDebug>
@@ -46,7 +47,7 @@ protected:
 
 private:  
   static uv_loop_t *loop;
-  static uv_tcp_t *tcp_server;
+  static TcpServer *tcp_server;
   static UdpSocket *udp_server;
 
   static QHash<SocketDescriptor, HiveProtocol::HiveClientBuffer*> buffer_hash;
