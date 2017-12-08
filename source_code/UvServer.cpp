@@ -4,6 +4,7 @@
 uv_loop_t* UvServer::loop;
 TcpServer* UvServer::tcp_server;
 UdpSocket* UvServer::udp_server;
+uv_timer_t* UvServer::heart_beat_timer;
 QHash<UvServer::SocketDescriptor, HiveProtocol::HiveClientBuffer*> UvServer::buffer_hash;
 QHash<QString, UvServer::SocketDescriptor> UvServer::key_sd_hash;
 
@@ -18,14 +19,53 @@ UvServer::~UvServer()
 
 }
 
-void UvServer::quit()
+void
+UvServer::quit()
 {
-  uv_stop(loop);
-//  uv_loop_close(loop);
+  uv_timer_stop(heart_beat_timer);
+
+  int result = uv_loop_close(loop);
+  if (result == UV_EBUSY)
+    {
+      uv_walk(loop, uvWalkCb, NULL);
+
+      wait(5);
+      uv_run(uv_default_loop(), UV_RUN_DEFAULT);
+
+
+      result = uv_loop_close(loop);
+      if (result)
+        {
+          qDebug() << "failed to close libuv loop: " << uv_err_name(result);
+        }
+      else
+        {
+          qDebug() << "libuv loop is closed successfully!\n";
+        }
+    }
   Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
-void UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
+void
+UvServer::uvWalkCb(uv_handle_t* handle, void* arg)
+{
+  uv_close(handle, uvCloseCb);
+
+}
+
+void
+UvServer::uvCloseCb(uv_handle_t* handle)
+{
+  qDebug()<<"closed"<<handle;
+  if (handle != NULL)
+    {
+      delete handle;
+      qDebug()<<"deleted"<<handle;
+    }
+}
+
+void
+UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
 {
   switch (protocol) {
     case BaseProtocol::Udp:
@@ -34,9 +74,9 @@ void UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &proto
         QByteArray dat = encodeTextMessage(msg);
         uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
         udp_server->write("255.255.255.255", 23232, &msg);
-//        struct sockaddr_in addr;
-//        uv_ip4_addr("255.255.255.255", 23232, &addr);
-//        uv_udp_send(req, udp_server, &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
+        //        struct sockaddr_in addr;
+        //        uv_ip4_addr("255.255.255.255", 23232, &addr);
+        //        uv_udp_send(req, udp_server, &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
 
         Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
         break;
@@ -57,42 +97,47 @@ void UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &proto
 void
 UvServer::run()
 {
-  qDebug()<<"uv thread id: "<<this->currentThreadId();
+  qDebug()<<"uv thread id: "<<(int*)this->currentThreadId();
   Log::net(Log::Normal, "UvServer::run()", "Thread Started");
 
   loop = uv_default_loop();
 
+  /// libuv UDP init
+  //  struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
+  //  uv_ip4_addr("0.0.0.0", UDP_PORT, udpAddr);
+  //  udp_server = (uv_udp_t*) malloc(sizeof(uv_udp_t));
+  //  uv_udp_init(loop, udp_server);
+  //  uv_udp_bind(udp_server, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
+  //  uv_udp_recv_start(udp_server, allocBuffer, udpReadCb);
+  //  uv_udp_set_broadcast(udp_server, 1);
+  /// libuv TCP init
+  //  struct sockaddr_in *tcpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
+  //  uv_ip4_addr("0.0.0.0", TCP_PORT, tcpAddr);
+  //  tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
+  //  uv_tcp_init(loop, tcp_server);
+  //  uv_tcp_bind(tcp_server, (const struct sockaddr*) tcpAddr, 0);
+  //  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnectionCb);
+  //  if(r)
+  //    {
+  //      Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
+  //      fprintf(stderr, "Listen error %s\n", uv_strerror(r));
+  //    }
+
+
+
   udp_server = new UdpSocket("255.255,255,255", 23232, true, loop);
-
-//  struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
-//  uv_ip4_addr("0.0.0.0", UDP_PORT, udpAddr);
-//  udp_server = (uv_udp_t*) malloc(sizeof(uv_udp_t));
-//  uv_udp_init(loop, udp_server);
-//  uv_udp_bind(udp_server, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
-//  uv_udp_recv_start(udp_server, allocBuffer, udpReadCb);
-//  uv_udp_set_broadcast(udp_server, 1);
-
+  qDebug()<<"udp"<<udp_server;
   tcp_server = new TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
+  qDebug()<<"tcp"<<tcp_server;
 
-//  struct sockaddr_in *tcpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
-//  uv_ip4_addr("0.0.0.0", TCP_PORT, tcpAddr);
-//  tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
-//  uv_tcp_init(loop, tcp_server);
-//  uv_tcp_bind(tcp_server, (const struct sockaddr*) tcpAddr, 0);
-//  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnectionCb);
-//  if(r)
-//    {
-//      Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
-//      fprintf(stderr, "Listen error %s\n", uv_strerror(r));
-//    }
+//  heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+//  uv_timer_init(loop, heart_beat_timer);
+//  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 3000);
+//  qDebug()<<"timer"<<heart_beat_timer;
 
-  uv_timer_t *heartBeatTimer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
-  uv_timer_init(loop, heartBeatTimer);
-  uv_timer_start(heartBeatTimer, udpHeartBeatCb, 1000, 3000);
 
 
   uv_run(loop, UV_RUN_DEFAULT);
-
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
 }
 
@@ -190,7 +235,7 @@ UvServer::udpReadCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const 
   else
     {
       fprintf(stderr, "UDP Read error %s\n", uv_err_name(nread));
-//      uv_close((uv_handle_t*) handle, NULL);
+      //      uv_close((uv_handle_t*) handle, NULL);
     }
 
   free(buf->base);
@@ -210,25 +255,25 @@ void UvServer::udpWriteCb(uv_udp_send_t *handle, int status)
 
 void UvServer::udpHeartBeatCb(uv_timer_t *handle)
 {
-///successful test code for timer not crashing
-//  struct sockaddr_in send2;
-//  printf("%d", uv_ip4_addr("255.255.255.255", 23232, &send2));
-//  uv_udp_send_t *req2 = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
-//  uv_buf_t buffer;
-//  char text[] = "hello?? :)\0";
-//  buffer = uv_buf_init(&text[0], sizeof(text) - 1);
-//  uv_udp_send(req2, udp_server, &buffer, 1, (const struct sockaddr *)&send2, udpWriten);
+  /// successful test code for timer not crashing
+  //  struct sockaddr_in send2;
+  //  printf("%d", uv_ip4_addr("255.255.255.255", 23232, &send2));
+  //  uv_udp_send_t *req2 = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
+  //  uv_buf_t buffer;
+  //  char text[] = "hello?? :)\0";
+  //  buffer = uv_buf_init(&text[0], sizeof(text) - 1);
+  //  uv_udp_send(req2, udp_server, &buffer, 1, (const struct sockaddr *)&send2, udpWriten);
+  /// this code block works well
+  //  uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
+  //  QByteArray dat = encodeHeartBeat();
+  //  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
+  //  struct sockaddr_in addr;
+  //  uv_ip4_addr("255.255.255.255", 23232, &addr);
+  //  uv_udp_send(req, udp_server->getSocket(), &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
 
-
-
-//  uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
-  QByteArray dat = encodeHeartBeat();
-  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-//  struct sockaddr_in addr;
-//  uv_ip4_addr("255.255.255.255", 23232, &addr);
-//  uv_udp_send(req, udp_server->getSocket(), &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
-
-  udp_server->write("255.255.255.255", 23232, &msg);
+//  QByteArray dat = encodeHeartBeat();
+//  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
+//  udp_server->write("255.255.255.255", 23232, &msg);
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }

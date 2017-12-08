@@ -49,9 +49,13 @@ private:
   static uv_loop_t *loop;
   static TcpServer *tcp_server;
   static UdpSocket *udp_server;
+  static uv_timer_t *heart_beat_timer;
 
   static QHash<SocketDescriptor, HiveProtocol::HiveClientBuffer*> buffer_hash;
   static QHash<QString, SocketDescriptor> key_sd_hash;
+
+  static void uvWalkCb(uv_handle_t* handle, void* arg);
+  static void uvCloseCb(uv_handle_t* handle);
 
   static void tcpNewConnectionCb(uv_stream_t *handle, int status);
   static void tcpReadCb(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
@@ -63,7 +67,6 @@ private:
 
   static void allocBuffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
   static void freeWriteReq(uv_write_t *handle);
-
 
   static int getSocketDescriptor(uv_handle_t *handle);
 
