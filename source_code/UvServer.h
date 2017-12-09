@@ -70,6 +70,20 @@ private:
 
   static int getSocketDescriptor(uv_handle_t *handle);
 
+  /// BEGIN: 9 Dec. 2017 Test
+  ///  - GitHub Source: ultrasilicon/uv_tcp_echo.c
+  ///  - URL: https://gist.github.com/ultrasilicon/f070f7acc4fe0b036d37f9383a484f5c
+
+  static struct sockaddr_in addr;
+  static void on_new_connection(uv_stream_t *server, int status);
+  static void alloc_buffer(uv_handle_t *handle, size_t suggested_size, uv_buf_t *buf);
+  static void echo_read(uv_stream_t *client, ssize_t nread, const uv_buf_t *buf);
+  static void echo_write(uv_write_t *req, int status);
+  static void free_write_req(uv_write_t *req);
+
+  /// END: 9 Dec. 2017 Test
+
+
 
 };
 
