@@ -82,11 +82,11 @@ Hive::~Hive()
   /// 9 Dec 2017 eoT3ohze
   /// DO NOT TOUCH!!
   /// Only touch when crash on quit!!!
-  if(!network_thread->wait(6000))
+  if(!network_thread->wait(3000))
     {
       Log::gui(Log::Error, "Hive::~Hive()", "Network thread is terminated due to timeout.");
       network_thread->terminate();
-      network_thread->wait(6000);
+      network_thread->wait(3000);
     }
 
   if(!data_thread->wait(500))
