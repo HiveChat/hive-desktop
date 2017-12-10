@@ -20,10 +20,13 @@ NetworkManager::~NetworkManager()
 
   uv_server->quit();
 
-  if(!uv_server->wait(500))
+  /// 9 Dec 2017 eoT3ohze
+  /// DON NOT TOUCH!!!
+  /// Only touch when crash on quit!!!
+  if(!uv_server->wait(5000))
     {
       uv_server->terminate();
-      uv_server->wait(500);
+      uv_server->wait(5000);
       Log::gui(Log::Normal, "NetworkManager::~NetworkManager()", "Fail to quit UvServer, destryoing it...");
     }
 

@@ -13,6 +13,7 @@ QHash<QString, UvServer::SocketDescriptor> UvServer::key_sd_hash;
 ///  - GitHub Source: ultrasilicon/uv_tcp_echo.c
 ///  - URL: https://gist.github.com/ultrasilicon/f070f7acc4fe0b036d37f9383a484f5c
 
+bool UvServer::stop = false;
 struct sockaddr_in UvServer::addr;
 
 /// END: 9 Dec. 2017 Test
@@ -38,7 +39,13 @@ UvServer::quit()
     {
       uv_walk(loop, uvWalkCb, NULL);
 
-      wait(5);
+      /// 9 Dec 2017 eoT3ohze
+      /// DON NOT TOUCH!!!
+      /// Only touch when crash on quit!!!
+      /// don't touch wait number, not sure how this works yet.
+      /// wait < 500 the chance of crash on quit is high.
+      /// related to kill wait of this thread and NetworkManager.
+      wait(500);
       uv_run(uv_default_loop(), UV_RUN_DEFAULT);
 
 
@@ -68,8 +75,9 @@ UvServer::uvCloseCb(uv_handle_t* handle)
   qDebug()<<"closed"<<handle;
   if (handle != NULL)
     {
-      delete handle;
-      qDebug()<<"deleted"<<handle;
+//      originial: delete
+      free(handle);
+      qDebug()<<"Freed"<<handle;
     }
 }
 
@@ -149,16 +157,27 @@ UvServer::run()
   ///  - GitHub Source: ultrasilicon/uv_tcp_echo.c
   ///  - URL: https://gist.github.com/ultrasilicon/f070f7acc4fe0b036d37f9383a484f5c
 
-  uv_tcp_t server;
-  uv_tcp_init(loop, &server);
+  uv_tcp_t *server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
+  uv_tcp_init(loop, server);
 
   uv_ip4_addr("0.0.0.0", 7000, &addr);
 
-  uv_tcp_bind(&server, (const struct sockaddr*)&addr, 0);
-  int r = uv_listen((uv_stream_t*) &server, 128, on_new_connection);
+  uv_tcp_bind(server, (const struct sockaddr*)&addr, 0);
+  int r = uv_listen((uv_stream_t*) server, 128, on_new_connection);
   if (r) {
       fprintf(stderr, "Listen error %s\n", uv_strerror(r));
   }
+
+    heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+    uv_timer_init(loop, heart_beat_timer);
+    uv_timer_start(heart_beat_timer, timer_cb, 1000, 500);
+    qDebug()<<"timer"<<heart_beat_timer;
+
+    heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+    uv_timer_init(loop, heart_beat_timer);
+    uv_timer_start(heart_beat_timer, timer_cb2, 1000, 7000);
+    qDebug()<<"time2r"<<heart_beat_timer;
+
 
   /// END: 9 Dec. 2017 Test
 
@@ -390,6 +409,24 @@ void UvServer::free_write_req(uv_write_t *req)
   write_req_t *wr = (write_req_t*) req;
   free(wr->buf.base);
   free(wr);
+}
+
+void UvServer::timer_cb(uv_timer_t *handle)
+{
+  qDebug()<<"1s";
+//  if(stop)
+//    {
+//      quit();
+//    }
+}
+
+void UvServer::timer_cb2(uv_timer_t *handle)
+{
+  qDebug()<<"0.5s---";
+//  if(stop)
+//    {
+//      quit();
+//    }
 }
 
 /// END: 9 Dec. 2017 Test
