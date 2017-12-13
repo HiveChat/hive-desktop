@@ -57,7 +57,9 @@ void UdpSocket::writeCb(uv_udp_send_t *req, int status)
 {
   if(!keep_alive)
     {
+#ifndef Q_OS_WIN
       free(req->bufs->base);
+#endif
       free(req);
     }
 }

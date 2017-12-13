@@ -344,7 +344,11 @@ int
 UvServer::getSocketDescriptor(uv_handle_t *handle)
 {
   int fd;
+#ifdef Q_OS_WIN
+  uv_fileno(handle, (uv_os_fd_t*)(&fd));
+#else
   uv_fileno(handle, &fd);
+#endif
   return fd;
 }
 

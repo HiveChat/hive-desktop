@@ -1,7 +1,13 @@
 #ifndef ABSTRACTSOCKET_H
 #define ABSTRACTSOCKET_H
 
+#include <QObject>
+
+#ifdef Q_OS_WIN
+#include "../dependency/win32/libuv/include/uv.h"
+#else
 #include <uv.h>
+#endif
 
 class AbstractSocket
 {

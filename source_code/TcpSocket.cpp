@@ -84,6 +84,10 @@ void TcpSocket::freeWriteReq(uv_write_t *handle)
 int TcpSocket::getSocketDescriptor()
 {
   int fd;
+#ifdef Q_OS_WIN
+  uv_fileno((uv_handle_t*) tcp_socket, (uv_os_fd_t*)(&fd));
+#else
   uv_fileno((uv_handle_t*) tcp_socket, &fd);
+#endif
   return fd;
 }
