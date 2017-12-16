@@ -33,11 +33,11 @@ void UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const
 {
   if(nread >= 0 && addr) //addr sometimes is a nullptr
     {
-      char senderAddr[17] = { 0 };
-      uv_ip4_name((const struct sockaddr_in*)addr, senderAddr, 16);
-      Log::net(Log::Normal, "UdpSocket::udpReadCb()", "Recv from %s\n" + QString(senderAddr));
+//      char senderAddr[17] = { 0 };
+//      uv_ip4_name((const struct sockaddr_in*)addr, senderAddr, 16);
+//      Log::net(Log::Normal, "UdpSocket::udpReadCb()", "Recv from %s\n" + QString(senderAddr));
 
-      uv_buf_t buffer = uv_buf_init(buf->base, nread);
+//      uv_buf_t buffer = uv_buf_init(buf->base, nread);
       /// Do callback or what ever
     }
   else
@@ -55,6 +55,7 @@ void UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const
 
 void UdpSocket::writeCb(uv_udp_send_t *req, int status)
 {
+  //NULL pointer should not happen for req obj!!
   if(!keep_alive)
     {
 #ifndef Q_OS_WIN

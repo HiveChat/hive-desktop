@@ -128,7 +128,7 @@ UvServer::run()
 
   heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heart_beat_timer);
-  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 2000);
+  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 2);
   qDebug()<<"timer"<<heart_beat_timer;
 
   /// BEGIN: 9 Dec. 2017 Original C code
@@ -318,9 +318,9 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
   //  uv_ip4_addr("255.255.255.255", 23232, &addr);
   //  uv_udp_send(req, udp_server->getSocket(), &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
 
-//  QByteArray dat = encodeHeartBeat();
-//  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-//  udp_server->write("255.255.255.255", 23232, &msg);
+  QByteArray dat = encodeHeartBeat();
+  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
+  udp_server->write("255.255.255.255", 23232, &msg);
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
