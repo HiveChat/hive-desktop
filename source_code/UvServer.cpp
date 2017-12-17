@@ -318,11 +318,12 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
   //  uv_ip4_addr("255.255.255.255", 23232, &addr);
   //  uv_udp_send(req, udp_server->getSocket(), &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
 
+  //try put data in, pass string literal instead of initialized buffer.
   QByteArray dat = encodeHeartBeat();
   uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
   udp_server->write("255.255.255.255", 23232, &msg);
 
-  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
+//  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
 void

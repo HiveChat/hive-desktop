@@ -251,6 +251,7 @@ QByteArray HiveProtocol::encodeHeartBeat()
   jsonObj.insert("name", GlobalData::settings_struct.profile_name_str);
   jsonObj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
   jsonObj.insert("msgType", MessageType::HeartBeat);
+  jsonObj.insert("trash", "aiCheila7Ohm8thohquoPhoh9aequ8raa1");
   QJsonDocument jsonDoc(jsonObj);
 
   return jsonDoc.toJson() + '\0';
