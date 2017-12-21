@@ -11,22 +11,26 @@ TcpSocket::TcpSocket(uv_loop_t *loop)
 
 }
 
-uv_tcp_t *TcpSocket::getSocket()
+uv_tcp_t*
+TcpSocket::getSocket()
 {
   return tcp_socket;
 }
 
-void TcpSocket::start()
+void
+TcpSocket::start()
 {
-  uv_read_start((uv_stream_t*)tcp_socket, allocBuffer, read);
+  uv_read_start((uv_stream_t*) tcp_socket, allocBuffer, read);
 }
 
-void TcpSocket::close()
+void
+TcpSocket::close()
 {
   uv_close((uv_handle_t*) tcp_socket, NULL);
 }
 
-void TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+void
+TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
   SocketDescriptor socketDiscriptor = getSocketDescriptor();
 
@@ -44,21 +48,23 @@ void TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
           Log::net(Log::Critical, "TcpSocket::tcpRead()", "TCP Read error: " + QString(uv_err_name(nread)));
         }
       Log::net(Log::Normal, "TcpSocket::tcpRead()", "Disconnected from discriptor: " + QString::number(socketDiscriptor));
-      uv_close((uv_handle_t*)handle, NULL);
+      uv_close((uv_handle_t*) handle, NULL);
     }
 
   free(buf->base);
 }
 
-void TcpSocket::write(const uv_buf_t *buf)
+void
+TcpSocket::write(const uv_buf_t *buf)
 {
   //< uv_tcp_t ?
-  write_req_t *req = (write_req_t*)malloc(sizeof(write_req_t));
+  write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t));
   req->buf = uv_buf_init(buf->base, buf->len);
-  uv_write((uv_write_t*)req, (uv_stream_t*)tcp_socket, &req->buf, 1, writeCb);
+  uv_write((uv_write_t*) req, (uv_stream_t*)tcp_socket, &req->buf, 1, writeCb);
 }
 
-void TcpSocket::writeCb(uv_write_t *handle, int status)
+void
+TcpSocket::writeCb(uv_write_t *handle, int status)
 {
   if (status)
     {
@@ -68,20 +74,23 @@ void TcpSocket::writeCb(uv_write_t *handle, int status)
   freeWriteReq(handle);
 }
 
-void TcpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
+void
+TcpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
 {
   buf->base = (char*) malloc(suggestedSize);
   buf->len = suggestedSize;
 }
 
-void TcpSocket::freeWriteReq(uv_write_t *handle)
+void
+TcpSocket::freeWriteReq(uv_write_t *handle)
 {
   write_req_t *req = (write_req_t*) handle;
   free(req->buf.base);
   free(req);
 }
 
-int TcpSocket::getSocketDescriptor()
+int
+TcpSocket::getSocketDescriptor()
 {
   int fd;
 #ifdef Q_OS_WIN

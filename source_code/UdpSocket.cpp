@@ -18,31 +18,33 @@ UdpSocket::UdpSocket(const char *ipAddr, const int &port, const bool keepAlive, 
   uv_udp_set_broadcast(udp_socket, 1);
 }
 
-void UdpSocket::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
+void
+UdpSocket::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
 {
   uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
-
-  //  uv_buf_t msg = uv_buf_init(buf->base, buf->len);
   struct sockaddr_in addr;
   uv_ip4_addr(ipAddr, port, &addr);
   uv_udp_send(req, udp_socket, buf, 1, (const struct sockaddr *)&addr, writeCb);
 
-//  Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
+  Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
 }
 
-void UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
+void
+UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
 {
-  /// The receive callback will be called with nread == 0 and addr == NULL when there is nothing to read,
-  /// and with nread == 0 and addr != NULL when an empty UDP packet is received.
-  if(nread != 0) //addr sometimes is a nullptr
+  /// DOC: libuv 1.18.1-dev
+  ///  - The receive callback will be called with nread == 0 and addr == NULL when there is nothing to read,
+  ///  - and with nread == 0 and addr != NULL when an empty UDP packet is received.
+  if(nread != 0)
     {
       if(addr != NULL)
         {
           char senderAddr[17] = { 0 };
           uv_ip4_name((const struct sockaddr_in*)addr, senderAddr, 16);
-//          Log::net(Log::Normal, "UdpSocket::udpReadCb()", QString("Recv from %1").arg(senderAddr));
+          Log::net(Log::Normal, "UdpSocket::udpReadCb()", QString("Recv from %1").arg(senderAddr));
 
-//          uv_buf_t buffer = uv_buf_init(buf->base, nread);
+          uv_buf_t buffer = uv_buf_init(buf->base, nread);
+          qDebug()<<buffer.base;
           /// Do callback or what ever
         }
     }
@@ -62,13 +64,14 @@ void UdpSocket::read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const
   return;
 }
 
-void UdpSocket::writeCb(uv_udp_send_t *req, int status)
+void
+UdpSocket::writeCb(uv_udp_send_t *req, int status)
 {
   free(req);
-
 }
 
-void UdpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
+void
+UdpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
 {
   buf->base = (char*) malloc(suggestedSize);
   buf->len = suggestedSize;

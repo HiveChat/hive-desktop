@@ -35,12 +35,12 @@ UvServer::quit()
     {
       uv_walk(loop, uvWalkCb, NULL);
 
-      /// 9 Dec 2017 eoT3ohze
-      /// DON NOT TOUCH!!!
-      /// Only touch when crash on quit!!!
-      /// don't touch wait number, not sure how this works yet.
-      /// when wait < [longest timer delay] the chance of crash on quit is high.
-      /// related to kill wait of this thread and NetworkManager.
+      /// WARN: DON NOT TOUCH!!!
+      /// DATE: 9 Dec 2017 eoT3ohze
+      ///  - Only touch when crash on quit!!!
+      ///  - don't touch wait number, not sure how this works yet.
+      ///  - when wait < [longest timer delay] the chance of crash on quit is high.
+      ///  - related to kill wait of this thread and NetworkManager.
       wait(2000);
 
 
@@ -73,7 +73,6 @@ UvServer::uvCloseCb(uv_handle_t* handle)
   qDebug()<<"closed"<<handle;
   if (handle != NULL)
     {
-//      originial: delete
       free(handle);
       qDebug()<<"Freed"<<handle;
     }
@@ -89,9 +88,6 @@ UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
         QByteArray dat = encodeTextMessage(msg);
         uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
         udp_server->write("255.255.255.255", 23232, &msg);
-        //        struct sockaddr_in addr;
-        //        uv_ip4_addr("255.255.255.255", 23232, &addr);
-        //        uv_udp_send(req, udp_server, &msg, 1, (const struct sockaddr *)&addr, udpWriteCb);
 
         Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
         break;
@@ -112,14 +108,10 @@ UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
 void
 UvServer::run()
 {
-  qDebug()<<"uv thread id: "<<(int*)this->currentThreadId();
+  qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Normal, "UvServer::run()", "Thread Started");
 
   loop = uv_default_loop();
-
-
-
-
 
   udp_server = new UdpSocket("255.255,255,255", 23232, true, loop);
   qDebug()<<"udp"<<udp_server;
@@ -128,32 +120,31 @@ UvServer::run()
 
   heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heart_beat_timer);
-  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 2);
+  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 2000);
   qDebug()<<"timer"<<heart_beat_timer;
 
   /// BEGIN: 9 Dec. 2017 Original C code
-  /// libuv UDP init
-  //  struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
-  //  uv_ip4_addr("0.0.0.0", UDP_PORT, udpAddr);
-  //  udp_server = (uv_udp_t*) malloc(sizeof(uv_udp_t));
-  //  uv_udp_init(loop, udp_server);
-  //  uv_udp_bind(udp_server, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
-  //  uv_udp_recv_start(udp_server, allocBuffer, udpReadCb);
-  //  uv_udp_set_broadcast(udp_server, 1);
-  /// libuv TCP init
-  //  struct sockaddr_in *tcpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
-  //  uv_ip4_addr("0.0.0.0", TCP_PORT, tcpAddr);
-  //  tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
-  //  uv_tcp_init(loop, tcp_server);
-  //  uv_tcp_bind(tcp_server, (const struct sockaddr*) tcpAddr, 0);
-  //  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnectionCb);
-  //  if(r)
-  //    {
-  //      Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
-  //      fprintf(stderr, "Listen error %s\n", uv_strerror(r));
-  //    }
+  ///  - libuv UDP init
+//  struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
+//  uv_ip4_addr("0.0.0.0", UDP_PORT, udpAddr);
+//  udp_server = (uv_udp_t*) malloc(sizeof(uv_udp_t));
+//  uv_udp_init(loop, udp_server);
+//  uv_udp_bind(udp_server, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
+//  uv_udp_recv_start(udp_server, allocBuffer, udpReadCb);
+//  uv_udp_set_broadcast(udp_server, 1);
+  ///  - libuv TCP init
+//  struct sockaddr_in *tcpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
+//  uv_ip4_addr("0.0.0.0", TCP_PORT, tcpAddr);
+//  tcp_server = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
+//  uv_tcp_init(loop, tcp_server);
+//  uv_tcp_bind(tcp_server, (const struct sockaddr*) tcpAddr, 0);
+//  int r = uv_listen((uv_stream_t*) tcp_server, TCP_BACKLOG, tcpNewConnectionCb);
+//  if(r)
+//    {
+//      Log::net(Log::Error, "UvServer::run()", QString("Listen error: " + QString(uv_strerror(r))));
+//      fprintf(stderr, "Listen error %s\n", uv_strerror(r));
+//    }
   /// END: 9 Dec. 2017 Original C code
-
 
   /// BEGIN: 9 Dec. 2017 Test
   ///  - GitHub Source: ultrasilicon/uv_tcp_echo.c
