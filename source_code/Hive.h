@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include "GlobalData.h"
-#include "Data/DataManager.h"
+#include "Data/AppDataManager.h"
 #include "Network/NetworkManager.h"
 #include "Gui/CentralWidget.h"
 

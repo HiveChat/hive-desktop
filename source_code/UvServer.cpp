@@ -33,10 +33,7 @@ UvServer::quit()
       ///  - related to kill wait of this thread and NetworkManager.
       wait(2000);
 
-
       uv_run(uv_default_loop(), UV_RUN_DEFAULT);
-
-
       result = uv_loop_close(loop);
       if (result)
         {
@@ -103,7 +100,7 @@ UvServer::run()
 
   loop = uv_default_loop();
 
-  udp_server = new UdpSocket("255.255,255,255", 23232, true, loop);
+  udp_server = new UdpSocket("255.255,255,255", UDP_PORT, true, loop);
   qDebug()<<"udp"<<udp_server;
   tcp_server = new TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
   qDebug()<<"tcp"<<tcp_server;
@@ -126,3 +123,18 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

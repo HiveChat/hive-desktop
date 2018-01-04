@@ -71,7 +71,6 @@ SOURCES += \
 \
     Network/NetworkManager.cpp \
 \
-    Data/DataManager.cpp \
     Gui/Frameworks/Widgets/AvatarWidgets.cpp \
     Log.cpp \
     UvServer.cpp \
@@ -79,7 +78,8 @@ SOURCES += \
     TcpServer.cpp \
     TcpSocket.cpp \
     UdpSocket.cpp \
-    AbstractSocket.cpp
+    AbstractSocket.cpp \
+    Data/AppDataManager.cpp
 \
 
 HEADERS  += \
@@ -115,7 +115,6 @@ HEADERS  += \
 \
     Network/NetworkManager.h \
 \
-    Data/DataManager.h \
     Gui/Frameworks/Widgets/AvatarWidgets.h \
     Log.h \
     UvServer.h \
@@ -124,7 +123,8 @@ HEADERS  += \
     TcpServer.h \
     TcpSocket.h \
     UdpSocket.h \
-    AbstractSocket.h
+    AbstractSocket.h \
+    Data/AppDataManager.h
 
 ICON = Src/hive.icns
 

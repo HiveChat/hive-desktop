@@ -3,7 +3,7 @@
 
 #include "GlobalData.h"
 #include "UsrData.h"
-#include "Data/DataManager.h"
+#include "Data/AppDataManager.h"
 #include "Gui/Frameworks/ScrollStack.h"
 #include "Gui/Frameworks/Widgets/LabelButton.h"
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"

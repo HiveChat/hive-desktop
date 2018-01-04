@@ -44,6 +44,8 @@ QHash<QString, UsrData*> GlobalData::offline_usr_data_hash;
 QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
 QMultiHash<QString, QPair<int, int> > GlobalData::file_tran_progress_hash;//used
 
+QList<QJsonObject> GlobalData::message_queue;
+
 
 ///netr
 QString GlobalData::g_localHostIP = "Offline";
