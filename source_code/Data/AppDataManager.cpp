@@ -18,45 +18,37 @@ AppDataManager::~AppDataManager()
 
 void AppDataManager::checkSettings()
 {
-//  if(written_settings_struct != GlobalData::g_settings_struct)
-//    {
-//      qDebug()<<"&DataManager::checkSettings():    written!!!!";
-//      writeCurrentConfig();
-//      written_settings_struct = GlobalData::g_settings_struct;
-//    }
   if(GlobalData::settings_struct.modified_lock)
     {
       qDebug()<<"&DataManager::checkSettings(): Settings changed";
       writeCurrentConfig();
       GlobalData::settings_struct.modified_lock = false;
-//      written_settings_struct = GlobalData::g_settings_struct;
-
     }
 }
 
 QJsonObject AppDataManager::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
 {
-  QJsonObject profile_json_obj;
-  profile_json_obj.insert("usrName", usrProfileStruct.name);
-  profile_json_obj.insert("avatarPath", usrProfileStruct.avatar);
+  QJsonObject profileJsonObj;
+  profileJsonObj.insert("usrName", usrProfileStruct.name);
+  profileJsonObj.insert("avatarPath", usrProfileStruct.avatar);
 
-  QJsonObject usr_profile_json_obj;
-  usr_profile_json_obj.insert(usrProfileStruct.key, profile_json_obj);
+  QJsonObject usrProfileJsonObj;
+  usrProfileJsonObj.insert(usrProfileStruct.key, profileJsonObj);
 
-  return usr_profile_json_obj;
+  return usrProfileJsonObj;
 }
 
-QJsonDocument AppDataManager::makeUsrList(QList<QJsonObject> &usr_profile_list)
+QJsonDocument AppDataManager::makeUsrList(QList<QJsonObject> &usrProfileList)
 {
-  QJsonArray usr_list_json_array;
-  foreach (QJsonObject json_obj, usr_profile_list)
+  QJsonArray usrListJsonArray;
+  foreach (QJsonObject jsonObj, usrProfileList)
     {
-      usr_list_json_array.append(json_obj);
+      usrListJsonArray.append(jsonObj);
     }
-  QJsonDocument json_doc;
-  json_doc.setArray(usr_list_json_array);
+  QJsonDocument jsonDoc;
+  jsonDoc.setArray(usrListJsonArray);
 
-  return json_doc;
+  return jsonDoc;
 }
 
 QJsonDocument AppDataManager::makeUpdateJson(const int stable[])
@@ -89,41 +81,41 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 
   QTextStream out(&file);
   QTextStream in(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
+  QByteArray inByteArray = in.readAll().toUtf8();
 
-  QJsonParseError json_error;
-  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-  if(json_error.error == QJsonParseError::NoError)
+  QJsonParseError jsonError;
+  QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+  if(jsonError.error == QJsonParseError::NoError)
     {
-      if(read_json_document.isObject())
+      if(readJsonDocument.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_document.object();
-          QJsonObject usr_info_json_obj;
-          usr_info_json_obj.insert("usrKey", usrKey);
-          usr_info_json_obj.insert("usrName", usrName);
-          usr_info_json_obj.insert("avatarPath", avatarPath);
-          if(!usr_list_json_obj.contains(usrKey))
+          QJsonObject usrListJsonObj = readJsonDocument.object();
+          QJsonObject usrInfoJsonObj;
+          usrInfoJsonObj.insert("usrKey", usrKey);
+          usrInfoJsonObj.insert("usrName", usrName);
+          usrInfoJsonObj.insert("avatarPath", avatarPath);
+          if(!usrListJsonObj.contains(usrKey))
             {
-              usr_list_json_obj.insert(usrKey, usr_info_json_obj);
+              usrListJsonObj.insert(usrKey, usrInfoJsonObj);
 
-              QJsonDocument write_json_document;
-              write_json_document.setObject(usr_list_json_obj);
+              QJsonDocument writeJsonDocument;
+              writeJsonDocument.setObject(usrListJsonObj);
 
               file.resize(0);
-              out<<write_json_document.toJson()<<endl;
+              out<<writeJsonDocument.toJson()<<endl;
             }
           else
             {
-              if(usr_list_json_obj[usrKey] != usr_info_json_obj)
+              if(usrListJsonObj[usrKey] != usrInfoJsonObj)
                 {
-                  usr_list_json_obj.remove(usrKey);
-                  usr_list_json_obj.insert(usrKey, usr_info_json_obj);
+                  usrListJsonObj.remove(usrKey);
+                  usrListJsonObj.insert(usrKey, usrInfoJsonObj);
 
-                  QJsonDocument write_json_document;
-                  write_json_document.setObject(usr_list_json_obj);
+                  QJsonDocument writeJsonDocument;
+                  writeJsonDocument.setObject(usrListJsonObj);
 
                   file.resize(0);
-                  out<<write_json_document.toJson()<<endl;
+                  out<<writeJsonDocument.toJson()<<endl;
                 }
             }
         }
@@ -166,18 +158,18 @@ void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 
   ///JSon
   QJsonParseError json_error;
-  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
+  QJsonDocument readJsonDocument = QJsonDocument::fromJson(in_byte_array, &json_error);
   if(json_error.error == QJsonParseError::NoError)
     {
-      if(read_json_document.isObject())
+      if(readJsonDocument.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_document.object();
-          usr_list_json_obj.erase(usr_list_json_obj.find(usrInfoStrList.at(0)));
+          QJsonObject usrListJsonObj = readJsonDocument.object();
+          usrListJsonObj.erase(usrListJsonObj.find(usrInfoStrList.at(0)));
 
-          QJsonDocument write_json_document;
-          write_json_document.setObject(usr_list_json_obj);
+          QJsonDocument writeJsonDocument;
+          writeJsonDocument.setObject(usrListJsonObj);
           file.resize(0);
-          out<<write_json_document.toJson(QJsonDocument::Indented)<<endl;
+          out<<writeJsonDocument.toJson(QJsonDocument::Indented)<<endl;
 
         }
     }
@@ -267,29 +259,29 @@ void AppDataManager::onUpdatesAvailable()
 
   QTextStream in(&file);
   QTextStream out(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
-  int write_version[3];
-  memcpy(&write_version, &GlobalData::current_version, sizeof(GlobalData::current_version));
+  QByteArray inByteArray = in.readAll().toUtf8();
+  int writeVersion[3];
+  memcpy(&writeVersion, &GlobalData::current_version, sizeof(GlobalData::current_version));
 
-  if(!in_byte_array.isEmpty())
+  if(!inByteArray.isEmpty())
     {
-      QJsonParseError json_error;
-      QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-      if(json_error.error == QJsonParseError::NoError)
+      QJsonParseError jsonError;
+      QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+      if(jsonError.error == QJsonParseError::NoError)
         {
-          if(read_json_document.isObject())
+          if(readJsonDocument.isObject())
             {
-              QJsonObject read_json_obj = read_json_document.object();
+              QJsonObject readJsonObj = readJsonDocument.object();
 
               int read_version[3] = {
-                read_json_obj.value("stable_version").toInt(),
-                read_json_obj.value("beta_version").toInt(),
-                read_json_obj.value("alpha_version").toInt()
+                readJsonObj.value("stable_version").toInt(),
+                readJsonObj.value("beta_version").toInt(),
+                readJsonObj.value("alpha_version").toInt()
               };
 
               for(int i = 0; i < 3; i ++)
                 {
-                  write_version[i] = read_version[i];
+                  writeVersion[i] = read_version[i];
                 }
 
               if(memcmp(read_version,
@@ -308,7 +300,7 @@ void AppDataManager::onUpdatesAvailable()
                     {
                       for(int i = 0; i < 3; i ++)
                         {
-                          write_version[i] = GlobalData::update_struct.version[i];
+                          writeVersion[i] = GlobalData::update_struct.version[i];
                         }
                     }
                 }
@@ -318,7 +310,7 @@ void AppDataManager::onUpdatesAvailable()
 
   file.resize(0);
 
-  out << makeUpdateJson(write_version).toJson(QJsonDocument::Indented) << endl;
+  out << makeUpdateJson(writeVersion).toJson(QJsonDocument::Indented) << endl;
 
   file.close();
   file.flush();
@@ -356,30 +348,25 @@ bool AppDataManager::checkDir(const QString &directory)
   return true;
 }
 
-//QString DataManager::appDataLocalPath()
-//{
-//  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-//}
-
 QJsonDocument AppDataManager::makeUsrProfile()
 {
   loadDefaultGlobalData();
 
-  QJsonObject my_profile_json_obj;
+  QJsonObject myProfileJsonObj;
   foreach (QString attribute, settings_hash_qstring.keys())
     {
-      my_profile_json_obj.insert(attribute, QJsonValue::fromVariant(*settings_hash_qstring.value(attribute)));
+      myProfileJsonObj.insert(attribute, QJsonValue::fromVariant(*settings_hash_qstring.value(attribute)));
     }
 
-  my_profile_json_obj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
-  my_profile_json_obj.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
+  myProfileJsonObj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
+  myProfileJsonObj.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
-  QJsonDocument write_json_document;
-  write_json_document.setObject(my_profile_json_obj);
+  QJsonDocument writeJsonDocument;
+  writeJsonDocument.setObject(myProfileJsonObj);
 
-  return write_json_document;
+  return writeJsonDocument;
 }
 
 QString AppDataManager::makeUsrKey()
@@ -399,7 +386,7 @@ QString AppDataManager::makeUsrKey()
 void AppDataManager::initVariable()
 {
   //When adding global variable to settings, choose a map with corresponding data type below.
-  //When adding map, go to register in loadMySettings() to enable reaing from disk.
+  //When adding map, go to register in loadMySettings() to enable reading from disk.
   settings_hash_int.insert("window_width",
                            &GlobalData::settings_struct.window_width);
   settings_hash_int.insert("window_height",
@@ -449,25 +436,25 @@ void AppDataManager::loadMySettings()
 
   QTextStream in(&file);
   QTextStream out(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
+  QByteArray inByteArray = in.readAll().toUtf8();
 
-  QJsonParseError json_error;
-  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-  if(json_error.error == QJsonParseError::NoError)
+  QJsonParseError jsonError;
+  QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+  if(jsonError.error == QJsonParseError::NoError)
     {
-      if(read_json_document.isObject())
+      if(readJsonDocument.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_document.object();
+          QJsonObject usrListJsonObj = readJsonDocument.object();
 
           //This is Tim's magic
           foreach(int *var, settings_hash_int.values())
             {
-              *var = usr_list_json_obj[settings_hash_int.key(var)].toInt();
+              *var = usrListJsonObj[settings_hash_int.key(var)].toInt();
             }
 
           foreach(QString *var, settings_hash_qstring.values())
             {
-              *var = usr_list_json_obj[settings_hash_qstring.key(var)].toString();
+              *var = usrListJsonObj[settings_hash_qstring.key(var)].toString();
             }
 
 //          foreach (QString *key, settings_hash_qstring.keys())
@@ -477,12 +464,12 @@ void AppDataManager::loadMySettings()
 
           foreach(QColor *var, settings_hash_qcolor.values())
             {
-              *var = QColor(usr_list_json_obj[settings_hash_qcolor.key(var)].toString());
+              *var = QColor(usrListJsonObj[settings_hash_qcolor.key(var)].toString());
             }
 
           foreach(bool *var, settings_hash_bool.values())
             {
-              *var = usr_list_json_obj[settings_hash_bool.key(var)].toBool();
+              *var = usrListJsonObj[settings_hash_bool.key(var)].toBool();
             }
         }
       else
@@ -511,30 +498,30 @@ void AppDataManager::loadUsrList()
       return;
     }
   QTextStream in(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
+  QByteArray inByteArray = in.readAll().toUtf8();
 
   ///JSon
-  QJsonParseError json_error;
-  QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-  if(json_error.error == QJsonParseError::NoError)
+  QJsonParseError jsonError;
+  QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+  if(jsonError.error == QJsonParseError::NoError)
     {
-      if(read_json_document.isObject())
+      if(readJsonDocument.isObject())
         {
-          QJsonObject usr_list_json_obj = read_json_document.object();
-          QStringList usr_key_str_list = usr_list_json_obj.keys();  //get usr_key as a string list
+          QJsonObject usrListJsonObj = readJsonDocument.object();
+          QStringList usrKeyStrList = usrListJsonObj.keys();  //get usr_key as a string list
 
-          for(int i = 0; i < usr_key_str_list.count(); i++)
+          for(int i = 0; i < usrKeyStrList.count(); i++)
             {
-              QString *temp_usr_key_str = &usr_key_str_list[i];
-              QJsonObject temp_usr_profile_json_obj = usr_list_json_obj[*temp_usr_key_str].toObject();
+              QString *tempUsrKeyStr = &usrKeyStrList[i];
+              QJsonObject tempUsrProfileJsonObj = usrListJsonObj[*tempUsrKeyStr].toObject();
 
-              UsrProfileStruct usr_profile_struct;
-              usr_profile_struct.key = temp_usr_profile_json_obj["usrKey"].toString();
-              usr_profile_struct.name = temp_usr_profile_json_obj["usrName"].toString();
-              usr_profile_struct.avatar = temp_usr_profile_json_obj["avatarPath"].toString();
+              UsrProfileStruct usrProfileStruct;
+              usrProfileStruct.key = tempUsrProfileJsonObj["usrKey"].toString();
+              usrProfileStruct.name = tempUsrProfileJsonObj["usrName"].toString();
+              usrProfileStruct.avatar = tempUsrProfileJsonObj["avatarPath"].toString();
 
-              UsrData *usr_data = new UsrData(&GlobalData::settings_struct.profile_key_str, usr_profile_struct, this);
-              GlobalData::offline_usr_data_hash.insert(*temp_usr_key_str, usr_data);
+              UsrData *usrData = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
+              GlobalData::offline_usr_data_hash.insert(*tempUsrKeyStr, usrData);
             }
         }
     }
@@ -561,32 +548,32 @@ void AppDataManager::writeCurrentConfig()
 
   QTextStream out(&file);
 
-  QJsonObject my_profile_json_obj;
+  QJsonObject myProfileJsonObj;
   foreach (QString attribute, settings_hash_int.keys())
     {
-      my_profile_json_obj.insert(attribute, *settings_hash_int.value(attribute));
+      myProfileJsonObj.insert(attribute, *settings_hash_int.value(attribute));
     }
   foreach (QString attribute, settings_hash_qstring.keys())
     {
-      my_profile_json_obj.insert(attribute, *settings_hash_qstring.value(attribute));
+      myProfileJsonObj.insert(attribute, *settings_hash_qstring.value(attribute));
     }
   foreach (QString attribute, settings_hash_qcolor.keys())
     {
-      my_profile_json_obj.insert(attribute, settings_hash_qcolor.value(attribute)->name());
+      myProfileJsonObj.insert(attribute, settings_hash_qcolor.value(attribute)->name());
     }
   foreach (QString attribute, settings_hash_bool.keys())
     {
-      my_profile_json_obj.insert(attribute, *settings_hash_bool.value(attribute));
+      myProfileJsonObj.insert(attribute, *settings_hash_bool.value(attribute));
     }
 
 //  my_profile_json_obj.insert("BubbleColorI", GlobalData::settings_struct.chat_bubble_color_i.name());
 //  my_profile_json_obj.insert("BubbleColorO", Globa_struct.chat_bubble_color_o.name());
 
-  QJsonDocument write_json_document;
-  write_json_document.setObject(my_profile_json_obj);
+  QJsonDocument writeJsonDocument;
+  writeJsonDocument.setObject(myProfileJsonObj);
 
   file.resize(0);
-  out << write_json_document.toJson();
+  out << writeJsonDocument.toJson();
   qDebug()<<".....................history written...................";
   file.flush();
   file.close();
@@ -661,29 +648,29 @@ void AppDataManager::loadUpdates()
     }
 
   QTextStream in(&file);
-  QByteArray in_byte_array = in.readAll().toUtf8();
+  QByteArray inByteArray = in.readAll().toUtf8();
 
-  if(!in_byte_array.isEmpty())
+  if(!inByteArray.isEmpty())
     {
-      QJsonParseError json_error;
-      QJsonDocument read_json_document = QJsonDocument::fromJson(in_byte_array, &json_error);
-      if(json_error.error == QJsonParseError::NoError)
+      QJsonParseError jsonError;
+      QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+      if(jsonError.error == QJsonParseError::NoError)
         {
-          if(read_json_document.isObject())
+          if(readJsonDocument.isObject())
             {
-              QJsonObject read_json_obj = read_json_document.object();
+              QJsonObject readJsonObj = readJsonDocument.object();
 
-              int read_version[3] = {
-                read_json_obj.value("stable_version").toInt(),
-                read_json_obj.value("beta_version").toInt(),
-                read_json_obj.value("alpha_version").toInt()
+              int readVersion[3] = {
+                readJsonObj.value("stable_version").toInt(),
+                readJsonObj.value("beta_version").toInt(),
+                readJsonObj.value("alpha_version").toInt()
               };
 
-              if(GlobalData::versionCompare(GlobalData::current_version, read_version))
+              if(GlobalData::versionCompare(GlobalData::current_version, readVersion))
                 {
                   for(int i = 0; i < 3; i ++)
                     {
-                      GlobalData::update_struct.version[i] = read_version[i];
+                      GlobalData::update_struct.version[i] = readVersion[i];
                     }
                   emit updatesAvailable();
                 }
@@ -697,74 +684,15 @@ void AppDataManager::loadUpdates()
 
 void AppDataManager::loadTimerTasks()
 {
-  QTimer *check_settings_timer = new QTimer(this);
-  connect(check_settings_timer, &QTimer::timeout,
+  QTimer *checkSettingsTimer = new QTimer(this);
+  connect(checkSettingsTimer, &QTimer::timeout,
           [this]() {
             checkSettings();
           });
-  check_settings_timer->setSingleShot(false);
-  check_settings_timer->setInterval(1000);
-  check_settings_timer->start();
+  checkSettingsTimer->setSingleShot(false);
+  checkSettingsTimer->setInterval(1000);
+  checkSettingsTimer->start();
 }
 
 
-/*
-void encode(QString filename)
-{
-    QFile file(filename);
-    QTextStream in(&file);
-    QString str;
-    if(file.open(QIODevice::ReadWrite))
-    {
-        str = in.readAll();
-        qDebug() << str;
 
-        int len = str.length();
-        for(int i=0;i<len;++i)
-        {
-            str[i] = QChar::fromAscii(str[i].toAscii() - 1);
-
-        }
-
-        qDebug() << str;
-    }
-    file.close();
-
-    QTextStream out(&file);
-    file.open(QIODevice::WriteOnly);
-    out << str;
-    file.close();
-}
-
-
-void decode(QString filename)
-{
-    QFile file(filename);
-    QTextStream fin(&file);
-    QString str;
-    if(file.open(QIODevice::ReadOnly))
-    {
-        str = fin.readAll();
-        qDebug() << str;
-
-        int len = str.length();
-        for(int i=0;i<len;++i)
-        {
-            str[i] = QChar::fromAscii(str[i].toAscii() + 1);
-
-        }
-
-        qDebug() << str;
-    }
-    file.close();
-
-    QTextStream fout(&file);
-    file.open(QIODevice::WriteOnly);
-    fout << str;
-    file.close();
-}
-*/
-
-
-
-//////slots
