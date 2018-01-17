@@ -8,7 +8,7 @@ class UvUdpSockUtils;
 class UvUdpSock;
 
 
-class UvUdpSockUtils : protected UvAbstractSock
+class UvUdpSockUtils
 {
 protected:
   static void read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
@@ -16,7 +16,9 @@ protected:
 };
 
 
-class UvUdpSock : protected UvUdpSockUtils
+class UvUdpSock
+    : protected UvAbstractSock
+    , protected UvUdpSockUtils
 {
 public:
   UvUdpSock(const char* ipAddr, const int &port, uv_loop_t *loop);

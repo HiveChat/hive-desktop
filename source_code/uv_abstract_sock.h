@@ -12,11 +12,17 @@
 
 class UvAbstractSock
 {
-  typedef int SocketDescriptor;
 public:
 
 protected:
+  typedef int SocketDescriptor;
+
+  int port;
+  uv_loop_t* uv_loop;
+
+
   virtual void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
+  virtual void bind(const char* ipAddr, const int &port);
 
   static void allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf);
   static int getSocketDescriptor(uv_handle_t *handle);

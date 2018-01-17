@@ -1,7 +1,5 @@
 #include "uv_tcp_sock.h"
 
-uv_tcp_t* UvTcpSock::tcp_socket;
-uv_loop_t* UvTcpSock::uv_loop;
 
 UvTcpSock::UvTcpSock(uv_loop_t *loop)
 {
@@ -38,7 +36,7 @@ void UvTcpSock::connect(const char *addr, const int &port)
 void
 UvTcpSock::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
-  SocketDescriptor socketDiscriptor = getSocketDescriptor();
+  SocketDescriptor socketDiscriptor = getSocketDescriptor((uv_handle_t*) handle);
 
   if(nread > 0)
     {
@@ -82,19 +80,12 @@ void UvTcpSock::setKeepAlive(const bool &enabled, const int &delay)
 void
 UvTcpSock::writeCb(uv_write_t *handle, int status)
 {
-  if (status)
+  if(status)
     {
       fprintf(stderr, "Write error %s\n", uv_strerror(status));
     }
 
   freeWriteReq(handle);
-}
-
-void
-UvTcpSock::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
-{
-  buf->base = (char*) malloc(suggestedSize);
-  buf->len = suggestedSize;
 }
 
 void
@@ -105,14 +96,3 @@ UvTcpSock::freeWriteReq(uv_write_t *handle)
   free(req);
 }
 
-int
-UvTcpSock::getSocketDescriptor()
-{
-  int fd;
-#ifdef Q_OS_WIN
-  uv_fileno((uv_handle_t*) tcp_socket, (uv_os_fd_t*)(&fd));
-#else
-  uv_fileno((uv_handle_t*) tcp_socket, &fd);
-#endif
-  return fd;
-}
