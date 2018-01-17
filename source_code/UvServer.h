@@ -48,7 +48,7 @@ protected:
 private:  
   static uv_loop_t *loop;
   static TcpServer *tcp_server;
-  static UdpSocket *udp_server;
+  static UvUdpSock *udp_server;
   static uv_timer_t *heart_beat_timer;
 
   static void uvWalkCb(uv_handle_t* handle, void* arg);

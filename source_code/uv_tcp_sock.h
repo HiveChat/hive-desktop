@@ -9,7 +9,7 @@
 #include <uv.h>
 #endif
 
-class TcpSocket
+class UvTcpSock
 {
   typedef int SocketDescriptor;
   typedef struct {
@@ -18,7 +18,7 @@ class TcpSocket
   } write_req_t;
 
 public:
-  TcpSocket(uv_loop_t *loop);
+  UvTcpSock(uv_loop_t *loop);
 
   void start();
   void close();

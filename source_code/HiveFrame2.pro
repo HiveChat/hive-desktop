@@ -76,11 +76,10 @@ SOURCES += \
     UvServer.cpp \
     HiveProtocol.cpp \
     TcpServer.cpp \
-    TcpSocket.cpp \
-    AbstractSocket.cpp \
     Data/AppDataManager.cpp \
-    uv_udp_sock_utils.cpp \
-    uv_udp_sock.cpp
+    uv_udp_sock.cpp \
+    uv_tcp_sock.cpp \
+    uv_abstract_sock.cpp
 \
 
 HEADERS  += \
@@ -122,11 +121,10 @@ HEADERS  += \
     Message.h \
     HiveProtocol.h \
     TcpServer.h \
-    TcpSocket.h \
-    AbstractSocket.h \
     Data/AppDataManager.h \
-    uv_udp_sock_utils.h \
-    uv_udp_sock.h
+    uv_udp_sock.h \
+    uv_tcp_sock.h \
+    uv_abstract_sock.h
 
 ICON = Src/hive.icns
 

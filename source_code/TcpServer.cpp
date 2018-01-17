@@ -23,7 +23,7 @@ TcpServer::TcpServer(const char *ipAddr, const int &port, const int &backLog, uv
 
 }
 
-bool TcpServer::accept(uv_stream_t *handle, TcpSocket *client)
+bool TcpServer::accept(uv_stream_t *handle, UvTcpSock *client)
 {
   return uv_accept(handle, (uv_stream_t*)client->getSocket()) == 0;
 }
@@ -36,7 +36,7 @@ void TcpServer::tcpNewConnectionCb(uv_stream_t *handle, int status)
       return;
     }
 
-  TcpSocket *client = new TcpSocket(uv_loop);
+  UvTcpSock *client = new UvTcpSock(uv_loop);
   if(accept(handle, client))
     {
       client->start();

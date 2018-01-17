@@ -1,9 +1,9 @@
-#include "TcpSocket.h"
+#include "uv_tcp_sock.h"
 
-uv_tcp_t* TcpSocket::tcp_socket;
-uv_loop_t* TcpSocket::uv_loop;
+uv_tcp_t* UvTcpSock::tcp_socket;
+uv_loop_t* UvTcpSock::uv_loop;
 
-TcpSocket::TcpSocket(uv_loop_t *loop)
+UvTcpSock::UvTcpSock(uv_loop_t *loop)
 {
   uv_loop = loop;
   tcp_socket = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
@@ -11,24 +11,24 @@ TcpSocket::TcpSocket(uv_loop_t *loop)
 }
 
 uv_tcp_t*
-TcpSocket::getSocket()
+UvTcpSock::getSocket()
 {
   return tcp_socket;
 }
 
 void
-TcpSocket::start()
+UvTcpSock::start()
 {
   uv_read_start((uv_stream_t*) tcp_socket, allocBuffer, read);
 }
 
 void
-TcpSocket::close()
+UvTcpSock::close()
 {
   uv_close((uv_handle_t*) tcp_socket, NULL);
 }
 
-void TcpSocket::connect(const char *addr, const int &port)
+void UvTcpSock::connect(const char *addr, const int &port)
 {
 //  struct sockaddr_in dest = uv_ip4_addr(addr, port);
 //  uv_connect_t *connect = (uv_connect_t*) malloc(sizeof(uv_connect_t));
@@ -36,7 +36,7 @@ void TcpSocket::connect(const char *addr, const int &port)
 }
 
 void
-TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+UvTcpSock::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
   SocketDescriptor socketDiscriptor = getSocketDescriptor();
 
@@ -61,7 +61,7 @@ TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 }
 
 void
-TcpSocket::write(const uv_buf_t *data)
+UvTcpSock::write(const uv_buf_t *data)
 {
   write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t));
   req->buf = uv_buf_init(data->base, data->len);
@@ -72,7 +72,7 @@ TcpSocket::write(const uv_buf_t *data)
            , writeCb);
 }
 
-void TcpSocket::setKeepAlive(const bool &enabled, const int &delay)
+void UvTcpSock::setKeepAlive(const bool &enabled, const int &delay)
 {
   uv_tcp_keepalive(tcp_socket
                    , enabled ? 1 : 0
@@ -80,7 +80,7 @@ void TcpSocket::setKeepAlive(const bool &enabled, const int &delay)
 }
 
 void
-TcpSocket::writeCb(uv_write_t *handle, int status)
+UvTcpSock::writeCb(uv_write_t *handle, int status)
 {
   if (status)
     {
@@ -91,14 +91,14 @@ TcpSocket::writeCb(uv_write_t *handle, int status)
 }
 
 void
-TcpSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
+UvTcpSock::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
 {
   buf->base = (char*) malloc(suggestedSize);
   buf->len = suggestedSize;
 }
 
 void
-TcpSocket::freeWriteReq(uv_write_t *handle)
+UvTcpSock::freeWriteReq(uv_write_t *handle)
 {
   write_req_t *req = (write_req_t*) handle;
   free(req->buf.base);
@@ -106,7 +106,7 @@ TcpSocket::freeWriteReq(uv_write_t *handle)
 }
 
 int
-TcpSocket::getSocketDescriptor()
+UvTcpSock::getSocketDescriptor()
 {
   int fd;
 #ifdef Q_OS_WIN

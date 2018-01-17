@@ -3,7 +3,7 @@
 
 uv_loop_t* UvServer::loop;
 TcpServer* UvServer::tcp_server;
-UdpSocket* UvServer::udp_server;
+UvUdpSock* UvServer::udp_server;
 uv_timer_t* UvServer::heart_beat_timer;
 
 
@@ -100,7 +100,7 @@ UvServer::run()
 
   loop = uv_default_loop();
 
-  udp_server = new UdpSocket("255.255,255,255", UDP_PORT, true, loop);
+  udp_server = new UvUdpSock("255.255,255,255", UDP_PORT, loop);
   qDebug()<<"udp"<<udp_server;
   tcp_server = new TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
   qDebug()<<"tcp"<<tcp_server;
@@ -109,6 +109,22 @@ UvServer::run()
   uv_timer_init(loop, heart_beat_timer);
   uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 2000);
   qDebug()<<"timer"<<heart_beat_timer;
+
+//  uv_idle_t* idler = (uv_idle_t*) malloc(sizeof(uv_idle_t));
+//  uv_idle_init(loop, idler);
+//  uv_idle_start(idler, [](uv_idle_t* handle){
+//    qDebug()<<"hello1 b";
+//    sleep(1);
+//    qDebug()<<"hello1 f";
+//  });
+
+//  uv_idle_t* idler2 = (uv_idle_t*) malloc(sizeof(uv_idle_t));
+//  uv_idle_init(loop, idler2);
+//  uv_idle_start(idler2, [](uv_idle_t* handle){
+//    qDebug()<<"hello2 b";
+//    sleep(1);
+//    qDebug()<<"hello2 f";
+//  });
 
   uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
