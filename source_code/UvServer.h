@@ -7,7 +7,7 @@
 #define TCP_BACKLOG 128
 
 #include "HiveProtocol.h"
-#include "UdpSocket.h"
+#include "uv_udp_sock.h"
 #include "TcpServer.h"
 
 #include <QThread>

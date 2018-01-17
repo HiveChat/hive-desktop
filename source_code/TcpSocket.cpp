@@ -8,7 +8,6 @@ TcpSocket::TcpSocket(uv_loop_t *loop)
   uv_loop = loop;
   tcp_socket = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
   uv_tcp_init(uv_loop, tcp_socket);
-
 }
 
 uv_tcp_t*
@@ -27,6 +26,13 @@ void
 TcpSocket::close()
 {
   uv_close((uv_handle_t*) tcp_socket, NULL);
+}
+
+void TcpSocket::connect(const char *addr, const int &port)
+{
+//  struct sockaddr_in dest = uv_ip4_addr(addr, port);
+//  uv_connect_t *connect = (uv_connect_t*) malloc(sizeof(uv_connect_t));
+//  uv_tcp_connect(connect, tcp_socket, dest, on_connect);
 }
 
 void
@@ -55,12 +61,22 @@ TcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 }
 
 void
-TcpSocket::write(const uv_buf_t *buf)
+TcpSocket::write(const uv_buf_t *data)
 {
-  //< uv_tcp_t ?
   write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t));
-  req->buf = uv_buf_init(buf->base, buf->len);
-  uv_write((uv_write_t*) req, (uv_stream_t*)tcp_socket, &req->buf, 1, writeCb);
+  req->buf = uv_buf_init(data->base, data->len);
+  uv_write((uv_write_t*) req
+           , (uv_stream_t*)tcp_socket
+           , &req->buf
+           , 1
+           , writeCb);
+}
+
+void TcpSocket::setKeepAlive(const bool &enabled, const int &delay)
+{
+  uv_tcp_keepalive(tcp_socket
+                   , enabled ? 1 : 0
+                   , delay);
 }
 
 void

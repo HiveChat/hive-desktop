@@ -22,10 +22,14 @@ public:
 
   void start();
   void close();
-  static void write(const uv_buf_t *buf);
+  void connect(const char* addr, const int &port);
+  static void write(const uv_buf_t *data);
+
+  void setKeepAlive(const bool &enabled, const int &delay);
 
   uv_tcp_t* getSocket();
   static int getSocketDescriptor();
+
 
 private:
   static uv_tcp_t* tcp_socket;
