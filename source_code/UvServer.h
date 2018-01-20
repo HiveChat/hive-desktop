@@ -57,6 +57,8 @@ private:
   static void udpHeartBeatCb(uv_timer_t *handle);
 
 
+  void readd(char *data, char *ip);
+
 };
 
 #endif // UVTCPSERVER_H

@@ -1,5 +1,7 @@
 #include "UvServer.h"
 
+#include <functional>
+
 
 uv_loop_t* UvServer::loop;
 TcpServer* UvServer::tcp_server;
@@ -126,6 +128,8 @@ UvServer::run()
 //    qDebug()<<"hello2 f";
 //  });
 
+  udp_server->read_cb = std::bind(&UvServer::readd, this, std::placeholders::_1, std::placeholders::_2);
+
   uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
 }
@@ -138,6 +142,11 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
   udp_server->write("255.255.255.255", 23232, &msg);
 
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
+}
+
+void UvServer::readd(char *data, char *ip)
+{
+  qDebug()<<data;
 }
 
 

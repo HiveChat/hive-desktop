@@ -1,6 +1,5 @@
 #include "uv_tcp_sock.h"
 
-
 UvTcpSock::UvTcpSock(uv_loop_t *loop)
 {
   uv_loop = loop;

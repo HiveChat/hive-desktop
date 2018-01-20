@@ -11,8 +11,11 @@ class UvUdpSock;
 class UvUdpSockUtils
 {
 protected:
-  static void read(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
-  static void onWritten(uv_udp_send_t* req, int status);
+  static QHash<int, UvUdpSock*> udp_sock_hash;
+
+  static void receiveCb(uv_udp_t* handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
+  static void writeCb(uv_udp_send_t* req, int status);
+
 };
 
 
@@ -21,6 +24,8 @@ class UvUdpSock
     , protected UvUdpSockUtils
 {
 public:
+  SockReadyReadCb read_cb;
+
   UvUdpSock(const char* ipAddr, const int &port, uv_loop_t *loop);
 
   void write(const char *ipAddr, const int &port, const uv_buf_t *buf);

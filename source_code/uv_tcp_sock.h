@@ -2,6 +2,8 @@
 #define TCPSOCKET_H
 
 #include "uv_abstract_sock.h"
+#include <functional>
+#include <stdlib.h>
 
 class UvTcpSockUtil;
 class UvTcpSock;
@@ -9,6 +11,8 @@ class UvTcpSock;
 class UvTcpSockUtil
 {
 public:
+
+//protected:
 
 };
 
@@ -21,6 +25,7 @@ class UvTcpSock
     uv_buf_t buf;
   } write_req_t;
 
+
 public:
   UvTcpSock(uv_loop_t *loop);
 
@@ -32,6 +37,8 @@ public:
   void setKeepAlive(const bool &enabled, const int &delay);
 
   uv_tcp_t* getSocket();
+
+  SockReadyReadCb read_cb;
 
 
 private:
