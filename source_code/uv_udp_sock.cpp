@@ -19,7 +19,7 @@ UvUdpSockUtils::receiveCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, 
           uv_buf_t buffer = uv_buf_init(buf->base, nread);
           qDebug()<<buffer.base;
 
-          udp_sock_hash.value(UvAbstractSock::getSocketDescriptor((uv_handle_t*) handle))->read_cb(buffer.base, senderAddr);
+          udp_sock_hash.value(UvAbstractSock::getSocketDescriptor((uv_handle_t*) handle))->ready_read_cb(buffer.base, senderAddr);
           /// Do callback or what ever
         }
     }

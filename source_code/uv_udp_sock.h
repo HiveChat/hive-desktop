@@ -20,7 +20,7 @@ protected:
 
 
 class UvUdpSock
-    : protected UvAbstractSock
+    : public UvAbstractSock
     , protected UvUdpSockUtils
 {
 public:
