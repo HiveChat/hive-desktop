@@ -25,14 +25,30 @@ UvServer::quit()
   int result = uv_loop_close(loop);
   if (result == UV_EBUSY)
     {
-      uv_walk(loop, uvWalkCb, NULL);
+      uv_walk_cb uvWalkCb = [](uv_handle_t* handle, void* arg) {
+        uv_close_cb uvCloseCb = [](uv_handle_t* handle) {
+          qDebug()<<"closed"<<handle;
+          if (handle != NULL)
+            {
+              free(handle);
+              qDebug()<<"Freed"<<handle;
+            }
+        };
+        uv_close(handle, uvCloseCb);
+      };
 
-      /// WARN: DON NOT TOUCH!!!
-      /// DATE: 9 Dec 2017 eoT3ohze
-      ///  - Only touch when crash on quit!!!
-      ///  - don't touch wait number, not sure how this works yet.
-      ///  - when wait < [longest timer delay] the chance of crash on quit is high.
-      ///  - related to kill wait of this thread and NetworkManager.
+      uv_walk(loop
+              , uvWalkCb
+              , NULL);
+
+      /*
+       * WARN: DON NOT TOUCH!!!
+       * DATE: 9 Dec 2017 eoT3ohze
+       *  - Only touch when crash on quit!!!
+       *  - don't touch wait number, not sure how this works yet.
+       *  - when wait < [longest timer delay] the chance of crash on quit is high.
+       *  - related to kill wait of this thread and NetworkManager.
+       */
       wait(2000);
 
       uv_run(uv_default_loop(), UV_RUN_DEFAULT);
@@ -49,23 +65,23 @@ UvServer::quit()
   Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
-void
-UvServer::uvWalkCb(uv_handle_t* handle, void* arg)
-{
-  uv_close(handle, uvCloseCb);
+//void
+//UvServer::uvWalkCb(uv_handle_t* handle, void* arg)
+//{
+//  uv_close(handle, uvCloseCb);
 
-}
+//}
 
-void
-UvServer::uvCloseCb(uv_handle_t* handle)
-{
-  qDebug()<<"closed"<<handle;
-  if (handle != NULL)
-    {
-      free(handle);
-      qDebug()<<"Freed"<<handle;
-    }
-}
+//void
+//UvServer::uvCloseCb(uv_handle_t* handle)
+//{
+//  qDebug()<<"closed"<<handle;
+//  if (handle != NULL)
+//    {
+//      free(handle);
+//      qDebug()<<"Freed"<<handle;
+//    }
+//}
 
 void
 UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)

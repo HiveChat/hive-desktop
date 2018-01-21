@@ -24,21 +24,13 @@ public:
   SockReadyReadCb ready_read_cb;
 
 protected:
-
   int port;
   uv_loop_t* uv_loop;
-
-
 
   virtual void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
   virtual void bind(const char* ipAddr, const int &port);
 
   static void allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf);
-
-
-
-
-
 };
 
 #endif // ABSTRACTSOCKET_H
