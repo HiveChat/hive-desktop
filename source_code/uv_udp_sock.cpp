@@ -73,5 +73,3 @@ UvUdpSock::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
   Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
 }
 
-
-

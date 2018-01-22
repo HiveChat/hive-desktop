@@ -34,17 +34,17 @@ int UvAbstractSock::getSocketDescriptor(uv_handle_t* handle)
 
 
 
-template<class T>
-void UvAbstractSock::bindCb(Callback cbType, T cb)
-{
-  switch (cbType) {
-    case Callback::Destryed:
-      ready_read_cb = cb;
-      break;
-    default:
-      break;
-    }
-}
+//template<class T>
+//void UvAbstractSock::bindCb(Callback cbType, T cb)
+//{
+//  switch (cbType) {
+//    case Callback::Destryed:
+//      ready_read_cb = cb;
+//      break;
+//    default:
+//      break;
+//    }
+//}
 
 
 

@@ -24,9 +24,20 @@ public:
 
   virtual void bindReadyReadCb(const SockReadyReadCb &cb);
 
-  template <class T>
-  void bindCb(Callback cbType, T cb);
+//  template <class T>
+//  void bindCb(Callback cbType, T cb);
 
+  template<class T>
+  void bindCb(Callback cbType, T cb)
+  {
+    switch (cbType) {
+      case Callback::Read:
+        ready_read_cb = cb;
+        break;
+      default:
+        break;
+      }
+  }
 
   static int getSocketDescriptor(uv_handle_t *handle);
   SockReadyReadCb ready_read_cb;
