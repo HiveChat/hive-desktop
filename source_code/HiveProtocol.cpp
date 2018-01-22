@@ -101,12 +101,12 @@ HiveProtocol::decodeHivePacket(const QString &data, const QString &addr)
         usr_profile.key = packetJson.value("sender").toString();
         usr_profile.name = packetJson.value("name").toString();
         usr_profile.avatar = packetJson.value("avatar").toString();
-        processHeartBeat(usr_profile);
+//        processHeartBeat(usr_profile);
         break;
       }
     case MessageType::TextMessage:
       {
-        processTextMessage();
+//        processTextMessage();
         break;
       }
     case MessageType::FileInfo:

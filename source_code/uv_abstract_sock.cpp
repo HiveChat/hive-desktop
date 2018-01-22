@@ -16,6 +16,11 @@ void UvAbstractSock::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_b
   buf->len = suggestedSize;
 }
 
+void UvAbstractSock::bindReadyReadCb(const UvAbstractSock::SockReadyReadCb &cb)
+{
+  ready_read_cb = cb;
+}
+
 int UvAbstractSock::getSocketDescriptor(uv_handle_t* handle)
 {
   int fd;
@@ -26,5 +31,30 @@ int UvAbstractSock::getSocketDescriptor(uv_handle_t* handle)
 #endif
   return fd;
 }
+
+
+
+template<class T>
+void UvAbstractSock::bindCb(Callback cbType, T cb)
+{
+  switch (cbType) {
+    case Callback::Destryed:
+      ready_read_cb = cb;
+      break;
+    default:
+      break;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 

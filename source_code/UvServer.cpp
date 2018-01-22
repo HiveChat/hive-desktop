@@ -144,7 +144,12 @@ UvServer::run()
 //    qDebug()<<"hello2 f";
 //  });
 
-  udp_server->ready_read_cb = std::bind(&UvServer::udpReadyRead, this, std::placeholders::_1, std::placeholders::_2);
+  UvAbstractSock::SockReadyReadCb cb = std::bind(&UvServer::udpReadyRead
+                                                 , this
+                                                 , std::placeholders::_1
+                                                 , std::placeholders::_2);
+
+  udp_server->bindCb<UvAbstractSock::SockReadyReadCb>(UvAbstractSock::Read, cb);
 
   uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
@@ -162,6 +167,8 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
 
 void UvServer::udpReadyRead(char *data, char *ip)
 {
+  decodeHivePacket(QString(data), QString(ip));
+//  emit usrEntered(decodeHivePacket);
   qDebug()<<data;
 }
 

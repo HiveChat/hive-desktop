@@ -28,18 +28,17 @@ class UvServer
 {
   Q_OBJECT
 
-  typedef int SocketDescriptor;
-  typedef struct {
-    uv_write_t req;
-    uv_buf_t buf;
-  } write_req_t;
-
 public:
+  enum BaseProtocol{
+    Any = 0,
+    Udp = 1,
+    Tcp = 2
+  };
+
   explicit UvServer(QObject *parent = 0);
   ~UvServer();
 
-   void quit();
-
+  void quit();
   void sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol = BaseProtocol::Udp);
 
 protected:
@@ -55,8 +54,6 @@ private:
 //  static void uvCloseCb(uv_handle_t* handle);
 
   static void udpHeartBeatCb(uv_timer_t *handle);
-
-
   void udpReadyRead(char *data, char *ip);
 
 };

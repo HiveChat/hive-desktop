@@ -34,7 +34,6 @@ public:
 
 private:
   uv_udp_t* udp_socket;
-  uv_loop_t* uv_loop;
 
 };
 
