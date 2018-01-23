@@ -9,7 +9,6 @@
 #include <uv.h>
 #endif
 
-
 class UvAbstractSock
 {
 public:
@@ -24,20 +23,8 @@ public:
 
   virtual void bindReadyReadCb(const SockReadyReadCb &cb);
 
-//  template <class T>
-//  void bindCb(Callback cbType, T cb);
-
-  template<class T>
-  void bindCb(Callback cbType, T cb)
-  {
-    switch (cbType) {
-      case Callback::Read:
-        ready_read_cb = cb;
-        break;
-      default:
-        break;
-      }
-  }
+  template <typename T>
+  void bindCb(Callback cbType, T cb);
 
   static int getSocketDescriptor(uv_handle_t *handle);
   SockReadyReadCb ready_read_cb;
@@ -51,5 +38,9 @@ protected:
 
   static void allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf);
 };
+
+
+
+
 
 #endif // ABSTRACTSOCKET_H

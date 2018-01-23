@@ -32,22 +32,19 @@ int UvAbstractSock::getSocketDescriptor(uv_handle_t* handle)
   return fd;
 }
 
+template void UvAbstractSock::bindCb<UvAbstractSock::SockReadyReadCb>(Callback, UvAbstractSock::SockReadyReadCb);
 
-
-//template<class T>
-//void UvAbstractSock::bindCb(Callback cbType, T cb)
-//{
-//  switch (cbType) {
-//    case Callback::Destryed:
-//      ready_read_cb = cb;
-//      break;
-//    default:
-//      break;
-//    }
-//}
-
-
-
+template<typename T>
+void UvAbstractSock::bindCb(Callback cbType, T cb)
+{
+  switch (cbType) {
+    case Callback::Read:
+      ready_read_cb = cb;
+      break;
+    default:
+      break;
+    }
+}
 
 
 
