@@ -149,7 +149,7 @@ UvServer::run()
                                                  , std::placeholders::_1
                                                  , std::placeholders::_2);
 
-  udp_server->bindCb<UvAbstractSock::SockReadyReadCb>(UvAbstractSock::Read, cb);
+  udp_server->bindCb(cb);
 
   uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
@@ -172,6 +172,110 @@ void UvServer::udpReadyRead(char *data, char *ip)
   qDebug()<<data;
 }
 
+
+bool
+UvServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
+{
+  if(usrProfileStruct.key.isEmpty())
+    {
+      return false;
+    }
+
+  if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
+    {
+      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
+        {
+          GlobalData::g_localHostIP = usrProfileStruct.ip;
+        }
+      Log::net(Log::Normal, "UvServer::processHeartBeat", "got heart beat from myself");
+//      emit getInstance()->usrEntered(usrProfileStruct);
+    }
+  else
+    {
+      Log::net(Log::Normal, "UvServer::processHeartBeat", "got heart beat from others");
+//      emit getInstance()->usrEntered(usrProfileStruct);
+    }
+}
+
+bool
+UvServer::processUsrLeave(QString *usrKey)
+{
+  if(*usrKey == GlobalData::settings_struct.profile_key_str)
+    {
+//      emit usrLeft(usrKey); << FIX HERE!!
+
+      qDebug()<<"@UvServer::udpProcessUsrLeft(): Myself left.";
+    }
+
+  qDebug()<<"@UvServer::udpProcessUsrLeft(): Someone left.";
+//  emit usrLeft(usrKey); << FIX HERE!!
+}
+
+bool
+UvServer::processErrorDelivery()
+{
+
+}
+
+bool
+UvServer::processTextMessage()
+{
+//  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
+//    {
+//      return;
+//    }
+
+//  if(messageStruct.reciever != GlobalData::settings_struct.profile_key_str)
+//    {
+//      if(messageStruct.sender != GlobalData::settings_struct.profile_key_str)
+//        {
+//          //no sniffing man!
+//          return;
+//        }
+//      else
+//        {
+//          qDebug()<<"@NetworkManager::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
+//          emit messageRecieved(messageStruct, true);
+//        }
+//    }
+//  else
+//    {
+//      if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
+//        {
+//          qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
+//          emit messageRecieved(messageStruct, true);
+//        }
+//      else
+//        {
+//          qDebug()<<"@NetworkManager::udpProcessMessage(): Other people sent: "<<messageStruct.message;
+//          emit messageRecieved(messageStruct, false);
+//        }
+//    }
+}
+
+bool
+UvServer::processFileInfo()
+{
+
+}
+
+bool
+UvServer::processFileContent()
+{
+
+}
+
+bool
+UvServer::processFileAccept()
+{
+
+}
+
+bool
+UvServer::processFileReject()
+{
+
+}
 
 
 

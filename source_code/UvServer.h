@@ -56,6 +56,14 @@ private:
   static void udpHeartBeatCb(uv_timer_t *handle);
   void udpReadyRead(char *data, char *ip);
 
+  bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
+  bool processUsrLeave(QString *usrKey);
+  bool processErrorDelivery();
+  bool processTextMessage();
+  bool processFileInfo();
+  bool processFileContent();
+  bool processFileAccept();
+  bool processFileReject();
 };
 
 #endif // UVTCPSERVER_H

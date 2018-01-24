@@ -47,7 +47,7 @@ HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //r
 
       Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
 
-      if(!decodeHivePacket(packet))
+//      if(!decodeHivePacket(packet))
         {
           Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
           clientBuffer->buffer.clear();
@@ -72,9 +72,12 @@ HiveProtocol::writeTcp(const MessageType &msgType, const QString &data)
 
 }
 
-bool
+std::tuple<MessageType, QJsonObject>
 HiveProtocol::decodeHivePacket(const QString &data, const QString &addr)
 {
+  std::make_tuple(3.8, 'A', "Lisa Simpson");
+
+  /*
   QByteArray byteArray = data.toLatin1();
   QJsonParseError jsonError;
   QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
@@ -101,7 +104,7 @@ HiveProtocol::decodeHivePacket(const QString &data, const QString &addr)
         usr_profile.key = packetJson.value("sender").toString();
         usr_profile.name = packetJson.value("name").toString();
         usr_profile.avatar = packetJson.value("avatar").toString();
-//        processHeartBeat(usr_profile);
+        processHeartBeat(usr_profile);
         break;
       }
     case MessageType::TextMessage:
@@ -136,112 +139,112 @@ HiveProtocol::decodeHivePacket(const QString &data, const QString &addr)
         break;
       }
   }
-  return true;
+  return true;*/
 }
 
-bool
-HiveProtocol::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
-{
-  if(usrProfileStruct.key.isEmpty())
-    {
-      return false;
-    }
-
-  if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
-    {
-      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
-        {
-          GlobalData::g_localHostIP = usrProfileStruct.ip;
-        }
-      Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from myself");
-//      emit getInstance()->usrEntered(usrProfileStruct);
-    }
-  else
-    {
-      Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from others");
-//      emit getInstance()->usrEntered(usrProfileStruct);
-    }
-}
-
-bool
-HiveProtocol::processUsrLeave(QString *usrKey)
-{
-  if(*usrKey == GlobalData::settings_struct.profile_key_str)
-    {
-//      emit usrLeft(usrKey); << FIX HERE!!
-
-      qDebug()<<"@HiveProtocol::udpProcessUsrLeft(): Myself left.";
-    }
-
-  qDebug()<<"@HiveProtocol::udpProcessUsrLeft(): Someone left.";
-//  emit usrLeft(usrKey); << FIX HERE!!
-}
-
-bool
-HiveProtocol::processErrorDelivery()
-{
-
-}
-
-bool
-HiveProtocol::processTextMessage()
-{
-//  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
+//bool
+//HiveProtocol::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
+//{
+//  if(usrProfileStruct.key.isEmpty())
 //    {
-//      return;
+//      return false;
 //    }
 
-//  if(messageStruct.reciever != GlobalData::settings_struct.profile_key_str)
+//  if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
 //    {
-//      if(messageStruct.sender != GlobalData::settings_struct.profile_key_str)
+//      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
 //        {
-//          //no sniffing man!
-//          return;
+//          GlobalData::g_localHostIP = usrProfileStruct.ip;
 //        }
-//      else
-//        {
-//          qDebug()<<"@NetworkManager::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
-//          emit messageRecieved(messageStruct, true);
-//        }
+//      Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from myself");
+////      emit getInstance()->usrEntered(usrProfileStruct);
 //    }
 //  else
 //    {
-//      if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
-//        {
-//          qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
-//          emit messageRecieved(messageStruct, true);
-//        }
-//      else
-//        {
-//          qDebug()<<"@NetworkManager::udpProcessMessage(): Other people sent: "<<messageStruct.message;
-//          emit messageRecieved(messageStruct, false);
-//        }
+//      Log::net(Log::Normal, "HiveProtocol::processHeartBeat", "got heart beat from others");
+////      emit getInstance()->usrEntered(usrProfileStruct);
 //    }
-}
+//}
 
-bool
-HiveProtocol::processFileInfo()
-{
+//bool
+//HiveProtocol::processUsrLeave(QString *usrKey)
+//{
+//  if(*usrKey == GlobalData::settings_struct.profile_key_str)
+//    {
+////      emit usrLeft(usrKey); << FIX HERE!!
 
-}
+//      qDebug()<<"@HiveProtocol::udpProcessUsrLeft(): Myself left.";
+//    }
 
-bool
-HiveProtocol::processFileContent()
-{
+//  qDebug()<<"@HiveProtocol::udpProcessUsrLeft(): Someone left.";
+////  emit usrLeft(usrKey); << FIX HERE!!
+//}
 
-}
+//bool
+//HiveProtocol::processErrorDelivery()
+//{
 
-bool
-HiveProtocol::processFileAccept()
-{
+//}
 
-}
+//bool
+//HiveProtocol::processTextMessage()
+//{
+////  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
+////    {
+////      return;
+////    }
 
-bool
-HiveProtocol::processFileReject()
-{
+////  if(messageStruct.reciever != GlobalData::settings_struct.profile_key_str)
+////    {
+////      if(messageStruct.sender != GlobalData::settings_struct.profile_key_str)
+////        {
+////          //no sniffing man!
+////          return;
+////        }
+////      else
+////        {
+////          qDebug()<<"@NetworkManager::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
+////          emit messageRecieved(messageStruct, true);
+////        }
+////    }
+////  else
+////    {
+////      if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
+////        {
+////          qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
+////          emit messageRecieved(messageStruct, true);
+////        }
+////      else
+////        {
+////          qDebug()<<"@NetworkManager::udpProcessMessage(): Other people sent: "<<messageStruct.message;
+////          emit messageRecieved(messageStruct, false);
+////        }
+////    }
+//}
 
-}
+//bool
+//HiveProtocol::processFileInfo()
+//{
+
+//}
+
+//bool
+//HiveProtocol::processFileContent()
+//{
+
+//}
+
+//bool
+//HiveProtocol::processFileAccept()
+//{
+
+//}
+
+//bool
+//HiveProtocol::processFileReject()
+//{
+
+//}
 
 QByteArray HiveProtocol::encodeHeartBeat()
 {

@@ -20,16 +20,9 @@ public:
 
 
 protected:
-  static inline bool decodeHivePacket(const QString &data, const QString &addr = "");
+  static std::tuple<MessageType, QJsonObject> decodeHivePacket(const QString &data, const QString &addr = "");
 
-  bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
-  bool processUsrLeave(QString *usrKey);
-  bool processErrorDelivery();
-  bool processTextMessage();
-  bool processFileInfo();
-  bool processFileContent();
-  bool processFileAccept();
-  bool processFileReject();
+
 
   static QByteArray encodeHeartBeat();
   static QByteArray encodeTextMessage(const QJsonObject &msg);

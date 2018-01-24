@@ -9,6 +9,8 @@
 #include <uv.h>
 #endif
 
+class UvAbstractSock;
+
 class UvAbstractSock
 {
 public:
@@ -19,22 +21,29 @@ public:
   };
 
   typedef int SocketDescriptor;
+  typedef std::function<void (int)> SockDestroyedCb;
   typedef std::function<void (char*, char*)> SockReadyReadCb;
+  typedef std::function<void (int)> SockWrittenCb;
 
-  virtual void bindReadyReadCb(const SockReadyReadCb &cb);
+  void bindCb(const SockReadyReadCb &cb);
 
-  template <typename T>
-  void bindCb(Callback cbType, T cb);
+  void callDestroyed(const int &sockDescriptor);
+  void callReadyRead(char* data, char* ip);
+
+
+  virtual void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
+  virtual void bind(const char* ipAddr, const int &port);
 
   static int getSocketDescriptor(uv_handle_t *handle);
-  SockReadyReadCb ready_read_cb;
 
 protected:
   int port;
   uv_loop_t* uv_loop;
 
-  virtual void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
-  virtual void bind(const char* ipAddr, const int &port);
+  SockDestroyedCb destroyed_cb;
+  SockReadyReadCb ready_read_cb;
+  SockWrittenCb written_cb;
+
 
   static void allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf);
 };
