@@ -1,53 +1,53 @@
-#include "uv_abstract_sock.h"
+#include "PAbstractSocket.h"
 
-void UvAbstractSock::bindCb(const UvAbstractSock::SockDestroyedCb &cb)
+void PAbstractSocket::bindCb(const PAbstractSocket::SockDestroyedCb &cb)
 {
   destroyed_cb = cb;
 }
 
-void UvAbstractSock::bindCb(const SockReadyReadCb &cb)
+void PAbstractSocket::bindCb(const SockReadyReadCb &cb)
 {
   ready_read_cb = cb;
 }
 
-void UvAbstractSock::callDestroyed(const int &sockDescriptor)
+void PAbstractSocket::callDestroyed(const int &sockDescriptor)
 {
   destroyed_cb(sockDescriptor);
 }
 
-void UvAbstractSock::callReadyRead(char *data, char *ip)
+void PAbstractSocket::callReadyRead(char *data, char *ip)
 {
   ready_read_cb(data, ip);
 
 }
 
-void UvAbstractSock::write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+void PAbstractSocket::write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
 
 }
 
-void UvAbstractSock::bind(const char *ipAddr, const int &port)
+void PAbstractSocket::bind(const char *ipAddr, const int &port)
 {
 
 }
 
-void UvAbstractSock::start()
+void PAbstractSocket::start()
 {
 
 }
 
-void UvAbstractSock::stop()
+void PAbstractSocket::stop()
 {
 
 }
 
-void UvAbstractSock::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
+void PAbstractSocket::allocBuffer(uv_handle_t *handle, size_t suggestedSize, uv_buf_t *buf)
 {
   buf->base = (char*) malloc(suggestedSize);
   buf->len = suggestedSize;
 }
 
-int UvAbstractSock::getSocketDescriptor(uv_handle_t* handle)
+int PAbstractSocket::getSocketDescriptor(uv_handle_t* handle)
 {
   int fd;
 #ifdef Q_OS_WIN

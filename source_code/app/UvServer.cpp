@@ -4,8 +4,8 @@
 
 
 uv_loop_t* UvServer::loop;
-TcpServer* UvServer::tcp_server;
-UvUdpSock* UvServer::udp_server;
+PTcpServer* UvServer::tcp_server;
+PUdpSocket* UvServer::udp_server;
 uv_timer_t* UvServer::heart_beat_timer;
 
 
@@ -118,9 +118,9 @@ UvServer::run()
 
   loop = uv_default_loop();
 
-  udp_server = new UvUdpSock("255.255,255,255", UDP_PORT, loop);
+  udp_server = new PUdpSocket("255.255,255,255", UDP_PORT, loop);
   qDebug()<<"udp"<<udp_server;
-  tcp_server = new TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
+  tcp_server = new PTcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
   qDebug()<<"tcp"<<tcp_server;
 
   heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
@@ -144,7 +144,7 @@ UvServer::run()
 //    qDebug()<<"hello2 f";
 //  });
 
-  UvAbstractSock::SockReadyReadCb cb = std::bind(&UvServer::udpReadyRead
+  PAbstractSocket::SockReadyReadCb cb = std::bind(&UvServer::udpReadyRead
                                                  , this
                                                  , std::placeholders::_1
                                                  , std::placeholders::_2);

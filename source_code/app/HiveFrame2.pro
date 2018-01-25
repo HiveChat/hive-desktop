@@ -29,7 +29,7 @@ unix{
 }
 
 win32{
-    QMAKE_LFLAGS += -L../dependency/win32/libuv -luv
+    QMAKE_LFLAGS += -L../libs/libuv/win32 -luv
     RC_FILE = ./Src/hive.rc
 }
 
@@ -75,11 +75,11 @@ SOURCES += \
     Log.cpp \
     UvServer.cpp \
     HiveProtocol.cpp \
-    TcpServer.cpp \
     Data/AppDataManager.cpp \
-    uv_udp_sock.cpp \
-    uv_tcp_sock.cpp \
-    uv_abstract_sock.cpp
+    PAbstractSocket.cpp \
+    PTcpSocket.cpp \
+    PUdpSocket.cpp \
+    PTcpServer.cpp
 \
 
 HEADERS  += \
@@ -120,11 +120,11 @@ HEADERS  += \
     UvServer.h \
     Message.h \
     HiveProtocol.h \
-    TcpServer.h \
     Data/AppDataManager.h \
-    uv_udp_sock.h \
-    uv_tcp_sock.h \
-    uv_abstract_sock.h
+    PAbstractSocket.h \
+    PTcpSocket.h \
+    PUdpSocket.h \
+    PTcpServer.h
 
 ICON = Src/hive.icns
 

@@ -1,6 +1,6 @@
-#include "uv_tcp_sock.h"
+#include "PTcpSocket.h"
 
-UvTcpSock::UvTcpSock(uv_loop_t *loop)
+PTcpSocket::PTcpSocket(uv_loop_t *loop)
 {
   uv_loop = loop;
   tcp_socket = (uv_tcp_t*) malloc(sizeof(uv_tcp_t));
@@ -8,24 +8,24 @@ UvTcpSock::UvTcpSock(uv_loop_t *loop)
 }
 
 uv_tcp_t*
-UvTcpSock::getSocket()
+PTcpSocket::getSocket()
 {
   return tcp_socket;
 }
 
 void
-UvTcpSock::start()
+PTcpSocket::start()
 {
   uv_read_start((uv_stream_t*) tcp_socket, allocBuffer, read);
 }
 
 void
-UvTcpSock::close()
+PTcpSocket::close()
 {
   uv_close((uv_handle_t*) tcp_socket, NULL);
 }
 
-void UvTcpSock::connect(const char *addr, const int &port)
+void PTcpSocket::connect(const char *addr, const int &port)
 {
 //  struct sockaddr_in dest = uv_ip4_addr(addr, port);
 //  uv_connect_t *connect = (uv_connect_t*) malloc(sizeof(uv_connect_t));
@@ -33,7 +33,7 @@ void UvTcpSock::connect(const char *addr, const int &port)
 }
 
 void
-UvTcpSock::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
+PTcpSocket::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 {
   SocketDescriptor socketDiscriptor = getSocketDescriptor((uv_handle_t*) handle);
 
@@ -58,7 +58,7 @@ UvTcpSock::read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf)
 }
 
 void
-UvTcpSock::write(const uv_buf_t *data)
+PTcpSocket::write(const uv_buf_t *data)
 {
   write_req_t *req = (write_req_t*) malloc(sizeof(write_req_t));
   req->buf = uv_buf_init(data->base, data->len);
@@ -69,7 +69,7 @@ UvTcpSock::write(const uv_buf_t *data)
            , writeCb);
 }
 
-void UvTcpSock::setKeepAlive(const bool &enabled, const int &delay)
+void PTcpSocket::setKeepAlive(const bool &enabled, const int &delay)
 {
   uv_tcp_keepalive(tcp_socket
                    , enabled ? 1 : 0
@@ -77,7 +77,7 @@ void UvTcpSock::setKeepAlive(const bool &enabled, const int &delay)
 }
 
 void
-UvTcpSock::writeCb(uv_write_t *handle, int status)
+PTcpSocket::writeCb(uv_write_t *handle, int status)
 {
   if(status)
     {
@@ -88,7 +88,7 @@ UvTcpSock::writeCb(uv_write_t *handle, int status)
 }
 
 void
-UvTcpSock::freeWriteReq(uv_write_t *handle)
+PTcpSocket::freeWriteReq(uv_write_t *handle)
 {
   write_req_t *req = (write_req_t*) handle;
   free(req->buf.base);

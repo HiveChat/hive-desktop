@@ -1,10 +1,10 @@
-#include "TcpServer.h"
+#include "PTcpServer.h"
 
-uv_tcp_t* TcpServer::uv_tcp_server;
-uv_loop_t* TcpServer::uv_loop;
+uv_tcp_t* PTcpServer::uv_tcp_server;
+uv_loop_t* PTcpServer::uv_loop;
 
 
-TcpServer::TcpServer(const char *ipAddr, const int &port, const int &backLog, uv_loop_t *loop)
+PTcpServer::PTcpServer(const char *ipAddr, const int &port, const int &backLog, uv_loop_t *loop)
 {
   uv_loop = loop;
   struct sockaddr_in *socketAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
@@ -23,12 +23,12 @@ TcpServer::TcpServer(const char *ipAddr, const int &port, const int &backLog, uv
 
 }
 
-bool TcpServer::accept(uv_stream_t *handle, UvTcpSock *client)
+bool PTcpServer::accept(uv_stream_t *handle, PTcpSocket *client)
 {
   return uv_accept(handle, (uv_stream_t*)client->getSocket()) == 0;
 }
 
-void TcpServer::tcpNewConnectionCb(uv_stream_t *handle, int status)
+void PTcpServer::tcpNewConnectionCb(uv_stream_t *handle, int status)
 {
   if(status < 0)
     {
@@ -36,7 +36,7 @@ void TcpServer::tcpNewConnectionCb(uv_stream_t *handle, int status)
       return;
     }
 
-  UvTcpSock *client = new UvTcpSock(uv_loop);
+  PTcpSocket *client = new PTcpSocket(uv_loop);
   if(accept(handle, client))
     {
       client->start();

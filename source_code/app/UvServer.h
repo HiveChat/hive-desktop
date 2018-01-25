@@ -7,15 +7,15 @@
 #define TCP_BACKLOG 128
 
 #include "HiveProtocol.h"
-#include "uv_udp_sock.h"
-#include "TcpServer.h"
+#include "PUdpSocket.h"
+#include "PTcpServer.h"
 
 #include <QThread>
 #include <QDebug>
 #include <QHash>
 
 #ifdef Q_OS_WIN
-#include "../dependency/win32/libuv/include/uv.h"
+#include "../libs/libuv/win32/include/uv.h"
 #else
 #include <uv.h>
 #endif
@@ -47,8 +47,8 @@ protected:
 private:  
   static uv_loop_t *loop;
   static uv_timer_t *heart_beat_timer;
-  static TcpServer *tcp_server;
-  static UvUdpSock *udp_server;
+  static PTcpServer *tcp_server;
+  static PUdpSocket *udp_server;
 
 //  static void uvWalkCb(uv_handle_t* handle, void* arg);
 //  static void uvCloseCb(uv_handle_t* handle);

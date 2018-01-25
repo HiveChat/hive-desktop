@@ -4,14 +4,14 @@
 #include "Log.h"
 
 #ifdef Q_OS_WIN
-#include "../dependency/win32/libuv/include/uv.h"
+#include "../libs/libuv/win32/include/uv.h"
 #else
 #include <uv.h>
 #endif
 
-class UvAbstractSock;
+class PAbstractSocket;
 
-class UvAbstractSock
+class PAbstractSocket
 {
 public:
   enum Callback {

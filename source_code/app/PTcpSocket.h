@@ -1,14 +1,14 @@
 #ifndef TCPSOCKET_H
 #define TCPSOCKET_H
 
-#include "uv_abstract_sock.h"
+#include "PAbstractSocket.h"
 #include <functional>
 #include <stdlib.h>
 
-class UvTcpSockUtil;
-class UvTcpSock;
+class PTcpSocketUtils;
+class PTcpSocket;
 
-class UvTcpSockUtil
+class PTcpSocketUtils
 {
 public:
 
@@ -16,9 +16,9 @@ public:
 
 };
 
-class UvTcpSock
-    : protected UvAbstractSock
-    , protected UvTcpSockUtil
+class PTcpSocket
+    : protected PAbstractSocket
+    , protected PTcpSocketUtils
 {
   typedef struct {
     uv_write_t req;
@@ -27,7 +27,7 @@ class UvTcpSock
 
 
 public:
-  UvTcpSock(uv_loop_t *loop);
+  PTcpSocket(uv_loop_t *loop);
 
   void start();
   void close();

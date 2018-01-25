@@ -2,17 +2,17 @@
 #define UDPSOCKET_H
 
 
-#include "uv_abstract_sock.h"
+#include "PAbstractSocket.h"
 
-class UvUdpSockUtils;
-class UvUdpSock;
+class PUdpSocketUtils;
+class PUdpSocket;
 
 
-class UvUdpSockUtils
+class PUdpSocketUtils
 {
 protected:
-  static QHash<int, UvUdpSock*> instance_hash;
-  static bool registerInstance(UvUdpSock *sock);
+  static QHash<int, PUdpSocket*> instance_hash;
+  static bool registerInstance(PUdpSocket *sock);
 
   static void receiveCb(uv_udp_t* handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags);
   static void writeCb(uv_udp_send_t* req, int status);
@@ -20,15 +20,15 @@ protected:
 };
 
 
-class UvUdpSock
-    : public UvAbstractSock
-    , protected UvUdpSockUtils
+class PUdpSocket
+    : public PAbstractSocket
+    , protected PUdpSocketUtils
 {
 public:
   SockReadyReadCb read_cb;
 
-  UvUdpSock(uv_loop_t *loop);
-  UvUdpSock(const char *ipAddr, const int &port, uv_loop_t *loop);
+  PUdpSocket(uv_loop_t *loop);
+  PUdpSocket(const char *ipAddr, const int &port, uv_loop_t *loop);
 
   void bind(const char *ipAddr, const int &port);
   void start();

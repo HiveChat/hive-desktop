@@ -1,14 +1,14 @@
-#include "uv_udp_sock.h"
+#include "PUdpSocket.h"
 
-QHash<int, UvUdpSock*> UvUdpSockUtils::instance_hash;
+QHash<int, PUdpSocket*> PUdpSocketUtils::instance_hash;
 
-bool UvUdpSockUtils::registerInstance(UvUdpSock *sock)
+bool PUdpSocketUtils::registerInstance(PUdpSocket *sock)
 {
-  instance_hash.insert(UvAbstractSock::getSocketDescriptor((uv_handle_t*)sock->getSocket()), sock);
+  instance_hash.insert(PAbstractSocket::getSocketDescriptor((uv_handle_t*)sock->getSocket()), sock);
 }
 
 void
-UvUdpSockUtils::receiveCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
+PUdpSocketUtils::receiveCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, const sockaddr *addr, unsigned flags)
 {
   /// DOC: libuv 1.18.1-dev
   ///  - The receive callback will be called with nread == 0 and addr == NULL when there is nothing to read,
@@ -24,7 +24,7 @@ UvUdpSockUtils::receiveCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, 
           uv_buf_t buffer = uv_buf_init(buf->base, nread);
           qDebug()<<buffer.base;
 
-          instance_hash.value(UvAbstractSock::getSocketDescriptor((uv_handle_t*) handle))->callReadyRead(buffer.base, senderAddr);
+          instance_hash.value(PAbstractSocket::getSocketDescriptor((uv_handle_t*) handle))->callReadyRead(buffer.base, senderAddr);
           /// Do callback or what ever
         }
     }
@@ -41,7 +41,7 @@ UvUdpSockUtils::receiveCb(uv_udp_t *handle, ssize_t nread, const uv_buf_t *buf, 
 }
 
 void
-UvUdpSockUtils::writeCb(uv_udp_send_t *req, int status)
+PUdpSocketUtils::writeCb(uv_udp_send_t *req, int status)
 {
   free(req);
 }
@@ -51,14 +51,14 @@ UvUdpSockUtils::writeCb(uv_udp_send_t *req, int status)
 
 
 
-UvUdpSock::UvUdpSock(uv_loop_t *loop)
+PUdpSocket::PUdpSocket(uv_loop_t *loop)
 {
   uv_loop = loop;
   udp_socket = (uv_udp_t*) malloc(sizeof(uv_udp_t));
   uv_udp_init(uv_loop, udp_socket);
 }
 
-UvUdpSock::UvUdpSock(const char *ipAddr, const int &port, uv_loop_t *loop)
+PUdpSocket::PUdpSocket(const char *ipAddr, const int &port, uv_loop_t *loop)
 {
   uv_loop = loop;
   udp_socket = (uv_udp_t*) malloc(sizeof(uv_udp_t));
@@ -70,29 +70,29 @@ UvUdpSock::UvUdpSock(const char *ipAddr, const int &port, uv_loop_t *loop)
 }
 
 void
-UvUdpSock::bind(const char *ipAddr, const int &port)
+PUdpSocket::bind(const char *ipAddr, const int &port)
 {
   struct sockaddr_in *udpAddr = (sockaddr_in*)malloc(sizeof(sockaddr_in));
   uv_ip4_addr(ipAddr, port, udpAddr);
   uv_udp_bind(udp_socket, (const struct sockaddr*) udpAddr, UV_UDP_REUSEADDR);
 
-  UvUdpSockUtils::registerInstance(this);
+  PUdpSocketUtils::registerInstance(this);
 }
 
 void
-UvUdpSock::start()
+PUdpSocket::start()
 {
   uv_udp_recv_start(udp_socket, allocBuffer, receiveCb);
 }
 
 void
-UvUdpSock::stop()
+PUdpSocket::stop()
 {
   uv_udp_recv_stop(udp_socket);
 }
 
 void
-UvUdpSock::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
+PUdpSocket::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
 {
   uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
   struct sockaddr_in addr;
@@ -103,7 +103,7 @@ UvUdpSock::write(const char *ipAddr, const int &port, const uv_buf_t *buf)
 }
 
 void
-UvUdpSock::setBroadcatEnabled(const bool &enabled)
+PUdpSocket::setBroadcatEnabled(const bool &enabled)
 {
   uv_udp_set_broadcast(udp_socket, enabled ? 1 : 0);
 }
