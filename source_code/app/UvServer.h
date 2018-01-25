@@ -14,12 +14,6 @@
 #include <QDebug>
 #include <QHash>
 
-#ifdef Q_OS_WIN
-#include "../libs/libuv/win32/include/uv.h"
-#else
-#include <uv.h>
-#endif
-
 class UvServer;
 
 class UvServer
