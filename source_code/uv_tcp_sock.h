@@ -41,7 +41,7 @@ public:
   SockReadyReadCb read_cb;
 
 
-private:
+protected:
   uv_tcp_t* tcp_socket;
 
   static void read(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);

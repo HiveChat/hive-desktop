@@ -25,14 +25,17 @@ public:
   typedef std::function<void (char*, char*)> SockReadyReadCb;
   typedef std::function<void (int)> SockWrittenCb;
 
+  void bindCb(const SockDestroyedCb &cb);
   void bindCb(const SockReadyReadCb &cb);
 
   void callDestroyed(const int &sockDescriptor);
   void callReadyRead(char* data, char* ip);
 
 
-  virtual void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
   virtual void bind(const char* ipAddr, const int &port);
+  virtual void start();
+  virtual void stop();
+  virtual void write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *buf);
 
   static int getSocketDescriptor(uv_handle_t *handle);
 

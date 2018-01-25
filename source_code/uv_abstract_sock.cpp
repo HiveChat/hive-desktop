@@ -1,5 +1,10 @@
 #include "uv_abstract_sock.h"
 
+void UvAbstractSock::bindCb(const UvAbstractSock::SockDestroyedCb &cb)
+{
+  destroyed_cb = cb;
+}
+
 void UvAbstractSock::bindCb(const SockReadyReadCb &cb)
 {
   ready_read_cb = cb;
@@ -22,6 +27,16 @@ void UvAbstractSock::write(uv_stream_t *handle, ssize_t nread, const uv_buf_t *b
 }
 
 void UvAbstractSock::bind(const char *ipAddr, const int &port)
+{
+
+}
+
+void UvAbstractSock::start()
+{
+
+}
+
+void UvAbstractSock::stop()
 {
 
 }

@@ -148,7 +148,6 @@ UvServer::run()
                                                  , this
                                                  , std::placeholders::_1
                                                  , std::placeholders::_2);
-
   udp_server->bindCb(cb);
 
   uv_run(loop, UV_RUN_DEFAULT);
