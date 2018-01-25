@@ -7,8 +7,8 @@
 #define TCP_BACKLOG 128
 
 #include "HiveProtocol.h"
-#include "PUdpSocket.h"
-#include "PTcpServer.h"
+#include "../libs/libParsley/src/PUdpSocket.h"
+#include "../libs/libParsley/src/PTcpServer.h"
 
 #include <QThread>
 #include <QDebug>
