@@ -79,7 +79,8 @@ SOURCES += \
     ../libs/libParsley/src/PAbstractSocket.cpp \
     ../libs/libParsley/src/PTcpServer.cpp \
     ../libs/libParsley/src/PTcpSocket.cpp \
-    ../libs/libParsley/src/PUdpSocket.cpp
+    ../libs/libParsley/src/PUdpSocket.cpp \
+    ../libs/libParsley/src/PLoop.cpp
 \
 
 HEADERS  += \
@@ -124,7 +125,8 @@ HEADERS  += \
     ../libs/libParsley/src/PAbstractSocket.h \
     ../libs/libParsley/src/PTcpServer.h \
     ../libs/libParsley/src/PTcpSocket.h \
-    ../libs/libParsley/src/PUdpSocket.h
+    ../libs/libParsley/src/PUdpSocket.h \
+    ../libs/libParsley/src/PLoop.h
 
 ICON = Src/hive.icns
 

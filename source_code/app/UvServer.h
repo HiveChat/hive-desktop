@@ -41,8 +41,8 @@ protected:
 private:  
   static uv_loop_t *loop;
   static uv_timer_t *heart_beat_timer;
-  static PTcpServer *tcp_server;
-  static PUdpSocket *udp_server;
+  static Parsley::TcpServer *tcp_server;
+  static Parsley::UdpSocket *udp_server;
 
 //  static void uvWalkCb(uv_handle_t* handle, void* arg);
 //  static void uvCloseCb(uv_handle_t* handle);
