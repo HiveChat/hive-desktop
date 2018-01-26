@@ -1,18 +1,17 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
+#include "HiveProtocol.h"
+#include "../libs/libParsley/src/PUdpSocket.h"
+#include "../libs/libParsley/src/PTcpServer.h"
+#include "../libs/libParsley/src/PLoop.h"
+
+
 #define UDP_PORT 23232
 
 #define TCP_PORT 23232
 #define TCP_BACKLOG 128
 
-#include "HiveProtocol.h"
-#include "../libs/libParsley/src/PUdpSocket.h"
-#include "../libs/libParsley/src/PTcpServer.h"
-
-#include <QThread>
-#include <QDebug>
-#include <QHash>
 
 class UvServer;
 

@@ -77,10 +77,10 @@ SOURCES += \
     HiveProtocol.cpp \
     Data/AppDataManager.cpp \
     ../libs/libParsley/src/PAbstractSocket.cpp \
-    ../libs/libParsley/src/PTcpServer.cpp \
     ../libs/libParsley/src/PTcpSocket.cpp \
     ../libs/libParsley/src/PUdpSocket.cpp \
-    ../libs/libParsley/src/PLoop.cpp
+    ../libs/libParsley/src/PLoop.cpp \
+    ../libs/libParsley/src/PTcpServer.cpp
 \
 
 HEADERS  += \

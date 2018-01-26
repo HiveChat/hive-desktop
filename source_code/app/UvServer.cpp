@@ -1,5 +1,6 @@
 #include "UvServer.h"
 
+#include <QThread>
 #include <functional>
 
 
@@ -22,7 +23,7 @@ UvServer::~UvServer()
 void
 UvServer::quit()
 {
-  int result = uv_loop_close(loop);
+  int result = Parsley::Loop::close(loop);
   if (result == UV_EBUSY)
     {
       uv_walk_cb uvWalkCb = [](uv_handle_t* handle, void* arg) {
@@ -51,8 +52,8 @@ UvServer::quit()
        */
       wait(2000);
 
-      uv_run(uv_default_loop(), UV_RUN_DEFAULT);
-      result = uv_loop_close(loop);
+      Parsley::Loop::run(Parsley::Loop::defaultLoop(), UV_RUN_DEFAULT);
+      result = Parsley::Loop::close(loop);
       if (result)
         {
           qDebug() << "failed to close libuv loop: " << uv_err_name(result);
@@ -116,7 +117,7 @@ UvServer::run()
   qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Normal, "UvServer::run()", "Thread Started");
 
-  loop = uv_default_loop();
+  loop = Parsley::Loop::defaultLoop();
 
   udp_server = new Parsley::UdpSocket("255.255,255,255", UDP_PORT, loop);
   qDebug()<<"udp"<<udp_server;
