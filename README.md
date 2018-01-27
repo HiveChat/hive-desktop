@@ -1,6 +1,6 @@
 # Hive!  
 
-[![license](https://img.shields.io/github/license/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/blob/master/GPLv3.LICENSE)
+[![license](https://img.shields.io/github/license/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/blob/master/LICENSE)
 [![GitHub commits](https://img.shields.io/github/commits-since/HiveChat/Hive-desktop/0.0.6.svg)](https://github.com/HiveChat/Hive-desktop/commits/master)
 [![GitHub issues](https://img.shields.io/github/issues/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/issues)
 <!--[![GitHub closed issues](https://img.shields.io/github/issues-closed/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/issues?q=is%3Aissue+is%3Aclosed)-->

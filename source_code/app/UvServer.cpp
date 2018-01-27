@@ -90,7 +90,6 @@ UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
   switch (protocol) {
     case BaseProtocol::Udp:
       {
-        uv_udp_send_t *req = (uv_udp_send_t*)malloc(sizeof(uv_udp_send_t));
         QByteArray dat = encodeTextMessage(msg);
         uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
         udp_server->write("255.255.255.255", 23232, &msg);
