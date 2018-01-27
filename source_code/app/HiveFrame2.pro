@@ -80,7 +80,9 @@ SOURCES += \
     ../libs/libParsley/src/PTcpSocket.cpp \
     ../libs/libParsley/src/PUdpSocket.cpp \
     ../libs/libParsley/src/PLoop.cpp \
-    ../libs/libParsley/src/PTcpServer.cpp
+    ../libs/libParsley/src/PTcpServer.cpp \
+    HiveUdpServer.cpp \
+    ../libs/libParsley/src/PAddress.cpp
 \
 
 HEADERS  += \
@@ -126,7 +128,9 @@ HEADERS  += \
     ../libs/libParsley/src/PTcpServer.h \
     ../libs/libParsley/src/PTcpSocket.h \
     ../libs/libParsley/src/PUdpSocket.h \
-    ../libs/libParsley/src/PLoop.h
+    ../libs/libParsley/src/PLoop.h \
+    HiveUdpServer.h \
+    ../libs/libParsley/src/PAddress.h
 
 ICON = Src/hive.icns
 
