@@ -63,7 +63,7 @@ HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //r
 
 bool HiveProtocol::decodeUdp(const QString &data, const char *addr)
 {
-  decodeHivePacket(data, QString::fromUtf8(addr));
+  checkJson(data, QString::fromUtf8(addr));
 }
 
 bool
@@ -73,73 +73,78 @@ HiveProtocol::writeTcp(const MessageType &msgType, const QString &data)
 }
 
 std::tuple<MessageType, QJsonObject>
-HiveProtocol::decodeHivePacket(const QString &data, const QString &addr)
+HiveProtocol::checkJson(const QString &data, const QString &addr)
 {
-  std::make_tuple(3.8, 'A', "Lisa Simpson");
+//  QJsonObject a;
+//  return std::make_tuple(MessageType::TextMessage, a);
 
-  /*
-  QByteArray byteArray = data.toLatin1();
-  QJsonParseError jsonError;
-  QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
-  if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
-    {
-      Log::net(Log::Critical, "HiveProtocol::decodeHivePacket()", QString(jsonError.errorString() + " in stream: " + data));
-      return false;
-    }
 
-  QJsonObject packetJson = readJsonDocument.object();
-  QString receiverKey = packetJson.value("receiver").toString();
-  if(receiverKey != GlobalData::settings_struct.profile_key_str
-     && receiverKey != "{00000000-0000-0000-0000-000000000000}")
-    {
-      Log::net(Log::Error, "HiveProtocol::decodeHivePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
-      return false;
-    }
-  MessageType messageType = (MessageType)packetJson.value("msgType").toInt();
-  switch (messageType) {
-    case MessageType::HeartBeat:
-      {
-        UsrProfileStruct usr_profile;
-        usr_profile.ip = addr;
-        usr_profile.key = packetJson.value("sender").toString();
-        usr_profile.name = packetJson.value("name").toString();
-        usr_profile.avatar = packetJson.value("avatar").toString();
-        processHeartBeat(usr_profile);
-        break;
-      }
-    case MessageType::TextMessage:
-      {
-//        processTextMessage();
-        break;
-      }
-    case MessageType::FileInfo:
-      {
-        Log::net(Log::Normal, "HiveProtocol::decodeHivePacket()", "File info received.");
+//  QByteArray byteArray = data.toLatin1();
+//  QJsonParseError jsonError;
+//  QJsonDocument readJsonDocument = QJsonDocument::fromJson(byteArray, &jsonError);
+//  if(jsonError.error != QJsonParseError::NoError && !readJsonDocument.isObject())
+//    {
+//      Log::net(Log::Critical, "HiveProtocol::decodeHivePacket()", QString(jsonError.errorString() + " in stream: " + data));
+//      return false;
+//    }
 
-        break;
-      }
-    case MessageType::FileContent:
-      {
+//  QJsonObject packetJson = readJsonDocument.object();
+//  QString receiverKey = packetJson.value("receiver").toString();
+//  if(receiverKey != GlobalData::settings_struct.profile_key_str
+//     && receiverKey != "{00000000-0000-0000-0000-000000000000}")
+//    {
+//      Log::net(Log::Error, "HiveProtocol::decodeHivePacket()", "Package delivered to wrong person!\n\t"+packetJson.value("receiver").toString() + "\n" + GlobalData::settings_struct.profile_key_str );
+//      return false;
+//    }
+//  MessageType messageType = (MessageType) packetJson.value("msgType").toInt();
+//  switch (messageType) {
+//    case MessageType::HeartBeat:
+//      {
+////        UsrProfileStruct usr_profile;
+////        usr_profile.ip = addr;
+////        usr_profile.key = packetJson.value("sender").toString();
+////        usr_profile.name = packetJson.value("name").toString();
+////        usr_profile.avatar = packetJson.value("avatar").toString();
+////        processHeartBeat(usr_profile);
 
-        break;
-      }
-    case MessageType::FileReject:
-      {
+//        packetJson.insert("ip", addr);
 
-        break;
-      }
-    case MessageType::FileAccept:
-      {
+//        return std::make_tuple(MessageType::Null, packetJson);
+//      }
+//    case MessageType::TextMessage:
+//      {
+////        processTextMessage();
+//        break;
+//      }
+//    case MessageType::FileInfo:
+//      {
+//        Log::net(Log::Normal, "HiveProtocol::decodeHivePacket()", "File info received.");
 
-        break;
-      }
-    case MessageType::ErrorDelivery:
-      {
+//        break;
+//      }
+//    case MessageType::FileContent:
+//      {
 
-        break;
-      }
-  }
-  return true;*/
+//        break;
+//      }
+//    case MessageType::FileReject:
+//      {
+
+//        break;
+//      }
+//    case MessageType::FileAccept:
+//      {
+
+//        break;
+//      }
+//    case MessageType::ErrorDelivery:
+//      {
+
+//        break;
+//      }
+//  }
+
+//  return std::make_tuple(MessageType::Null, QJsonObject());
 }
 
 //bool

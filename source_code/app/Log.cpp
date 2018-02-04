@@ -25,25 +25,25 @@ void Log::gui(const Level &level, const QString &function, const QString &str)
 
 void Log::net(const Log::Level &level, const QString &function, const QString &str)
 {
-  switch (level) {
-    case Level::Normal:
-      {
-        qDebug().noquote()<<QTime::currentTime().toString() << " NET_NORM "<< function << str;
-        break;
-      }
-    case Level::Error:
-      {
-        qDebug().noquote()<<QTime::currentTime().toString() << " NET_ERRO " << function << str;
-        break;
-      }
-    case Level::Critical:
-      {
-        qDebug().noquote()<<QTime::currentTime().toString() << " NET_CRIT " << function << str;
-      }
+//  switch (level) {
+//    case Level::Normal:
+//      {
+//        qDebug().noquote()<<QTime::currentTime().toString() << " NET_NORM "<< function << str;
+//        break;
+//      }
+//    case Level::Error:
+//      {
+//        qDebug().noquote()<<QTime::currentTime().toString() << " NET_ERRO " << function << str;
+//        break;
+//      }
+//    case Level::Critical:
+//      {
+//        qDebug().noquote()<<QTime::currentTime().toString() << " NET_CRIT " << function << str;
+//      }
 
-    default:
-      break;
-    }
+//    default:
+//      break;
+//    }
 }
 
 void Log::dat(const Log::Level &level, const QString &function, const QString &str)

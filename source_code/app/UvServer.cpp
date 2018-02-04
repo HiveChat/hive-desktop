@@ -1,13 +1,13 @@
 #include "UvServer.h"
 
 #include <QThread>
-#include <functional>
-
 
 uv_loop_t* UvServer::loop;
 Parsley::TcpServer* UvServer::tcp_server;
 Parsley::UdpSocket* UvServer::udp_server;
 uv_timer_t* UvServer::heart_beat_timer;
+int UvServer::counter = 0;
+
 
 
 UvServer::UvServer(QObject *parent)
@@ -66,24 +66,6 @@ UvServer::quit()
   Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
-//void
-//UvServer::uvWalkCb(uv_handle_t* handle, void* arg)
-//{
-//  uv_close(handle, uvCloseCb);
-
-//}
-
-//void
-//UvServer::uvCloseCb(uv_handle_t* handle)
-//{
-//  qDebug()<<"closed"<<handle;
-//  if (handle != NULL)
-//    {
-//      free(handle);
-//      qDebug()<<"Freed"<<handle;
-//    }
-//}
-
 void
 UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
 {
@@ -125,8 +107,15 @@ UvServer::run()
 
   heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heart_beat_timer);
-  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 2000);
+  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 1);
   qDebug()<<"timer"<<heart_beat_timer;
+
+  uv_timer_t *heart_beat_timer2 = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+  uv_timer_init(loop, heart_beat_timer2);
+  uv_timer_start(heart_beat_timer2, [](uv_timer_t *handle){
+    qDebug()<<counter << "p/s";
+    counter = 0;
+  }, 10, 1000);
 
 //  uv_idle_t* idler = (uv_idle_t*) malloc(sizeof(uv_idle_t));
 //  uv_idle_init(loop, idler);
@@ -161,14 +150,16 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
   uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
   udp_server->write("255.255.255.255", 23232, &msg);
 
+  counter ++;
+
   Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
 void UvServer::udpReadyRead(char *data, char *ip)
 {
-  decodeHivePacket(QString(data), QString(ip));
+  checkJson(QString(data), QString(ip));
 //  emit usrEntered(decodeHivePacket);
-  qDebug()<<data;
+//  qDebug()<<data;
 }
 
 

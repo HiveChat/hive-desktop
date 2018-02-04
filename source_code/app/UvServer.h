@@ -43,8 +43,7 @@ private:
   static Parsley::TcpServer *tcp_server;
   static Parsley::UdpSocket *udp_server;
 
-//  static void uvWalkCb(uv_handle_t* handle, void* arg);
-//  static void uvCloseCb(uv_handle_t* handle);
+  static int counter;
 
   static void udpHeartBeatCb(uv_timer_t *handle);
   void udpReadyRead(char *data, char *ip);

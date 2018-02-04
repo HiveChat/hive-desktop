@@ -5,8 +5,9 @@
 
 
 enum MessageType {
-  HeartBeat = 0,
-  UsrLeave = 1,
+  Null = 0,
+  HeartBeat = 1,
+  UsrLeave = 2,
   ErrorDelivery = 10,
   TextMessage = 20,
   PhotoMessage = 21,
@@ -15,6 +16,7 @@ enum MessageType {
   FileContent = 31,
   FileAccept = 32,
   FileReject = 33,
+
 };
 
 struct HiveHeartBeat{
