@@ -15,7 +15,13 @@ HiveUdpServer::HiveUdpServer(uv_loop_t *loop)
 
 void HiveUdpServer::udpReadyRead(char *data, char *ip)
 {
-//   checkJson(QString(data), QString(ip));
-//  emit usrEntered(decodeHivePacket);
+  QJsonObject json;
+  if(!checkJsonPackage(data, &json))
+    {
+      // do something;
+    }
+
+
+
   qDebug()<<data;
 }

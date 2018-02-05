@@ -3,9 +3,9 @@
 
 #define UDP_PORT 23232
 
-#include <../libs/libParsley/src/PUdpSocket.h>
+#include "HiveAbstractServer.h"
 
-class HiveUdpServer
+class HiveUdpServer : public HiveAbstractServer
 {
 public:
   HiveUdpServer(uv_loop_t* loop);

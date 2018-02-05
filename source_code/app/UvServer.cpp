@@ -42,7 +42,7 @@ UvServer::quit()
               , uvWalkCb
               , NULL);
 
-      /*
+      /*!
        * WARN: DON NOT TOUCH!!!
        * DATE: 9 Dec 2017 eoT3ohze
        *  - Only touch when crash on quit!!!
@@ -148,7 +148,7 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
 {
   QByteArray dat = encodeHeartBeat();
   uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-  udp_server->write("255.255.255.255", 23232, &msg);
+  udp_server->write("255.255.255.255", UDP_PORT, &msg);
 
   counter ++;
 
