@@ -64,7 +64,7 @@ private:
   const QString usr_path = app_data_local_path + "/usr/";
   const QString log_path = app_data_local_path + "/log/";
 
-  const QString contacts_file_path = app_data_local_path + "/contacts.json";
+  const QString contacts_file_path = app_data_local_path1 + "/contacts.json";
   const QString settings_file_path = app_data_local_path + "/settings.json";
   const QString update_file_path = app_data_local_path + "/update.json";
 

@@ -68,7 +68,6 @@ private:
   QList<QJsonArray> history_bundle_list;//Boxes of canned patato chips
   QJsonArray latest_history_json_array;//A stack of patato chips
 
-  //Funciton
   inline bool checkDir(const QString &directory);
   inline QJsonObject getMessageJsonObject(const Message::TextMessage &messageStruct);
 

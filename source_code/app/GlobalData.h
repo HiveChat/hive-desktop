@@ -5,6 +5,7 @@
 #include "UsrData.h"
 #include "GlobalType.h"
 #include "Log.h"
+#include "Bee.h"
 
 #include <QDate>
 #include <QFont>
@@ -15,11 +16,16 @@
 #include <QDebug>
 #include <QUrl>
 
+#ifndef Q_OS_WIN
+  const QString app_data_local_path1 = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+#else
+  const QString app_data_local_path1 = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
 
 
-class GlobalData
+namespace GlobalData
 {
-public:
+//public:
   ///UI
 
   static int window_dpr;

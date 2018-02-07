@@ -40,7 +40,7 @@ time | int | UNIX time stamp
 ### File Info
 Key | type | Note
 ------- | ------- | -------
-index | int | 16 digit random number
+sid | int | 8 digit random number
 sender | string | Sender
 receiver | string | Receiver
 name | string | File Name
@@ -50,17 +50,17 @@ md5 | str | File Md5
 ### FileContent
 Key | type | Note
 ------- | ------- | -------
-index | int | 16 digit random number
+sid | int | 8 digit random number
 sender | string | Sender
 receiver | string | Receiver
 content | string | File Segment in Base64
-index | int | Segment Number
+sid | int | Segment Number
 md5 | str | File Md5 (as identification)
 
 ### FileAccept
 Key | type | Note
 ------- | ------- | -------
-index | int | 16 digit random number
+sid | int | 8 digit random number
 sender | string | Sender
 receiver | string | Receiver
 md5 | str | File Md5
@@ -69,7 +69,7 @@ position | int | The position to start transfer
 ### FileReject
 Key | type | Note
 ------- | ------- | -------
-index | int | 16 digit random number
+sid | int | 8 digit random number
 sender | string | Sender
 receiver | string | Receiver
 md5 | str | File Md5
@@ -78,7 +78,7 @@ reason | int | Enum reason for rejecting
 ### ErrorDelivery
 Key | type | Note
 ------- | ------- | -------
-index | int | 16 digit random number
+sid | int | 8 digit random number
 sender | string | Sender
 receiver | string | Receiver
 
@@ -98,7 +98,7 @@ Key | type | Note
 ------- | ------- | -------
 sender | string | User key of the sender
 receiver | string | User key of the receiver
-index | int | 16 digit random number
+sid | int | 8 digit random number
 time | int | UNIX time stamp
 message | string | Message
 
@@ -107,7 +107,7 @@ Key | type | Note
 ------- | ------- | -------
 sender | string | User key of the sender
 receiver | string | User key of the receiver
-index | int | 16 digit random number
+sid | int | 8 digit random number
 size | int | File size
 name | string | File name
 

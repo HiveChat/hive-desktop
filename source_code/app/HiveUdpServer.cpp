@@ -23,5 +23,7 @@ void HiveUdpServer::udpReadyRead(char *data, char *ip)
 
 
 
+
+
   qDebug()<<data;
 }

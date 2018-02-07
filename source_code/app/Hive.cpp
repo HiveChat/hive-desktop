@@ -28,6 +28,7 @@ Hive::Hive(int &argc, char **argv)
   gui_central_widget = new CentralWidget();
 
   ////connect
+//  qRegisterMetaType<Bee> ("Bee");
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 

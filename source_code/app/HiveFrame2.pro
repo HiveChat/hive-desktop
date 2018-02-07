@@ -83,7 +83,8 @@ SOURCES += \
     ../libs/libParsley/src/PTcpServer.cpp \
     HiveUdpServer.cpp \
     ../libs/libParsley/src/PAddress.cpp \
-    HiveAbstractServer.cpp
+    HiveAbstractServer.cpp \
+    Bee.cpp
 \
 
 HEADERS  += \
@@ -132,7 +133,8 @@ HEADERS  += \
     ../libs/libParsley/src/PLoop.h \
     HiveUdpServer.h \
     ../libs/libParsley/src/PAddress.h \
-    HiveAbstractServer.h
+    HiveAbstractServer.h \
+    Bee.h
 
 ICON = Src/hive.icns
 
