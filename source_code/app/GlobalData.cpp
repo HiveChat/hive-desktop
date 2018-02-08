@@ -2,7 +2,7 @@
 
 
 ///UI
-//int GlobalData::window_dpr;
+int GlobalData::window_dpr;
 int GlobalData::window_defaultWidth = 900;
 int GlobalData::window_defaultHeight = 600;
 
@@ -45,6 +45,18 @@ QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
 QMultiHash<QString, QPair<int, int> > GlobalData::file_tran_progress_hash;//used
 
 QList<QJsonObject> GlobalData::message_queue;
+
+#ifndef Q_OS_WIN
+const QString GlobalData::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/Hive!";
+#else
+const QString GlobalData::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+#endif
+const QString GlobalData::user_data_dir = GlobalData::data_location_dir + "/usr";
+const QString GlobalData::log_dir = GlobalData::data_location_dir + "/log";
+
+const QString GlobalData::contacts_file_dir = GlobalData::data_location_dir + "/contacts.json";
+const QString GlobalData::settings_file_dir = GlobalData::data_location_dir + "/settings.json";
+const QString GlobalData::update_file_dir = GlobalData::data_location_dir + "/update.json";
 
 
 ///netr

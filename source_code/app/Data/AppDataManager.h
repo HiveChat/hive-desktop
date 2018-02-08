@@ -35,13 +35,11 @@ public:
 private:
 
   void checkSettings();
-  inline static bool checkDir(const QString &directory);
+  static bool checkDir(const QString &directory);
 
-  inline QJsonDocument makeUsrProfile();
-  inline QJsonObject makeUsrProfile(UsrProfileStruct &usrProfileStruct);
-  inline QJsonDocument makeUsrList(QList<QJsonObject> &usr_profile_list);
+  inline QString makeUuid();
+  inline QJsonDocument makeDefaultSettigns();
   inline QJsonDocument makeUpdateJson(const int stable[]);
-  inline QString makeUsrKey();
 
   inline void initVariable();
   inline void checkFiles();
@@ -54,19 +52,6 @@ private:
 
   inline void updateUsr(const UsrProfileStruct &usrProfileStruct);
   inline void deleteUsr(const QStringList usrInfoStrList);
-
-#ifndef Q_OS_WIN
-  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-#else
-  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-#endif
-
-  const QString usr_path = app_data_local_path + "/usr/";
-  const QString log_path = app_data_local_path + "/log/";
-
-  const QString contacts_file_path = app_data_local_path1 + "/contacts.json";
-  const QString settings_file_path = app_data_local_path + "/settings.json";
-  const QString update_file_path = app_data_local_path + "/update.json";
 
   //config map
   QHash<QString, int*> settings_hash_int;

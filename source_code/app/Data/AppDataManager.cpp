@@ -26,31 +26,6 @@ void AppDataManager::checkSettings()
     }
 }
 
-QJsonObject AppDataManager::makeUsrProfile(UsrProfileStruct &usrProfileStruct)
-{
-  QJsonObject profileJsonObj;
-  profileJsonObj.insert("usrName", usrProfileStruct.name);
-  profileJsonObj.insert("avatarPath", usrProfileStruct.avatar);
-
-  QJsonObject usrProfileJsonObj;
-  usrProfileJsonObj.insert(usrProfileStruct.key, profileJsonObj);
-
-  return usrProfileJsonObj;
-}
-
-QJsonDocument AppDataManager::makeUsrList(QList<QJsonObject> &usrProfileList)
-{
-  QJsonArray usrListJsonArray;
-  foreach (QJsonObject jsonObj, usrProfileList)
-    {
-      usrListJsonArray.append(jsonObj);
-    }
-  QJsonDocument jsonDoc;
-  jsonDoc.setArray(usrListJsonArray);
-
-  return jsonDoc;
-}
-
 QJsonDocument AppDataManager::makeUpdateJson(const int stable[])
 {
   QJsonObject write_json_obj;
@@ -73,7 +48,7 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
   QString usrName = usrProfileStruct.name;
   QString avatarPath = usrProfileStruct.avatar;
 
-  QFile file(contacts_file_path);
+  QFile file(GlobalData::contacts_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -145,7 +120,7 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 
 void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 {
-  QFile file(contacts_file_path);
+  QFile file(GlobalData::contacts_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
   {
     return;
@@ -251,7 +226,7 @@ void AppDataManager::onUpdatesAvailable()
       return;
     }
 
-  QFile file(update_file_path);
+  QFile file(GlobalData::update_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -320,14 +295,14 @@ void AppDataManager::onUpdatesAvailable()
 
 void AppDataManager::checkFiles()
 {
-  checkDir(app_data_local_path);
-  checkDir(usr_path);
-  checkDir(log_path);
+  checkDir(GlobalData::data_location_dir);
+  checkDir(GlobalData::user_data_dir);
+  checkDir(GlobalData::log_dir);
 }
 
 void AppDataManager::loadDefaultGlobalData()
 {
-  GlobalData::settings_struct.profile_key_str = makeUsrKey();
+  GlobalData::settings_struct.profile_key_str = makeUuid();
   GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
   GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
 }
@@ -348,7 +323,7 @@ bool AppDataManager::checkDir(const QString &directory)
   return true;
 }
 
-QJsonDocument AppDataManager::makeUsrProfile()
+QJsonDocument AppDataManager::makeDefaultSettigns()
 {
   loadDefaultGlobalData();
 
@@ -369,7 +344,7 @@ QJsonDocument AppDataManager::makeUsrProfile()
   return writeJsonDocument;
 }
 
-QString AppDataManager::makeUsrKey()
+QString AppDataManager::makeUuid()
 {
 //  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
 //  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -428,7 +403,7 @@ void AppDataManager::initVariable()
 
 void AppDataManager::loadMySettings()
 {
-  QFile file(settings_file_path);
+  QFile file(GlobalData::settings_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -475,13 +450,13 @@ void AppDataManager::loadMySettings()
       else
         {
           file.resize(0);
-          out<<makeUsrProfile().toJson(QJsonDocument::Indented)<<endl;
+          out<<makeDefaultSettigns().toJson(QJsonDocument::Indented)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      out<<makeUsrProfile().toJson(QJsonDocument::Indented)<<endl;
+      out<<makeDefaultSettigns().toJson(QJsonDocument::Indented)<<endl;
     }
 
 //  written_settings_struct = GlobalData::g_settings_struct;
@@ -492,7 +467,7 @@ void AppDataManager::loadMySettings()
 
 void AppDataManager::loadUsrList()
 {
-  QFile file(contacts_file_path);
+  QFile file(GlobalData::contacts_file_dir);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;
@@ -540,7 +515,7 @@ void AppDataManager::writeCurrentConfig()
 {
   qDebug()<<"&DataManager::writeCurrentConfig() invoked";
 
-  QFile file(settings_file_path);
+  QFile file(GlobalData::settings_file_dir);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
       return;
@@ -641,7 +616,7 @@ void AppDataManager::loadFonts()
 
 void AppDataManager::loadUpdates()
 {
-  QFile file(update_file_path);
+  QFile file(GlobalData::update_file_dir);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;

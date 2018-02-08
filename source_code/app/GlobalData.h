@@ -16,16 +16,11 @@
 #include <QDebug>
 #include <QUrl>
 
-#ifndef Q_OS_WIN
-  const QString app_data_local_path1 = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-#else
-  const QString app_data_local_path1 = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-#endif
 
 
-namespace GlobalData
+class GlobalData
 {
-//public:
+public:
   ///UI
 
   static int window_dpr;
@@ -73,6 +68,15 @@ namespace GlobalData
   static QMultiHash<QString, QPair<int, int> > file_tran_progress_hash;
                   //key           total done
   static QList<QJsonObject> message_queue;
+
+  static const QString data_location_dir;
+  static const QString user_data_dir;
+  static const QString log_dir;
+
+  static const QString contacts_file_dir;
+  static const QString settings_file_dir;
+  static const QString update_file_dir;
+
 
   ///net
   static QString g_localHostIP;
