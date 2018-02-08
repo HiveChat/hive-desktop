@@ -4,7 +4,7 @@ AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 {
   initVariable();
   checkFiles();
-  loadMySettings();
+  readSettings();
   loadUsrList();
   loadFonts();
   loadTimerTasks();
@@ -20,8 +20,8 @@ void AppDataManager::checkSettings()
 {
   if(GlobalData::settings_struct.modified_lock)
     {
-      qDebug()<<"&DataManager::checkSettings(): Settings changed";
-      writeCurrentConfig();
+      Log::dat(Log::Normal, "AppDataManager::checkSettings()", "Settings changed.");
+      writeSettings();
       GlobalData::settings_struct.modified_lock = false;
     }
 }
@@ -300,14 +300,6 @@ void AppDataManager::checkFiles()
   checkDir(GlobalData::log_dir);
 }
 
-void AppDataManager::loadDefaultGlobalData()
-{
-  GlobalData::settings_struct.profile_key_str = makeUuid();
-  GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
-  GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
-}
-
-
 bool AppDataManager::checkDir(const QString &directory)
 {
   QDir dir(directory);
@@ -323,23 +315,24 @@ bool AppDataManager::checkDir(const QString &directory)
   return true;
 }
 
-QJsonDocument AppDataManager::makeDefaultSettigns()
+QJsonDocument AppDataManager::makeDefaultSettings()
 {
-  loadDefaultGlobalData();
+  GlobalData::settings_struct.profile_key_str = makeUuid();
+  GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
+  GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
 
-  QJsonObject myProfileJsonObj;
-  foreach (QString attribute, settings_hash_qstring.keys())
-    {
-      myProfileJsonObj.insert(attribute, QJsonValue::fromVariant(*settings_hash_qstring.value(attribute)));
-    }
 
-  myProfileJsonObj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
-  myProfileJsonObj.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
+  QJsonObject usrProfileJson;
+  usrProfileJson.insert("usrKey", GlobalData::settings_struct.profile_key_str);
+  usrProfileJson.insert("usrName", GlobalData::settings_struct.profile_name_str);
+  usrProfileJson.insert("avatarPath", GlobalData::settings_struct.profile_avatar_str);
+  usrProfileJson.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
+  usrProfileJson.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
   QJsonDocument writeJsonDocument;
-  writeJsonDocument.setObject(myProfileJsonObj);
+  writeJsonDocument.setObject(usrProfileJson);
 
   return writeJsonDocument;
 }
@@ -360,35 +353,32 @@ QString AppDataManager::makeUuid()
 
 void AppDataManager::initVariable()
 {
-  //When adding global variable to settings, choose a map with corresponding data type below.
-  //When adding map, go to register in loadMySettings() to enable reading from disk.
-  settings_hash_int.insert("window_width",
-                           &GlobalData::settings_struct.window_width);
-  settings_hash_int.insert("window_height",
-                           &GlobalData::settings_struct.window_height);
+  /*! When adding global variable to settings, choose a map with corresponding data type below.
+   *  When adding new types, you need to add corresponding hash table for that type, go to register in readSettings() and writeSettings() to enable reading from disk.
+   */
+  settings_int_hash = {
+    { "window_width", &GlobalData::settings_struct.window_width },
+    { "window_height", &GlobalData::settings_struct.window_height }
+  };
 
-  settings_hash_qstring.insert("usrKey",
-                              &GlobalData::settings_struct.profile_key_str);
-  settings_hash_qstring.insert("usrName",
-                              &GlobalData::settings_struct.profile_name_str);
-  settings_hash_qstring.insert("avatarPath",
-                              &GlobalData::settings_struct.profile_avatar_str);
+  settings_qcolor_hash = {
+    { "BubbleColorI", &GlobalData::settings_struct.chat_bubble_color_i},
+    { "BubbleColorO", &GlobalData::settings_struct.chat_bubble_color_o }
+  };
 
-  settings_hash_qcolor.insert("BubbleColorI",
-                             &GlobalData::settings_struct.chat_bubble_color_i);
-  settings_hash_qcolor.insert("BubbleColorO",
-                             &GlobalData::settings_struct.chat_bubble_color_o);
+  settings_qstring_hash = {
+    { "usrKey", &GlobalData::settings_struct.profile_key_str },
+    { "usrName", &GlobalData::settings_struct.profile_name_str },
+    { "avatarPath", &GlobalData::settings_struct.profile_avatar_str }
+  };
 
-  settings_hash_bool.insert("updateNotification",
-                           &GlobalData::settings_struct.notification.update_notification);
-  settings_hash_bool.insert("messageNotification",
-                           &GlobalData::settings_struct.notification.message_notification);
-  settings_hash_bool.insert("messageDetailNotification",
-                           &GlobalData::settings_struct.notification.message_detail_notification);
-  settings_hash_bool.insert("autoUpdate",
-                           &GlobalData::settings_struct.update.auto_update);
-  settings_hash_bool.insert("autoCheckUpdate",
-                           &GlobalData::settings_struct.update.auto_check_update);
+  settings_bool_hash = {
+    { "updateNotification", &GlobalData::settings_struct.notification.update_notification },
+    { "messageNotification", &GlobalData::settings_struct.notification.message_notification },
+    { "messageDetailNotification", &GlobalData::settings_struct.notification.message_detail_notification },
+    { "autoUpdate", &GlobalData::settings_struct.update.auto_update },
+    { "autoCheckUpdate", &GlobalData::settings_struct.update.auto_check_update }
+  };
 
   //defaults:
   GlobalData::settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
@@ -401,65 +391,49 @@ void AppDataManager::initVariable()
 
 }
 
-void AppDataManager::loadMySettings()
+void AppDataManager::readSettings()
 {
   QFile file(GlobalData::settings_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
     }
-
   QTextStream in(&file);
   QTextStream out(&file);
-  QByteArray inByteArray = in.readAll().toUtf8();
 
+  QByteArray inByteArray = in.readAll().toUtf8();
   QJsonParseError jsonError;
-  QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+  QJsonDocument document = QJsonDocument::fromJson(inByteArray, &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
-      if(readJsonDocument.isObject())
+      if(document.isObject())
         {
-          QJsonObject usrListJsonObj = readJsonDocument.object();
+          QJsonObject settingsJson = document.object();
 
-          //This is Tim's magic
-          foreach(int *var, settings_hash_int.values())
-            {
-              *var = usrListJsonObj[settings_hash_int.key(var)].toInt();
-            }
+          for (std::pair<QString, int*> element : settings_int_hash)
+            *element.second = settingsJson[element.first].toInt();
 
-          foreach(QString *var, settings_hash_qstring.values())
-            {
-              *var = usrListJsonObj[settings_hash_qstring.key(var)].toString();
-            }
+          for (std::pair<QString, QColor*> element : settings_qcolor_hash)
+            *element.second = QColor(settingsJson[element.first].toString());
 
-//          foreach (QString *key, settings_hash_qstring.keys())
-//            {
-//              settings_hash_qstring.value(key) = usr_list_json_obj[key].toString();
-//            } //better
+          for (std::pair<QString, QString*> element : settings_qstring_hash)
+            *element.second = settingsJson[element.first].toString();
 
-          foreach(QColor *var, settings_hash_qcolor.values())
-            {
-              *var = QColor(usrListJsonObj[settings_hash_qcolor.key(var)].toString());
-            }
+          for (std::pair<QString, bool*> element : settings_bool_hash)
+            *element.second = settingsJson[element.first].toBool();
 
-          foreach(bool *var, settings_hash_bool.values())
-            {
-              *var = usrListJsonObj[settings_hash_bool.key(var)].toBool();
-            }
         }
       else
         {
           file.resize(0);
-          out<<makeDefaultSettigns().toJson(QJsonDocument::Indented)<<endl;
+          out<<makeDefaultSettings().toJson(QJsonDocument::Indented)<<endl;
         }
     }
   else
     {
       file.resize(0);
-      out<<makeDefaultSettigns().toJson(QJsonDocument::Indented)<<endl;
+      out<<makeDefaultSettings().toJson(QJsonDocument::Indented)<<endl;
     }
-
-//  written_settings_struct = GlobalData::g_settings_struct;
 
   file.flush();
   file.close();
@@ -511,10 +485,8 @@ void AppDataManager::loadUsrList()
   file.close();
 }
 
-void AppDataManager::writeCurrentConfig()
+void AppDataManager::writeSettings()
 {
-  qDebug()<<"&DataManager::writeCurrentConfig() invoked";
-
   QFile file(GlobalData::settings_file_dir);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
@@ -523,33 +495,26 @@ void AppDataManager::writeCurrentConfig()
 
   QTextStream out(&file);
 
-  QJsonObject myProfileJsonObj;
-  foreach (QString attribute, settings_hash_int.keys())
-    {
-      myProfileJsonObj.insert(attribute, *settings_hash_int.value(attribute));
-    }
-  foreach (QString attribute, settings_hash_qstring.keys())
-    {
-      myProfileJsonObj.insert(attribute, *settings_hash_qstring.value(attribute));
-    }
-  foreach (QString attribute, settings_hash_qcolor.keys())
-    {
-      myProfileJsonObj.insert(attribute, settings_hash_qcolor.value(attribute)->name());
-    }
-  foreach (QString attribute, settings_hash_bool.keys())
-    {
-      myProfileJsonObj.insert(attribute, *settings_hash_bool.value(attribute));
-    }
+  QJsonObject settingsJson;
 
-//  my_profile_json_obj.insert("BubbleColorI", GlobalData::settings_struct.chat_bubble_color_i.name());
-//  my_profile_json_obj.insert("BubbleColorO", Globa_struct.chat_bubble_color_o.name());
+  for (std::pair<QString, int*> element : settings_int_hash)
+    settingsJson.insert(element.first, *element.second);
+
+  for (std::pair<QString, QColor*> element : settings_qcolor_hash)
+    settingsJson.insert(element.first, element.second->name());
+
+  for (std::pair<QString, QString*> element : settings_qstring_hash)
+    settingsJson.insert(element.first, *element.second);
+
+  for (std::pair<QString, bool*> element : settings_bool_hash)
+    settingsJson.insert(element.first, *element.second);
 
   QJsonDocument writeJsonDocument;
-  writeJsonDocument.setObject(myProfileJsonObj);
+  writeJsonDocument.setObject(settingsJson);
 
   file.resize(0);
   out << writeJsonDocument.toJson();
-  qDebug()<<".....................history written...................";
+  Log::dat(Log::Normal, "AppDataManager::writeCurrentConfig()", "Config file updated.");
   file.flush();
   file.close();
 }

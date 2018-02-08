@@ -3,6 +3,7 @@
 
 #include "GlobalData.h"
 #include "UsrData.h"
+#include "unordered_map"
 
 #include <QThread>
 #include <QMutex>
@@ -35,29 +36,34 @@ public:
 private:
 
   void checkSettings();
-  static bool checkDir(const QString &directory);
+  inline bool checkDir(const QString &directory);
 
-  inline QString makeUuid();
-  inline QJsonDocument makeDefaultSettigns();
-  inline QJsonDocument makeUpdateJson(const int stable[]);
-
+  /*!
+   * Functions called by constructor AppDataManager::AppDataManager(), only called once when during initialization.
+   */
   inline void initVariable();
   inline void checkFiles();
-  inline void loadDefaultGlobalData();
-  inline void loadMySettings();
+  inline void readSettings();
   inline void loadUsrList();
   inline void loadFonts();
   inline void loadUpdates();
   inline void loadTimerTasks();
 
+  inline QString makeUuid();
+  inline QJsonDocument makeDefaultSettings();
+  inline QJsonDocument makeUpdateJson(const int stable[]);
+
   inline void updateUsr(const UsrProfileStruct &usrProfileStruct);
   inline void deleteUsr(const QStringList usrInfoStrList);
 
-  //config map
-  QHash<QString, int*> settings_hash_int;
-  QHash<QString, QColor*> settings_hash_qcolor;
-  QHash<QString, QString*> settings_hash_qstring;
-  QHash<QString, bool*> settings_hash_bool;
+  /*!
+   * Hashes for storing settings
+   */
+
+  std::map<QString, int*> settings_int_hash;
+  std::map<QString, QColor*> settings_qcolor_hash;
+  std::map<QString, QString*> settings_qstring_hash;
+  std::map<QString, bool*> settings_bool_hash;
 
 public slots:
   void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
@@ -66,7 +72,7 @@ public slots:
   void onUpdatesAvailable();
 
 private slots:
-  void writeCurrentConfig();
+  void writeSettings();
 
 signals:
   void updatesAvailable();
