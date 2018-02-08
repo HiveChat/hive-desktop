@@ -26,16 +26,16 @@ void AppDataManager::checkSettings()
     }
 }
 
-QJsonDocument AppDataManager::makeUpdateJson(const int stable[])
+QJsonDocument AppDataManager::makeUpdateJson(const int version[])
 {
-  QJsonObject write_json_obj;
-  write_json_obj.insert("stable_version", QJsonValue(stable[0]));
-  write_json_obj.insert("beta_version", QJsonValue(stable[1]));
-  write_json_obj.insert("alpha_version", QJsonValue(stable[2]));
+  QJsonObject obj;
+  obj.insert("stable_version", QJsonValue(version[0]));
+  obj.insert("beta_version", QJsonValue(version[1]));
+  obj.insert("alpha_version", QJsonValue(version[2]));
 
-  QJsonDocument write_json_document;
-  write_json_document.setObject(write_json_obj);
-  return write_json_document;
+  QJsonDocument doc;
+  doc.setObject(obj);
+  return doc;
 }
 
 
@@ -43,54 +43,54 @@ QJsonDocument AppDataManager::makeUpdateJson(const int stable[])
 
 void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 {
-  QString usrKey = usrProfileStruct.key;
+  QString uuid = usrProfileStruct.key;
   QString ipAddr = usrProfileStruct.ip;
   QString usrName = usrProfileStruct.name;
   QString avatarPath = usrProfileStruct.avatar;
 
-  QFile file(GlobalData::contacts_file_dir);
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+  QFile f(GlobalData::contacts_file_dir);
+  if(!f.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
     }
 
-  QTextStream out(&file);
-  QTextStream in(&file);
+  QTextStream out(&f);
+  QTextStream in(&f);
   QByteArray inByteArray = in.readAll().toUtf8();
 
   QJsonParseError jsonError;
-  QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
-      if(readJsonDocument.isObject())
+      if(inJsonDoc.isObject())
         {
-          QJsonObject usrListJsonObj = readJsonDocument.object();
-          QJsonObject usrInfoJsonObj;
-          usrInfoJsonObj.insert("usrKey", usrKey);
-          usrInfoJsonObj.insert("usrName", usrName);
-          usrInfoJsonObj.insert("avatarPath", avatarPath);
-          if(!usrListJsonObj.contains(usrKey))
+          QJsonObject usrListObj = inJsonDoc.object();
+          QJsonObject usrInfoObj;
+          usrInfoObj.insert("usrKey", uuid);
+          usrInfoObj.insert("usrName", usrName);
+          usrInfoObj.insert("avatarPath", avatarPath);
+          if(!usrListObj.contains(uuid))
             {
-              usrListJsonObj.insert(usrKey, usrInfoJsonObj);
+              usrListObj.insert(uuid, usrInfoObj);
 
-              QJsonDocument writeJsonDocument;
-              writeJsonDocument.setObject(usrListJsonObj);
+              QJsonDocument outJsonDoc;
+              outJsonDoc.setObject(usrListObj);
 
-              file.resize(0);
-              out<<writeJsonDocument.toJson()<<endl;
+              f.resize(0);
+              out<<outJsonDoc.toJson()<<endl;
             }
           else
             {
-              if(usrListJsonObj[usrKey] != usrInfoJsonObj)
+              if(usrListObj[uuid] != usrInfoObj)
                 {
-                  usrListJsonObj.remove(usrKey);
-                  usrListJsonObj.insert(usrKey, usrInfoJsonObj);
+                  usrListObj.remove(uuid);
+                  usrListObj.insert(uuid, usrInfoObj);
 
-                  QJsonDocument writeJsonDocument;
-                  writeJsonDocument.setObject(usrListJsonObj);
+                  QJsonDocument outJsonDoc;
+                  outJsonDoc.setObject(usrListObj);
 
-                  file.resize(0);
-                  out<<writeJsonDocument.toJson()<<endl;
+                  f.resize(0);
+                  out<<outJsonDoc.toJson()<<endl;
                 }
             }
         }
@@ -98,64 +98,65 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
   else
     {
       qDebug()<<"else";
-      QJsonObject usr_info_json_obj;
-      usr_info_json_obj.insert("usrKey", usrKey);
-      usr_info_json_obj.insert("usrName", usrName);
-      usr_info_json_obj.insert("avatarPath", avatarPath);
+      QJsonObject usrInfoObj;
+      usrInfoObj.insert("usrKey", uuid);
+      usrInfoObj.insert("usrName", usrName);
+      usrInfoObj.insert("avatarPath", avatarPath);
 
-      QJsonObject usr_list_json_obj;
-      usr_list_json_obj.insert(usrKey, usr_info_json_obj);
+      QJsonObject usrListObj;
+      usrListObj.insert(uuid, usrInfoObj);
 
-      QJsonDocument write_json_document;
-      write_json_document.setObject(usr_list_json_obj);
+      QJsonDocument outJsonDoc;
+      outJsonDoc.setObject(usrListObj);
 
-      file.resize(0);
-      out<<write_json_document.toJson(QJsonDocument::Indented);  ///QJsonDocument::Compact
+      f.resize(0);
+      out<<outJsonDoc.toJson(QJsonDocument::Indented);  ///QJsonDocument::Compact
     }
 
-  file.flush();
-  file.close();
+  f.flush();
+  f.close();
 
 }
 
+//!! OBSOLETE !!
 void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 {
-  QFile file(GlobalData::contacts_file_dir);
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
-  {
-    return;
-  }
+//  QFile file(GlobalData::contacts_file_dir);
+//  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+//  {
+//    return;
+//  }
 
-  QTextStream in(&file);
-  QTextStream out(&file);
+//  QTextStream in(&file);
+//  QTextStream out(&file);
 
-  QByteArray in_byte_array = in.readAll().toUtf8();
+//  QByteArray in_byte_array = in.readAll().toUtf8();
 
-  ///JSon
-  QJsonParseError json_error;
-  QJsonDocument readJsonDocument = QJsonDocument::fromJson(in_byte_array, &json_error);
-  if(json_error.error == QJsonParseError::NoError)
-    {
-      if(readJsonDocument.isObject())
-        {
-          QJsonObject usrListJsonObj = readJsonDocument.object();
-          usrListJsonObj.erase(usrListJsonObj.find(usrInfoStrList.at(0)));
+//  ///JSon
+//  QJsonParseError json_error;
+//  QJsonDocument readJsonDocument = QJsonDocument::fromJson(in_byte_array, &json_error);
+//  if(json_error.error == QJsonParseError::NoError)
+//    {
+//      if(readJsonDocument.isObject())
+//        {
+//          QJsonObject usrListJsonObj = readJsonDocument.object();
+//          usrListJsonObj.erase(usrListJsonObj.find(usrInfoStrList.at(0)));
 
-          QJsonDocument writeJsonDocument;
-          writeJsonDocument.setObject(usrListJsonObj);
-          file.resize(0);
-          out<<writeJsonDocument.toJson(QJsonDocument::Indented)<<endl;
+//          QJsonDocument writeJsonDocument;
+//          writeJsonDocument.setObject(usrListJsonObj);
+//          file.resize(0);
+//          out<<writeJsonDocument.toJson(QJsonDocument::Indented)<<endl;
 
-        }
-    }
-  else
-    {
-      qDebug()<<"Contact delete failed, is file empty?";
+//        }
+//    }
+//  else
+//    {
+//      qDebug()<<"Contact delete failed, is file empty?";
 
-    }
+//    }
 
-  file.close();
-  file.flush();
+//  file.close();
+//  file.flush();
 }
 
 void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
@@ -163,11 +164,11 @@ void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // l
   if(GlobalData::online_usr_data_hash.contains(usrProfileStruct.key))
     {
       Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in online list");
-      UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
-      if(usrProfileStruct != *recordedUsrData->getUsrProfileStruct())
+      UsrData *usrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
+      if(usrProfileStruct != *usrData->getUsrProfileStruct())
         {
-          recordedUsrData->setUsrProfileStruct(usrProfileStruct);
-          emit usrProfileChanged(recordedUsrData);
+          usrData->setUsrProfileStruct(usrProfileStruct);
+          emit usrProfileChanged(usrData);
           Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
@@ -175,12 +176,12 @@ void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // l
     {
       Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
       GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, GlobalData::offline_usr_data_hash.value(usrProfileStruct.key));
-      UsrData *recordedUsrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
-      if(usrProfileStruct != *recordedUsrData->getUsrProfileStruct())
+      UsrData *usrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
+      if(usrProfileStruct != *usrData->getUsrProfileStruct())
         {
-          recordedUsrData->setUsrProfileStruct(usrProfileStruct);
+          usrData->setUsrProfileStruct(usrProfileStruct);
           updateUsr(usrProfileStruct);
-          emit usrProfileChanged(recordedUsrData);
+          emit usrProfileChanged(usrData);
           Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
@@ -235,33 +236,33 @@ void AppDataManager::onUpdatesAvailable()
   QTextStream in(&file);
   QTextStream out(&file);
   QByteArray inByteArray = in.readAll().toUtf8();
-  int writeVersion[3];
-  memcpy(&writeVersion, &GlobalData::current_version, sizeof(GlobalData::current_version));
+  int outVersion[3];
+  memcpy(&outVersion, &GlobalData::current_version, sizeof(GlobalData::current_version));
 
   if(!inByteArray.isEmpty())
     {
       QJsonParseError jsonError;
-      QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+      QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
       if(jsonError.error == QJsonParseError::NoError)
         {
-          if(readJsonDocument.isObject())
+          if(inJsonDoc.isObject())
             {
-              QJsonObject readJsonObj = readJsonDocument.object();
+              QJsonObject inObj = inJsonDoc.object();
 
-              int read_version[3] = {
-                readJsonObj.value("stable_version").toInt(),
-                readJsonObj.value("beta_version").toInt(),
-                readJsonObj.value("alpha_version").toInt()
+              int inVersion[3] = {
+                inObj.value("stable_version").toInt(),
+                inObj.value("beta_version").toInt(),
+                inObj.value("alpha_version").toInt()
               };
 
               for(int i = 0; i < 3; i ++)
                 {
-                  writeVersion[i] = read_version[i];
+                  outVersion[i] = inVersion[i];
                 }
 
-              if(memcmp(read_version,
+              if(memcmp(inVersion,
                         GlobalData::update_struct.version,
-                        sizeof(read_version)) == 0)
+                        sizeof(inVersion)) == 0)
                 {
                   file.close();
                   file.flush();
@@ -271,11 +272,11 @@ void AppDataManager::onUpdatesAvailable()
                 }
               else
                 {
-                  if(GlobalData::versionCompare(GlobalData::update_struct.version, read_version))
+                  if(GlobalData::versionCompare(GlobalData::update_struct.version, inVersion))
                     {
                       for(int i = 0; i < 3; i ++)
                         {
-                          writeVersion[i] = GlobalData::update_struct.version[i];
+                          outVersion[i] = GlobalData::update_struct.version[i];
                         }
                     }
                 }
@@ -285,7 +286,7 @@ void AppDataManager::onUpdatesAvailable()
 
   file.resize(0);
 
-  out << makeUpdateJson(writeVersion).toJson(QJsonDocument::Indented) << endl;
+  out << makeUpdateJson(outVersion).toJson(QJsonDocument::Indented) << endl;
 
   file.close();
   file.flush();
@@ -305,10 +306,10 @@ bool AppDataManager::checkDir(const QString &directory)
   QDir dir(directory);
   if(!dir.exists())
     {
-//      qDebug()<<"bool DataManager::ckeckDir(QString directory) NOT EXIST~";
+      //log here
       if(!dir.mkdir(directory))
         {
-//          qDebug()<<"bool DataManager::ckeckDir(QString directory) CANT MAKE DIR!";
+          //log here
           return false;
         }
     }
@@ -322,39 +323,31 @@ QJsonDocument AppDataManager::makeDefaultSettings()
   GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
 
 
-  QJsonObject usrProfileJson;
-  usrProfileJson.insert("usrKey", GlobalData::settings_struct.profile_key_str);
-  usrProfileJson.insert("usrName", GlobalData::settings_struct.profile_name_str);
-  usrProfileJson.insert("avatarPath", GlobalData::settings_struct.profile_avatar_str);
-  usrProfileJson.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
-  usrProfileJson.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
+  QJsonObject obj;
+  obj.insert("usrKey", GlobalData::settings_struct.profile_key_str);
+  obj.insert("usrName", GlobalData::settings_struct.profile_name_str);
+  obj.insert("avatarPath", GlobalData::settings_struct.profile_avatar_str);
+  obj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
+  obj.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
-  QJsonDocument writeJsonDocument;
-  writeJsonDocument.setObject(usrProfileJson);
+  QJsonDocument doc;
+  doc.setObject(obj);
 
-  return writeJsonDocument;
+  return doc;
 }
 
 QString AppDataManager::makeUuid()
 {
-//  const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-//  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-//  GlobalData::settings_struct.profile_key_str.clear();
-
-//  for(int i = 0; i < 32; i ++)
-//    {
-//      GlobalData::settings_struct.profile_key_str.append(alphabet_char[qrand()%63]);
-//    }
-
   return QUuid::createUuid().toString();
 }
 
 void AppDataManager::initVariable()
 {
-  /*! When adding global variable to settings, choose a map with corresponding data type below.
-   *  When adding new types, you need to add corresponding hash table for that type, go to register in readSettings() and writeSettings() to enable reading from disk.
+  /*! 1. When adding global variable to settings, choose a map with corresponding data type below.
+   *  2. When adding new types, you need to add corresponding maps for that type.
+   *  Go to register in AppDataManager::readSettings() and AppDataManager::writeSettings() to enable reading and writing from disk.
    */
   settings_int_hash = {
     { "window_width", &GlobalData::settings_struct.window_width },
@@ -380,7 +373,7 @@ void AppDataManager::initVariable()
     { "autoCheckUpdate", &GlobalData::settings_struct.update.auto_check_update }
   };
 
-  //defaults:
+  //! defaults
   GlobalData::settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
   GlobalData::settings_struct.chat_bubble_color_o = GlobalData::color_defaultChatBubbleO;
   GlobalData::settings_struct.notification.message_detail_notification = true;
@@ -403,31 +396,24 @@ void AppDataManager::readSettings()
 
   QByteArray inByteArray = in.readAll().toUtf8();
   QJsonParseError jsonError;
-  QJsonDocument document = QJsonDocument::fromJson(inByteArray, &jsonError);
-  if(jsonError.error == QJsonParseError::NoError)
+  QJsonDocument inDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
+  if(jsonError.error == QJsonParseError::NoError
+     && inDoc.isObject())
     {
-      if(document.isObject())
-        {
-          QJsonObject settingsJson = document.object();
+      QJsonObject settingsJson = inDoc.object();
 
-          for (std::pair<QString, int*> element : settings_int_hash)
-            *element.second = settingsJson[element.first].toInt();
+      for (std::pair<QString, int*> element : settings_int_hash)
+        *element.second = settingsJson[element.first].toInt();
 
-          for (std::pair<QString, QColor*> element : settings_qcolor_hash)
-            *element.second = QColor(settingsJson[element.first].toString());
+      for (std::pair<QString, QColor*> element : settings_qcolor_hash)
+        *element.second = QColor(settingsJson[element.first].toString());
 
-          for (std::pair<QString, QString*> element : settings_qstring_hash)
-            *element.second = settingsJson[element.first].toString();
+      for (std::pair<QString, QString*> element : settings_qstring_hash)
+        *element.second = settingsJson[element.first].toString();
 
-          for (std::pair<QString, bool*> element : settings_bool_hash)
-            *element.second = settingsJson[element.first].toBool();
+      for (std::pair<QString, bool*> element : settings_bool_hash)
+        *element.second = settingsJson[element.first].toBool();
 
-        }
-      else
-        {
-          file.resize(0);
-          out<<makeDefaultSettings().toJson(QJsonDocument::Indented)<<endl;
-        }
     }
   else
     {
@@ -451,23 +437,23 @@ void AppDataManager::loadUsrList()
 
   ///JSon
   QJsonParseError jsonError;
-  QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
-      if(readJsonDocument.isObject())
+      if(inJsonDoc.isObject())
         {
-          QJsonObject usrListJsonObj = readJsonDocument.object();
-          QStringList usrKeyStrList = usrListJsonObj.keys();  //get usr_key as a string list
+          QJsonObject usrListObj = inJsonDoc.object();
+          QStringList uuidList = usrListObj.keys();  //get usr_key as a string list
 
-          for(int i = 0; i < usrKeyStrList.count(); i++)
+          for(int i = 0; i < uuidList.count(); i++)
             {
-              QString *tempUsrKeyStr = &usrKeyStrList[i];
-              QJsonObject tempUsrProfileJsonObj = usrListJsonObj[*tempUsrKeyStr].toObject();
+              QString *tempUsrKeyStr = &uuidList[i];
+              QJsonObject tempUsrProfileObj = usrListObj[*tempUsrKeyStr].toObject();
 
               UsrProfileStruct usrProfileStruct;
-              usrProfileStruct.key = tempUsrProfileJsonObj["usrKey"].toString();
-              usrProfileStruct.name = tempUsrProfileJsonObj["usrName"].toString();
-              usrProfileStruct.avatar = tempUsrProfileJsonObj["avatarPath"].toString();
+              usrProfileStruct.key = tempUsrProfileObj["usrKey"].toString();
+              usrProfileStruct.name = tempUsrProfileObj["usrName"].toString();
+              usrProfileStruct.avatar = tempUsrProfileObj["avatarPath"].toString();
 
               UsrData *usrData = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
               GlobalData::offline_usr_data_hash.insert(*tempUsrKeyStr, usrData);
@@ -476,8 +462,10 @@ void AppDataManager::loadUsrList()
     }
   else
     {
-      qDebug()<<"&DataManager::loadUsrList(): Usr list file broken... Resize to 0.";
       file.resize(0);
+      Log::dat(Log::Critical
+               , "AppDataManager::loadUsrList()"
+               , "Contact list file broken, broken file is cleared");
       return;
     }
 
@@ -495,28 +483,29 @@ void AppDataManager::writeSettings()
 
   QTextStream out(&file);
 
-  QJsonObject settingsJson;
-
+  QJsonObject settingsObj;
   for (std::pair<QString, int*> element : settings_int_hash)
-    settingsJson.insert(element.first, *element.second);
+    settingsObj.insert(element.first, *element.second);
 
   for (std::pair<QString, QColor*> element : settings_qcolor_hash)
-    settingsJson.insert(element.first, element.second->name());
+    settingsObj.insert(element.first, element.second->name());
 
   for (std::pair<QString, QString*> element : settings_qstring_hash)
-    settingsJson.insert(element.first, *element.second);
+    settingsObj.insert(element.first, *element.second);
 
   for (std::pair<QString, bool*> element : settings_bool_hash)
-    settingsJson.insert(element.first, *element.second);
+    settingsObj.insert(element.first, *element.second);
 
-  QJsonDocument writeJsonDocument;
-  writeJsonDocument.setObject(settingsJson);
-
+  QJsonDocument outJsonDoc;
+  outJsonDoc.setObject(settingsObj);
   file.resize(0);
-  out << writeJsonDocument.toJson();
-  Log::dat(Log::Normal, "AppDataManager::writeCurrentConfig()", "Config file updated.");
+  out << outJsonDoc.toJson();
   file.flush();
   file.close();
+
+  Log::dat(Log::Normal
+           , "AppDataManager::writeCurrentConfig()"
+           , "Config file updated.");
 }
 
 void AppDataManager::loadFonts()
@@ -542,26 +531,26 @@ void AppDataManager::loadFonts()
 
 
 #ifndef Q_OS_WIN ///windows can't load font from qrc, don't know why.
-  int font_id;
-  QString font_family;
+  int fontId;
+  QString fontFamily;
 
-  font_id = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
-  if(font_id == -1)
+  fontId = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
+  if(fontId == -1)
     {
       return;
     }
 
-  font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
+  fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 
-  GlobalData::font_chatTextEditor = QFont(font_family, 16);
-  if(font_id == -1)
+  GlobalData::font_chatTextEditor = QFont(fontFamily, 16);
+  if(fontId == -1)
     {
       return;
     }
 
-  font_id = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
-  font_family = QFontDatabase::applicationFontFamilies(font_id).at(0);
-  GlobalData::font_main = QFont(font_family);
+  fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
+  fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+  GlobalData::font_main = QFont(fontFamily);
   GlobalData::font_chatBubble = GlobalData::font_main;
   GlobalData::font_chatBubble.setPointSize(14);
   GlobalData::font_combWidgetUsrName = GlobalData::font_main;
@@ -593,12 +582,12 @@ void AppDataManager::loadUpdates()
   if(!inByteArray.isEmpty())
     {
       QJsonParseError jsonError;
-      QJsonDocument readJsonDocument = QJsonDocument::fromJson(inByteArray, &jsonError);
+      QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
       if(jsonError.error == QJsonParseError::NoError)
         {
-          if(readJsonDocument.isObject())
+          if(inJsonDoc.isObject())
             {
-              QJsonObject readJsonObj = readJsonDocument.object();
+              QJsonObject readJsonObj = inJsonDoc.object();
 
               int readVersion[3] = {
                 readJsonObj.value("stable_version").toInt(),

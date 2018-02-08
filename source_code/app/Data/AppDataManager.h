@@ -3,7 +3,6 @@
 
 #include "GlobalData.h"
 #include "UsrData.h"
-#include "unordered_map"
 
 #include <QThread>
 #include <QMutex>
@@ -20,11 +19,12 @@
 
 #include <QFontDatabase>
 #include <QHostInfo>
-#include <QTime>
 #include <QTimer>
 #include <QUuid>
 
-class AppDataManager : public QObject
+#include <unordered_map>
+
+class AppDataManager final : public QObject
 {
   Q_OBJECT
 
@@ -32,9 +32,13 @@ public:
   explicit AppDataManager(QObject *parent = 0);
   ~AppDataManager();
 
+public slots:
+  void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
+  void onUsrLeft(QString *usrKey);
+  void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
+  void onUpdatesAvailable();
 
 private:
-
   void checkSettings();
   inline bool checkDir(const QString &directory);
 
@@ -51,25 +55,18 @@ private:
 
   inline QString makeUuid();
   inline QJsonDocument makeDefaultSettings();
-  inline QJsonDocument makeUpdateJson(const int stable[]);
+  inline QJsonDocument makeUpdateJson(const int version[]);
 
   inline void updateUsr(const UsrProfileStruct &usrProfileStruct);
   inline void deleteUsr(const QStringList usrInfoStrList);
 
   /*!
-   * Hashes for storing settings
+   * Maps for storing settings
    */
-
   std::map<QString, int*> settings_int_hash;
   std::map<QString, QColor*> settings_qcolor_hash;
   std::map<QString, QString*> settings_qstring_hash;
   std::map<QString, bool*> settings_bool_hash;
-
-public slots:
-  void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
-  void onUsrLeft(QString *usrKey);
-  void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
-  void onUpdatesAvailable();
 
 private slots:
   void writeSettings();
