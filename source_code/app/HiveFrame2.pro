@@ -86,7 +86,8 @@ SOURCES += \
     HiveAbstractServer.cpp \
     Bee.cpp \
     ../libs/libParsley/src/PTimer.cpp \
-    ../libs/libParsley/src/PUtils.cpp
+    ../libs/libParsley/src/PUtils.cpp \
+    ../libs/libParsley/src/Parsley.cpp
 \
 
 HEADERS  += \
@@ -138,7 +139,8 @@ HEADERS  += \
     HiveAbstractServer.h \
     Bee.h \
     ../libs/libParsley/src/PTimer.h \
-    ../libs/libParsley/src/PUtils.h
+    ../libs/libParsley/src/PUtils.h \
+    ../libs/libParsley/src/Parsley.h
 
 ICON = Src/hive.icns
 

@@ -133,11 +133,10 @@ UvServer::run()
 //    qDebug()<<"hello2 f";
 //  });
 
-  AbstractSocket::SockReadyReadCb cb = std::bind(&UvServer::udpReadyRead
-                                                 , this
-                                                 , std::placeholders::_1
-                                                 , std::placeholders::_2);
-  udp_server->bindCb(cb);
+  udp_server->bindCb(std::bind(&UvServer::udpReadyRead
+                               , this
+                               , std::placeholders::_1
+                               , std::placeholders::_2));
 
   uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
