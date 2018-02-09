@@ -107,7 +107,7 @@ UvServer::run()
 
   heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
   uv_timer_init(loop, heart_beat_timer);
-  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 1);
+  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 1000);
   qDebug()<<"timer"<<heart_beat_timer;
 
   uv_timer_t *heart_beat_timer2 = (uv_timer_t*)malloc(sizeof(uv_timer_t));

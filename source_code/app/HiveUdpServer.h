@@ -8,7 +8,7 @@
 class HiveUdpServer : public HiveAbstractServer
 {
 public:
-  HiveUdpServer(uv_loop_t* loop);
+  HiveUdpServer(uv_loop_t *loop);
 
 private:
   Parsley::UdpSocket *udp_socket;

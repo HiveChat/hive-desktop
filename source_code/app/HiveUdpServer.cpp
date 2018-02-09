@@ -19,7 +19,10 @@ void HiveUdpServer::udpReadyRead(char *data, char *ip)
   if(!checkJsonPackage(data, &json))
     {
       // do something;
+      return;
     }
+
+
 
 
 

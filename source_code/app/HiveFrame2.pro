@@ -84,7 +84,9 @@ SOURCES += \
     HiveUdpServer.cpp \
     ../libs/libParsley/src/PAddress.cpp \
     HiveAbstractServer.cpp \
-    Bee.cpp
+    Bee.cpp \
+    ../libs/libParsley/src/PTimer.cpp \
+    ../libs/libParsley/src/PUtils.cpp
 \
 
 HEADERS  += \
@@ -134,7 +136,9 @@ HEADERS  += \
     HiveUdpServer.h \
     ../libs/libParsley/src/PAddress.h \
     HiveAbstractServer.h \
-    Bee.h
+    Bee.h \
+    ../libs/libParsley/src/PTimer.h \
+    ../libs/libParsley/src/PUtils.h
 
 ICON = Src/hive.icns
 

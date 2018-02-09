@@ -480,7 +480,6 @@ void AppDataManager::writeSettings()
     {
       return;
     }
-
   QTextStream out(&file);
 
   QJsonObject settingsObj;
