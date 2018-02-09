@@ -7,11 +7,10 @@
 [![platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-ff69b4.svg?style=flat)](http://doc.qt.io/qt-5/supported-platforms.html)
 <!--[![GitHub contributors](https://img.shields.io/github/contributors/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/graphs/contributors)-->
 
-### The Cute Chat App Against Censorship [https://hivechat.org](hivechat.org)
+### The Cute Chat App Against Big Brother [https://hivechat.org](hivechat.org)
 * User Experience Focused
 * Working fast on every desktop platform
 * Protected by modern encryption
-* Obfuscation against censorship
 
 ## Warnings:
 * Project Hive! is still in **alpha test phase**, features are not guaranteed to work perfectly, and chat between different versions could be unachievable. 
