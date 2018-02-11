@@ -1,6 +1,16 @@
 #include "HiveAbstractServer.h"
 
 
+bool HiveAbstractServer::start()
+{
+
+}
+
+bool HiveAbstractServer::stop()
+{
+
+}
+
 void HiveAbstractServer::bindCb(const PacketReadyCb &cb)
 {
   packet_ready_cb = cb;
@@ -29,7 +39,7 @@ bool HiveAbstractServer::checkJsonPackage(const QString &data, QJsonObject *obj)
 
   QJsonObject json = jsonDocument.object();
   QString receiverKey = json.value("receiver").toString();
-  if(receiverKey != GlobalData::settings_struct.profile_key_str
+  if(receiverKey != Global::settings.profile_key_str
      && receiverKey != "{00000000-0000-0000-0000-000000000000}")
     {
       Log::net(Log::Error

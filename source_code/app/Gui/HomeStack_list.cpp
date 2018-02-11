@@ -7,8 +7,8 @@ ListItem::ListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidge
   name_label = new QLabel("Loading...", this);
   ip_label = new QLabel("Loading...", this);
 
-  name_label->setFont(GlobalData::font_scrollStackSubtitle);
-  ip_label->setFont(GlobalData::font_scrollStackSubtitle);
+  name_label->setFont(Global::font_scrollStackSubtitle);
+  ip_label->setFont(Global::font_scrollStackSubtitle);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setSpacing(50);

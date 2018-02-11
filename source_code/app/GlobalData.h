@@ -18,7 +18,7 @@
 
 
 
-class GlobalData
+class Global
 {
 public:
   ///UI
@@ -58,7 +58,7 @@ public:
 
   ///data
   static int current_version[3];
-  static Settings::SettingsStruct settings_struct;
+  static Settings::SettingsStruct settings;
   static UpdateStruct update_struct;
   static QUrl update_url;
   static QUrl download_url;

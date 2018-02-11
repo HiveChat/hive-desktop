@@ -86,7 +86,7 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
     {
       composite_title_label = new QLabel(this);
       composite_title_label->setPalette(text_palette);
-      composite_title_label->setFont(GlobalData::font_scrollStackTitle);
+      composite_title_label->setFont(Global::font_scrollStackTitle);
 
       top_frame_main_layout->setContentsMargins(15,0,10,0);
       top_frame_main_layout->addWidget(composite_title_label);
@@ -94,10 +94,10 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
   else if(layout_style == LayoutStyle::Profile)
     {
       title_label = new QLabel(this);
-      title_label->setFont(GlobalData::font_scrollStackTitle);
+      title_label->setFont(Global::font_scrollStackTitle);
 
       sub_title_label = new QLabel(this);
-      sub_title_label->setFont(GlobalData::font_scrollStackSubtitle);
+      sub_title_label->setFont(Global::font_scrollStackSubtitle);
 
       QVBoxLayout *usr_info_layout = new QVBoxLayout();
       usr_info_layout->setContentsMargins(0,0,10,10);
@@ -170,7 +170,7 @@ void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI swit
 QLabel *ScrollStack::addTag(const QString &text)
 {
   QLabel *tag_labe = new QLabel(text, this);
-  tag_labe->setFont(GlobalData::font_scrollStackTitle);
+  tag_labe->setFont(Global::font_scrollStackTitle);
   tag_labe->setPalette(text_palette);
 
   QFrame *line = new QFrame(this);
@@ -190,7 +190,7 @@ QLabel *ScrollStack::addTag(const QString &text)
 QBoxLayout *ScrollStack::addItem(const QString &text, const QString &string, const bool &wrapping)
 {
   QLabel *text_label = new QLabel("\t" + text, this);
-  text_label->setFont(GlobalData::font_scrollStackSubtitle);
+  text_label->setFont(Global::font_scrollStackSubtitle);
   text_label->setPalette(sub_text_palette);
 
   QLabel *string_label = new QLabel(string, this);
@@ -216,7 +216,7 @@ QBoxLayout *ScrollStack::addItem(const QString &text, const QString &string, con
 QBoxLayout *ScrollStack::addItem(const QString &text, QWidget *widget)
 {
   QLabel *text_label = new QLabel(text, this);
-  text_label->setFont(GlobalData::font_scrollStackSubtitle);
+  text_label->setFont(Global::font_scrollStackSubtitle);
   text_label->setPalette(sub_text_palette);
 
   QHBoxLayout *layout = new QHBoxLayout();
@@ -235,7 +235,7 @@ QBoxLayout *ScrollStack::addItem(const QString &text, QWidget *widget)
 QBoxLayout *ScrollStack::addItem(QWidget *widget, const QString &text)
 {
   QLabel *text_label = new QLabel(text, this);
-  text_label->setFont(GlobalData::font_scrollStackSubtitle);
+  text_label->setFont(Global::font_scrollStackSubtitle);
   text_label->setPalette(sub_text_palette);
 
   QHBoxLayout *layout = new QHBoxLayout();
@@ -255,7 +255,7 @@ QBoxLayout *ScrollStack::addItem(QWidget *widget, const QString &text)
 QBoxLayout *ScrollStack::addItem(const QString &text, QLayout *widgetLayout)
 {
   QLabel *text_label = new QLabel(text, this);
-  text_label->setFont(GlobalData::font_scrollStackSubtitle);
+  text_label->setFont(Global::font_scrollStackSubtitle);
   text_label->setPalette(sub_text_palette);
 
   QHBoxLayout *layout = new QHBoxLayout();

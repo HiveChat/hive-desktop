@@ -78,7 +78,7 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   text_editor = new GuiTextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
-  text_editor->setFont(GlobalData::font_chatTextEditor);
+  text_editor->setFont(Global::font_chatTextEditor);
   text_editor->installEventFilter(this);
 
   ///tools
@@ -390,13 +390,13 @@ void GuiChatStack::updateFileTranProgress()
 void GuiChatStack::display(const QString &usrKey)
 {
   UsrData *temp_usr_data;
-  if(GlobalData::online_usr_data_hash.contains(usrKey))
+  if(Global::online_usr_data_hash.contains(usrKey))
     {
-      temp_usr_data = GlobalData::online_usr_data_hash.value(usrKey);
+      temp_usr_data = Global::online_usr_data_hash.value(usrKey);
     }
   else
     {
-      temp_usr_data = GlobalData::offline_usr_data_hash.value(usrKey);
+      temp_usr_data = Global::offline_usr_data_hash.value(usrKey);
     }
 
   // if different usr or updated usr is refreshing

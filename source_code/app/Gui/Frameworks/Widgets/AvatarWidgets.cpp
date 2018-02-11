@@ -29,7 +29,7 @@ void AvatarButton::setAvatar(const QString &path)
   QPixmap avatar_pixmap(path);
   avatar_pixmap = avatar_pixmap.scaled(diameter,diameter,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);
 
-  avatar_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  avatar_pixmap.setDevicePixelRatio(Global::window_dpr);
   avatar_pixmap.setMask(mask);
 
   this->setPixmap(avatar_pixmap);
@@ -213,7 +213,7 @@ void AvatarComposer::render()
   painter.end();
 
   QPixmap pixmap = QPixmap::fromImage(result_image);
-  pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  pixmap.setDevicePixelRatio(Global::window_dpr);
   result_label->setPixmap(pixmap);
 
   render_lock = false;

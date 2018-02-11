@@ -13,12 +13,12 @@ CentralWidget::CentralWidget(QWidget *parent)
 {    
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
-  this->setGeometry(this->x(), this->y(), GlobalData::settings_struct.window_width, GlobalData::settings_struct.window_height);
+  this->setGeometry(this->x(), this->y(), Global::settings.window_width, Global::settings.window_height);
   this->setAttribute(Qt::WA_TranslucentBackground);
   this->setWindowTitle(QString("Hive! %1.%2.%3 alpha-test")
-                       .arg(GlobalData::current_version[0])
-                       .arg(GlobalData::current_version[1])
-                       .arg(GlobalData::current_version[2]));
+                       .arg(Global::current_version[0])
+                       .arg(Global::current_version[1])
+                       .arg(Global::current_version[2]));
 #ifndef Q_OS_OSX
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
@@ -43,13 +43,13 @@ CentralWidget::CentralWidget(QWidget *parent)
   QTimer *timer = new QTimer(this);
   connect(timer, &QTimer::timeout,
           [this]() {
-            if(GlobalData::settings_struct.window_height != this->height()
-               || GlobalData::settings_struct.window_width != this->width())
+            if(Global::settings.window_height != this->height()
+               || Global::settings.window_width != this->width())
               {
-                GlobalData::settings_struct.window_height = this->height();
-                GlobalData::settings_struct.window_width = this->width();
+                Global::settings.window_height = this->height();
+                Global::settings.window_width = this->width();
 
-                GlobalData::settings_struct.modified_lock = true;
+                Global::settings.modified_lock = true;
               }
           });
   timer->setSingleShot(false);
@@ -79,7 +79,7 @@ CentralWidget::CentralWidget(QWidget *parent)
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, this, &CentralWidget::showNormal);
 
-  foreach(UsrData *usrData, GlobalData::offline_usr_data_hash.values())
+  foreach(UsrData *usrData, Global::offline_usr_data_hash.values())
     {
       this->addUsr(usrData);
     }
@@ -101,12 +101,12 @@ void CentralWidget::onMessageReceived(const Message::TextMessage &messageStruct,
       //if not displaying the usr
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {
-          UsrData *temp_usr_data = GlobalData::online_usr_data_hash.value(messageStruct.sender);
+          UsrData *temp_usr_data = Global::online_usr_data_hash.value(messageStruct.sender);
           gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
-          if(GlobalData::settings_struct.notification.message_notification
-             && GlobalData::settings_struct.update.auto_check_update)
+          if(Global::settings.notification.message_notification
+             && Global::settings.update.auto_check_update)
             {
-              if(GlobalData::settings_struct.notification.message_detail_notification)
+              if(Global::settings.notification.message_detail_notification)
                 {
                   tray_icon->showMessage(temp_usr_data->getName(), messageStruct.message);
                 }
@@ -151,16 +151,16 @@ void CentralWidget::changeUsr(UsrData *userData)
 
 void CentralWidget::onUpdateAvailable()
 {
-  if(GlobalData::settings_struct.notification.update_notification
-     && GlobalData::settings_struct.update.auto_check_update)
+  if(Global::settings.notification.update_notification
+     && Global::settings.update.auto_check_update)
     {
       QString message = QString("current version: %0.%1.%2\nnew version: %3.%4.%5")
-          .arg(GlobalData::current_version[0])
-          .arg(GlobalData::current_version[1])
-          .arg(GlobalData::current_version[2])
-          .arg(GlobalData::update_struct.version[0])
-          .arg(GlobalData::update_struct.version[1])
-          .arg(GlobalData::update_struct.version[2]);
+          .arg(Global::current_version[0])
+          .arg(Global::current_version[1])
+          .arg(Global::current_version[2])
+          .arg(Global::update_struct.version[0])
+          .arg(Global::update_struct.version[1])
+          .arg(Global::update_struct.version[2]);
       tray_icon->showMessage("Update Available", message);
     }
 }

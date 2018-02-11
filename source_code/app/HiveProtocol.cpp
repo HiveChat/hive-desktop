@@ -254,21 +254,21 @@ HiveProtocol::checkJson(const QString &data, const QString &addr)
 QByteArray HiveProtocol::encodeHeartBeat()
 {
   QJsonObject jsonObj;
-  jsonObj.insert("sender", GlobalData::settings_struct.profile_key_str);
+  jsonObj.insert("sender", Global::settings.profile_key_str);
   jsonObj.insert("receiver", "{00000000-0000-0000-0000-000000000000}");
-  jsonObj.insert("name", GlobalData::settings_struct.profile_name_str);
-  jsonObj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
+  jsonObj.insert("name", Global::settings.profile_name_str);
+  jsonObj.insert("avatar", Global::settings.profile_avatar_str);
   jsonObj.insert("msgType", MessageType::HeartBeat);
   jsonObj.insert("trash", "aiCheila7Ohm8thohquoPhoh9aequ8raa1");
   QJsonDocument jsonDoc(jsonObj);
 
-  return jsonDoc.toJson() + '\0';
+  return jsonDoc.toJson() + "\0";
 }
 
 QByteArray HiveProtocol::encodeTextMessage(const QJsonObject &msg)
 {
   QJsonObject jsonObj = msg;
-  jsonObj.insert("index", QJsonValue(GlobalData::getRandomString(8)));
+  jsonObj.insert("index", QJsonValue(Global::getRandomString(8)));
   jsonObj.insert("msgType", MessageType::TextMessage);
   QJsonDocument jsonDoc(jsonObj);
 

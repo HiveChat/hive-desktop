@@ -18,11 +18,11 @@ AppDataManager::~AppDataManager()
 
 void AppDataManager::checkSettings()
 {
-  if(GlobalData::settings_struct.modified_lock)
+  if(Global::settings.modified_lock)
     {
       Log::dat(Log::Normal, "AppDataManager::checkSettings()", "Settings changed.");
       writeSettings();
-      GlobalData::settings_struct.modified_lock = false;
+      Global::settings.modified_lock = false;
     }
 }
 
@@ -48,7 +48,7 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
   QString usrName = usrProfileStruct.name;
   QString avatarPath = usrProfileStruct.avatar;
 
-  QFile f(GlobalData::contacts_file_dir);
+  QFile f(Global::contacts_file_dir);
   if(!f.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -161,10 +161,10 @@ void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 
 void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
 {
-  if(GlobalData::online_usr_data_hash.contains(usrProfileStruct.key))
+  if(Global::online_usr_data_hash.contains(usrProfileStruct.key))
     {
       Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in online list");
-      UsrData *usrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
+      UsrData *usrData = Global::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *usrData->getUsrProfileStruct())
         {
           usrData->setUsrProfileStruct(usrProfileStruct);
@@ -172,11 +172,11 @@ void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // l
           Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
-  else if(GlobalData::offline_usr_data_hash.contains(usrProfileStruct.key))
+  else if(Global::offline_usr_data_hash.contains(usrProfileStruct.key))
     {
       Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
-      GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, GlobalData::offline_usr_data_hash.value(usrProfileStruct.key));
-      UsrData *usrData = GlobalData::online_usr_data_hash.value(usrProfileStruct.key);
+      Global::online_usr_data_hash.insert(usrProfileStruct.key, Global::offline_usr_data_hash.value(usrProfileStruct.key));
+      UsrData *usrData = Global::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *usrData->getUsrProfileStruct())
         {
           usrData->setUsrProfileStruct(usrProfileStruct);
@@ -187,8 +187,8 @@ void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // l
     }
   else
     {
-      UsrData *userData = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
-      GlobalData::online_usr_data_hash.insert(usrProfileStruct.key, userData);
+      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct, this);
+      Global::online_usr_data_hash.insert(usrProfileStruct.key, userData);
       updateUsr(usrProfileStruct);
       emit usrProfileLoaded(userData);
       qDebug()<<"@DataManager::onUsrEntered: User profile Created.";
@@ -208,26 +208,26 @@ void AppDataManager::onMessageCome(const Message::TextMessage &messageStruct, bo
   if(fromMe)
     {
       qDebug()<<"fromme";
-      GlobalData::online_usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
+      Global::online_usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
     }
   else
     {
       qDebug()<<"notfromme";
-      GlobalData::online_usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
+      Global::online_usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
     }
   emit messageLoaded(messageStruct, fromMe);
 }
 
 void AppDataManager::onUpdatesAvailable()
 {
-  if(GlobalData::update_struct.version[0] == 0
-     && GlobalData::update_struct.version[1] == 0
-     && GlobalData::update_struct.version[2] == 0)
+  if(Global::update_struct.version[0] == 0
+     && Global::update_struct.version[1] == 0
+     && Global::update_struct.version[2] == 0)
     {
       return;
     }
 
-  QFile file(GlobalData::update_file_dir);
+  QFile file(Global::update_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -237,7 +237,7 @@ void AppDataManager::onUpdatesAvailable()
   QTextStream out(&file);
   QByteArray inByteArray = in.readAll().toUtf8();
   int outVersion[3];
-  memcpy(&outVersion, &GlobalData::current_version, sizeof(GlobalData::current_version));
+  memcpy(&outVersion, &Global::current_version, sizeof(Global::current_version));
 
   if(!inByteArray.isEmpty())
     {
@@ -261,7 +261,7 @@ void AppDataManager::onUpdatesAvailable()
                 }
 
               if(memcmp(inVersion,
-                        GlobalData::update_struct.version,
+                        Global::update_struct.version,
                         sizeof(inVersion)) == 0)
                 {
                   file.close();
@@ -272,11 +272,11 @@ void AppDataManager::onUpdatesAvailable()
                 }
               else
                 {
-                  if(GlobalData::versionCompare(GlobalData::update_struct.version, inVersion))
+                  if(Global::versionCompare(Global::update_struct.version, inVersion))
                     {
                       for(int i = 0; i < 3; i ++)
                         {
-                          outVersion[i] = GlobalData::update_struct.version[i];
+                          outVersion[i] = Global::update_struct.version[i];
                         }
                     }
                 }
@@ -296,9 +296,9 @@ void AppDataManager::onUpdatesAvailable()
 
 void AppDataManager::checkFiles()
 {
-  checkDir(GlobalData::data_location_dir);
-  checkDir(GlobalData::user_data_dir);
-  checkDir(GlobalData::log_dir);
+  checkDir(Global::data_location_dir);
+  checkDir(Global::user_data_dir);
+  checkDir(Global::log_dir);
 }
 
 bool AppDataManager::checkDir(const QString &directory)
@@ -318,17 +318,17 @@ bool AppDataManager::checkDir(const QString &directory)
 
 QJsonDocument AppDataManager::makeDefaultSettings()
 {
-  GlobalData::settings_struct.profile_key_str = makeUuid();
-  GlobalData::settings_struct.profile_avatar_str = ":/avatar/avatar/default.png";
-  GlobalData::settings_struct.profile_name_str = QHostInfo::localHostName();
+  Global::settings.profile_key_str = makeUuid();
+  Global::settings.profile_avatar_str = ":/avatar/avatar/default.png";
+  Global::settings.profile_name_str = QHostInfo::localHostName();
 
 
   QJsonObject obj;
-  obj.insert("usrKey", GlobalData::settings_struct.profile_key_str);
-  obj.insert("usrName", GlobalData::settings_struct.profile_name_str);
-  obj.insert("avatarPath", GlobalData::settings_struct.profile_avatar_str);
-  obj.insert("BubbleColorI", GlobalData::color_defaultChatBubbleI.name());
-  obj.insert("BubbleColorO", GlobalData::color_defaultChatBubbleO.name());
+  obj.insert("usrKey", Global::settings.profile_key_str);
+  obj.insert("usrName", Global::settings.profile_name_str);
+  obj.insert("avatarPath", Global::settings.profile_avatar_str);
+  obj.insert("BubbleColorI", Global::color_defaultChatBubbleI.name());
+  obj.insert("BubbleColorO", Global::color_defaultChatBubbleO.name());
 
   ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
@@ -350,43 +350,43 @@ void AppDataManager::initVariable()
    *  Go to register in AppDataManager::readSettings() and AppDataManager::writeSettings() to enable reading and writing from disk.
    */
   settings_int_hash = {
-    { "window_width", &GlobalData::settings_struct.window_width },
-    { "window_height", &GlobalData::settings_struct.window_height }
+    { "window_width", &Global::settings.window_width },
+    { "window_height", &Global::settings.window_height }
   };
 
   settings_qcolor_hash = {
-    { "BubbleColorI", &GlobalData::settings_struct.chat_bubble_color_i},
-    { "BubbleColorO", &GlobalData::settings_struct.chat_bubble_color_o }
+    { "BubbleColorI", &Global::settings.chat_bubble_color_i},
+    { "BubbleColorO", &Global::settings.chat_bubble_color_o }
   };
 
   settings_qstring_hash = {
-    { "usrKey", &GlobalData::settings_struct.profile_key_str },
-    { "usrName", &GlobalData::settings_struct.profile_name_str },
-    { "avatarPath", &GlobalData::settings_struct.profile_avatar_str }
+    { "usrKey", &Global::settings.profile_key_str },
+    { "usrName", &Global::settings.profile_name_str },
+    { "avatarPath", &Global::settings.profile_avatar_str }
   };
 
   settings_bool_hash = {
-    { "updateNotification", &GlobalData::settings_struct.notification.update_notification },
-    { "messageNotification", &GlobalData::settings_struct.notification.message_notification },
-    { "messageDetailNotification", &GlobalData::settings_struct.notification.message_detail_notification },
-    { "autoUpdate", &GlobalData::settings_struct.update.auto_update },
-    { "autoCheckUpdate", &GlobalData::settings_struct.update.auto_check_update }
+    { "updateNotification", &Global::settings.notification.update_notification },
+    { "messageNotification", &Global::settings.notification.message_notification },
+    { "messageDetailNotification", &Global::settings.notification.message_detail_notification },
+    { "autoUpdate", &Global::settings.update.auto_update },
+    { "autoCheckUpdate", &Global::settings.update.auto_check_update }
   };
 
   //! defaults
-  GlobalData::settings_struct.chat_bubble_color_i = GlobalData::color_defaultChatBubbleI;
-  GlobalData::settings_struct.chat_bubble_color_o = GlobalData::color_defaultChatBubbleO;
-  GlobalData::settings_struct.notification.message_detail_notification = true;
-  GlobalData::settings_struct.notification.message_notification = true;
-  GlobalData::settings_struct.notification.update_notification = true;
-  GlobalData::settings_struct.update.auto_check_update = true;
-  GlobalData::settings_struct.update.auto_update = true;
+  Global::settings.chat_bubble_color_i = Global::color_defaultChatBubbleI;
+  Global::settings.chat_bubble_color_o = Global::color_defaultChatBubbleO;
+  Global::settings.notification.message_detail_notification = true;
+  Global::settings.notification.message_notification = true;
+  Global::settings.notification.update_notification = true;
+  Global::settings.update.auto_check_update = true;
+  Global::settings.update.auto_update = true;
 
 }
 
 void AppDataManager::readSettings()
 {
-  QFile file(GlobalData::settings_file_dir);
+  QFile file(Global::settings_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -427,7 +427,7 @@ void AppDataManager::readSettings()
 
 void AppDataManager::loadUsrList()
 {
-  QFile file(GlobalData::contacts_file_dir);
+  QFile file(Global::contacts_file_dir);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;
@@ -455,8 +455,8 @@ void AppDataManager::loadUsrList()
               usrProfileStruct.name = tempUsrProfileObj["usrName"].toString();
               usrProfileStruct.avatar = tempUsrProfileObj["avatarPath"].toString();
 
-              UsrData *usrData = new UsrData(&GlobalData::settings_struct.profile_key_str, usrProfileStruct, this);
-              GlobalData::offline_usr_data_hash.insert(*tempUsrKeyStr, usrData);
+              UsrData *usrData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct, this);
+              Global::offline_usr_data_hash.insert(*tempUsrKeyStr, usrData);
             }
         }
     }
@@ -475,7 +475,7 @@ void AppDataManager::loadUsrList()
 
 void AppDataManager::writeSettings()
 {
-  QFile file(GlobalData::settings_file_dir);
+  QFile file(Global::settings_file_dir);
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
       return;
@@ -541,7 +541,7 @@ void AppDataManager::loadFonts()
 
   fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
 
-  GlobalData::font_chatTextEditor = QFont(fontFamily, 16);
+  Global::font_chatTextEditor = QFont(fontFamily, 16);
   if(fontId == -1)
     {
       return;
@@ -549,19 +549,19 @@ void AppDataManager::loadFonts()
 
   fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
   fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-  GlobalData::font_main = QFont(fontFamily);
-  GlobalData::font_chatBubble = GlobalData::font_main;
-  GlobalData::font_chatBubble.setPointSize(14);
-  GlobalData::font_combWidgetUsrName = GlobalData::font_main;
-  GlobalData::font_combWidgetUsrName.setPointSize(15);
-  GlobalData::font_combWidgetIpAddr = GlobalData::font_main;
-  GlobalData::font_combWidgetIpAddr.setPointSize(11);
-  GlobalData::font_menuButton = GlobalData::font_main;
-  GlobalData::font_menuButton.setPointSize(14);
-  GlobalData::font_scrollStackTitle = GlobalData::font_main;
-  GlobalData::font_scrollStackTitle.setPointSize(15);
-  GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
-  GlobalData::font_scrollStackSubtitle.setPointSize(13);
+  Global::font_main = QFont(fontFamily);
+  Global::font_chatBubble = Global::font_main;
+  Global::font_chatBubble.setPointSize(14);
+  Global::font_combWidgetUsrName = Global::font_main;
+  Global::font_combWidgetUsrName.setPointSize(15);
+  Global::font_combWidgetIpAddr = Global::font_main;
+  Global::font_combWidgetIpAddr.setPointSize(11);
+  Global::font_menuButton = Global::font_main;
+  Global::font_menuButton.setPointSize(14);
+  Global::font_scrollStackTitle = Global::font_main;
+  Global::font_scrollStackTitle.setPointSize(15);
+  Global::font_scrollStackSubtitle = Global::font_main;
+  Global::font_scrollStackSubtitle.setPointSize(13);
 
 #endif //Q_OS_WIN
 
@@ -569,7 +569,7 @@ void AppDataManager::loadFonts()
 
 void AppDataManager::loadUpdates()
 {
-  QFile file(GlobalData::update_file_dir);
+  QFile file(Global::update_file_dir);
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;
@@ -594,11 +594,11 @@ void AppDataManager::loadUpdates()
                 readJsonObj.value("alpha_version").toInt()
               };
 
-              if(GlobalData::versionCompare(GlobalData::current_version, readVersion))
+              if(Global::versionCompare(Global::current_version, readVersion))
                 {
                   for(int i = 0; i < 3; i ++)
                     {
-                      GlobalData::update_struct.version[i] = readVersion[i];
+                      Global::update_struct.version[i] = readVersion[i];
                     }
                   emit updatesAvailable();
                 }

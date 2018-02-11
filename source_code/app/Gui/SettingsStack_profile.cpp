@@ -23,7 +23,7 @@ SettingsStack_profile::SettingsStack_profile(QWidget *parent)
   QButtonGroup *avatar_option_group = new QButtonGroup(this);
   QVBoxLayout *avatar_option_layout = new QVBoxLayout();
 
-  QString current_avatar_name = avatar_hash.key(GlobalData::settings_struct.profile_avatar_str);
+  QString current_avatar_name = avatar_hash.key(Global::settings.profile_avatar_str);
 
   foreach(QString temp_avatar_name_str, avatar_hash.keys())
     {
@@ -35,18 +35,18 @@ SettingsStack_profile::SettingsStack_profile(QWidget *parent)
     }
 
   avatar_composer = new AvatarComposer(QSize(200,200),this);
-  avatar_composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
+  avatar_composer->setSourceImage(Global::settings.profile_avatar_str);
   addItem("\tAvatar Editor:", avatar_composer);
   addItem("\tAvatar:", avatar_option_layout);
 
   //usrname
-  QLineEdit *usr_name_line_edit = new QLineEdit(GlobalData::settings_struct.profile_name_str,this);
+  QLineEdit *usr_name_line_edit = new QLineEdit(Global::settings.profile_name_str,this);
   usr_name_line_edit->setMaximumWidth(200);
   addItem("\tUser Name:", usr_name_line_edit);
 
   //usrkey
-  QLineEdit *usr_key_line_edit = new QLineEdit(GlobalData::settings_struct.profile_name_str,this);
-  usr_key_line_edit->setText(GlobalData::settings_struct.profile_key_str);
+  QLineEdit *usr_key_line_edit = new QLineEdit(Global::settings.profile_name_str,this);
+  usr_key_line_edit->setText(Global::settings.profile_key_str);
   usr_key_line_edit->setCursor(QCursor(Qt::IBeamCursor));
   usr_key_line_edit->setReadOnly(true);
   usr_key_line_edit->setMaximumWidth(200);
@@ -71,14 +71,14 @@ SettingsStack_profile::~SettingsStack_profile()
 
 void SettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
-  GlobalData::settings_struct.profile_avatar_str = avatar_hash.value(abstractButton->text());
-  avatar_composer->setSourceImage(GlobalData::settings_struct.profile_avatar_str);
-  GlobalData::settings_struct.modified_lock = true;
+  Global::settings.profile_avatar_str = avatar_hash.value(abstractButton->text());
+  avatar_composer->setSourceImage(Global::settings.profile_avatar_str);
+  Global::settings.modified_lock = true;
 }
 
 void SettingsStack_profile::onUsrNameChanged(QString usr_name)
 {
-  GlobalData::settings_struct.profile_name_str = usr_name;
-  GlobalData::settings_struct.modified_lock = true;
+  Global::settings.profile_name_str = usr_name;
+  Global::settings.modified_lock = true;
 }
 

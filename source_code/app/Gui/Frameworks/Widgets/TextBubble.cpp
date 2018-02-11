@@ -7,7 +7,7 @@ TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft =
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
   label = new QLabel(this);
   label->setText(text);
-  label->setFont(GlobalData::font_chatBubble);
+  label->setFont(Global::font_chatBubble);
   label->adjustSize();
   label->setWordWrap(true);
   label->setTextInteractionFlags(Qt::TextSelectableByMouse);
@@ -19,12 +19,12 @@ TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft =
 
   if(alignLeft)
     {
-      color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
+      color = &Global::settings.chat_bubble_color_i;//255,181,0
       main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
+      color = &Global::settings.chat_bubble_color_o;//255,215,126
       main_layout->setAlignment(Qt::AlignRight);
     }
 
@@ -95,7 +95,7 @@ GuiFileBubble_file_info::GuiFileBubble_file_info(const QString &text, bool align
 
   //QString message = text+"\n";//"<p style=\"line-height:100%\">" + text + "</p>";
   QPixmap file_icon(":/icon/icon/doc.png");
-  file_icon.setDevicePixelRatio(GlobalData::window_dpr);
+  file_icon.setDevicePixelRatio(Global::window_dpr);
   label =  new QLabel(this);
   label->setPixmap(file_icon);
 //  label->adjustSize();
@@ -109,12 +109,12 @@ GuiFileBubble_file_info::GuiFileBubble_file_info(const QString &text, bool align
 
   if(alignLeft)
     {
-      color = &GlobalData::settings_struct.chat_bubble_color_i;//255,181,0
+      color = &Global::settings.chat_bubble_color_i;//255,181,0
       main_layout->setAlignment(Qt::AlignLeft);
     }
   else
     {
-      color = &GlobalData::settings_struct.chat_bubble_color_o;//255,215,126
+      color = &Global::settings.chat_bubble_color_o;//255,215,126
       main_layout->setAlignment(Qt::AlignRight);
     }
 

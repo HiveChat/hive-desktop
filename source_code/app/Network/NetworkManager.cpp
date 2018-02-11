@@ -66,7 +66,7 @@ NetworkManager::~NetworkManager()
 void NetworkManager::checkUpdate()
 {
   http_update_manager = new QNetworkAccessManager(this);
-  http_update_reply = http_update_manager->head(QNetworkRequest(GlobalData::update_url)); //leak?
+  http_update_reply = http_update_manager->head(QNetworkRequest(Global::update_url)); //leak?
   connect(http_update_reply, &QNetworkReply::finished,
           this, &NetworkManager::onRedirectFinished);
 }
@@ -92,9 +92,9 @@ void NetworkManager::udpProcessMessage(const Message::TextMessage &messageStruct
       return;
     }
 
-  if(messageStruct.reciever != GlobalData::settings_struct.profile_key_str)
+  if(messageStruct.reciever != Global::settings.profile_key_str)
     {
-      if(messageStruct.sender != GlobalData::settings_struct.profile_key_str)
+      if(messageStruct.sender != Global::settings.profile_key_str)
         {
           //no sniffing man!
           return;
@@ -107,7 +107,7 @@ void NetworkManager::udpProcessMessage(const Message::TextMessage &messageStruct
     }
   else
     {
-      if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
+      if(messageStruct.sender == Global::settings.profile_key_str)
         {
           qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
           emit messageRecieved(messageStruct, true);
@@ -127,11 +127,11 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
       return;
     }
 
-  if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
+  if(usrProfileStruct.key == Global::settings.profile_key_str)
     {
-      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
+      if(Global::g_localHostIP != usrProfileStruct.ip)
         {
-          GlobalData::g_localHostIP = usrProfileStruct.ip;
+          Global::g_localHostIP = usrProfileStruct.ip;
         }
       Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from myself");
       emit usrEnter(usrProfileStruct);
@@ -146,7 +146,7 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
 
 void NetworkManager::udpProcessUsrLeft(QString *usrKey)
 {
-  if(*usrKey == GlobalData::settings_struct.profile_key_str)
+  if(*usrKey == Global::settings.profile_key_str)
     {
       emit usrLeft(usrKey);
 
@@ -174,9 +174,9 @@ void NetworkManager::udpSendHeartBeat()
   QDataStream out(&data, QIODevice::WriteOnly);
 
   QJsonObject json_obj;
-  json_obj.insert("key", GlobalData::settings_struct.profile_key_str);
-  json_obj.insert("name", GlobalData::settings_struct.profile_name_str);
-  json_obj.insert("avatar", GlobalData::settings_struct.profile_avatar_str);
+  json_obj.insert("key", Global::settings.profile_key_str);
+  json_obj.insert("name", Global::settings.profile_name_str);
+  json_obj.insert("avatar", Global::settings.profile_avatar_str);
   json_obj.insert("msgType", HeartBeat);
   QJsonDocument json_doc(json_obj);
   out << json_doc.toJson();
@@ -197,7 +197,7 @@ void NetworkManager::udpSendUsrLeave()
   return;
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
-  out << UsrLeave << GlobalData::settings_struct.profile_key_str;
+  out << UsrLeave << Global::settings.profile_key_str;
   udp_socket->writeDatagram(data
                             , data.length()
                             , QHostAddress::Broadcast
@@ -216,23 +216,23 @@ void NetworkManager::udpSendMessage(const QJsonObject &msg)
   QDataStream out(&data, QIODevice::WriteOnly);
 
   QJsonObject json_obj = msg;
-  json_obj.insert("index", QJsonValue(GlobalData::getRandomString(8)));
+  json_obj.insert("index", QJsonValue(Global::getRandomString(8)));
   json_obj.insert("msgType", Message);
   QJsonDocument json_doc(json_obj);
 
   out << json_doc.toJson();
 
-  if(!GlobalData::online_usr_data_hash.contains(json_obj["receiver"].toString()))
+  if(!Global::online_usr_data_hash.contains(json_obj["receiver"].toString()))
     {
       Log::net(Log::Critical, "NetworkManager::udpSendMessage()", "sending to usr out of online_usr_data_hash failed!");
       return;
     }
 
-  QString usrIp = GlobalData::online_usr_data_hash.value(json_obj["receiver"].toString())->getIp();
+  QString usrIp = Global::online_usr_data_hash.value(json_obj["receiver"].toString())->getIp();
 
   qint64 ret = udp_socket->writeDatagram(data
                                          , data.length()
-                                         , usrIp.isEmpty() || usrIp == GlobalData::g_localHostIP ? QHostAddress::Broadcast : QHostAddress(usrIp)
+                                         , usrIp.isEmpty() || usrIp == Global::g_localHostIP ? QHostAddress::Broadcast : QHostAddress(usrIp)
                                          , udp_port);
   if(ret != 0 && ret != -1)
     {
@@ -311,15 +311,15 @@ void NetworkManager::onRedirectFinished()
                 if(json_document.isObject())
                   {
                     QJsonObject json_obj = json_document.object();
-                    GlobalData::update_struct.version[0] = json_obj.value("stable_version").toInt();
-                    GlobalData::update_struct.version[1] = json_obj.value("beta_version").toInt();
-                    GlobalData::update_struct.version[2] = json_obj.value("alpha_version").toInt();
-                    GlobalData::update_struct.message = json_obj.value("message").toString();
-                    GlobalData::update_struct.title = json_obj.value("title").toString();
+                    Global::update_struct.version[0] = json_obj.value("stable_version").toInt();
+                    Global::update_struct.version[1] = json_obj.value("beta_version").toInt();
+                    Global::update_struct.version[2] = json_obj.value("alpha_version").toInt();
+                    Global::update_struct.message = json_obj.value("message").toString();
+                    Global::update_struct.title = json_obj.value("title").toString();
                     if(/*memcmp(GlobalData::update_struct.version,
                               GlobalData::current_version,
                               sizeof(GlobalData::current_version)) != 0*/
-                       GlobalData::versionCompare(GlobalData::update_struct.version, GlobalData::current_version))
+                       Global::versionCompare(Global::update_struct.version, Global::current_version))
                       {
                         Log::net(Log::Normal, "NetworkManager::onRedirectFinished()", "update available");
                         emit updateAvailable();

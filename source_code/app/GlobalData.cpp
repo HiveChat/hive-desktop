@@ -2,72 +2,72 @@
 
 
 ///UI
-int GlobalData::window_dpr;
-int GlobalData::window_defaultWidth = 900;
-int GlobalData::window_defaultHeight = 600;
+int Global::window_dpr;
+int Global::window_defaultWidth = 900;
+int Global::window_defaultHeight = 600;
 
-QFont GlobalData::font_main;
-QFont GlobalData::font_chatTextEditor;
-QFont GlobalData::font_chatBubble;
-QFont GlobalData::font_combWidgetUsrName;
-QFont GlobalData::font_combWidgetIpAddr;
-QFont GlobalData::font_menuButton;
-QFont GlobalData::font_scrollStackTitle;
-QFont GlobalData::font_scrollStackSubtitle;
+QFont Global::font_main;
+QFont Global::font_chatTextEditor;
+QFont Global::font_chatBubble;
+QFont Global::font_combWidgetUsrName;
+QFont Global::font_combWidgetIpAddr;
+QFont Global::font_menuButton;
+QFont Global::font_scrollStackTitle;
+QFont Global::font_scrollStackSubtitle;
 
-QColor GlobalData::color_darkGrey = QColor(100,100,100);
-QColor GlobalData::color_lightGrey = QColor(225,225,225);
-QColor GlobalData::color_brown = QColor(103,72,0);
-QColor GlobalData::color_hiveYellow = QColor(255,181,0);
-QColor GlobalData::color_lightYellow = QColor(255,215,126);
+QColor Global::color_darkGrey = QColor(100,100,100);
+QColor Global::color_lightGrey = QColor(225,225,225);
+QColor Global::color_brown = QColor(103,72,0);
+QColor Global::color_hiveYellow = QColor(255,181,0);
+QColor Global::color_lightYellow = QColor(255,215,126);
 
-QColor GlobalData::color_window = QColor(255,255,255);
-QColor GlobalData::color_alphaTab = QColor(255,255,255,230);
-QColor GlobalData::color_tab = QColor(0,0,0,0);
+QColor Global::color_window = QColor(255,255,255);
+QColor Global::color_alphaTab = QColor(255,255,255,230);
+QColor Global::color_tab = QColor(0,0,0,0);
 
-QColor GlobalData::color_defaultChatBubbleI = GlobalData::color_lightYellow;
-QColor GlobalData::color_defaultChatBubbleO = GlobalData::color_lightGrey;
+QColor Global::color_defaultChatBubbleI = Global::color_lightYellow;
+QColor Global::color_defaultChatBubbleO = Global::color_lightGrey;
 
-QPalette GlobalData::palette_bkg_normalWhite;
-QPalette GlobalData::palette_bkg_transparent;
-QPalette GlobalData::palette_txt_brown;
+QPalette Global::palette_bkg_normalWhite;
+QPalette Global::palette_bkg_transparent;
+QPalette Global::palette_txt_brown;
 
 
 ///data
-int GlobalData::current_version[3] = {0, 0, 8};
-Settings::SettingsStruct GlobalData::settings_struct;
-UpdateStruct GlobalData::update_struct;
-QUrl GlobalData::update_url = QUrl("http://updatestest.hivechat.org");
-QUrl GlobalData::download_url = QUrl("http://download.hivechat.org");
+int Global::current_version[3] = {0, 0, 8};
+Settings::SettingsStruct Global::settings;
+UpdateStruct Global::update_struct;
+QUrl Global::update_url = QUrl("http://updatestest.hivechat.org");
+QUrl Global::download_url = QUrl("http://download.hivechat.org");
 
-QHash<QString, UsrData*> GlobalData::offline_usr_data_hash;
-QHash<QString, UsrData*> GlobalData::online_usr_data_hash;//used
-QMultiHash<QString, QPair<int, int> > GlobalData::file_tran_progress_hash;//used
+QHash<QString, UsrData*> Global::offline_usr_data_hash;
+QHash<QString, UsrData*> Global::online_usr_data_hash;//used
+QMultiHash<QString, QPair<int, int> > Global::file_tran_progress_hash;//used
 
-QList<QJsonObject> GlobalData::message_queue;
+QList<QJsonObject> Global::message_queue;
 
 #ifndef Q_OS_WIN
-const QString GlobalData::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/Hive!";
+const QString Global::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/Hive!";
 #else
 const QString GlobalData::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif
-const QString GlobalData::user_data_dir = GlobalData::data_location_dir + "/usr";
-const QString GlobalData::log_dir = GlobalData::data_location_dir + "/log";
+const QString Global::user_data_dir = Global::data_location_dir + "/usr";
+const QString Global::log_dir = Global::data_location_dir + "/log";
 
-const QString GlobalData::contacts_file_dir = GlobalData::data_location_dir + "/contacts.json";
-const QString GlobalData::settings_file_dir = GlobalData::data_location_dir + "/settings.json";
-const QString GlobalData::update_file_dir = GlobalData::data_location_dir + "/update.json";
+const QString Global::contacts_file_dir = Global::data_location_dir + "/contacts.json";
+const QString Global::settings_file_dir = Global::data_location_dir + "/settings.json";
+const QString Global::update_file_dir = Global::data_location_dir + "/update.json";
 
 
 ///netr
-QString GlobalData::g_localHostIP = "Offline";
+QString Global::g_localHostIP = "Offline";
 
-QString GlobalData::getCurrentTime()
+QString Global::getCurrentTime()
 {
   return QDateTime::currentDateTime().toString("yyyy_MM_dd_hh_mm_ss");
 }
 
-QString GlobalData::getRandomString(const int &digit)
+QString Global::getRandomString(const int &digit)
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
   qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -80,7 +80,7 @@ QString GlobalData::getRandomString(const int &digit)
   return random_str;
 }
 
-bool GlobalData::versionCompare(const int (&fresh)[3], const int (&old)[3])
+bool Global::versionCompare(const int (&fresh)[3], const int (&old)[3])
 {
   //return true if fresh is really fresh
   if(fresh[0] > old[0])
@@ -101,7 +101,7 @@ bool GlobalData::versionCompare(const int (&fresh)[3], const int (&old)[3])
     }
 }
 
-void GlobalData::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
+void Global::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
 {
   qDebug()<<endl<<"Test by "<<str;
   qDebug()<<usrProfileStruct.key;

@@ -10,16 +10,16 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
   ////profile widget
   profile_widget = new QWidget(this);
 
-  my_avatar = new AvatarButton(GlobalData::settings_struct.profile_avatar_str,175,this);
+  my_avatar = new AvatarButton(Global::settings.profile_avatar_str,175,this);
   my_avatar->setAlignment(Qt::AlignHCenter);
 
   welcome_label = new QLabel(this);
   welcome_label->setAlignment(Qt::AlignHCenter);
-  welcome_label->setFont(GlobalData::font_chatBubble);
+  welcome_label->setFont(Global::font_chatBubble);
 
   ip_label = new QLabel(this);
   ip_label->setAlignment(Qt::AlignHCenter);
-  ip_label->setFont(GlobalData::font_chatBubble);
+  ip_label->setFont(Global::font_chatBubble);
 
   profile_layout = new QVBoxLayout(profile_widget);
   profile_layout->setAlignment(Qt::AlignCenter);
@@ -31,7 +31,7 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
 
   background_label = new QLabel(this);
   QPixmap background_pixmap(":/img/img/welcome_stack_background.png");
-  background_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  background_pixmap.setDevicePixelRatio(Global::window_dpr);
   background_label->setPixmap(background_pixmap);
   background_label->setAlignment(Qt::AlignRight|Qt::AlignBottom);
 
@@ -79,28 +79,28 @@ void HomeStack_welcome::refreshUI()
   int current_hour = QTime::currentTime().toString("hh").toInt();
   if(current_hour >= 4 && current_hour <= 12)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::settings_struct.profile_name_str).arg("Good Morning!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("Good Morning!"));
     }
   else if(current_hour >= 13 && current_hour <= 14)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::settings_struct.profile_name_str).arg("sleepy noon~"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("sleepy noon~"));
     }
   else if(current_hour >= 15 && current_hour <= 17)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::settings_struct.profile_name_str).arg("Good Afternoon!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("Good Afternoon!"));
     }
   else if(current_hour >= 18 && current_hour <= 23)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::settings_struct.profile_name_str).arg("Good Evening!"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("Good Evening!"));
     }
   else if(current_hour >= 24 || current_hour <=3)
     {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(GlobalData::settings_struct.profile_name_str).arg("It's late at night :)"));
+      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("It's late at night :)"));
     }
 
-  my_avatar->setAvatar(GlobalData::settings_struct.profile_avatar_str);
+  my_avatar->setAvatar(Global::settings.profile_avatar_str);
 
-  if(GlobalData::g_localHostIP.isEmpty() || GlobalData::g_localHostIP == "Offline")
+  if(Global::g_localHostIP.isEmpty() || Global::g_localHostIP == "Offline")
     {
       online = false;
       ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
@@ -108,7 +108,7 @@ void HomeStack_welcome::refreshUI()
   else
     {
       online = true;
-      ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(GlobalData::g_localHostIP));
+      ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(Global::g_localHostIP));
     }
 //  Log::gui(Log::Normal, "GuiWelcomeStack::refresh()", "Finished");
 

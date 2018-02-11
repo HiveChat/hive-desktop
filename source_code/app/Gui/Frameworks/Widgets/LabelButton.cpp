@@ -16,20 +16,20 @@ LabelButton::LabelButton(const int &hoverDelay, QWidget *parent)
 void LabelButton::setDefaultPixmap(const QString &path)
 {
   default_pixmap.load(path);
-  default_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  default_pixmap.setDevicePixelRatio(Global::window_dpr);
   this->setPixmap(default_pixmap);
 }
 
 void LabelButton::setHoveredPixmap(const QString &path)
 {
   hovered_pixmap.load(path);
-  hovered_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  hovered_pixmap.setDevicePixelRatio(Global::window_dpr);
 }
 
 void LabelButton::setPressedPixmap(const QString &path)
 {
   pressed_pixmap.load(path);
-  pressed_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  pressed_pixmap.setDevicePixelRatio(Global::window_dpr);
 }
 
 void LabelButton::setDefault()

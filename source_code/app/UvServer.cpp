@@ -4,7 +4,7 @@
 
 uv_loop_t* UvServer::loop;
 Parsley::TcpServer* UvServer::tcp_server;
-Parsley::UdpSocket* UvServer::udp_server;
+//Parsley::UdpSocket* UvServer::udp_server;
 uv_timer_t* UvServer::heart_beat_timer;
 int UvServer::counter = 0;
 
@@ -74,7 +74,7 @@ UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
       {
         QByteArray dat = encodeTextMessage(msg);
         uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-        udp_server->write("255.255.255.255", 23232, &msg);
+//        udp_server->write("255.255.255.255", 23232, &msg);
 
         Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
         break;
@@ -100,22 +100,25 @@ UvServer::run()
 
   loop = Parsley::Loop::defaultLoop();
 
-  udp_server = new Parsley::UdpSocket("255.255,255,255", UDP_PORT, loop);
-  qDebug()<<"udp"<<udp_server;
+  udp_server = new HiveUdpServer(loop);
+  udp_server->bindCb(std::bind(&UvServer::udpPacketReady
+                               , this
+                               , std::placeholders::_1));
+  udp_server->start();
+
   tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
-  qDebug()<<"tcp"<<tcp_server;
 
-  heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
-  uv_timer_init(loop, heart_beat_timer);
-  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 1000);
-  qDebug()<<"timer"<<heart_beat_timer;
+//  heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+//  uv_timer_init(loop, heart_beat_timer);
+//  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 1000);
+//  qDebug()<<"timer"<<heart_beat_timer;
 
-  uv_timer_t *heart_beat_timer2 = (uv_timer_t*)malloc(sizeof(uv_timer_t));
-  uv_timer_init(loop, heart_beat_timer2);
-  uv_timer_start(heart_beat_timer2, [](uv_timer_t *handle){
-    qDebug()<<counter << "p/s";
-    counter = 0;
-  }, 10, 1000);
+//  uv_timer_t *heart_beat_timer2 = (uv_timer_t*)malloc(sizeof(uv_timer_t));
+//  uv_timer_init(loop, heart_beat_timer2);
+//  uv_timer_start(heart_beat_timer2, [](uv_timer_t *handle){
+//    qDebug()<<counter << "p/s";
+//    counter = 0;
+//  }, 10, 1000);
 
 //  uv_idle_t* idler = (uv_idle_t*) malloc(sizeof(uv_idle_t));
 //  uv_idle_init(loop, idler);
@@ -133,10 +136,6 @@ UvServer::run()
 //    qDebug()<<"hello2 f";
 //  });
 
-  udp_server->bindCb(std::bind(&UvServer::udpReadyRead
-                               , this
-                               , std::placeholders::_1
-                               , std::placeholders::_2));
 
   uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
@@ -145,20 +144,20 @@ UvServer::run()
 void
 UvServer::udpHeartBeatCb(uv_timer_t *handle)
 {
-  QByteArray dat = encodeHeartBeat();
-  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-  udp_server->write("255.255.255.255", UDP_PORT, &msg);
+//  QByteArray dat = encodeHeartBeat();
+//  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
+//  udp_server->write("255.255.255.255", UDP_PORT, &msg);
 
-  counter ++;
+//  counter ++;
 
-  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
+//  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
-void UvServer::udpReadyRead(char *data, char *ip)
+void UvServer::udpPacketReady(const QJsonObject &obj)
 {
-  checkJson(QString(data), QString(ip));
+//  checkJson(QString(data), QString(ip));
 //  emit usrEntered(decodeHivePacket);
-//  qDebug()<<data;
+//  qDebug()<<obj;
 }
 
 
@@ -170,11 +169,11 @@ UvServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
       return false;
     }
 
-  if(usrProfileStruct.key == GlobalData::settings_struct.profile_key_str)
+  if(usrProfileStruct.key == Global::settings.profile_key_str)
     {
-      if(GlobalData::g_localHostIP != usrProfileStruct.ip)
+      if(Global::g_localHostIP != usrProfileStruct.ip)
         {
-          GlobalData::g_localHostIP = usrProfileStruct.ip;
+          Global::g_localHostIP = usrProfileStruct.ip;
         }
       Log::net(Log::Normal, "UvServer::processHeartBeat", "got heart beat from myself");
 //      emit getInstance()->usrEntered(usrProfileStruct);
@@ -189,7 +188,7 @@ UvServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
 bool
 UvServer::processUsrLeave(QString *usrKey)
 {
-  if(*usrKey == GlobalData::settings_struct.profile_key_str)
+  if(*usrKey == Global::settings.profile_key_str)
     {
 //      emit usrLeft(usrKey); << FIX HERE!!
 

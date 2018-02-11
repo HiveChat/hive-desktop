@@ -22,8 +22,8 @@ CombWidget::CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
   usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
 
   usr_name_label->setPalette(usr_name_palette);
-  usr_name_label->setFont(GlobalData::font_combWidgetUsrName);
-  ip_addr_label->setFont(GlobalData::font_combWidgetIpAddr);
+  usr_name_label->setFont(Global::font_combWidgetUsrName);
+  ip_addr_label->setFont(Global::font_combWidgetIpAddr);
   status_label->setText(offline_dot);
 
   net_status_layout = new QHBoxLayout();
@@ -70,7 +70,7 @@ void CombWidget::setProfile(UsrProfileStruct *usrProfile)
     }
   else
     {
-      if(getSubNetStr(GlobalData::g_localHostIP) == getSubNetStr(usr_profile.ip))
+      if(getSubNetStr(Global::g_localHostIP) == getSubNetStr(usr_profile.ip))
         {
           status_label->setText(online_dot);
           this->setToolTip("online");

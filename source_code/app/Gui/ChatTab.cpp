@@ -19,7 +19,7 @@ ChatTab::ChatTab(QWidget *parent) : QWidget(parent)
   main_layout->setContentsMargins(5,5,5,5);
 
   QPalette palette;
-  palette.setColor(QPalette::Window, GlobalData::color_tab);
+  palette.setColor(QPalette::Window, Global::color_tab);
 
   this->setAutoFillBackground(true);
   this->setPalette(palette);

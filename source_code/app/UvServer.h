@@ -1,10 +1,11 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
-#include "HiveProtocol.h"
-#include "../libs/libParsley/src/PUdpSocket.h"
 #include "../libs/libParsley/src/PTcpServer.h"
 #include "../libs/libParsley/src/PLoop.h"
+
+#include "HiveProtocol.h"
+#include "HiveUdpServer.h"
 
 
 #define UDP_PORT 23232
@@ -41,12 +42,12 @@ private:
   static uv_loop_t *loop;
   static uv_timer_t *heart_beat_timer;
   static Parsley::TcpServer *tcp_server;
-  static Parsley::UdpSocket *udp_server;
+  HiveUdpServer *udp_server;
 
   static int counter;
 
   static void udpHeartBeatCb(uv_timer_t *handle);
-  void udpReadyRead(char *data, char *ip);
+  void udpPacketReady(const QJsonObject &obj);
 
   bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);

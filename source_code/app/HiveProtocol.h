@@ -5,9 +5,8 @@
 #include "UsrData.h"
 #include "GlobalData.h"
 
-class HiveProtocol/* : public QObject*/
+class HiveProtocol
 {
-//  Q_OBJECT
 public:
   struct HiveClientBuffer{
     QString buffer;

@@ -18,7 +18,7 @@ GuiTabBlock::GuiTabBlock(QWidget *parent)
 {
   this->setAutoFillBackground(true);
   QPalette palette;
-  palette.setColor(QPalette::Window, GlobalData::color_alphaTab);
+  palette.setColor(QPalette::Window, Global::color_alphaTab);
   this->setPalette(palette);
   this->setFixedWidth(250);
 

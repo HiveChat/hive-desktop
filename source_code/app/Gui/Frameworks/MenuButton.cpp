@@ -8,7 +8,7 @@ MenuButton::MenuButton(QString text, GUI::StaticStackType staticStackType, QWidg
 
   text_label = new QLabel(this);
   text_label->setText(text);
-  text_label->setFont(GlobalData::font_menuButton);
+  text_label->setFont(Global::font_menuButton);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setContentsMargins(0,0,0,0);
@@ -32,14 +32,14 @@ MenuButton::~MenuButton()
 void MenuButton::setDefaultPixmap(QString path)
 {
   default_pixmap.load(path);
-  default_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  default_pixmap.setDevicePixelRatio(Global::window_dpr);
   setDefault();
 }
 
 void MenuButton::setHoveredPixmap(QString path)
 {
   hovered_pixmap.load(path);
-  hovered_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
+  hovered_pixmap.setDevicePixelRatio(Global::window_dpr);
 }
 
 

@@ -38,8 +38,8 @@ protected:
   QBoxLayout *addItem(QWidget *widget, const QString &text);
   void addItem(QWidget *centralWidget);
 
-  QFont font = GlobalData::font_scrollStackTitle;
-  QFont sub_font = GlobalData::font_scrollStackSubtitle;
+  QFont font = Global::font_scrollStackTitle;
+  QFont sub_font = Global::font_scrollStackSubtitle;
   QPalette text_palette;
   QPalette sub_text_palette;
 

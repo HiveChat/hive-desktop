@@ -10,20 +10,20 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
 
   addTag("Check update");
   QCheckBox *auto_check_box = new QCheckBox(this);
-  auto_check_box->setChecked(GlobalData::settings_struct.update.auto_check_update);
+  auto_check_box->setChecked(Global::settings.update.auto_check_update);
   connect(auto_check_box, &QCheckBox::toggled,
           [this](bool toggled){
-            GlobalData::settings_struct.update.auto_check_update = toggled;
-            GlobalData::settings_struct.modified_lock = true;
+            Global::settings.update.auto_check_update = toggled;
+            Global::settings.modified_lock = true;
           });
   addItem("\tAuto check update:\t\t\t          ", auto_check_box);
 
   QCheckBox *show_notification_box = new QCheckBox(this);
-  show_notification_box->setChecked(GlobalData::settings_struct.notification.update_notification);
+  show_notification_box->setChecked(Global::settings.notification.update_notification);
   connect(show_notification_box, &QCheckBox::toggled,
           [this](bool toggled){
-            GlobalData::settings_struct.notification.update_notification = toggled;
-            GlobalData::settings_struct.modified_lock = true;
+            Global::settings.notification.update_notification = toggled;
+            Global::settings.modified_lock = true;
           });
   addItem("\tShow update notification:\t\t          ", show_notification_box);
 
@@ -31,9 +31,9 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
   addTag("Hive version: ");
   addItem("Current version: ",
           QString("%1.%2.%3")
-          .arg(GlobalData::current_version[0])
-          .arg(GlobalData::current_version[1])
-          .arg(GlobalData::current_version[2]));
+          .arg(Global::current_version[0])
+          .arg(Global::current_version[1])
+          .arg(Global::current_version[2]));
   addItem("Current features:"
           , "1. Added notifications for messaging\n"
             "2. Added notifications for updates\n"
@@ -46,13 +46,13 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
             "9. Fixed unexpected quit caused by unrecognized user\n"
           , false);
 
-  bool updateLoaded = (GlobalData::update_struct.version[0] != 0
-                       || GlobalData::update_struct.version[1] != 0
-                       || GlobalData::update_struct.version[2] != 0);
+  bool updateLoaded = (Global::update_struct.version[0] != 0
+                       || Global::update_struct.version[1] != 0
+                       || Global::update_struct.version[2] != 0);
 
-  bool updateAvailable = memcmp(GlobalData::update_struct.version,
-                           GlobalData::current_version,
-                           sizeof(GlobalData::current_version))  != 0;
+  bool updateAvailable = memcmp(Global::update_struct.version,
+                           Global::current_version,
+                           sizeof(Global::current_version))  != 0;
 
   if(updateLoaded && updateAvailable)
     {
@@ -61,14 +61,14 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
 
       addTag("Available Update:");
       addItem("\tGo to update!\t\t             ", label);
-      addItem("New version: version:\t", GlobalData::update_struct.title, false);
+      addItem("New version: version:\t", Global::update_struct.title, false);
       addItem("Update version: version:\t",
               QString("%1.%2.%3")
-              .arg(GlobalData::update_struct.version[0])
-              .arg(GlobalData::update_struct.version[1])
-              .arg(GlobalData::update_struct.version[2]),
+              .arg(Global::update_struct.version[0])
+              .arg(Global::update_struct.version[1])
+              .arg(Global::update_struct.version[2]),
               false);
-      addItem("Features and Fixes: \t", GlobalData::update_struct.message);
+      addItem("Features and Fixes: \t", Global::update_struct.message);
     }
 
 

@@ -3,7 +3,7 @@
 Hive::Hive(int &argc, char **argv)
     : QApplication(argc, argv)
 {
-  GlobalData::window_dpr = this->devicePixelRatio();
+  Global::window_dpr = this->devicePixelRatio();
 #ifdef Q_OS_OSX
 
   QApplication::setQuitOnLastWindowClosed(false);
@@ -107,9 +107,9 @@ Hive::~Hive()
 void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 {
   QJsonObject json_object;
-  json_object.insert("sender", GlobalData::settings_struct.profile_key_str);
+  json_object.insert("sender", Global::settings.profile_key_str);
   json_object.insert("receiver", receiver);
-  json_object.insert("time", GlobalData::getCurrentTime());
+  json_object.insert("time", Global::getCurrentTime());
   json_object.insert("message", message);
 
   network_manager->udpSendMessage(json_object);
