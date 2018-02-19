@@ -97,5 +97,11 @@ namespace Settings
 
 }
 
+enum BaseProtocol{
+  Any = 0,
+  Udp = 1,
+  Tcp = 2
+};
+
 
 #endif // GLOBALTYPE_H

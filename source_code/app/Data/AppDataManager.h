@@ -23,14 +23,23 @@
 #include <QUuid>
 
 #include <unordered_map>
+#include <forward_list>
 
 class AppDataManager final : public QObject
 {
   Q_OBJECT
 
 public:
+
+  struct NetBuffer {
+    char *ipAddr;
+    char *data;
+    BaseProtocol protocol;
+  }
   explicit AppDataManager(QObject *parent = 0);
   ~AppDataManager();
+
+  static bool tryPushInboundBuffer();
 
 public slots:
   void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
@@ -39,6 +48,9 @@ public slots:
   void onUpdatesAvailable();
 
 private:
+  static std::forward_list<> inbound_net_buffer;
+  static std::forward_list<> outbound_net_buffer;
+
   void checkSettings();
   inline bool checkDir(const QString &directory);
 

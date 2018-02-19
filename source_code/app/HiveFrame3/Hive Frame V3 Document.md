@@ -111,5 +111,16 @@ sid | int | 8 digit random number
 size | int | File size
 name | string | File name
 
+## Raw Data Buffer
+### Priority:
+* Heart Beat
+* Message
+* File
+
+ Key | Value
+------- | -------
+IP addr (char\*) | Packet (char\*)
+
+
 
 

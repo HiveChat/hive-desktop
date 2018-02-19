@@ -1,5 +1,8 @@
 #include "AppDataManager.h"
 
+std::forward_list AppDataManager::network_buffer;
+
+
 AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 {
   initVariable();

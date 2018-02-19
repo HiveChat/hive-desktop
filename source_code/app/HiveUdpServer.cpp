@@ -31,6 +31,12 @@ bool HiveUdpServer::stop()
   udp_socket->stop();
 }
 
+/*!
+ * \brief HiveUdpServer::udpReadyRead
+ * \param data Received data in the callback from Parsley::UdpSocket.
+ * \param ip IP address in the callback from Parsley::UdpSocket.
+ * \note Any Json decoding should not appear in network thread, because it will be a bottle neck of net speed. Will be removed after several testings.
+ */
 void HiveUdpServer::udpReadyRead(char *data, char *ip)
 {
   QJsonParseError err;
@@ -58,18 +64,6 @@ void HiveUdpServer::udpReadyRead(char *data, char *ip)
       //! TODO: Error Handling
       return;
     }
-
-//  for(int i = 0; i < 1000; i ++)
-//    {
-//      for(int j = 0; j < 100; j ++)
-//        {
-//          for(int k = 0; k < 10; k ++)
-//            {
-//              i ++;
-//              i --;
-//            }
-//        }
-//    }
 
   callPacketReady(obj);
 }
