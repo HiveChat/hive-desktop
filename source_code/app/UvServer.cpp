@@ -4,7 +4,6 @@
 
 uv_loop_t* UvServer::loop;
 Parsley::TcpServer* UvServer::tcp_server;
-//Parsley::UdpSocket* UvServer::udp_server;
 uv_timer_t* UvServer::heart_beat_timer;
 int UvServer::counter = 0;
 

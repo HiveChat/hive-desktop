@@ -24,6 +24,9 @@
 
 #include <unordered_map>
 #include <forward_list>
+#include <mutex>
+
+class AppDataManager;
 
 class AppDataManager final : public QObject
 {
@@ -35,11 +38,12 @@ public:
     char *ipAddr;
     char *data;
     BaseProtocol protocol;
-  }
+  };
   explicit AppDataManager(QObject *parent = 0);
   ~AppDataManager();
 
-  static bool tryPushInboundBuffer();
+  static bool pushInboundBuffer(NetBuffer *buffer);
+  static bool pushOutboundBuffer(NetBuffer *buffer);
 
 public slots:
   void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
@@ -48,8 +52,10 @@ public slots:
   void onUpdatesAvailable();
 
 private:
-  static std::forward_list<> inbound_net_buffer;
-  static std::forward_list<> outbound_net_buffer;
+  static std::forward_list<NetBuffer*> inbound_net_buffer;
+  static std::mutex inbound_net_buffer_mutex;
+  static std::forward_list<NetBuffer*> outbound_net_buffer;
+  static std::mutex outbound_net_buffer_mutex;
 
   void checkSettings();
   inline bool checkDir(const QString &directory);
@@ -91,5 +97,6 @@ signals:
 
 
 };
+
 
 #endif // DATAMANAGER_H

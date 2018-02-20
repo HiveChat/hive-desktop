@@ -1,6 +1,9 @@
 #include "AppDataManager.h"
 
-std::forward_list AppDataManager::network_buffer;
+std::forward_list<AppDataManager::NetBuffer*> AppDataManager::inbound_net_buffer;
+std::mutex AppDataManager::inbound_net_buffer_mutex;
+std::forward_list<AppDataManager::NetBuffer*> AppDataManager::outbound_net_buffer;
+std::mutex AppDataManager::outbound_net_buffer_mutex;
 
 
 AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
@@ -17,6 +20,18 @@ AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 AppDataManager::~AppDataManager()
 {
   Log::gui(Log::Normal, "AppDataManager::~AppDataManager()", "Successfully destroyed AppDataManager...");
+}
+
+bool AppDataManager::pushInboundBuffer(NetBuffer *buffer)
+{
+  std::lock_guard<std::mutex> guard(inbound_net_buffer_mutex);
+  inbound_net_buffer.push_front(buffer);
+}
+
+bool AppDataManager::pushOutboundBuffer(NetBuffer *buffer)
+{
+  std::lock_guard<std::mutex> guard(outbound_net_buffer_mutex);
+  outbound_net_buffer.push_front(buffer);
 }
 
 void AppDataManager::checkSettings()

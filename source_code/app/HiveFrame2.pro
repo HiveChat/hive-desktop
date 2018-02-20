@@ -87,7 +87,8 @@ SOURCES += \
     Bee.cpp \
     ../libs/libParsley/src/PTimer.cpp \
     ../libs/libParsley/src/PUtils.cpp \
-    ../libs/libParsley/src/Parsley.cpp
+    ../libs/libParsley/src/Parsley.cpp \
+    HiveDoubleBuffer.cpp
 \
 
 HEADERS  += \
@@ -140,7 +141,8 @@ HEADERS  += \
     Bee.h \
     ../libs/libParsley/src/PTimer.h \
     ../libs/libParsley/src/PUtils.h \
-    ../libs/libParsley/src/Parsley.h
+    ../libs/libParsley/src/Parsley.h \
+    HiveDoubleBuffer.h
 
 ICON = Src/hive.icns
 
