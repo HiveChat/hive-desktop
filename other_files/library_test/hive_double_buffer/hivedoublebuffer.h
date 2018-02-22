@@ -1,9 +1,8 @@
 #ifndef HIVEDOUBLEBUFFER_H
 #define HIVEDOUBLEBUFFER_H
 
-#include <QDebug>
-
-#include <forward_list>
+#include <list>
+#include <iostream>
 
 template <typename T>
 class HiveDoubleBuffer final
@@ -11,28 +10,31 @@ class HiveDoubleBuffer final
 public:
   HiveDoubleBuffer();
 
-  void push(T *item);
-  bool take(T *item);
+  void push(T item);
+  bool take(T item);
 
 private:
-  using Container = std::forward_list<T*>;
+  using Container = std::list<T>;
   Container buffer1;
   Container buffer2;
   bool reading = false;
   bool writing = false;
   bool isFliping = false;
 
-  std::forward_list<T*> *inbound_buffer = &buffer1;
-  std::forward_list<T*> *outbound_buffer = &buffer2;
+  Container *inbound_buffer = &buffer1;
+  Container *outbound_buffer = &buffer2;
 
   void flip();
 };
 
+template<typename T>
+HiveDoubleBuffer<T>::HiveDoubleBuffer()
+{
 
-
+}
 
 template<typename T>
-void HiveDoubleBuffer<T>::push(T *item)
+void HiveDoubleBuffer<T>::push(T item)
 {
   while(1)
     {
@@ -50,7 +52,7 @@ void HiveDoubleBuffer<T>::push(T *item)
 }
 
 template<typename T>
-bool HiveDoubleBuffer<T>::take(T *item)
+bool HiveDoubleBuffer<T>::take(T item)
 {
   while(1)
     {
@@ -64,11 +66,13 @@ bool HiveDoubleBuffer<T>::take(T *item)
           flip();
           if(outbound_buffer->empty())
             {
+              printf("buffer empty \n");
               return false;
             }
         }
       reading = true;
       item = outbound_buffer->front();
+      printf("%s\n", item);
       outbound_buffer->pop_front();
       reading = false;
       break;
@@ -92,6 +96,7 @@ void HiveDoubleBuffer<T>::flip()
       outbound_buffer = temp;
       break;
     }
+  printf("flipped\n");
   isFliping = false;
 }
 
