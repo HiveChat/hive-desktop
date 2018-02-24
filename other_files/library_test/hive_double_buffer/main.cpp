@@ -7,8 +7,9 @@
 HiveDoubleBuffer<char*> buffer;
 int counter = 0;
 
-
 using namespace std;
+
+
 
 void inbound()
 {
@@ -26,7 +27,7 @@ void inbound()
 
               if (randomString)
                 {
-                  for (int n = 0;n < length;n++)
+                  for (int n = 0; n < length; n ++)
                     {
                       int key = rand() % (int)(sizeof(charset) -1);
                       randomString[n] = charset[key];
@@ -37,13 +38,14 @@ void inbound()
             }
           counter ++;
           printf("%d push: %s\n", counter, "randomString");
-          buffer.push("randomString");
-          if((rand() % 30) < 1)
-            {
-              break;
-            }
+          buffer.push_front("randomString");
+          this_thread::sleep_for(std::chrono::milliseconds(5));
+//          if((rand() % 30) < 1)
+//            {
+//              break;
+//            }
         }
-      this_thread::sleep_for(std::chrono::milliseconds(rand() % 300));
+//      this_thread::sleep_for(std::chrono::milliseconds(rand() % 300));
     }
 }
 
@@ -56,15 +58,17 @@ int main()
     {
       while (1)
         {
-          char* string;
-          if(!buffer.take(string))
+          char* string = buffer.front();
+          if(!string)
             {
               break;
             }
           counter ++;
           printf("%d take: %s\n", counter, string);
+          buffer.pop_front();
+
         }
-      this_thread::sleep_for(std::chrono::milliseconds(500));
+      this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
 
 
