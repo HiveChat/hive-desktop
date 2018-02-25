@@ -10,8 +10,9 @@ class HiveDoubleBuffer final
 public:
   HiveDoubleBuffer();
 
+  T front();
   void push_front(T item);
-  bool pop_front(T item);
+  bool pop_front();
 
 private:
   using Container = std::list<T>;
@@ -52,7 +53,34 @@ void HiveDoubleBuffer<T>::push_front(T item)
 }
 
 template<typename T>
-bool HiveDoubleBuffer<T>::pop_front(T item)
+T HiveDoubleBuffer<T>::front()
+{
+  while(1)
+    {
+      if(isFliping)
+        {
+          //do something is better
+          continue;
+        }
+      if(outbound_buffer->empty())
+        {
+          flip();
+          if(outbound_buffer->empty())
+            {
+              printf("buffer empty \n");
+              return 0;
+            }
+        }
+      reading = true;
+      char *item;
+      item = outbound_buffer->front();
+      reading = false;
+      return item;
+    }
+}
+
+template<typename T>
+bool HiveDoubleBuffer<T>::pop_front()
 {
   while(1)
     {
@@ -71,9 +99,8 @@ bool HiveDoubleBuffer<T>::pop_front(T item)
             }
         }
       reading = true;
-      item = outbound_buffer->front();
-      printf("%s\n", item);
-//      outbound_buffer->pop_front();
+      printf("pop: %s\n", outbound_buffer->front());
+      outbound_buffer->pop_front();
       reading = false;
       break;
     }
