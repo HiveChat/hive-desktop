@@ -154,6 +154,7 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
 
 void UvServer::udpPacketReady(const QJsonObject &obj)
 {
+  AppDataManager::pushInboundBuffer(
 //  checkJson(QString(data), QString(ip));
 //  emit usrEntered(decodeHivePacket);
 //  qDebug()<<obj;

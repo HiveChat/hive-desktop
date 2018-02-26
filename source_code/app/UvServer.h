@@ -6,6 +6,7 @@
 
 #include "HiveProtocol.h"
 #include "HiveUdpServer.h"
+#include "./Data/AppDataManager.h"
 
 
 #define UDP_PORT 23232

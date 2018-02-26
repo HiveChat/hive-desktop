@@ -3,6 +3,7 @@
 
 #include "GlobalData.h"
 #include "UsrData.h"
+#include "HiveDoubleBuffer.h"
 
 #include <QThread>
 #include <QMutex>
@@ -33,17 +34,11 @@ class AppDataManager final : public QObject
   Q_OBJECT
 
 public:
-
-  struct NetBuffer {
-    char *ipAddr;
-    char *data;
-    BaseProtocol protocol;
-  };
   explicit AppDataManager(QObject *parent = 0);
   ~AppDataManager();
 
-  static bool pushInboundBuffer(NetBuffer *buffer);
-  static bool pushOutboundBuffer(NetBuffer *buffer);
+  static bool pushInboundBuffer(NetPacket *packet);
+  static bool pushOutboundBuffer(NetPacket *packet);
 
 public slots:
   void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
@@ -52,13 +47,10 @@ public slots:
   void onUpdatesAvailable();
 
 private:
-  static std::forward_list<NetBuffer*> inbound_net_buffer;
-  static std::mutex inbound_net_buffer_mutex;
-  static std::forward_list<NetBuffer*> outbound_net_buffer;
-  static std::mutex outbound_net_buffer_mutex;
+  static HiveDoubleBuffer inboundNetBuffer;
+  static HiveDoubleBuffer outboundNetBuffer;
 
   void checkSettings();
-  inline bool checkDir(const QString &directory);
 
   /*!
    * Functions called by constructor AppDataManager::AppDataManager(), only called once when during initialization.
@@ -71,6 +63,7 @@ private:
   inline void loadUpdates();
   inline void loadTimerTasks();
 
+  inline bool checkDir(const QString &directory);
   inline QString makeUuid();
   inline QJsonDocument makeDefaultSettings();
   inline QJsonDocument makeUpdateJson(const int version[]);

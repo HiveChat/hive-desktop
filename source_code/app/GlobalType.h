@@ -103,5 +103,11 @@ enum BaseProtocol{
   Tcp = 2
 };
 
+struct NetPacket {
+  char *ipAddr;
+  char *data;
+  BaseProtocol protocol;
+};
+
 
 #endif // GLOBALTYPE_H
