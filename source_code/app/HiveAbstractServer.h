@@ -13,13 +13,13 @@
 class HiveAbstractServer
 {
 public:
-  typedef std::function<void (const QJsonObject &)> PacketReadyCb;
+  typedef std::function<void (char*, char*)> PacketReadyCb;
 
   virtual bool start();
   virtual bool stop();
   virtual void bindCb(const PacketReadyCb &cb);
 
-  void callPacketReady(const QJsonObject &packet);
+  void callPacketReady(char *data, char *ip);
 
 protected:
   //! TODO: Add uv_loop_t* handle to protected member for future memory recycle.

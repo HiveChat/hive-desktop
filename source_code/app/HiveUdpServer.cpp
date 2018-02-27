@@ -39,31 +39,31 @@ bool HiveUdpServer::stop()
  */
 void HiveUdpServer::udpReadyRead(char *data, char *ip)
 {
-  QJsonParseError err;
-  QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-  if(err.error != QJsonParseError::NoError
-     || !doc.isObject())
-    {
-      Log::net(Log::Critical
-               , "HiveAbstractServer::checkJsonPackage()"
-               , QString(err.errorString() + " in stream: " + data));
+//  QJsonParseError err;
+//  QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+//  if(err.error != QJsonParseError::NoError
+//     || !doc.isObject())
+//    {
+//      Log::net(Log::Critical
+//               , "HiveAbstractServer::checkJsonPackage()"
+//               , QString(err.errorString() + " in stream: " + data));
 
-      //! TODO: Error Handling
-      return;
-    }
+//      //! TODO: Error Handling
+//      return;
+//    }
 
-  QJsonObject obj = doc.object();
-  QString rUuid = obj.value("receiver").toString();
-  if(rUuid != Global::settings.profile_key_str
-     && rUuid != "{00000000-0000-0000-0000-000000000000}")
-    {
-      Log::net(Log::Error
-               , "HiveAbstractServer::checkJsonPackage()"
-               , "Package belongs to " + obj.value("receiver").toString());
+//  QJsonObject obj = doc.object();
+//  QString rUuid = obj.value("receiver").toString();
+//  if(rUuid != Global::settings.profile_key_str
+//     && rUuid != "{00000000-0000-0000-0000-000000000000}")
+//    {
+//      Log::net(Log::Error
+//               , "HiveAbstractServer::checkJsonPackage()"
+//               , "Package belongs to " + obj.value("receiver").toString());
 
-      //! TODO: Error Handling
-      return;
-    }
+//      //! TODO: Error Handling
+//      return;
+//    }
 
-  callPacketReady(obj);
+  callPacketReady(data, ip);
 }

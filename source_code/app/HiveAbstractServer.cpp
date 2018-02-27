@@ -16,11 +16,11 @@ void HiveAbstractServer::bindCb(const PacketReadyCb &cb)
   packet_ready_cb = cb;
 }
 
-void HiveAbstractServer::callPacketReady(const QJsonObject &packet)
+void HiveAbstractServer::callPacketReady(char *data, char *ip)
 {
   if(packet_ready_cb)
     {
-      packet_ready_cb(packet);
+      packet_ready_cb(data, ip);
     }
 }
 

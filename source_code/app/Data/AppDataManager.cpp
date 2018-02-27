@@ -1,7 +1,7 @@
 #include "AppDataManager.h"
 
-HiveDoubleBuffer AppDataManager::inboundNetBuffer;
-HiveDoubleBuffer AppDataManager::outboundNetBuffer;
+HiveDoubleBuffer<NetPacket> AppDataManager::inboundNetBuffer;
+HiveDoubleBuffer<NetPacket> AppDataManager::outboundNetBuffer;
 
 AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
 {
@@ -21,12 +21,12 @@ AppDataManager::~AppDataManager()
 
 bool AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
-  inboundNetBuffer.push_front(packet);
+  inboundNetBuffer.push_front(*packet);
 }
 
 bool AppDataManager::pushOutboundBuffer(NetPacket *packet)
 {
-  outboundNetBuffer.push_front(packet);
+  outboundNetBuffer.push_front(*packet);
 }
 
 void AppDataManager::checkSettings()

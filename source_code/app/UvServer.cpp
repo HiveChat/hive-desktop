@@ -102,7 +102,8 @@ UvServer::run()
   udp_server = new HiveUdpServer(loop);
   udp_server->bindCb(std::bind(&UvServer::udpPacketReady
                                , this
-                               , std::placeholders::_1));
+                               , std::placeholders::_1
+                               , std::placeholders::_2));
   udp_server->start();
 
   tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
@@ -152,12 +153,14 @@ UvServer::udpHeartBeatCb(uv_timer_t *handle)
 //  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
-void UvServer::udpPacketReady(const QJsonObject &obj)
+void UvServer::udpPacketReady(char *data, char *ip)
 {
-  AppDataManager::pushInboundBuffer(
+//  AppDataManager::pushInboundBuffer();
 //  checkJson(QString(data), QString(ip));
 //  emit usrEntered(decodeHivePacket);
 //  qDebug()<<obj;
+  NetPacket *packet = new NetPacket(data, ip, BaseProtocol::Udp);
+  AppDataManager::pushInboundBuffer(packet);
 }
 
 

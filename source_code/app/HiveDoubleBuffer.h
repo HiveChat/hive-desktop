@@ -4,11 +4,14 @@
 #include <list>
 #include <iostream>
 
+#include <QDebug>
+
 template <typename T>
 class HiveDoubleBuffer final
 {
 public:
   HiveDoubleBuffer();
+  ~HiveDoubleBuffer();
 
   T front();
   void push_front(T item);
@@ -31,6 +34,13 @@ private:
 template<typename T>
 HiveDoubleBuffer<T>::HiveDoubleBuffer()
 {
+
+}
+
+template<typename T>
+HiveDoubleBuffer<T>::~HiveDoubleBuffer()
+{
+  printf("quit...............................................");
 
 }
 
@@ -72,8 +82,7 @@ T HiveDoubleBuffer<T>::front()
             }
         }
       reading = true;
-      char *item;
-      item = outbound_buffer->front();
+      char *item = outbound_buffer->front();
       reading = false;
       return item;
     }

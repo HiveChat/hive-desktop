@@ -24,12 +24,6 @@ class UvServer
   Q_OBJECT
 
 public:
-  enum BaseProtocol{
-    Any = 0,
-    Udp = 1,
-    Tcp = 2
-  };
-
   explicit UvServer(QObject *parent = 0);
   ~UvServer();
 
@@ -48,7 +42,7 @@ private:
   static int counter;
 
   static void udpHeartBeatCb(uv_timer_t *handle);
-  void udpPacketReady(const QJsonObject &obj);
+  void udpPacketReady(char *data, char *ip);
 
   bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);

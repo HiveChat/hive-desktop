@@ -47,8 +47,8 @@ public slots:
   void onUpdatesAvailable();
 
 private:
-  static HiveDoubleBuffer inboundNetBuffer;
-  static HiveDoubleBuffer outboundNetBuffer;
+  static HiveDoubleBuffer<NetPacket> inboundNetBuffer;
+  static HiveDoubleBuffer<NetPacket> outboundNetBuffer;
 
   void checkSettings();
 
