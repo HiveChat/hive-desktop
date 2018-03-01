@@ -3,6 +3,7 @@
 
 #include <list>
 #include <iostream>
+#include <mutex>
 
 template <typename T>
 class HiveDoubleBuffer final
@@ -18,6 +19,9 @@ private:
   using Container = std::list<T>;
   Container buffer1;
   Container buffer2;
+
+  std::mutex flip_mutex;
+
   bool reading = false;
   bool writing = false;
   bool isFliping = false;
@@ -110,7 +114,8 @@ bool HiveDoubleBuffer<T>::pop_front()
 template<typename T>
 void HiveDoubleBuffer<T>::flip()
 {
-  isFliping = true;
+  std::unique_lock guard(flip_mutex);
+
   while(1)
     {
       if(writing || reading)
@@ -124,7 +129,8 @@ void HiveDoubleBuffer<T>::flip()
       break;
     }
   printf("flipped\n");
-  isFliping = false;
+
+  guard.unlock();
 }
 
 
