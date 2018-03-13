@@ -104,15 +104,17 @@ enum BaseProtocol{
 };
 
 struct NetPacket {
-  NetPacket(char* ip, char* data, const BaseProtocol &protocol)
+  NetPacket(char* ip, char* data, const int &len, const BaseProtocol &protocol)
     : ipAddr(ip)
     , data(data)
+    , len(len)
     , protocol(protocol)
   {
 
   }
   char *ipAddr;
   char *data;
+  int len;
   BaseProtocol protocol;
 };
 

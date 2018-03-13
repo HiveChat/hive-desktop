@@ -34,15 +34,13 @@ protected:
   void run();
 
 private:  
-  static uv_loop_t *loop;
-  static uv_timer_t *heart_beat_timer;
+  static Parsley::Loop *loop;
   static Parsley::TcpServer *tcp_server;
   HiveUdpServer *udp_server;
 
   static int counter;
 
-  static void udpHeartBeatCb(uv_timer_t *handle);
-  void udpPacketReady(char *data, char *ip);
+  void udpPacketReady(const Parsley::Buffer &data, char *ip);
 
   bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);

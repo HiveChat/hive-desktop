@@ -4,6 +4,7 @@
 #include <list>
 #include <iostream>
 #include <mutex>
+#include <condition_variable>
 
 template <typename T>
 class HiveDoubleBuffer final
@@ -25,6 +26,8 @@ private:
   bool reading = false;
   bool writing = false;
   bool isFliping = false;
+
+  std::mutex write_mutex;
 
   Container *inbound_buffer = &buffer1;
   Container *outbound_buffer = &buffer2;

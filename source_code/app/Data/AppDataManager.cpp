@@ -21,7 +21,7 @@ AppDataManager::~AppDataManager()
 
 bool AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
-  inboundNetBuffer.push_front(*packet);
+//  inboundNetBuffer.push_front(*packet);
 }
 
 bool AppDataManager::pushOutboundBuffer(NetPacket *packet)
@@ -625,23 +625,23 @@ void AppDataManager::loadUpdates()
 
 void AppDataManager::loadTimerTasks()
 {
-//  QTimer *checkSettingsTimer = new QTimer(this);
-//  connect(checkSettingsTimer, &QTimer::timeout,
-//          [this]() {
-//            checkSettings();
-//          });
-//  checkSettingsTimer->setSingleShot(false);
-//  checkSettingsTimer->setInterval(1000);
-//  checkSettingsTimer->start();
-
-  QTimer *popInboundBufferTimer = new QTimer(this);
-  connect(popInboundBufferTimer, &QTimer::timeout,
+  QTimer *checkSettingsTimer = new QTimer(this);
+  connect(checkSettingsTimer, &QTimer::timeout,
           [this]() {
             checkSettings();
           });
-  popInboundBufferTimer->setSingleShot(false);
-  popInboundBufferTimer->setInterval(1);
-  popInboundBufferTimer->start();
+  checkSettingsTimer->setSingleShot(false);
+  checkSettingsTimer->setInterval(1000);
+  checkSettingsTimer->start();
+
+//  QTimer *popInboundBufferTimer = new QTimer(this);
+//  connect(popInboundBufferTimer, &QTimer::timeout,
+//          [this]() {
+//            checkSettings();
+//          });
+//  popInboundBufferTimer->setSingleShot(false);
+//  popInboundBufferTimer->setInterval(1);
+//  popInboundBufferTimer->start();
 }
 
 

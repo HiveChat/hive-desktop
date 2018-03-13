@@ -2,6 +2,7 @@
 #include <thread>
 #include <stdlib.h>
 
+
 #include "hivedoublebuffer.h"
 
 HiveDoubleBuffer<char*> buffer;

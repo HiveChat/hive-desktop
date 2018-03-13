@@ -2,9 +2,8 @@
 
 #include <QThread>
 
-uv_loop_t* UvServer::loop;
+Parsley::Loop* UvServer::loop;
 Parsley::TcpServer* UvServer::tcp_server;
-uv_timer_t* UvServer::heart_beat_timer;
 int UvServer::counter = 0;
 
 
@@ -16,13 +15,13 @@ UvServer::UvServer(QObject *parent)
 
 UvServer::~UvServer()
 {
-
+  delete udp_server;
 }
 
 void
 UvServer::quit()
 {
-  int result = Parsley::Loop::close(loop);
+  int result = loop->close();
   if (result == UV_EBUSY)
     {
       uv_walk_cb uvWalkCb = [](uv_handle_t* handle, void* arg) {
@@ -37,7 +36,7 @@ UvServer::quit()
         uv_close(handle, uvCloseCb);
       };
 
-      uv_walk(loop
+      uv_walk(loop->uvHandle()
               , uvWalkCb
               , NULL);
 
@@ -51,8 +50,8 @@ UvServer::quit()
        */
       wait(2000);
 
-      Parsley::Loop::run(Parsley::Loop::defaultLoop(), UV_RUN_DEFAULT);
-      result = Parsley::Loop::close(loop);
+      Parsley::Loop::defaultLoop()->run(UV_RUN_DEFAULT);
+      result = loop->close();
       if (result)
         {
           qDebug() << "failed to close libuv loop: " << uv_err_name(result);
@@ -98,68 +97,21 @@ UvServer::run()
   Log::net(Log::Normal, "UvServer::run()", "Thread Started");
 
   loop = Parsley::Loop::defaultLoop();
-
   udp_server = new HiveUdpServer(loop);
   udp_server->bindCb(std::bind(&UvServer::udpPacketReady
                                , this
                                , std::placeholders::_1
                                , std::placeholders::_2));
   udp_server->start();
-
   tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
+  loop->run(UV_RUN_DEFAULT);
 
-//  heart_beat_timer = (uv_timer_t*)malloc(sizeof(uv_timer_t));
-//  uv_timer_init(loop, heart_beat_timer);
-//  uv_timer_start(heart_beat_timer, udpHeartBeatCb, 1000, 1000);
-//  qDebug()<<"timer"<<heart_beat_timer;
-
-//  uv_timer_t *heart_beat_timer2 = (uv_timer_t*)malloc(sizeof(uv_timer_t));
-//  uv_timer_init(loop, heart_beat_timer2);
-//  uv_timer_start(heart_beat_timer2, [](uv_timer_t *handle){
-//    qDebug()<<counter << "p/s";
-//    counter = 0;
-//  }, 10, 1000);
-
-//  uv_idle_t* idler = (uv_idle_t*) malloc(sizeof(uv_idle_t));
-//  uv_idle_init(loop, idler);
-//  uv_idle_start(idler, [](uv_idle_t* handle){
-//    qDebug()<<"hello1 b";
-//    sleep(1);
-//    qDebug()<<"hello1 f";
-//  });
-
-//  uv_idle_t* idler2 = (uv_idle_t*) malloc(sizeof(uv_idle_t));
-//  uv_idle_init(loop, idler2);
-//  uv_idle_start(idler2, [](uv_idle_t* handle){
-//    qDebug()<<"hello2 b";
-//    sleep(1);
-//    qDebug()<<"hello2 f";
-//  });
-
-
-  uv_run(loop, UV_RUN_DEFAULT);
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
 }
 
-void
-UvServer::udpHeartBeatCb(uv_timer_t *handle)
+void UvServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
 {
-//  QByteArray dat = encodeHeartBeat();
-//  uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-//  udp_server->write("255.255.255.255", UDP_PORT, &msg);
-
-//  counter ++;
-
-//  Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
-}
-
-void UvServer::udpPacketReady(char *data, char *ip)
-{
-//  AppDataManager::pushInboundBuffer();
-//  checkJson(QString(data), QString(ip));
-//  emit usrEntered(decodeHivePacket);
-//  qDebug()<<obj;
-  NetPacket *packet = new NetPacket(data, ip, BaseProtocol::Udp);
+  NetPacket *packet = new NetPacket(ip, data.base, data.len, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
 }
 

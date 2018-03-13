@@ -13,17 +13,14 @@
 class HiveAbstractServer
 {
 public:
-  typedef std::function<void (char*, char*)> PacketReadyCb;
-
   virtual bool start();
   virtual bool stop();
-  virtual void bindCb(const PacketReadyCb &cb);
+  virtual void bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb);
 
-  void callPacketReady(char *data, char *ip);
+  void callPacketReady(Parsley::Buffer data, char *ip);
 
 protected:
-  //! TODO: Add uv_loop_t* handle to protected member for future memory recycle.
-  PacketReadyCb packet_ready_cb;
+  Parsley::AbstractSocket::SockReadyReadCb packet_ready_cb;
 
   bool checkJsonPackage(const QString &data, QJsonObject *obj);
 };

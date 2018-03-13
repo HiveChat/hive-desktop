@@ -11,12 +11,12 @@ bool HiveAbstractServer::stop()
 
 }
 
-void HiveAbstractServer::bindCb(const PacketReadyCb &cb)
+void HiveAbstractServer::bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb)
 {
   packet_ready_cb = cb;
 }
 
-void HiveAbstractServer::callPacketReady(char *data, char *ip)
+void HiveAbstractServer::callPacketReady(Parsley::Buffer data, char *ip)
 {
   if(packet_ready_cb)
     {

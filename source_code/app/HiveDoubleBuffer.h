@@ -40,7 +40,7 @@ HiveDoubleBuffer<T>::HiveDoubleBuffer()
 template<typename T>
 HiveDoubleBuffer<T>::~HiveDoubleBuffer()
 {
-  printf("quit...............................................");
+  printf("Destroying HiveDoubleBuffer<T>...\n");
 
 }
 
