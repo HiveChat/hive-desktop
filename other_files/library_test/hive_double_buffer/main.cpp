@@ -39,7 +39,8 @@ char* randomString(const int &len = 32)
 }
 
 /*!
- * \brief inbound Pushes random strings into double buffer. It also simulates streams of data in difference length pushing into the buffer with radom time interval.
+ * \brief inbound Pushes random strings into double buffer.
+ * It also simulates streams of data in difference length pushing into the buffer with radom time interval.
  */
 void inbound()
 {

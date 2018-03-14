@@ -3,7 +3,7 @@
 
 #include "GlobalData.h"
 #include "GlobalType.h"
-#include "UvServer.h"
+#include "HiveServer.h"
 #include "Log.h"
 
 #include <QJsonDocument>
@@ -27,7 +27,7 @@ public:
   explicit NetworkManager(QObject *parent = 0);
   ~NetworkManager();
 
-  UvServer *uv_server;
+  HiveServer *uv_server;
 
 
 private:

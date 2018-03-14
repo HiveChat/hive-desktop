@@ -1,25 +1,24 @@
-#include "UvServer.h"
+#include "HiveServer.h"
 
 #include <QThread>
 
-Parsley::Loop* UvServer::loop;
-Parsley::TcpServer* UvServer::tcp_server;
-int UvServer::counter = 0;
+Parsley::TcpServer* HiveServer::tcp_server;
+int HiveServer::counter = 0;
 
 
 
-UvServer::UvServer(QObject *parent)
+HiveServer::HiveServer(QObject *parent)
   : QThread(parent)
 {
 }
 
-UvServer::~UvServer()
+HiveServer::~HiveServer()
 {
   delete udp_server;
 }
 
 void
-UvServer::quit()
+HiveServer::quit()
 {
   int result = loop->close();
   if (result == UV_EBUSY)
@@ -65,7 +64,7 @@ UvServer::quit()
 }
 
 void
-UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
+HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
 {
   switch (protocol) {
     case BaseProtocol::Udp:
@@ -91,14 +90,14 @@ UvServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol)
 }
 
 void
-UvServer::run()
+HiveServer::run()
 {
   qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Normal, "UvServer::run()", "Thread Started");
 
   loop = Parsley::Loop::defaultLoop();
   udp_server = new HiveUdpServer(loop);
-  udp_server->bindCb(std::bind(&UvServer::udpPacketReady
+  udp_server->bindCb(std::bind(&HiveServer::udpPacketReady
                                , this
                                , std::placeholders::_1
                                , std::placeholders::_2));
@@ -109,7 +108,7 @@ UvServer::run()
   Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
 }
 
-void UvServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
+void HiveServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
 {
   NetPacket *packet = new NetPacket(ip, data.base, data.len, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
@@ -117,7 +116,7 @@ void UvServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
 
 
 bool
-UvServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
+HiveServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
 {
   if(usrProfileStruct.key.isEmpty())
     {
@@ -141,7 +140,7 @@ UvServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
 }
 
 bool
-UvServer::processUsrLeave(QString *usrKey)
+HiveServer::processUsrLeave(QString *usrKey)
 {
   if(*usrKey == Global::settings.profile_key_str)
     {
@@ -155,13 +154,13 @@ UvServer::processUsrLeave(QString *usrKey)
 }
 
 bool
-UvServer::processErrorDelivery()
+HiveServer::processErrorDelivery()
 {
 
 }
 
 bool
-UvServer::processTextMessage()
+HiveServer::processTextMessage()
 {
 //  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
 //    {
@@ -197,25 +196,25 @@ UvServer::processTextMessage()
 }
 
 bool
-UvServer::processFileInfo()
+HiveServer::processFileInfo()
 {
 
 }
 
 bool
-UvServer::processFileContent()
+HiveServer::processFileContent()
 {
 
 }
 
 bool
-UvServer::processFileAccept()
+HiveServer::processFileAccept()
 {
 
 }
 
 bool
-UvServer::processFileReject()
+HiveServer::processFileReject()
 {
 
 }

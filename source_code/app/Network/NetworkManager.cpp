@@ -3,7 +3,7 @@
 
 NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 {
-  uv_server = new UvServer(this);
+  uv_server = new HiveServer(this);
   uv_server->start();
 
 //  udp_socket = new QUdpSocket(this);

@@ -3,7 +3,8 @@
 HiveDoubleBuffer<NetPacket> AppDataManager::inboundNetBuffer;
 HiveDoubleBuffer<NetPacket> AppDataManager::outboundNetBuffer;
 
-AppDataManager::AppDataManager(QObject *parent) : QObject(parent)
+AppDataManager::AppDataManager(QObject *parent)
+  : QThread(parent)
 {
   initVariable();
   checkFiles();
@@ -305,6 +306,13 @@ void AppDataManager::onUpdatesAvailable()
   file.flush();
 
   emit updatesAvailable();
+}
+
+void AppDataManager::run()
+{
+  loop = new Parsley::Loop();
+
+  loop->run(UV_RUN_DEFAULT);
 }
 
 void AppDataManager::checkFiles()

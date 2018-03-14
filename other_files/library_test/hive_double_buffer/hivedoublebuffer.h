@@ -117,8 +117,6 @@ bool HiveDoubleBuffer<T>::pop_front()
 template<typename T>
 void HiveDoubleBuffer<T>::flip()
 {
-  std::unique_lock guard(flip_mutex);
-
   while(1)
     {
       if(writing || reading)
@@ -132,8 +130,6 @@ void HiveDoubleBuffer<T>::flip()
       break;
     }
   printf("flipped\n");
-
-  guard.unlock();
 }
 
 

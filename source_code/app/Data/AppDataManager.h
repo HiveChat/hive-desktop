@@ -5,8 +5,9 @@
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
 
+#include "../libs/libParsley/src/PLoop.h"
+
 #include <QThread>
-#include <QMutex>
 #include <QDebug>
 
 #include <QJsonDocument>
@@ -29,7 +30,8 @@
 
 class AppDataManager;
 
-class AppDataManager final : public QObject
+class AppDataManager final
+    : public QThread
 {
   Q_OBJECT
 
@@ -46,7 +48,13 @@ public slots:
   void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
   void onUpdatesAvailable();
 
+protected:
+  void run();
+
 private:
+  Parsley::Loop *loop;
+
+
   static HiveDoubleBuffer<NetPacket> inboundNetBuffer;
   static HiveDoubleBuffer<NetPacket> outboundNetBuffer;
 

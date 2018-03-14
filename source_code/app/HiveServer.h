@@ -15,17 +15,17 @@
 #define TCP_BACKLOG 128
 
 
-class UvServer;
+class HiveServer;
 
-class UvServer
+class HiveServer final
     : public QThread
     , public HiveProtocol
 {
   Q_OBJECT
 
 public:
-  explicit UvServer(QObject *parent = 0);
-  ~UvServer();
+  explicit HiveServer(QObject *parent = 0);
+  ~HiveServer();
 
   void quit();
   void sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol = BaseProtocol::Udp);
@@ -34,7 +34,7 @@ protected:
   void run();
 
 private:  
-  static Parsley::Loop *loop;
+  Parsley::Loop *loop;
   static Parsley::TcpServer *tcp_server;
   HiveUdpServer *udp_server;
 

@@ -73,7 +73,6 @@ SOURCES += \
 \
     Gui/Frameworks/Widgets/AvatarWidgets.cpp \
     Log.cpp \
-    UvServer.cpp \
     HiveProtocol.cpp \
     Data/AppDataManager.cpp \
     ../libs/libParsley/src/PAbstractSocket.cpp \
@@ -88,7 +87,8 @@ SOURCES += \
     ../libs/libParsley/src/PTimer.cpp \
     ../libs/libParsley/src/PUtils.cpp \
     ../libs/libParsley/src/Parsley.cpp \
-    HiveDoubleBuffer.cpp
+    HiveDoubleBuffer.cpp \
+    HiveServer.cpp
 \
 
 HEADERS  += \
@@ -126,7 +126,6 @@ HEADERS  += \
 \
     Gui/Frameworks/Widgets/AvatarWidgets.h \
     Log.h \
-    UvServer.h \
     Message.h \
     HiveProtocol.h \
     Data/AppDataManager.h \
@@ -142,7 +141,8 @@ HEADERS  += \
     ../libs/libParsley/src/PTimer.h \
     ../libs/libParsley/src/PUtils.h \
     ../libs/libParsley/src/Parsley.h \
-    HiveDoubleBuffer.h
+    HiveDoubleBuffer.h \
+    HiveServer.h
 
 ICON = Src/hive.icns
 
