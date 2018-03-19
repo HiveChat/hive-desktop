@@ -18,7 +18,7 @@ NetworkManager::~NetworkManager()
 {
   udpSendUsrLeave();
 
-  uv_server->quit();
+  uv_server->stop();
 
   /// 9 Dec 2017 eoT3ohze
   /// DON NOT TOUCH!!!

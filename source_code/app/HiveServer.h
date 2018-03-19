@@ -27,7 +27,7 @@ public:
   explicit HiveServer(QObject *parent = 0);
   ~HiveServer();
 
-  void quit();
+  void stop();
   void sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol = BaseProtocol::Udp);
 
 protected:
@@ -35,7 +35,7 @@ protected:
 
 private:  
   Parsley::Loop *loop;
-  static Parsley::TcpServer *tcp_server;
+  Parsley::TcpServer *tcp_server;
   HiveUdpServer *udp_server;
 
   static int counter;

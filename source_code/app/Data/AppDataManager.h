@@ -54,7 +54,6 @@ protected:
 private:
   Parsley::Loop *loop;
 
-
   static HiveDoubleBuffer<NetPacket> inboundNetBuffer;
   static HiveDoubleBuffer<NetPacket> outboundNetBuffer;
 

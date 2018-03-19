@@ -2,7 +2,6 @@
 
 #include <QThread>
 
-Parsley::TcpServer* HiveServer::tcp_server;
 int HiveServer::counter = 0;
 
 
@@ -17,49 +16,9 @@ HiveServer::~HiveServer()
   delete udp_server;
 }
 
-void
-HiveServer::quit()
+void HiveServer::stop()
 {
-  int result = loop->close();
-  if (result == UV_EBUSY)
-    {
-      uv_walk_cb uvWalkCb = [](uv_handle_t* handle, void* arg) {
-        uv_close_cb uvCloseCb = [](uv_handle_t* handle) {
-          qDebug()<<"closed"<<handle;
-          if (handle != NULL)
-            {
-              free(handle);
-              qDebug()<<"Freed"<<handle;
-            }
-        };
-        uv_close(handle, uvCloseCb);
-      };
-
-      uv_walk(loop->uvHandle()
-              , uvWalkCb
-              , NULL);
-
-      /*!
-       * WARN: DON NOT TOUCH!!!
-       * DATE: 9 Dec 2017 eoT3ohze
-       *  - Only touch when crash on quit!!!
-       *  - don't touch wait number, not sure how this works yet.
-       *  - when wait < [longest timer delay] the chance of crash on quit is high.
-       *  - related to kill wait of this thread and NetworkManager.
-       */
-      wait(2000);
-
-      Parsley::Loop::defaultLoop()->run(UV_RUN_DEFAULT);
-      result = loop->close();
-      if (result)
-        {
-          qDebug() << "failed to close libuv loop: " << uv_err_name(result);
-        }
-      else
-        {
-          qDebug() << "libuv loop is closed successfully!\n";
-        }
-    }
+  loop->close();
   Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
 }
 
@@ -95,7 +54,7 @@ HiveServer::run()
   qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Normal, "UvServer::run()", "Thread Started");
 
-  loop = Parsley::Loop::defaultLoop();
+  loop = new Parsley::Loop();
   udp_server = new HiveUdpServer(loop);
   udp_server->bindCb(std::bind(&HiveServer::udpPacketReady
                                , this
