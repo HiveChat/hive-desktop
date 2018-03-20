@@ -17,6 +17,7 @@ Hive::Hive(int &argc, char **argv)
 
   data_manager = new AppDataManager();
   data_manager->moveToThread(data_thread);
+  data_manager->start();
 
   network_thread = new QThread(this);
   network_thread->start();

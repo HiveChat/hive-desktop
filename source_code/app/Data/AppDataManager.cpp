@@ -7,11 +7,11 @@ AppDataManager::AppDataManager(QObject *parent)
   : QThread(parent)
 {
   initVariable();
-  checkFiles();
-  readSettings();
-  loadUsrList();
-  loadFonts();
-  loadTimerTasks();
+//  checkFiles(); << delete
+//  readSettings();
+//  loadUsrList();
+//  loadFonts();
+//  loadTimerTasks();
 }
 
 /////////////thread
@@ -20,9 +20,15 @@ AppDataManager::~AppDataManager()
   Log::gui(Log::Normal, "AppDataManager::~AppDataManager()", "Successfully destroyed AppDataManager...");
 }
 
+void AppDataManager::stop()
+{
+  loop->close();
+  Log::net(Log::Normal, "AppDataManager::stop()", "Successfully closed uv event loop.");
+}
+
 bool AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
-//  inboundNetBuffer.push_front(*packet);
+  inboundNetBuffer.push_front(*packet);
 }
 
 bool AppDataManager::pushOutboundBuffer(NetPacket *packet)
@@ -310,16 +316,27 @@ void AppDataManager::onUpdatesAvailable()
 
 void AppDataManager::run()
 {
+  initVariable();
   loop = new Parsley::Loop();
 
+  touchDir(Global::data_location_dir.toUtf8().data());
+  touchDir(Global::user_data_dir.toUtf8().data());
+  touchDir(Global::log_dir.toUtf8().data());
+
   loop->run(UV_RUN_DEFAULT);
+
+  readSettings();
+  loadUsrList();
+  loadFonts();
+  loadTimerTasks();
+
 }
 
 void AppDataManager::checkFiles()
 {
-  checkDir(Global::data_location_dir);
-  checkDir(Global::user_data_dir);
-  checkDir(Global::log_dir);
+//  checkDir(Global::data_location_dir);
+//  checkDir(Global::user_data_dir);
+//  checkDir(Global::log_dir);
 }
 
 bool AppDataManager::checkDir(const QString &directory)
@@ -335,6 +352,31 @@ bool AppDataManager::checkDir(const QString &directory)
         }
     }
   return true;
+}
+
+bool AppDataManager::touchFile(const char* path)
+{
+  uv_fs_t r;
+  int ret = uv_fs_open(loop->uvHandle()
+             , &r
+             , path
+             , O_WRONLY | O_CREAT
+             , 666
+             , NULL);
+  uv_fs_req_cleanup(&r);
+  return ret == 0;
+}
+
+bool AppDataManager::touchDir(const char *dir)
+{
+  uv_fs_t r;
+  int ret = uv_fs_mkdir(loop->uvHandle()
+              , &r
+              , dir
+              , 0777
+              , NULL);
+  uv_fs_req_cleanup(&r);
+  return ret == 0;
 }
 
 QJsonDocument AppDataManager::makeDefaultSettings()

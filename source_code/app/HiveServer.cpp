@@ -19,7 +19,7 @@ HiveServer::~HiveServer()
 void HiveServer::stop()
 {
   loop->close();
-  Log::net(Log::Normal, "UvServer::closeUvLoop()", "Successfully closed uv event loop.");
+  Log::net(Log::Normal, "HiveServer::close()", "Successfully closed uv event loop.");
 }
 
 void
@@ -32,7 +32,7 @@ HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol
         uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
 //        udp_server->write("255.255.255.255", 23232, &msg);
 
-        Log::net(Log::Normal, "UvServer::sendTextMessage()", "message sent");
+        Log::net(Log::Normal, "HiveServer::sendTextMessage()", "message sent");
         break;
       }
     case BaseProtocol::Tcp:
@@ -52,7 +52,7 @@ void
 HiveServer::run()
 {
   qDebug()<<"uv thread id: "<<this->currentThreadId();
-  Log::net(Log::Normal, "UvServer::run()", "Thread Started");
+  Log::net(Log::Normal, "HiveServer::run()", "Thread Started");
 
   loop = new Parsley::Loop();
   udp_server = new HiveUdpServer(loop);
@@ -64,7 +64,7 @@ HiveServer::run()
   tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
   loop->run(UV_RUN_DEFAULT);
 
-  Log::net(Log::Normal, "UvServer::run()", "Quit Thread");
+  Log::net(Log::Normal, "HiveServer::run()", "Quit Thread");
 }
 
 void HiveServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
@@ -88,12 +88,12 @@ HiveServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
         {
           Global::g_localHostIP = usrProfileStruct.ip;
         }
-      Log::net(Log::Normal, "UvServer::processHeartBeat", "got heart beat from myself");
+      Log::net(Log::Normal, "HiveServer::processHeartBeat", "got heart beat from myself");
 //      emit getInstance()->usrEntered(usrProfileStruct);
     }
   else
     {
-      Log::net(Log::Normal, "UvServer::processHeartBeat", "got heart beat from others");
+      Log::net(Log::Normal, "HiveServer::processHeartBeat", "got heart beat from others");
 //      emit getInstance()->usrEntered(usrProfileStruct);
     }
 }
@@ -105,10 +105,10 @@ HiveServer::processUsrLeave(QString *usrKey)
     {
 //      emit usrLeft(usrKey); << FIX HERE!!
 
-      qDebug()<<"@UvServer::udpProcessUsrLeft(): Myself left.";
+      qDebug()<<"@HiveServer::udpProcessUsrLeft(): Myself left.";
     }
 
-  qDebug()<<"@UvServer::udpProcessUsrLeft(): Someone left.";
+  qDebug()<<"@HiveServer::udpProcessUsrLeft(): Someone left.";
 //  emit usrLeft(usrKey); << FIX HERE!!
 }
 

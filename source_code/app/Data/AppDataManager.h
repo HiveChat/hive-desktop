@@ -39,6 +39,8 @@ public:
   explicit AppDataManager(QObject *parent = 0);
   ~AppDataManager();
 
+  void stop();
+
   static bool pushInboundBuffer(NetPacket *packet);
   static bool pushOutboundBuffer(NetPacket *packet);
 
@@ -71,6 +73,8 @@ private:
   inline void loadTimerTasks();
 
   inline bool checkDir(const QString &directory);
+  inline bool touchFile(const char *path);
+  inline bool touchDir(const char *dir);
   inline QString makeUuid();
   inline QJsonDocument makeDefaultSettings();
   inline QJsonDocument makeUpdateJson(const int version[]);
