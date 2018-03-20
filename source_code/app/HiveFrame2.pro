@@ -16,16 +16,12 @@ CONFIG   += c++14
 
 macx{
     QT   += macextras
-
-    INCLUDEPATH += /usr/local/include/
-    QMAKE_LFLAGS += -L/usr/local/lib -luv
 }
 
+
 unix{
-    INCLUDEPATH += /usr/local/include/
-    LIBS  += -L/usr/local/lib -luv
-    QMAKE_LFLAGS += -L/usr/local/lib -luv
-    QMAKE_CXXFLAGS += -std=c++14
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libuv
 }
 
 win32{
@@ -151,5 +147,6 @@ RESOURCES += \
     Src/img.qrc \
     Src/font.qrc
 #    Src/icon.qrc
+
 
 
