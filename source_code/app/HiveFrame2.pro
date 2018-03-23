@@ -16,12 +16,10 @@ CONFIG   += c++14
 
 macx{
     QT   += macextras
-    infoplist = $$cat($$PWD/app-Info.plist, blob)
-    infoplist = $$replace(infoplist, @MACOSX_DEPLOYMENT_TARGET@, $$QMAKE_MACOSX_DEPLOYMENT_TARGET)
-    infoplist = $$replace(infoplist, @QTCREATOR_COPYRIGHT_YEAR@, $$QTCREATOR_COPYRIGHT_YEAR)
-    infoplist = $$replace(infoplist, @PRODUCT_BUNDLE_IDENTIFIER@, $$PRODUCT_BUNDLE_IDENTIFIER)
-    write_file($$OUT_PWD/Info.plist, infoplist)
-    QMAKE_INFO_PLIST = $$OUT_PWD/Info.plist
+    QMAKE_INFO_PLIST = ./Info.plist
+    plist.path = "$$DESTDIR/$$join(TARGET,,,.app)/Contents"
+    plist.files = ./Info.plist
+    INSTALLS += plist
 }
 
 
