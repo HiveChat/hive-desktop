@@ -3,15 +3,15 @@
 HiveDoubleBuffer<NetPacket> AppDataManager::inboundNetBuffer;
 HiveDoubleBuffer<NetPacket> AppDataManager::outboundNetBuffer;
 
+std::map<QString, int*> AppDataManager::settings_int_hash;
+std::map<QString, QColor*> AppDataManager::settings_qcolor_hash;
+std::map<QString, QString*> AppDataManager::settings_qstring_hash;
+std::map<QString, bool*> AppDataManager::settings_bool_hash;
+
 AppDataManager::AppDataManager(QObject *parent)
   : QThread(parent)
 {
-  initVariable();
-//  checkFiles(); << delete
-//  readSettings();
-//  loadUsrList();
-//  loadFonts();
-//  loadTimerTasks();
+
 }
 
 /////////////thread
@@ -332,28 +332,6 @@ void AppDataManager::run()
 
 }
 
-void AppDataManager::checkFiles()
-{
-//  checkDir(Global::data_location_dir);
-//  checkDir(Global::user_data_dir);
-//  checkDir(Global::log_dir);
-}
-
-bool AppDataManager::checkDir(const QString &directory)
-{
-  QDir dir(directory);
-  if(!dir.exists())
-    {
-      //log here
-      if(!dir.mkdir(directory))
-        {
-          //log here
-          return false;
-        }
-    }
-  return true;
-}
-
 bool AppDataManager::touchFile(const char* path)
 {
   uv_fs_t r;
@@ -449,6 +427,24 @@ void AppDataManager::initVariable()
 
 void AppDataManager::readSettings()
 {
+//  uv_fs_t r;
+//  uv_fs_open(loop->uvHandle()
+//             , &r
+//             , Global::settings_file_dir
+//             , O_RDWR
+//             , 644
+//             , [](uv_fs_t *req){
+//      if (req->result >= 0) {
+//          iov = uv_buf_init(buffer, sizeof(buffer));
+//          uv_fs_read(uv_default_loop(), &read_req, req->result,
+//                     &iov, 1, -1, on_read);
+//        }
+//      else {
+//          fprintf(stderr, "error opening file: %s\n", uv_strerror((int)req->result));
+//        }
+//    });
+
+
   QFile file(Global::settings_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {

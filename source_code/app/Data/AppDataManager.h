@@ -65,14 +65,12 @@ private:
    * Functions called by constructor AppDataManager::AppDataManager(), only called once when during initialization.
    */
   inline void initVariable();
-  inline void checkFiles();
   inline void readSettings();
   inline void loadUsrList();
   inline void loadFonts();
   inline void loadUpdates();
   inline void loadTimerTasks();
 
-  inline bool checkDir(const QString &directory);
   inline bool touchFile(const char *path);
   inline bool touchDir(const char *dir);
   inline QString makeUuid();
@@ -85,10 +83,10 @@ private:
   /*!
    * Maps for storing settings
    */
-  std::map<QString, int*> settings_int_hash;
-  std::map<QString, QColor*> settings_qcolor_hash;
-  std::map<QString, QString*> settings_qstring_hash;
-  std::map<QString, bool*> settings_bool_hash;
+  static std::map<QString, int*> settings_int_hash;
+  static std::map<QString, QColor*> settings_qcolor_hash;
+  static std::map<QString, QString*> settings_qstring_hash;
+  static std::map<QString, bool*> settings_bool_hash;
 
 private slots:
   void writeSettings();
