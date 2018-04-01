@@ -71,6 +71,7 @@ void HiveServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
 {
   NetPacket *packet = new NetPacket(ip, data.base, data.len, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
+  qDebug()<<"packet received";
 }
 
 

@@ -10,13 +10,13 @@
 #include <QMenu>
 #include <QAction>
 
-class CentralWidget : public QWidget
+class Window : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit CentralWidget(QWidget *parent = 0);
-  ~CentralWidget();
+  explicit Window(QWidget *parent = 0);
+  ~Window();
 
   GuiTabBlock *gui_tab_block;
   MainBlock *gui_main_block;

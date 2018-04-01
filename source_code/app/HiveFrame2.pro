@@ -44,7 +44,6 @@ SOURCES += \
     GlobalType.cpp \
     UsrData.cpp \
 \
-    Gui/CentralWidget.cpp \
     Gui/TabBlock.cpp \
     Gui/HomeTab.cpp \
     Gui/MainBlock.cpp \
@@ -89,7 +88,8 @@ SOURCES += \
     ../libs/libParsley/src/Parsley.cpp \
     HiveDoubleBuffer.cpp \
     HiveServer.cpp \
-    ../libs/libParsley/src/PFile.cpp
+    ../libs/libParsley/src/PFile.cpp \
+    Gui/Window.cpp
 \
 
 HEADERS  += \
@@ -98,7 +98,6 @@ HEADERS  += \
     GlobalType.h \
     UsrData.h \
 \
-    Gui/CentralWidget.h \
     Gui/TabBlock.h \
     Gui/HomeTab.h \
     Gui/MainBlock.h \
@@ -144,7 +143,8 @@ HEADERS  += \
     ../libs/libParsley/src/Parsley.h \
     HiveDoubleBuffer.h \
     HiveServer.h \
-    ../libs/libParsley/src/PFile.h
+    ../libs/libParsley/src/PFile.h \
+    Gui/Window.h
 
 ICON = Src/hive.icns
 

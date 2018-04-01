@@ -6,6 +6,7 @@
 #include "HiveDoubleBuffer.h"
 
 #include "../libs/libParsley/src/PLoop.h"
+#include "../libs/libParsley/src/PFile.h"
 
 #include <QThread>
 #include <QDebug>
@@ -71,7 +72,7 @@ private:
   inline void loadUpdates();
   inline void loadTimerTasks();
 
-  inline bool touchFile(const char *path);
+  inline bool touchFile(char *path);
   inline bool touchDir(const char *dir);
   inline QString makeUuid();
   inline QJsonDocument makeDefaultSettings();

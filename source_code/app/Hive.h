@@ -4,7 +4,7 @@
 #include "GlobalData.h"
 #include "Data/AppDataManager.h"
 #include "Network/NetworkManager.h"
-#include "Gui/CentralWidget.h"
+#include "Gui/Window.h"
 
 
 #include <QApplication>
@@ -25,7 +25,7 @@ public:
   Hive(int &argc, char **argv);
   ~Hive();
 
-  CentralWidget *gui_central_widget;
+  Window *window;
   AppDataManager *data_manager;
   NetworkManager *network_manager;
 
@@ -33,7 +33,7 @@ public:
   QThread *network_thread;
 
 protected:
-  bool event(QEvent* event);
+  bool event(QEvent* e);
 
 
 //private:

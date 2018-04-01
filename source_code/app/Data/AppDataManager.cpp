@@ -332,17 +332,12 @@ void AppDataManager::run()
 
 }
 
-bool AppDataManager::touchFile(const char* path)
+bool AppDataManager::touchFile(char* path)
 {
-  uv_fs_t r;
-  int ret = uv_fs_open(loop->uvHandle()
-             , &r
-             , path
-             , O_WRONLY | O_CREAT
-             , 666
-             , NULL);
-  uv_fs_req_cleanup(&r);
-  return ret == 0;
+  Parsley::File f(loop);
+  int ret = f.open(path, O_WRONLY | O_CREAT, 0644, Parsley::Sync);
+  f.close(Parsley::Async);
+  return ret;
 }
 
 bool AppDataManager::touchDir(const char *dir)
@@ -351,7 +346,7 @@ bool AppDataManager::touchDir(const char *dir)
   int ret = uv_fs_mkdir(loop->uvHandle()
               , &r
               , dir
-              , 0777
+              , 0755
               , NULL);
   uv_fs_req_cleanup(&r);
   return ret == 0;

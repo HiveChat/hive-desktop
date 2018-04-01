@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 {
   Hive hiveApp(argc, argv);
   loadMyStyle();
-  hiveApp.gui_central_widget->show();
+  hiveApp.window->show();
 
   return hiveApp.exec();
 }

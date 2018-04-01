@@ -4,8 +4,8 @@ Hive::Hive(int &argc, char **argv)
     : QApplication(argc, argv)
 {
   Global::window_dpr = this->devicePixelRatio();
-#ifdef Q_OS_OSX
 
+#ifdef Q_OS_OSX
   QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
 #endif
@@ -25,16 +25,14 @@ Hive::Hive(int &argc, char **argv)
   network_manager = new NetworkManager();
   network_manager->moveToThread(network_thread);
 
-  //QObject not compatible to QWidget para, delete obj manually
-  gui_central_widget = new CentralWidget();
+  window = new Window();
 
   ////connect
-//  qRegisterMetaType<Bee> ("Bee");
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   connect(data_manager, &AppDataManager::updatesAvailable,
-          gui_central_widget, &CentralWidget::onUpdateAvailable,
+          window, &Window::onUpdateAvailable,
           Qt::AutoConnection);
 
 //  connect(network_manager->uv_server, &UvServer::usrEntered,
@@ -44,20 +42,20 @@ Hive::Hive(int &argc, char **argv)
           data_manager, &AppDataManager::onUpdatesAvailable,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::usrProfileLoaded,
-          gui_central_widget, &CentralWidget::addUsr,
+          window, &Window::addUsr,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::usrProfileChanged,
-          gui_central_widget, &CentralWidget::changeUsr,
+          window, &Window::changeUsr,
           Qt::AutoConnection);
 
-  connect(gui_central_widget->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
+  connect(window->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,
           Qt::AutoConnection);
   connect(network_manager, &NetworkManager::messageRecieved,
           data_manager, &AppDataManager::onMessageCome,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::messageLoaded,
-          gui_central_widget, &CentralWidget::onMessageReceived,
+          window, &Window::onMessageReceived,
           Qt::AutoConnection);
 
 #ifdef Q_OS_OSX
@@ -72,8 +70,8 @@ Hive::~Hive()
   QtMac::setBadgeLabelText("Bye");
 #endif
 
-  gui_central_widget->close();
-  gui_central_widget->deleteLater();
+  window->close();
+  window->deleteLater();
 
   data_manager->deleteLater();
   network_manager->deleteLater();
@@ -81,9 +79,7 @@ Hive::~Hive()
   network_thread->quit();
   data_thread->quit();
 
-  /// 9 Dec 2017 eoT3ohze
-  /// DO NOT TOUCH!!
-  /// Only touch when crash on quit!!!
+
   if(!network_thread->wait(3000))
     {
       Log::gui(Log::Error, "Hive::~Hive()", "Network thread is terminated due to timeout.");
@@ -116,20 +112,20 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
   network_manager->udpSendMessage(json_object);
 }
 
-bool Hive::event(QEvent* event)
+bool Hive::event(QEvent* e)
 {
-    switch (event->type()) {
+    switch (e->type()) {
       case QEvent::ApplicationActivate:
         {
-          gui_central_widget->showNormal();
+          window->showNormal();
           return true;
         }
 #ifdef Q_OS_OSX
       case QEvent::FileOpen:
         {
-          QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(event);
+          QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(e);
           qDebug() << "Open file" << openEvent->file();
-          gui_central_widget->setWindowTitle(QString(openEvent->file()));
+          window->setWindowTitle(QString(openEvent->file()));
           return true;
         }
 #endif
@@ -139,7 +135,7 @@ bool Hive::event(QEvent* event)
         }
     }
 
-    return QApplication::event(event);
+    return QApplication::event(e);
 }
 
 

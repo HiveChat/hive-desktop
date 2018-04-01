@@ -1,7 +1,7 @@
-#include "CentralWidget.h"
+#include "Window.h"
 
 
-CentralWidget::CentralWidget(QWidget *parent)
+Window::Window(QWidget *parent)
   : QWidget(parent)
   , gui_tab_block(new GuiTabBlock(this))
   , gui_main_block(new MainBlock(this))
@@ -56,7 +56,7 @@ CentralWidget::CentralWidget(QWidget *parent)
   timer->start(2000);
 
   connect(gui_tab_block->chat_tab->comb_scroll_widget, &ChatTab_comb_scroll_widget::combWidgetClicked,
-          this, &CentralWidget::onCombWidgetClicked);
+          this, &Window::onCombWidgetClicked);
 
   connect(gui_tab_block->home_tab->welcome_btn, &MenuButton::clicked, 
           gui_main_block, &MainBlock::displayStaticStack);
@@ -77,7 +77,7 @@ CentralWidget::CentralWidget(QWidget *parent)
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
   connect(show_action, &QAction::triggered, this, &QWidget::showNormal);
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
-  connect(tray_icon, &QSystemTrayIcon::activated, this, &CentralWidget::showNormal);
+  connect(tray_icon, &QSystemTrayIcon::activated, this, &Window::showNormal);
 
   foreach(UsrData *usrData, Global::offline_usr_data_hash.values())
     {
@@ -85,12 +85,12 @@ CentralWidget::CentralWidget(QWidget *parent)
     }
 }
 
-CentralWidget::~CentralWidget()
+Window::~Window()
 {
   qDebug()<<"\n@Hive UI is destructed";
 }
 
-void CentralWidget::onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe)
+void Window::onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe)
 {
   if(fromMe)
     {
@@ -119,13 +119,13 @@ void CentralWidget::onMessageReceived(const Message::TextMessage &messageStruct,
     }
 }
 
-void CentralWidget::onCombWidgetClicked(const QString &usrKey)
+void Window::onCombWidgetClicked(const QString &usrKey)
 {
   gui_main_block->displayChatStack(usrKey);
   gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
-void CentralWidget::addUsr(UsrData *userData)
+void Window::addUsr(UsrData *userData)
 {
   if(gui_tab_block->chat_tab->comb_scroll_widget->contains(userData->getKey()))
     {
@@ -136,12 +136,12 @@ void CentralWidget::addUsr(UsrData *userData)
   gui_main_block->gui_home_stack_list->addUsr(userData->getUsrProfileStruct());
 }
 
-void CentralWidget::delUsr(UsrData *userData)
+void Window::delUsr(UsrData *userData)
 {
   userData;
 }
 
-void CentralWidget::changeUsr(UsrData *userData)
+void Window::changeUsr(UsrData *userData)
 {
   qDebug()<<"updated GUI";
   gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfileStruct());
@@ -149,7 +149,7 @@ void CentralWidget::changeUsr(UsrData *userData)
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->getUsrProfileStruct());
 }
 
-void CentralWidget::onUpdateAvailable()
+void Window::onUpdateAvailable()
 {
   if(Global::settings.notification.update_notification
      && Global::settings.update.auto_check_update)
