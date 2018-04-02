@@ -340,16 +340,9 @@ bool AppDataManager::touchFile(char* path)
   return ret;
 }
 
-bool AppDataManager::touchDir(const char *dir)
+bool AppDataManager::touchDir(char *dir)
 {
-  uv_fs_t r;
-  int ret = uv_fs_mkdir(loop->uvHandle()
-              , &r
-              , dir
-              , 0755
-              , NULL);
-  uv_fs_req_cleanup(&r);
-  return ret == 0;
+  return Parsley::File::mkdir(dir, 0755, loop, Parsley::Sync) == 0;
 }
 
 QJsonDocument AppDataManager::makeDefaultSettings()
@@ -422,24 +415,6 @@ void AppDataManager::initVariable()
 
 void AppDataManager::readSettings()
 {
-//  uv_fs_t r;
-//  uv_fs_open(loop->uvHandle()
-//             , &r
-//             , Global::settings_file_dir
-//             , O_RDWR
-//             , 644
-//             , [](uv_fs_t *req){
-//      if (req->result >= 0) {
-//          iov = uv_buf_init(buffer, sizeof(buffer));
-//          uv_fs_read(uv_default_loop(), &read_req, req->result,
-//                     &iov, 1, -1, on_read);
-//        }
-//      else {
-//          fprintf(stderr, "error opening file: %s\n", uv_strerror((int)req->result));
-//        }
-//    });
-
-
   QFile file(Global::settings_file_dir);
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {

@@ -7,6 +7,7 @@
 
 #include "../libs/libParsley/src/PLoop.h"
 #include "../libs/libParsley/src/PFile.h"
+#include "../libs/libParsley/src/PTimer.h"
 
 #include <QThread>
 #include <QDebug>
@@ -73,7 +74,7 @@ private:
   inline void loadTimerTasks();
 
   inline bool touchFile(char *path);
-  inline bool touchDir(const char *dir);
+  inline bool touchDir(char *dir);
   inline QString makeUuid();
   inline QJsonDocument makeDefaultSettings();
   inline QJsonDocument makeUpdateJson(const int version[]);
