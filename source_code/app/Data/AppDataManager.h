@@ -1,11 +1,12 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
+#include <functional>
+
 #include "GlobalData.h"
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
 
-#include "../libs/libParsley/src/PLoop.h"
 #include "../libs/libParsley/src/PFile.h"
 #include "../libs/libParsley/src/PTimer.h"
 
@@ -58,8 +59,10 @@ protected:
 private:
   Parsley::Loop *loop;
 
-  static HiveDoubleBuffer<NetPacket> inboundNetBuffer;
-  static HiveDoubleBuffer<NetPacket> outboundNetBuffer;
+  static HiveDoubleBuffer<NetPacket*> inboundNetBuffer;
+  static HiveDoubleBuffer<NetPacket*> outboundNetBuffer;
+  Parsley::Timer *inbound_timer;
+  void readInboundNetBuffer();
 
   void checkSettings();
 

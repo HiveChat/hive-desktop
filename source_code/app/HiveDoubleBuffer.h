@@ -77,12 +77,11 @@ T HiveDoubleBuffer<T>::front()
           flip();
           if(outbound_buffer->empty())
             {
-              printf("buffer empty \n");
-              return 0;
+              return nullptr;
             }
         }
       reading = true;
-      char *item = outbound_buffer->front();
+      T item = outbound_buffer->front();
       reading = false;
       return item;
     }
@@ -103,7 +102,6 @@ bool HiveDoubleBuffer<T>::pop_front()
           flip();
           if(outbound_buffer->empty())
             {
-              printf("buffer empty \n");
               return false;
             }
         }
@@ -132,7 +130,6 @@ void HiveDoubleBuffer<T>::flip()
       outbound_buffer = temp;
       break;
     }
-  printf("flipped\n");
   isFliping = false;
 }
 

@@ -93,7 +93,7 @@ void CombWidget::setBadgeNumber(const int &num)
 
 //////events
 
-void CombWidget::paintEvent(QPaintEvent *event)
+void CombWidget::paintEvent(QPaintEvent *)
 {
   QRectF rectangle(0, 0, this->width(), this->height());
   QPainter painter;
@@ -104,7 +104,7 @@ void CombWidget::paintEvent(QPaintEvent *event)
   painter.end();
 }
 
-void CombWidget::mouseReleaseEvent(QMouseEvent *event)
+void CombWidget::mouseReleaseEvent(QMouseEvent *)
 {
   mousePressed = false;
   this->setHidden(false);
@@ -151,19 +151,19 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void CombWidget::enterEvent(QEvent *event)
+void CombWidget::enterEvent(QEvent *)
 {
   hovered = true;
   this->update();
 }
 
-void CombWidget::leaveEvent(QEvent *event)
+void CombWidget::leaveEvent(QEvent *)
 {
   hovered = false;
   this->update();
 }
 
-void CombWidget::dragMoveEvent(QEvent *event)
+void CombWidget::dragMoveEvent(QEvent *)
 {
 
 }

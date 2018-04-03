@@ -77,7 +77,6 @@ SOURCES += \
     ../libs/libParsley/src/PAbstractSocket.cpp \
     ../libs/libParsley/src/PTcpSocket.cpp \
     ../libs/libParsley/src/PUdpSocket.cpp \
-    ../libs/libParsley/src/PLoop.cpp \
     ../libs/libParsley/src/PTcpServer.cpp \
     HiveUdpServer.cpp \
     ../libs/libParsley/src/PAddress.cpp \
@@ -89,7 +88,8 @@ SOURCES += \
     HiveDoubleBuffer.cpp \
     HiveServer.cpp \
     ../libs/libParsley/src/PFile.cpp \
-    Gui/Window.cpp
+    Gui/Window.cpp \
+    ../libs/libParsley/src/PCheck.cpp
 \
 
 HEADERS  += \
@@ -133,7 +133,6 @@ HEADERS  += \
     ../libs/libParsley/src/PTcpServer.h \
     ../libs/libParsley/src/PTcpSocket.h \
     ../libs/libParsley/src/PUdpSocket.h \
-    ../libs/libParsley/src/PLoop.h \
     HiveUdpServer.h \
     ../libs/libParsley/src/PAddress.h \
     HiveAbstractServer.h \
@@ -144,7 +143,8 @@ HEADERS  += \
     HiveDoubleBuffer.h \
     HiveServer.h \
     ../libs/libParsley/src/PFile.h \
-    Gui/Window.h
+    Gui/Window.h \
+    ../libs/libParsley/src/PCheck.h
 
 ICON = Src/hive.icns
 

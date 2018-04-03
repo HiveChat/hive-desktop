@@ -29,7 +29,7 @@ public:
   AppDataManager *data_manager;
   NetworkManager *network_manager;
 
-  QThread *data_thread;
+//  QThread *data_thread;
   QThread *network_thread;
 
 protected:

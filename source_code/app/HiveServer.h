@@ -2,7 +2,6 @@
 #define UVTCPSERVER_H
 
 #include "../libs/libParsley/src/PTcpServer.h"
-#include "../libs/libParsley/src/PLoop.h"
 
 #include "HiveProtocol.h"
 #include "HiveUdpServer.h"

@@ -1,7 +1,7 @@
 #include "AppDataManager.h"
 
-HiveDoubleBuffer<NetPacket> AppDataManager::inboundNetBuffer;
-HiveDoubleBuffer<NetPacket> AppDataManager::outboundNetBuffer;
+HiveDoubleBuffer<NetPacket*> AppDataManager::inboundNetBuffer;
+HiveDoubleBuffer<NetPacket*> AppDataManager::outboundNetBuffer;
 
 std::map<QString, int*> AppDataManager::settings_int_hash;
 std::map<QString, QColor*> AppDataManager::settings_qcolor_hash;
@@ -22,18 +22,19 @@ AppDataManager::~AppDataManager()
 
 void AppDataManager::stop()
 {
+  inbound_timer->stop();
   loop->close();
   Log::net(Log::Normal, "AppDataManager::stop()", "Successfully closed uv event loop.");
 }
 
 bool AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
-  inboundNetBuffer.push_front(*packet);
+  inboundNetBuffer.push_front(packet);
 }
 
 bool AppDataManager::pushOutboundBuffer(NetPacket *packet)
 {
-  outboundNetBuffer.push_front(*packet);
+  outboundNetBuffer.push_front(packet);
 }
 
 void AppDataManager::checkSettings()
@@ -317,19 +318,37 @@ void AppDataManager::onUpdatesAvailable()
 void AppDataManager::run()
 {
   initVariable();
+
   loop = new Parsley::Loop();
+
+  inbound_timer = new Parsley::Timer(loop);
+  inbound_timer->bindCb(std::bind(&AppDataManager::readInboundNetBuffer, this));
+  inbound_timer->start(0, 10);
 
   touchDir(Global::data_location_dir.toUtf8().data());
   touchDir(Global::user_data_dir.toUtf8().data());
   touchDir(Global::log_dir.toUtf8().data());
 
-  loop->run(UV_RUN_DEFAULT);
+  Parsley::File file(loop);
+  file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::Sync);
+  std::cout<<file.readAll();
+  file.close();
 
   readSettings();
   loadUsrList();
   loadFonts();
   loadTimerTasks();
 
+  loop->run(UV_RUN_DEFAULT);
+}
+
+void AppDataManager::readInboundNetBuffer()
+{
+  if(inboundNetBuffer.front())
+    {
+      qDebug()<<inboundNetBuffer.front()->data;
+    }
+  inboundNetBuffer.pop_front();
 }
 
 bool AppDataManager::touchFile(char* path)

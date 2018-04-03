@@ -30,12 +30,12 @@ protected:
   bool mousePressed = false;
   QMouseEvent *mouseEvent;
 
-  void paintEvent(QPaintEvent  *event);
-  void mouseReleaseEvent(QMouseEvent *event);
+  void paintEvent(QPaintEvent  *);
+  void mouseReleaseEvent(QMouseEvent *);
   void mousePressEvent(QMouseEvent *event);
-  void enterEvent(QEvent *event );
+  void enterEvent(QEvent *);
   void leaveEvent(QEvent *);
-  void dragMoveEvent(QEvent *event);
+  void dragMoveEvent(QEvent *);
 
 private:
   AvatarButton *avatar;
@@ -51,7 +51,6 @@ private:
   QString offline_dot = "<span style=\" color:#ed403f;\">●</span>";
   QString unstable_dot = "<span style=\" color:#ffb500;\">●</span>";
 
-
   QPalette hover_palette;
   QColor default_window_color = Global::color_tab;
   QColor hovered_window_color = QColor(255,175,0,161);
@@ -62,12 +61,8 @@ private:
   UsrProfileStruct usr_profile;
   QString getSubNetStr(const QString &ipAddr);
 
-
-
 signals:
   void clicked(const QString &usrKey);
-
-
 
 };
 

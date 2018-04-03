@@ -12,11 +12,7 @@ Hive::Hive(int &argc, char **argv)
 
   qDebug()<< "xx:xx:xx GUI_NORM  Hive::Hive() Main Thread Started: "<< this->thread()->currentThreadId();
 
-  data_thread = new QThread(this);
-  data_thread->start();
-
   data_manager = new AppDataManager();
-  data_manager->moveToThread(data_thread);
   data_manager->start();
 
   network_thread = new QThread(this);
@@ -73,11 +69,11 @@ Hive::~Hive()
   window->close();
   window->deleteLater();
 
-  data_manager->deleteLater();
+  //! network_manager should be deleted to call destructor of NetworkManager, which closes uv loop in the child thread of NetworkManager
   network_manager->deleteLater();
 
   network_thread->quit();
-  data_thread->quit();
+  data_manager->quit();
 
 
   if(!network_thread->wait(3000))
@@ -87,15 +83,15 @@ Hive::~Hive()
       network_thread->wait(3000);
     }
 
-  if(!data_thread->wait(500))
+  if(!data_manager->wait(500))
     {
       Log::gui(Log::Error, "Hive::~Hive()", "Data thread is terminated due to timeout.");
-      data_thread->terminate();
-      data_thread->wait(100);
+      data_manager->terminate();
+      data_manager->wait(100);
     }
 
+  data_manager->deleteLater();
   network_thread->deleteLater();
-  data_thread->deleteLater();
 
   Log::gui(Log::Normal, "Hive::~Hive()", "Destroyed App");
 }
