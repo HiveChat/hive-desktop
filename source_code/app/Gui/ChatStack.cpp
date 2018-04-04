@@ -68,14 +68,14 @@ void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fr
 
 //////////////////////////bottom//////////////////////////////////////
 
-GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWidget(parent)
+ChatStack_message_editor::ChatStack_message_editor(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
-  text_editor = new GuiTextEdit(this);
+  text_editor = new TextEdit(this);
   text_editor->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   text_editor->setFrameStyle(QFrame::NoFrame);
   text_editor->setFont(Global::font_chatTextEditor);
@@ -187,14 +187,14 @@ GuiChatStack_message_editor::GuiChatStack_message_editor(QWidget *parent) : QWid
   this->setMaximumHeight(130);
 }
 
-GuiChatStack_message_editor::~GuiChatStack_message_editor()
+ChatStack_message_editor::~ChatStack_message_editor()
 {
 
 }
 
 /// Event filter: capture QEvent outside the class
 ///   text_editor->installEventFilter(this);
-bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
+bool ChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 {
   Q_ASSERT(obj == text_editor);
   if(e->type() == QEvent::KeyPress)
@@ -237,24 +237,24 @@ bool GuiChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
 }
 
 
-GuiTextEdit::GuiTextEdit(QWidget *parent)
+TextEdit::TextEdit(QWidget *parent)
 {
   this->setParent(parent);
 }
 
-GuiTextEdit::~GuiTextEdit()
+TextEdit::~TextEdit()
 {
 
 }
 
 
 
-void GuiTextEdit::dragEnterEvent(QDragEnterEvent *event)
+void TextEdit::dragEnterEvent(QDragEnterEvent *event)
 {
   event->accept();
 }
 
-void GuiTextEdit::dropEvent(QDropEvent *event)
+void TextEdit::dropEvent(QDropEvent *event)
 {
   QList<QUrl> url_list = event->mimeData()->urls();
   if(url_list.isEmpty())
@@ -285,7 +285,7 @@ void GuiTextEdit::dropEvent(QDropEvent *event)
 
 
 
-GuiChatStack::GuiChatStack(QWidget *parent)
+ChatStack::ChatStack(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Profile);
 
@@ -305,7 +305,7 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   scroll_area->setWidget(chat_widget);
   scroll_area->setFrameStyle(0);
 
-  message_editor = new GuiChatStack_message_editor(this);
+  message_editor = new ChatStack_message_editor(this);
 
   ////main layout
 //  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
@@ -320,10 +320,10 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   main_layout->addWidget(bottom_line);
   main_layout->addWidget(message_editor);
 
-  connect(message_editor, &GuiChatStack_message_editor::sendTriggered,
-          this, &GuiChatStack::onSendButtonClicked);
+  connect(message_editor, &ChatStack_message_editor::sendTriggered,
+          this, &ChatStack::onSendButtonClicked);
   connect(message_editor->send_btn, &LabelButton::clicked,
-          this, &GuiChatStack::onSendButtonClicked);
+          this, &ChatStack::onSendButtonClicked);
 //  connect(scroll_area->verticalScrollBar(), &QScrollBar::sliderReleased,
 //          [this](){
 //            Log::gui(Log::Normal, "hello()", "hello");
@@ -332,12 +332,12 @@ GuiChatStack::GuiChatStack(QWidget *parent)
   this->setParent(parent);
 }
 
-GuiChatStack::~GuiChatStack()
+ChatStack::~ChatStack()
 {
   //  this->set
 }
 
-bool GuiChatStack::refreshProfile(const QString &usrKey)
+bool ChatStack::refreshProfile(const QString &usrKey)
 {
   if(!this->isDisplaying(usrKey))
     {
@@ -352,7 +352,7 @@ bool GuiChatStack::refreshProfile(const QString &usrKey)
     }
 }
 
-bool GuiChatStack::refreshMessage(const QString &usrKey)
+bool ChatStack::refreshMessage(const QString &usrKey)
 {
   if(!this->isDisplaying(usrKey))
     {
@@ -366,12 +366,12 @@ bool GuiChatStack::refreshMessage(const QString &usrKey)
     }
 }
 
-void GuiChatStack::setUsrData(UsrData *usrData)
+void ChatStack::setUsrData(UsrData *usrData)
 {
   usr_data = usrData;
 }
 
-void GuiChatStack::updateFileTranProgress()
+void ChatStack::updateFileTranProgress()
 {
 //  if(GlobalData::file_tran_progress_hash.contains(usr_data->key()))
 //  {
@@ -387,7 +387,7 @@ void GuiChatStack::updateFileTranProgress()
 //  }
 }
 
-void GuiChatStack::display(const QString &usrKey)
+void ChatStack::display(const QString &usrKey)
 {
   UsrData *temp_usr_data;
   if(Global::online_usr_data_hash.contains(usrKey))
@@ -451,18 +451,18 @@ void GuiChatStack::display(const QString &usrKey)
     }
 }
 
-bool GuiChatStack::isDisplaying(const QString &usrKey)
+bool ChatStack::isDisplaying(const QString &usrKey)
 {
   return (usrKey == usr_data->getKey());
 }
 
-void GuiChatStack::dragEnterEvent(QDragEnterEvent *event)
+void ChatStack::dragEnterEvent(QDragEnterEvent *event)
 {
   event->accept();
 
 }
 
-void GuiChatStack::dropEvent(QDropEvent *event)
+void ChatStack::dropEvent(QDropEvent *event)
 {
   qDebug()<<"#GuiChatStack::dropEvent(): file entered.";
   QList<QUrl> urls = event->mimeData()->urls();
@@ -477,7 +477,7 @@ void GuiChatStack::dropEvent(QDropEvent *event)
     }
 }
 
-void GuiChatStack::flipUnreadMessage()
+void ChatStack::flipUnreadMessage()
 {
   Log::gui(Log::Normal, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
   if(usr_data->getUnreadMessageNumber() != 0)
@@ -499,7 +499,7 @@ void GuiChatStack::flipUnreadMessage()
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum()+100);
 }
 
-void GuiChatStack::flipLatestMessage(const bool &clear)
+void ChatStack::flipLatestMessage(const bool &clear)
 {
   if(clear)
     {
@@ -520,7 +520,7 @@ void GuiChatStack::flipLatestMessage(const bool &clear)
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
 }
 
-void GuiChatStack::flipUpMessage(const bool &clear)
+void ChatStack::flipUpMessage(const bool &clear)
 {
   if(clear)
     {
@@ -528,7 +528,7 @@ void GuiChatStack::flipUpMessage(const bool &clear)
     }
 }
 
-void GuiChatStack::flipDownMessage(const bool &clear)
+void ChatStack::flipDownMessage(const bool &clear)
 {
   if(clear)
     {
@@ -536,7 +536,7 @@ void GuiChatStack::flipDownMessage(const bool &clear)
     }
 }
 
-void GuiChatStack::onSendButtonClicked()
+void ChatStack::onSendButtonClicked()
 {
   if(key_lock)
     {
@@ -623,7 +623,7 @@ void GuiChatStack::onSendButtonClicked()
   key_lock = false;
 }
 
-void GuiChatStack::onKeyEnterTriggered(bool &pressed)
+void ChatStack::onKeyEnterTriggered(bool &pressed)
 {
   if(easter_animating)
     {

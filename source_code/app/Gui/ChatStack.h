@@ -19,19 +19,19 @@
 #include <QProgressBar>
 #include <QVariantAnimation>
 
-class GuiTextEdit;
+class TextEdit;
 class ChatStack_chat_widget;
-class GuiChatStack_message_editor;
-class GuiChatStack;
+class ChatStack_message_editor;
+class ChatStack;
 
 
-class GuiTextEdit : public QTextEdit
+class TextEdit : public QTextEdit
 {
   Q_OBJECT
 
 public:
-  explicit GuiTextEdit(QWidget *parent = 0);
-  ~GuiTextEdit();
+  explicit TextEdit(QWidget *parent = 0);
+  ~TextEdit();
 
 protected:
 ///Do not delete!
@@ -74,17 +74,17 @@ public slots:
 
 
 //////////////////////////bottom//////////////////////////////////////
-class GuiChatStack_message_editor : public QWidget
+class ChatStack_message_editor : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiChatStack_message_editor(QWidget *parent = 0);
-  ~GuiChatStack_message_editor();
+  explicit ChatStack_message_editor(QWidget *parent = 0);
+  ~ChatStack_message_editor();
 
   QString currentFileName() {return current_file_name;}
 
-  GuiTextEdit *text_editor;
+  TextEdit *text_editor;
   LabelButton *send_btn;
 
 protected:
@@ -118,13 +118,13 @@ signals:
 
 
 
-class GuiChatStack : public ScrollStack
+class ChatStack : public ScrollStack
 {
   Q_OBJECT
 
 public:
-  explicit GuiChatStack(QWidget *parent = 0);
-  ~GuiChatStack();
+  explicit ChatStack(QWidget *parent = 0);
+  ~ChatStack();
 
   void display(const QString &usrKey);
   bool refreshProfile(const QString &usrKey);
@@ -142,7 +142,7 @@ private:
   QHash<QString, QString> editing_message_hash;
 
   ChatStack_chat_widget *chat_widget;
-  GuiChatStack_message_editor *message_editor;
+  ChatStack_message_editor *message_editor;
 
   //Data
   UsrData *usr_data;

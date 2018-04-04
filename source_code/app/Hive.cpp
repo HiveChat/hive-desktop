@@ -1,7 +1,7 @@
 #include "Hive.h"
 
 Hive::Hive(int &argc, char **argv)
-    : QApplication(argc, argv)
+  : QApplication(argc, argv)
 {
   Global::window_dpr = this->devicePixelRatio();
 
@@ -23,14 +23,13 @@ Hive::Hive(int &argc, char **argv)
 
   window = new Window();
 
-  ////connect
+  //! Qt SIGNAL SLOT connection between data_manager, network_manager, and window
   qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   connect(data_manager, &AppDataManager::updatesAvailable,
           window, &Window::onUpdateAvailable,
           Qt::AutoConnection);
-
 //  connect(network_manager->uv_server, &UvServer::usrEntered,
 //          data_manager, &AppDataManager::onUsrEntered,
 //          Qt::AutoConnection);
@@ -43,8 +42,7 @@ Hive::Hive(int &argc, char **argv)
   connect(data_manager, &AppDataManager::usrProfileChanged,
           window, &Window::changeUsr,
           Qt::AutoConnection);
-
-  connect(window->gui_main_block->gui_chat_stack, &GuiChatStack::sendMessage,
+  connect(window->gui_main_block->gui_chat_stack, &ChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,
           Qt::AutoConnection);
   connect(network_manager, &NetworkManager::messageRecieved,
@@ -69,7 +67,8 @@ Hive::~Hive()
   window->close();
   window->deleteLater();
 
-  //! network_manager should be deleted to call destructor of NetworkManager, which closes uv loop in the child thread of NetworkManager
+  //! network_manager should be deleted to call destructor of NetworkManager,
+  //! which closes uv loop in the child thread of NetworkManager
   network_manager->deleteLater();
 
   network_thread->quit();
@@ -107,6 +106,7 @@ void Hive::onTextMessageToSend(const QString &receiver, const QString &message)
 
   network_manager->udpSendMessage(json_object);
 }
+
 
 bool Hive::event(QEvent* e)
 {

@@ -2,7 +2,7 @@
 
 MainBlock::MainBlock(QWidget *parent)
   : QWidget(parent)
-  , gui_chat_stack(new GuiChatStack(this))
+  , gui_chat_stack(new ChatStack(this))
   , main_stacked_widget(new QStackedWidget(this))
 {
   this->createStaticStack(GUI::StaticStackType::Home_list);

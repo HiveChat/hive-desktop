@@ -14,7 +14,6 @@ AppDataManager::AppDataManager(QObject *parent)
 
 }
 
-/////////////thread
 AppDataManager::~AppDataManager()
 {
   Log::gui(Log::Normal, "AppDataManager::~AppDataManager()", "Successfully destroyed AppDataManager...");
@@ -58,9 +57,6 @@ QJsonDocument AppDataManager::makeUpdateJson(const int version[])
   doc.setObject(obj);
   return doc;
 }
-
-
-///////////!thread
 
 void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
 {

@@ -26,7 +26,7 @@ public:
   explicit MainBlock(QWidget *parent = 0);
   ~MainBlock();
 
-  GuiChatStack *gui_chat_stack;
+  ChatStack *gui_chat_stack;
   QStackedWidget *main_stacked_widget;
   HomeStack_welcome *gui_home_stack_welcome;
   HomeStack_list *gui_home_stack_list;
