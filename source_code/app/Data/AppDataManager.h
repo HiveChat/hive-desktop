@@ -63,6 +63,7 @@ private:
   static HiveDoubleBuffer<NetPacket*> outboundNetBuffer;
   Parsley::Timer *inbound_timer;
   void readInboundNetBuffer();
+  void wakeReadInboundTimer(HiveDoubleBuffer<NetPacket *> *buf);
 
   void checkSettings();
 

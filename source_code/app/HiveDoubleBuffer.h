@@ -10,6 +10,8 @@ template <typename T>
 class HiveDoubleBuffer final
 {
 public:
+  using PushedCb = std::function<void (HiveDoubleBuffer <T>*)>;
+
   HiveDoubleBuffer();
   ~HiveDoubleBuffer();
 
@@ -17,8 +19,11 @@ public:
   void push_front(T item);
   bool pop_front();
 
+  void bindCb(const PushedCb &value);
+
 private:
   using Container = std::list<T>;
+
   Container buffer1;
   Container buffer2;
   bool reading = false;
@@ -28,13 +33,16 @@ private:
   Container *inbound_buffer = &buffer1;
   Container *outbound_buffer = &buffer2;
 
+  PushedCb pushed_cb;
+
   void flip();
 };
 
 template<typename T>
 HiveDoubleBuffer<T>::HiveDoubleBuffer()
 {
-
+  //! Make sure T is a pointer of a type
+  T *t = nullptr;
 }
 
 template<typename T>
@@ -59,6 +67,10 @@ void HiveDoubleBuffer<T>::push_front(T item)
       inbound_buffer->push_front(item);
       writing = false;
       break;
+    }
+  if(pushed_cb)
+    {
+      pushed_cb(this);
     }
 }
 
@@ -112,6 +124,12 @@ bool HiveDoubleBuffer<T>::pop_front()
       break;
     }
   return true;
+}
+
+template<typename T>
+void HiveDoubleBuffer<T>::bindCb(const PushedCb &value)
+{
+  pushed_cb = value;
 }
 
 template<typename T>

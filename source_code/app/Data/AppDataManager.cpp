@@ -330,6 +330,8 @@ void AppDataManager::run()
   std::cout<<file.readAll();
   file.close();
 
+  inboundNetBuffer.bindCb(std::bind(&AppDataManager::wakeReadInboundTimer, this, std::placeholders::_1));
+
   readSettings();
   loadUsrList();
   loadFonts();
@@ -340,11 +342,20 @@ void AppDataManager::run()
 
 void AppDataManager::readInboundNetBuffer()
 {
+  qDebug()<<"Yo! ";
   if(inboundNetBuffer.front())
     {
-      qDebug()<<inboundNetBuffer.front()->data;
+      qDebug()<<"Yo! "<<inboundNetBuffer.front()->data;
     }
   inboundNetBuffer.pop_front();
+//  uv_timer_again(inbound_timer->getUvHandle());
+  inbound_timer->stop();
+  inbound_timer->start();
+}
+
+void AppDataManager::wakeReadInboundTimer(HiveDoubleBuffer<NetPacket *> *buf)
+{
+  inbound_timer->start(0, 30);
 }
 
 bool AppDataManager::touchFile(char* path)
