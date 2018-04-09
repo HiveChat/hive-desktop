@@ -9,6 +9,7 @@
 
 #include "../libs/libParsley/src/PFile.h"
 #include "../libs/libParsley/src/PTimer.h"
+#include "../libs/libParsley/src/PAsync.h"
 
 #include <QThread>
 #include <QDebug>
@@ -61,9 +62,9 @@ private:
 
   static HiveDoubleBuffer<NetPacket*> inboundNetBuffer;
   static HiveDoubleBuffer<NetPacket*> outboundNetBuffer;
-  Parsley::Timer *inbound_timer;
+  Parsley::Async *read_inbound_async;
   void readInboundNetBuffer();
-  void wakeReadInboundTimer(HiveDoubleBuffer<NetPacket *> *buf);
+  void wakeLoop(HiveDoubleBuffer<NetPacket *> *buf);
 
   void checkSettings();
 

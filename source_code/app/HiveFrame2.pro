@@ -89,7 +89,8 @@ SOURCES += \
     HiveServer.cpp \
     ../libs/libParsley/src/PFile.cpp \
     Gui/Window.cpp \
-    ../libs/libParsley/src/PCheck.cpp
+    ../libs/libParsley/src/PCheck.cpp \
+    ../libs/libParsley/src/PAsync.cpp
 \
 
 HEADERS  += \
@@ -144,7 +145,8 @@ HEADERS  += \
     HiveServer.h \
     ../libs/libParsley/src/PFile.h \
     Gui/Window.h \
-    ../libs/libParsley/src/PCheck.h
+    ../libs/libParsley/src/PCheck.h \
+    ../libs/libParsley/src/PAsync.h
 
 ICON = Src/hive.icns
 

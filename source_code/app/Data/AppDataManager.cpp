@@ -21,7 +21,6 @@ AppDataManager::~AppDataManager()
 
 void AppDataManager::stop()
 {
-  inbound_timer->stop();
   loop->close();
   Log::net(Log::Normal, "AppDataManager::stop()", "Successfully closed uv event loop.");
 }
@@ -317,20 +316,20 @@ void AppDataManager::run()
 
   loop = new Parsley::Loop();
 
-  inbound_timer = new Parsley::Timer(loop);
-  inbound_timer->bindCb(std::bind(&AppDataManager::readInboundNetBuffer, this));
-  inbound_timer->start(0, 10);
+
+  read_inbound_async = new Parsley::Async(loop);
+  read_inbound_async->bindCb(std::bind(&AppDataManager::readInboundNetBuffer, this));
 
   touchDir(Global::data_location_dir.toUtf8().data());
   touchDir(Global::user_data_dir.toUtf8().data());
   touchDir(Global::log_dir.toUtf8().data());
 
   Parsley::File file(loop);
-  file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::Sync);
+  file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
   std::cout<<file.readAll();
   file.close();
 
-  inboundNetBuffer.bindCb(std::bind(&AppDataManager::wakeReadInboundTimer, this, std::placeholders::_1));
+  inboundNetBuffer.bindCb(std::bind(&AppDataManager::wakeLoop, this, std::placeholders::_1));
 
   readSettings();
   loadUsrList();
@@ -342,33 +341,29 @@ void AppDataManager::run()
 
 void AppDataManager::readInboundNetBuffer()
 {
-  qDebug()<<"Yo! ";
   if(inboundNetBuffer.front())
     {
-      qDebug()<<"Yo! "<<inboundNetBuffer.front()->data;
+      qDebug()<<"Received: "<<inboundNetBuffer.front()->data;
     }
   inboundNetBuffer.pop_front();
-//  uv_timer_again(inbound_timer->getUvHandle());
-  inbound_timer->stop();
-  inbound_timer->start();
 }
 
-void AppDataManager::wakeReadInboundTimer(HiveDoubleBuffer<NetPacket *> *buf)
+void AppDataManager::wakeLoop(HiveDoubleBuffer<NetPacket *> *buf)
 {
-  inbound_timer->start(0, 30);
+  read_inbound_async->send();
 }
 
 bool AppDataManager::touchFile(char* path)
 {
   Parsley::File f(loop);
-  int ret = f.open(path, O_WRONLY | O_CREAT, 0644, Parsley::Sync);
-  f.close(Parsley::Async);
+  int ret = f.open(path, O_WRONLY | O_CREAT, 0644, Parsley::SyncMode);
+  f.close(Parsley::AsyncMode);
   return ret;
 }
 
 bool AppDataManager::touchDir(char *dir)
 {
-  return Parsley::File::mkdir(dir, 0755, loop, Parsley::Sync) == 0;
+  return Parsley::File::mkdir(dir, 0755, loop, Parsley::SyncMode) == 0;
 }
 
 QJsonDocument AppDataManager::makeDefaultSettings()
