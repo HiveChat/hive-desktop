@@ -58,6 +58,7 @@ protected:
   void run();
 
 private:
+  bool inboundNetBufferReading;
   Parsley::Loop *loop;
 
   static HiveDoubleBuffer<NetPacket*> inboundNetBuffer;
@@ -69,14 +70,14 @@ private:
   void checkSettings();
 
   /*!
-   * Functions called by constructor AppDataManager::AppDataManager(), only called once when during initialization.
+   * Functions called by constructor AppDataManager::AppDataManager(),
+   * only called once when during initialization.
    */
   inline void initVariable();
   inline void readSettings();
   inline void loadUsrList();
   inline void loadFonts();
   inline void loadUpdates();
-  inline void loadTimerTasks();
 
   inline bool touchFile(char *path);
   inline bool touchDir(char *dir);

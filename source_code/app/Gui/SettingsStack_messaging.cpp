@@ -19,7 +19,7 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
           [this](){
             Global::settings.chat_bubble_color_i = Global::color_defaultChatBubbleI;
             Global::settings.chat_bubble_color_o = Global::color_defaultChatBubbleO;
-            Global::settings.modified_lock = true;
+            Global::settings.modified = true;
             in_bubble_picker->repaint();
             out_bubble_picker->repaint();
           });
@@ -32,7 +32,7 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
   connect(enable_notify_box, &QCheckBox::toggled,
           [this](bool toggled){
             Global::settings.notification.message_notification = toggled;
-            Global::settings.modified_lock = true;
+            Global::settings.modified = true;
           });
 #ifndef Q_OS_WIN
   addItem("\tEnable notifications\t\t\t          ", enable_notify_box);
@@ -44,7 +44,7 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
   connect(show_detail_box, &QCheckBox::toggled,
           [this](bool toggled){
             Global::settings.notification.message_detail_notification = toggled;
-            Global::settings.modified_lock = true;
+            Global::settings.modified = true;
           });
 #ifndef Q_OS_WIN
   addItem("\tShow message detail\t\t          ", show_detail_box);

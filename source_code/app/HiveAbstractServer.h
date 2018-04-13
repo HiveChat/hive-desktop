@@ -21,8 +21,6 @@ public:
 
 protected:
   Parsley::AbstractSocket::SockReadyReadCb packet_ready_cb;
-
-  bool checkJsonPackage(const QString &data, QJsonObject *obj);
 };
 
 #endif // HIVEABSTRACTSERVER_H

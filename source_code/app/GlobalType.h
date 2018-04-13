@@ -77,7 +77,7 @@ namespace Settings
 
   struct SettingsStruct
   {
-    bool modified_lock;
+    bool modified;
 
     int window_width;
     int window_height;
@@ -110,12 +110,18 @@ struct NetPacket {
     , len(len)
     , protocol(protocol)
   {
-
+  }
+  ~NetPacket()
+  {
+    delete[] ipAddr;
+    delete[] data;
   }
   char *ipAddr;
   char *data;
   int len;
   BaseProtocol protocol;
+
+
 };
 
 

@@ -73,12 +73,12 @@ void SettingsStack_profile::onRadioClicked(QAbstractButton *abstractButton)
 {
   Global::settings.profile_avatar_str = avatar_hash.value(abstractButton->text());
   avatar_composer->setSourceImage(Global::settings.profile_avatar_str);
-  Global::settings.modified_lock = true;
+  Global::settings.modified = true;
 }
 
 void SettingsStack_profile::onUsrNameChanged(QString usr_name)
 {
   Global::settings.profile_name_str = usr_name;
-  Global::settings.modified_lock = true;
+  Global::settings.modified = true;
 }
 

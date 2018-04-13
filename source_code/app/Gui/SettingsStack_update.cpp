@@ -14,7 +14,7 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
   connect(auto_check_box, &QCheckBox::toggled,
           [this](bool toggled){
             Global::settings.update.auto_check_update = toggled;
-            Global::settings.modified_lock = true;
+            Global::settings.modified = true;
           });
   addItem("\tAuto check update:\t\t\t          ", auto_check_box);
 
@@ -23,7 +23,7 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
   connect(show_notification_box, &QCheckBox::toggled,
           [this](bool toggled){
             Global::settings.notification.update_notification = toggled;
-            Global::settings.modified_lock = true;
+            Global::settings.modified = true;
           });
   addItem("\tShow update notification:\t\t          ", show_notification_box);
 

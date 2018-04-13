@@ -11,7 +11,6 @@ std::map<QString, bool*> AppDataManager::settings_bool_hash;
 AppDataManager::AppDataManager(QObject *parent)
   : QThread(parent)
 {
-
 }
 
 AppDataManager::~AppDataManager()
@@ -37,11 +36,11 @@ bool AppDataManager::pushOutboundBuffer(NetPacket *packet)
 
 void AppDataManager::checkSettings()
 {
-  if(Global::settings.modified_lock)
+  if(Global::settings.modified)
     {
       Log::dat(Log::Normal, "AppDataManager::checkSettings()", "Settings changed.");
       writeSettings();
-      Global::settings.modified_lock = false;
+      Global::settings.modified = false;
     }
 }
 
@@ -175,6 +174,7 @@ void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 //  file.flush();
 }
 
+//! TODO: PLEASE REVIEW AND REWRITE
 void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
 {
   if(Global::online_usr_data_hash.contains(usrProfileStruct.key))
@@ -316,6 +316,7 @@ void AppDataManager::run()
 
   loop = new Parsley::Loop();
 
+  inboundNetBuffer.bindCb(std::bind(&AppDataManager::wakeLoop, this, std::placeholders::_1));
 
   read_inbound_async = new Parsley::Async(loop);
   read_inbound_async->bindCb(std::bind(&AppDataManager::readInboundNetBuffer, this));
@@ -326,31 +327,105 @@ void AppDataManager::run()
 
   Parsley::File file(loop);
   file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
-  std::cout<<file.readAll();
+//  std::cout<<file.readAll();
   file.close();
 
-  inboundNetBuffer.bindCb(std::bind(&AppDataManager::wakeLoop, this, std::placeholders::_1));
 
   readSettings();
   loadUsrList();
   loadFonts();
-  loadTimerTasks();
+
+  Parsley::Timer checkSettingsTimer(loop);
+  checkSettingsTimer.bindCb(std::bind(&AppDataManager::checkSettings, this));
+  checkSettingsTimer.start(2000, 1000);
 
   loop->run(UV_RUN_DEFAULT);
 }
 
 void AppDataManager::readInboundNetBuffer()
 {
-  if(inboundNetBuffer.front())
+  NetPacket *p = inboundNetBuffer.front();
+
+  while (p)
     {
-      qDebug()<<"Received: "<<inboundNetBuffer.front()->data;
+      //! See if JSON object is complete.
+      QJsonParseError err;
+      QJsonDocument doc = QJsonDocument::fromJson(QByteArray(p->data, p->len), &err);
+      QString ipAddr = QByteArray(p->ipAddr, 17);
+      //! HiveDoubleBuffer calls std::list::pop_front()
+      //! which automatically calls destructor of NetPacket *p.
+      inboundNetBuffer.pop_front();
+      if(err.error != QJsonParseError::NoError || !doc.isObject())
+        {
+          continue;
+        }
+
+      //! See if the package is delivered to me.
+      QJsonObject packetJson = doc.object();
+      QString receiverKey = packetJson.value("receiver").toString();
+      if(receiverKey != Global::settings.profile_key_str
+         && receiverKey != BROADCAST_UUID)
+        {
+          Log::net(Log::Error
+                   , "AppDataManager::readInboundNetBuffer()"
+                   , "Package wrong destination: " + receiverKey + " My Id: " + Global::settings.profile_key_str);
+          continue;
+        }
+
+      //! Start processing message
+      MessageType messageType = (MessageType) packetJson.value("msgType").toInt();
+      switch (messageType) {
+        case MessageType::HeartBeat:
+          {
+            UsrProfileStruct usr_profile;
+//            usr_profile.ip = addr;
+            usr_profile.key = packetJson.value("sender").toString();
+            usr_profile.name = packetJson.value("name").toString();
+            usr_profile.avatar = packetJson.value("avatar").toString();
+            onUsrEntered(usr_profile);
+          }
+        case MessageType::TextMessage:
+          {
+    //        processTextMessage();
+            break;
+          }
+        case MessageType::FileInfo:
+          {
+            Log::net(Log::Normal, "HiveProtocol::decodeHivePacket()", "File info received.");
+
+            break;
+          }
+        case MessageType::FileContent:
+          {
+
+            break;
+          }
+        case MessageType::FileReject:
+          {
+
+            break;
+          }
+        case MessageType::FileAccept:
+          {
+
+            break;
+          }
+        case MessageType::ErrorDelivery:
+          {
+
+            break;
+          }
+      }
+
+      //! Get a new p.
+      p = inboundNetBuffer.front();
     }
-  inboundNetBuffer.pop_front();
 }
 
 void AppDataManager::wakeLoop(HiveDoubleBuffer<NetPacket *> *buf)
 {
-  read_inbound_async->send();
+  if(!inboundNetBufferReading)
+    read_inbound_async->send();
 }
 
 bool AppDataManager::touchFile(char* path)
@@ -660,26 +735,7 @@ void AppDataManager::loadUpdates()
   file.flush();
 }
 
-void AppDataManager::loadTimerTasks()
-{
-  QTimer *checkSettingsTimer = new QTimer(this);
-  connect(checkSettingsTimer, &QTimer::timeout,
-          [this]() {
-            checkSettings();
-          });
-  checkSettingsTimer->setSingleShot(false);
-  checkSettingsTimer->setInterval(1000);
-  checkSettingsTimer->start();
 
-//  QTimer *popInboundBufferTimer = new QTimer(this);
-//  connect(popInboundBufferTimer, &QTimer::timeout,
-//          [this]() {
-//            checkSettings();
-//          });
-//  popInboundBufferTimer->setSingleShot(false);
-//  popInboundBufferTimer->setInterval(1);
-//  popInboundBufferTimer->start();
-}
 
 
 

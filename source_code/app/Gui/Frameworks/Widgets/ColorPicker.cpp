@@ -43,7 +43,7 @@ void ColorPicker::mouseReleaseEvent(QMouseEvent *ev)
         }
 
       *my_color = color;
-      Global::settings.modified_lock = true;
+      Global::settings.modified = true;
       repaint();
     }
 }

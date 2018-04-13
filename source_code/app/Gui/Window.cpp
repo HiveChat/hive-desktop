@@ -49,7 +49,7 @@ Window::Window(QWidget *parent)
                 Global::settings.window_height = this->height();
                 Global::settings.window_width = this->width();
 
-                Global::settings.modified_lock = true;
+                Global::settings.modified = true;
               }
           });
   timer->setSingleShot(false);
