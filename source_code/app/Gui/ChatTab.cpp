@@ -46,7 +46,7 @@ ChatTab_comb_scroll_widget::ChatTab_comb_scroll_widget(QWidget *parent) : QWidge
 
 void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
 {
-  Log::gui(Log::Normal, "GuiChatTab_comb_scroll_widget::addComb()", "Added a comb.");
+  Log::gui(Log::Info, "GuiChatTab_comb_scroll_widget::addComb()", "Added a comb.");
   CombWidget *comb_widget = new CombWidget(usrProfileStruct, this);
   comb_widget_hash.insert(usrProfileStruct->key, comb_widget);
   main_layout->addWidget(comb_widget);

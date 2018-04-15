@@ -27,10 +27,10 @@ NetworkManager::~NetworkManager()
     {
       uv_server->terminate();
       uv_server->wait(5000);
-      Log::gui(Log::Normal, "NetworkManager::~NetworkManager()", "Fail to quit UvServer, destryoing it...");
+      Log::gui(Log::Info, "NetworkManager::~NetworkManager()", "Fail to quit UvServer, destryoing it...");
     }
 
-  Log::gui(Log::Normal, "NetworkManager::~NetworkManager()", "Successfully destroyed NetworkManager...");
+  Log::gui(Log::Info, "NetworkManager::~NetworkManager()", "Successfully destroyed NetworkManager...");
 
 }
 
@@ -133,12 +133,12 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruc
         {
           Global::g_localHostIP = usrProfileStruct.ip;
         }
-      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from myself");
+      Log::net(Log::Info, "NetworkManager::udpProcessHeartBeat()", "got heart beat from myself");
       emit usrEnter(usrProfileStruct);
     }
   else
     {
-      Log::net(Log::Normal, "NetworkManager::udpProcessHeartBeat()", "got heart beat from others");
+      Log::net(Log::Info, "NetworkManager::udpProcessHeartBeat()", "got heart beat from others");
       emit usrEnter(usrProfileStruct);
     }
 
@@ -186,7 +186,7 @@ void NetworkManager::udpSendHeartBeat()
                             , 23232);
   if(ret > 0)
     {
-      Log::net(Log::Normal, "NetworkManager::udpSendHeartBeat()", "heart beat sent");
+      Log::net(Log::Info, "NetworkManager::udpSendHeartBeat()", "heart beat sent");
     }
 
   return;
@@ -284,12 +284,12 @@ void NetworkManager::onRedirectFinished()
 {
   if(http_update_reply->error() != QNetworkReply::NoError)
     {
-      Log::net(Log::Error, "NetworkManager::onRedirectFinished()", QString(http_update_reply->error()));
+      Log::net(Log::Warning, "NetworkManager::onRedirectFinished()", QString(http_update_reply->error()));
       return;
     }
   QUrl redirectUrl = QString(http_update_reply->rawHeader("Location"));
 
-  Log::net(Log::Error, "NetworkManager::onRedirectFinished()", redirectUrl.toString());
+  Log::net(Log::Warning, "NetworkManager::onRedirectFinished()", redirectUrl.toString());
 
   http_update_manager->deleteLater();
   http_update_reply->deleteLater();
@@ -321,12 +321,12 @@ void NetworkManager::onRedirectFinished()
                               sizeof(GlobalData::current_version)) != 0*/
                        Global::versionCompare(Global::update_struct.version, Global::current_version))
                       {
-                        Log::net(Log::Normal, "NetworkManager::onRedirectFinished()", "update available");
+                        Log::net(Log::Info, "NetworkManager::onRedirectFinished()", "update available");
                         emit updateAvailable();
                       }
                     else
                       {
-                        Log::net(Log::Normal, "NetworkManager::onRedirectFinished()", "version already new");
+                        Log::net(Log::Info, "NetworkManager::onRedirectFinished()", "version already new");
                       }
                   }
                 else
@@ -366,7 +366,7 @@ void NetworkManager::udpProcessPendingDatagrams()
       QJsonDocument json_document = QJsonDocument::fromJson(byte_array);
       if(json_document.isObject())
         {
-          Log::net(Log::Normal, "NetworkManager::checkJsonObject()", "got message with JSON format");
+          Log::net(Log::Info, "NetworkManager::checkJsonObject()", "got message with JSON format");
 
           QJsonObject json_obj = json_document.object();
           int type = json_obj.value("msgType").toInt();

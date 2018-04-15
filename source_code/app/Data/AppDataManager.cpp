@@ -15,13 +15,13 @@ AppDataManager::AppDataManager(QObject *parent)
 
 AppDataManager::~AppDataManager()
 {
-  Log::gui(Log::Normal, "AppDataManager::~AppDataManager()", "Successfully destroyed AppDataManager...");
+  Log::gui(Log::Info, "AppDataManager::~AppDataManager()", "Successfully destroyed AppDataManager...");
 }
 
 void AppDataManager::stop()
 {
   loop->close();
-  Log::net(Log::Normal, "AppDataManager::stop()", "Successfully closed uv event loop.");
+  Log::net(Log::Info, "AppDataManager::stop()", "Successfully closed uv event loop.");
 }
 
 bool AppDataManager::pushInboundBuffer(NetPacket *packet)
@@ -38,7 +38,7 @@ void AppDataManager::checkSettings()
 {
   if(Global::settings.modified)
     {
-      Log::dat(Log::Normal, "AppDataManager::checkSettings()", "Settings changed.");
+      Log::dat(Log::Info, "AppDataManager::checkSettings()", "Settings changed.");
       writeSettings();
       Global::settings.modified = false;
     }
@@ -179,18 +179,18 @@ void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // l
 {
   if(Global::online_usr_data_hash.contains(usrProfileStruct.key))
     {
-      Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in online list");
+      Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in online list");
       UsrData *usrData = Global::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *usrData->getUsrProfileStruct())
         {
           usrData->setUsrProfileStruct(usrProfileStruct);
           emit usrProfileChanged(usrData);
-          Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
+          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
   else if(Global::offline_usr_data_hash.contains(usrProfileStruct.key))
     {
-      Log::dat(Log::Normal, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
+      Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
       Global::online_usr_data_hash.insert(usrProfileStruct.key, Global::offline_usr_data_hash.value(usrProfileStruct.key));
       UsrData *usrData = Global::online_usr_data_hash.value(usrProfileStruct.key);
       if(usrProfileStruct != *usrData->getUsrProfileStruct())
@@ -198,7 +198,7 @@ void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // l
           usrData->setUsrProfileStruct(usrProfileStruct);
           updateUsr(usrProfileStruct);
           emit usrProfileChanged(usrData);
-          Log::dat(Log::Normal, "DataManager::onUsrEntered()", "user profile changed");
+          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
   else
@@ -327,7 +327,6 @@ void AppDataManager::run()
 
   Parsley::File file(loop);
   file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
-//  std::cout<<file.readAll();
   file.close();
 
 
@@ -366,7 +365,7 @@ void AppDataManager::readInboundNetBuffer()
       if(receiverKey != Global::settings.profile_key_str
          && receiverKey != BROADCAST_UUID)
         {
-          Log::net(Log::Error
+          Log::net(Log::Warning
                    , "AppDataManager::readInboundNetBuffer()"
                    , "Package wrong destination: " + receiverKey + " My Id: " + Global::settings.profile_key_str);
           continue;
@@ -391,7 +390,7 @@ void AppDataManager::readInboundNetBuffer()
           }
         case MessageType::FileInfo:
           {
-            Log::net(Log::Normal, "HiveProtocol::decodeHivePacket()", "File info received.");
+            Log::net(Log::Info, "HiveProtocol::decodeHivePacket()", "File info received.");
 
             break;
           }
@@ -627,7 +626,7 @@ void AppDataManager::writeSettings()
   file.flush();
   file.close();
 
-  Log::dat(Log::Normal
+  Log::dat(Log::Info
            , "AppDataManager::writeCurrentConfig()"
            , "Config file updated.");
 }

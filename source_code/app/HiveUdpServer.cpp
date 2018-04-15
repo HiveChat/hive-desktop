@@ -14,7 +14,7 @@ HiveUdpServer::HiveUdpServer(Parsley::Loop *loop)
     QByteArray dat = encodeHeartBeat();
     Parsley::Buffer msg = uv_buf_init(dat.data(), dat.count());
     udp_socket->write("255.255.255.255", UDP_PORT, &msg);
-    Log::net(Log::Normal, "UvServer::udpHeartBeatCb()", "heart beat sent");
+    Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
   });
 }
 

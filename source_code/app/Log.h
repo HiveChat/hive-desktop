@@ -9,8 +9,8 @@ namespace Log
 {
   enum Level
   {
-    Normal = 0,
-    Error = 1,
+    Info = 0,
+    Warning = 1,
     Critical = 2,
 
   };

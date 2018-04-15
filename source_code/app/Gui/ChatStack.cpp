@@ -479,7 +479,7 @@ void ChatStack::dropEvent(QDropEvent *event)
 
 void ChatStack::flipUnreadMessage()
 {
-  Log::gui(Log::Normal, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
+  Log::gui(Log::Info, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
   if(usr_data->getUnreadMessageNumber() != 0)
     {
       QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
@@ -506,7 +506,7 @@ void ChatStack::flipLatestMessage(const bool &clear)
       chat_widget->clearChatBubbles();
     }
 
-  Log::gui(Log::Normal, "GuiChatStack::flipLatestMessage()", "chat stack is loading latest history message...");
+  Log::gui(Log::Info, "GuiChatStack::flipLatestMessage()", "chat stack is loading latest history message...");
   QJsonArray message_json_array = *usr_data->flipLatest();
   int message_count = message_json_array.count();
   for(int i = 0; i < message_count; i++)
@@ -594,7 +594,7 @@ void ChatStack::onSendButtonClicked()
           click_num ++;
         }
 
-      Log::gui(Log::Normal, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->getName() +"\" not online");
+      Log::gui(Log::Info, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->getName() +"\" not online");
 
       key_lock = false;
       return;

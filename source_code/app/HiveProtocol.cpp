@@ -4,15 +4,15 @@ bool
 HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //recursion decode
 {
   qDebug()<<"\n\n";
-  Log::net(Log::Normal, "Bee::read()", "New READ section begins");
+  Log::net(Log::Info, "Bee::read()", "New READ section begins");
   if(data.isEmpty() && clientBuffer->buffer.isEmpty())
     {
-      Log::net(Log::Error, "Bee:read()", "data empty");
+      Log::net(Log::Warning, "Bee:read()", "data empty");
       return false;
     }
 
-  Log::net(Log::Normal, "Bee::read()", "Stream: " + data);
-  Log::net(Log::Normal, "Bee::read()", "Current Buffer Size: " + QString::number( clientBuffer->buffer.size()));
+  Log::net(Log::Info, "Bee::read()", "Stream: " + data);
+  Log::net(Log::Info, "Bee::read()", "Current Buffer Size: " + QString::number( clientBuffer->buffer.size()));
 
   clientBuffer->buffer.append(data);
 
@@ -22,21 +22,21 @@ HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //r
       //if 16 digit size header is not complete, return
       if(clientBuffer->buffer.size() < 16)
         {
-          Log::net(Log::Normal, "Bee::read()", "Failed: value \"size\" in header is not complete");
+          Log::net(Log::Info, "Bee::read()", "Failed: value \"size\" in header is not complete");
           return false;
         }
       else
         {
           clientBuffer->readSize = clientBuffer->buffer.mid(0, 16).toInt();
           clientBuffer->buffer.remove(0, 16);
-          Log::net(Log::Normal, "Bee::read()", "Member clientBuffer->readSize is set to " + QString::number(clientBuffer->readSize));
+          Log::net(Log::Info, "Bee::read()", "Member clientBuffer->readSize is set to " + QString::number(clientBuffer->readSize));
         }
     }
 
   //if data is not complete, return
   if(clientBuffer->buffer.size() < clientBuffer->readSize)
     {
-      Log::net(Log::Normal, "Bee::read()", "Failed: buffer not filled.");
+      Log::net(Log::Info, "Bee::read()", "Failed: buffer not filled.");
       return false;
     }
   else //else read
@@ -45,11 +45,11 @@ HiveProtocol::decodeTcp(const QString &data, HiveClientBuffer *clientBuffer) //r
       clientBuffer->buffer.remove(0, clientBuffer->readSize - 1);
       clientBuffer->readSize = 0;
 
-      Log::net(Log::Normal, "Bee::read()", "Get packet: " + packet);
+      Log::net(Log::Info, "Bee::read()", "Get packet: " + packet);
 
 //      if(!decodeHivePacket(packet))
         {
-          Log::net(Log::Error, "bool Bee::readBuffer()", "Packet decode failed!");
+          Log::net(Log::Warning, "bool Bee::readBuffer()", "Packet decode failed!");
           clientBuffer->buffer.clear();
 
           //have to reset the connection!

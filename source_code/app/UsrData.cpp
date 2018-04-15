@@ -55,7 +55,7 @@ QJsonArray* UsrData::flipUp()
     }
   else
     {
-      return NULL;
+      return nullptr;
     }
 }
 
@@ -72,7 +72,7 @@ QJsonArray* UsrData::flipDown()
     }
   else
     {
-      return NULL;
+      return nullptr;
     }
 }
 
