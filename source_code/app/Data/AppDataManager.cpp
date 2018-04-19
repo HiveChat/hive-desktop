@@ -329,6 +329,11 @@ void AppDataManager::run()
   file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
   file.close();
 
+  Parsley::File file2(loop);
+  file2.open("/Users/echo/a.txt", O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
+  std::string str = "tim is here i don't know where";
+//  file2.writeAll(str, Parsley::SyncMode);
+  file2.close();
 
   readSettings();
   loadUsrList();
