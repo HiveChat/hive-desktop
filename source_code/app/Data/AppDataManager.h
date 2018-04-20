@@ -17,8 +17,8 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QFile>
-#include <QDir>
+//#include <QFile>
+//#include <QDir>
 #include <QTextStream>
 #include <QFileInfo>
 #include <QStandardPaths>
@@ -45,8 +45,8 @@ public:
 
   void stop();
 
-  static bool pushInboundBuffer(NetPacket *packet);
-  static bool pushOutboundBuffer(NetPacket *packet);
+  static void pushInboundBuffer(NetPacket *packet);
+  static void pushOutboundBuffer(NetPacket *packet);
 
 public slots:
   void onUsrEntered(const UsrProfileStruct &usrProfileStruct);

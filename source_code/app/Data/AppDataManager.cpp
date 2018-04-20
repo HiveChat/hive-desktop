@@ -24,12 +24,12 @@ void AppDataManager::stop()
   Log::net(Log::Info, "AppDataManager::stop()", "Successfully closed uv event loop.");
 }
 
-bool AppDataManager::pushInboundBuffer(NetPacket *packet)
+void AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
   inboundNetBuffer.push_front(packet);
 }
 
-bool AppDataManager::pushOutboundBuffer(NetPacket *packet)
+void AppDataManager::pushOutboundBuffer(NetPacket *packet)
 {
   outboundNetBuffer.push_front(packet);
 }
@@ -236,69 +236,60 @@ void AppDataManager::onUpdatesAvailable()
       return;
     }
 
-  QFile file(QString::fromStdString(Global::update_file_dir));
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
-    {
-      return;
-    }
-
-  QTextStream in(&file);
-  QTextStream out(&file);
-  QByteArray inByteArray = in.readAll().toUtf8();
   int outVersion[3];
   memcpy(&outVersion, &Global::current_version, sizeof(Global::current_version));
 
-  if(!inByteArray.isEmpty())
+  Parsley::File file(Global::update_file_dir, loop);
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
-      QJsonParseError jsonError;
-      QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
-      if(jsonError.error == QJsonParseError::NoError)
+      return;
+    }
+  std::string inData = file.readAll();
+  QJsonParseError jsonError;
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(inData.data(), inData.size()), &jsonError);
+  if(jsonError.error == QJsonParseError::NoError)
+    {
+      if(inJsonDoc.isObject())
         {
-          if(inJsonDoc.isObject())
+          QJsonObject inObj = inJsonDoc.object();
+
+          int inVersion[3] = {
+            inObj.value("stable_version").toInt(),
+            inObj.value("beta_version").toInt(),
+            inObj.value("alpha_version").toInt()
+          };
+
+          for(int i = 0; i < 3; i ++)
             {
-              QJsonObject inObj = inJsonDoc.object();
+              outVersion[i] = inVersion[i];
+            }
 
-              int inVersion[3] = {
-                inObj.value("stable_version").toInt(),
-                inObj.value("beta_version").toInt(),
-                inObj.value("alpha_version").toInt()
-              };
+          if(memcmp(inVersion,
+                    Global::update_struct.version,
+                    sizeof(inVersion)) == 0)
+            {
+              file.close(Parsley::SyncMode);
+              emit updatesAvailable();
 
-              for(int i = 0; i < 3; i ++)
+              return;
+            }
+          else
+            {
+              if(Global::versionCompare(Global::update_struct.version, inVersion))
                 {
-                  outVersion[i] = inVersion[i];
-                }
-
-              if(memcmp(inVersion,
-                        Global::update_struct.version,
-                        sizeof(inVersion)) == 0)
-                {
-                  file.close();
-                  file.flush();
-                  emit updatesAvailable();
-
-                  return;
-                }
-              else
-                {
-                  if(Global::versionCompare(Global::update_struct.version, inVersion))
+                  for(int i = 0; i < 3; i ++)
                     {
-                      for(int i = 0; i < 3; i ++)
-                        {
-                          outVersion[i] = Global::update_struct.version[i];
-                        }
+                      outVersion[i] = Global::update_struct.version[i];
                     }
                 }
             }
         }
     }
 
-  file.resize(0);
 
-  out << makeUpdateJson(outVersion).toJson(QJsonDocument::Indented) << endl;
-
-  file.close();
-  file.flush();
+  std::string outData = makeUpdateJson(outVersion).toJson(QJsonDocument::Indented).toStdString();
+  file.write(outData, Parsley::SyncMode);
+  file.close(Parsley::SyncMode);
 
   emit updatesAvailable();
 }
@@ -534,21 +525,21 @@ void AppDataManager::loadSettings()
       Log::dat(Log::Info, "AppDataManager::readSettings()", "Settings file first created:");
       Log::dat(Log::Info, "AppDataManager::readSettings()", "\n"+QString::fromStdString(writeData));
     }
-  file.close(Parsley::SyncMode);
 
+  file.close(Parsley::SyncMode);
 }
 
 void AppDataManager::loadUsrList()
 {
-  Parsley::File file(Global::contacts_file_dir.data(), loop);
+  Parsley::File file(Global::contacts_file_dir, loop);
   if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
   std::string data = file.readAll();
-  QJsonParseError jsonError;
-  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
-  if(jsonError.error == QJsonParseError::NoError)
+  QJsonParseError jsonErr;
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
+  if(jsonErr.error == QJsonParseError::NoError)
     {
       if(doc.isObject())
         {
@@ -585,12 +576,11 @@ void AppDataManager::loadUsrList()
 
 void AppDataManager::writeSettings()
 {
-  QFile file(QString::fromStdString(Global::settings_file_dir));
-  if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
+  Parsley::File file(Global::settings_file_dir, loop);
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
-  QTextStream out(&file);
 
   QJsonObject settingsObj;
   for (std::pair<QString, int*> element : settings_int_hash)
@@ -607,10 +597,10 @@ void AppDataManager::writeSettings()
 
   QJsonDocument outJsonDoc;
   outJsonDoc.setObject(settingsObj);
-  file.resize(0);
-  out << outJsonDoc.toJson();
-  file.flush();
-  file.close();
+
+  std::string outData = outJsonDoc.toJson().toStdString();
+  file.write(outData, Parsley::SyncMode);
+  file.close(Parsley::SyncMode);
 
   Log::dat(Log::Info
            , "AppDataManager::writeCurrentConfig()"
@@ -679,45 +669,38 @@ void AppDataManager::loadFonts()
 
 void AppDataManager::loadUpdates()
 {
-  QFile file(QString::fromStdString(Global::update_file_dir));
-  if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+  Parsley::File file(Global::update_file_dir, loop);
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
-
-  QTextStream in(&file);
-  QByteArray inByteArray = in.readAll().toUtf8();
-
-  if(!inByteArray.isEmpty())
+  std::string data = file.readAll();
+  QJsonParseError jsonError;
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
+  if(jsonError.error == QJsonParseError::NoError)
     {
-      QJsonParseError jsonError;
-      QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
-      if(jsonError.error == QJsonParseError::NoError)
+      if(doc.isObject())
         {
-          if(inJsonDoc.isObject())
+          QJsonObject readJsonObj = doc.object();
+
+          int readVersion[3] = {
+            readJsonObj.value("stable_version").toInt(),
+            readJsonObj.value("beta_version").toInt(),
+            readJsonObj.value("alpha_version").toInt()
+          };
+
+          if(Global::versionCompare(Global::current_version, readVersion))
             {
-              QJsonObject readJsonObj = inJsonDoc.object();
-
-              int readVersion[3] = {
-                readJsonObj.value("stable_version").toInt(),
-                readJsonObj.value("beta_version").toInt(),
-                readJsonObj.value("alpha_version").toInt()
-              };
-
-              if(Global::versionCompare(Global::current_version, readVersion))
+              for(int i = 0; i < 3; i ++)
                 {
-                  for(int i = 0; i < 3; i ++)
-                    {
-                      Global::update_struct.version[i] = readVersion[i];
-                    }
-                  emit updatesAvailable();
+                  Global::update_struct.version[i] = readVersion[i];
                 }
+              emit updatesAvailable();
             }
         }
     }
 
-  file.close();
-  file.flush();
+  file.close(Parsley::SyncMode);
 }
 
 
