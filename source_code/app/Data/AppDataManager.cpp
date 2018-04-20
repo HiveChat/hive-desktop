@@ -63,18 +63,14 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
   QString usrName = usrProfileStruct.name;
   QString avatarPath = usrProfileStruct.avatar;
 
-  QFile f(Global::contacts_file_dir);
-  if(!f.open(QIODevice::ReadWrite | QIODevice::Text))
+  Parsley::File file(Global::contacts_file_dir, loop);
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
-
-  QTextStream out(&f);
-  QTextStream in(&f);
-  QByteArray inByteArray = in.readAll().toUtf8();
-
+  std::string data = file.readAll();
   QJsonParseError jsonError;
-  QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
       if(inJsonDoc.isObject())
@@ -91,8 +87,8 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
               QJsonDocument outJsonDoc;
               outJsonDoc.setObject(usrListObj);
 
-              f.resize(0);
-              out<<outJsonDoc.toJson()<<endl;
+              std::string data = outJsonDoc.toJson().toStdString();
+              file.write(data, Parsley::SyncMode);
             }
           else
             {
@@ -104,15 +100,14 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
                   QJsonDocument outJsonDoc;
                   outJsonDoc.setObject(usrListObj);
 
-                  f.resize(0);
-                  out<<outJsonDoc.toJson()<<endl;
+                  std::string data = outJsonDoc.toJson().toStdString();
+                  file.write(data, Parsley::SyncMode);
                 }
             }
         }
     }
   else
     {
-      qDebug()<<"else";
       QJsonObject usrInfoObj;
       usrInfoObj.insert("usrKey", uuid);
       usrInfoObj.insert("usrName", usrName);
@@ -124,13 +119,11 @@ void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
       QJsonDocument outJsonDoc;
       outJsonDoc.setObject(usrListObj);
 
-      f.resize(0);
-      out<<outJsonDoc.toJson(QJsonDocument::Indented);  ///QJsonDocument::Compact
+      std::string data = outJsonDoc.toJson(QJsonDocument::Indented).toStdString();
+      file.write(data, Parsley::SyncMode);
     }
 
-  f.flush();
-  f.close();
-
+  file.close(Parsley::SyncMode);
 }
 
 //!! OBSOLETE !!
@@ -243,7 +236,7 @@ void AppDataManager::onUpdatesAvailable()
       return;
     }
 
-  QFile file(Global::update_file_dir);
+  QFile file(QString::fromStdString(Global::update_file_dir));
   if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
     {
       return;
@@ -321,21 +314,15 @@ void AppDataManager::run()
   read_inbound_async = new Parsley::Async(loop);
   read_inbound_async->bindCb(std::bind(&AppDataManager::readInboundNetBuffer, this));
 
-  touchDir(Global::data_location_dir.toUtf8().data());
-  touchDir(Global::user_data_dir.toUtf8().data());
-  touchDir(Global::log_dir.toUtf8().data());
+  touchDir(Global::data_location_dir);
+  touchDir(Global::user_data_dir);
+  touchDir(Global::log_dir);
+  touchFile(Global::settings_file_dir);
+  Parsley::File file1(Global::settings_file_dir, loop);
+  file1.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
+  file1.close(Parsley::SyncMode);
 
-  Parsley::File file(loop);
-  file.open(QByteArray(Global::settings_file_dir.toUtf8()).data(), O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
-  file.close();
-
-  Parsley::File file2(loop);
-  file2.open("/Users/echo/a.txt", O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
-  std::string str = "tim is here i don't know where";
-//  file2.writeAll(str, Parsley::SyncMode);
-  file2.close();
-
-  readSettings();
+  loadSettings();
   loadUsrList();
   loadFonts();
 
@@ -432,15 +419,15 @@ void AppDataManager::wakeLoop(HiveDoubleBuffer<NetPacket *> *buf)
     read_inbound_async->send();
 }
 
-bool AppDataManager::touchFile(char* path)
+bool AppDataManager::touchFile(const std::string &path)
 {
-  Parsley::File f(loop);
-  int ret = f.open(path, O_WRONLY | O_CREAT, 0644, Parsley::SyncMode);
-  f.close(Parsley::AsyncMode);
+  Parsley::File f(path, loop);
+  int ret = f.open(O_WRONLY | O_CREAT, 0644, Parsley::SyncMode);
+  f.close(Parsley::SyncMode);
   return ret;
 }
 
-bool AppDataManager::touchDir(char *dir)
+bool AppDataManager::touchDir(const std::string &dir)
 {
   return Parsley::File::mkdir(dir, 0755, loop, Parsley::SyncMode) == 0;
 }
@@ -513,23 +500,20 @@ void AppDataManager::initVariable()
 
 }
 
-void AppDataManager::readSettings()
+void AppDataManager::loadSettings()
 {
-  QFile file(Global::settings_file_dir);
-  if(!file.open(QIODevice::ReadWrite | QIODevice::Text))
+  Parsley::File file(Global::settings_file_dir, loop);
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
-  QTextStream in(&file);
-  QTextStream out(&file);
-
-  QByteArray inByteArray = in.readAll().toUtf8();
+  std::string data = file.readAll();
   QJsonParseError jsonError;
-  QJsonDocument inDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError
-     && inDoc.isObject())
+     && doc.isObject())
     {
-      QJsonObject settingsJson = inDoc.object();
+      QJsonObject settingsJson = doc.object();
 
       for (std::pair<QString, int*> element : settings_int_hash)
         *element.second = settingsJson[element.first].toInt();
@@ -542,36 +526,33 @@ void AppDataManager::readSettings()
 
       for (std::pair<QString, bool*> element : settings_bool_hash)
         *element.second = settingsJson[element.first].toBool();
-
     }
   else
     {
-      file.resize(0);
-      out<<makeDefaultSettings().toJson(QJsonDocument::Indented)<<endl;
+      std::string writeData = makeDefaultSettings().toJson(QJsonDocument::Indented).toStdString();
+      file.write(writeData, Parsley::SyncMode);
+      Log::dat(Log::Info, "AppDataManager::readSettings()", "Settings file first created:");
+      Log::dat(Log::Info, "AppDataManager::readSettings()", "\n"+QString::fromStdString(writeData));
     }
+  file.close(Parsley::SyncMode);
 
-  file.flush();
-  file.close();
 }
 
 void AppDataManager::loadUsrList()
 {
-  QFile file(Global::contacts_file_dir);
-  if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
+  Parsley::File file(Global::contacts_file_dir.data(), loop);
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
-  QTextStream in(&file);
-  QByteArray inByteArray = in.readAll().toUtf8();
-
-  ///JSon
+  std::string data = file.readAll();
   QJsonParseError jsonError;
-  QJsonDocument inJsonDoc = QJsonDocument::fromJson(inByteArray, &jsonError);
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
-      if(inJsonDoc.isObject())
+      if(doc.isObject())
         {
-          QJsonObject usrListObj = inJsonDoc.object();
+          QJsonObject usrListObj = doc.object();
           QStringList uuidList = usrListObj.keys();  //get usr_key as a string list
 
           for(int i = 0; i < uuidList.count(); i++)
@@ -591,20 +572,20 @@ void AppDataManager::loadUsrList()
     }
   else
     {
-      file.resize(0);
+      std::string data = "";
+      file.write(data, Parsley::SyncMode);
       Log::dat(Log::Critical
                , "AppDataManager::loadUsrList()"
                , "Contact list file broken, broken file is cleared");
       return;
     }
 
-  file.flush();
-  file.close();
+  file.close(Parsley::SyncMode);
 }
 
 void AppDataManager::writeSettings()
 {
-  QFile file(Global::settings_file_dir);
+  QFile file(QString::fromStdString(Global::settings_file_dir));
   if(!file.open(QIODevice::WriteOnly | QIODevice::Text))
     {
       return;
@@ -698,7 +679,7 @@ void AppDataManager::loadFonts()
 
 void AppDataManager::loadUpdates()
 {
-  QFile file(Global::update_file_dir);
+  QFile file(QString::fromStdString(Global::update_file_dir));
   if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
     {
       return;

@@ -71,13 +71,13 @@ public:
                   //key           total done
   static QList<QJsonObject> message_queue;
 
-  static const QString data_location_dir;
-  static const QString user_data_dir;
-  static const QString log_dir;
+  static const std::string data_location_dir;
+  static const std::string user_data_dir;
+  static const std::string log_dir;
 
-  static const QString contacts_file_dir;
-  static const QString settings_file_dir;
-  static const QString update_file_dir;
+  static const std::string contacts_file_dir;
+  static const std::string settings_file_dir;
+  static const std::string update_file_dir;
 
 
   ///net

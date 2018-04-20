@@ -74,13 +74,13 @@ private:
    * only called once when during initialization.
    */
   inline void initVariable();
-  inline void readSettings();
+  inline void loadSettings();
   inline void loadUsrList();
   inline void loadFonts();
   inline void loadUpdates();
 
-  inline bool touchFile(char *path);
-  inline bool touchDir(char *dir);
+  inline bool touchFile(const std::string &path);
+  inline bool touchDir(const std::string &dir);
   inline QString makeUuid();
   inline QJsonDocument makeDefaultSettings();
   inline QJsonDocument makeUpdateJson(const int version[]);

@@ -47,16 +47,16 @@ QMultiHash<QString, QPair<int, int> > Global::file_tran_progress_hash;//used
 QList<QJsonObject> Global::message_queue;
 
 #ifndef Q_OS_WIN
-const QString Global::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/Hive!";
+const std::string Global::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString() + "/Hive!";
 #else
 const QString GlobalData::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif
-const QString Global::user_data_dir = Global::data_location_dir + "/usr";
-const QString Global::log_dir = Global::data_location_dir + "/log";
+const std::string  Global::user_data_dir = Global::data_location_dir + "/usr";
+const std::string  Global::log_dir = Global::data_location_dir + "/log";
 
-const QString Global::contacts_file_dir = Global::data_location_dir + "/contacts.json";
-const QString Global::settings_file_dir = Global::data_location_dir + "/settings.json";
-const QString Global::update_file_dir = Global::data_location_dir + "/update.json";
+const std::string  Global::contacts_file_dir = Global::data_location_dir + "/contacts.json";
+const std::string  Global::settings_file_dir = Global::data_location_dir + "/settings.json";
+const std::string  Global::update_file_dir = Global::data_location_dir + "/update.json";
 
 
 ///netr
