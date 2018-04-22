@@ -1,10 +1,10 @@
 #ifndef HIVEDOUBLEBUFFER_H
 #define HIVEDOUBLEBUFFER_H
 
+#include <QDebug>
+
 #include <list>
 #include <iostream>
-
-#include <QDebug>
 
 template <typename T>
 class HiveDoubleBuffer final

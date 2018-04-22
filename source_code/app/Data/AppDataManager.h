@@ -1,8 +1,6 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include <functional>
-
 #include "GlobalData.h"
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
@@ -17,10 +15,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-//#include <QFile>
-//#include <QDir>
-#include <QTextStream>
-#include <QFileInfo>
 #include <QStandardPaths>
 
 #include <QFontDatabase>
@@ -28,6 +22,7 @@
 #include <QTimer>
 #include <QUuid>
 
+#include <functional>
 #include <unordered_map>
 #include <forward_list>
 #include <mutex>
@@ -49,7 +44,7 @@ public:
   static void pushOutboundBuffer(NetPacket *packet);
 
 public slots:
-  void onUsrEntered(const UsrProfileStruct &usrProfileStruct);
+  void onUsrEntered(const UsrProfile &usrProfile);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
   void onUpdatesAvailable();
@@ -58,7 +53,7 @@ protected:
   void run();
 
 private:
-  bool inboundNetBufferReading;
+  bool inboundNetBufferReading = false;
   Parsley::Loop *loop;
 
   static HiveDoubleBuffer<NetPacket*> inboundNetBuffer;
@@ -85,7 +80,7 @@ private:
   inline QJsonDocument makeDefaultSettings();
   inline QJsonDocument makeUpdateJson(const int version[]);
 
-  inline void updateUsr(const UsrProfileStruct &usrProfileStruct);
+  inline void updateUsr(const UsrProfile &usrProfileStruct);
   inline void deleteUsr(const QStringList usrInfoStrList);
 
   /*!

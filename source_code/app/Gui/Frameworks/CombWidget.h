@@ -20,10 +20,10 @@ class CombWidget : public QWidget
   Q_OBJECT
 
 public:
-  explicit CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  explicit CombWidget(UsrProfile *usrProfileStruct, QWidget *parent = 0);
   ~CombWidget();
 
-  void setProfile(UsrProfileStruct *usrProfile);
+  void setProfile(UsrProfile *usrProfile);
   void setBadgeNumber(const int &num);
 
 protected:
@@ -47,9 +47,9 @@ private:
   QHBoxLayout *net_status_layout;
   QHBoxLayout *main_layout;
 
-  QString online_dot = "<span style=\" color:#39c828;\">●</span>";
-  QString offline_dot = "<span style=\" color:#ed403f;\">●</span>";
-  QString unstable_dot = "<span style=\" color:#ffb500;\">●</span>";
+  const QString online_dot = "<span style=\" color:#39c828;\">●</span>";
+  const QString offline_dot = "<span style=\" color:#ed403f;\">●</span>";
+  const QString unstable_dot = "<span style=\" color:#ffb500;\">●</span>";
 
   QPalette hover_palette;
   QColor default_window_color = Global::color_tab;
@@ -58,7 +58,7 @@ private:
   bool hovered  = false;
 
   ///data
-  UsrProfileStruct usr_profile;
+  UsrProfile usr_profile;
   QString getSubNetStr(const QString &ipAddr);
 
 signals:

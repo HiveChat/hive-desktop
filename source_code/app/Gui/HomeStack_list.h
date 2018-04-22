@@ -12,10 +12,10 @@ class ListItem : public QWidget
 {
   Q_OBJECT
 public:
-  explicit ListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent = 0);
+  explicit ListItem(UsrProfile *usrProfileStruct, QWidget *parent = 0);
   ~ListItem();
 
-  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
+  void refreshUsrProfile(UsrProfile *usrProfileStruct);
 
 private:
   AvatarButton *avatar_button;
@@ -33,8 +33,8 @@ public:
   explicit HomeStack_list(QWidget *parent);
   ~HomeStack_list();
 
-  void addUsr(UsrProfileStruct *usrProfileStruct);
-  void refreshUsrProfile(UsrProfileStruct *usrProfileStruct);
+  void addUsr(UsrProfile *usrProfileStruct);
+  void refreshUsrProfile(UsrProfile *usrProfileStruct);
 
 private:
   QHash<QString, ListItem*> list_item_hash;

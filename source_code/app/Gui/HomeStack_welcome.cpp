@@ -50,26 +50,24 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
   timer->setSingleShot(false);
   timer->start(1000);
 
-
-
 }
 
 void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *ev)
 {
   if(ev->button() == Qt::LeftButton)
     {
-      QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
-      file_tran_ani->setStartValue(255);
-      file_tran_ani->setEndValue(0);
-      file_tran_ani->setDuration(3000);
-      file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
-      connect(file_tran_ani, &QVariantAnimation::valueChanged,
-              [this](QVariant value) {
-                QPalette palette;
-                palette.setColor(QPalette::Window, QColor(255,255,255,value.toInt()));
-                this->setPalette(palette);
-              });
-      file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
+//      QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
+//      file_tran_ani->setStartValue(255);
+//      file_tran_ani->setEndValue(0);
+//      file_tran_ani->setDuration(3000);
+//      file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
+//      connect(file_tran_ani, &QVariantAnimation::valueChanged,
+//              [this](QVariant value) {
+//                QPalette palette;
+//                palette.setColor(QPalette::Window, QColor(255,255,255,value.toInt()));
+//                this->setPalette(palette);
+//              });
+//      file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
     }
 }
 

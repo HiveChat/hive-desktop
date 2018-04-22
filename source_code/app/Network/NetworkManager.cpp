@@ -120,7 +120,7 @@ void NetworkManager::udpProcessMessage(const Message::TextMessage &messageStruct
     }
 }
 
-void NetworkManager::udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct)
+void NetworkManager::udpProcessHeartBeat(const UsrProfile &usrProfileStruct)
 {
   if(usrProfileStruct.key.isEmpty())
     {
@@ -385,7 +385,7 @@ void NetworkManager::udpProcessPendingDatagrams()
               }
             case HeartBeat:
               {
-                UsrProfileStruct usr_profile;
+                UsrProfile usr_profile;
                 usr_profile.ip = sender_address.toString().remove("::ffff:");
                 usr_profile.key = json_obj.value("key").toString();
                 usr_profile.name = json_obj.value("name").toString();

@@ -56,7 +56,7 @@ QJsonDocument AppDataManager::makeUpdateJson(const int version[])
   return doc;
 }
 
-void AppDataManager::updateUsr(const UsrProfileStruct &usrProfileStruct)
+void AppDataManager::updateUsr(const UsrProfile &usrProfileStruct)
 {
   QString uuid = usrProfileStruct.key;
   QString ipAddr = usrProfileStruct.ip;
@@ -168,37 +168,37 @@ void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 }
 
 //! TODO: PLEASE REVIEW AND REWRITE
-void AppDataManager::onUsrEntered(const UsrProfileStruct &usrProfileStruct) // logic problem here? too complicated?
+void AppDataManager::onUsrEntered(const UsrProfile &usrProfile) // logic problem here? too complicated?
 {
-  if(Global::online_usr_data_hash.contains(usrProfileStruct.key))
+  if(Global::online_usr_data_hash.contains(usrProfile.key))
     {
       Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in online list");
-      UsrData *usrData = Global::online_usr_data_hash.value(usrProfileStruct.key);
-      if(usrProfileStruct != *usrData->getUsrProfileStruct())
+      UsrData *usrData = Global::online_usr_data_hash.value(usrProfile.key);
+      if(usrProfile != *usrData->getUsrProfileStruct())
         {
-          usrData->setUsrProfileStruct(usrProfileStruct);
+          usrData->setUsrProfileStruct(usrProfile);
           emit usrProfileChanged(usrData);
           Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
-  else if(Global::offline_usr_data_hash.contains(usrProfileStruct.key))
+  else if(Global::offline_usr_data_hash.contains(usrProfile.key))
     {
       Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
-      Global::online_usr_data_hash.insert(usrProfileStruct.key, Global::offline_usr_data_hash.value(usrProfileStruct.key));
-      UsrData *usrData = Global::online_usr_data_hash.value(usrProfileStruct.key);
-      if(usrProfileStruct != *usrData->getUsrProfileStruct())
+      Global::online_usr_data_hash.insert(usrProfile.key, Global::offline_usr_data_hash.value(usrProfile.key));
+      UsrData *usrData = Global::online_usr_data_hash.value(usrProfile.key);
+      if(usrProfile != *usrData->getUsrProfileStruct())
         {
-          usrData->setUsrProfileStruct(usrProfileStruct);
-          updateUsr(usrProfileStruct);
+          usrData->setUsrProfileStruct(usrProfile);
+          updateUsr(usrProfile);
           emit usrProfileChanged(usrData);
           Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
         }
     }
   else
     {
-      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct, this);
-      Global::online_usr_data_hash.insert(usrProfileStruct.key, userData);
-      updateUsr(usrProfileStruct);
+      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile, this);
+      Global::online_usr_data_hash.insert(usrProfile.key, userData);
+      updateUsr(usrProfile);
       emit usrProfileLoaded(userData);
       qDebug()<<"@DataManager::onUsrEntered: User profile Created.";
 
@@ -326,19 +326,23 @@ void AppDataManager::run()
 
 void AppDataManager::readInboundNetBuffer()
 {
+  inboundNetBufferReading = true;
   NetPacket *p = inboundNetBuffer.front();
+  Log::net(Log::Info, "AppDataManager::readInboundNetBuffer()","Checking Package");
 
   while (p)
     {
       //! See if JSON object is complete.
       QJsonParseError err;
       QJsonDocument doc = QJsonDocument::fromJson(QByteArray(p->data, p->len), &err);
-      QString ipAddr = QByteArray(p->ipAddr, 17);
+      QString ipAddr = QString::fromStdString(p->ipAddr);
       //! HiveDoubleBuffer calls std::list::pop_front()
       //! which automatically calls destructor of NetPacket *p.
       inboundNetBuffer.pop_front();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
         {
+          Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()","emit");
+
           continue;
         }
 
@@ -359,12 +363,13 @@ void AppDataManager::readInboundNetBuffer()
       switch (messageType) {
         case MessageType::HeartBeat:
           {
-            UsrProfileStruct usr_profile;
-//            usr_profile.ip = addr;
+            UsrProfile usr_profile;
+            usr_profile.ip = ipAddr;
             usr_profile.key = packetJson.value("sender").toString();
             usr_profile.name = packetJson.value("name").toString();
             usr_profile.avatar = packetJson.value("avatar").toString();
             onUsrEntered(usr_profile);
+            break;
           }
         case MessageType::TextMessage:
           {
@@ -402,6 +407,7 @@ void AppDataManager::readInboundNetBuffer()
       //! Get a new p.
       p = inboundNetBuffer.front();
     }
+  inboundNetBufferReading = false;
 }
 
 void AppDataManager::wakeLoop(HiveDoubleBuffer<NetPacket *> *buf)
@@ -551,7 +557,7 @@ void AppDataManager::loadUsrList()
               QString *tempUsrKeyStr = &uuidList[i];
               QJsonObject tempUsrProfileObj = usrListObj[*tempUsrKeyStr].toObject();
 
-              UsrProfileStruct usrProfileStruct;
+              UsrProfile usrProfileStruct;
               usrProfileStruct.key = tempUsrProfileObj["usrKey"].toString();
               usrProfileStruct.name = tempUsrProfileObj["usrName"].toString();
               usrProfileStruct.avatar = tempUsrProfileObj["avatarPath"].toString();

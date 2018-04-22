@@ -10,7 +10,7 @@ Hive::Hive(int &argc, char **argv)
   QtMac::setBadgeLabelText("Hi");
 #endif
 
-  qDebug()<< "xx:xx:xx GUI_NORM  Hive::Hive() Main Thread Started: "<< this->thread()->currentThreadId();
+  qDebug()<< "00:00:00 GUI_NORM  Hive::Hive() Main Thread Started: "<< this->thread()->currentThreadId();
 
   data_manager = new AppDataManager();
   data_manager->start();
@@ -24,7 +24,7 @@ Hive::Hive(int &argc, char **argv)
   window = new Window();
 
   //! Qt SIGNAL SLOT connection between data_manager, network_manager, and window
-  qRegisterMetaType<UsrProfileStruct> ("UsrProfileStruct");
+  qRegisterMetaType<UsrProfile> ("UsrProfileStruct");
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   connect(data_manager, &AppDataManager::updatesAvailable,

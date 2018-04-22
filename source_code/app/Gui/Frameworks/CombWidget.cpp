@@ -2,7 +2,7 @@
 #include <QDebug>
 
 
-CombWidget::CombWidget(UsrProfileStruct *usrProfileStruct, QWidget *parent)
+CombWidget::CombWidget(UsrProfile *usrProfileStruct, QWidget *parent)
   : QWidget(parent)
   , avatar(new AvatarButton(80,  this))
   , usr_name_label(new QLabel(this))
@@ -55,7 +55,7 @@ CombWidget::~CombWidget()
 
 }
 
-void CombWidget::setProfile(UsrProfileStruct *usrProfile)
+void CombWidget::setProfile(UsrProfile *usrProfile)
 {
   usr_profile = *usrProfile;
 

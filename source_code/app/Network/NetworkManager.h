@@ -63,7 +63,7 @@ private:
   quint16 udp_port = 23232;
   QUdpSocket *udp_socket;
   void udpProcessMessage(const Message::TextMessage &messageStruct);
-  void udpProcessHeartBeat(const UsrProfileStruct &usrProfileStruct);
+  void udpProcessHeartBeat(const UsrProfile &usrProfileStruct);
   void udpProcessUsrLeft(QString *usrKey);
   void udpProcessFileTran(const Message::TextMessage &fileInfoStruct);
   void udpProcessFileReject();
@@ -99,7 +99,7 @@ signals:
   void messageReceived(const QJsonObject &jsonObj, const MessageType &msgType);
 
   void messageRecieved(const Message::TextMessage &messageStruct, bool fromMe);//<
-  void usrEnter(const UsrProfileStruct &usrProfileStruct);
+  void usrEnter(const UsrProfile &usrProfileStruct);
   void usrLeft(QString *usrKey);
 
   void updateAvailable();

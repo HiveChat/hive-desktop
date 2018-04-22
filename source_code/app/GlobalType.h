@@ -43,15 +43,15 @@ namespace GUI
   };
 }
 
-struct UsrProfileStruct
+struct UsrProfile
 {
   QString key;
   QString name;
   QString avatar;
   QString ip = "Offline";
 };
-bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
-bool operator ==(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2);
+bool operator !=(const UsrProfile &arg1 , const UsrProfile &arg2);
+bool operator ==(const UsrProfile &arg1 , const UsrProfile &arg2);
 
 struct UpdateStruct
 {
@@ -104,7 +104,7 @@ enum BaseProtocol{
 };
 
 struct NetPacket {
-  NetPacket(char* ip, char* data, const int &len, const BaseProtocol &protocol)
+  NetPacket(std::string ip, char* data, const int &len, const BaseProtocol &protocol)
     : ipAddr(ip)
     , data(data)
     , len(len)
@@ -113,10 +113,10 @@ struct NetPacket {
   }
   ~NetPacket()
   {
-    delete[] ipAddr;
     delete[] data;
+    data = nullptr;
   }
-  char *ipAddr;
+  std::string ipAddr;
   char *data;
   int len;
   BaseProtocol protocol;

@@ -1,6 +1,6 @@
 #include "GlobalType.h"
 
-bool operator ==(const UsrProfileStruct &arg1, const UsrProfileStruct &arg2)
+bool operator ==(const UsrProfile &arg1, const UsrProfile &arg2)
 {
   if(arg1.key == arg2.key
      && arg1.ip == arg2.ip
@@ -14,7 +14,7 @@ bool operator ==(const UsrProfileStruct &arg1, const UsrProfileStruct &arg2)
       return false;
     }
 }
-bool operator !=(const UsrProfileStruct &arg1 , const UsrProfileStruct &arg2)
+bool operator !=(const UsrProfile &arg1 , const UsrProfile &arg2)
 {
   return !(arg1 == arg2);
 }

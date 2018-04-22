@@ -1,7 +1,7 @@
 #include "UsrData.h"
 
 
-UsrData::UsrData(QString *myKey, const UsrProfileStruct &usrProfileStruct, QObject *parent)
+UsrData::UsrData(QString *myKey, const UsrProfile &usrProfileStruct, QObject *parent)
   : QObject(parent)
   , usr_profile_struct(usrProfileStruct)
   , history_path(usr_path + usr_profile_struct.key)
@@ -26,7 +26,7 @@ void UsrData::addUnreadMessage(const Message::TextMessage &message)
   unread_message_list.append(getMessageJsonObject(message));
 }
 
-void UsrData::setUsrProfileStruct(const UsrProfileStruct &usrProfileStruct)
+void UsrData::setUsrProfileStruct(const UsrProfile &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
 }

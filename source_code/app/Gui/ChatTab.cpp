@@ -44,7 +44,7 @@ ChatTab_comb_scroll_widget::ChatTab_comb_scroll_widget(QWidget *parent) : QWidge
   main_layout->setSpacing(0);
 }
 
-void ChatTab_comb_scroll_widget::addComb(UsrProfileStruct *usrProfileStruct)
+void ChatTab_comb_scroll_widget::addComb(UsrProfile *usrProfileStruct)
 {
   Log::gui(Log::Info, "GuiChatTab_comb_scroll_widget::addComb()", "Added a comb.");
   CombWidget *comb_widget = new CombWidget(usrProfileStruct, this);
@@ -75,7 +75,7 @@ bool ChatTab_comb_scroll_widget::contains(const QString &usrKey)
 }
 
 
-void ChatTab_comb_scroll_widget::refreshComb(UsrProfileStruct *usrProfileStruct)
+void ChatTab_comb_scroll_widget::refreshComb(UsrProfile *usrProfileStruct)
 {
   CombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key);
   if(comb_widget != nullptr)

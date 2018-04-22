@@ -71,12 +71,12 @@ void HiveServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
 {
   NetPacket *packet = new NetPacket(ip, data.base, data.len, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
-  qDebug()<<"packet received";
+  qDebug()<<"packet received"<<ip;
 }
 
 
 bool
-HiveServer::processHeartBeat(const UsrProfileStruct &usrProfileStruct)
+HiveServer::processHeartBeat(const UsrProfile &usrProfileStruct)
 {
   if(usrProfileStruct.key.isEmpty())
     {

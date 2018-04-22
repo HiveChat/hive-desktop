@@ -17,8 +17,8 @@ class ChatTab_comb_scroll_widget : public QWidget
 
 public:
   explicit ChatTab_comb_scroll_widget(QWidget *parent = 0);
-  void addComb(UsrProfileStruct *usrProfileStruct);
-  void refreshComb(UsrProfileStruct *usrProfileStruct);
+  void addComb(UsrProfile *usrProfileStruct);
+  void refreshComb(UsrProfile *usrProfileStruct);
   void refreshBadgeNumber(const QString &usrKey, const int &num);
   bool contains(const QString &usrKey);
 

@@ -27,7 +27,7 @@ protected:
   static QByteArray encodeTextMessage(const QJsonObject &msg);
 
 signals:
-  void usrEntered(const UsrProfileStruct &usr);
+  void usrEntered(const UsrProfile &usr);
 
 
 };

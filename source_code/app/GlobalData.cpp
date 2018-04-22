@@ -101,7 +101,7 @@ bool Global::versionCompare(const int (&fresh)[3], const int (&old)[3])
     }
 }
 
-void Global::TEST_printUsrProfileStruct(const UsrProfileStruct &usrProfileStruct, const QString &str)
+void Global::TEST_printUsrProfileStruct(const UsrProfile &usrProfileStruct, const QString &str)
 {
   qDebug()<<endl<<"Test by "<<str;
   qDebug()<<usrProfileStruct.key;

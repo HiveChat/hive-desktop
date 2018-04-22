@@ -41,7 +41,7 @@ private:
 
   void udpPacketReady(const Parsley::Buffer &data, char *ip);
 
-  bool processHeartBeat(const UsrProfileStruct &usrProfileStruct);
+  bool processHeartBeat(const UsrProfile &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);
   bool processErrorDelivery();
   bool processTextMessage();

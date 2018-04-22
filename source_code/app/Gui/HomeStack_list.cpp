@@ -1,7 +1,7 @@
 #include "HomeStack_list.h"
 #include <QDebug>
 
-ListItem::ListItem(UsrProfileStruct *usrProfileStruct, QWidget *parent) : QWidget(parent)
+ListItem::ListItem(UsrProfile *usrProfileStruct, QWidget *parent) : QWidget(parent)
 {
   avatar_button = new AvatarButton(":/avatar/avatar/default.png", 90, this);
   name_label = new QLabel("Loading...", this);
@@ -24,7 +24,7 @@ ListItem::~ListItem()
 
 }
 
-void ListItem::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+void ListItem::refreshUsrProfile(UsrProfile *usrProfileStruct)
 {
   avatar_button->setAvatar(usrProfileStruct->avatar);
   name_label->setText(usrProfileStruct->name);
@@ -51,14 +51,14 @@ HomeStack_list::~HomeStack_list()
 
 }
 
-void HomeStack_list::addUsr(UsrProfileStruct *usrProfileStruct)
+void HomeStack_list::addUsr(UsrProfile *usrProfileStruct)
 {
   ListItem *list_item = new ListItem(usrProfileStruct, this);
   list_item_hash.insert(usrProfileStruct->key, list_item);
   central_layout->addWidget(list_item);
 }
 
-void HomeStack_list::refreshUsrProfile(UsrProfileStruct *usrProfileStruct)
+void HomeStack_list::refreshUsrProfile(UsrProfile *usrProfileStruct)
 {
   list_item_hash.value(usrProfileStruct->key)->refreshUsrProfile(usrProfileStruct);
 }
