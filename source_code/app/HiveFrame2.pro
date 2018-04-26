@@ -13,7 +13,6 @@ QT	 += network
 
 CONFIG   += c++14
 
-
 macx{
     QT   += macextras
     QMAKE_INFO_PLIST = ./Info.plist
