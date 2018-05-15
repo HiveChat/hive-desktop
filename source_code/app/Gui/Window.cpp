@@ -3,14 +3,10 @@
 
 Window::Window(QWidget *parent)
   : QWidget(parent)
-  , gui_tab_block(new GuiTabBlock(this))
-  , gui_main_block(new MainBlock(this))
-  , hide_action(new QAction(tr("&Hide"), this))
-  , show_action(new QAction(tr("&Show"), this))
-  , quit_action(new QAction(tr("&Quit"), this))
-  , tray_icon_menu(new QMenu(this))
-  , tray_icon(new QSystemTrayIcon(this))
 {    
+  loadFonts();
+
+  this->setHidden(true);
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
   this->setGeometry(this->x(), this->y(), Global::settings.window_width, Global::settings.window_height);
@@ -23,17 +19,26 @@ Window::Window(QWidget *parent)
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
+  gui_tab_block = new GuiTabBlock(this);
+  gui_main_block = new MainBlock(this);
+
   QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
   main_layout->addWidget(gui_tab_block);
   main_layout->addWidget(gui_main_block);
 
+  hide_action = new QAction(tr("&Hide"), this);
+  show_action = new QAction(tr("&Show"), this);
+  quit_action = new QAction(tr("&Quit"), this);
+
+  tray_icon_menu = new QMenu(this);
   tray_icon_menu->addAction(hide_action);
   tray_icon_menu->addAction(show_action);
   tray_icon_menu->addSeparator();
   tray_icon_menu->addAction(quit_action);
 
+  tray_icon = new QSystemTrayIcon(this);
   tray_icon->setIcon(QIcon(":/img/img/tray_0.png"));
   tray_icon->setToolTip("Hive!");
   tray_icon->setContextMenu(tray_icon_menu);
@@ -88,6 +93,65 @@ Window::Window(QWidget *parent)
 Window::~Window()
 {
   qDebug()<<"\n@Hive UI is destructed";
+}
+
+void Window::loadFonts()
+{
+#ifdef Q_OS_WIN
+      QString font_family = "Verdana";
+      GlobalData::font_chatTextEditor = QFont(font_family, 11);
+      GlobalData::font_main = QFont(font_family, 6);
+      GlobalData::font_chatBubble = GlobalData::font_main;
+      GlobalData::font_chatBubble.setPointSize(10);
+      GlobalData::font_combWidgetUsrName = GlobalData::font_main;
+      GlobalData::font_combWidgetUsrName.setPointSize(10);
+      GlobalData::font_combWidgetIpAddr = GlobalData::font_main;
+      GlobalData::font_combWidgetIpAddr.setPointSize(7);
+      GlobalData::font_menuButton = GlobalData::font_main;
+      GlobalData::font_menuButton.setPointSize(10);
+      GlobalData::font_scrollStackTitle = GlobalData::font_main;
+      GlobalData::font_scrollStackTitle.setPointSize(10);
+      GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
+      GlobalData::font_scrollStackSubtitle.setPointSize(9);
+#endif //Q_OS_WIN
+
+
+#ifndef Q_OS_WIN ///windows can't load font from qrc, don't know why.
+    int fontId;
+    QString fontFamily;
+
+    fontId = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
+    if(fontId == -1)
+      {
+        return;
+      }
+
+    fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+
+    Global::font_chatTextEditor = QFont(fontFamily, 16);
+    if(fontId == -1)
+      {
+        return;
+      }
+
+    fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
+    fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
+    Global::font_main = QFont(fontFamily);
+    Global::font_chatBubble = Global::font_main;
+    Global::font_chatBubble.setPointSize(14);
+    Global::font_combWidgetUsrName = Global::font_main;
+    Global::font_combWidgetUsrName.setPointSize(15);
+    Global::font_combWidgetIpAddr = Global::font_main;
+    Global::font_combWidgetIpAddr.setPointSize(11);
+    Global::font_menuButton = Global::font_main;
+    Global::font_menuButton.setPointSize(14);
+    Global::font_scrollStackTitle = Global::font_main;
+    Global::font_scrollStackTitle.setPointSize(15);
+    Global::font_scrollStackSubtitle = Global::font_main;
+    Global::font_scrollStackSubtitle.setPointSize(13);
+
+#endif //Q_OS_WIN
+
 }
 
 void Window::onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe)

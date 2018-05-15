@@ -29,6 +29,7 @@ void UsrData::addUnreadMessage(const Message::TextMessage &message)
 void UsrData::setUsrProfileStruct(const UsrProfile &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
+//  usr_profile_struct.online = true;
 }
 
 QList<QJsonObject>* UsrData::retrieveUnreadMessage()
@@ -78,14 +79,7 @@ QJsonArray* UsrData::flipDown()
 
 bool UsrData::isOnline()
 {
-  if(usr_profile_struct.ip.isEmpty() || usr_profile_struct.ip == "Offline")
-    {
-      return false;
-    }
-  else
-    {
-      return true;
-    }
+  return usr_profile_struct.online;
 }
 
 

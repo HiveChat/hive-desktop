@@ -315,7 +315,6 @@ void AppDataManager::run()
 
   loadSettings();
   loadUsrList();
-  loadFonts();
 
   Parsley::Timer checkSettingsTimer(loop);
   checkSettingsTimer.bindCb(std::bind(&AppDataManager::checkSettings, this));
@@ -611,66 +610,6 @@ void AppDataManager::writeSettings()
   Log::dat(Log::Info
            , "AppDataManager::writeCurrentConfig()"
            , "Config file updated.");
-}
-
-void AppDataManager::loadFonts()
-{
-
-#ifdef Q_OS_WIN
-    QString font_family = "Verdana";
-    GlobalData::font_chatTextEditor = QFont(font_family, 11);
-    GlobalData::font_main = QFont(font_family, 6);
-    GlobalData::font_chatBubble = GlobalData::font_main;
-    GlobalData::font_chatBubble.setPointSize(10);
-    GlobalData::font_combWidgetUsrName = GlobalData::font_main;
-    GlobalData::font_combWidgetUsrName.setPointSize(10);
-    GlobalData::font_combWidgetIpAddr = GlobalData::font_main;
-    GlobalData::font_combWidgetIpAddr.setPointSize(7);
-    GlobalData::font_menuButton = GlobalData::font_main;
-    GlobalData::font_menuButton.setPointSize(10);
-    GlobalData::font_scrollStackTitle = GlobalData::font_main;
-    GlobalData::font_scrollStackTitle.setPointSize(10);
-    GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
-    GlobalData::font_scrollStackSubtitle.setPointSize(9);
-#endif //Q_OS_WIN
-
-
-#ifndef Q_OS_WIN ///windows can't load font from qrc, don't know why.
-  int fontId;
-  QString fontFamily;
-
-  fontId = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
-  if(fontId == -1)
-    {
-      return;
-    }
-
-  fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-
-  Global::font_chatTextEditor = QFont(fontFamily, 16);
-  if(fontId == -1)
-    {
-      return;
-    }
-
-  fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
-  fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-  Global::font_main = QFont(fontFamily);
-  Global::font_chatBubble = Global::font_main;
-  Global::font_chatBubble.setPointSize(14);
-  Global::font_combWidgetUsrName = Global::font_main;
-  Global::font_combWidgetUsrName.setPointSize(15);
-  Global::font_combWidgetIpAddr = Global::font_main;
-  Global::font_combWidgetIpAddr.setPointSize(11);
-  Global::font_menuButton = Global::font_main;
-  Global::font_menuButton.setPointSize(14);
-  Global::font_scrollStackTitle = Global::font_main;
-  Global::font_scrollStackTitle.setPointSize(15);
-  Global::font_scrollStackSubtitle = Global::font_main;
-  Global::font_scrollStackSubtitle.setPointSize(13);
-
-#endif //Q_OS_WIN
-
 }
 
 void AppDataManager::loadUpdates()

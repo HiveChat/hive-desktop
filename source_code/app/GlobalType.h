@@ -49,6 +49,7 @@ struct UsrProfile
   QString name;
   QString avatar;
   QString ip = "Offline";
+  bool online = false;
 };
 bool operator !=(const UsrProfile &arg1 , const UsrProfile &arg2);
 bool operator ==(const UsrProfile &arg1 , const UsrProfile &arg2);

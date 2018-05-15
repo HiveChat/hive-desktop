@@ -71,7 +71,6 @@ private:
   inline void initVariable();
   inline void loadSettings();
   inline void loadUsrList();
-  inline void loadFonts();
   inline void loadUpdates();
 
   inline bool touchFile(const std::string &path);

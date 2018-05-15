@@ -12,6 +12,8 @@ Hive::Hive(int &argc, char **argv)
 
   qDebug()<< "00:00:00 GUI_NORM  Hive::Hive() Main Thread Started: "<< this->thread()->currentThreadId();
 
+  window = new Window();
+
   data_manager = new AppDataManager();
   data_manager->start();
 
@@ -21,7 +23,6 @@ Hive::Hive(int &argc, char **argv)
   network_manager = new NetworkManager();
   network_manager->moveToThread(network_thread);
 
-  window = new Window();
 
   //! Qt SIGNAL SLOT connection between data_manager, network_manager, and window
   qRegisterMetaType<UsrProfile> ("UsrProfileStruct");
