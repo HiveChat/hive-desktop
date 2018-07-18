@@ -1,29 +1,12 @@
-[plain] view plaincopy
-#File
+#Build File
+build*/
+.qmake.stash
+
+
+#System File
 .DS_Store 
 Icon
 
-#Directory
-  
-
-.DS_Store
-
-.DS_Store
-
-.DS_Store
-
-SourceCode/.DS_Store
-
+#User File
 *.user
-
-source_code/HiveFrame2.pro.user
-
-source_code/HiveFrame2.pro.user
-
-other_files/UIWidgets/HiveDialog/HiveDialog.pro.user.d518d3b
-
-*.user
-
-*.user
-
-*.66ef662
+*.pro.user.*
