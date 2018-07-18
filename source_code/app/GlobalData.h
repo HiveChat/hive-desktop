@@ -65,8 +65,8 @@ public:
   static QUrl update_url;
   static QUrl download_url;
 
-  static QHash<QString, UsrData*> offline_usr_data_hash;
-  static QHash<QString, UsrData*> online_usr_data_hash;//used
+//  static QHash<QString, UsrData*> offline_usr_data_hash;
+//  static QHash<QString, UsrData*> online_usr_data_hash;//used
   static QMultiHash<QString, QPair<int, int> > file_tran_progress_hash;
                   //key           total done
   static QList<QJsonObject> message_queue;

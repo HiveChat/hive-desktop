@@ -5,7 +5,8 @@ bool operator ==(const UsrProfile &arg1, const UsrProfile &arg2)
   if(arg1.key == arg2.key
      && arg1.ip == arg2.ip
      && arg1.name == arg2.name
-     && arg1.avatar == arg2.avatar)
+     && arg1.avatar == arg2.avatar
+     && arg1.online == arg2.online)
     {
       return true;
     }

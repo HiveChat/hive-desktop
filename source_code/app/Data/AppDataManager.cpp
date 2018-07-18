@@ -3,6 +3,9 @@
 HiveDoubleBuffer<NetPacket*> AppDataManager::inboundNetBuffer;
 HiveDoubleBuffer<NetPacket*> AppDataManager::outboundNetBuffer;
 
+QHash<QString, UsrData*> AppDataManager::usr_data_hash;
+
+
 std::map<QString, int*> AppDataManager::settings_int_hash;
 std::map<QString, QColor*> AppDataManager::settings_qcolor_hash;
 std::map<QString, QString*> AppDataManager::settings_qstring_hash;
@@ -32,6 +35,11 @@ void AppDataManager::pushInboundBuffer(NetPacket *packet)
 void AppDataManager::pushOutboundBuffer(NetPacket *packet)
 {
   outboundNetBuffer.push_front(packet);
+}
+
+bool AppDataManager::isUsrNew(const QString &uuid)
+{
+  return !usr_data_hash.contains(uuid);
 }
 
 void AppDataManager::checkSettings()
@@ -168,43 +176,64 @@ void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 }
 
 //! TODO: PLEASE REVIEW AND REWRITE
-void AppDataManager::onUsrEntered(const UsrProfile &usrProfile) // logic problem here? too complicated?
+void AppDataManager::onUsrEntered(UsrProfile &usrProfile) // logic problem here? too complicated?
 {
-  if(Global::online_usr_data_hash.contains(usrProfile.key))
+  if(isUsrNew(usrProfile.key))
     {
-      Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in online list");
-      UsrData *usrData = Global::online_usr_data_hash.value(usrProfile.key);
-      if(usrProfile != *usrData->getUsrProfileStruct())
-        {
-          usrData->setUsrProfileStruct(usrProfile);
-          emit usrProfileChanged(usrData);
-          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
-        }
-    }
-  else if(Global::offline_usr_data_hash.contains(usrProfile.key))
-    {
-      Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
-      Global::online_usr_data_hash.insert(usrProfile.key, Global::offline_usr_data_hash.value(usrProfile.key));
-      UsrData *usrData = Global::online_usr_data_hash.value(usrProfile.key);
-      if(usrProfile != *usrData->getUsrProfileStruct())
-        {
-          usrData->setUsrProfileStruct(usrProfile);
-          updateUsr(usrProfile);
-          emit usrProfileChanged(usrData);
-          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
-        }
+      Log::dat(Log::Info, "DataManager::onUsrEntered()", "New user");
+      usrProfile.online = true;
+      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile, this);
+      usr_data_hash.insert(usrProfile.key, userData);
+      updateUsr(usrProfile);
+      emit usrProfileLoaded(userData);
     }
   else
     {
-      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile, this);
-      Global::online_usr_data_hash.insert(usrProfile.key, userData);
-      updateUsr(usrProfile);
-      emit usrProfileLoaded(userData);
-      qDebug()<<"@DataManager::onUsrEntered: User profile Created.";
+      UsrData *userData = usr_data_hash.value(usrProfile.key);
+      qDebug()<<userData->getKey();
+      if(usrProfile != *userData->getUsrProfileStruct())
+        {
+          userData->setUsrProfileStruct(usrProfile);
+          emit usrProfileChanged(userData);
+          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
+        }
 
     }
 
-  return;
+
+//  if(Global::online_usr_data_hash.contains(usrProfile.key))
+//    {
+//      Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in online list");
+//      UsrData *usrData = Global::online_usr_data_hash.value(usrProfile.key);
+//      if(usrProfile != *usrData->getUsrProfileStruct())
+//        {
+//          usrData->setUsrProfileStruct(usrProfile);
+//          emit usrProfileChanged(usrData);
+//          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
+//        }
+//    }
+//  else if(Global::offline_usr_data_hash.contains(usrProfile.key))
+//    {
+//      Log::dat(Log::Info, "DataManager::onUsrEntered()", "incoming user already exist in offline list");
+//      Global::online_usr_data_hash.insert(usrProfile.key, Global::offline_usr_data_hash.value(usrProfile.key));
+//      UsrData *usrData = Global::online_usr_data_hash.value(usrProfile.key);
+//      if(usrProfile != *usrData->getUsrProfileStruct())
+//        {
+//          usrData->setUsrProfileStruct(usrProfile);
+//          updateUsr(usrProfile);
+//          emit usrProfileChanged(usrData);
+//          Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
+//        }
+//    }
+//  else
+//    {
+//      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile, this);
+//      Global::online_usr_data_hash.insert(usrProfile.key, userData);
+//      updateUsr(usrProfile);
+//      emit usrProfileLoaded(userData);
+//      qDebug()<<"@DataManager::onUsrEntered: User profile Created.";
+
+//    }
 }
 
 void AppDataManager::onUsrLeft(QString *usrKey)
@@ -217,12 +246,12 @@ void AppDataManager::onMessageCome(const Message::TextMessage &messageStruct, bo
   if(fromMe)
     {
       qDebug()<<"fromme";
-      Global::online_usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
+      usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
     }
   else
     {
       qDebug()<<"notfromme";
-      Global::online_usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
+      usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
     }
   emit messageLoaded(messageStruct, fromMe);
 }
@@ -335,8 +364,7 @@ void AppDataManager::readInboundNetBuffer()
       QJsonParseError err;
       QJsonDocument doc = QJsonDocument::fromJson(QByteArray(p->data, p->len), &err);
       QString ipAddr = QString::fromStdString(p->ipAddr);
-      //! HiveDoubleBuffer calls std::list::pop_front()
-      //! which automatically calls destructor of NetPacket *p.
+      //! HiveDoubleBuffer calls std::list::pop_front(), which automatically calls destructor of NetPacket *p.
       inboundNetBuffer.pop_front();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
         {
@@ -553,16 +581,19 @@ void AppDataManager::loadUsrList()
 
           for(int i = 0; i < uuidList.count(); i++)
             {
-              QString *tempUsrKeyStr = &uuidList[i];
-              QJsonObject tempUsrProfileObj = usrListObj[*tempUsrKeyStr].toObject();
+              QString *tempUuidStr = &uuidList[i];
+              QJsonObject tempUsrProfileObj = usrListObj[*tempUuidStr].toObject();
 
               UsrProfile usrProfileStruct;
               usrProfileStruct.key = tempUsrProfileObj["usrKey"].toString();
               usrProfileStruct.name = tempUsrProfileObj["usrName"].toString();
               usrProfileStruct.avatar = tempUsrProfileObj["avatarPath"].toString();
+              usrProfileStruct.online = false;
 
               UsrData *usrData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct, this);
-              Global::offline_usr_data_hash.insert(*tempUsrKeyStr, usrData);
+              usr_data_hash.insert(*tempUuidStr, usrData);
+
+              Global::TEST_printUsrProfileStruct(*usrData->getUsrProfileStruct(),"adding from disk");
             }
         }
     }
