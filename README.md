@@ -7,6 +7,11 @@
 [![platform](https://img.shields.io/badge/Platform-Linux%20%7C%20macOS%20%7C%20Windows-ff69b4.svg?style=flat)](http://doc.qt.io/qt-5/supported-platforms.html)
 <!--[![GitHub contributors](https://img.shields.io/github/contributors/HiveChat/Hive-desktop.svg)](https://github.com/HiveChat/Hive-desktop/graphs/contributors)-->
 
+```
+NOTE: The developer is busy during the summer, the project will continue after the holiday. 
+If you'd like to contribute, please contact the author, Thanks! :)
+```
+
 ### The Cute Chat App [https://hivechat.org](hivechat.org)
 * User Experience Focused
 * Working fast on every desktop platform
