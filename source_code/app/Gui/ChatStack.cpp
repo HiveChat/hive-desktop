@@ -390,13 +390,13 @@ void ChatStack::updateFileTranProgress()
 void ChatStack::display(const QString &usrKey)
 {
   UsrData *temp_usr_data;
-  if(Global::online_usr_data_hash.contains(usrKey))
+  if(AppDataManager::usr_data_hash.contains(usrKey))
     {
-      temp_usr_data = Global::online_usr_data_hash.value(usrKey);
+      temp_usr_data = AppDataManager::usr_data_hash.value(usrKey);
     }
   else
     {
-      temp_usr_data = Global::offline_usr_data_hash.value(usrKey);
+      temp_usr_data = AppDataManager::usr_data_hash.value(usrKey);
     }
 
   // if different usr or updated usr is refreshing

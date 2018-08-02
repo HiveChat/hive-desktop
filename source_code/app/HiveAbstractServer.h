@@ -17,6 +17,11 @@ public:
   virtual bool stop();
   virtual void bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb);
 
+//  template <class T, typename Ret, typename... Args>
+//  void bindCbb(Parsley::AbstractSocket::CallbackType &t, T *obj, Ret(T::*f)(Args...)) {
+//    packet_ready_cb
+//  }
+
   void callPacketReady(Parsley::Buffer data, char *ip);
 
 protected:

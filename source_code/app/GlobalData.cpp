@@ -40,8 +40,8 @@ UpdateStruct Global::update_struct;
 QUrl Global::update_url = QUrl("http://updatestest.hivechat.org");
 QUrl Global::download_url = QUrl("http://download.hivechat.org");
 
-QHash<QString, UsrData*> Global::offline_usr_data_hash;
-QHash<QString, UsrData*> Global::online_usr_data_hash;//used
+//QHash<QString, UsrData*> Global::offline_usr_data_hash;
+//QHash<QString, UsrData*> Global::online_usr_data_hash;//used
 QMultiHash<QString, QPair<int, int> > Global::file_tran_progress_hash;//used
 
 QList<QJsonObject> Global::message_queue;

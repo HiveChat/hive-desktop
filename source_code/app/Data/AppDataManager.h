@@ -9,6 +9,8 @@
 #include "../libs/libParsley/src/PTimer.h"
 #include "../libs/libParsley/src/PAsync.h"
 
+#include <unordered_map>
+
 #include <QThread>
 #include <QDebug>
 
@@ -43,8 +45,12 @@ public:
   static void pushInboundBuffer(NetPacket *packet);
   static void pushOutboundBuffer(NetPacket *packet);
 
+  static bool isUsrNew(const QString &uuid);
+
+  static QHash<QString, UsrData*> usr_data_hash;
+
 public slots:
-  void onUsrEntered(const UsrProfile &usrProfile);
+  void onUsrEntered(UsrProfile &usrProfile);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
   void onUpdatesAvailable();
@@ -58,11 +64,12 @@ private:
 
   static HiveDoubleBuffer<NetPacket*> inboundNetBuffer;
   static HiveDoubleBuffer<NetPacket*> outboundNetBuffer;
-  Parsley::Async *read_inbound_async;
-  void readInboundNetBuffer();
-  void wakeLoop(HiveDoubleBuffer<NetPacket *> *buf);
 
+  Parsley::Async *read_inbound_async;
+  void wakeLoop(HiveDoubleBuffer<NetPacket *> *buf);
+  void readInboundNetBuffer();
   void checkSettings();
+
 
   /*!
    * Functions called by constructor AppDataManager::AppDataManager(),

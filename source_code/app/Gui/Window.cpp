@@ -83,11 +83,6 @@ Window::Window(QWidget *parent)
   connect(show_action, &QAction::triggered, this, &QWidget::showNormal);
   connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
   connect(tray_icon, &QSystemTrayIcon::activated, this, &Window::showNormal);
-
-  foreach(UsrData *usrData, Global::offline_usr_data_hash.values())
-    {
-      this->addUsr(usrData);
-    }
 }
 
 Window::~Window()
@@ -165,7 +160,7 @@ void Window::onMessageReceived(const Message::TextMessage &messageStruct, const 
       //if not displaying the usr
       if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
         {
-          UsrData *temp_usr_data = Global::online_usr_data_hash.value(messageStruct.sender);
+          UsrData *temp_usr_data = AppDataManager::usr_data_hash.value(messageStruct.sender);
           gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
           if(Global::settings.notification.message_notification
              && Global::settings.update.auto_check_update)
@@ -207,7 +202,7 @@ void Window::delUsr(UsrData *userData)
 
 void Window::changeUsr(UsrData *userData)
 {
-  qDebug()<<"updated GUI";
+  qDebug()<<"Update user info";
   gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfileStruct());
   gui_main_block->gui_chat_stack->refreshProfile(userData->getKey());
   gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->getUsrProfileStruct());

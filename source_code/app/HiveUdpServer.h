@@ -19,7 +19,7 @@ public:
 
   bool start();
   bool stop();
-  void bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb);
+//  void bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb);
 
 private:
   Parsley::UdpSocket *udp_socket;

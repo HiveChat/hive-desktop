@@ -37,11 +37,6 @@ bool HiveUdpServer::stop()
   udp_socket->stop();
 }
 
-void HiveUdpServer::bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb)
-{
-  udp_socket->bindCb(cb);
-}
-
 /*!
  * \brief HiveUdpServer::udpReadyRead
  * \param data Received data in the callback from Parsley::UdpSocket.

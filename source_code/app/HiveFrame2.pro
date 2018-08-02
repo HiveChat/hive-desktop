@@ -19,6 +19,7 @@ macx{
     plist.path = "$$DESTDIR/$$join(TARGET,,,.app)/Contents"
     plist.files = ./Info.plist
     INSTALLS += plist
+    PKG_CONFIG = /usr/local/bin/pkg-config
 }
 
 
