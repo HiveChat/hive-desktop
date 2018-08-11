@@ -10,7 +10,7 @@ HiveUdpServer::HiveUdpServer(Parsley::Loop *loop)
                                , std::placeholders::_2));
 
   heartbeat_timer = new Parsley::Timer(1000, 1000, loop);
-  heartbeat_timer->bindCb([this](Parsley::Timer*){
+  heartbeat_timer->bindCb(Parsley::Timer::Timeout, [this](Parsley::Timer*){
     QByteArray dat = encodeHeartBeat();
     Parsley::Buffer msg = uv_buf_init(dat.data(), dat.count());
     udp_socket->write("255.255.255.255", UDP_PORT, &msg);

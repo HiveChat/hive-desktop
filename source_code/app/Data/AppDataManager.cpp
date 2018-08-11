@@ -346,7 +346,7 @@ void AppDataManager::run()
   loadUsrList();
 
   Parsley::Timer checkSettingsTimer(loop);
-  checkSettingsTimer.bindCb(std::bind(&AppDataManager::checkSettings, this));
+  checkSettingsTimer.bindCb(Parsley::Timer::Timeout, std::bind(&AppDataManager::checkSettings, this));
   checkSettingsTimer.start(2000, 1000);
 
   loop->run(UV_RUN_DEFAULT);
