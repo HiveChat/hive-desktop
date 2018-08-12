@@ -289,7 +289,7 @@ ChatStack::ChatStack(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Profile);
 
-  usr_data = new UsrData(this);//empty object
+  usr_data = new UsrData();//empty object
   ///UI
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);

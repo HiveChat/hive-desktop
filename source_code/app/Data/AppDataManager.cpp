@@ -2,10 +2,7 @@
 
 HiveDoubleBuffer<NetPacket*> AppDataManager::inboundNetBuffer;
 HiveDoubleBuffer<NetPacket*> AppDataManager::outboundNetBuffer;
-
 QHash<QString, UsrData*> AppDataManager::usr_data_hash;
-
-
 std::map<QString, int*> AppDataManager::settings_int_hash;
 std::map<QString, QColor*> AppDataManager::settings_qcolor_hash;
 std::map<QString, QString*> AppDataManager::settings_qstring_hash;
@@ -182,7 +179,7 @@ void AppDataManager::onUsrEntered(UsrProfile &usrProfile) // logic problem here?
     {
       Log::dat(Log::Info, "DataManager::onUsrEntered()", "New user");
       usrProfile.online = true;
-      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile, this);
+      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile);
       usr_data_hash.insert(usrProfile.key, userData);
       updateUsr(usrProfile);
       emit usrProfileLoaded(userData);
@@ -191,6 +188,8 @@ void AppDataManager::onUsrEntered(UsrProfile &usrProfile) // logic problem here?
     {
       UsrData *userData = usr_data_hash.value(usrProfile.key);
       qDebug()<<userData->getKey();
+      Global::TEST_printUsrProfileStruct(*userData->getUsrProfileStruct(), "000000000000");
+      Global::TEST_printUsrProfileStruct(usrProfile, "111111111111");
       if(usrProfile != *userData->getUsrProfileStruct())
         {
           userData->setUsrProfileStruct(usrProfile);
@@ -354,7 +353,7 @@ void AppDataManager::run()
 
 void AppDataManager::readInboundNetBuffer()
 {
-  inboundNetBufferReading = true;
+  inboundNetBufferReading = true; // not 100% safe
   NetPacket *p = inboundNetBuffer.front();
   Log::net(Log::Info, "AppDataManager::readInboundNetBuffer()","Checking Package");
 
@@ -373,7 +372,7 @@ void AppDataManager::readInboundNetBuffer()
           continue;
         }
 
-      //! See if the package is delivered to me.
+      //! See if the package is for me.
       QJsonObject packetJson = doc.object();
       QString receiverKey = packetJson.value("receiver").toString();
       if(receiverKey != Global::settings.profile_key_str
@@ -395,6 +394,7 @@ void AppDataManager::readInboundNetBuffer()
             usr_profile.key = packetJson.value("sender").toString();
             usr_profile.name = packetJson.value("name").toString();
             usr_profile.avatar = packetJson.value("avatar").toString();
+            usr_profile.online = true;
             onUsrEntered(usr_profile);
             break;
           }
@@ -532,6 +532,7 @@ void AppDataManager::loadSettings()
       return;
     }
   std::string data = file.readAll();
+  qDebug()<< "settings from disk:"<<data.c_str();
   QJsonParseError jsonError;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError
@@ -554,9 +555,9 @@ void AppDataManager::loadSettings()
   else
     {
       std::string writeData = makeDefaultSettings().toJson(QJsonDocument::Indented).toStdString();
+      file.truncate(0, Parsley::SyncMode);
       file.write(writeData, Parsley::SyncMode);
-      Log::dat(Log::Info, "AppDataManager::readSettings()", "Settings file first created:");
-      Log::dat(Log::Info, "AppDataManager::readSettings()", "\n"+QString::fromStdString(writeData));
+      Log::dat(Log::Info, "AppDataManager::readSettings()", "Settings file first created:\n" + QString::fromStdString(writeData));
     }
 
   file.close(Parsley::SyncMode);
@@ -590,7 +591,7 @@ void AppDataManager::loadUsrList()
               usrProfileStruct.avatar = tempUsrProfileObj["avatarPath"].toString();
               usrProfileStruct.online = false;
 
-              UsrData *usrData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct, this);
+              UsrData *usrData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct);
               usr_data_hash.insert(*tempUuidStr, usrData);
 
               Global::TEST_printUsrProfileStruct(*usrData->getUsrProfileStruct(),"adding from disk");

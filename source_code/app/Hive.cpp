@@ -73,6 +73,7 @@ Hive::~Hive()
   network_manager->deleteLater();
 
   network_thread->quit();
+//  data_manager->stop();
   data_manager->quit();
 
 

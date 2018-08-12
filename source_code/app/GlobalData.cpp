@@ -107,6 +107,7 @@ void Global::TEST_printUsrProfileStruct(const UsrProfile &usrProfileStruct, cons
   qDebug()<<usrProfileStruct.key;
   qDebug()<<usrProfileStruct.name;
   qDebug()<<usrProfileStruct.ip;
+  qDebug()<<usrProfileStruct.online;
   qDebug()<<usrProfileStruct.avatar<<endl;
 }
 

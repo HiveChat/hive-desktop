@@ -1,9 +1,8 @@
 #include "UsrData.h"
 
 
-UsrData::UsrData(QString *myKey, const UsrProfile &usrProfileStruct, QObject *parent)
-  : QObject(parent)
-  , usr_profile_struct(usrProfileStruct)
+UsrData::UsrData(QString *myKey, const UsrProfile &usrProfileStruct)
+  : usr_profile_struct(usrProfileStruct)
   , history_path(usr_path + usr_profile_struct.key)
   , my_key(myKey)
 {
@@ -11,8 +10,7 @@ UsrData::UsrData(QString *myKey, const UsrProfile &usrProfileStruct, QObject *pa
   this->readHistoryBundle();
 }
 
-UsrData::UsrData(QObject *parent)
-  : QObject(parent)
+UsrData::UsrData()
 {
 }
 
@@ -178,7 +176,7 @@ void UsrData::makeHistoryBundle(const int &index)
 
 void UsrData::saveHistoryBundle()
 {
-  qDebug()<<"UsrData::saveHistoryBundle()"<< "current thread:" << this->thread()->currentThreadId();
+//  qDebug()<<"UsrData::saveHistoryBundle()"<< "current thread:" << this->thread()->currentThreadId();
 //  auto lambda = [&]()
 //    {
       QString file_path = QString(history_path+"/%1.json").arg(current_history_bundle_index);

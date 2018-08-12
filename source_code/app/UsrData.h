@@ -21,13 +21,12 @@ class MessageHelper;
 
 class UsrData;
 
-class UsrData : public QObject
+class UsrData
 {
-  Q_OBJECT
 public:
 
-  explicit UsrData(QString *myKey, const UsrProfile &getUsrProfileStruct, QObject *parent = 0);
-  explicit UsrData(QObject *parent = 0);
+  explicit UsrData(QString *myKey, const UsrProfile &getUsrProfileStruct);
+  explicit UsrData();
   ~UsrData();
 
   void addUnreadMessage(const Message::TextMessage &message);
