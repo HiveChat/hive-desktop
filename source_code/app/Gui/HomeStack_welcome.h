@@ -3,7 +3,7 @@
 
 #include "Gui/Frameworks/Widgets/LabelButton.h"
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
-#include "GlobalData.h"
+#include "Data/AppDataManager.h"
 
 #include <QStackedLayout>
 #include <QRadialGradient>

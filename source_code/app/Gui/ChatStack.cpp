@@ -400,7 +400,7 @@ void ChatStack::display(const QString &usrKey)
     }
 
   // if different usr or updated usr is refreshing
-  if(*usr_data->getUsrProfileStruct() != *temp_usr_data->getUsrProfileStruct())
+  if(*usr_data->getUsrProfile() != *temp_usr_data->getUsrProfile())
     {
       if(usr_data->getKey() != temp_usr_data->getKey())
         {

@@ -25,12 +25,12 @@ class UsrData
 {
 public:
 
-  explicit UsrData(QString *myKey, const UsrProfile &getUsrProfileStruct);
+  explicit UsrData(QString *myKey, const UsrProfile &getUsrProfile);
   explicit UsrData();
   ~UsrData();
 
   void addUnreadMessage(const Message::TextMessage &message);
-  void setUsrProfileStruct(const UsrProfile &getUsrProfileStruct);
+  void setUsrProfileStruct(const UsrProfile &getUsrProfile);
 
   QJsonArray* flipLatest();
   QJsonArray* flipUp();
@@ -42,7 +42,7 @@ public:
   QString getName() {return usr_profile_struct.name;}
   QString getAvatar() {return usr_profile_struct.avatar;}
   QString getIp() {return usr_profile_struct.ip;}
-  UsrProfile* getUsrProfileStruct() {return &usr_profile_struct;}
+  UsrProfile* getUsrProfile() {return &usr_profile_struct;}
   int getCurrentHistoryBundleIndex() {return current_history_bundle_index;}
   int getUnreadMessageNumber() {return unread_message_list.count();}
 

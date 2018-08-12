@@ -98,17 +98,21 @@ void HomeStack_welcome::refreshUI()
 
   my_avatar->setAvatar(Global::settings.profile_avatar_str);
 
-  if(Global::g_localHostIP.isEmpty() || Global::g_localHostIP == "Offline")
+  UsrData *p = AppDataManager::usr_data_hash.value(Global::settings.profile_key_str);
+  if(p && p->getUsrProfile())
     {
-      online = false;
-      ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
+      if(!p->getUsrProfile()->online)
+        {
+          online = false;
+          ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
+        }
+      else
+        {
+          online = true;
+          ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(p->getUsrProfile()->ip));
+        }
     }
-  else
-    {
-      online = true;
-      ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(Global::g_localHostIP));
-    }
-//  Log::gui(Log::Normal, "GuiWelcomeStack::refresh()", "Finished");
+  Log::gui(Log::Info, "GuiWelcomeStack::refresh()", "Finished");
 
 }
 

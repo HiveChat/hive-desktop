@@ -188,9 +188,9 @@ void AppDataManager::onUsrEntered(UsrProfile &usrProfile) // logic problem here?
     {
       UsrData *userData = usr_data_hash.value(usrProfile.key);
       qDebug()<<userData->getKey();
-      Global::TEST_printUsrProfileStruct(*userData->getUsrProfileStruct(), "000000000000");
+      Global::TEST_printUsrProfileStruct(*userData->getUsrProfile(), "000000000000");
       Global::TEST_printUsrProfileStruct(usrProfile, "111111111111");
-      if(usrProfile != *userData->getUsrProfileStruct())
+      if(usrProfile != *userData->getUsrProfile())
         {
           userData->setUsrProfileStruct(usrProfile);
           emit usrProfileChanged(userData);
@@ -594,7 +594,7 @@ void AppDataManager::loadUsrList()
               UsrData *usrData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct);
               usr_data_hash.insert(*tempUuidStr, usrData);
 
-              Global::TEST_printUsrProfileStruct(*usrData->getUsrProfileStruct(),"adding from disk");
+              Global::TEST_printUsrProfileStruct(*usrData->getUsrProfile(),"adding from disk");
             }
         }
     }

@@ -81,7 +81,7 @@ public:
 
 
   ///net
-  static QString g_localHostIP;
+  static QString g_localHostIP; //<< Deprecated! DELETE!
   ///other
   static QString getCurrentTime();
   static QString getRandomString(const int &digit);

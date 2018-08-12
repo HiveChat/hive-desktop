@@ -191,8 +191,8 @@ void Window::addUsr(UsrData *userData)
       qDebug()<<"#GuiCentralWidget::addUsr(): Already exists.";
       return;
     }
-  gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->getUsrProfileStruct());
-  gui_main_block->gui_home_stack_list->addUsr(userData->getUsrProfileStruct());
+  gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->getUsrProfile());
+  gui_main_block->gui_home_stack_list->addUsr(userData->getUsrProfile());
 }
 
 void Window::delUsr(UsrData *userData)
@@ -203,9 +203,9 @@ void Window::delUsr(UsrData *userData)
 void Window::changeUsr(UsrData *userData)
 {
   qDebug()<<"Update user info";
-  gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfileStruct());
+  gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfile());
   gui_main_block->gui_chat_stack->refreshProfile(userData->getKey());
-  gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->getUsrProfileStruct());
+  gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->getUsrProfile());
 }
 
 void Window::onUpdateAvailable()
