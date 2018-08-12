@@ -533,9 +533,9 @@ void AppDataManager::loadSettings()
     }
   std::string data = file.readAll();
   qDebug()<< "settings from disk:"<<data.c_str();
-  QJsonParseError jsonError;
-  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
-  if(jsonError.error == QJsonParseError::NoError
+  QJsonParseError jsonErr;
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
+  if(jsonErr.error == QJsonParseError::NoError
      && doc.isObject())
     {
       QJsonObject settingsJson = doc.object();
@@ -554,6 +554,7 @@ void AppDataManager::loadSettings()
     }
   else
     {
+      Log::dat(Log::Info, "AppDataManager::readSettings()", "Json parse error:" + jsonErr.errorString());
       std::string writeData = makeDefaultSettings().toJson(QJsonDocument::Indented).toStdString();
       file.truncate(0, Parsley::SyncMode);
       file.write(writeData, Parsley::SyncMode);
@@ -636,6 +637,7 @@ void AppDataManager::writeSettings()
   outJsonDoc.setObject(settingsObj);
 
   std::string outData = outJsonDoc.toJson().toStdString();
+  file.truncate(0, Parsley::SyncMode);
   file.write(outData, Parsley::SyncMode);
   file.close(Parsley::SyncMode);
 

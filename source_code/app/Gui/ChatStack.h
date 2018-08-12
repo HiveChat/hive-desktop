@@ -47,9 +47,6 @@ signals:
   void keyEnterTriggered(bool pressed);
 };
 
-
-
-//////////////////////////mid//////////////////////////////////////
 class ChatStack_chat_widget : public QWidget
 {
   Q_OBJECT
@@ -72,8 +69,6 @@ public slots:
 
 };
 
-
-//////////////////////////bottom//////////////////////////////////////
 class ChatStack_message_editor : public QWidget
 {
   Q_OBJECT
@@ -115,8 +110,6 @@ signals:
   void sendTriggered();
 
 };
-
-
 
 class ChatStack : public ScrollStack
 {
