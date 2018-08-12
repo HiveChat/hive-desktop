@@ -60,10 +60,10 @@ void ChatStack_chat_widget::clearChatBubbles()
 
 void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
 {
-  gui_chat_bubble = new TextBubble(message, !fromMe, this);
-  chat_bubble_list.append(gui_chat_bubble);
+  chat_bubble = new TextBubble(message, !fromMe, this);
+  chat_bubble_list.append(chat_bubble);
 
-  chat_bubble_layout->addWidget(gui_chat_bubble);
+  chat_bubble_layout->addWidget(chat_bubble);
 }
 
 //////////////////////////bottom//////////////////////////////////////

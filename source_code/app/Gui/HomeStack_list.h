@@ -12,10 +12,10 @@ class ListItem : public QWidget
 {
   Q_OBJECT
 public:
-  explicit ListItem(UsrProfile *usrProfileStruct, QWidget *parent = 0);
+  explicit ListItem(UsrProfile *profile, QWidget *parent = 0);
   ~ListItem();
 
-  void refreshUsrProfile(UsrProfile *usrProfileStruct);
+  void refreshUsrProfile(UsrProfile *profile);
 
 private:
   AvatarButton *avatar_button;

@@ -1,7 +1,7 @@
 #include "HomeStack_list.h"
 #include <QDebug>
 
-ListItem::ListItem(UsrProfile *usrProfileStruct, QWidget *parent) : QWidget(parent)
+ListItem::ListItem(UsrProfile *profile, QWidget *parent) : QWidget(parent)
 {
   avatar_button = new AvatarButton(":/avatar/avatar/default.png", 90, this);
   name_label = new QLabel("Loading...", this);
@@ -16,7 +16,7 @@ ListItem::ListItem(UsrProfile *usrProfileStruct, QWidget *parent) : QWidget(pare
   main_layout->addWidget(name_label);
   main_layout->addWidget(ip_label);
 
-  refreshUsrProfile(usrProfileStruct);
+  refreshUsrProfile(profile);
 }
 
 ListItem::~ListItem()
@@ -24,11 +24,11 @@ ListItem::~ListItem()
 
 }
 
-void ListItem::refreshUsrProfile(UsrProfile *usrProfileStruct)
+void ListItem::refreshUsrProfile(UsrProfile *profile)
 {
-  avatar_button->setAvatar(usrProfileStruct->avatar);
-  name_label->setText(usrProfileStruct->name);
-  ip_label->setText(usrProfileStruct->ip);
+  avatar_button->setAvatar(profile->avatar);
+  name_label->setText(profile->name);
+  ip_label->setText(profile->ip);
 }
 
 

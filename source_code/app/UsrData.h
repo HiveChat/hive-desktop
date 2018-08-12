@@ -30,7 +30,7 @@ public:
   ~UsrData();
 
   void addUnreadMessage(const Message::TextMessage &message);
-  void setUsrProfileStruct(const UsrProfile &getUsrProfile);
+  void setUsrProfile(const UsrProfile &getUsrProfile);
 
   QJsonArray* flipLatest();
   QJsonArray* flipUp();

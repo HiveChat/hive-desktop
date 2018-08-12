@@ -20,7 +20,7 @@ class CombWidget : public QWidget
   Q_OBJECT
 
 public:
-  explicit CombWidget(UsrProfile *usrProfileStruct, QWidget *parent = 0);
+  explicit CombWidget(UsrProfile *p, QWidget *parent = 0);
   ~CombWidget();
 
   void setProfile(UsrProfile *usrProfile);

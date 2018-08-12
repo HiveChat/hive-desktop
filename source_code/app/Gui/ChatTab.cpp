@@ -44,11 +44,11 @@ ChatTab_comb_scroll_widget::ChatTab_comb_scroll_widget(QWidget *parent) : QWidge
   main_layout->setSpacing(0);
 }
 
-void ChatTab_comb_scroll_widget::addComb(UsrProfile *usrProfileStruct)
+void ChatTab_comb_scroll_widget::addComb(UsrProfile *p)
 {
   Log::gui(Log::Info, "GuiChatTab_comb_scroll_widget::addComb()", "Added a comb.");
-  CombWidget *comb_widget = new CombWidget(usrProfileStruct, this);
-  comb_widget_hash.insert(usrProfileStruct->key, comb_widget);
+  CombWidget *comb_widget = new CombWidget(p, this);
+  comb_widget_hash.insert(p->key, comb_widget);
   main_layout->addWidget(comb_widget);
 
   connect(comb_widget, &CombWidget::clicked,
@@ -75,12 +75,12 @@ bool ChatTab_comb_scroll_widget::contains(const QString &usrKey)
 }
 
 
-void ChatTab_comb_scroll_widget::refreshComb(UsrProfile *usrProfileStruct)
+void ChatTab_comb_scroll_widget::refreshComb(UsrProfile *p)
 {
-  CombWidget *comb_widget = comb_widget_hash.value(usrProfileStruct->key);
+  CombWidget *comb_widget = comb_widget_hash.value(p->key);
   if(comb_widget != nullptr)
     {
-      comb_widget->setProfile(usrProfileStruct);
+      comb_widget->setProfile(p);
     }
   else
     {

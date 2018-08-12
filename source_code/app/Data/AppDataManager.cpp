@@ -61,22 +61,22 @@ QJsonDocument AppDataManager::makeUpdateJson(const int version[])
   return doc;
 }
 
-void AppDataManager::updateUsr(const UsrProfile &usrProfileStruct)
+void AppDataManager::updateUsr(const UsrProfile &p)
 {
-  QString uuid = usrProfileStruct.key;
-  QString ipAddr = usrProfileStruct.ip;
-  QString usrName = usrProfileStruct.name;
-  QString avatarPath = usrProfileStruct.avatar;
+  QString uuid = p.key;
+  QString ipAddr = p.ip;
+  QString usrName = p.name;
+  QString avatarPath = p.avatar;
 
-  Parsley::File file(Global::contacts_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  Parsley::File f(Global::contacts_file_dir, loop);
+  if(!f.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
     {
       return;
     }
-  std::string data = file.readAll();
-  QJsonParseError jsonError;
-  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
-  if(jsonError.error == QJsonParseError::NoError)
+  std::string data = f.readAll();
+  QJsonParseError jsonErr;
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
+  if(jsonErr.error == QJsonParseError::NoError)
     {
       if(inJsonDoc.isObject())
         {
@@ -93,7 +93,7 @@ void AppDataManager::updateUsr(const UsrProfile &usrProfileStruct)
               outJsonDoc.setObject(usrListObj);
 
               std::string data = outJsonDoc.toJson().toStdString();
-              file.write(data, Parsley::SyncMode);
+              f.write(data, Parsley::SyncMode);
             }
           else
             {
@@ -106,7 +106,7 @@ void AppDataManager::updateUsr(const UsrProfile &usrProfileStruct)
                   outJsonDoc.setObject(usrListObj);
 
                   std::string data = outJsonDoc.toJson().toStdString();
-                  file.write(data, Parsley::SyncMode);
+                  f.write(data, Parsley::SyncMode);
                 }
             }
         }
@@ -125,10 +125,10 @@ void AppDataManager::updateUsr(const UsrProfile &usrProfileStruct)
       outJsonDoc.setObject(usrListObj);
 
       std::string data = outJsonDoc.toJson(QJsonDocument::Indented).toStdString();
-      file.write(data, Parsley::SyncMode);
+      f.write(data, Parsley::SyncMode);
     }
 
-  file.close(Parsley::SyncMode);
+  f.close(Parsley::SyncMode);
 }
 
 //!! OBSOLETE !!
@@ -188,11 +188,11 @@ void AppDataManager::onUsrEntered(UsrProfile &usrProfile) // logic problem here?
     {
       UsrData *userData = usr_data_hash.value(usrProfile.key);
       qDebug()<<userData->getKey();
-      Global::TEST_printUsrProfileStruct(*userData->getUsrProfile(), "000000000000");
-      Global::TEST_printUsrProfileStruct(usrProfile, "111111111111");
+      Global::TEST_printUsrProfile(*userData->getUsrProfile(), "000000000000");
+      Global::TEST_printUsrProfile(usrProfile, "111111111111");
       if(usrProfile != *userData->getUsrProfile())
         {
-          userData->setUsrProfileStruct(usrProfile);
+          userData->setUsrProfile(usrProfile);
           emit usrProfileChanged(userData);
           Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
         }
@@ -240,19 +240,19 @@ void AppDataManager::onUsrLeft(QString *usrKey)
 
 }
 
-void AppDataManager::onMessageCome(const Message::TextMessage &messageStruct, bool fromMe)
+void AppDataManager::onMessageCome(const Message::TextMessage &m, bool fromMe)
 {
   if(fromMe)
     {
       qDebug()<<"fromme";
-      usr_data_hash.value(messageStruct.reciever)->addUnreadMessage(messageStruct);
+      usr_data_hash.value(m.reciever)->addUnreadMessage(m);
     }
   else
     {
       qDebug()<<"notfromme";
-      usr_data_hash.value(messageStruct.sender)->addUnreadMessage(messageStruct);
+      usr_data_hash.value(m.sender)->addUnreadMessage(m);
     }
-  emit messageLoaded(messageStruct, fromMe);
+  emit messageLoaded(m, fromMe);
 }
 
 void AppDataManager::onUpdatesAvailable()
@@ -585,16 +585,16 @@ void AppDataManager::loadUsrList()
               QString *tempUuidStr = &uuidList[i];
               QJsonObject tempUsrProfileObj = usrListObj[*tempUuidStr].toObject();
 
-              UsrProfile usrProfileStruct;
-              usrProfileStruct.key = tempUsrProfileObj["usrKey"].toString();
-              usrProfileStruct.name = tempUsrProfileObj["usrName"].toString();
-              usrProfileStruct.avatar = tempUsrProfileObj["avatarPath"].toString();
-              usrProfileStruct.online = false;
+              UsrProfile p;
+              p.key = tempUsrProfileObj["usrKey"].toString();
+              p.name = tempUsrProfileObj["usrName"].toString();
+              p.avatar = tempUsrProfileObj["avatarPath"].toString();
+              p.online = false;
 
-              UsrData *usrData = new UsrData(&Global::settings.profile_key_str, usrProfileStruct);
+              UsrData *usrData = new UsrData(&Global::settings.profile_key_str, p);
               usr_data_hash.insert(*tempUuidStr, usrData);
 
-              Global::TEST_printUsrProfileStruct(*usrData->getUsrProfile(),"adding from disk");
+              Global::TEST_printUsrProfile(*usrData->getUsrProfile(),"adding from disk");
             }
         }
     }

@@ -63,7 +63,7 @@ public:
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *chat_bubble_layout;
-  TextBubble *gui_chat_bubble;
+  TextBubble *chat_bubble;
 
   QList<TextBubble*> chat_bubble_list;
 

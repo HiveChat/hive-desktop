@@ -24,7 +24,7 @@ void UsrData::addUnreadMessage(const Message::TextMessage &message)
   unread_message_list.append(getMessageJsonObject(message));
 }
 
-void UsrData::setUsrProfileStruct(const UsrProfile &usrProfileStruct)
+void UsrData::setUsrProfile(const UsrProfile &usrProfileStruct)
 {
   usr_profile_struct = usrProfileStruct;
 //  usr_profile_struct.online = true;

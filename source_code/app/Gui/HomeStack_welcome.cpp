@@ -54,8 +54,8 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
 
 void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *ev)
 {
-  if(ev->button() == Qt::LeftButton)
-    {
+//  if(ev->button() == Qt::LeftButton)
+//    {
 //      QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
 //      file_tran_ani->setStartValue(255);
 //      file_tran_ani->setEndValue(0);
@@ -68,7 +68,7 @@ void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *ev)
 //                this->setPalette(palette);
 //              });
 //      file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
-    }
+//    }
 }
 
 

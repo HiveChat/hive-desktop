@@ -101,14 +101,14 @@ bool Global::versionCompare(const int (&fresh)[3], const int (&old)[3])
     }
 }
 
-void Global::TEST_printUsrProfileStruct(const UsrProfile &usrProfileStruct, const QString &str)
+void Global::TEST_printUsrProfile(const UsrProfile &p, const QString &str)
 {
   qDebug()<<endl<<"Test by "<<str;
-  qDebug()<<usrProfileStruct.key;
-  qDebug()<<usrProfileStruct.name;
-  qDebug()<<usrProfileStruct.ip;
-  qDebug()<<usrProfileStruct.online;
-  qDebug()<<usrProfileStruct.avatar<<endl;
+  qDebug()<<p.key;
+  qDebug()<<p.name;
+  qDebug()<<p.ip;
+  qDebug()<<p.online;
+  qDebug()<<p.avatar<<endl;
 }
 
 

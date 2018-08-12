@@ -2,7 +2,7 @@
 #include <QDebug>
 
 
-CombWidget::CombWidget(UsrProfile *usrProfileStruct, QWidget *parent)
+CombWidget::CombWidget(UsrProfile *p, QWidget *parent)
   : QWidget(parent)
   , avatar(new AvatarButton(80,  this))
   , usr_name_label(new QLabel(this))
@@ -15,7 +15,7 @@ CombWidget::CombWidget(UsrProfile *usrProfileStruct, QWidget *parent)
   this->setAutoFillBackground(true);
   this->setAcceptDrops(true);
   this->setToolTipDuration(1000);
-  setProfile(usrProfileStruct);
+  setProfile(p);
 
 
   QPalette usr_name_palette;

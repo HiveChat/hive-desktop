@@ -25,7 +25,7 @@ Hive::Hive(int &argc, char **argv)
 
 
   //! Qt SIGNAL SLOT connection between data_manager, network_manager, and window
-  qRegisterMetaType<UsrProfile> ("UsrProfileStruct");
+  qRegisterMetaType<UsrProfile> ("UsrProfile");
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   connect(data_manager, &AppDataManager::updatesAvailable,

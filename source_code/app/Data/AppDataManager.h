@@ -52,7 +52,7 @@ public:
 public slots:
   void onUsrEntered(UsrProfile &usrProfile);
   void onUsrLeft(QString *usrKey);
-  void onMessageCome(const Message::TextMessage &messageStruct, bool fromMe);
+  void onMessageCome(const Message::TextMessage &m, bool fromMe);
   void onUpdatesAvailable();
 
 protected:
@@ -86,7 +86,7 @@ private:
   inline QJsonDocument makeDefaultSettings();
   inline QJsonDocument makeUpdateJson(const int version[]);
 
-  inline void updateUsr(const UsrProfile &usrProfileStruct);
+  inline void updateUsr(const UsrProfile &p);
   inline void deleteUsr(const QStringList usrInfoStrList);
 
   /*!

@@ -90,7 +90,7 @@ public:
   static bool versionCompare(const int (&fresh)[3], const int (&old)[3]);
 
   ///debug
-  static void TEST_printUsrProfileStruct(const UsrProfile &usrProfileStruct, const QString &str);
+  static void TEST_printUsrProfile(const UsrProfile &p, const QString &str);
 
 };
 
