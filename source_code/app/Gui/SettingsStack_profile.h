@@ -2,7 +2,7 @@
 #define GUISETTINGSSTACK_PROFILE_H
 
 #include "Gui/Frameworks/ScrollStack.h"
-#include "GlobalData.h"
+#include "Global.h"
 
 #include <QListWidget>
 #include <QAbstractButton>

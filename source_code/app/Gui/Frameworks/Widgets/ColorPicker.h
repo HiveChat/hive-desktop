@@ -5,7 +5,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QColorDialog>
-#include "GlobalData.h"
+#include "Global.h"
 
 class ColorPicker : public QWidget
 {

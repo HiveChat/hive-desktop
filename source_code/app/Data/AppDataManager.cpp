@@ -1,7 +1,7 @@
 #include "AppDataManager.h"
 
-HiveDoubleBuffer<NetPacket*> AppDataManager::inboundNetBuffer;
-HiveDoubleBuffer<NetPacket*> AppDataManager::outboundNetBuffer;
+DoubleBuffer<NetPacket*> AppDataManager::inboundNetBuffer;
+DoubleBuffer<NetPacket*> AppDataManager::outboundNetBuffer;
 QHash<QString, UsrData*> AppDataManager::usr_data_hash;
 std::map<QString, int*> AppDataManager::settings_int_hash;
 std::map<QString, QColor*> AppDataManager::settings_qcolor_hash;
@@ -39,7 +39,7 @@ bool AppDataManager::isUsrNew(const QString &uuid)
   return !usr_data_hash.contains(uuid);
 }
 
-void AppDataManager::checkSettings()
+void AppDataManager::checkSettings(Parsley::Timer *)
 {
   if(Global::settings.modified)
     {
@@ -328,10 +328,10 @@ void AppDataManager::run()
 
   loop = new Parsley::Loop();
 
-  inboundNetBuffer.bindCb(std::bind(&AppDataManager::wakeLoop, this, std::placeholders::_1));
+  inboundNetBuffer.onPushed.connect(this, &AppDataManager::wakeLoop);
 
   read_inbound_async = new Parsley::Async(loop);
-  read_inbound_async->bindCb(std::bind(&AppDataManager::readInboundNetBuffer, this));
+  read_inbound_async->onCalled.connect(this, &AppDataManager::readInboundNetBuffer);
 
   touchDir(Global::data_location_dir);
   touchDir(Global::user_data_dir);
@@ -345,7 +345,7 @@ void AppDataManager::run()
   loadUsrList();
 
   Parsley::Timer checkSettingsTimer(loop);
-  checkSettingsTimer.bindCb(Parsley::Timer::Timeout, std::bind(&AppDataManager::checkSettings, this));
+  checkSettingsTimer.onTimedOut.connect(this, &AppDataManager::checkSettings);
   checkSettingsTimer.start(2000, 1000);
 
   loop->run(UV_RUN_DEFAULT);
@@ -354,15 +354,15 @@ void AppDataManager::run()
 void AppDataManager::readInboundNetBuffer()
 {
   inboundNetBufferReading = true; // not 100% safe
-  NetPacket *p = inboundNetBuffer.front();
+  NetPacket *packet = inboundNetBuffer.front();
   Log::net(Log::Info, "AppDataManager::readInboundNetBuffer()","Checking Package");
 
-  while (p)
+  while (packet)
     {
       //! See if JSON object is complete.
       QJsonParseError err;
-      QJsonDocument doc = QJsonDocument::fromJson(QByteArray(p->data, p->len), &err);
-      QString ipAddr = QString::fromStdString(p->ipAddr);
+      QJsonDocument doc = QJsonDocument::fromJson(QByteArray(packet->data, packet->len), &err);
+      QString ipAddr = QString::fromStdString(packet->ipAddr);
       //! HiveDoubleBuffer calls std::list::pop_front(), which automatically calls destructor of NetPacket *p.
       inboundNetBuffer.pop_front();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
@@ -389,13 +389,13 @@ void AppDataManager::readInboundNetBuffer()
       switch (messageType) {
         case MessageType::HeartBeat:
           {
-            UsrProfile usr_profile;
-            usr_profile.ip = ipAddr;
-            usr_profile.key = packetJson.value("sender").toString();
-            usr_profile.name = packetJson.value("name").toString();
-            usr_profile.avatar = packetJson.value("avatar").toString();
-            usr_profile.online = true;
-            onUsrEntered(usr_profile);
+            UsrProfile profile;
+            profile.ip = ipAddr;
+            profile.key = packetJson.value("sender").toString();
+            profile.name = packetJson.value("name").toString();
+            profile.avatar = packetJson.value("avatar").toString();
+            profile.online = true;
+            onUsrEntered(profile);
             break;
           }
         case MessageType::TextMessage:
@@ -432,12 +432,12 @@ void AppDataManager::readInboundNetBuffer()
       }
 
       //! Get a new p.
-      p = inboundNetBuffer.front();
+      packet = inboundNetBuffer.front();
     }
   inboundNetBufferReading = false;
 }
 
-void AppDataManager::wakeLoop(HiveDoubleBuffer<NetPacket *> *buf)
+void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)
 {
   if(!inboundNetBufferReading)
     read_inbound_async->send();

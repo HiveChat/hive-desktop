@@ -1,5 +1,5 @@
 #include "ColorPicker.h"
-#include "GlobalData.h"
+#include "Global.h"
 
 ColorPicker::ColorPicker(QColor *color, QWidget *parent)
   : QWidget(parent)

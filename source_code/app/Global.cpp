@@ -1,4 +1,4 @@
-#include "GlobalData.h"
+#include "Global.h"
 
 
 ///UI

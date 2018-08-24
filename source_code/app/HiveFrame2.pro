@@ -40,7 +40,6 @@ TEMPLATE = app
 SOURCES += \
     main.cpp \
     Hive.cpp \
-    GlobalData.cpp \
     GlobalType.cpp \
     UsrData.cpp \
 \
@@ -90,12 +89,12 @@ SOURCES += \
     ../libs/libParsley/src/PFile.cpp \
     Gui/Window.cpp \
     ../libs/libParsley/src/PCheck.cpp \
-    ../libs/libParsley/src/PAsync.cpp
+    ../libs/libParsley/src/PAsync.cpp \
+    Global.cpp
 \
 
 HEADERS  += \
     Hive.h \
-    GlobalData.h \
     GlobalType.h \
     UsrData.h \
 \
@@ -146,7 +145,8 @@ HEADERS  += \
     ../libs/libParsley/src/PFile.h \
     Gui/Window.h \
     ../libs/libParsley/src/PCheck.h \
-    ../libs/libParsley/src/PAsync.h
+    ../libs/libParsley/src/PAsync.h \
+    Global.h
 
 ICON = Src/hive.icns
 

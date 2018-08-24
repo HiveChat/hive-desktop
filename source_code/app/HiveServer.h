@@ -8,8 +8,6 @@
 #include "./Data/AppDataManager.h"
 
 
-#define UDP_PORT 23232
-
 #define TCP_PORT 23232
 #define TCP_BACKLOG 128
 

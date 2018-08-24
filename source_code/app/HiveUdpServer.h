@@ -1,7 +1,7 @@
 #ifndef HIVEUDPSERVER_H
 #define HIVEUDPSERVER_H
 
-#define UDP_PORT 23233
+#define UDP_PORT 23232
 
 #include "../libs/libParsley/src/PTimer.h"
 
@@ -15,17 +15,20 @@ class HiveUdpServer
 {
 public:
   HiveUdpServer(Parsley::Loop *loop);
-  ~HiveUdpServer();
+  virtual ~HiveUdpServer();
 
   bool start();
   bool stop();
-//  void bindCb(const Parsley::AbstractSocket::SockReadyReadCb &cb);
+
+  Parsley::Callback<void, const Parsley::Buffer&, char*> onReadyRead;
 
 private:
   Parsley::UdpSocket *udp_socket;
-  Parsley::Timer *heartbeat_timer; // Move this to another thread in the future, this heartbeat is on application level
+  Parsley::Timer *heartbeat_timer;
 
-  void udpReadyRead(const Parsley::Buffer &data, char *ip);
+  void udpReadyRead(Parsley::Buffer data, char *ip);
+
+  void onTimedOut(Parsley::Timer* t);
 
 //  static QHash<int, > buffer;
 };

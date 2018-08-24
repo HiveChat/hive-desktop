@@ -56,10 +56,7 @@ HiveServer::run()
 
   loop = new Parsley::Loop();
   udp_server = new HiveUdpServer(loop);
-  udp_server->bindCb(std::bind(&HiveServer::udpPacketReady
-                               , this
-                               , std::placeholders::_1
-                               , std::placeholders::_2));
+  udp_server->onReadyRead.connect(this, &HiveServer::udpPacketReady);
   udp_server->start();
 //  tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
   loop->run(UV_RUN_DEFAULT);

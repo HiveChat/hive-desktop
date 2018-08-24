@@ -1,7 +1,7 @@
 #ifndef GUIMENUBUTTON_H
 #define GUIMENUBUTTON_H
 
-#include "GlobalData.h"
+#include "Global.h"
 
 #include <QLabel>
 #include <QMouseEvent>

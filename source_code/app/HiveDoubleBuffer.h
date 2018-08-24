@@ -1,25 +1,25 @@
 #ifndef HIVEDOUBLEBUFFER_H
 #define HIVEDOUBLEBUFFER_H
 
+#include "../libs/libParsley/src/PUdpSocket.h"
+
 #include <QDebug>
 
 #include <list>
 #include <iostream>
 
 template <typename T>
-class HiveDoubleBuffer final
+class DoubleBuffer final
 {
 public:
-  using PushedCb = std::function<void (HiveDoubleBuffer <T>*)>;
+  DoubleBuffer();
+  ~DoubleBuffer();
 
-  HiveDoubleBuffer();
-  ~HiveDoubleBuffer();
+  Parsley::Callback<void, DoubleBuffer <T>*> onPushed;
 
   T front();
   void push_front(T item);
   bool pop_front();
-
-  void bindCb(const PushedCb &value);
 
 private:
   using Container = std::list<T>;
@@ -33,27 +33,24 @@ private:
   Container *inbound_buffer = &buffer1;
   Container *outbound_buffer = &buffer2;
 
-  PushedCb pushed_cb;
 
   void flip();
 };
 
 template<typename T>
-HiveDoubleBuffer<T>::HiveDoubleBuffer()
+DoubleBuffer<T>::DoubleBuffer()
 {
-  //! Make sure T is a pointer of a type
-  T *t = nullptr;
 }
 
 template<typename T>
-HiveDoubleBuffer<T>::~HiveDoubleBuffer()
+DoubleBuffer<T>::~DoubleBuffer()
 {
   printf("Destroying HiveDoubleBuffer<T>...\n");
 
 }
 
 template<typename T>
-void HiveDoubleBuffer<T>::push_front(T item)
+void DoubleBuffer<T>::push_front(T item)
 {
   while(1)
     {
@@ -68,14 +65,11 @@ void HiveDoubleBuffer<T>::push_front(T item)
       writing = false;
       break;
     }
-  if(pushed_cb)
-    {
-      pushed_cb(this);
-    }
+  onPushed.call(this);
 }
 
 template<typename T>
-T HiveDoubleBuffer<T>::front()
+T DoubleBuffer<T>::front()
 {
   while(1)
     {
@@ -100,7 +94,7 @@ T HiveDoubleBuffer<T>::front()
 }
 
 template<typename T>
-bool HiveDoubleBuffer<T>::pop_front()
+bool DoubleBuffer<T>::pop_front()
 {
   while(1)
     {
@@ -127,13 +121,7 @@ bool HiveDoubleBuffer<T>::pop_front()
 }
 
 template<typename T>
-void HiveDoubleBuffer<T>::bindCb(const PushedCb &value)
-{
-  pushed_cb = value;
-}
-
-template<typename T>
-void HiveDoubleBuffer<T>::flip()
+void DoubleBuffer<T>::flip()
 {
   isFliping = true;
   while(1)

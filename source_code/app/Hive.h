@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "GlobalData.h"
+#include "Global.h"
 #include "Data/AppDataManager.h"
 #include "Network/NetworkManager.h"
 #include "Gui/Window.h"

@@ -10,7 +10,7 @@
 #include <QMimeData>
 
 #include "GlobalType.h"
-#include "GlobalData.h"
+#include "Global.h"
 #include "Gui/Frameworks/Widgets/LabelButton.h"
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/BadgeIcon.h"

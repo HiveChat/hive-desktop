@@ -2,7 +2,7 @@
 
 //////////////////////////mid////////////////////////////////
 
-ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : QWidget(parent)
+ChatStack_chat_widget::ChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 {
   //test
 
@@ -36,8 +36,6 @@ ChatStack_chat_widget::ChatStack_chat_widget(QString hello, QWidget *parent) : Q
   main_layout->addWidget(top_line);
   main_layout->addLayout(chat_bubble_layout);
   main_layout->addWidget(bottom_line);
-
-
 
 }
 
@@ -297,7 +295,7 @@ ChatStack::ChatStack(QWidget *parent)
   bottom_line->setFixedHeight(2);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
-  chat_widget = new ChatStack_chat_widget("init",this);
+  chat_widget = new ChatStack_chat_widget(this);
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   scroll_area->setPalette(palette);
@@ -433,7 +431,7 @@ void ChatStack::display(const QString &usrKey)
             }
           else
             {
-              ChatStack_chat_widget *widget = new ChatStack_chat_widget(usrKey, this);
+              ChatStack_chat_widget *widget = new ChatStack_chat_widget(this);
               chat_widget = widget;
               chat_widget_hash.insert(usrKey, widget);
               this->flipLatestMessage(false);

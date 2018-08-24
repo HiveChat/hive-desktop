@@ -2,7 +2,7 @@
 #define GUIHOMESTACK_LIST_H
 
 #include "Gui/Frameworks/ScrollStack.h"
-#include "GlobalData.h"
+#include "Global.h"
 
 class HomeStack_list;
 class ListItem;

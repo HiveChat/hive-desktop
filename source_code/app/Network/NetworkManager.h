@@ -1,7 +1,7 @@
 #ifndef NETWORKMANAGER_H
 #define NETWORKMANAGER_H
 
-#include "GlobalData.h"
+#include "Global.h"
 #include "GlobalType.h"
 #include "HiveServer.h"
 #include "Log.h"

@@ -1,7 +1,7 @@
 #ifndef DATAMANAGER_H
 #define DATAMANAGER_H
 
-#include "GlobalData.h"
+#include "Global.h"
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
 
@@ -62,13 +62,13 @@ private:
   bool inboundNetBufferReading = false;
   Parsley::Loop *loop;
 
-  static HiveDoubleBuffer<NetPacket*> inboundNetBuffer;
-  static HiveDoubleBuffer<NetPacket*> outboundNetBuffer;
+  static DoubleBuffer<NetPacket*> inboundNetBuffer;
+  static DoubleBuffer<NetPacket*> outboundNetBuffer;
 
   Parsley::Async *read_inbound_async;
-  void wakeLoop(HiveDoubleBuffer<NetPacket *> *buf);
+  void wakeLoop(DoubleBuffer<NetPacket *> *buf);
   void readInboundNetBuffer();
-  void checkSettings();
+  void checkSettings(Parsley::Timer *);
 
 
   /*!

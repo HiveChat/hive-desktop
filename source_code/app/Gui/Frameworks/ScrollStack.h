@@ -3,7 +3,7 @@
 
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Log.h"
-#include "GlobalData.h"
+#include "Global.h"
 
 #include <QFrame>
 #include <QVBoxLayout>

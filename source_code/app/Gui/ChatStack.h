@@ -1,7 +1,7 @@
 #ifndef GUICHATSTACK_H
 #define GUICHATSTACK_H
 
-#include "GlobalData.h"
+#include "Global.h"
 #include "UsrData.h"
 #include "Data/AppDataManager.h"
 #include "Gui/Frameworks/ScrollStack.h"
@@ -52,7 +52,7 @@ class ChatStack_chat_widget : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChatStack_chat_widget(QString hello, QWidget *parent = 0);
+  explicit ChatStack_chat_widget(QWidget *parent = 0);
   ~ChatStack_chat_widget();
 
   void clearChatBubbles();

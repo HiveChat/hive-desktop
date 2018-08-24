@@ -3,7 +3,7 @@
 
 #include "Log.h"
 #include "UsrData.h"
-#include "GlobalData.h"
+#include "Global.h"
 
 class HiveProtocol
 {

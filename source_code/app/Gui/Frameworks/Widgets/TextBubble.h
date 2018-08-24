@@ -1,7 +1,7 @@
 #ifndef GUICHATBUBBLE_H
 #define GUICHATBUBBLE_H
 
-#include "GlobalData.h"
+#include "Global.h"
 #include <QLabel>
 #include <QPainter>
 #include <QHBoxLayout>
