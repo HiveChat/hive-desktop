@@ -85,33 +85,20 @@ void AppDataManager::updateUsr(const UsrProfile &p)
           usrInfoObj.insert("usrKey", uuid);
           usrInfoObj.insert("usrName", usrName);
           usrInfoObj.insert("avatarPath", avatarPath);
-          if(!usrListObj.contains(uuid))
+          if(usrListObj.contains(uuid))
             {
-              usrListObj.insert(uuid, usrInfoObj);
-
-              QJsonDocument outJsonDoc;
-              outJsonDoc.setObject(usrListObj);
-
-              std::string data = outJsonDoc.toJson().toStdString();
-              f.write(data, Parsley::SyncMode);
+              usrListObj.remove(uuid);
             }
-          else
-            {
-              if(usrListObj[uuid] != usrInfoObj)
-                {
-                  usrListObj.remove(uuid);
-                  usrListObj.insert(uuid, usrInfoObj);
+          usrListObj.insert(uuid, usrInfoObj);
 
-                  QJsonDocument outJsonDoc;
-                  outJsonDoc.setObject(usrListObj);
-
-                  std::string data = outJsonDoc.toJson().toStdString();
-                  f.write(data, Parsley::SyncMode);
-                }
-            }
+          QJsonDocument outJsonDoc;
+          outJsonDoc.setObject(usrListObj);
+          std::string data = outJsonDoc.toJson().toStdString();
+          f.truncate(0, Parsley::SyncMode);
+          f.write(data, Parsley::SyncMode);
         }
     }
-  else
+  else //! TODO: put all loaded contacts in!!
     {
       QJsonObject usrInfoObj;
       usrInfoObj.insert("usrKey", uuid);
@@ -125,6 +112,7 @@ void AppDataManager::updateUsr(const UsrProfile &p)
       outJsonDoc.setObject(usrListObj);
 
       std::string data = outJsonDoc.toJson(QJsonDocument::Indented).toStdString();
+      f.truncate(0, Parsley::SyncMode);
       f.write(data, Parsley::SyncMode);
     }
 
@@ -316,6 +304,7 @@ void AppDataManager::onUpdatesAvailable()
 
 
   std::string outData = makeUpdateJson(outVersion).toJson(QJsonDocument::Indented).toStdString();
+  file.truncate(0, Parsley::SyncMode);
   file.write(outData, Parsley::SyncMode);
   file.close(Parsley::SyncMode);
 
@@ -602,6 +591,7 @@ void AppDataManager::loadUsrList()
   else
     {
       std::string data = "";
+      file.truncate(0, Parsley::SyncMode);
       file.write(data, Parsley::SyncMode);
       Log::dat(Log::Critical
                , "AppDataManager::loadUsrList()"
