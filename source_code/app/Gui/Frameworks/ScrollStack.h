@@ -21,7 +21,7 @@ class ScrollStack : public QWidget
   Q_OBJECT
 
 public:
-  explicit ScrollStack(QWidget *parent = 0);
+  explicit ScrollStack(QWidget *parent = nullptr);
   ~ScrollStack();
 
 

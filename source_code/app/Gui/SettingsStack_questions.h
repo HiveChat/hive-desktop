@@ -9,7 +9,7 @@ class SettingsStack_questions : public ScrollStack
   Q_OBJECT
 
 public:
-  explicit SettingsStack_questions(QWidget *parent = 0);
+  explicit SettingsStack_questions(QWidget *parent = nullptr);
   ~SettingsStack_questions();
 
 };

@@ -9,7 +9,7 @@ class BadgeIcon : public QWidget
 {
   Q_OBJECT
 public:
-  explicit BadgeIcon(const int &dia,QWidget *parent = 0);
+  explicit BadgeIcon(const int &dia,QWidget *parent = nullptr);
 
   void setNumber(const int &number);
 

@@ -12,7 +12,7 @@ class ListItem : public QWidget
 {
   Q_OBJECT
 public:
-  explicit ListItem(UsrProfile *profile, QWidget *parent = 0);
+  explicit ListItem(UsrProfile *profile, QWidget *parent = nullptr);
   ~ListItem();
 
   void refreshUsrProfile(UsrProfile *profile);

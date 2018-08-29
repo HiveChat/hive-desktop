@@ -13,7 +13,7 @@ class MenuButton : public QWidget
   Q_OBJECT
 
 public:
-  explicit MenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent = 0);
+  explicit MenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent = nullptr);
   ~MenuButton();
 
   void setDefaultPixmap(QString path);

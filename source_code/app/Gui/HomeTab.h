@@ -10,7 +10,7 @@ class HomeTab : public QWidget
   Q_OBJECT
 
 public:
-  explicit HomeTab(QWidget *parent = 0);
+  explicit HomeTab(QWidget *parent = nullptr);
 
   MenuButton *welcome_btn;
   MenuButton *list_btn;

@@ -13,7 +13,7 @@ class LabelButton : public QLabel
   Q_OBJECT
 
 public:
-  explicit LabelButton(const int &hoverDelay = 0, QWidget *parent = 0);
+  explicit LabelButton(const int &hoverDelay = 0, QWidget *parent = nullptr);
 
   void setDefaultPixmap(const QString &path);
   void setHoveredPixmap(const QString &path);

@@ -18,7 +18,7 @@ class HomeStack_welcome : public QWidget
   Q_OBJECT
 
 public:
-  explicit HomeStack_welcome(QWidget *parent = 0);
+  explicit HomeStack_welcome(QWidget *parent = nullptr);
 
 protected:
   void mouseReleaseEvent(QMouseEvent *);

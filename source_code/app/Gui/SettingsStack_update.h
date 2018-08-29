@@ -9,7 +9,7 @@ class SettingsStack_update : public ScrollStack
 {
   Q_OBJECT
 public:
-  explicit SettingsStack_update(QWidget *parent = 0);
+  explicit SettingsStack_update(QWidget *parent = nullptr);
 
 private:
   QLabel *update_available_label;

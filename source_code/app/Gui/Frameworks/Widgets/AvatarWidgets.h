@@ -51,7 +51,7 @@ class AvatarComposer : public QWidget
   Q_OBJECT
 
 public:
-  AvatarComposer(const QSize &size, QWidget *parent = 0);
+  AvatarComposer(const QSize &size, QWidget *parent = nullptr);
   ~AvatarComposer();
 
   void setSourceImage(const QString &fileName);

@@ -16,7 +16,7 @@ class ChatTab_comb_scroll_widget : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChatTab_comb_scroll_widget(QWidget *parent = 0);
+  explicit ChatTab_comb_scroll_widget(QWidget *parent = nullptr);
   void addComb(UsrProfile *p);
   void refreshComb(UsrProfile *p);
   void refreshBadgeNumber(const QString &usrKey, const int &num);
@@ -41,7 +41,7 @@ class ChatTab : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChatTab(QWidget *parent = 0);
+  explicit ChatTab(QWidget *parent = nullptr);
   QScrollArea *comb_scrollarea;
   ChatTab_comb_scroll_widget *comb_scroll_widget;
 

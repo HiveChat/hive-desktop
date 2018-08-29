@@ -30,7 +30,7 @@ class TextEdit : public QTextEdit
   Q_OBJECT
 
 public:
-  explicit TextEdit(QWidget *parent = 0);
+  explicit TextEdit(QWidget *parent = nullptr);
   ~TextEdit();
 
 protected:
@@ -52,7 +52,7 @@ class ChatStack_chat_widget : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChatStack_chat_widget(QWidget *parent = 0);
+  explicit ChatStack_chat_widget(QWidget *parent = nullptr);
   ~ChatStack_chat_widget();
 
   void clearChatBubbles();
@@ -74,7 +74,7 @@ class ChatStack_message_editor : public QWidget
   Q_OBJECT
 
 public:
-  explicit ChatStack_message_editor(QWidget *parent = 0);
+  explicit ChatStack_message_editor(QWidget *parent = nullptr);
   ~ChatStack_message_editor();
 
   QString currentFileName() {return current_file_name;}
@@ -116,7 +116,7 @@ class ChatStack : public ScrollStack
   Q_OBJECT
 
 public:
-  explicit ChatStack(QWidget *parent = 0);
+  explicit ChatStack(QWidget *parent = nullptr);
   ~ChatStack();
 
   void display(const QString &usrKey);

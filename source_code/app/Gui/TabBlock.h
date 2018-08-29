@@ -13,7 +13,7 @@ class GuiTabBlock : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiTabBlock(QWidget *parent = 0);
+  explicit GuiTabBlock(QWidget *parent = nullptr);
   ~GuiTabBlock();
 
   SettingsTab *settings_tab;

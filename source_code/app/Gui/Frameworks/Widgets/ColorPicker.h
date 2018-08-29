@@ -12,7 +12,7 @@ class ColorPicker : public QWidget
   Q_OBJECT
 
 public:
-  explicit ColorPicker(QColor *color, QWidget *parent = 0);
+  explicit ColorPicker(QColor *color, QWidget *parent = nullptr);
   ~ColorPicker();
 
   QColor color();

@@ -15,7 +15,7 @@ class Window : public QWidget
   Q_OBJECT
 
 public:
-  explicit Window(QWidget *parent = 0);
+  explicit Window(QWidget *parent = nullptr);
   ~Window();
 
   GuiTabBlock *gui_tab_block;

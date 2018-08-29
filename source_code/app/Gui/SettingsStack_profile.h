@@ -16,7 +16,7 @@ class SettingsStack_profile : public ScrollStack
   Q_OBJECT
 
 public:
-  explicit SettingsStack_profile(QWidget *parent = 0);
+  explicit SettingsStack_profile(QWidget *parent = nullptr);
   ~SettingsStack_profile();
 
 private:

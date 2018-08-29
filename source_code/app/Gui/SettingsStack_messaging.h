@@ -12,7 +12,7 @@ class SettingsStack_messaging : public ScrollStack
   Q_OBJECT
 
 public:
-  explicit SettingsStack_messaging(QWidget *parent = 0);
+  explicit SettingsStack_messaging(QWidget *parent = nullptr);
   ~SettingsStack_messaging();
 
 private:

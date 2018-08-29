@@ -17,7 +17,7 @@ class TextBubble_text_area : public QWidget
   Q_OBJECT
 
 public:
-  explicit TextBubble_text_area(const QString &text, bool alignLeft, QWidget *parent = 0);
+  explicit TextBubble_text_area(const QString &text, bool alignLeft, QWidget *parent = nullptr);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -36,7 +36,7 @@ class TextBubble : public QWidget
   Q_OBJECT
 
 public:
-  explicit TextBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
+  explicit TextBubble(const QString &text, bool alignLeft, QWidget *parent = nullptr);
   TextBubble_text_area *text_area;
 
 private:
@@ -51,7 +51,7 @@ class GuiFileBubble_file_info : public QLabel
   Q_OBJECT
 
 public:
-  explicit GuiFileBubble_file_info(const QString &text, bool alignLeft, QWidget *parent = 0);
+  explicit GuiFileBubble_file_info(const QString &text, bool alignLeft, QWidget *parent = nullptr);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -69,7 +69,7 @@ class GuiFileBubble : public QWidget
   Q_OBJECT
 
 public:
-  explicit GuiFileBubble(const QString &text, bool alignLeft, QWidget *parent = 0);
+  explicit GuiFileBubble(const QString &text, bool alignLeft, QWidget *parent = nullptr);
   GuiFileBubble_file_info *file_info;
 
 

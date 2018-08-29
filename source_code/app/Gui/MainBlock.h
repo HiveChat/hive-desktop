@@ -23,7 +23,7 @@ class MainBlock : public QWidget
   Q_OBJECT
 
 public:
-  explicit MainBlock(QWidget *parent = 0);
+  explicit MainBlock(QWidget *parent = nullptr);
   ~MainBlock();
 
   ChatStack *gui_chat_stack;

@@ -12,7 +12,7 @@ class SettingsTab : public QWidget
   Q_OBJECT
 
 public:
-  explicit SettingsTab(QWidget *parent = 0);
+  explicit SettingsTab(QWidget *parent = nullptr);
   ~SettingsTab();
 
   MenuButton *profile_btn;
