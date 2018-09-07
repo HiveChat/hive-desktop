@@ -37,7 +37,7 @@ class AppDataManager final
   Q_OBJECT
 
 public:
-  explicit AppDataManager(QObject *parent = 0);
+  explicit AppDataManager(QObject *parent = nullptr);
   ~AppDataManager();
 
   void stop();
