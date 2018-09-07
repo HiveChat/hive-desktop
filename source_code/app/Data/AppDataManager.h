@@ -70,7 +70,6 @@ private:
   void readInboundNetBuffer();
   void checkSettings(Parsley::Timer *);
 
-
   /*!
    * Functions called by constructor AppDataManager::AppDataManager(),
    * only called once when during initialization.

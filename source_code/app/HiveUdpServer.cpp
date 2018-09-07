@@ -4,10 +4,9 @@
 HiveUdpServer::HiveUdpServer(Parsley::Loop *loop)
 {
   udp_socket = new Parsley::UdpSocket("255.255,255,255", UDP_PORT, loop);
-  udp_socket->onReadyRead.connect(this, &HiveUdpServer::udpReadyRead);
-
+  Parsley::connect(&udp_socket->onReadyRead, this, &HiveUdpServer::udpReadyRead);
   heartbeat_timer = new Parsley::Timer(1000, 1000, loop);
-  heartbeat_timer->onTimedOut.connect(this, &HiveUdpServer::onTimedOut);
+  Parsley::connect(&heartbeat_timer->onTimedOut, this, &HiveUdpServer::onTimedOut);
 }
 
 HiveUdpServer::~HiveUdpServer()
