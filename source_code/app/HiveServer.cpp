@@ -58,10 +58,10 @@ HiveServer::run()
   udp_server = new HiveUdpServer(loop);
   Parsley::connect(&udp_server->onReadyRead, this, &HiveServer::udpPacketReady);
   udp_server->start();
-//  tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
-  loop->run(UV_RUN_DEFAULT);
 
-  Log::net(Log::Info, "HiveServer::run()", "Quit Thread");
+//  tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
+
+  loop->run(UV_RUN_DEFAULT);
 }
 
 void HiveServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
