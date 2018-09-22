@@ -10,6 +10,10 @@
 #include "../libs/libParsley/src/PAsync.h"
 
 #include <unordered_map>
+#include <functional>
+#include <unordered_map>
+#include <forward_list>
+#include <mutex>
 
 #include <QThread>
 #include <QDebug>
@@ -24,10 +28,6 @@
 #include <QTimer>
 #include <QUuid>
 
-#include <functional>
-#include <unordered_map>
-#include <forward_list>
-#include <mutex>
 
 class AppDataManager;
 

@@ -161,27 +161,27 @@ void AppDataManager::deleteUsr(const QStringList usrInfoStrList)
 }
 
 //! TODO: PLEASE REVIEW AND REWRITE
-void AppDataManager::onUsrEntered(UsrProfile &usrProfile) // logic problem here? too complicated?
+void AppDataManager::onUsrEntered(UsrProfile &profile) // logic problem here? too complicated?
 {
-  if(isUsrNew(usrProfile.key))
+  if(isUsrNew(profile.key))
     {
       Log::dat(Log::Info, "DataManager::onUsrEntered()", "New user");
-      usrProfile.online = true;
-      UsrData *userData = new UsrData(&Global::settings.profile_key_str, usrProfile);
-      usr_data_hash.insert(usrProfile.key, userData);
-      updateUsr(usrProfile);
-      emit usrProfileLoaded(userData);
+      profile.online = true;
+      UsrData *data = new UsrData(&Global::settings.profile_key_str, profile);
+      usr_data_hash.insert(profile.key, data);
+      updateUsr(profile);
+      emit usrProfileLoaded(data);
     }
   else
     {
-      UsrData *userData = usr_data_hash.value(usrProfile.key);
-      qDebug()<<userData->getKey();
-      Global::TEST_printUsrProfile(*userData->getUsrProfile(), "000000000000");
-      Global::TEST_printUsrProfile(usrProfile, "111111111111");
-      if(usrProfile != *userData->getUsrProfile())
+      UsrData *data = usr_data_hash.value(profile.key);
+      qDebug()<<data->getKey();
+      Global::TEST_printUsrProfile(*data->getUsrProfile(), "000000000000");
+      Global::TEST_printUsrProfile(profile, "111111111111");
+      if(profile != *data->getUsrProfile())
         {
-          userData->setUsrProfile(usrProfile);
-          emit usrProfileChanged(userData);
+          data->setUsrProfile(profile);
+          emit usrProfileChanged(data);
           Log::dat(Log::Info, "DataManager::onUsrEntered()", "user profile changed");
         }
 
