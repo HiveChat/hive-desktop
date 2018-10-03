@@ -15,7 +15,7 @@ CONFIG   += c++14
 
 TARGET = Hive!
 TEMPLATE = app
-INCLUDEPATH += ../
+INCLUDEPATH += ../libs/libParsley/src
 SOURCES += \
     main.cpp \
     Hive.cpp \
