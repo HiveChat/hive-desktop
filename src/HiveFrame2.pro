@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2015-10-14T18:40:32
+# Project created by Project Hive 2015-10-14T18:40:32
 #
 #-------------------------------------------------
 
@@ -13,30 +13,9 @@ QT	 += network
 
 CONFIG   += c++14
 
-macx{
-    QT   += macextras
-    QMAKE_INFO_PLIST = ./Info.plist
-    plist.path = "$$DESTDIR/$$join(TARGET,,,.app)/Contents"
-    plist.files = ./Info.plist
-    INSTALLS += plist
-    PKG_CONFIG = /usr/local/bin/pkg-config
-}
-
-
-unix{
-    CONFIG += link_pkgconfig
-    PKGCONFIG += libuv
-}
-
-win32{
-    QMAKE_LFLAGS += -L../libs/libuv/win32 -luv
-    RC_FILE = ./Src/hive.rc
-}
-
-
 TARGET = Hive!
 TEMPLATE = app
-
+INCLUDEPATH += ../
 SOURCES += \
     main.cpp \
     Hive.cpp \
@@ -156,5 +135,24 @@ RESOURCES += \
     Src/font.qrc
 #    Src/icon.qrc
 
+macx{
+    QT   += macextras
+    QMAKE_INFO_PLIST = ./Info.plist
+    plist.path = "$$DESTDIR/$$join(TARGET,,,.app)/Contents"
+    plist.files = ./Info.plist
+    INSTALLS += plist
+    PKG_CONFIG = /usr/local/bin/pkg-config
+}
+
+
+unix{
+    CONFIG += link_pkgconfig
+    PKGCONFIG += libuv
+}
+
+win32{
+    QMAKE_LFLAGS += -L../libs/libuv/win32 -luv
+    RC_FILE = ./Src/hive.rc
+}
 
 
