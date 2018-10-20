@@ -33,7 +33,7 @@ bool HiveUdpServer::stop()
  * \param ip IP address in the callback from Parsley::UdpSocket.
  * \note Any Json decoding should not appear in network thread, because it will be a bottle neck of net speed. Will be removed after several testings.
  */
-void HiveUdpServer::udpReadyRead(Parsley::Buffer data, char *ip)
+void HiveUdpServer::udpReadyRead(Parsley::Buffer *data, char *ip)
 {
   onReadyRead.call(data, ip);
 }
@@ -41,7 +41,7 @@ void HiveUdpServer::udpReadyRead(Parsley::Buffer data, char *ip)
 void HiveUdpServer::onTimedOut(Parsley::Timer *t)
 {
   QByteArray dat = encodeHeartBeat();
-  Parsley::Buffer msg = uv_buf_init(dat.data(), dat.count());
-  udp_socket->write("255.255.255.255", UDP_PORT, &msg);
+  Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), nullptr);
+  udp_socket->write("255.255.255.255", UDP_PORT, *msg);
   Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }

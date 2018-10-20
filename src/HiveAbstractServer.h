@@ -5,7 +5,7 @@
 //#include <QJsonDocument>
 
 #include "Global.h"
-#include "../libs/libParsley/src/PUdpSocket.h"
+#include "../libs/libParsley/include/PUdpSocket.h"
 
 #include <functional>
 #include <Log.h>

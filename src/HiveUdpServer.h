@@ -3,7 +3,7 @@
 
 #define UDP_PORT 23232
 
-#include "../libs/libParsley/src/PTimer.h"
+#include "../libs/libParsley/include/PTimer.h"
 
 
 #include "HiveAbstractServer.h"
@@ -20,13 +20,13 @@ public:
   bool start();
   bool stop();
 
-  Parsley::Callback<void, const Parsley::Buffer&, char*> onReadyRead;
+  Parsley::Callback<void, Parsley::Buffer*, char*> onReadyRead;
 
 private:
   Parsley::UdpSocket *udp_socket;
   Parsley::Timer *heartbeat_timer;
 
-  void udpReadyRead(Parsley::Buffer data, char *ip);
+  void udpReadyRead(Parsley::Buffer *data, char *ip);
 
   void onTimedOut(Parsley::Timer* t);
 

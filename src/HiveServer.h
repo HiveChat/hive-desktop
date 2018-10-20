@@ -1,8 +1,8 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
-#include "../libs/libParsley/src/PTcpServer.h"
-#include "../libs/libParsley/src/Parsley.h"
+#include "../libs/libParsley/include/PTcpServer.h"
+#include "../libs/libParsley/include/Parsley.h"
 
 #include "HiveProtocol.h"
 #include "HiveUdpServer.h"
@@ -38,7 +38,7 @@ private:
 
   static int counter;
 
-  void udpPacketReady(const Parsley::Buffer &data, char *ip);
+  void udpPacketReady(Parsley::Buffer *data, char *ip);
 
   bool processHeartBeat(const UsrProfile &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);

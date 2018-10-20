@@ -64,9 +64,9 @@ HiveServer::run()
   loop->run(UV_RUN_DEFAULT);
 }
 
-void HiveServer::udpPacketReady(const Parsley::Buffer &data, char *ip)
+void HiveServer::udpPacketReady(Parsley::Buffer *data, char *ip)
 {
-  NetPacket *packet = new NetPacket(ip, data.base, data.len, BaseProtocol::Udp);
+  NetPacket *packet = new NetPacket(ip, data->data(), data->length(), BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
   qDebug()<<"packet received"<<ip;
 }
