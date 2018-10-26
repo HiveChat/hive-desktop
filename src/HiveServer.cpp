@@ -29,8 +29,8 @@ HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol
     case BaseProtocol::Udp:
       {
         QByteArray dat = encodeTextMessage(msg);
-        uv_buf_t msg = uv_buf_init(dat.data(), dat.count());
-//        udp_server->write("255.255.255.255", 23232, &msg);
+        Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), loop);
+        udp_server->write("255.255.255.255", 23232, msg);
 
         Log::net(Log::Info, "HiveServer::sendTextMessage()", "message sent");
         break;
@@ -51,7 +51,6 @@ HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol
 void
 HiveServer::run()
 {
-  qDebug()<<"uv thread id: "<<this->currentThreadId();
   Log::net(Log::Info, "HiveServer::run()", "Thread Started");
 
   loop = new Parsley::Loop();
@@ -66,7 +65,7 @@ HiveServer::run()
 
 void HiveServer::udpPacketReady(Parsley::Buffer *data, char *ip)
 {
-  NetPacket *packet = new NetPacket(ip, data->data(), data->length(), BaseProtocol::Udp);
+  NetPacket *packet = new NetPacket(ip, data, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
   qDebug()<<"packet received"<<ip;
 }

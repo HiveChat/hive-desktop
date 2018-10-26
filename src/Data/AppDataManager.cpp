@@ -349,8 +349,8 @@ void AppDataManager::readInboundNetBuffer()
     {
       //! See if JSON object is complete.
       QJsonParseError err;
-      QJsonDocument doc = QJsonDocument::fromJson(QByteArray(packet->data, packet->len), &err);
-      QString ipAddr = QString::fromStdString(packet->ipAddr);
+      QJsonDocument doc = QJsonDocument::fromJson(QByteArray(packet->buffer->data(), packet->buffer->length()), &err);
+      QString ipAddr = QString::fromStdString(packet->ip_addr);
       //! HiveDoubleBuffer calls std::list::pop_front(), which automatically calls destructor of NetPacket *p.
       inboundNetBuffer.pop_front();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
@@ -457,8 +457,6 @@ QJsonDocument AppDataManager::makeDefaultSettings()
   obj.insert("avatarPath", Global::settings.profile_avatar_str);
   obj.insert("BubbleColorI", Global::color_defaultChatBubbleI.name());
   obj.insert("BubbleColorO", Global::color_defaultChatBubbleO.name());
-
-  ////these default data will be integrated in a class[I don't know what I meat in this comment...]
 
   QJsonDocument doc;
   doc.setObject(obj);

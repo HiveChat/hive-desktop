@@ -58,7 +58,6 @@ SOURCES += \
     ../libs/libParsley/src/PTcpServer.cpp \
     HiveUdpServer.cpp \
     ../libs/libParsley/src/PAddress.cpp \
-    HiveAbstractServer.cpp \
     Bee.cpp \
     ../libs/libParsley/src/PTimer.cpp \
     ../libs/libParsley/src/PUtils.cpp \
@@ -116,7 +115,6 @@ HEADERS  += \
     ../libs/libParsley/include/PUdpSocket.h \
     HiveUdpServer.h \
     ../libs/libParsley/include/PAddress.h \
-    HiveAbstractServer.h \
     Bee.h \
     ../libs/libParsley/include/PTimer.h \
     ../libs/libParsley/include/PUtils.h \

@@ -16,7 +16,7 @@ public:
   DoubleBuffer();
   ~DoubleBuffer();
 
-  Parsley::Callback<void, DoubleBuffer <T>*> onPushed;
+  Parsley::Callback<void, DoubleBuffer<T>*> onPushed;
 
   T front();
   void push_front(T item);
@@ -27,9 +27,9 @@ private:
 
   Container buffer1;
   Container buffer2;
-  bool reading = false;
-  bool writing = false;
-  bool isFliping = false;
+  std::atomic<bool> reading = ATOMIC_VAR_INIT(false);
+  std::atomic<bool> writing = ATOMIC_VAR_INIT(false);
+  std::atomic<bool> isFliping = ATOMIC_VAR_INIT(false);
 
   Container *inbound_buffer = &buffer1;
   Container *outbound_buffer = &buffer2;

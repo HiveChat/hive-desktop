@@ -1,6 +1,8 @@
 #ifndef GLOBALTYPE_H
 #define GLOBALTYPE_H
 
+#include <PBuffer.h>
+
 #include <QString>
 #include <QColor>
 #include <QJsonObject>
@@ -105,21 +107,29 @@ enum BaseProtocol{
 };
 
 struct NetPacket {
-  NetPacket(std::string ip, char* data, const int &len, const BaseProtocol &protocol)
-    : ipAddr(ip)
-    , data(data)
-    , len(len)
+  NetPacket(std::string ip, Parsley::Buffer* buf, const BaseProtocol &protocol)
+    : ip_addr(ip)
+    , buffer(buf)
     , protocol(protocol)
   {
+
   }
+
+  NetPacket(std::string ip, char* data, const int &len, const BaseProtocol &protocol)
+    : ip_addr(ip)
+    , protocol(protocol)
+  {
+    buffer = new Parsley::Buffer(data, len, Parsley::Loop::defaultLoop());
+  }
+
   ~NetPacket()
   {
-    delete[] data;
-    data = nullptr;
+    delete[] buffer;
+    buffer = nullptr;
   }
-  std::string ipAddr;
-  char *data;
-  int len;
+
+  std::string ip_addr;
+  Parsley::Buffer* buffer;
   BaseProtocol protocol;
 
 
