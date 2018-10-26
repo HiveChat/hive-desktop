@@ -2,6 +2,7 @@
 
 
 HiveUdpServer::HiveUdpServer(Parsley::Loop *loop)
+  : Parsley::UdpSocket(loop)
 {
   udp_socket = new Parsley::UdpSocket("255.255,255,255", UDP_PORT, loop);
   Parsley::connect(&udp_socket->onReadyRead, this, &HiveUdpServer::udpReadyRead);
@@ -15,16 +16,20 @@ HiveUdpServer::~HiveUdpServer()
   qDebug()<<"stopping timer";
 }
 
-bool HiveUdpServer::start()
+void HiveUdpServer::start()
 {
   udp_socket->start();
   heartbeat_timer->start();
+
+  Parsley::UdpSocket::start();
 }
 
-bool HiveUdpServer::stop()
+void HiveUdpServer::stop()
 {
   heartbeat_timer->stop();
   udp_socket->stop();
+
+  Parsley::UdpSocket::stop();
 }
 
 /*!
@@ -40,7 +45,7 @@ void HiveUdpServer::udpReadyRead(Parsley::Buffer *data, char *ip)
 
 void HiveUdpServer::onTimedOut(Parsley::Timer *t)
 {
-  QByteArray dat = encodeHeartBeat();
+  QByteArray dat = HiveProtocol::encodeHeartBeat();
   Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), nullptr);
   udp_socket->write("255.255.255.255", UDP_PORT, *msg);
   Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");

@@ -26,12 +26,12 @@ void AppDataManager::stop()
 
 void AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
-  inboundNetBuffer.push_front(packet);
+  inboundNetBuffer.push(packet);
 }
 
 void AppDataManager::pushOutboundBuffer(NetPacket *packet)
 {
-  outboundNetBuffer.push_front(packet);
+  outboundNetBuffer.push(packet);
 }
 
 bool AppDataManager::isUsrNew(const QString &uuid)
@@ -352,10 +352,10 @@ void AppDataManager::readInboundNetBuffer()
       QJsonDocument doc = QJsonDocument::fromJson(QByteArray(packet->buffer->data(), packet->buffer->length()), &err);
       QString ipAddr = QString::fromStdString(packet->ip_addr);
       //! HiveDoubleBuffer calls std::list::pop_front(), which automatically calls destructor of NetPacket *p.
-      inboundNetBuffer.pop_front();
+      inboundNetBuffer.pop();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
         {
-          Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()","emit");
+          Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()","JSON ERROR");
 
           continue;
         }
@@ -427,6 +427,7 @@ void AppDataManager::readInboundNetBuffer()
 
 void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)
 {
+  qDebug()<<"void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)";
   if(!inboundNetBufferReading)
     read_inbound_async->send();
 }

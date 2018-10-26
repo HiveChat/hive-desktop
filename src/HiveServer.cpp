@@ -29,7 +29,7 @@ HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol
     case BaseProtocol::Udp:
       {
         QByteArray dat = encodeTextMessage(msg);
-        Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), loop);
+        Parsley::Buffer msg(dat.data(), dat.count(), loop);
         udp_server->write("255.255.255.255", 23232, msg);
 
         Log::net(Log::Info, "HiveServer::sendTextMessage()", "message sent");

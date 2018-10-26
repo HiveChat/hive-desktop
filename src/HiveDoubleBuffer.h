@@ -19,8 +19,8 @@ public:
   Parsley::Callback<void, DoubleBuffer<T>*> onPushed;
 
   T front();
-  void push_front(T item);
-  bool pop_front();
+  void push(T item);
+  bool pop();
 
 private:
   using Container = std::list<T>;
@@ -51,7 +51,7 @@ DoubleBuffer<T>::~DoubleBuffer()
 }
 
 template<typename T>
-void DoubleBuffer<T>::push_front(T item)
+void DoubleBuffer<T>::push(T item)
 {
   while(1)
     {
@@ -95,7 +95,7 @@ T DoubleBuffer<T>::front()
 }
 
 template<typename T>
-bool DoubleBuffer<T>::pop_front()
+bool DoubleBuffer<T>::pop()
 {
   while(1)
     {

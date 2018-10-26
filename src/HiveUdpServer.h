@@ -10,14 +10,14 @@
 #include "HiveProtocol.h"
 
 class HiveUdpServer
-//  : public Parsley::UdpSocket
+  : public Parsley::UdpSocket
 {
 public:
   HiveUdpServer(Parsley::Loop *loop);
   ~HiveUdpServer();
 
-  bool start();
-  bool stop();
+  void start();
+  void stop();
 
   Parsley::Callback<void, Parsley::Buffer*, char*> onReadyRead;
 

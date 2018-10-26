@@ -17,13 +17,13 @@ public:
   static bool decodeUdp(const QString &data, const char *addr);
   static bool writeTcp(const MessageType &msgType, const QString &data);
 
+  static QByteArray encodeHeartBeat();
 
 protected:
   static std::tuple<MessageType, QJsonObject> checkJson(const QString &data, const QString &addr = "");
 
 
 
-  static QByteArray encodeHeartBeat();
   static QByteArray encodeTextMessage(const QJsonObject &msg);
 
 signals:
