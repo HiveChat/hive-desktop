@@ -356,7 +356,7 @@ void AppDataManager::readInboundNetBuffer()
       if(err.error != QJsonParseError::NoError || !doc.isObject())
         {
           Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()","JSON ERROR");
-
+          packet = inboundNetBuffer.front();
           continue;
         }
 
@@ -369,6 +369,7 @@ void AppDataManager::readInboundNetBuffer()
           Log::net(Log::Warning
                    , "AppDataManager::readInboundNetBuffer()"
                    , "Package wrong destination: " + receiverKey + " My Id: " + Global::settings.profile_key_str);
+          packet = inboundNetBuffer.front();
           continue;
         }
 
