@@ -107,29 +107,17 @@ enum BaseProtocol{
 };
 
 struct NetPacket {
-  NetPacket(std::string ip, Parsley::Buffer* buf, const BaseProtocol &protocol)
+  NetPacket(const std::string& ip, const std::string& data, const BaseProtocol &protocol)
     : ip_addr(ip)
-    , buffer(buf)
+    , data(data)
     , protocol(protocol)
   {
 
   }
 
-  NetPacket(std::string ip, char* data, const int &len, const BaseProtocol &protocol)
-    : ip_addr(ip)
-    , protocol(protocol)
-  {
-    buffer = new Parsley::Buffer(data, len, Parsley::Loop::defaultLoop());
-  }
-
-  ~NetPacket()
-  {
-    delete[] buffer;
-    buffer = nullptr;
-  }
 
   std::string ip_addr;
-  Parsley::Buffer* buffer;
+  std::string data;
   BaseProtocol protocol;
 
 

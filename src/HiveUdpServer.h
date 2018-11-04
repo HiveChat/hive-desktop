@@ -19,13 +19,11 @@ public:
   void start();
   void stop();
 
-  Parsley::Callback<void, Parsley::Buffer*, char*> onReadyRead;
-
 private:
   Parsley::UdpSocket *udp_socket;
   Parsley::Timer *heartbeat_timer;
 
-  void udpReadyRead(Parsley::Buffer *data, char *ip);
+  void udpReadyRead(std::string &data, std::string &ip);
 
   void onTimedOut(Parsley::Timer* t);
 

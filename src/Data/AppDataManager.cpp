@@ -349,7 +349,7 @@ void AppDataManager::readInboundNetBuffer()
     {
       //! See if JSON object is complete.
       QJsonParseError err;
-      QJsonDocument doc = QJsonDocument::fromJson(QByteArray(packet->buffer->data(), packet->buffer->length()), &err);
+      QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(packet->data), &err);
       QString ipAddr = QString::fromStdString(packet->ip_addr);
       //! HiveDoubleBuffer calls std::list::pop_front(), which automatically calls destructor of NetPacket *p.
       inboundNetBuffer.pop();

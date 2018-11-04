@@ -38,7 +38,7 @@ private:
 
   static int counter;
 
-  void udpPacketReady(Parsley::Buffer *data, char *ip);
+  void udpPacketReady(std::string &data, std::string &ip);
 
   bool processHeartBeat(const UsrProfile &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);
