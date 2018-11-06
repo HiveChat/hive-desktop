@@ -92,9 +92,9 @@ void NetworkManager::udpProcessMessage(const Message::TextMessage &messageStruct
       return;
     }
 
-  if(messageStruct.reciever != Global::settings.profile_key_str)
+  if(messageStruct.reciever != Global::settings.profile_uuid_str)
     {
-      if(messageStruct.sender != Global::settings.profile_key_str)
+      if(messageStruct.sender != Global::settings.profile_uuid_str)
         {
           //no sniffing man!
           return;
@@ -107,7 +107,7 @@ void NetworkManager::udpProcessMessage(const Message::TextMessage &messageStruct
     }
   else
     {
-      if(messageStruct.sender == Global::settings.profile_key_str)
+      if(messageStruct.sender == Global::settings.profile_uuid_str)
         {
           qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
           emit messageRecieved(messageStruct, true);
@@ -127,7 +127,7 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfile &usrProfileStruct)
       return;
     }
 
-  if(usrProfileStruct.key == Global::settings.profile_key_str)
+  if(usrProfileStruct.key == Global::settings.profile_uuid_str)
     {
       if(Global::g_localHostIP != usrProfileStruct.ip)
         {
@@ -146,7 +146,7 @@ void NetworkManager::udpProcessHeartBeat(const UsrProfile &usrProfileStruct)
 
 void NetworkManager::udpProcessUsrLeft(QString *usrKey)
 {
-  if(*usrKey == Global::settings.profile_key_str)
+  if(*usrKey == Global::settings.profile_uuid_str)
     {
       emit usrLeft(usrKey);
 
@@ -174,7 +174,7 @@ void NetworkManager::udpSendHeartBeat()
   QDataStream out(&data, QIODevice::WriteOnly);
 
   QJsonObject json_obj;
-  json_obj.insert("key", Global::settings.profile_key_str);
+  json_obj.insert("key", Global::settings.profile_uuid_str);
   json_obj.insert("name", Global::settings.profile_name_str);
   json_obj.insert("avatar", Global::settings.profile_avatar_str);
   json_obj.insert("msgType", HeartBeat);
@@ -197,7 +197,7 @@ void NetworkManager::udpSendUsrLeave()
   return;
   QByteArray data;
   QDataStream out(&data, QIODevice::WriteOnly);
-  out << UsrLeave << Global::settings.profile_key_str;
+  out << UsrLeave << Global::settings.profile_uuid_str;
   udp_socket->writeDatagram(data
                             , data.length()
                             , QHostAddress::Broadcast

@@ -254,7 +254,7 @@ HiveProtocol::checkJson(const QString &data, const QString &addr)
 QByteArray HiveProtocol::encodeHeartBeat()
 {
   QJsonObject jsonObj;
-  jsonObj.insert("sender", Global::settings.profile_key_str);
+  jsonObj.insert("sender", Global::settings.profile_uuid_str);
   jsonObj.insert("receiver", "{00000000-0000-0000-0000-000000000000}");
   jsonObj.insert("name", Global::settings.profile_name_str);
   jsonObj.insert("avatar", Global::settings.profile_avatar_str);

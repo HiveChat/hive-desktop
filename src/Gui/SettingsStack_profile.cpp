@@ -46,7 +46,7 @@ SettingsStack_profile::SettingsStack_profile(QWidget *parent)
 
   //usrkey
   QLineEdit *usr_key_line_edit = new QLineEdit(Global::settings.profile_name_str,this);
-  usr_key_line_edit->setText(Global::settings.profile_key_str);
+  usr_key_line_edit->setText(Global::settings.profile_uuid_str);
   usr_key_line_edit->setCursor(QCursor(Qt::IBeamCursor));
   usr_key_line_edit->setReadOnly(true);
   usr_key_line_edit->setMaximumWidth(200);

@@ -167,7 +167,7 @@ void AppDataManager::onUsrEntered(UsrProfile &profile) // logic problem here? to
     {
       Log::dat(Log::Info, "DataManager::onUsrEntered()", "New user");
       profile.online = true;
-      UsrData *data = new UsrData(&Global::settings.profile_key_str, profile);
+      UsrData *data = new UsrData(&Global::settings.profile_uuid_str, profile);
       usr_data_hash.insert(profile.key, data);
       updateUsr(profile);
       emit usrProfileLoaded(data);
@@ -364,12 +364,12 @@ void AppDataManager::readInboundNetBuffer()
       //! See if the package is for me.
       QJsonObject packetJson = doc.object();
       QString receiverKey = packetJson.value("receiver").toString();
-      if(receiverKey != Global::settings.profile_key_str
+      if(receiverKey != Global::settings.profile_uuid_str
          && receiverKey != BROADCAST_UUID)
         {
           Log::net(Log::Warning
                    , "AppDataManager::readInboundNetBuffer()"
-                   , "Package wrong destination: " + receiverKey + " My Id: " + Global::settings.profile_key_str);
+                   , "Package wrong destination: " + receiverKey + " My Id: " + Global::settings.profile_uuid_str);
           packet = inboundNetBuffer.front();
           continue;
         }
@@ -390,7 +390,14 @@ void AppDataManager::readInboundNetBuffer()
           }
         case MessageType::TextMessage:
           {
+            Message::TextMessage message;
+            message.index = packetJson.value("index").toInt();
+            message.time = packetJson.value("time").toInt();
+            message.reciever = packetJson.value("receiver").toString();
+            message.sender = packetJson.value("sender").toString();
+            message.message = packetJson.value("message").toString();
 
+            onMessageCome(message, message.sender == Global::settings.profile_uuid_str);
 //            processTextMessage();
             break;
           }
@@ -449,13 +456,13 @@ bool AppDataManager::touchDir(const std::string &dir)
 
 QJsonDocument AppDataManager::makeDefaultSettings()
 {
-  Global::settings.profile_key_str = makeUuid();
+  Global::settings.profile_uuid_str = makeUuid();
   Global::settings.profile_avatar_str = ":/avatar/avatar/default.png";
   Global::settings.profile_name_str = QHostInfo::localHostName();
 
 
   QJsonObject obj;
-  obj.insert("usrKey", Global::settings.profile_key_str);
+  obj.insert("usrKey", Global::settings.profile_uuid_str);
   obj.insert("usrName", Global::settings.profile_name_str);
   obj.insert("avatarPath", Global::settings.profile_avatar_str);
   obj.insert("BubbleColorI", Global::color_defaultChatBubbleI.name());
@@ -489,7 +496,7 @@ void AppDataManager::initVariable()
   };
 
   settings_qstring_hash = {
-    { "usrKey", &Global::settings.profile_key_str },
+    { "usrKey", &Global::settings.profile_uuid_str },
     { "usrName", &Global::settings.profile_name_str },
     { "avatarPath", &Global::settings.profile_avatar_str }
   };
@@ -581,7 +588,7 @@ void AppDataManager::loadUsrList()
               p.avatar = tempUsrProfileObj["avatarPath"].toString();
               p.online = false;
 
-              UsrData *usrData = new UsrData(&Global::settings.profile_key_str, p);
+              UsrData *usrData = new UsrData(&Global::settings.profile_uuid_str, p);
               usr_data_hash.insert(*tempUuidStr, usrData);
 
               Global::TEST_printUsrProfile(*usrData->getUsrProfile(),"adding from disk");

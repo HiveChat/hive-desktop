@@ -90,7 +90,7 @@ namespace Settings
 
     QString profile_avatar_str;
     QString profile_name_str;
-    QString profile_key_str;
+    QString profile_uuid_str;
 
     Notification notification;
     Update update;

@@ -113,7 +113,7 @@ void HiveServer::onTimedOut(Parsley::Timer *t)
 bool
 HiveServer::processUsrLeave(QString *usrKey)
 {
-  if(*usrKey == Global::settings.profile_key_str)
+  if(*usrKey == Global::settings.profile_uuid_str)
     {
 //      emit usrLeft(usrKey); << FIX HERE!!
 

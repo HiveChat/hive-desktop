@@ -98,7 +98,7 @@ void HomeStack_welcome::refreshUI()
 
   my_avatar->setAvatar(Global::settings.profile_avatar_str);
 
-  UsrData *p = AppDataManager::usr_data_hash.value(Global::settings.profile_key_str);
+  UsrData *p = AppDataManager::usr_data_hash.value(Global::settings.profile_uuid_str);
   if(p && p->getUsrProfile())
     {
       if(!p->getUsrProfile()->online)
