@@ -355,7 +355,8 @@ void AppDataManager::readInboundNetBuffer()
       inboundNetBuffer.pop();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
         {
-          Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()","JSON ERROR");
+          Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer(): failed to parse JSON\n", packet->data.c_str());
+          Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()", err.errorString());
           packet = inboundNetBuffer.front();
           continue;
         }
@@ -389,7 +390,8 @@ void AppDataManager::readInboundNetBuffer()
           }
         case MessageType::TextMessage:
           {
-    //        processTextMessage();
+
+//            processTextMessage();
             break;
           }
         case MessageType::FileInfo:
@@ -428,7 +430,6 @@ void AppDataManager::readInboundNetBuffer()
 
 void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)
 {
-  qDebug()<<"void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)";
   if(!inboundNetBufferReading)
     read_inbound_async->send();
 }

@@ -13,11 +13,13 @@ HiveServer::HiveServer(QObject *parent)
 
 HiveServer::~HiveServer()
 {
+  this->stop();
   delete udp_server;
 }
 
 void HiveServer::stop()
 {
+  heartbeat_timer->stop();
   loop->close();
   Log::net(Log::Info, "HiveServer::close()", "Successfully closed uv event loop.");
 }
@@ -30,7 +32,7 @@ HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol
       {
         QByteArray dat = encodeTextMessage(msg);
         Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), loop);
-        udp_server->write("255.255.255.255", 23232, msg);
+        udp_server->write("255.255.255.255", UDP_PORT, msg);
 
         Log::net(Log::Info, "HiveServer::sendTextMessage()", "message sent");
         break;
@@ -54,9 +56,14 @@ HiveServer::run()
   Log::net(Log::Info, "HiveServer::run()", "Thread Started");
 
   loop = new Parsley::Loop();
-  udp_server = new HiveUdpServer(loop);
+  udp_server = new HiveUdpServer("0.0.0.0", UDP_PORT, loop);
   Parsley::connect(&udp_server->onReadyRead, this, &HiveServer::udpPacketReady);
   udp_server->start();
+
+  heartbeat_timer = new Parsley::Timer(1000, 1000, loop);
+  Parsley::connect(&heartbeat_timer->onTimedOut, this, &HiveServer::onTimedOut);
+  heartbeat_timer->start();
+
 
 //  tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
 
@@ -70,30 +77,38 @@ void HiveServer::udpPacketReady(std::string &data, std::string &ip)
   qDebug()<<"packet received"<<ip.c_str();
 }
 
-
-bool
-HiveServer::processHeartBeat(const UsrProfile &usrProfileStruct)
+void HiveServer::onTimedOut(Parsley::Timer *t)
 {
-  if(usrProfileStruct.key.isEmpty())
-    {
-      return false;
-    }
-
-  if(usrProfileStruct.key == Global::settings.profile_key_str)
-    {
-      if(Global::g_localHostIP != usrProfileStruct.ip)
-        {
-          Global::g_localHostIP = usrProfileStruct.ip;
-        }
-      Log::net(Log::Info, "HiveServer::processHeartBeat", "got heart beat from myself");
-//      emit getInstance()->usrEntered(usrProfileStruct);
-    }
-  else
-    {
-      Log::net(Log::Info, "HiveServer::processHeartBeat", "got heart beat from others");
-//      emit getInstance()->usrEntered(usrProfileStruct);
-    }
+  QByteArray dat = HiveProtocol::encodeHeartBeat();
+  Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), loop);
+  udp_server->write("255.255.255.255", UDP_PORT, msg);
+  Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
+
+
+//bool
+//HiveServer::processHeartBeat(const UsrProfile &usrProfileStruct)
+//{
+//  if(usrProfileStruct.key.isEmpty())
+//    {
+//      return false;
+//    }
+
+//  if(usrProfileStruct.key == Global::settings.profile_key_str)
+//    {
+//      if(Global::g_localHostIP != usrProfileStruct.ip)
+//        {
+//          Global::g_localHostIP = usrProfileStruct.ip;
+//        }
+//      Log::net(Log::Info, "HiveServer::processHeartBeat", "got heart beat from myself");
+////      emit getInstance()->usrEntered(usrProfileStruct);
+//    }
+//  else
+//    {
+//      Log::net(Log::Info, "HiveServer::processHeartBeat", "got heart beat from others");
+////      emit getInstance()->usrEntered(usrProfileStruct);
+//    }
+//}
 
 bool
 HiveServer::processUsrLeave(QString *usrKey)

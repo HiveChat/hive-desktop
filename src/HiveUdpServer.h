@@ -13,15 +13,13 @@ class HiveUdpServer
   : public Parsley::UdpSocket
 {
 public:
-  HiveUdpServer(Parsley::Loop *loop);
+  HiveUdpServer(const char *ip, const int &port, Parsley::Loop *l);
   ~HiveUdpServer();
 
   void start();
   void stop();
 
 private:
-  Parsley::UdpSocket *udp_socket;
-  Parsley::Timer *heartbeat_timer;
 
   void udpReadyRead(std::string &data, std::string &ip);
 

@@ -22,7 +22,7 @@ class HiveServer final
   Q_OBJECT
 
 public:
-  explicit HiveServer(QObject *parent = 0);
+  explicit HiveServer(QObject *parent = nullptr);
   ~HiveServer();
 
   void stop();
@@ -35,12 +35,14 @@ private:
   Parsley::Loop *loop;
   Parsley::TcpServer *tcp_server;
   HiveUdpServer *udp_server;
+  Parsley::Timer *heartbeat_timer;
 
   static int counter;
 
   void udpPacketReady(std::string &data, std::string &ip);
+  void onTimedOut(Parsley::Timer *t);
 
-  bool processHeartBeat(const UsrProfile &usrProfileStruct);
+//  bool processHeartBeat(const UsrProfile &usrProfileStruct);
   bool processUsrLeave(QString *usrKey);
   bool processErrorDelivery();
   bool processTextMessage();

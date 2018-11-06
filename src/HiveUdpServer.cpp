@@ -1,34 +1,25 @@
 #include "HiveUdpServer.h"
 
 
-HiveUdpServer::HiveUdpServer(Parsley::Loop *loop)
-  : Parsley::UdpSocket(loop)
+HiveUdpServer::HiveUdpServer(const char *ip, const int &port, Parsley::Loop *l)
+  : Parsley::UdpSocket(ip, port, l)
 {
-  udp_socket = new Parsley::UdpSocket("255.255,255,255", UDP_PORT, loop);
-  Parsley::connect(&udp_socket->onReadyRead, this, &HiveUdpServer::udpReadyRead);
-  heartbeat_timer = new Parsley::Timer(1000, 1000, loop);
-  Parsley::connect(&heartbeat_timer->onTimedOut, this, &HiveUdpServer::onTimedOut);
+  Parsley::connect(&this->onReadyRead, this, &HiveUdpServer::udpReadyRead);
 }
 
 HiveUdpServer::~HiveUdpServer()
 {
-  heartbeat_timer->stop();
   qDebug()<<"stopping timer";
 }
 
 void HiveUdpServer::start()
 {
-  udp_socket->start();
-  heartbeat_timer->start();
 
   Parsley::UdpSocket::start();
 }
 
 void HiveUdpServer::stop()
 {
-  heartbeat_timer->stop();
-  udp_socket->stop();
-
   Parsley::UdpSocket::stop();
 }
 
@@ -40,13 +31,8 @@ void HiveUdpServer::stop()
  */
 void HiveUdpServer::udpReadyRead(std::string &data, std::string &ip)
 {
+  Log::net(Log::Info, "HiveUdpServer::udpReadyRead()", "Packet!!!!!!!!!!!!");
+
   onReadyRead.call(data, ip);
 }
 
-void HiveUdpServer::onTimedOut(Parsley::Timer *t)
-{
-  QByteArray dat = HiveProtocol::encodeHeartBeat();
-  Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), nullptr);
-  udp_socket->write("255.255.255.255", UDP_PORT, msg);
-  Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
-}

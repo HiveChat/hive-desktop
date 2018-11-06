@@ -272,5 +272,5 @@ QByteArray HiveProtocol::encodeTextMessage(const QJsonObject &msg)
   jsonObj.insert("msgType", MessageType::TextMessage);
   QJsonDocument jsonDoc(jsonObj);
 
-  return jsonDoc.toJson() + '\0';
+  return jsonDoc.toJson() + "\0";
 }
