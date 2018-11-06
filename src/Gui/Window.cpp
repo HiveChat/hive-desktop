@@ -60,7 +60,7 @@ Window::Window(QWidget *parent)
   timer->setSingleShot(false);
   timer->start(2000);
 
-  connect(gui_tab_block->chat_tab->comb_scroll_widget, &ChatTab_comb_scroll_widget::combWidgetClicked,
+  connect(gui_tab_block->chat_tab->comb_scroll_widget, &CombScrollWidget::combWidgetClicked,
           this, &Window::onCombWidgetClicked);
 
   connect(gui_tab_block->home_tab->welcome_btn, &MenuButton::clicked, 

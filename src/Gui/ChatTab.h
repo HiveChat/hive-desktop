@@ -8,15 +8,15 @@
 #include <QHash>
 #include <QDrag>
 
-class ChatTab_comb_scroll_widget;
+class CombScrollWidget;
 class ChatTab;
 
-class ChatTab_comb_scroll_widget : public QWidget
+class CombScrollWidget : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit ChatTab_comb_scroll_widget(QWidget *parent = nullptr);
+  explicit CombScrollWidget(QWidget *parent = nullptr);
   void addComb(UsrProfile *p);
   void refreshComb(UsrProfile *p);
   void refreshBadgeNumber(const QString &usrKey, const int &num);
@@ -43,7 +43,7 @@ class ChatTab : public QWidget
 public:
   explicit ChatTab(QWidget *parent = nullptr);
   QScrollArea *comb_scrollarea;
-  ChatTab_comb_scroll_widget *comb_scroll_widget;
+  CombScrollWidget *comb_scroll_widget;
 
 private:
   QVBoxLayout *main_layout;
