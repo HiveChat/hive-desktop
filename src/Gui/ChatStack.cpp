@@ -2,7 +2,7 @@
 
 //////////////////////////mid////////////////////////////////
 
-ChatStack_chat_widget::ChatStack_chat_widget(QWidget *parent) : QWidget(parent)
+MessageViewer::MessageViewer(QWidget *parent) : QWidget(parent)
 {
   //test
 
@@ -39,12 +39,12 @@ ChatStack_chat_widget::ChatStack_chat_widget(QWidget *parent) : QWidget(parent)
 
 }
 
-ChatStack_chat_widget::~ChatStack_chat_widget()
+MessageViewer::~MessageViewer()
 {
 
 }
 
-void ChatStack_chat_widget::clearChatBubbles()
+void MessageViewer::clearChatBubbles()
 {
   foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
     {
@@ -56,7 +56,7 @@ void ChatStack_chat_widget::clearChatBubbles()
     }
 }
 
-void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fromMe)
+void MessageViewer::addChatBubble(const QString &message, const bool &fromMe)
 {
   chat_bubble = new TextBubble(message, !fromMe, this);
   chat_bubble_list.append(chat_bubble);
@@ -66,7 +66,7 @@ void ChatStack_chat_widget::addChatBubble(const QString &message, const bool &fr
 
 //////////////////////////bottom//////////////////////////////////////
 
-ChatStack_message_editor::ChatStack_message_editor(QWidget *parent) : QWidget(parent)
+MessageEditor::MessageEditor(QWidget *parent) : QWidget(parent)
 {
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
@@ -185,14 +185,19 @@ ChatStack_message_editor::ChatStack_message_editor(QWidget *parent) : QWidget(pa
   this->setMaximumHeight(130);
 }
 
-ChatStack_message_editor::~ChatStack_message_editor()
+MessageEditor::~MessageEditor()
 {
 
 }
 
+QString MessageEditor::currentFileName()
+{
+  return current_file_name;
+}
+
 /// Event filter: capture QEvent outside the class
 ///   text_editor->installEventFilter(this);
-bool ChatStack_message_editor::eventFilter(QObject *obj, QEvent *e)
+bool MessageEditor::eventFilter(QObject *obj, QEvent *e)
 {
   Q_ASSERT(obj == text_editor);
   if(e->type() == QEvent::KeyPress)
@@ -295,7 +300,7 @@ ChatStack::ChatStack(QWidget *parent)
   bottom_line->setFixedHeight(2);
   bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
-  chat_widget = new ChatStack_chat_widget(this);
+  chat_widget = new MessageViewer(this);
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
   scroll_area->setPalette(palette);
@@ -303,7 +308,7 @@ ChatStack::ChatStack(QWidget *parent)
   scroll_area->setWidget(chat_widget);
   scroll_area->setFrameStyle(0);
 
-  message_editor = new ChatStack_message_editor(this);
+  message_editor = new MessageEditor(this);
 
   ////main layout
 //  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
@@ -318,7 +323,7 @@ ChatStack::ChatStack(QWidget *parent)
   main_layout->addWidget(bottom_line);
   main_layout->addWidget(message_editor);
 
-  connect(message_editor, &ChatStack_message_editor::sendTriggered,
+  connect(message_editor, &MessageEditor::sendTriggered,
           this, &ChatStack::onSendButtonClicked);
   connect(message_editor->send_btn, &LabelButton::clicked,
           this, &ChatStack::onSendButtonClicked);
@@ -426,12 +431,12 @@ void ChatStack::display(const QString &usrKey)
 
           if(chat_widget_hash.contains(usrKey))
             {
-               ChatStack_chat_widget *widget = chat_widget_hash.value(usrKey);
+               MessageViewer *widget = chat_widget_hash.value(usrKey);
                chat_widget = widget;
             }
           else
             {
-              ChatStack_chat_widget *widget = new ChatStack_chat_widget(this);
+              MessageViewer *widget = new MessageViewer(this);
               chat_widget = widget;
               chat_widget_hash.insert(usrKey, widget);
               this->flipLatestMessage(false);

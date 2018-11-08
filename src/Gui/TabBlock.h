@@ -8,13 +8,13 @@
 #include "SettingsTab.h"
 
 
-class GuiTabBlock : public QWidget
+class TabBlock : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiTabBlock(QWidget *parent = nullptr);
-  ~GuiTabBlock();
+  explicit TabBlock(QWidget *parent = nullptr);
+  ~TabBlock();
 
   SettingsTab *settings_tab;
   HomeTab *home_tab;

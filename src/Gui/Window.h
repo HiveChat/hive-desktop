@@ -18,7 +18,7 @@ public:
   explicit Window(QWidget *parent = nullptr);
   ~Window();
 
-  GuiTabBlock *gui_tab_block;
+  TabBlock *gui_tab_block;
   MainBlock *gui_main_block;
 
 private:

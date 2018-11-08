@@ -1,7 +1,7 @@
 #ifndef GUIBADGEICON_H
 #define GUIBADGEICON_H
 
-#include <QLabel>
+#include <QWidget>
 #include <QPainter>
 
 
@@ -9,7 +9,7 @@ class BadgeIcon : public QWidget
 {
   Q_OBJECT
 public:
-  explicit BadgeIcon(const int &dia,QWidget *parent = nullptr);
+  explicit BadgeIcon(const int &dia, QWidget *parent = nullptr);
 
   void setNumber(const int &number);
 

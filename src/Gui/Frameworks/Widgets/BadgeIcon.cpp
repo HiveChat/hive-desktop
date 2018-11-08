@@ -12,6 +12,7 @@ BadgeIcon::BadgeIcon(const int &dia, QWidget *parent)
 void BadgeIcon::setNumber(const int &num)
 {
   number = num;
+  this->update();
 }
 
 void BadgeIcon::paintEvent(QPaintEvent *)
@@ -35,25 +36,13 @@ void BadgeIcon::paintEvent(QPaintEvent *)
   paint.setFont(font);
 
   if(number < 10)
-    {
-      paint.drawText(QPoint(22, 20), QString::number(number));
-      paint.end();
-      this->setHidden(false);
-      return;
-    }
+    paint.drawText(QPoint(22, 20), QString::number(number));
   else if(number > 99)
-    {
-      paint.drawText(QPoint(21, 18), "...");
-      paint.end();
-      this->setHidden(false);
-      return;
-    }
+    paint.drawText(QPoint(21, 18), "...");
   else
-    {
-      paint.drawText(QPoint(20, 20), QString::number(number));
-      paint.end();
-      this->setHidden(false);
-      return;
-    }
+    paint.drawText(QPoint(20, 20), QString::number(number));
+
+  this->setHidden(false);
   paint.end();
+  return;
 }

@@ -2,7 +2,7 @@
 #include <QFileDialog>
 #include <QLabel>
 
-GuiTabBlock::GuiTabBlock(QWidget *parent)
+TabBlock::TabBlock(QWidget *parent)
   : QWidget(parent)
   , settings_tab(new SettingsTab(this))
   , home_tab(new HomeTab(this))
@@ -34,19 +34,19 @@ GuiTabBlock::GuiTabBlock(QWidget *parent)
   right_tab_label->setHoveredPixmap(":/img/img/settings_tab.png");
   right_tab_label->setToolTipDuration(1000);
   right_tab_label->setToolTip("settings");
-  connect(left_tab_label,  &LabelButton::clicked, this, &GuiTabBlock::changeBtnLine);
-  connect(mid_tab_label,   &LabelButton::entered, this, &GuiTabBlock::changeBtnLine);
-  connect(right_tab_label, &LabelButton::clicked, this, &GuiTabBlock::changeBtnLine);
+  connect(left_tab_label,  &LabelButton::clicked, this, &TabBlock::changeBtnLine);
+  connect(mid_tab_label,   &LabelButton::entered, this, &TabBlock::changeBtnLine);
+  connect(right_tab_label, &LabelButton::clicked, this, &TabBlock::changeBtnLine);
 
   left_btn_line->setFrameShape(QFrame::HLine);
   left_btn_line->setFrameShadow(QFrame::Plain);
-  left_btn_line->setFixedSize(83,3);
-  left_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+  left_btn_line->setFixedSize(83,2);
+  left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   mid_btn_line->setFrameShape(QFrame::HLine);
   mid_btn_line->setFrameShadow(QFrame::Plain);
-  mid_btn_line->setFixedSize(84,2);
-  mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+  mid_btn_line->setFixedSize(84,3);
+  mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
 
   right_btn_line->setFrameShape(QFrame::HLine);
   right_btn_line->setFrameShadow(QFrame::Plain);
@@ -65,8 +65,8 @@ GuiTabBlock::GuiTabBlock(QWidget *parent)
   tab_label_layout->addWidget(mid_btn_line,1,1,Qt::AlignCenter);
   tab_label_layout->addWidget(right_btn_line,1,2,Qt::AlignRight);
 
-  tab_stacked_widget->addWidget(home_tab);
   tab_stacked_widget->addWidget(chat_tab);
+  tab_stacked_widget->addWidget(home_tab);
   tab_stacked_widget->addWidget(settings_tab);
 
   QVBoxLayout *main_layout = new QVBoxLayout(this);
@@ -75,14 +75,15 @@ GuiTabBlock::GuiTabBlock(QWidget *parent)
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addLayout(tab_label_layout);
   main_layout->addWidget(tab_stacked_widget);
+
 }
 
-GuiTabBlock::~GuiTabBlock()
+TabBlock::~TabBlock()
 {
 
 }
 
-void GuiTabBlock::changeBtnLine()
+void TabBlock::changeBtnLine()
 {
   if(sender() == left_tab_label)
     {
@@ -119,9 +120,3 @@ void GuiTabBlock::changeBtnLine()
     }
 }
 
-
-////label test
-/// QFileDialog Example
-//  QString fileName = QFileDialog::getOpenFileName(this,"Choose Image","/",("Image File(*.*)")) ;
-//      QImage image ;
-//      image.load(fileName) ;

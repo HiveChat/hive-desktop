@@ -33,36 +33,23 @@ TextBubble_text_area::TextBubble_text_area(const QString &text, bool alignLeft =
 
 void TextBubble_text_area::paintEvent(QPaintEvent *)
 {
-//  btn->setGeometry(btn->parentWidget()->width()-btn->width(), btn->y(), btn->width(), btn->height());
   label->adjustSize();
-
+  int width = label->rect().width() + 20;
+  int height = label->rect().height() + 20;
   QPainter painter(this);
   painter.setPen(QPen(Qt::NoPen));
   painter.setBrush(QBrush(*color, Qt::SolidPattern));
-  painter.drawRoundedRect(label->x()-10,label->y()-10,label->rect().width()+20,label->rect().height()+20,12,12);
-  this->setFixedWidth(label->rect().width()+20);
-  this->setFixedHeight(label->rect().height()+20);
+  painter.drawRoundedRect(label->x() - 10
+                          , label->y() - 10
+                          , width
+                          , height
+                          , 12
+                          , 12);
+  this->setFixedSize(width, height);
 }
 
 TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
 {
-
-  ////recently not consider the strip, it's ugly.
-//  if(alignLeft)
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
-//    }
-//  else
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
-//    }
-
-//  strip_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
-//  strip = new QLabel();
-//  strip->setPixmap(strip_pixmap);
-//  strip->setAlignment(Qt::AlignTop);
-//  strip->setContentsMargins(0,10,0,0);
-
   text_area = new TextBubble_text_area(text, alignLeft, this);
 
   main_layout = new QHBoxLayout(this);
@@ -72,14 +59,12 @@ TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *pare
   if(alignLeft)
     {
       main_layout->setAlignment(Qt::AlignLeft);
-      //main_layout->addWidget(strip);
       main_layout->addWidget(text_area);
     }
   else
     {
       main_layout->setAlignment(Qt::AlignRight);
       main_layout->addWidget(text_area);
-      //main_layout->addWidget(strip);
     }
 
   this->setParent(parent);

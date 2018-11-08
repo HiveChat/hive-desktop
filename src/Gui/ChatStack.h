@@ -20,8 +20,8 @@
 #include <QVariantAnimation>
 
 class TextEdit;
-class ChatStack_chat_widget;
-class ChatStack_message_editor;
+class MessageViewer;
+class MessageEditor;
 class ChatStack;
 
 
@@ -47,13 +47,13 @@ signals:
   void keyEnterTriggered(bool pressed);
 };
 
-class ChatStack_chat_widget : public QWidget
+class MessageViewer : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit ChatStack_chat_widget(QWidget *parent = nullptr);
-  ~ChatStack_chat_widget();
+  explicit MessageViewer(QWidget *parent = nullptr);
+  ~MessageViewer();
 
   void clearChatBubbles();
 
@@ -69,25 +69,24 @@ public slots:
 
 };
 
-class ChatStack_message_editor : public QWidget
+class MessageEditor : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit ChatStack_message_editor(QWidget *parent = nullptr);
-  ~ChatStack_message_editor();
+  explicit MessageEditor(QWidget *parent = nullptr);
+  ~MessageEditor();
 
-  QString currentFileName() {return current_file_name;}
+  QString currentFileName();
 
   TextEdit *text_editor;
   LabelButton *send_btn;
 
 protected:
-/// An old way to capture QEvent outside the class!
+  //! Capture QEvent outside the class!
   bool eventFilter(QObject *obj, QEvent *e);
 
 private:
-
   QVBoxLayout *edit_layout;
   QHBoxLayout *tool_layout;
   QHBoxLayout *main_layout;
@@ -131,11 +130,11 @@ protected:
 
 private:
   //UI
-  QHash<QString, ChatStack_chat_widget*> chat_widget_hash;
+  QHash<QString, MessageViewer*> chat_widget_hash;
   QHash<QString, QString> editing_message_hash;
 
-  ChatStack_chat_widget *chat_widget;
-  ChatStack_message_editor *message_editor;
+  MessageViewer *chat_widget;
+  MessageEditor *message_editor;
 
   //Data
   UsrData *usr_data;

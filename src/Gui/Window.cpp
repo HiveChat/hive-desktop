@@ -19,7 +19,7 @@ Window::Window(QWidget *parent)
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
-  gui_tab_block = new GuiTabBlock(this);
+  gui_tab_block = new TabBlock(this);
   gui_main_block = new MainBlock(this);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
@@ -69,7 +69,6 @@ Window::Window(QWidget *parent)
           gui_main_block, &MainBlock::displayStaticStack);
   connect(gui_tab_block->home_tab->storage_btn, &MenuButton::clicked, 
           gui_main_block, &MainBlock::displayStaticStack);
-
   connect(gui_tab_block->settings_tab->messaging_btn, &MenuButton::clicked, 
           gui_main_block, &MainBlock::displayStaticStack);
   connect(gui_tab_block->settings_tab->profile_btn, &MenuButton::clicked, 
