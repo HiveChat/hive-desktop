@@ -20,12 +20,9 @@ public:
   void stop();
 
 private:
-
-  void udpReadyRead(std::string &data, std::string &ip);
-
+//  void onReadyRead(std::string &data, std::string &ip);
   void onTimedOut(Parsley::Timer* t);
 
-//  static QHash<int, > buffer;
 };
 
 #endif // HIVEUDPSERVER_H

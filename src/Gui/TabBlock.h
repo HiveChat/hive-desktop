@@ -16,9 +16,9 @@ public:
   explicit TabBlock(QWidget *parent = nullptr);
   ~TabBlock();
 
-  SettingsTab *settings_tab;
   HomeTab *home_tab;
   ChatTab *chat_tab;
+  SettingsTab *settings_tab;
 
 private:
   int current_tab_index = 0;

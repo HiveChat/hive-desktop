@@ -85,110 +85,49 @@ void HiveServer::onTimedOut(Parsley::Timer *t)
   Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
-
 //bool
-//HiveServer::processHeartBeat(const UsrProfile &usrProfileStruct)
+//HiveServer::processUsrLeave(QString *usrKey)
 //{
-//  if(usrProfileStruct.key.isEmpty())
+//  if(*usrKey == Global::settings.profile_uuid_str)
 //    {
-//      return false;
+////      emit usrLeft(usrKey); << FIX HERE!!
+
+//      qDebug()<<"@HiveServer::udpProcessUsrLeft(): Myself left.";
 //    }
 
-//  if(usrProfileStruct.key == Global::settings.profile_key_str)
-//    {
-//      if(Global::g_localHostIP != usrProfileStruct.ip)
-//        {
-//          Global::g_localHostIP = usrProfileStruct.ip;
-//        }
-//      Log::net(Log::Info, "HiveServer::processHeartBeat", "got heart beat from myself");
-////      emit getInstance()->usrEntered(usrProfileStruct);
-//    }
-//  else
-//    {
-//      Log::net(Log::Info, "HiveServer::processHeartBeat", "got heart beat from others");
-////      emit getInstance()->usrEntered(usrProfileStruct);
-//    }
+//  qDebug()<<"@HiveServer::udpProcessUsrLeft(): Someone left.";
+////  emit usrLeft(usrKey); << FIX HERE!!
 //}
 
-bool
-HiveServer::processUsrLeave(QString *usrKey)
-{
-  if(*usrKey == Global::settings.profile_uuid_str)
-    {
-//      emit usrLeft(usrKey); << FIX HERE!!
+//bool
+//HiveServer::processErrorDelivery()
+//{
 
-      qDebug()<<"@HiveServer::udpProcessUsrLeft(): Myself left.";
-    }
+//}
 
-  qDebug()<<"@HiveServer::udpProcessUsrLeft(): Someone left.";
-//  emit usrLeft(usrKey); << FIX HERE!!
-}
+//bool
+//HiveServer::processFileInfo()
+//{
 
-bool
-HiveServer::processErrorDelivery()
-{
+//}
 
-}
+//bool
+//HiveServer::processFileContent()
+//{
 
-bool
-HiveServer::processTextMessage()
-{
-//  if(messageStruct.sender.isEmpty() || messageStruct.reciever.isEmpty())
-//    {
-//      return;
-//    }
+//}
 
-//  if(messageStruct.reciever != GlobalData::settings_struct.profile_key_str)
-//    {
-//      if(messageStruct.sender != GlobalData::settings_struct.profile_key_str)
-//        {
-//          //no sniffing man!
-//          return;
-//        }
-//      else
-//        {
-//          qDebug()<<"@NetworkManager::udpProcessMessage(): Got msg I sent: "<<messageStruct.message;
-//          emit messageRecieved(messageStruct, true);
-//        }
-//    }
-//  else
-//    {
-//      if(messageStruct.sender == GlobalData::settings_struct.profile_key_str)
-//        {
-//          qDebug()<<"@NetworkManager::udpProcessMessage(): me 2 me...";
-//          emit messageRecieved(messageStruct, true);
-//        }
-//      else
-//        {
-//          qDebug()<<"@NetworkManager::udpProcessMessage(): Other people sent: "<<messageStruct.message;
-//          emit messageRecieved(messageStruct, false);
-//        }
-//    }
-}
+//bool
+//HiveServer::processFileAccept()
+//{
 
-bool
-HiveServer::processFileInfo()
-{
+//}
 
-}
+//bool
+//HiveServer::processFileReject()
+//{
 
-bool
-HiveServer::processFileContent()
-{
-
-}
-
-bool
-HiveServer::processFileAccept()
-{
-
-}
-
-bool
-HiveServer::processFileReject()
-{
-
-}
+//}
 
 
 

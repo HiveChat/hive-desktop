@@ -4,9 +4,9 @@
 
 TabBlock::TabBlock(QWidget *parent)
   : QWidget(parent)
-  , settings_tab(new SettingsTab(this))
   , home_tab(new HomeTab(this))
   , chat_tab(new ChatTab(this))
+  , settings_tab(new SettingsTab(this))
   , tab_label_layout(new QGridLayout())
   , left_tab_label(new LabelButton(0, this))
   , mid_tab_label(new LabelButton(70, this))
@@ -34,24 +34,21 @@ TabBlock::TabBlock(QWidget *parent)
   right_tab_label->setHoveredPixmap(":/img/img/settings_tab.png");
   right_tab_label->setToolTipDuration(1000);
   right_tab_label->setToolTip("settings");
-  connect(left_tab_label,  &LabelButton::clicked, this, &TabBlock::changeBtnLine);
-  connect(mid_tab_label,   &LabelButton::entered, this, &TabBlock::changeBtnLine);
-  connect(right_tab_label, &LabelButton::clicked, this, &TabBlock::changeBtnLine);
 
   left_btn_line->setFrameShape(QFrame::HLine);
   left_btn_line->setFrameShadow(QFrame::Plain);
   left_btn_line->setFixedSize(83,2);
-  left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+  left_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   mid_btn_line->setFrameShape(QFrame::HLine);
   mid_btn_line->setFrameShadow(QFrame::Plain);
   mid_btn_line->setFixedSize(84,3);
-  mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+  mid_btn_line->setStyleSheet("QFrame{  background: #FFB500; border: transparent;  }");
 
   right_btn_line->setFrameShape(QFrame::HLine);
   right_btn_line->setFrameShadow(QFrame::Plain);
   right_btn_line->setFixedSize(83,2);
-  right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+  right_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
 
   tab_label_layout->setContentsMargins(0,10,0,10);
   tab_label_layout->setHorizontalSpacing(0);
@@ -76,6 +73,9 @@ TabBlock::TabBlock(QWidget *parent)
   main_layout->addLayout(tab_label_layout);
   main_layout->addWidget(tab_stacked_widget);
 
+  connect(left_tab_label,  &LabelButton::clicked, this, &TabBlock::changeBtnLine);
+  connect(mid_tab_label,   &LabelButton::entered, this, &TabBlock::changeBtnLine);
+  connect(right_tab_label, &LabelButton::clicked, this, &TabBlock::changeBtnLine);
 }
 
 TabBlock::~TabBlock()
@@ -89,33 +89,33 @@ void TabBlock::changeBtnLine()
     {
       current_tab_index = 1;
       left_btn_line->setFixedHeight(3);
-      left_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+      left_btn_line->setStyleSheet("QFrame{  background: #FFB500; border: transparent;  }");
       mid_btn_line->setFixedHeight(2);
-      mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line->setFixedHeight(2);
-      right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(home_tab);
     }
   if(sender() == mid_tab_label)
     {
       current_tab_index = 2;
       left_btn_line->setFixedHeight(2);
-      left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      left_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
       mid_btn_line->setFixedHeight(3);
-      mid_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+      mid_btn_line->setStyleSheet("QFrame{  background: #FFB500; border: transparent;  }");
       right_btn_line->setFixedHeight(2);
-      right_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      right_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(chat_tab);
     }
   if(sender() == right_tab_label)
     {
       current_tab_index = 3;
       left_btn_line->setFixedHeight(2);
-      left_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      left_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
       mid_btn_line->setFixedHeight(2);
-      mid_btn_line->setStyleSheet ("QFrame{  background: #CFCFCF; border: transparent;  }");
+      mid_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
       right_btn_line->setFixedHeight(3);
-      right_btn_line->setStyleSheet ("QFrame{  background: #FFB500; border: transparent;  }");
+      right_btn_line->setStyleSheet("QFrame{  background: #FFB500; border: transparent;  }");
       tab_stacked_widget->setCurrentWidget(settings_tab);
     }
 }

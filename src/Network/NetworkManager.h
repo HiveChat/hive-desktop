@@ -23,14 +23,7 @@
 class NetworkManager : public QObject
 {
   Q_OBJECT
-public:
-  explicit NetworkManager(QObject *parent = 0);
-  ~NetworkManager();
 
-  HiveServer *uv_server;
-
-
-private:
   enum BroadcastType{
     Message = 1,
     HeartBeat = 2,
@@ -48,60 +41,33 @@ private:
     TimeOut
   };
 
-  QHash<QString, QHostAddress> ip_address_hash;
+public:
+  explicit NetworkManager(QObject *parent = nullptr);
+  ~NetworkManager();
 
-  ///Thread Tasks
+private:
+  HiveServer *uv_server;
+
   bool downloaded_update = false;
-  void checkUpdate();
-  void loadTimerTasks();
-
   QNetworkAccessManager *http_update_manager;
   QNetworkReply *http_update_reply;
   QByteArray http_update_file;
 
-  ///UDP Socket
-  quint16 udp_port = 23232;
-  QUdpSocket *udp_socket;
-  void udpProcessMessage(const Message::TextMessage &messageStruct);
-  void udpProcessHeartBeat(const UsrProfile &usrProfileStruct);
+  void checkUpdate();
   void udpProcessUsrLeft(QString *usrKey);
   void udpProcessFileTran(const Message::TextMessage &fileInfoStruct);
   void udpProcessFileReject();
-
-  void udpSendHeartBeat();
-  void udpSendUsrLeave();
-  void udpSendFileTran();
-  void udpSendFileAccept();
-  void TEST_udpsSendMessage(QString to, QString from, QString message);
-
-  ///TCP Server
-  qint16 tcp_port = 23232;
-  QString file_name;
-  QFile *local_file;
-
-
-  void tcpCloseConnection();
-
 
 public slots:
   void udpSendMessage(const QJsonObject &jsonObj);
 
 private slots:
-  void udpProcessPendingDatagrams();
-
-  void tcpSendData();
-
   void onRedirectFinished();
 
-
-
 signals:
-  void messageReceived(const QJsonObject &jsonObj, const MessageType &msgType);
-
   void messageRecieved(const Message::TextMessage &messageStruct, bool fromMe);//<
   void usrEnter(const UsrProfile &usrProfileStruct);
   void usrLeft(QString *usrKey);
-
   void updateAvailable();
 
 };

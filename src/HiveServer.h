@@ -42,14 +42,8 @@ private:
   void udpPacketReady(std::string &data, std::string &ip);
   void onTimedOut(Parsley::Timer *t);
 
-//  bool processHeartBeat(const UsrProfile &usrProfileStruct);
-  bool processUsrLeave(QString *usrKey);
-  bool processErrorDelivery();
-  bool processTextMessage();
-  bool processFileInfo();
-  bool processFileContent();
-  bool processFileAccept();
-  bool processFileReject();
+//  bool processUsrLeave(QString *usrKey); <<! to be moved to AppDataManager
+
 };
 
 #endif // UVTCPSERVER_H
