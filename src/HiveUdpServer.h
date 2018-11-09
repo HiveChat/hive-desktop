@@ -20,7 +20,6 @@ public:
   void stop();
 
 private:
-//  void onReadyRead(std::string &data, std::string &ip);
   void onTimedOut(Parsley::Timer* t);
 
 };

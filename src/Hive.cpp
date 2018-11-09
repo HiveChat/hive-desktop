@@ -3,30 +3,18 @@
 Hive::Hive(int &argc, char **argv)
   : QApplication(argc, argv)
 {
-  Global::window_dpr = 2;
-
 #ifdef Q_OS_OSX
   QApplication::setQuitOnLastWindowClosed(false);
   QtMac::setBadgeLabelText("Hi");
 #endif
 
-  qDebug()<< "00:00:00 GUI_NORM  Hive::Hive() Main Thread Started: "<< this->thread()->currentThreadId();
-
   window = new Window();
-
   data_manager = new AppDataManager();
   data_manager->start();
-
   network_thread = new QThread(this);
   network_thread->start();
-
   network_manager = new NetworkManager();
   network_manager->moveToThread(network_thread);
-
-
-  //! Qt SIGNAL SLOT connection between data_manager, network_manager, and window
-  qRegisterMetaType<UsrProfile> ("UsrProfile");
-  qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   connect(data_manager, &AppDataManager::updatesAvailable,
           window, &Window::onUpdateAvailable,
@@ -132,7 +120,6 @@ bool Hive::event(QEvent* e)
           break;
         }
     }
-
     return QApplication::event(e);
 }
 

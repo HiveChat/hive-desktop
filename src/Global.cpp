@@ -2,7 +2,7 @@
 
 
 ///UI
-int Global::window_dpr;
+int Global::window_dpr = 2;
 int Global::window_defaultWidth = 900;
 int Global::window_defaultHeight = 600;
 

@@ -2,10 +2,6 @@
 
 #include <QThread>
 
-int HiveServer::counter = 0;
-
-
-
 HiveServer::HiveServer(QObject *parent)
   : QThread(parent)
 {
@@ -98,47 +94,3 @@ void HiveServer::onTimedOut(Parsley::Timer *t)
 //  qDebug()<<"@HiveServer::udpProcessUsrLeft(): Someone left.";
 ////  emit usrLeft(usrKey); << FIX HERE!!
 //}
-
-//bool
-//HiveServer::processErrorDelivery()
-//{
-
-//}
-
-//bool
-//HiveServer::processFileInfo()
-//{
-
-//}
-
-//bool
-//HiveServer::processFileContent()
-//{
-
-//}
-
-//bool
-//HiveServer::processFileAccept()
-//{
-
-//}
-
-//bool
-//HiveServer::processFileReject()
-//{
-
-//}
-
-
-
-
-
-
-
-
-
-
-
-
-
-

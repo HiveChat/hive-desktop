@@ -37,8 +37,6 @@ private:
   HiveUdpServer *udp_server;
   Parsley::Timer *heartbeat_timer;
 
-  static int counter;
-
   void udpPacketReady(std::string &data, std::string &ip);
   void onTimedOut(Parsley::Timer *t);
 
