@@ -48,7 +48,8 @@ void TextBubble_text_area::paintEvent(QPaintEvent *)
   this->setFixedSize(width, height);
 }
 
-TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent)
+  : QWidget(parent)
 {
   text_area = new TextBubble_text_area(text, alignLeft, this);
 
@@ -66,8 +67,6 @@ TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *pare
       main_layout->setAlignment(Qt::AlignRight);
       main_layout->addWidget(text_area);
     }
-
-  this->setParent(parent);
 }
 
 
@@ -123,23 +122,10 @@ void GuiFileBubble_file_info::paintEvent(QPaintEvent *)
 }
 
 
-GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget *parent)
+  : QWidget(parent)
 {
-  ////recently not consider the strip, it's ugly.
-//  if(alignLeft)
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp.png");
-//    }
-//  else
-//    {
-//      strip_pixmap.load("/Users/Echo/Desktop/asp2.png");
-//    }
 
-//  strip_pixmap.setDevicePixelRatio(GlobalData::window_dpr);
-//  strip = new QLabel();
-//  strip->setPixmap(strip_pixmap);
-//  strip->setAlignment(Qt::AlignTop);
-//  strip->setContentsMargins(0,10,0,0);
 
   file_info = new GuiFileBubble_file_info(text, alignLeft, this);
 
@@ -150,17 +136,13 @@ GuiFileBubble::GuiFileBubble(const QString &text, bool alignLeft = true, QWidget
   if(alignLeft)
     {
       main_layout->setAlignment(Qt::AlignLeft);
-      //main_layout->addWidget(strip);
       main_layout->addWidget(file_info);
     }
   else
     {
       main_layout->setAlignment(Qt::AlignRight);
       main_layout->addWidget(file_info);
-      //main_layout->addWidget(strip);
     }
-
-  this->setParent(parent);
 }
 
 

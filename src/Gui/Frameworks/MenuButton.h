@@ -4,9 +4,7 @@
 #include "Global.h"
 
 #include <QLabel>
-#include <QMouseEvent>
 #include <QHBoxLayout>
-
 
 class MenuButton : public QWidget
 {
@@ -20,7 +18,6 @@ public:
   void setHoveredPixmap(QString path);
 
 protected:
-
   void mousePressEvent(QMouseEvent *);
   void mouseReleaseEvent(QMouseEvent *);
   void enterEvent(QEvent *);

@@ -14,8 +14,6 @@
 #include "SettingsStack_update.h"
 
 #include <QStackedWidget>
-#include <QList>
-#include <QHash>
 
 
 class MainBlock : public QWidget

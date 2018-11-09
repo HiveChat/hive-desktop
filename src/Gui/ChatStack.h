@@ -64,7 +64,7 @@ private:
 
   QList<TextBubble*> chat_bubble_list;
 
-public slots:
+public:
   void addChatBubble(const QString &message, const bool &fromMe);
 
 };
@@ -122,11 +122,12 @@ public:
   bool refreshProfile(const QString &usrKey);
   bool refreshMessage(const QString &usrKey);
 
+  void onSendButtonClicked();
+  void onKeyEnterTriggered(bool &pressed);
+
 protected:
   void dragEnterEvent(QDragEnterEvent *event);
   void dropEvent(QDropEvent *event);
-
-  LayoutStyle layout_style = LayoutStyle::Profile;
 
 private:
   //UI
@@ -153,10 +154,6 @@ private:
   bool isDisplaying(const QString &usrKey);
   void setUsrData(UsrData *usrData);
   void updateFileTranProgress();
-
-public slots:
-  void onSendButtonClicked();
-  void onKeyEnterTriggered(bool &pressed);
 
 signals:
   void sendMessage(QString usrKey, QString message);

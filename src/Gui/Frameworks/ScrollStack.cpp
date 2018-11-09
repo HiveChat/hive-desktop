@@ -1,7 +1,8 @@
 #include "Gui/Frameworks/ScrollStack.h"
 #include <QDebug>
 
-ScrollStack::ScrollStack(QWidget *parent) : QWidget(parent)
+ScrollStack::ScrollStack(QWidget *parent)
+  : QWidget(parent)
 {
 }
 
@@ -58,9 +59,9 @@ void ScrollStack::setIcon(const QString &path)
   icon_btn->setAvatar(path);
 }
 
-void ScrollStack::setUpUI(const LayoutStyle &layoutStyle)//////add enum GUI switcher.
+void ScrollStack::setUpUI(const LayoutStyle &style)
 {
-  layout_style = layoutStyle;
+  layout_style = style;
 
   text_palette.setColor(QPalette::WindowText, QColor(100,100,100));
   sub_text_palette.setColor(QPalette::WindowText, QColor(100,100,100/*130, 130, 130*/));

@@ -1,6 +1,7 @@
 #include "SettingsStack_messaging.h"
 
 SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
+  : ScrollStack(parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -30,7 +31,7 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
   QCheckBox *enable_notify_box = new QCheckBox(this);
   enable_notify_box->setChecked(Global::settings.notification.message_notification);
   connect(enable_notify_box, &QCheckBox::toggled,
-          [this](bool toggled){
+          [](bool toggled){
             Global::settings.notification.message_notification = toggled;
             Global::settings.modified = true;
           });
@@ -42,7 +43,7 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
   QCheckBox *show_detail_box = new QCheckBox(this);
   show_detail_box->setChecked(Global::settings.notification.message_detail_notification);
   connect(show_detail_box, &QCheckBox::toggled,
-          [this](bool toggled){
+          [](bool toggled){
             Global::settings.notification.message_detail_notification = toggled;
             Global::settings.modified = true;
           });
@@ -86,10 +87,6 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
               }
           });
   addItem("\tDelete ALL Message History:      ", clear_btn);
-
-
-
-  this->setParent(parent);
 }
 
 SettingsStack_messaging::~SettingsStack_messaging()

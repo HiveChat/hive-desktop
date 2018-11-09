@@ -7,7 +7,6 @@
 ChatTab::ChatTab(QWidget *parent)
   : QWidget(parent)
 {
-
   comb_scrollarea = new QScrollArea(this);
   comb_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   comb_scrollarea->setFrameShape(QFrame::NoFrame);
@@ -30,7 +29,8 @@ ChatTab::ChatTab(QWidget *parent)
 
 
 
-CombScrollWidget::CombScrollWidget(QWidget *parent) : QWidget(parent)
+CombScrollWidget::CombScrollWidget(QWidget *parent)
+  : QWidget(parent)
 {
   QPalette palette;
   palette.setColor(QPalette::Window,QColor(0,0,0,0));// GlobalData::g_tabColor);

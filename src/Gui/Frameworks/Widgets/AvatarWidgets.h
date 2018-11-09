@@ -59,6 +59,9 @@ protected:
   void wheelEvent(QWheelEvent *event);
 
 private:
+  void render();
+  void highQualityRender();
+
   QLabel *result_label;
   QSlider *horinzontal_slider;
   QSlider *vertical_slider;
@@ -76,11 +79,6 @@ private:
 
   bool render_lock = true;
   bool high_quality_rendering = false;
-
-private slots:
-  void render();
-  void highQualityRender();
-
 };
 
 #endif // GUIAVATARBUTTON_H

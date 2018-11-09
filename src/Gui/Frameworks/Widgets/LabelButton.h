@@ -22,11 +22,6 @@ public:
   void setHovered();
   void setDisabled(const bool &dis) {disabled = dis;}
 
-signals:
-  void clicked();
-  void entered();
-  void left();
-
 protected:
   void mousePressEvent(QMouseEvent *);
   void mouseReleaseEvent(QMouseEvent *);
@@ -42,6 +37,10 @@ private:
   int disabled = false;
   bool hover_signal_lock;
 
+signals:
+  void clicked();
+  void entered();
+  void left();
 };
 
 #endif // GuiLabelButton_H

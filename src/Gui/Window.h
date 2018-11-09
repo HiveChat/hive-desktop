@@ -18,19 +18,6 @@ public:
   explicit Window(QWidget *parent = nullptr);
   ~Window();
 
-  TabBlock *gui_tab_block;
-  MainBlock *gui_main_block;
-
-private:
-  QMenu *tray_icon_menu;
-  QAction *hide_action;
-  QAction *show_action;
-  QAction *quit_action;
-  QSystemTrayIcon *tray_icon;
-
-  inline void loadFonts();
-
-public slots:  
   void onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe);
   void onCombWidgetClicked(const QString &usrKey);
   void addUsr(UsrData *userData);
@@ -38,6 +25,17 @@ public slots:
   void changeUsr(UsrData *userData);
   void onUpdateAvailable();
 
+  TabBlock *gui_tab_block;
+  MainBlock *gui_main_block;
+
+private:
+  inline void loadFonts();
+
+  QMenu *tray_icon_menu;
+  QAction *hide_action;
+  QAction *show_action;
+  QAction *quit_action;
+  QSystemTrayIcon *tray_icon;
 };
 
 #endif // GUICENTRALWIDGET_H

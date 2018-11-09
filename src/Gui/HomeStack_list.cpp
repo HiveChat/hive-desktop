@@ -35,15 +35,14 @@ void ListItem::refreshUsrProfile(UsrProfile *profile)
 ////////////////////////////////////////////////////////////////////////
 
 HomeStack_list::HomeStack_list(QWidget *parent)
+  : ScrollStack(parent)
 {
   this->setUpUI(LayoutStyle::Linear);
-
   this->setIcon(":/img/img/list.png");
   this->setTitle("Home");
   this->setSubTitle("online user");
 
   this->central_layout->setAlignment(Qt::AlignLeft);
-  this->setParent(parent);
 }
 
 HomeStack_list::~HomeStack_list()
