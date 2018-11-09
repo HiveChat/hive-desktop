@@ -25,22 +25,19 @@ class AvatarButton : public QLabel
   Q_OBJECT
 
 public:
-  AvatarButton(const QString path, const int Diameter, QWidget *parent);
-  AvatarButton(const int Diameter, QWidget *parent);
+  AvatarButton(const int &Diameter, QWidget *parent = nullptr);
+  AvatarButton(const QString &path, const int &Diameter, QWidget *parent = nullptr);
 
   void setAvatar(const QString &path);
 
 protected:
   void mouseReleaseEvent(QMouseEvent *);
-  void enterEvent(QEvent *);
-  void leaveEvent(QEvent *);
 
 private:
   int diameter;
 
 signals:
   void clicked();
-
 };
 
 
@@ -54,7 +51,7 @@ public:
   AvatarComposer(const QSize &size, QWidget *parent = nullptr);
   ~AvatarComposer();
 
-  void setSourceImage(const QString &fileName);
+  void setSourceImage(const QString &path);
 
 protected:
   void dragEnterEvent(QDragEnterEvent *event);
@@ -67,15 +64,15 @@ private:
   QSlider *vertical_slider;
   QSlider *scale_slider;
 
-  QImage source_image;
+  QImage image;
   QImage scaled_source_image;
-  QImage destination_image;
-  QImage result_image;
+  QImage mask;
+  QImage rendered_image;
 
   QSize scaled_source_size;
   QSize result_avatar_size;
 
-  QString source_image_name;
+  QString image_path;
 
   bool render_lock = true;
   bool high_quality_rendering = false;

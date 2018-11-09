@@ -1,18 +1,16 @@
 #include "AvatarWidgets.h"
 
 
-AvatarButton::AvatarButton(const QString path, const int Diameter, QWidget *parent)
+AvatarButton::AvatarButton(const int &Diameter, QWidget *parent)
+  : QLabel(parent)
+  , diameter(Diameter)
 {
-  diameter = Diameter;
-  setAvatar(path);
-
-  this->setParent(parent);
 }
 
-AvatarButton::AvatarButton(const int Diameter, QWidget *parent)
+AvatarButton::AvatarButton(const QString &path, const int &Diameter, QWidget *parent)
+  : AvatarButton(Diameter, parent)
 {
-  diameter = Diameter;
-  this->setParent(parent);
+  setAvatar(path);
 }
 
 void AvatarButton::setAvatar(const QString &path)
@@ -35,28 +33,11 @@ void AvatarButton::setAvatar(const QString &path)
   this->setPixmap(avatar_pixmap);
 }
 
-
-////////////events
-
 void AvatarButton::mouseReleaseEvent(QMouseEvent *ev)
 {
   if (ev->button() == Qt::LeftButton)
   emit clicked();
 }
-
-void AvatarButton::enterEvent(QEvent *)
-{
-  //setState1();
-  //emit entered();
-}
-
-void AvatarButton::leaveEvent(QEvent *)
-{
-  //setState0();
-  //emit left();
-}
-
-
 
 
 
@@ -65,19 +46,17 @@ AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
   : QWidget(parent)
   , result_avatar_size(size)
 {
-  //result_image is the final result
-  result_image = QImage(result_avatar_size, QImage::Format_ARGB32_Premultiplied);
-  //destination_image is the mask with a hole in the center
-  destination_image = QImage(result_avatar_size, QImage::Format_ARGB32_Premultiplied);
+  rendered_image = QImage(result_avatar_size, QImage::Format_ARGB32_Premultiplied);
+  mask = QImage(result_avatar_size, QImage::Format_ARGB32_Premultiplied);
 
   //Draw a transparent hole in a black square as avatar mask
-  QPainter painter(&destination_image);
+  QPainter painter(&mask);
   painter.setRenderHint(QPainter::Antialiasing);
-  painter.fillRect(destination_image.rect(), QBrush(Qt::black, Qt::SolidPattern));
+  painter.fillRect(mask.rect(), QBrush(Qt::black, Qt::SolidPattern));
   painter.setCompositionMode(QPainter::CompositionMode_SourceOut);
   painter.setPen(Qt::NoPen);
   painter.setBrush(QBrush(Qt::transparent, Qt::SolidPattern));
-  painter.drawEllipse(destination_image.rect());
+  painter.drawEllipse(mask.rect());
 
   //GUI Widgets
   result_label = new QLabel("drag image here!", this);
@@ -105,8 +84,6 @@ AvatarComposer::AvatarComposer(const QSize &size, QWidget *parent)
   connect(scale_slider, &QDial::valueChanged, this, &AvatarComposer::render);
   connect(scale_slider, &QDial::sliderReleased, this, &AvatarComposer::highQualityRender);
 
-//  setSourceImage("/Users/echo/Desktop/5123.png");
-
   this->setAcceptDrops(true);
 }
 
@@ -115,24 +92,18 @@ AvatarComposer::~AvatarComposer()
 
 }
 
-void AvatarComposer::setSourceImage(const QString &fileName)
+void AvatarComposer::setSourceImage(const QString &path)
 {
   //if already opened, return
-  if(source_image_name == fileName)
-    {
-      return;
-    }
-
-  //load file
-  if(!source_image.load(fileName))
-    {
-      return;
-    }
+  if(image_path == path)
+     return;
+  if(!image.load(path))
+     return;
 
   render_lock = false;
-  source_image_name = fileName;
-  scaled_source_size = source_image.size().scaled(result_avatar_size, Qt::KeepAspectRatioByExpanding);
-  scaled_source_image = source_image.scaled(scaled_source_size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+  image_path = path;
+  scaled_source_size = image.size().scaled(result_avatar_size, Qt::KeepAspectRatioByExpanding);
+  scaled_source_image = image.scaled(scaled_source_size, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
 
   scale_slider->setValue(100);
   horinzontal_slider->setValue(0);
@@ -151,30 +122,24 @@ void AvatarComposer::dragEnterEvent(QDragEnterEvent *event)
 void AvatarComposer::dropEvent(QDropEvent *event)
 {
   QList<QUrl> urls = event->mimeData()->urls();
-  if (urls.isEmpty())
-    {
-      return;
-    }
+  if(urls.isEmpty())
+    return;
   QString fileName = urls.first().toLocalFile();
-  if (fileName.isEmpty())
-    {
-      return;
-    }
+  if(fileName.isEmpty())
+    return;
 
   setSourceImage(fileName);
 }
 
 void AvatarComposer::wheelEvent(QWheelEvent *event)
- {
-     QPoint numDegrees = event->angleDelta() * 0.125;
-     scale_slider->setValue(scale_slider->value() + numDegrees.y());
+{
+  QPoint numDegrees = event->angleDelta() * 0.125;
+  scale_slider->setValue(scale_slider->value() + numDegrees.y());
 
-     if(numDegrees.y() < 30)
-       {
-         high_quality_rendering = true;
-       }
-     event->accept();
- }
+  if(numDegrees.y() < 30)
+    high_quality_rendering = true;
+  event->accept();
+}
 
 void AvatarComposer::render()
 {
@@ -187,20 +152,21 @@ void AvatarComposer::render()
       render_lock = true;
     }
 
-  QPainter painter(&result_image);
+  QPainter painter(&rendered_image);
   painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setCompositionMode(QPainter::CompositionMode_Source);
-  painter.fillRect(result_image.rect(), Qt::transparent);
+  painter.fillRect(rendered_image.rect(), Qt::transparent);
   painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
-  painter.drawImage(0, 0, destination_image);
+  painter.drawImage(0, 0, mask);
   painter.setCompositionMode(QPainter::CompositionMode_SourceOut);
 
   if(sender() == scale_slider)
     {
-      //calculate scale percentage
-      float scaleFactor = scale_slider->value() * 0.01;
-      scaled_source_size = QSize(result_avatar_size.width() * scaleFactor, result_avatar_size.height() * scaleFactor);
-      scaled_source_image = source_image.scaled(scaled_source_size
+      //! calculate scale percentage
+      float scaleFactor = scale_slider->value() * 0.01f;
+      scaled_source_size = QSize(static_cast<int>(result_avatar_size.width() * scaleFactor)
+                                 , static_cast<int>(result_avatar_size.height() * scaleFactor));
+      scaled_source_image = image.scaled(scaled_source_size
                                                 , Qt::KeepAspectRatioByExpanding
                                                 , high_quality_rendering ? Qt::SmoothTransformation : Qt::FastTransformation);
       horinzontal_slider->setRange(0, scaled_source_image.width() - result_avatar_size.width());
@@ -209,10 +175,10 @@ void AvatarComposer::render()
 
   painter.drawImage(- horinzontal_slider->value(), - vertical_slider->value() , scaled_source_image);
   painter.setCompositionMode(QPainter::CompositionMode_DestinationOver);
-  painter.fillRect(result_image.rect(), Qt::transparent);
+  painter.fillRect(rendered_image.rect(), Qt::transparent);
   painter.end();
 
-  QPixmap pixmap = QPixmap::fromImage(result_image);
+  QPixmap pixmap = QPixmap::fromImage(rendered_image);
   pixmap.setDevicePixelRatio(Global::window_dpr);
   result_label->setPixmap(pixmap);
 

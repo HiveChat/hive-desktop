@@ -38,11 +38,11 @@ public:
   QList<QJsonObject>* retrieveUnreadMessage();
 
   bool isOnline();
-  QString getKey() {return usr_profile_struct.key;}
-  QString getName() {return usr_profile_struct.name;}
-  QString getAvatar() {return usr_profile_struct.avatar;}
-  QString getIp() {return usr_profile_struct.ip;}
-  UsrProfile* getUsrProfile() {return &usr_profile_struct;}
+  QString getKey() {return profile.key;}
+  QString getName() {return profile.name;}
+  QString getAvatar() {return profile.avatar;}
+  QString getIp() {return profile.ip;}
+  UsrProfile* getUsrProfile() {return &profile;}
   int getCurrentHistoryBundleIndex() {return current_history_bundle_index;}
   int getUnreadMessageNumber() {return unread_message_list.count();}
 
@@ -55,7 +55,7 @@ private:
 #endif
 
   const QString usr_path = app_data_local_path + "/usr/";
-  UsrProfile usr_profile_struct;
+  UsrProfile profile;
   QString history_path;
   QString *my_key;
 

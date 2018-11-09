@@ -52,7 +52,7 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
 
 }
 
-void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *ev)
+void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *)
 {
 //  if(ev->button() == Qt::LeftButton)
 //    {

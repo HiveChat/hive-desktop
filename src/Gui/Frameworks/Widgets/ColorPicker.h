@@ -10,7 +10,6 @@
 class ColorPicker : public QWidget
 {
   Q_OBJECT
-
 public:
   explicit ColorPicker(QColor *color, QWidget *parent = nullptr);
   ~ColorPicker();
@@ -24,7 +23,6 @@ protected:
 private:
   QRect rectangle;
   QColor *my_color;
-
 };
 
 #endif // GUICOLORPICKER_H
