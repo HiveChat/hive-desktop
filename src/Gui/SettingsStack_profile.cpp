@@ -1,6 +1,7 @@
 #include "SettingsStack_profile.h"
 
 SettingsStack_profile::SettingsStack_profile(QWidget *parent)
+  : ScrollStack(parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -57,8 +58,6 @@ SettingsStack_profile::SettingsStack_profile(QWidget *parent)
           this, SLOT(onRadioClicked(QAbstractButton*)));
   connect(usr_name_line_edit, &QLineEdit::textEdited,
           this, &SettingsStack_profile::onUsrNameChanged);
-
-  this->setParent(parent);
 }
 
 SettingsStack_profile::~SettingsStack_profile()

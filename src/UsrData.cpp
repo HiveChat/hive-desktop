@@ -2,8 +2,8 @@
 
 
 UsrData::UsrData(QString *myKey, const UsrProfile &usrProfileStruct)
-  : usr_profile_struct(usrProfileStruct)
-  , history_path(usr_path + usr_profile_struct.key)
+  : profile(usrProfileStruct)
+  , history_path(usr_path + profile.key)
   , my_key(myKey)
 {
   this->checkDir(history_path);
@@ -26,7 +26,7 @@ void UsrData::addUnreadMessage(const Message::TextMessage &message)
 
 void UsrData::setUsrProfile(const UsrProfile &usrProfileStruct)
 {
-  usr_profile_struct = usrProfileStruct;
+  profile = usrProfileStruct;
 //  usr_profile_struct.online = true;
 }
 
@@ -77,7 +77,7 @@ QJsonArray* UsrData::flipDown()
 
 bool UsrData::isOnline()
 {
-  return usr_profile_struct.online;
+  return profile.online;
 }
 
 

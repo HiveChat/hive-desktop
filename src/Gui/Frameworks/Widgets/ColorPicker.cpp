@@ -3,8 +3,8 @@
 
 ColorPicker::ColorPicker(QColor *color, QWidget *parent)
   : QWidget(parent)
-  , my_color(color)
   , rectangle(QRect(1, 1, 18, 18))
+  , my_color(color)
 {
   this->setFixedSize(20,20);
 }

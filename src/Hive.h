@@ -28,19 +28,16 @@ public:
   Window *window;
   AppDataManager *data_manager;
   NetworkManager *network_manager;
-
-//  QThread *data_thread;
   QThread *network_thread;
 
 protected:
   bool event(QEvent* e);
 
-
 //private:
 //  QJsonObject wrapTextMessage(const Message::TextMessage &textMessageStruct);
 //  QJsonObject wrapFileMessage(const Message::FileInfoStruct &fileMessageStruct);
 
-private slots:
+private:
   void onTextMessageToSend(const QString &receiver, const QString &message);
 };
 

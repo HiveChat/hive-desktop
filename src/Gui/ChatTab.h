@@ -5,7 +5,6 @@
 #include "UsrData.h"
 
 #include <QScrollArea>
-#include <QHash>
 #include <QDrag>
 
 class CombScrollWidget;
@@ -22,6 +21,7 @@ public:
   void refreshBadgeNumber(const QString &usrKey, const int &num);
   bool contains(const QString &usrKey);
 
+  void onCombWidgetClicked(const QString &usrKey);
 
 private:
   QVBoxLayout *main_layout;
@@ -29,17 +29,11 @@ private:
 
 signals:
   void combWidgetClicked(const QString &usrKey);
-
-public slots:
-  void onCombWidgetClicked(const QString &usrKey);
-
-
 };
 
 class ChatTab : public QWidget
 {
   Q_OBJECT
-
 public:
   explicit ChatTab(QWidget *parent = nullptr);
   QScrollArea *comb_scrollarea;
@@ -48,7 +42,6 @@ public:
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *comb_layout;
-
 };
 
 #endif // GUICHATTAB_H

@@ -196,7 +196,7 @@ void Window::addUsr(UsrData *userData)
 
 void Window::delUsr(UsrData *userData)
 {
-  userData;
+  (void)userData;
 }
 
 void Window::changeUsr(UsrData *userData)

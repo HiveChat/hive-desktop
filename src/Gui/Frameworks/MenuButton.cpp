@@ -1,6 +1,7 @@
 #include "MenuButton.h"
 
-MenuButton::MenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent) : QWidget(parent)
+MenuButton::MenuButton(QString text, GUI::StaticStackType staticStackType, QWidget *parent)
+  : QWidget(parent)
 {
   static_stack_type = staticStackType;
 
@@ -21,7 +22,6 @@ MenuButton::MenuButton(QString text, GUI::StaticStackType staticStackType, QWidg
 
   this->setPalette(text_palette);
   this->setLayout(main_layout);
-  this->setParent(parent);
 }
 
 MenuButton::~MenuButton()

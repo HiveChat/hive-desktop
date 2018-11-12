@@ -241,16 +241,14 @@ bool MessageEditor::eventFilter(QObject *obj, QEvent *e)
 
 
 TextEdit::TextEdit(QWidget *parent)
+  : QTextEdit(parent)
 {
-  this->setParent(parent);
 }
 
 TextEdit::~TextEdit()
 {
 
 }
-
-
 
 void TextEdit::dragEnterEvent(QDragEnterEvent *event)
 {
@@ -289,6 +287,7 @@ void TextEdit::dropEvent(QDropEvent *event)
 
 
 ChatStack::ChatStack(QWidget *parent)
+  : ScrollStack(parent)
 {
   this->setUpUI(LayoutStyle::Profile);
 

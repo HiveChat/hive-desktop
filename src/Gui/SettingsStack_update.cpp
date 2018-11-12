@@ -1,6 +1,7 @@
 #include "SettingsStack_update.h"
 
 SettingsStack_update::SettingsStack_update(QWidget *parent)
+  : ScrollStack(parent)
 {
   this->setUpUI(LayoutStyle::Linear);
 
@@ -70,7 +71,4 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
               false);
       addItem("Features and Fixes: \t", Global::update_struct.message);
     }
-
-
-  this->setParent(parent);
 }

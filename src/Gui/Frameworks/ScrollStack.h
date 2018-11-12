@@ -5,29 +5,24 @@
 #include "Log.h"
 #include "Global.h"
 
-#include <QFrame>
-#include <QVBoxLayout>
 #include <QScrollArea>
-
-enum LayoutStyle
-{
-  Profile,
-  Linear
-};
 
 
 class ScrollStack : public QWidget
 {
   Q_OBJECT
-
 public:
+  enum LayoutStyle
+  {
+    Profile,
+    Linear
+  };
+
   explicit ScrollStack(QWidget *parent = nullptr);
   ~ScrollStack();
 
-
-
 protected:
-  void setUpUI(const LayoutStyle &layoutStyle);
+  void setUpUI(const LayoutStyle &style);
   void setTitle(const QString &text);
   void setSubTitle(const QString &text);
   void setIcon(const QString &path);

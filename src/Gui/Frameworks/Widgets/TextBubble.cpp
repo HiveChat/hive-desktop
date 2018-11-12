@@ -49,7 +49,8 @@ void TextBubble_text_area::paintEvent(QPaintEvent *)
   this->setFixedSize(width, height);
 }
 
-TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent) : QWidget(parent)
+TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *parent)
+  : QWidget(parent)
 {
   text_area = new TextBubble_text_area(text, alignLeft, this);
 
@@ -67,8 +68,6 @@ TextBubble::TextBubble(const QString &text, bool alignLeft = true, QWidget *pare
       main_layout->setAlignment(Qt::AlignRight);
       main_layout->addWidget(text_area);
     }
-
-  this->setParent(parent);
 }
 
 
@@ -136,17 +135,13 @@ FileBubble::FileBubble(const QString &text, const bool alignLeft = true, QWidget
   if(alignLeft)
     {
       main_layout->setAlignment(Qt::AlignLeft);
-      //main_layout->addWidget(strip);
       main_layout->addWidget(file_info);
     }
   else
     {
       main_layout->setAlignment(Qt::AlignRight);
       main_layout->addWidget(file_info);
-      //main_layout->addWidget(strip);
     }
-
-  this->setParent(parent);
 }
 
 

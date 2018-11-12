@@ -8,9 +8,9 @@
  */
 
 LabelButton::LabelButton(const int &hoverDelay, QWidget *parent)
-  : hover_delay(hoverDelay)
+  : QLabel(parent)
+  , hover_delay(hoverDelay)
 {
-  this->setParent(parent);
 }
 
 void LabelButton::setDefaultPixmap(const QString &path)

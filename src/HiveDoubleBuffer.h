@@ -46,8 +46,6 @@ DoubleBuffer<T>::DoubleBuffer()
 template<typename T>
 DoubleBuffer<T>::~DoubleBuffer()
 {
-  printf("Destroying HiveDoubleBuffer<T>...\n");
-
 }
 
 template<typename T>
@@ -113,7 +111,6 @@ bool DoubleBuffer<T>::pop()
             }
         }
       reading = true;
-      printf("pop: %s\n", outbound_buffer->front());
       outbound_buffer->pop_front();
       reading = false;
       break;

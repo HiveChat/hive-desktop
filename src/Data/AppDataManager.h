@@ -49,7 +49,6 @@ public:
 
   static QHash<QString, UsrData*> usr_data_hash;
 
-public slots:
   void onUsrEntered(UsrProfile &usrProfile);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(const Message::TextMessage &m, bool fromMe);
@@ -59,21 +58,10 @@ protected:
   void run();
 
 private:
-  bool inboundNetBufferReading = false;
-  Parsley::Loop *loop;
-
-  static DoubleBuffer<NetPacket*> inboundNetBuffer;
-  static DoubleBuffer<NetPacket*> outboundNetBuffer;
-
-  Parsley::Async *read_inbound_async;
   void wakeLoop(DoubleBuffer<NetPacket *> *buf);
   void readInboundNetBuffer();
   void checkSettings(Parsley::Timer *);
 
-  /*!
-   * Functions called by constructor AppDataManager::AppDataManager(),
-   * only called once when during initialization.
-   */
   inline void initVariable();
   inline void loadSettings();
   inline void loadUsrList();
@@ -87,25 +75,26 @@ private:
 
   inline void updateUsr(const UsrProfile &p);
   inline void deleteUsr(const QStringList usrInfoStrList);
+  void writeSettings();
 
-  /*!
-   * Maps for storing settings
-   */
+  Parsley::Loop *loop;
+  Parsley::Async *read_inbound_async;
+  bool inboundNetBufferReading = false;
+
+  static DoubleBuffer<NetPacket*> inboundNetBuffer;
+  static DoubleBuffer<NetPacket*> outboundNetBuffer;
+
+
   static std::map<QString, int*> settings_int_hash;
   static std::map<QString, QColor*> settings_qcolor_hash;
   static std::map<QString, QString*> settings_qstring_hash;
   static std::map<QString, bool*> settings_bool_hash;
-
-private slots:
-  void writeSettings();
 
 signals:
   void updateAvailable();
   void usrProfileLoaded(UsrData *userData);
   void usrProfileChanged(UsrData *userData);
   void messageLoaded(Message::TextMessage messageStrList, bool fromMe);
-
-
 };
 
 

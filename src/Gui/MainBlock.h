@@ -14,8 +14,6 @@
 #include "SettingsStack_update.h"
 
 #include <QStackedWidget>
-#include <QList>
-#include <QHash>
 
 
 class MainBlock : public QWidget
@@ -31,24 +29,19 @@ public:
   HomeStack_welcome *home_stack_welcome;
   HomeStack_list *home_stack_list;
 
+  void displayStaticStack(GUI::StaticStackType staticStackType);
+  void displayChatStack(const QString &usrKey);
+
 private:
   QHash<GUI::StaticStackType, QWidget*> static_stack_hash;
   GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
+
+  void onMessageToSend(QString *usrKey, QString *message);
   void clearStackMap(GUI::StaticStackType &reservation);
   inline void createStaticStack(GUI::StaticStackType staticStackType);
 
-public slots:
-  void displayStaticStack(GUI::StaticStackType staticStackType);
-  void displayChatStack(const QString &usrKey);
-//  GuiChatStack_old *addChatStack(UsrProfileStruct *usrProfileStruct);<<
-
-private slots:
-  void onMessageToSend(QString *usrKey, QString *message);
-
 signals:
   void sendMessage(QString usrKey, QString message);
-
-
 };
 
 #endif // GUIMAINBLOCK_H

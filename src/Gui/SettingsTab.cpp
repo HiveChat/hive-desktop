@@ -1,6 +1,7 @@
 #include "SettingsTab.h"
 
-SettingsTab::SettingsTab(QWidget *parent) : QWidget(parent)
+SettingsTab::SettingsTab(QWidget *parent)
+  : QWidget(parent)
 {
   messaging_btn = new MenuButton("messaging", GUI::StaticStackType::Settings_Messaging, this);
   messaging_btn->setDefaultPixmap(":/img/img/messaging_0.png");
@@ -22,7 +23,6 @@ SettingsTab::SettingsTab(QWidget *parent) : QWidget(parent)
   update_btn->setDefaultPixmap(":/img/img/update_0.png");
   update_btn->setHoveredPixmap(":/img/img/update_1.png");
 
-  ////main layout
   main_layout = new QVBoxLayout(this);
   main_layout->setContentsMargins(30,20,20,0);
   main_layout->setSpacing(20);
@@ -33,17 +33,11 @@ SettingsTab::SettingsTab(QWidget *parent) : QWidget(parent)
   main_layout->addWidget(update_btn);
   main_layout->addWidget(questions_btn);
 
-  ///for test period
   style_btn->setHidden(true);
-
-
-  this->setParent(parent);
-
 }
 
 SettingsTab::~SettingsTab()
 {
-
 }
 
 

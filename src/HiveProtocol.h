@@ -21,9 +21,6 @@ public:
 
 protected:
   static std::tuple<MessageType, QJsonObject> checkJson(const QString &data, const QString &addr = "");
-
-
-
   static QByteArray encodeTextMessage(const QJsonObject &msg);
 
 signals:
