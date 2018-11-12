@@ -26,10 +26,10 @@ public:
   explicit MainBlock(QWidget *parent = nullptr);
   ~MainBlock();
 
-  ChatStack *gui_chat_stack;
+  ChatStack *chat_stack;
   QStackedWidget *main_stacked_widget;
-  HomeStack_welcome *gui_home_stack_welcome;
-  HomeStack_list *gui_home_stack_list;
+  HomeStack_welcome *home_stack_welcome;
+  HomeStack_list *home_stack_list;
 
 private:
   QHash<GUI::StaticStackType, QWidget*> static_stack_hash;

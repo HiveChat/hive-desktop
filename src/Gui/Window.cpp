@@ -19,14 +19,14 @@ Window::Window(QWidget *parent)
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
-  gui_tab_block = new TabBlock(this);
-  gui_main_block = new MainBlock(this);
+  tab_block = new TabBlock(this);
+  main_block = new MainBlock(this);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
-  main_layout->addWidget(gui_tab_block);
-  main_layout->addWidget(gui_main_block);
+  main_layout->addWidget(tab_block);
+  main_layout->addWidget(main_block);
 
   hide_action = new QAction(tr("&Hide"), this);
   show_action = new QAction(tr("&Show"), this);
@@ -60,23 +60,23 @@ Window::Window(QWidget *parent)
   timer->setSingleShot(false);
   timer->start(2000);
 
-  connect(gui_tab_block->chat_tab->comb_scroll_widget, &CombScrollWidget::combWidgetClicked,
+  connect(tab_block->chat_tab->comb_scroll_widget, &CombScrollWidget::combWidgetClicked,
           this, &Window::onCombWidgetClicked);
 
-  connect(gui_tab_block->home_tab->welcome_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->home_tab->list_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->home_tab->storage_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->messaging_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->profile_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->questions_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
-  connect(gui_tab_block->settings_tab->update_btn, &MenuButton::clicked, 
-          gui_main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->home_tab->welcome_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->home_tab->list_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->home_tab->storage_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->settings_tab->messaging_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->settings_tab->profile_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->settings_tab->questions_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
+  connect(tab_block->settings_tab->update_btn, &MenuButton::clicked,
+          main_block, &MainBlock::displayStaticStack);
 
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
   connect(show_action, &QAction::triggered, this, &QWidget::showNormal);
@@ -152,15 +152,15 @@ void Window::onMessageReceived(const Message::TextMessage &messageStruct, const 
 {
   if(fromMe)
     {
-      gui_main_block->gui_chat_stack->refreshMessage(messageStruct.reciever);
+      main_block->chat_stack->refreshMessage(messageStruct.reciever);
     }
   else
     {
       //if not displaying the usr
-      if(!gui_main_block->gui_chat_stack->refreshMessage(messageStruct.sender))
+      if(!main_block->chat_stack->refreshMessage(messageStruct.sender))
         {
           UsrData *temp_usr_data = AppDataManager::usr_data_hash.value(messageStruct.sender);
-          gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
+          tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
           if(Global::settings.notification.message_notification
              && Global::settings.update.auto_check_update)
             {
@@ -179,19 +179,19 @@ void Window::onMessageReceived(const Message::TextMessage &messageStruct, const 
 
 void Window::onCombWidgetClicked(const QString &usrKey)
 {
-  gui_main_block->displayChatStack(usrKey);
-  gui_tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
+  main_block->displayChatStack(usrKey);
+  tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
 void Window::addUsr(UsrData *userData)
 {
-  if(gui_tab_block->chat_tab->comb_scroll_widget->contains(userData->getKey()))
+  if(tab_block->chat_tab->comb_scroll_widget->contains(userData->getKey()))
     {
       qDebug()<<"#GuiCentralWidget::addUsr(): Already exists.";
       return;
     }
-  gui_tab_block->chat_tab->comb_scroll_widget->addComb(userData->getUsrProfile());
-  gui_main_block->gui_home_stack_list->addUsr(userData->getUsrProfile());
+  tab_block->chat_tab->comb_scroll_widget->addComb(userData->getUsrProfile());
+  main_block->home_stack_list->addUsr(userData->getUsrProfile());
 }
 
 void Window::delUsr(UsrData *userData)
@@ -202,9 +202,9 @@ void Window::delUsr(UsrData *userData)
 void Window::changeUsr(UsrData *userData)
 {
   qDebug()<<"Update user info";
-  gui_tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfile());
-  gui_main_block->gui_chat_stack->refreshProfile(userData->getKey());
-  gui_main_block->gui_home_stack_list->refreshUsrProfile(userData->getUsrProfile());
+  tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getUsrProfile());
+  main_block->chat_stack->refreshProfile(userData->getKey());
+  main_block->home_stack_list->refreshUsrProfile(userData->getUsrProfile());
 }
 
 void Window::onUpdateAvailable()

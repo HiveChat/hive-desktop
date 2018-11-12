@@ -243,7 +243,7 @@ void AppDataManager::onMessageCome(const Message::TextMessage &m, bool fromMe)
   emit messageLoaded(m, fromMe);
 }
 
-void AppDataManager::onUpdatesAvailable()
+void AppDataManager::onUpdateAvailable()
 {
   if(Global::update_struct.version[0] == 0
      && Global::update_struct.version[1] == 0
@@ -285,7 +285,7 @@ void AppDataManager::onUpdatesAvailable()
                     sizeof(inVersion)) == 0)
             {
               file.close(Parsley::SyncMode);
-              emit updatesAvailable();
+              emit updateAvailable();
 
               return;
             }
@@ -308,7 +308,7 @@ void AppDataManager::onUpdatesAvailable()
   file.write(outData, Parsley::SyncMode);
   file.close(Parsley::SyncMode);
 
-  emit updatesAvailable();
+  emit updateAvailable();
 }
 
 void AppDataManager::run()
@@ -671,7 +671,7 @@ void AppDataManager::loadUpdates()
                 {
                   Global::update_struct.version[i] = readVersion[i];
                 }
-              emit updatesAvailable();
+              emit updateAvailable();
             }
         }
     }

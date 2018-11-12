@@ -18,8 +18,8 @@ public:
   explicit Window(QWidget *parent = nullptr);
   ~Window();
 
-  TabBlock *gui_tab_block;
-  MainBlock *gui_main_block;
+  TabBlock *tab_block;
+  MainBlock *main_block;
 
 private:
   QMenu *tray_icon_menu;

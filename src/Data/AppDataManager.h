@@ -53,7 +53,7 @@ public slots:
   void onUsrEntered(UsrProfile &usrProfile);
   void onUsrLeft(QString *usrKey);
   void onMessageCome(const Message::TextMessage &m, bool fromMe);
-  void onUpdatesAvailable();
+  void onUpdateAvailable();
 
 protected:
   void run();
@@ -100,7 +100,7 @@ private slots:
   void writeSettings();
 
 signals:
-  void updatesAvailable();
+  void updateAvailable();
   void usrProfileLoaded(UsrData *userData);
   void usrProfileChanged(UsrData *userData);
   void messageLoaded(Message::TextMessage messageStrList, bool fromMe);

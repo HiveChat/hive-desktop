@@ -9,15 +9,15 @@
 class TextBubble_text_area;
 class TextBubble;
 
-class GuiFileBubble_file_info;
-class GuiFileBubble;
+class FileBubble_file_info;
+class FileBubble;
 
 class TextBubble_text_area : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit TextBubble_text_area(const QString &text, bool alignLeft, QWidget *parent = nullptr);
+  explicit TextBubble_text_area(const QString &text, const bool alignLeft, QWidget *parent = nullptr);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -46,12 +46,12 @@ private:
 };
 
 
-class GuiFileBubble_file_info : public QLabel
+class FileBubble_file_info : public QLabel
 {
   Q_OBJECT
 
 public:
-  explicit GuiFileBubble_file_info(const QString &text, bool alignLeft, QWidget *parent = nullptr);
+  explicit FileBubble_file_info(const QString &text, bool alignLeft, QWidget *parent = nullptr);
 
 protected:
   void paintEvent(QPaintEvent *);
@@ -64,13 +64,13 @@ private:
 
 };
 
-class GuiFileBubble : public QWidget
+class FileBubble : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit GuiFileBubble(const QString &text, bool alignLeft, QWidget *parent = nullptr);
-  GuiFileBubble_file_info *file_info;
+  explicit FileBubble(const QString &text, bool alignLeft, QWidget *parent = nullptr);
+  FileBubble_file_info *file_info;
 
 
 private:

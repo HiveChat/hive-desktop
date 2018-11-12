@@ -2,14 +2,14 @@
 
 MainBlock::MainBlock(QWidget *parent)
   : QWidget(parent)
-  , gui_chat_stack(new ChatStack(this))
+  , chat_stack(new ChatStack(this))
   , main_stacked_widget(new QStackedWidget(this))
 {
   this->createStaticStack(GUI::StaticStackType::Home_list);
   this->createStaticStack(GUI::StaticStackType::Home_Welcome);
   this->displayStaticStack(GUI::StaticStackType::Home_Welcome);
 
-  main_stacked_widget->addWidget(gui_chat_stack);
+  main_stacked_widget->addWidget(chat_stack);
 
   QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setMargin(0);
@@ -46,20 +46,20 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
   switch (staticStackType) {
     case GUI::StaticStackType::Home_Welcome:
       {
-        gui_home_stack_welcome = new HomeStack_welcome(this);
-        static_stack_hash.insert(staticStackType, gui_home_stack_welcome);
-        main_stacked_widget->addWidget(gui_home_stack_welcome);
-        main_stacked_widget->setCurrentWidget(gui_home_stack_welcome);
+        home_stack_welcome = new HomeStack_welcome(this);
+        static_stack_hash.insert(staticStackType, home_stack_welcome);
+        main_stacked_widget->addWidget(home_stack_welcome);
+        main_stacked_widget->setCurrentWidget(home_stack_welcome);
 
         return;
       }
 
     case GUI::StaticStackType::Home_list:
       {
-        gui_home_stack_list = new HomeStack_list(this);
-        static_stack_hash.insert(staticStackType, gui_home_stack_list);
-        main_stacked_widget->addWidget(gui_home_stack_list);
-        main_stacked_widget->setCurrentWidget(gui_home_stack_list);
+        home_stack_list = new HomeStack_list(this);
+        static_stack_hash.insert(staticStackType, home_stack_list);
+        main_stacked_widget->addWidget(home_stack_list);
+        main_stacked_widget->setCurrentWidget(home_stack_list);
 
         return;
       }
@@ -122,9 +122,9 @@ void MainBlock::createStaticStack(GUI::StaticStackType staticStackType)
 
 void MainBlock::displayChatStack(const QString &usrKey)
 {
-  gui_chat_stack->display(usrKey);
-  gui_chat_stack->refreshMessage(usrKey);
-  main_stacked_widget->setCurrentWidget(gui_chat_stack);
+  chat_stack->display(usrKey);
+  chat_stack->refreshMessage(usrKey);
+  main_stacked_widget->setCurrentWidget(chat_stack);
 }
 
 void MainBlock::displayStaticStack(GUI::StaticStackType staticStackType)

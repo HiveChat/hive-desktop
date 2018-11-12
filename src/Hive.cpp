@@ -16,14 +16,14 @@ Hive::Hive(int &argc, char **argv)
   network_manager = new NetworkManager();
   network_manager->moveToThread(network_thread);
 
-  connect(data_manager, &AppDataManager::updatesAvailable,
-          window, &Window::onUpdateAvailable,
-          Qt::AutoConnection);
 //  connect(network_manager->uv_server, &UvServer::usrEntered,
 //          data_manager, &AppDataManager::onUsrEntered,
 //          Qt::AutoConnection);
   connect(network_manager, &NetworkManager::updateAvailable,
-          data_manager, &AppDataManager::onUpdatesAvailable,
+          data_manager, &AppDataManager::onUpdateAvailable,
+          Qt::AutoConnection);
+  connect(data_manager, &AppDataManager::updateAvailable,
+          window, &Window::onUpdateAvailable,
           Qt::AutoConnection);
   connect(data_manager, &AppDataManager::usrProfileLoaded,
           window, &Window::addUsr,
@@ -31,7 +31,7 @@ Hive::Hive(int &argc, char **argv)
   connect(data_manager, &AppDataManager::usrProfileChanged,
           window, &Window::changeUsr,
           Qt::AutoConnection);
-  connect(window->gui_main_block->gui_chat_stack, &ChatStack::sendMessage,
+  connect(window->main_block->chat_stack, &ChatStack::sendMessage,
           this, &Hive::onTextMessageToSend,
           Qt::AutoConnection);
   connect(network_manager, &NetworkManager::messageRecieved,
