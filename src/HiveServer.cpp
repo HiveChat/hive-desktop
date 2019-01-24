@@ -66,11 +66,10 @@ HiveServer::run()
   loop->run(UV_RUN_DEFAULT);
 }
 
-void HiveServer::udpPacketReady(std::string &data, std::string &ip)
+void HiveServer::udpPacketReady(std::string &data, Parsley::IPAddress &ip)
 {
-  NetPacket *packet = new NetPacket(ip, data, BaseProtocol::Udp);
+  NetPacket *packet = new NetPacket(ip.toIPString(), data, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
-  qDebug()<<"packet received"<<ip.c_str();
 }
 
 void HiveServer::onTimedOut(Parsley::Timer *t)

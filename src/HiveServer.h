@@ -37,7 +37,7 @@ private:
   HiveUdpServer *udp_server;
   Parsley::Timer *heartbeat_timer;
 
-  void udpPacketReady(std::string &data, std::string &ip);
+  void udpPacketReady(std::string &data, Parsley::IPAddress &ip);
   void onTimedOut(Parsley::Timer *t);
 
 //  bool processUsrLeave(QString *usrKey); <<! to be moved to AppDataManager
