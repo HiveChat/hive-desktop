@@ -3,8 +3,8 @@
 
 #define UDP_PORT 23232
 
-#include "../libs/libParsley/include/PTimer.h"
-#include "../libs/libParsley/include/PUdpSocket.h"
+#include "libParsley/PTimer.h"
+#include "libParsley/PUdpSocket.h"
 
 
 #include "HiveProtocol.h"

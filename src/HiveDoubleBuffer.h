@@ -1,8 +1,8 @@
 #ifndef HIVEDOUBLEBUFFER_H
 #define HIVEDOUBLEBUFFER_H
 
-#include "../libs/libParsley/include/PUdpSocket.h"
-#include "../libs/libParsley/include/PFunction.h"
+#include <libParsley/PUdpSocket.h>
+#include <libParsley/PFunction.h>
 
 #include <QDebug>
 

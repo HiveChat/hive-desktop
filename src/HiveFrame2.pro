@@ -15,7 +15,7 @@ CONFIG   += c++14
 
 TARGET = Hive!
 TEMPLATE = app
-INCLUDEPATH += ../libs/libParsley/include
+INCLUDEPATH += /usr/local/include
 SOURCES += \
     main.cpp \
     Hive.cpp \
@@ -52,24 +52,11 @@ SOURCES += \
     Log.cpp \
     HiveProtocol.cpp \
     Data/AppDataManager.cpp \
-    ../libs/libParsley/src/PAbstractSocket.cpp \
-    ../libs/libParsley/src/PTcpSocket.cpp \
-    ../libs/libParsley/src/PUdpSocket.cpp \
-    ../libs/libParsley/src/PTcpServer.cpp \
     HiveUdpServer.cpp \
-    ../libs/libParsley/src/PAddress.cpp \
     Bee.cpp \
-    ../libs/libParsley/src/PTimer.cpp \
-    ../libs/libParsley/src/PUtils.cpp \
-    ../libs/libParsley/src/Parsley.cpp \
     HiveDoubleBuffer.cpp \
     HiveServer.cpp \
-    ../libs/libParsley/src/PFile.cpp \
     Gui/Window.cpp \
-    ../libs/libParsley/src/PCheck.cpp \
-    ../libs/libParsley/src/PAsync.cpp \
-    ../libs/libParsley/src/PBuffer.cpp \
-    ../libs/libParsley/src/PFunction.cpp \
     Global.cpp
 \
 
@@ -109,24 +96,11 @@ HEADERS  += \
     Message.h \
     HiveProtocol.h \
     Data/AppDataManager.h \
-    ../libs/libParsley/include/PAbstractSocket.h \
-    ../libs/libParsley/include/PTcpServer.h \
-    ../libs/libParsley/include/PTcpSocket.h \
-    ../libs/libParsley/include/PUdpSocket.h \
     HiveUdpServer.h \
-    ../libs/libParsley/include/PAddress.h \
     Bee.h \
-    ../libs/libParsley/include/PTimer.h \
-    ../libs/libParsley/include/PUtils.h \
-    ../libs/libParsley/include/Parsley.h \
     HiveDoubleBuffer.h \
     HiveServer.h \
-    ../libs/libParsley/include/PFile.h \
     Gui/Window.h \
-    ../libs/libParsley/include/PCheck.h \
-    ../libs/libParsley/include/PAsync.h \
-    ../libs/libParsley/include/PBuffer.h \
-    ../libs/libParsley/include/PFunction.h \
     Global.h
 
 ICON = Src/hive.icns
@@ -149,7 +123,8 @@ macx{
 
 unix{
     CONFIG += link_pkgconfig
-    PKGCONFIG += libuv
+    PKGCONFIG += \
+        libparsley
 }
 
 win32{

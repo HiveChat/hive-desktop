@@ -1,8 +1,6 @@
 #ifndef GLOBALTYPE_H
 #define GLOBALTYPE_H
 
-#include <PBuffer.h>
-
 #include <QString>
 #include <QColor>
 #include <QJsonObject>

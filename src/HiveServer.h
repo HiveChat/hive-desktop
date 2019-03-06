@@ -1,8 +1,8 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
-#include "../libs/libParsley/include/PTcpServer.h"
-#include "../libs/libParsley/include/Parsley.h"
+#include "libParsley/PTcpServer.h"
+#include "libParsley/Parsley.h"
 
 #include "HiveProtocol.h"
 #include "HiveUdpServer.h"
@@ -38,7 +38,7 @@ private:
   Parsley::Timer *heartbeat_timer;
 
   void udpPacketReady(std::string &data, Parsley::IPAddress &ip);
-  void onTimedOut(Parsley::Timer *t);
+  void onTimedOut(Parsley::Timer *);
 
 //  bool processUsrLeave(QString *usrKey); <<! to be moved to AppDataManager
 

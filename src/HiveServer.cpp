@@ -27,8 +27,7 @@ HiveServer::sendTextMessage(const QJsonObject &msg, const BaseProtocol &protocol
     case BaseProtocol::Udp:
       {
         QByteArray dat = encodeTextMessage(msg);
-        Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), loop);
-        udp_server->write("255.255.255.255", UDP_PORT, msg);
+        udp_server->write("255.255.255.255", UDP_PORT, dat.data());
 
         Log::net(Log::Info, "HiveServer::sendTextMessage()", "message sent");
         break;
@@ -72,11 +71,10 @@ void HiveServer::udpPacketReady(std::string &data, Parsley::IPAddress &ip)
   AppDataManager::pushInboundBuffer(packet);
 }
 
-void HiveServer::onTimedOut(Parsley::Timer *t)
+void HiveServer::onTimedOut(Parsley::Timer *)
 {
   QByteArray dat = HiveProtocol::encodeHeartBeat();
-  Parsley::Buffer *msg = new Parsley::Buffer(dat.data(), dat.count(), loop);
-  udp_server->write("255.255.255.255", UDP_PORT, msg);
+  udp_server->write("255.255.255.255", UDP_PORT, dat.data());
   Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
