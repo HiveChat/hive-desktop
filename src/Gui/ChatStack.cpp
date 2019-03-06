@@ -291,8 +291,8 @@ ChatStack::ChatStack(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Profile);
 
-  usr_data = new UsrData();//empty object
-  ///UI
+  user = new UsrData();//empty object
+
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);
   bottom_line->setFrameShadow(QFrame::Plain);
@@ -309,13 +309,6 @@ ChatStack::ChatStack(QWidget *parent)
 
   message_editor = new MessageEditor(this);
 
-  ////main layout
-//  QVBoxLayout *central_layout = new QVBoxLayout(chat_widget);
-//  central_layout->setContentsMargins(0,0,0,0);
-//  central_layout->setAlignment(Qt::AlignBottom);
-//  central_layout->setMargin(0);
-//  central_layout->setSpacing(0);
-
   main_layout->setAlignment(Qt::AlignBottom);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
@@ -326,12 +319,6 @@ ChatStack::ChatStack(QWidget *parent)
           this, &ChatStack::onSendButtonClicked);
   connect(message_editor->send_btn, &LabelButton::clicked,
           this, &ChatStack::onSendButtonClicked);
-//  connect(scroll_area->verticalScrollBar(), &QScrollBar::sliderReleased,
-//          [this](){
-//            Log::gui(Log::Normal, "hello()", "hello");
-//          });
-
-  this->setParent(parent);
 }
 
 ChatStack::~ChatStack()
@@ -339,19 +326,11 @@ ChatStack::~ChatStack()
   //  this->set
 }
 
-bool ChatStack::refreshProfile(const QString &usrKey)
+bool ChatStack::refreshProfile()
 {
-  if(!this->isDisplaying(usrKey))
-    {
-      return false;
-    }
-  else
-    {
-      this->setIcon(usr_data->getAvatar());
-      this->setTitle(usr_data->getName());
-      this->setSubTitle(usr_data->getIp());
-      return true;
-    }
+  this->setIcon(user->getAvatar());
+  this->setTitle(user->getName());
+  this->setSubTitle(user->getIp());
 }
 
 bool ChatStack::refreshMessage(const QString &usrKey)
@@ -368,9 +347,9 @@ bool ChatStack::refreshMessage(const QString &usrKey)
     }
 }
 
-void ChatStack::setUsrData(UsrData *usrData)
+void ChatStack::setUsr(UsrData *usrData)
 {
-  usr_data = usrData;
+  user = usrData;
 }
 
 void ChatStack::updateFileTranProgress()
@@ -391,71 +370,25 @@ void ChatStack::updateFileTranProgress()
 
 void ChatStack::display(const QString &usrKey)
 {
-  UsrData *temp_usr_data;
+  UsrData *incomingUsr;
   if(AppDataManager::usr_data_hash.contains(usrKey))
-    {
-      temp_usr_data = AppDataManager::usr_data_hash.value(usrKey);
-    }
+    incomingUsr = AppDataManager::usr_data_hash.value(usrKey);
   else
+    incomingUsr = AppDataManager::usr_data_hash.value(usrKey);
+
+  if(*user->getProfile() != *incomingUsr->getProfile())
     {
-      temp_usr_data = AppDataManager::usr_data_hash.value(usrKey);
-    }
-
-  // if different usr or updated usr is refreshing
-  if(*usr_data->getUsrProfile() != *temp_usr_data->getUsrProfile())
-    {
-      if(usr_data->getKey() != temp_usr_data->getKey())
-        {
-          // can you read this?
-          if(editing_message_hash.contains(usr_data->getKey()))
-            {
-              editing_message_hash.take(usr_data->getKey());
-            }
-          editing_message_hash.insert(usr_data->getKey(), message_editor->text_editor->toPlainText());
-
-
-          this->setUsrData(temp_usr_data);
-
-
-          if(editing_message_hash.contains(usrKey))
-            {
-              message_editor->text_editor->setText(editing_message_hash.value(usrKey));
-            }
-          else
-            {
-              message_editor->text_editor->clear();
-              editing_message_hash.insert(usrKey, "");
-            }
-
-
-          if(chat_widget_hash.contains(usrKey))
-            {
-               MessageViewer *widget = chat_widget_hash.value(usrKey);
-               chat_widget = widget;
-            }
-          else
-            {
-              MessageViewer *widget = new MessageViewer(this);
-              chat_widget = widget;
-              chat_widget_hash.insert(usrKey, widget);
-              this->flipLatestMessage(false);
-            }
-
-
-          this->flipUnreadMessage();
-          scroll_area->takeWidget();
-          scroll_area->setWidget(chat_widget);
-        }
-
-
-      this->refreshProfile(usrKey);
-
+      saveEditingMessage();
+      setUsr(incomingUsr);
+      loadEditingMessage();
+      loadMessageViewer();
+      refreshProfile();
     }
 }
 
 bool ChatStack::isDisplaying(const QString &usrKey)
 {
-  return (usrKey == usr_data->getKey());
+  return user->getKey() == usrKey;
 }
 
 void ChatStack::dragEnterEvent(QDragEnterEvent *event)
@@ -469,22 +402,53 @@ void ChatStack::dropEvent(QDropEvent *event)
   qDebug()<<"#GuiChatStack::dropEvent(): file entered.";
   QList<QUrl> urls = event->mimeData()->urls();
   if (urls.isEmpty())
-    {
       return;
-    }
   QString fileName = urls.first().toLocalFile();
   if (fileName.isEmpty())
+    return;
+}
+
+void ChatStack::saveEditingMessage()
+{
+  if(editing_message_hash.contains(user->getKey()))
+      editing_message_hash.take(user->getKey());
+  editing_message_hash.insert(user->getKey(), message_editor->text_editor->toPlainText());
+}
+
+void ChatStack::loadEditingMessage()
+{
+  if(editing_message_hash.contains(user->getKey()))
+    message_editor->text_editor->setText(editing_message_hash.value(user->getKey()));
+  else
+    message_editor->text_editor->clear();
+}
+
+void ChatStack::loadMessageViewer()
+{
+  if(chat_widget_hash.contains(user->getKey()))
     {
-      return;
+       MessageViewer *widget = chat_widget_hash.value(user->getKey());
+       chat_widget = widget;
     }
+  else
+    {
+      MessageViewer *widget = new MessageViewer(this);
+      chat_widget = widget;
+      chat_widget_hash.insert(user->getKey(), widget);
+      this->flipLatestMessage(false);
+    }
+
+  this->flipUnreadMessage();
+  scroll_area->takeWidget();
+  scroll_area->setWidget(chat_widget);
 }
 
 void ChatStack::flipUnreadMessage()
 {
   Log::gui(Log::Info, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
-  if(usr_data->getUnreadMessageNumber() != 0)
+  if(user->getUnreadMessageNumber() != 0)
     {
-      QList<QJsonObject> *message_list = usr_data->retrieveUnreadMessage();
+      QList<QJsonObject> *message_list = user->retrieveUnreadMessage();
       foreach (QJsonObject history_json_obj, *message_list)
         {
           chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
@@ -509,14 +473,14 @@ void ChatStack::flipLatestMessage(const bool &clear)
     }
 
   Log::gui(Log::Info, "GuiChatStack::flipLatestMessage()", "chat stack is loading latest history message...");
-  QJsonArray message_json_array = *usr_data->flipLatest();
+  QJsonArray message_json_array = *user->flipLatest();
   int message_count = message_json_array.count();
   for(int i = 0; i < message_count; i++)
     {
       QJsonObject history_json_obj = message_json_array[i].toObject();
 
       chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
-      qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
+      qDebug()<<" | GuiChatStack::refreshUI(): Message loaded...";
     }
 
   scroll_area->verticalScrollBar()->setValue(scroll_area->verticalScrollBar()->maximum());
@@ -525,34 +489,22 @@ void ChatStack::flipLatestMessage(const bool &clear)
 void ChatStack::flipUpMessage(const bool &clear)
 {
   if(clear)
-    {
-      chat_widget->clearChatBubbles();
-    }
+    chat_widget->clearChatBubbles();
 }
 
 void ChatStack::flipDownMessage(const bool &clear)
 {
   if(clear)
-    {
-      chat_widget->clearChatBubbles();
-    }
+    chat_widget->clearChatBubbles();
 }
 
 void ChatStack::onSendButtonClicked()
 {
-  if(key_lock)
-    {
-      return;
-    }
-  if(easter_animating)
-    {
-      return;
-    }
-
+  if(key_lock || easter_animating)
+    return;
   key_lock = true;
 
-
-  if(!usr_data->isOnline())
+  if(!user->isOnline())
     {
       if(click_num == 0)
         {
@@ -596,7 +548,7 @@ void ChatStack::onSendButtonClicked()
           click_num ++;
         }
 
-      Log::gui(Log::Info, "GuiChatStack::onSendButtonClicked()", "user \"" + usr_data->getName() +"\" not online");
+      Log::gui(Log::Info, "GuiChatStack::onSendButtonClicked()", "user \"" + user->getName() +"\" not online");
 
       key_lock = false;
       return;
@@ -611,7 +563,7 @@ void ChatStack::onSendButtonClicked()
       return;
     }
 
-  emit sendMessage(usr_data->getKey(), message);
+  emit sendMessage(user->getKey(), message);
   message_editor->text_editor->clear();
 
 #ifdef Q_OS_OSX
@@ -628,9 +580,7 @@ void ChatStack::onSendButtonClicked()
 void ChatStack::onKeyEnterTriggered(bool &pressed)
 {
   if(easter_animating)
-    {
-      return;
-    }
+    return;
 
   if(pressed)
     {

@@ -20,12 +20,14 @@ public:
   ~SettingsStack_profile();
 
 private:
-  void onRadioClicked(QAbstractButton *abstractButton);
   void onUsrNameChanged(QString usr_name);
 
   QHash<QString , QString> avatar_hash;
   QList<QRadioButton *> avatar_radio_btn_list;
   AvatarComposer *avatar_composer;
+
+private slots:
+  void onRadioClicked(QAbstractButton *abstractButton);
 };
 
 #endif // GUISETTINGSSTACK_PROFILE_H

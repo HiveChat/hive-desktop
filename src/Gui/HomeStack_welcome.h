@@ -45,6 +45,7 @@ private:
   bool online = false;
 
   void refreshCenter();
+  QString getGreetings();
 
 private slots:
   void refreshUI();

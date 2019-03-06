@@ -15,6 +15,9 @@ AvatarButton::AvatarButton(const QString &path, const int &Diameter, QWidget *pa
 
 void AvatarButton::setAvatar(const QString &path)
 {
+  if(img_path == path)
+    return;
+  img_path = path;
   QBitmap mask(QSize(diameter,diameter));
   QPainter painter(&mask);
   painter.setRenderHint(QPainter::Antialiasing);
@@ -22,7 +25,6 @@ void AvatarButton::setAvatar(const QString &path)
   painter.fillRect(0, 0, diameter, diameter, Qt::white);
   painter.setBrush(Qt::black);
   painter.drawRoundedRect(0, 0, diameter, diameter, 99, 99);
-
 
   QPixmap avatar_pixmap(path);
   avatar_pixmap = avatar_pixmap.scaled(diameter,diameter,Qt::IgnoreAspectRatio,Qt::SmoothTransformation);

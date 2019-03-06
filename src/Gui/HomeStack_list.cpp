@@ -16,7 +16,7 @@ ListItem::ListItem(UsrProfile *profile, QWidget *parent) : QWidget(parent)
   main_layout->addWidget(name_label);
   main_layout->addWidget(ip_label);
 
-  refreshUsrProfile(profile);
+  refreshProfile(profile);
 }
 
 ListItem::~ListItem()
@@ -24,7 +24,7 @@ ListItem::~ListItem()
 
 }
 
-void ListItem::refreshUsrProfile(UsrProfile *profile)
+void ListItem::refreshProfile(UsrProfile *profile)
 {
   avatar_button->setAvatar(profile->avatar);
   name_label->setText(profile->name);
@@ -57,9 +57,9 @@ void HomeStack_list::addUsr(UsrProfile *usrProfileStruct)
   central_layout->addWidget(list_item);
 }
 
-void HomeStack_list::refreshUsrProfile(UsrProfile *usrProfileStruct)
+void HomeStack_list::refreshUser(UsrProfile *usrProfileStruct)
 {
-  list_item_hash.value(usrProfileStruct->key)->refreshUsrProfile(usrProfileStruct);
+  list_item_hash.value(usrProfileStruct->key)->refreshProfile(usrProfileStruct);
 }
 
 

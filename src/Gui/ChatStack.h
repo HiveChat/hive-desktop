@@ -119,8 +119,9 @@ public:
   ~ChatStack();
 
   void display(const QString &usrKey);
-  bool refreshProfile(const QString &usrKey);
+  bool refreshProfile();
   bool refreshMessage(const QString &usrKey);
+  bool isDisplaying(const QString &usrKey);
 
   void onSendButtonClicked();
   void onKeyEnterTriggered(bool &pressed);
@@ -130,34 +131,30 @@ protected:
   void dropEvent(QDropEvent *event);
 
 private:
-  //UI
-  QHash<QString, MessageViewer*> chat_widget_hash;
-  QHash<QString, QString> editing_message_hash;
-
   MessageViewer *chat_widget;
   MessageEditor *message_editor;
-
-  //Data
-  UsrData *usr_data;
+  UsrData *user;
   QPair<int, int> file_tran_progress_pair;
+  QHash<QString, MessageViewer*> chat_widget_hash;
+  QHash<QString, QString> editing_message_hash;
 
   int click_num = 0;
   QTime first_click_time;
   bool easter_animating = false;
   bool key_lock = false;
 
-  //Function
+  void saveEditingMessage();
+  void loadEditingMessage();
+  void loadMessageViewer();
   void flipUnreadMessage();
   void flipLatestMessage(const bool &clear);
   void flipUpMessage(const bool &clear);
   void flipDownMessage(const bool &clear);
-  bool isDisplaying(const QString &usrKey);
-  void setUsrData(UsrData *usrData);
+  void setUsr(UsrData *usrData);
   void updateFileTranProgress();
 
 signals:
   void sendMessage(QString usrKey, QString message);
-
 };
 
 

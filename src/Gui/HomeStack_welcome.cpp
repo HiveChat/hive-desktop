@@ -68,40 +68,52 @@ void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *)
 //                this->setPalette(palette);
 //              });
 //      file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
-//    }
+  //    }
+}
+
+QString HomeStack_welcome::getGreetings()
+{
+  int current_hour = QTime::currentTime().toString("hh").toInt();
+  if(current_hour >= 4 && current_hour <= 12)
+    {
+      return "Good Morning!";
+    }
+  else if(current_hour >= 13 && current_hour <= 14)
+    {
+      return "Good Afternoon!";
+    }
+  else if(current_hour >= 15 && current_hour <= 17)
+    {
+      return "Good Afternoon!";
+    }
+  else if(current_hour >= 18 && current_hour <= 23)
+    {
+      return "Good Evening!";
+    }
+  else if(current_hour >= 24 || current_hour <=3)
+    {
+      return "z<sup>z<sup>Z</sup></sup>";
+    }
+  return "";
 }
 
 
 void HomeStack_welcome::refreshUI()
 {
-  int current_hour = QTime::currentTime().toString("hh").toInt();
-  if(current_hour >= 4 && current_hour <= 12)
-    {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("Good Morning!"));
-    }
-  else if(current_hour >= 13 && current_hour <= 14)
-    {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("sleepy noon~"));
-    }
-  else if(current_hour >= 15 && current_hour <= 17)
-    {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("Good Afternoon!"));
-    }
-  else if(current_hour >= 18 && current_hour <= 23)
-    {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("Good Evening!"));
-    }
-  else if(current_hour >= 24 || current_hour <=3)
-    {
-      welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg("It's late at night :)"));
-    }
+  if(Global::settings.profile_name_str.isEmpty())
+    welcome_label->setText(getGreetings());
+  else
+    welcome_label->setText(QString("<b>%1</b>, %2").arg(Global::settings.profile_name_str).arg(getGreetings()));
 
-  my_avatar->setAvatar(Global::settings.profile_avatar_str);
+  if(Global::settings.profile_avatar_str.isEmpty())
+    my_avatar->setAvatar(":/img/img/icon.png");
+  else
+    my_avatar->setAvatar(Global::settings.profile_avatar_str);
 
   UsrData *p = AppDataManager::usr_data_hash.value(Global::settings.profile_uuid_str);
-  if(p && p->getUsrProfile())
+  if(p && p->getProfile())
     {
-      if(!p->getUsrProfile()->online)
+      if(!p->getProfile()->online)
         {
           online = false;
           ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
@@ -109,7 +121,7 @@ void HomeStack_welcome::refreshUI()
       else
         {
           online = true;
-          ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> Your IP is: %1\n\n\n").arg(p->getUsrProfile()->ip));
+          ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> %1\n\n\n").arg(p->getProfile()->ip));
         }
     }
   Log::gui(Log::Info, "GuiWelcomeStack::refresh()", "Finished");

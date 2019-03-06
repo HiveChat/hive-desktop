@@ -15,7 +15,7 @@ public:
   explicit ListItem(UsrProfile *profile, QWidget *parent = nullptr);
   ~ListItem();
 
-  void refreshUsrProfile(UsrProfile *profile);
+  void refreshProfile(UsrProfile *profile);
 
 private:
   AvatarButton *avatar_button;
@@ -34,7 +34,7 @@ public:
   ~HomeStack_list();
 
   void addUsr(UsrProfile *usrProfileStruct);
-  void refreshUsrProfile(UsrProfile *usrProfileStruct);
+  void refreshUser(UsrProfile *usrProfileStruct);
 
 private:
   QHash<QString, ListItem*> list_item_hash;

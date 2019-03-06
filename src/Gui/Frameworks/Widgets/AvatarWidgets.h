@@ -35,6 +35,7 @@ protected:
 
 private:
   int diameter;
+  QString img_path;
 
 signals:
   void clicked();

@@ -25,7 +25,7 @@ public:
   ~MainBlock();
 
   ChatStack *chat_stack;
-  QStackedWidget *main_stacked_widget;
+  QStackedWidget *stacked_widget;
   HomeStack_welcome *home_stack_welcome;
   HomeStack_list *home_stack_list;
 
@@ -33,8 +33,8 @@ public:
   void displayChatStack(const QString &usrKey);
 
 private:
-  QHash<GUI::StaticStackType, QWidget*> static_stack_hash;
   GUI::StaticStackType current_static_stack_type = GUI::StaticStackType::NULL_Stack;
+  QHash<GUI::StaticStackType, QWidget*> static_stack_hash;
 
   void onMessageToSend(QString *usrKey, QString *message);
   void clearStackMap(GUI::StaticStackType &reservation);

@@ -176,9 +176,9 @@ void AppDataManager::onUsrEntered(UsrProfile &profile) // logic problem here? to
     {
       UsrData *data = usr_data_hash.value(profile.key);
       qDebug()<<data->getKey();
-      Global::TEST_printUsrProfile(*data->getUsrProfile(), "000000000000");
+      Global::TEST_printUsrProfile(*data->getProfile(), "000000000000");
       Global::TEST_printUsrProfile(profile, "111111111111");
-      if(profile != *data->getUsrProfile())
+      if(profile != *data->getProfile())
         {
           data->setUsrProfile(profile);
           emit usrProfileChanged(data);
@@ -325,9 +325,6 @@ void AppDataManager::run()
   touchDir(Global::user_data_dir);
   touchDir(Global::log_dir);
   touchFile(Global::settings_file_dir);
-  Parsley::File file1(Global::settings_file_dir, loop);
-  file1.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode);
-  file1.close(Parsley::SyncMode);
 
   loadSettings();
   loadUsrList();
@@ -591,7 +588,7 @@ void AppDataManager::loadUsrList()
               UsrData *usrData = new UsrData(&Global::settings.profile_uuid_str, p);
               usr_data_hash.insert(*tempUuidStr, usrData);
 
-              Global::TEST_printUsrProfile(*usrData->getUsrProfile(),"adding from disk");
+              Global::TEST_printUsrProfile(*usrData->getProfile(),"adding from disk");
             }
         }
     }
