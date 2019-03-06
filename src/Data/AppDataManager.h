@@ -5,9 +5,9 @@
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
 
-#include "libParsley/PFile.h"
-#include "libParsley/PTimer.h"
-#include "libParsley/PAsync.h"
+#include "libparsley/PFile.h"
+#include "libparsley/PTimer.h"
+#include "libparsley/PAsync.h"
 
 #include <unordered_map>
 #include <functional>
