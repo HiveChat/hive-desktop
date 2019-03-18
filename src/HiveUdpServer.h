@@ -3,8 +3,8 @@
 
 #define UDP_PORT 23232
 
-#include "libparsley/PTimer.h"
-#include "libparsley/PUdpSocket.h"
+#include "libparsley/timer.h"
+#include "libparsley/udp_socket.h"
 
 
 #include "HiveProtocol.h"
@@ -16,7 +16,7 @@ public:
   HiveUdpServer(const char *ip, const int &port, Parsley::Loop *l);
   ~HiveUdpServer();
 
-  void start();
+  int start();
   void stop();
 
 private:

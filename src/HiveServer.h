@@ -1,8 +1,9 @@
 #ifndef UVTCPSERVER_H
 #define UVTCPSERVER_H
 
-#include "libparsley/PTcpServer.h"
-#include "libparsley/Parsley.h"
+#include "libparsley/tcp_server.h"
+#include "libparsley/timer.h"
+#include "libparsley/parsley.h"
 
 #include "HiveProtocol.h"
 #include "HiveUdpServer.h"

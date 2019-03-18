@@ -10,7 +10,7 @@ HiveUdpServer::~HiveUdpServer()
 {
 }
 
-void HiveUdpServer::start()
+int HiveUdpServer::start()
 {
   Parsley::UdpSocket::start();
 }
