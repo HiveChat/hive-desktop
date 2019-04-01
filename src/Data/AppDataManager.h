@@ -78,7 +78,7 @@ private:
   void writeSettings();
 
   Parsley::Loop *loop;
-  Parsley::Async *read_inbound_async;
+  Parsley::AsyncEvent *read_inbound_async;
   bool inboundNetBufferReading = false;
 
   static DoubleBuffer<NetPacket*> inboundNetBuffer;

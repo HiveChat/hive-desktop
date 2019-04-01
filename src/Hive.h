@@ -16,7 +16,6 @@
 #endif
 
 
-
 class Hive : public QApplication
 {
   Q_OBJECT

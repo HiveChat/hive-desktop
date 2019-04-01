@@ -15,7 +15,7 @@ public:
   DoubleBuffer();
   ~DoubleBuffer();
 
-  Parsley::Callback<void, DoubleBuffer<T>*> onPushed;
+  Parsley::CallbackHandler<void, DoubleBuffer<T>*> onPushed;
 
   T front();
   void push(T item);

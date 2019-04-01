@@ -1,5 +1,6 @@
 #include "Hive.h"
 
+
 Hive::Hive(int &argc, char **argv)
   : QApplication(argc, argv)
 {
@@ -9,6 +10,7 @@ Hive::Hive(int &argc, char **argv)
 #endif
 
   window = new Window();
+
   data_manager = new AppDataManager();
   data_manager->start();
   network_thread = new QThread(this);

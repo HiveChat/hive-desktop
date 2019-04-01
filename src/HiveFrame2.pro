@@ -57,7 +57,8 @@ SOURCES += \
     HiveDoubleBuffer.cpp \
     HiveServer.cpp \
     Gui/Window.cpp \
-    Global.cpp
+    Global.cpp \
+    Subscription.cpp
 \
 
 HEADERS  += \
@@ -101,7 +102,8 @@ HEADERS  += \
     HiveDoubleBuffer.h \
     HiveServer.h \
     Gui/Window.h \
-    Global.h
+    Global.h \
+    Subscription.h
 
 ICON = Src/hive.icns
 
@@ -118,6 +120,14 @@ macx{
     plist.files = ./Info.plist
     INSTALLS += plist
     PKG_CONFIG = /usr/local/bin/pkg-config
+
+    LIBS += -framework AppKit
+    OBJECTIVE_HEADERS += \
+	Gui/macos/WindowOptions.h
+    OBJECTIVE_SOURCES += \
+	Gui/macos/WindowOptions.mm
+
+
 }
 
 

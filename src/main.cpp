@@ -1,6 +1,13 @@
 #include "Hive.h"
 
 #include <QApplication>
+//#include "Gui/macos/WindowOptions.h"
+
+namespace Cocoa
+{
+  void changeTitleBarColor(WId winId, double red, double green, double blue, double alpha);
+}
+
 
 void loadStyleSheet()
 {
@@ -13,7 +20,6 @@ void loadStyleSheet()
   qApp->setStyleSheet(qss.readAll());
 }
 
-
 int main(int argc, char *argv[])
 {
   //! Register to Qt signal-slot meta type.
@@ -23,6 +29,9 @@ int main(int argc, char *argv[])
   Hive hiveApp(argc, argv);
   loadStyleSheet();
   hiveApp.window->show();
+
+  Cocoa::changeTitleBarColor(hiveApp.window->effectiveWinId(), 255./255., 255./255., 255./255., .95);
+
 
   return hiveApp.exec();
 }

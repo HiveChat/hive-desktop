@@ -69,7 +69,7 @@ void AppDataManager::updateUsr(const UsrProfile &p)
   QString avatarPath = p.avatar;
 
   Parsley::File f(Global::contacts_file_dir, loop);
-  if(!f.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  if(!f.open(O_RDWR | O_CREAT, 0755, Parsley::Sync))
     {
       return;
     }
@@ -94,8 +94,8 @@ void AppDataManager::updateUsr(const UsrProfile &p)
           QJsonDocument outJsonDoc;
           outJsonDoc.setObject(usrListObj);
           std::string data = outJsonDoc.toJson().toStdString();
-          f.truncate(0, Parsley::SyncMode);
-          f.write(data, Parsley::SyncMode);
+          f.truncate(0, Parsley::Sync);
+          f.write(data, Parsley::Sync);
         }
     }
   else //! TODO: put all loaded contacts in!!
@@ -112,11 +112,11 @@ void AppDataManager::updateUsr(const UsrProfile &p)
       outJsonDoc.setObject(usrListObj);
 
       std::string data = outJsonDoc.toJson(QJsonDocument::Indented).toStdString();
-      f.truncate(0, Parsley::SyncMode);
-      f.write(data, Parsley::SyncMode);
+      f.truncate(0, Parsley::Sync);
+      f.write(data, Parsley::Sync);
     }
 
-  f.close(Parsley::SyncMode);
+  f.close(Parsley::Sync);
 }
 
 //!! OBSOLETE !!
@@ -256,7 +256,7 @@ void AppDataManager::onUpdateAvailable()
   memcpy(&outVersion, &Global::current_version, sizeof(Global::current_version));
 
   Parsley::File file(Global::update_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::Sync))
     {
       return;
     }
@@ -284,7 +284,7 @@ void AppDataManager::onUpdateAvailable()
                     Global::update_struct.version,
                     sizeof(inVersion)) == 0)
             {
-              file.close(Parsley::SyncMode);
+              file.close(Parsley::Sync);
               emit updateAvailable();
 
               return;
@@ -304,9 +304,9 @@ void AppDataManager::onUpdateAvailable()
 
 
   std::string outData = makeUpdateJson(outVersion).toJson(QJsonDocument::Indented).toStdString();
-  file.truncate(0, Parsley::SyncMode);
-  file.write(outData, Parsley::SyncMode);
-  file.close(Parsley::SyncMode);
+  file.truncate(0, Parsley::Sync);
+  file.write(outData, Parsley::Sync);
+  file.close(Parsley::Sync);
 
   emit updateAvailable();
 }
@@ -318,7 +318,7 @@ void AppDataManager::run()
   loop = new Parsley::Loop();
   Parsley::connect(&inboundNetBuffer.onPushed, this, &AppDataManager::wakeLoop);
 
-  read_inbound_async = new Parsley::Async(loop);
+  read_inbound_async = new Parsley::AsyncEvent(loop);
   Parsley::connect(&read_inbound_async->onCalled, this, &AppDataManager::readInboundNetBuffer);
 
   touchDir(Global::data_location_dir);
@@ -441,14 +441,14 @@ void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)
 bool AppDataManager::touchFile(const std::string &path)
 {
   Parsley::File f(path, loop);
-  int ret = f.open(O_WRONLY | O_CREAT, 0644, Parsley::SyncMode);
-  f.close(Parsley::SyncMode);
+  int ret = f.open(O_WRONLY | O_CREAT, 0644, Parsley::Sync);
+  f.close(Parsley::Sync);
   return ret;
 }
 
 bool AppDataManager::touchDir(const std::string &dir)
 {
-  return Parsley::File::mkdir(dir, 0755, loop, Parsley::SyncMode) == 0;
+  return Parsley::File::mkdir(dir, 0755, loop, Parsley::Sync) == 0;
 }
 
 QJsonDocument AppDataManager::makeDefaultSettings()
@@ -520,7 +520,7 @@ void AppDataManager::initVariable()
 void AppDataManager::loadSettings()
 {
   Parsley::File file(Global::settings_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::Sync))
     {
       return;
     }
@@ -549,18 +549,18 @@ void AppDataManager::loadSettings()
     {
       Log::dat(Log::Info, "AppDataManager::readSettings()", "Json parse error:" + jsonErr.errorString());
       std::string writeData = makeDefaultSettings().toJson(QJsonDocument::Indented).toStdString();
-      file.truncate(0, Parsley::SyncMode);
-      file.write(writeData, Parsley::SyncMode);
+      file.truncate(0, Parsley::Sync);
+      file.write(writeData, Parsley::Sync);
       Log::dat(Log::Info, "AppDataManager::readSettings()", "Settings file first created:\n" + QString::fromStdString(writeData));
     }
 
-  file.close(Parsley::SyncMode);
+  file.close(Parsley::Sync);
 }
 
 void AppDataManager::loadUsrList()
 {
   Parsley::File file(Global::contacts_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::Sync))
     {
       return;
     }
@@ -595,21 +595,21 @@ void AppDataManager::loadUsrList()
   else
     {
       std::string data = "";
-      file.truncate(0, Parsley::SyncMode);
-      file.write(data, Parsley::SyncMode);
+      file.truncate(0, Parsley::Sync);
+      file.write(data, Parsley::Sync);
       Log::dat(Log::Critical
                , "AppDataManager::loadUsrList()"
                , "Contact list file broken, broken file is cleared");
       return;
     }
 
-  file.close(Parsley::SyncMode);
+  file.close(Parsley::Sync);
 }
 
 void AppDataManager::writeSettings()
 {
   Parsley::File file(Global::settings_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::Sync))
     {
       return;
     }
@@ -631,9 +631,9 @@ void AppDataManager::writeSettings()
   outJsonDoc.setObject(settingsObj);
 
   std::string outData = outJsonDoc.toJson().toStdString();
-  file.truncate(0, Parsley::SyncMode);
-  file.write(outData, Parsley::SyncMode);
-  file.close(Parsley::SyncMode);
+  file.truncate(0, Parsley::Sync);
+  file.write(outData, Parsley::Sync);
+  file.close(Parsley::Sync);
 
   Log::dat(Log::Info
            , "AppDataManager::writeCurrentConfig()"
@@ -643,7 +643,7 @@ void AppDataManager::writeSettings()
 void AppDataManager::loadUpdates()
 {
   Parsley::File file(Global::update_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::SyncMode))
+  if(!file.open(O_RDWR | O_CREAT, 0755, Parsley::Sync))
     {
       return;
     }
@@ -673,7 +673,7 @@ void AppDataManager::loadUpdates()
         }
     }
 
-  file.close(Parsley::SyncMode);
+  file.close(Parsley::Sync);
 }
 
 
