@@ -108,7 +108,6 @@ HEADERS  += \
 ICON = Src/hive.icns
 
 RESOURCES += \
-    Src/qss.qrc \
     Src/img.qrc \
     Src/font.qrc
 #    Src/icon.qrc

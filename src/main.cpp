@@ -1,13 +1,12 @@
 #include "Hive.h"
-
 #include <QApplication>
-//#include "Gui/macos/WindowOptions.h"
 
+#ifdef Q_OS_OSX
 namespace Cocoa
 {
   void changeTitleBarColor(WId winId, double red, double green, double blue, double alpha);
 }
-
+#endif
 
 void loadStyleSheet()
 {
@@ -27,11 +26,12 @@ int main(int argc, char *argv[])
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   Hive hiveApp(argc, argv);
-  loadStyleSheet();
+//  loadStyleSheet();
   hiveApp.window->show();
 
+#ifdef Q_OS_OSX
   Cocoa::changeTitleBarColor(hiveApp.window->effectiveWinId(), 255./255., 255./255., 255./255., .95);
-
+#endif
 
   return hiveApp.exec();
 }
