@@ -1,3 +1,0 @@
-[submodule "libs/libParsley"]
-	path = libs/libParsley
-	url = https://github.com/ultrasilicon/libParsley.git
