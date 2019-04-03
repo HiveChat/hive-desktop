@@ -316,10 +316,10 @@ void AppDataManager::run()
   initVariable();
 
   loop = new Parsley::Loop();
-  Parsley::connect(&inboundNetBuffer.onPushed, this, &AppDataManager::wakeLoop);
+  Parsley::on(&inboundNetBuffer.onPushed, this, &AppDataManager::wakeLoop);
 
   read_inbound_async = new Parsley::AsyncEvent(loop);
-  Parsley::connect(&read_inbound_async->onCalled, this, &AppDataManager::readInboundNetBuffer);
+  Parsley::on(&read_inbound_async->onCalled, this, &AppDataManager::readInboundNetBuffer);
 
   touchDir(Global::data_location_dir);
   touchDir(Global::user_data_dir);
@@ -330,7 +330,7 @@ void AppDataManager::run()
   loadUsrList();
 
   Parsley::Timer checkSettingsTimer(loop);
-  Parsley::connect(&checkSettingsTimer.onTimedOut, this, &AppDataManager::checkSettings);
+  Parsley::on(&checkSettingsTimer.onTimedOut, this, &AppDataManager::checkSettings);
   checkSettingsTimer.start(2000, 1000);
 
   loop->run(UV_RUN_DEFAULT);
