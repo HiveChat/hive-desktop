@@ -11,10 +11,7 @@ Window::Window(QWidget *parent)
   this->setMinimumWidth(900);
   this->setGeometry(this->x(), this->y(), Global::settings.window_width, Global::settings.window_height);
   this->setAttribute(Qt::WA_TranslucentBackground);
-  this->setWindowTitle(QString("Hive! %1.%2.%3 alpha-test")
-                       .arg(Global::current_version[0])
-                       .arg(Global::current_version[1])
-                       .arg(Global::current_version[2]));
+  this->setWindowTitle(QString("Hive!"));
 #ifndef Q_OS_OSX
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
