@@ -7,7 +7,7 @@
 
 #include "libparsley/file.h"
 #include "libparsley/timer.h"
-#include "libparsley/async.h"
+#include "libparsley/async_event.h"
 
 #include <unordered_map>
 #include <functional>
