@@ -52,11 +52,11 @@ HiveServer::run()
 
   loop = new Parsley::Loop();
   udp_server = new HiveUdpServer("0.0.0.0", UDP_PORT, loop);
-  Parsley::connect(&udp_server->onReadyRead, this, &HiveServer::udpPacketReady);
+  Parsley::on(&udp_server->onReadyRead, this, &HiveServer::udpPacketReady);
   udp_server->start();
 
   heartbeat_timer = new Parsley::Timer(1000, 1000, loop);
-  Parsley::connect(&heartbeat_timer->onTimedOut, this, &HiveServer::onTimedOut);
+  Parsley::on(&heartbeat_timer->onTimedOut, this, &HiveServer::onTimedOut);
   heartbeat_timer->start();
 
 
@@ -78,16 +78,3 @@ void HiveServer::onTimedOut(Parsley::Timer *)
   Log::net(Log::Info, "UvServer::udpHeartBeatCb()", "heart beat sent");
 }
 
-//bool
-//HiveServer::processUsrLeave(QString *usrKey)
-//{
-//  if(*usrKey == Global::settings.profile_uuid_str)
-//    {
-////      emit usrLeft(usrKey); << FIX HERE!!
-
-//      qDebug()<<"@HiveServer::udpProcessUsrLeft(): Myself left.";
-//    }
-
-//  qDebug()<<"@HiveServer::udpProcessUsrLeft(): Someone left.";
-////  emit usrLeft(usrKey); << FIX HERE!!
-//}
