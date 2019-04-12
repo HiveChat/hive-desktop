@@ -23,6 +23,9 @@ public:
 
   void expand();
   void shrink();
+//  void escape();
+  void freez(const bool &b);
+
 
 protected:
   void focusInEvent(QFocusEvent *e);
@@ -31,14 +34,18 @@ protected:
 private:
   void updateWidth(const QVariant &v);
 
-
   int width;
-  QVariantAnimation *expand_animation;
-  QVariantAnimation *shrink_animation;
+  const int width_full = 250;
+  const int width_half = 225;
+  bool frozen = false;
+  QVariantAnimation *expand_anim;
+  QVariantAnimation *shrink_anim;
+//  QVariantAnimation *escape_anim;
 
 signals:
   void focused(const bool &b);
   void shrinked();
+//  void escaped();
 };
 
 
@@ -52,20 +59,19 @@ public:
 protected:
   void mousePressEvent(QMouseEvent *);
   void mouseReleaseEvent(QMouseEvent *);
-  void enterEvent(QEvent *);
-  void leaveEvent(QEvent *);
+  void enterEvent(QEvent *e);
+  void leaveEvent(QEvent *e);
 
 private:
   int width;
   bool search_focus_lock = false;
-  bool animation_lock = false;
-
+  bool settings_toggled = false;
   LabelButton *settings_button;
   SearchWidget *search_widget;
   QHBoxLayout *main_Layout;
 
 signals:
-  void settingsClicked();
+  void settingsSelected(const bool& b);
 };
 
 #endif // SEARCHBAR_H

@@ -20,7 +20,7 @@ TabBlock::TabBlock(QWidget *parent)
   tab_stacked_widget->addWidget(settings_tab);
 
   search_bar = new SearchBar(this);
-  connect(search_bar, &SearchBar::settingsClicked, this, &TabBlock::displaySettings);
+  connect(search_bar, &SearchBar::settingsSelected, this, &TabBlock::displaySettings);
 
   QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setSpacing(0);
@@ -37,9 +37,12 @@ TabBlock::~TabBlock()
 
 }
 
-void TabBlock::displaySettings()
+void TabBlock::displaySettings(const bool& b)
 {
-  tab_stacked_widget->setCurrentWidget(settings_tab);
+  if(b)
+    tab_stacked_widget->setCurrentWidget(settings_tab);
+  else
+    tab_stacked_widget->setCurrentWidget(chat_tab);
 }
 
 void TabBlock::displayHome()

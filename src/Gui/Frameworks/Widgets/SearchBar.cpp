@@ -1,4 +1,7 @@
 #include "SearchBar.h"
+
+#include <QIcon>
+
 #include <QDebug>
 
 SearchWidget::SearchWidget(const int& width, QWidget *parent)
@@ -7,10 +10,8 @@ SearchWidget::SearchWidget(const int& width, QWidget *parent)
 {
   this->setMinimumHeight(32);
   this->setGeometry(x(), y(), width, height());
-//  search_bar->addAction(QIcon("/Users/echo/Downloads/av6584c34aabb39f00a10.png"), QLineEdit::LeadingPosition);
   this->setPlaceholderText("discover...");
   this->setAttribute(Qt::WA_MacShowFocusRect, 0);
-//  this->setContentsMargins(10, 0, 0, 10);
   this->setStyleSheet("border-radius: 16px; "
                       "background-color: #eeeeee; "
                       "margin-left: 10px;"
@@ -19,57 +20,62 @@ SearchWidget::SearchWidget(const int& width, QWidget *parent)
                       "padding-right: 10px;"
                       "outline: none;");
 
+  expand_anim = new QVariantAnimation(this);
+  expand_anim->setEasingCurve(QEasingCurve::OutElastic);
+  expand_anim->setDuration(500);
+  expand_anim->setEndValue(width_full);
+  connect(expand_anim, &QVariantAnimation::valueChanged, this, &SearchWidget::updateWidth);
 
-  expand_animation = new QVariantAnimation(this);
-  expand_animation->setEasingCurve(QEasingCurve::OutElastic);
-  expand_animation->setDuration(500);
-  expand_animation->setStartValue(width);
-  expand_animation->setEndValue(250);
-  connect(expand_animation, &QVariantAnimation::valueChanged, this, &SearchWidget::updateWidth);
+  shrink_anim = new QVariantAnimation(this);
+  shrink_anim->setEasingCurve(QEasingCurve::OutQuad);
+  shrink_anim->setDuration(100);
+  shrink_anim->setEndValue(width_half);
+  connect(shrink_anim, &QVariantAnimation::valueChanged, this, &SearchWidget::updateWidth);
+  connect(shrink_anim, &QVariantAnimation::finished, this, &SearchWidget::shrinked);
 
-  shrink_animation = new QVariantAnimation(this);
-  shrink_animation->setEasingCurve(QEasingCurve::OutQuad);
-  shrink_animation->setDuration(200);
-  shrink_animation->setStartValue(width);
-  shrink_animation->setEndValue(225);
-  connect(shrink_animation, &QVariantAnimation::valueChanged, this, &SearchWidget::updateWidth);
-  connect(shrink_animation, &QVariantAnimation::finished, this, &SearchWidget::shrinked);
 }
 
 void SearchWidget::expand()
 {
-  shrink_animation->stop();
-  expand_animation->start();
-  expand_animation->setStartValue(width);
+  if(frozen)
+    return;
+  shrink_anim->stop();
+  expand_anim->setStartValue(width);
+  expand_anim->start();
 }
 
 void SearchWidget::shrink()
 {
-  expand_animation->stop();
-  shrink_animation->start();
-  shrink_animation->setStartValue(width);
+  if(frozen)
+    return;
+  expand_anim->stop();
+  shrink_anim->setStartValue(width);
+  shrink_anim->start();
+}
+
+void SearchWidget::freez(const bool &b)
+{
+  frozen = b;
 }
 
 void SearchWidget::focusInEvent(QFocusEvent *e)
 {
   QLineEdit::focusInEvent(e);
-  qWarning()<<"--------------------SearchWidget::focusInEvent";
-
-  emit focused(true);
+  if(!frozen)
+    emit focused(true);
 }
 
 void SearchWidget::focusOutEvent(QFocusEvent *e)
 {
   QLineEdit::focusOutEvent(e);
-  qWarning()<<"--------------------SearchWidget::focusOutEvent";
-  emit focused(false);
+  if(!frozen)
+    emit focused(false);
 }
 
 void SearchWidget::updateWidth(const QVariant &v)
 {
   width = v.toInt();
   this->setGeometry(x(), y(), width, height());
-//  qDebug()<<"set: " << width ;
 }
 
 
@@ -81,14 +87,30 @@ SearchBar::SearchBar(QWidget *parent)
 {
   settings_button = new LabelButton(0, this);
   settings_button->setHidden(true);
-  settings_button->setDefaultPixmap("/Users/echo/Downloads/settings_0.png");
-  settings_button->setHoveredPixmap("/Users/echo/Downloads/settings_1.png");
-  connect(settings_button, &LabelButton::clicked, this, &SearchBar::settingsClicked);
+  settings_button->setDefaultPixmap(":/img/img/settings_0.png");
+  settings_button->setHoveredPixmap(":/img/img/settings_1.png");
+  connect(settings_button, &LabelButton::clicked, [this] {
+      if(settings_toggled)
+        {
+          settings_toggled = false;
+          search_widget->freez(false);
+          search_widget->shrink();
+          search_widget->setHidden(false);
+          emit settingsSelected(false);
+
+        }
+      else
+        {
+          settings_toggled = true;
+          search_widget->freez(true);
+          emit settingsSelected(true);
+        }
+    });
 
   search_widget = new SearchWidget(width, this);
   connect(search_widget, &SearchWidget::focused, [this](const bool &b){
       search_focus_lock = b;
-      if(!search_focus_lock)
+      if(!b)
         {
           settings_button->setHidden(true);
           search_widget->expand();
@@ -103,8 +125,6 @@ SearchBar::SearchBar(QWidget *parent)
   main_Layout->setSpacing(3);
   main_Layout->addWidget(search_widget);
   main_Layout->addWidget(settings_button);
-
-
 }
 
 void SearchBar::mousePressEvent(QMouseEvent *)
@@ -114,22 +134,23 @@ void SearchBar::mousePressEvent(QMouseEvent *)
 
 void SearchBar::mouseReleaseEvent(QMouseEvent *)
 {
-
 }
 
-void SearchBar::enterEvent(QEvent *)
+void SearchBar::enterEvent(QEvent *e)
 {
-  if(animation_lock || search_focus_lock)
+  if(search_focus_lock || settings_toggled)
     return;
   search_widget->shrink();
+  QWidget::enterEvent(e);
 }
 
-void SearchBar::leaveEvent(QEvent *)
+void SearchBar::leaveEvent(QEvent *e)
 {
-  if(animation_lock || search_focus_lock)
+  if(search_focus_lock || settings_toggled)
     return;
   settings_button->setHidden(true);
   search_widget->expand();
+  QWidget::leaveEvent(e);
 }
 
 

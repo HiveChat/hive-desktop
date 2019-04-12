@@ -21,7 +21,7 @@ public:
   explicit TabBlock(QWidget *parent = nullptr);
   ~TabBlock();
 
-  void displaySettings();
+  void displaySettings(const bool &b);
   void displayHome();
   void displayChat();
 
