@@ -1,14 +1,15 @@
 #include "Subscription.h"
 
-Channel::Channel()
+template <typename Handler_T>
+Event<Handler_T>::Event()
 {
 
 }
 
 
 
-
-Event::Event()
+template <class Event_T>
+Channel<Event_T>::Channel()
 {
 
 }

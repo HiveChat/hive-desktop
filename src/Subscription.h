@@ -1,21 +1,25 @@
 #ifndef SUBSCRIBER_H
 #define SUBSCRIBER_H
 
-class Channel;
+template <typename Handler_T>
 class Event;
+template <class Event_T>
+class Channel;
 class Publisher;
 class Subscriber;
 
-class Channel
-{
-public:
-  Channel();
-};
-
+template <typename Handler_T>
 class Event
 {
 public:
   Event();
+};
+
+template <class Event_T>
+class Channel
+{
+public:
+  Channel();
 };
 
 class Publisher
