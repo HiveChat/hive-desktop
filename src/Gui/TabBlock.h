@@ -1,11 +1,16 @@
 #ifndef GUITABBLOCK_H
 #define GUITABBLOCK_H
 
-#include <QStackedWidget>
-#include "Gui/Frameworks/Widgets/LabelButton.h"
+#include "Gui/Frameworks/Widgets/Button.h"
+#include "Gui/Frameworks/Widgets/SearchBar.h"
+
 #include "ChatTab.h"
 #include "HomeTab.h"
 #include "SettingsTab.h"
+
+#include <QStackedWidget>
+#include <QLineEdit>
+#include <QIcon>
 
 
 class TabBlock : public QWidget
@@ -32,6 +37,7 @@ private:
   QFrame *mid_btn_line;
   QFrame *right_btn_line;
   QStackedWidget *tab_stacked_widget;
+  SearchBar *search_bar;
 };
 
 #endif // GUITABBLOCK_H

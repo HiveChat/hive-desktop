@@ -47,11 +47,11 @@ CombScrollWidget::CombScrollWidget(QWidget *parent)
 void CombScrollWidget::addComb(UsrProfile *p)
 {
   Log::gui(Log::Info, "GuiChatTab_comb_scroll_widget::addComb()", "Added a comb.");
-  CombWidget *comb_widget = new CombWidget(p, this);
-  comb_widget_hash.insert(p->key, comb_widget);
-  main_layout->addWidget(comb_widget);
+  CombWidget *w = new CombWidget(p, this);
+  comb_widget_hash.insert(p->key, w);
+  main_layout->addWidget(w);
 
-  connect(comb_widget, &CombWidget::clicked,
+  connect(w, &CombWidget::clicked,
           [this](const QString &usrKey){
             emit combWidgetClicked(usrKey);
           });

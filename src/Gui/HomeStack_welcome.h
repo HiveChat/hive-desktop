@@ -1,7 +1,7 @@
 #ifndef GUIWELCOMESTACK_H
 #define GUIWELCOMESTACK_H
 
-#include "Gui/Frameworks/Widgets/LabelButton.h"
+#include "Gui/Frameworks/Widgets/Button.h"
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Data/AppDataManager.h"
 

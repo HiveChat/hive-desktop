@@ -20,7 +20,7 @@ private:
   int number;
   int height;
   QRectF rectangle;
-  QColor color = QColor("#D31111");
+  QColor color = QColor(237,64,64);
 };
 
 #endif // GUIBADGEICON_H

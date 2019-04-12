@@ -6,7 +6,7 @@ BadgeIcon::BadgeIcon(const int &dia, QWidget *parent)
   , height(dia)
   , rectangle(QRect(18, 10, dia, dia))
 {
-  this->setHidden(true);
+//  this->setHidden(true);
 }
 
 void BadgeIcon::setNumber(const int &num)

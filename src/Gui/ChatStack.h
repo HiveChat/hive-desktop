@@ -5,7 +5,7 @@
 #include "UsrData.h"
 #include "Data/AppDataManager.h"
 #include "Gui/Frameworks/ScrollStack.h"
-#include "Gui/Frameworks/Widgets/LabelButton.h"
+#include "Gui/Frameworks/Widgets/Button.h"
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/TextBubble.h"
 

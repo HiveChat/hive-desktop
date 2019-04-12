@@ -39,12 +39,10 @@ TabBlock::TabBlock(QWidget *parent)
   left_btn_line->setFrameShadow(QFrame::Plain);
   left_btn_line->setFixedSize(83,2);
   left_btn_line->setStyleSheet("QFrame{  background: #CFCFCF; border: transparent;  }");
-
   mid_btn_line->setFrameShape(QFrame::HLine);
   mid_btn_line->setFrameShadow(QFrame::Plain);
   mid_btn_line->setFixedSize(84,3);
   mid_btn_line->setStyleSheet("QFrame{  background: #FFB500; border: transparent;  }");
-
   right_btn_line->setFrameShape(QFrame::HLine);
   right_btn_line->setFrameShadow(QFrame::Plain);
   right_btn_line->setFixedSize(83,2);
@@ -66,10 +64,14 @@ TabBlock::TabBlock(QWidget *parent)
   tab_stacked_widget->addWidget(home_tab);
   tab_stacked_widget->addWidget(settings_tab);
 
+  search_bar = new SearchBar(this);
+
   QVBoxLayout *main_layout = new QVBoxLayout(this);
   main_layout->setSpacing(0);
   main_layout->setMargin(0);
   main_layout->setAlignment(Qt::AlignTop);
+  main_layout->addSpacing(5);
+  main_layout->addWidget(search_bar);
   main_layout->addLayout(tab_label_layout);
   main_layout->addWidget(tab_stacked_widget);
 

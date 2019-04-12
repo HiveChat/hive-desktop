@@ -37,17 +37,13 @@ CombWidget::CombWidget(UsrProfile *p, QWidget *parent)
   usr_info_layout->addLayout(net_status_layout);
 
   badge_icon = new BadgeIcon(14, this);
-  badge_icon->setNumber(0);
-
+  badge_icon->setNumber(18);
 
   main_layout = new QHBoxLayout(this);
   main_layout->setAlignment(Qt::AlignLeft);
   main_layout->addSpacing(10);
   main_layout->addWidget(avatar);
   main_layout->addLayout(usr_info_layout);
-//  main_layout->addWidget(badge_icon, Qt::AlignCenter);
-
-
 }
 
 CombWidget::~CombWidget()
@@ -163,7 +159,7 @@ void CombWidget::leaveEvent(QEvent *)
   this->update();
 }
 
-void CombWidget::dragMoveEvent(QEvent *)
+void CombWidget::dragMoveEvent(QDragMoveEvent *)
 {
 
 }

@@ -11,7 +11,7 @@
 
 #include "GlobalType.h"
 #include "Global.h"
-#include "Gui/Frameworks/Widgets/LabelButton.h"
+#include "Gui/Frameworks/Widgets/Button.h"
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/BadgeIcon.h"
 
@@ -35,7 +35,7 @@ protected:
   void mousePressEvent(QMouseEvent *event);
   void enterEvent(QEvent *);
   void leaveEvent(QEvent *);
-  void dragMoveEvent(QEvent *);
+  void dragMoveEvent(QDragMoveEvent *);
 
 private:
   AvatarButton *avatar;

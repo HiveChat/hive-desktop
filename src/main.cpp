@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
 
   Hive hiveApp(argc, argv);
   hiveApp.window->show();
+  hiveApp.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 #ifdef Q_OS_OSX
   Cocoa::changeTitleBarColor(hiveApp.window->effectiveWinId(), 255./255., 255./255., 255./255., .95);

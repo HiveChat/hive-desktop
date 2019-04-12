@@ -42,7 +42,6 @@ SOURCES += \
     Gui/Frameworks/MenuButton.cpp \
 \
     Gui/Frameworks/Widgets/TextBubble.cpp \
-    Gui/Frameworks/Widgets/LabelButton.cpp \
     Gui/Frameworks/Widgets/ColorPicker.cpp \
     Gui/Frameworks/Widgets/BadgeIcon.cpp \
 \
@@ -58,7 +57,10 @@ SOURCES += \
     HiveServer.cpp \
     Gui/Window.cpp \
     Global.cpp \
-    Subscription.cpp
+    Subscription.cpp \
+    Database.cpp \
+    Gui/Frameworks/Widgets/Button.cpp \
+    gui/frameworks/widgets/SearchBar.cpp
 \
 
 HEADERS  += \
@@ -86,7 +88,6 @@ HEADERS  += \
     Gui/Frameworks/MenuButton.h \
 \
     Gui/Frameworks/Widgets/TextBubble.h \
-    Gui/Frameworks/Widgets/LabelButton.h \
     Gui/Frameworks/Widgets/ColorPicker.h \
     Gui/Frameworks/Widgets/BadgeIcon.h \
 \
@@ -103,7 +104,10 @@ HEADERS  += \
     HiveServer.h \
     Gui/Window.h \
     Global.h \
-    Subscription.h
+    Subscription.h \
+    Database.h \
+    Gui/Frameworks/Widgets/Button.h \
+    gui/frameworks/widgets/SearchBar.h
 
 ICON = Src/hive.icns
 

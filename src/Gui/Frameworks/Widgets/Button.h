@@ -3,9 +3,10 @@
 
 #include "Global.h"
 
-#include <QLabel>
-#include <QMouseEvent>
 #include <QTimer>
+#include <QLabel>
+#include <QTextOption>
+#include <QMouseEvent>
 #include <QDebug>
 
 class LabelButton : public QLabel
@@ -41,6 +42,36 @@ signals:
   void clicked();
   void entered();
   void left();
+};
+
+
+
+class FloatButton : public QFrame
+{
+  Q_OBJECT
+public:
+  explicit FloatButton(const QString &txt, QWidget *parent = nullptr, const QColor &color = Qt::gray);
+
+protected:
+  void paintEvent(QPaintEvent *);
+  void mousePressEvent(QMouseEvent *);
+  void mouseReleaseEvent(QMouseEvent *);
+  void enterEvent(QEvent *);
+  void leaveEvent(QEvent *);
+
+private:
+  int width_;
+  int height_;
+  int radius_ = 15;
+  QString text_;
+  QColor color_;
+  QFont font_;
+  QTextOption text_option_;
+
+  bool hovered_ = false;
+
+signals:
+  void clicked();
 };
 
 #endif // GuiLabelButton_H
