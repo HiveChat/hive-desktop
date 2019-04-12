@@ -1,7 +1,7 @@
 #include "AppDataManager.h"
 
-DoubleBuffer<NetPacket*> AppDataManager::inboundNetBuffer;
-DoubleBuffer<NetPacket*> AppDataManager::outboundNetBuffer;
+DoubleBuffer<NetPacket*> AppDataManager::net_buffer_in;
+DoubleBuffer<NetPacket*> AppDataManager::net_buffer_out;
 QHash<QString, UsrData*> AppDataManager::usr_data_hash;
 std::map<QString, int*> AppDataManager::settings_int_hash;
 std::map<QString, QColor*> AppDataManager::settings_qcolor_hash;
@@ -26,12 +26,12 @@ void AppDataManager::stop()
 
 void AppDataManager::pushInboundBuffer(NetPacket *packet)
 {
-  inboundNetBuffer.push(packet);
+  net_buffer_in.push(packet);
 }
 
 void AppDataManager::pushOutboundBuffer(NetPacket *packet)
 {
-  outboundNetBuffer.push(packet);
+  net_buffer_out.push(packet);
 }
 
 bool AppDataManager::isUsrNew(const QString &uuid)
@@ -316,7 +316,7 @@ void AppDataManager::run()
   initVariable();
 
   loop = new Parsley::Loop();
-  Parsley::on(&inboundNetBuffer.onPushed, this, &AppDataManager::wakeLoop);
+  Parsley::on(&net_buffer_in.onPushed, this, &AppDataManager::wakeLoop);
 
   read_inbound_async = new Parsley::AsyncEvent(loop);
   Parsley::on(&read_inbound_async->onCalled, this, &AppDataManager::readInboundNetBuffer);
@@ -339,7 +339,7 @@ void AppDataManager::run()
 void AppDataManager::readInboundNetBuffer()
 {
   inboundNetBufferReading = true; // not 100% safe
-  NetPacket *packet = inboundNetBuffer.front();
+  NetPacket *packet = net_buffer_in.front();
   Log::net(Log::Info, "AppDataManager::readInboundNetBuffer()","Checking Package");
 
   while (packet)
@@ -349,12 +349,12 @@ void AppDataManager::readInboundNetBuffer()
       QJsonDocument doc = QJsonDocument::fromJson(QByteArray::fromStdString(packet->data), &err);
       QString ipAddr = QString::fromStdString(packet->ip_addr);
       //! HiveDoubleBuffer calls std::list::pop_front(), which automatically calls destructor of NetPacket *p.
-      inboundNetBuffer.pop();
+      net_buffer_in.pop();
       if(err.error != QJsonParseError::NoError || !doc.isObject())
         {
           Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer(): failed to parse JSON\n", packet->data.c_str());
           Log::net(Log::Warning, "AppDataManager::readInboundNetBuffer()", err.errorString());
-          packet = inboundNetBuffer.front();
+          packet = net_buffer_in.front();
           continue;
         }
 
@@ -367,7 +367,7 @@ void AppDataManager::readInboundNetBuffer()
           Log::net(Log::Warning
                    , "AppDataManager::readInboundNetBuffer()"
                    , "Package wrong destination: " + receiverKey + " My Id: " + Global::settings.profile_uuid_str);
-          packet = inboundNetBuffer.front();
+          packet = net_buffer_in.front();
           continue;
         }
 
@@ -427,7 +427,7 @@ void AppDataManager::readInboundNetBuffer()
       }
 
       //! Get a new p.
-      packet = inboundNetBuffer.front();
+      packet = net_buffer_in.front();
     }
   inboundNetBufferReading = false;
 }
@@ -441,9 +441,9 @@ void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)
 bool AppDataManager::touchFile(const std::string &path)
 {
   Parsley::File f(path, loop);
-  int ret = f.open(O_WRONLY | O_CREAT, 0644, Parsley::Sync);
+  int r = f.open(O_WRONLY | O_CREAT, 0664, Parsley::Sync);
   f.close(Parsley::Sync);
-  return ret;
+  return r;
 }
 
 bool AppDataManager::touchDir(const std::string &dir)

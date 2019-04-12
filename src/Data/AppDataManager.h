@@ -81,8 +81,8 @@ private:
   Parsley::AsyncEvent *read_inbound_async;
   bool inboundNetBufferReading = false;
 
-  static DoubleBuffer<NetPacket*> inboundNetBuffer;
-  static DoubleBuffer<NetPacket*> outboundNetBuffer;
+  static DoubleBuffer<NetPacket*> net_buffer_in;
+  static DoubleBuffer<NetPacket*> net_buffer_out;
 
 
   static std::map<QString, int*> settings_int_hash;
