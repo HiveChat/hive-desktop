@@ -14,16 +14,16 @@ SearchBar::SearchBar(QWidget *parent)
   this->setAttribute(Qt::WA_MacShowFocusRect, 0);
 //  this->setContentsMargins(10, 0, 0, 10);
   this->setStyleSheet("border-radius: 16px; "
-                            "background-color: #eeeeee; "
-                            "margin-left: 10px;"
-                            "margin-right: 10px;"
-                            "padding-left: 10px;"
+                      "background-color: #eeeeee; "
+                      "margin-left: 10px;"
+                      "margin-right: 10px;"
+                      "padding-left: 10px;"
                       "outline: none;");
 
 
   expand_animation = new QVariantAnimation(this);
-  expand_animation->setEasingCurve(QEasingCurve::OutQuad);
-  expand_animation->setDuration(200);
+  expand_animation->setEasingCurve(QEasingCurve::OutElastic);
+  expand_animation->setDuration(500);
   expand_animation->setStartValue(width);
   expand_animation->setEndValue(250);
   connect(expand_animation, &QVariantAnimation::valueChanged, this, &SearchBar::updateWidth);
@@ -49,6 +49,8 @@ void SearchBar::mouseReleaseEvent(QMouseEvent *)
 
 void SearchBar::enterEvent(QEvent *)
 {
+  if(animation_lock)
+    return;
   expand_animation->stop();
   shrink_animation->start();
   shrink_animation->setStartValue(width);
@@ -56,9 +58,28 @@ void SearchBar::enterEvent(QEvent *)
 
 void SearchBar::leaveEvent(QEvent *)
 {
+  if(animation_lock)
+    return;
   shrink_animation->stop();
   expand_animation->start();
   expand_animation->setStartValue(width);
+}
+
+void SearchBar::focusInEvent(QFocusEvent *e)
+{
+  animation_lock = true;
+  QLineEdit::focusInEvent(e);
+}
+
+void SearchBar::focusOutEvent(QFocusEvent *e)
+{
+  animation_lock = false;
+  if(width == 250)
+    return;
+  shrink_animation->stop();
+  expand_animation->start();
+  expand_animation->setStartValue(width);
+  QLineEdit::focusOutEvent(e);
 }
 
 void SearchBar::updateWidth(const QVariant &v)

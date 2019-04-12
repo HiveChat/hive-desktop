@@ -17,9 +17,8 @@ CombWidget::CombWidget(UsrProfile *p, QWidget *parent)
   this->setToolTipDuration(1000);
   setProfile(p);
 
-
   QPalette usr_name_palette;
-  usr_name_palette.setColor(QPalette::WindowText, QColor(103,72,0));
+  usr_name_palette.setColor(QPalette::WindowText, QColor(64,64,64));
 
   usr_name_label->setPalette(usr_name_palette);
   usr_name_label->setFont(Global::font_combWidgetUsrName);
@@ -96,7 +95,7 @@ void CombWidget::paintEvent(QPaintEvent *)
   painter.begin(this);
   painter.setPen(QPen(Qt::NoPen));
   painter.setBrush(QBrush(hovered ? hovered_window_color : default_window_color,Qt::SolidPattern));
-  painter.drawRoundedRect(rectangle,5,5);
+  painter.drawRoundedRect(rectangle,16,16);
   painter.end();
 }
 
