@@ -39,7 +39,6 @@ SOURCES += \
 \
     Gui/Frameworks/CombWidget.cpp \
     Gui/Frameworks/ScrollStack.cpp \
-    Gui/Frameworks/MenuButton.cpp \
 \
     Gui/Frameworks/Widgets/TextBubble.cpp \
     Gui/Frameworks/Widgets/ColorPicker.cpp \
@@ -85,7 +84,6 @@ HEADERS  += \
 \
     Gui/Frameworks/CombWidget.h \
     Gui/Frameworks/ScrollStack.h \
-    Gui/Frameworks/MenuButton.h \
 \
     Gui/Frameworks/Widgets/TextBubble.h \
     Gui/Frameworks/Widgets/ColorPicker.h \

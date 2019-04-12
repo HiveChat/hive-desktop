@@ -3,7 +3,7 @@
 
 #include <QVBoxLayout>
 #include <QGridLayout>
-#include "Gui/Frameworks/MenuButton.h"
+#include "Gui/Frameworks/Widgets/Button.h"
 
 class HomeTab : public QWidget
 {

@@ -1,9 +1,8 @@
 #ifndef GUISETTINGSTAB_H
 #define GUISETTINGSTAB_H
 
-#include "Gui/Frameworks/MenuButton.h"
+#include "Gui/Frameworks/Widgets/Button.h"
 
-#include <QWidget>
 #include <QVBoxLayout>
 #include <QGridLayout>
 
