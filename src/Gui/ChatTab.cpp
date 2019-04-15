@@ -33,7 +33,7 @@ CombScrollWidget::CombScrollWidget(QWidget *parent)
   : QWidget(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Window,QColor(0,0,0,0));// GlobalData::g_tabColor);
+  palette.setColor(QPalette::Window, Global::color_tab);
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
@@ -52,14 +52,14 @@ void CombScrollWidget::addComb(UsrProfile *p)
   main_layout->addWidget(w);
 
   connect(w, &CombWidget::clicked,
-          [this](const QString &usrKey){
-            emit combWidgetClicked(usrKey);
+          [this](const QString &uuid){
+            emit combWidgetClicked(uuid);
           });
 }
 
-void CombScrollWidget::refreshBadgeNumber(const QString &usrKey, const int &num)
+void CombScrollWidget::refreshBadgeNumber(const QString &uuid, const int &num)
 {
-  CombWidget *comb_widget = comb_widget_hash.value(usrKey);
+  CombWidget *comb_widget = comb_widget_hash.value(uuid);
   qDebug()<<"badge:" <<num;
   comb_widget->setBadgeNumber(num);
   if(num != 0)
@@ -69,9 +69,9 @@ void CombScrollWidget::refreshBadgeNumber(const QString &usrKey, const int &num)
     }
 }
 
-bool CombScrollWidget::contains(const QString &usrKey)
+bool CombScrollWidget::contains(const QString &uuid)
 {
-  return comb_widget_hash.contains(usrKey);
+  return comb_widget_hash.contains(uuid);
 }
 
 
@@ -88,7 +88,7 @@ void CombScrollWidget::refreshComb(UsrProfile *p)
     }
 }
 
-void CombScrollWidget::onCombWidgetClicked(const QString &usrKey)
+void CombScrollWidget::onCombWidgetClicked(const QString &uuid)
 {
-  emit combWidgetClicked(usrKey);
+  emit combWidgetClicked(uuid);
 }

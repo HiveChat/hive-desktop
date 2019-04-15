@@ -15,8 +15,8 @@ int main(int argc, char *argv[])
   qRegisterMetaType<Message::TextMessage> ("Message::TextMessage");
 
   Hive hiveApp(argc, argv);
-  hiveApp.window->show();
   hiveApp.setAttribute(Qt::AA_UseHighDpiPixmaps);
+  hiveApp.window->show();
 
 #ifdef Q_OS_OSX
   Cocoa::changeTitleBarColor(hiveApp.window->effectiveWinId(), 255./255., 255./255., 255./255., .95);

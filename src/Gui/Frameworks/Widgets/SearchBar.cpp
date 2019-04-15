@@ -28,7 +28,7 @@ SearchWidget::SearchWidget(const int& width, QWidget *parent)
 
   shrink_anim = new QVariantAnimation(this);
   shrink_anim->setEasingCurve(QEasingCurve::OutQuad);
-  shrink_anim->setDuration(100);
+  shrink_anim->setDuration(200);
   shrink_anim->setEndValue(width_half);
   connect(shrink_anim, &QVariantAnimation::valueChanged, this, &SearchWidget::updateWidth);
   connect(shrink_anim, &QVariantAnimation::finished, this, &SearchWidget::shrinked);
@@ -124,7 +124,7 @@ SearchBar::SearchBar(QWidget *parent)
     });
 
   main_Layout = new QHBoxLayout(this);
-  main_Layout->setContentsMargins(0,0,0,0);
+  main_Layout->setContentsMargins(0,0,10,0);
   main_Layout->setSpacing(3);
   main_Layout->addWidget(search_widget);
   main_Layout->addWidget(settings_button);

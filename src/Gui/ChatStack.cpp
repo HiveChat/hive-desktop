@@ -4,8 +4,6 @@
 
 MessageViewer::MessageViewer(QWidget *parent) : QWidget(parent)
 {
-  //test
-
   QPalette palette = this->palette();
   palette.setColor(QPalette::Window, Qt::white);
   this->setAutoFillBackground(true);
@@ -17,25 +15,25 @@ MessageViewer::MessageViewer(QWidget *parent) : QWidget(parent)
   chat_bubble_layout->setContentsMargins(5,30,5,30);
 
   ///lines
-  QFrame *top_line = new QFrame(this);
-  top_line->setFrameShape(QFrame::HLine);
-  top_line->setFrameShadow(QFrame::Plain);
-  top_line->setFixedHeight(2);
-  top_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+  QFrame *topLine = new QFrame(this);
+  topLine->setFrameShape(QFrame::HLine);
+  topLine->setFrameShadow(QFrame::Plain);
+  topLine->setFixedHeight(2);
+  topLine->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
-  QFrame *bottom_line = new QFrame(this);
-  bottom_line->setFrameShape(QFrame::HLine);
-  bottom_line->setFrameShadow(QFrame::Plain);
-  bottom_line->setFixedHeight(2);
-  bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
+  QFrame *bottomLine = new QFrame(this);
+  bottomLine->setFrameShape(QFrame::HLine);
+  bottomLine->setFrameShadow(QFrame::Plain);
+  bottomLine->setFixedHeight(2);
+  bottomLine->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
 
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->setSpacing(5);
   main_layout->setContentsMargins(0,0,0,0);
-  main_layout->addWidget(top_line);
+  main_layout->addWidget(topLine);
   main_layout->addLayout(chat_bubble_layout);
-  main_layout->addWidget(bottom_line);
+  main_layout->addWidget(bottomLine);
 
 }
 
@@ -44,24 +42,25 @@ MessageViewer::~MessageViewer()
 
 }
 
-void MessageViewer::clearChatBubbles()
+void MessageViewer::clear()
 {
-  foreach (TextBubble *temp_chat_bubble_pointer, chat_bubble_list)
+  for (TextBubble *b : chat_bubble_list)
     {
-      if(temp_chat_bubble_pointer != nullptr)
+      if(b != nullptr)
         {
-          temp_chat_bubble_pointer->deleteLater();
+          b->deleteLater();
         }
-      chat_bubble_list.removeOne(temp_chat_bubble_pointer);
+      chat_bubble_list.removeOne(b);
     }
 }
 
 void MessageViewer::addChatBubble(const QString &message, const bool &fromMe)
 {
-  chat_bubble = new TextBubble(message, !fromMe, this);
-  chat_bubble_list.append(chat_bubble);
+  TextBubble *b = new TextBubble(message, !fromMe, this);
+  chat_bubble_list.append(b);
+  chat_bubble_layout->addWidget(b);
+  chat_bubble_layout->setAlignment(b, fromMe ? Qt::AlignRight : Qt::AlignLeft);
 
-  chat_bubble_layout->addWidget(chat_bubble);
 }
 
 //////////////////////////bottom//////////////////////////////////////
@@ -111,10 +110,6 @@ MessageEditor::MessageEditor(QWidget *parent) : QWidget(parent)
   tool_layout->addSpacing(30);
   tool_layout->addWidget(file_progress_bar, 0, Qt::AlignLeft);
   tool_layout->addWidget(file_progress_label, 0, Qt::AlignLeft);
-  ///for test period
-//    expression_label->setHidden(true);
-//    image_label->setHidden(true);
-//    file_label->setHidden(true);
 
   edit_layout = new QVBoxLayout();
   edit_layout->setAlignment(Qt::AlignLeft);
@@ -190,11 +185,6 @@ MessageEditor::~MessageEditor()
 
 }
 
-QString MessageEditor::currentFileName()
-{
-  return current_file_name;
-}
-
 /// Event filter: capture QEvent outside the class
 ///   text_editor->installEventFilter(this);
 bool MessageEditor::eventFilter(QObject *obj, QEvent *e)
@@ -257,19 +247,19 @@ void TextEdit::dragEnterEvent(QDragEnterEvent *event)
 
 void TextEdit::dropEvent(QDropEvent *event)
 {
-  QList<QUrl> url_list = event->mimeData()->urls();
-  if(url_list.isEmpty())
+  QList<QUrl> urlList = event->mimeData()->urls();
+  if(urlList.isEmpty())
     {
       return;
     }
 
-  if(url_list.count() > 15)
+  if(urlList.count() > 15)
     {
       qDebug()<<"@GuiTextEdit::dropEvent: Too many files dropped";
       return;
     }
 
-  foreach(QUrl url, url_list)
+  for(QUrl url : urlList)
     {
       QString fileName = url.toLocalFile();
       if (fileName.isEmpty())
@@ -291,7 +281,7 @@ ChatStack::ChatStack(QWidget *parent)
 {
   this->setUpUI(LayoutStyle::Profile);
 
-  user = new UsrData();//empty object
+  user = new UsrData();
 
   QFrame *bottom_line = new QFrame(this);
   bottom_line->setFrameShape(QFrame::HLine);
@@ -323,7 +313,6 @@ ChatStack::ChatStack(QWidget *parent)
 
 ChatStack::~ChatStack()
 {
-  //  this->set
 }
 
 bool ChatStack::refreshProfile()
@@ -425,16 +414,16 @@ void ChatStack::loadEditingMessage()
 
 void ChatStack::loadMessageViewer()
 {
-  if(chat_widget_hash.contains(user->getKey()))
+  if(message_viewer_hash.contains(user->getKey()))
     {
-       MessageViewer *widget = chat_widget_hash.value(user->getKey());
+       MessageViewer *widget = message_viewer_hash.value(user->getKey());
        chat_widget = widget;
     }
   else
     {
       MessageViewer *widget = new MessageViewer(this);
       chat_widget = widget;
-      chat_widget_hash.insert(user->getKey(), widget);
+      message_viewer_hash.insert(user->getKey(), widget);
       this->flipLatestMessage(false);
     }
 
@@ -448,10 +437,9 @@ void ChatStack::flipUnreadMessage()
   Log::gui(Log::Info, "GuiChatStack::flipUnreadMessage()", "chat stack is loading unread message...");
   if(user->getUnreadMessageNumber() != 0)
     {
-      QList<QJsonObject> *message_list = user->retrieveUnreadMessage();
-      foreach (QJsonObject history_json_obj, *message_list)
+      for(QJsonObject history : *user->retrieveUnreadMessage())
         {
-          chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+          chat_widget->addChatBubble(history["message"].toString(), history["fromMe"].toBool());
           qDebug()<<" | @GuiChatStack::refreshUI(): Message loaded...";
         }
     }
@@ -469,17 +457,16 @@ void ChatStack::flipLatestMessage(const bool &clear)
 {
   if(clear)
     {
-      chat_widget->clearChatBubbles();
+      chat_widget->clear();
     }
 
   Log::gui(Log::Info, "GuiChatStack::flipLatestMessage()", "chat stack is loading latest history message...");
-  QJsonArray message_json_array = *user->flipLatest();
-  int message_count = message_json_array.count();
-  for(int i = 0; i < message_count; i++)
+  QJsonArray messages = *user->flipLatest();
+  for(int i = 0; i < messages.count(); ++ i)
     {
-      QJsonObject history_json_obj = message_json_array[i].toObject();
+      QJsonObject history = messages[i].toObject();
 
-      chat_widget->addChatBubble(history_json_obj["message"].toString(), history_json_obj["fromMe"].toBool());
+      chat_widget->addChatBubble(history["message"].toString(), history["fromMe"].toBool());
       qDebug()<<" | GuiChatStack::refreshUI(): Message loaded...";
     }
 
@@ -489,13 +476,13 @@ void ChatStack::flipLatestMessage(const bool &clear)
 void ChatStack::flipUpMessage(const bool &clear)
 {
   if(clear)
-    chat_widget->clearChatBubbles();
+    chat_widget->clear();
 }
 
 void ChatStack::flipDownMessage(const bool &clear)
 {
   if(clear)
-    chat_widget->clearChatBubbles();
+    chat_widget->clear();
 }
 
 void ChatStack::onSendButtonClicked()

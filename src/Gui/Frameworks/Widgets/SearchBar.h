@@ -36,16 +36,14 @@ private:
 
   int width;
   const int width_full = 250;
-  const int width_half = 225;
+  const int width_half = 215;
   bool frozen = false;
   QVariantAnimation *expand_anim;
   QVariantAnimation *shrink_anim;
-//  QVariantAnimation *escape_anim;
 
 signals:
   void focused(const bool &b);
   void shrinked();
-//  void escaped();
 };
 
 

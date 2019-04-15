@@ -54,21 +54,6 @@ HomeStack_welcome::HomeStack_welcome(QWidget *parent) : QWidget(parent)
 
 void HomeStack_welcome::mouseReleaseEvent(QMouseEvent *)
 {
-//  if(ev->button() == Qt::LeftButton)
-//    {
-//      QVariantAnimation *file_tran_ani = new QVariantAnimation(this);
-//      file_tran_ani->setStartValue(255);
-//      file_tran_ani->setEndValue(0);
-//      file_tran_ani->setDuration(3000);
-//      file_tran_ani->setEasingCurve(QEasingCurve::OutCirc);
-//      connect(file_tran_ani, &QVariantAnimation::valueChanged,
-//              [this](QVariant value) {
-//                QPalette palette;
-//                palette.setColor(QPalette::Window, QColor(255,255,255,value.toInt()));
-//                this->setPalette(palette);
-//              });
-//      file_tran_ani->start(QAbstractAnimation::DeleteWhenStopped);
-  //    }
 }
 
 QString HomeStack_welcome::getGreetings()
@@ -110,10 +95,10 @@ void HomeStack_welcome::refreshUI()
   else
     my_avatar->setAvatar(Global::settings.profile_avatar_str);
 
-  UsrData *p = AppDataManager::usr_data_hash.value(Global::settings.profile_uuid_str);
-  if(p && p->getProfile())
+  UsrData *usr = AppDataManager::usr_data_hash.value(Global::settings.profile_uuid_str);
+  if(usr && usr->getProfile())
     {
-      if(!p->getProfile()->online)
+      if(!usr->getProfile()->online)
         {
           online = false;
           ip_label->setText("<span style=\" color:#ed403f;\">●</span> You are Offline");
@@ -121,7 +106,7 @@ void HomeStack_welcome::refreshUI()
       else
         {
           online = true;
-          ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> %1\n\n\n").arg(p->getProfile()->ip));
+          ip_label->setText(QString("<span style=\" color:#39c828;\">●</span> %1\n\n\n").arg(usr->getProfile()->ip));
         }
     }
   Log::gui(Log::Info, "GuiWelcomeStack::refresh()", "Finished");

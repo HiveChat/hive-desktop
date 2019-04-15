@@ -18,17 +18,17 @@ public:
   explicit CombScrollWidget(QWidget *parent = nullptr);
   void addComb(UsrProfile *p);
   void refreshComb(UsrProfile *p);
-  void refreshBadgeNumber(const QString &usrKey, const int &num);
-  bool contains(const QString &usrKey);
+  void refreshBadgeNumber(const QString &uuid, const int &num);
+  bool contains(const QString &uuid);
 
-  void onCombWidgetClicked(const QString &usrKey);
+  void onCombWidgetClicked(const QString &uuid);
 
 private:
   QVBoxLayout *main_layout;
   QHash<QString, CombWidget *> comb_widget_hash;
 
 signals:
-  void combWidgetClicked(const QString &usrKey);
+  void combWidgetClicked(const QString &uuid);
 };
 
 class ChatTab : public QWidget

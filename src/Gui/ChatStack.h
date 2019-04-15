@@ -40,9 +40,6 @@ protected:
   void dragEnterEvent(QDragEnterEvent *event);
   void dropEvent(QDropEvent *event);
 
-private:
-  bool control_pressed = false;
-
 signals:
   void keyEnterTriggered(bool pressed);
 };
@@ -55,12 +52,11 @@ public:
   explicit MessageViewer(QWidget *parent = nullptr);
   ~MessageViewer();
 
-  void clearChatBubbles();
+  void clear();
 
 private:
   QVBoxLayout *main_layout;
   QVBoxLayout *chat_bubble_layout;
-  TextBubble *chat_bubble;
 
   QList<TextBubble*> chat_bubble_list;
 
@@ -76,8 +72,6 @@ class MessageEditor : public QWidget
 public:
   explicit MessageEditor(QWidget *parent = nullptr);
   ~MessageEditor();
-
-  QString currentFileName();
 
   TextEdit *text_editor;
   LabelButton *send_btn;
@@ -98,8 +92,6 @@ private:
   QLabel *file_progress_label;
 
   QVariantAnimation *file_tran_ani;
-
-  QString current_file_name;
 
   bool control_pressed = false;
   bool file_label_hovered = false;
@@ -135,7 +127,7 @@ private:
   MessageEditor *message_editor;
   UsrData *user;
   QPair<int, int> file_tran_progress_pair;
-  QHash<QString, MessageViewer*> chat_widget_hash;
+  QHash<QString, MessageViewer*> message_viewer_hash;
   QHash<QString, QString> editing_message_hash;
 
   int click_num = 0;

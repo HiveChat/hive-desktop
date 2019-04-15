@@ -146,13 +146,9 @@ void AvatarComposer::wheelEvent(QWheelEvent *event)
 void AvatarComposer::render()
 {
   if(render_lock)
-    {
-      return;
-    }
+    return;
   else
-    {
-      render_lock = true;
-    }
+    render_lock = true;
 
   QPainter painter(&rendered_image);
   painter.setRenderHint(QPainter::Antialiasing, true);
