@@ -93,15 +93,18 @@ SearchBar::SearchBar(QWidget *parent)
       if(settings_toggled)
         {
           settings_toggled = false;
+          settings_button->setDefaultPixmap(":/img/img/settings_0.png");
+          settings_button->setHoveredPixmap(":/img/img/settings_1.png");
           search_widget->freez(false);
           search_widget->shrink();
           search_widget->setHidden(false);
           emit settingsSelected(false);
-
         }
       else
         {
           settings_toggled = true;
+          settings_button->setDefaultPixmap(":/img/img/chat_0.png");
+          settings_button->setHoveredPixmap(":/img/img/chat_1.png");
           search_widget->freez(true);
           emit settingsSelected(true);
         }

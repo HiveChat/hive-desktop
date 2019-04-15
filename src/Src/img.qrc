@@ -39,6 +39,8 @@
         <file>img/update.png</file>
         <file>img/settings_0.png</file>
         <file>img/settings_1.png</file>
+        <file>img/chat_0.png</file>
+        <file>img/chat_1.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>
