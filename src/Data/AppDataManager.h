@@ -5,28 +5,24 @@
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
 
-#include "libparsley/file.h"
-#include "libparsley/timer.h"
-#include "libparsley/async_event.h"
+#include <libparsley/file.h>
+#include <libparsley/timer.h>
+#include <libparsley/async_event.h>
 
-#include <unordered_map>
-#include <functional>
 #include <unordered_map>
 #include <forward_list>
-#include <mutex>
 
 #include <QThread>
-#include <QDebug>
-
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QStandardPaths>
-
 #include <QFontDatabase>
 #include <QHostInfo>
 #include <QTimer>
 #include <QUuid>
+
+#include <QDebug>
 
 
 class AppDataManager;

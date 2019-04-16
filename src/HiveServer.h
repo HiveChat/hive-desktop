@@ -1,17 +1,14 @@
-#ifndef UVTCPSERVER_H
-#define UVTCPSERVER_H
+#ifndef HIVESERVER_H
+#define HIVESERVER_H
 
-#include "libparsley/tcp_server.h"
-#include "libparsley/timer.h"
-#include "libparsley/parsley.h"
-
-#include "HiveProtocol.h"
-#include "HiveUdpServer.h"
 #include "./Data/AppDataManager.h"
 
+#include "HiveUdpServer.h"
+#include "HiveProtocol.h"
 
-#define TCP_PORT 23232
-#define TCP_BACKLOG 128
+#include <libparsley/tcp_server.h>
+#include <libparsley/timer.h>
+#include <libparsley/parsley.h>
 
 
 class HiveServer;
@@ -42,7 +39,6 @@ private:
   void onTimedOut(Parsley::Timer *);
 
 //  bool processUsrLeave(QString *usrKey); <<! to be moved to AppDataManager
-
 };
 
-#endif // UVTCPSERVER_H
+#endif // HIVESERVER_H
