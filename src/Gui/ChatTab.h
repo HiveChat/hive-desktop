@@ -31,17 +31,12 @@ signals:
   void combWidgetClicked(const QString &uuid);
 };
 
-class ChatTab : public QWidget
+class ChatTab : public QScrollArea
 {
   Q_OBJECT
 public:
   explicit ChatTab(QWidget *parent = nullptr);
-  QScrollArea *comb_scrollarea;
   CombScrollWidget *comb_scroll_widget;
-
-private:
-  QVBoxLayout *main_layout;
-  QVBoxLayout *comb_layout;
 };
 
 #endif // GUICHATTAB_H

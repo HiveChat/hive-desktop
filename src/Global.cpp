@@ -23,7 +23,7 @@ QColor Global::color_lightYellow = QColor(255,215,126);
 
 QColor Global::color_window = QColor(255,255,255);
 QColor Global::color_alphaTab = QColor(255,255,255,255);
-QColor Global::color_tab = QColor(0,0,0,0);
+QColor Global::color_comb_selection = QColor(240,240,240,100);
 
 QColor Global::color_defaultChatBubbleI = Global::color_lightYellow;
 QColor Global::color_defaultChatBubbleO = Global::color_lightGrey;

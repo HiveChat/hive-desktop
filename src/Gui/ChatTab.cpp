@@ -5,35 +5,26 @@
 #include <QScrollBar>
 
 ChatTab::ChatTab(QWidget *parent)
-  : QWidget(parent)
+  : QScrollArea(parent)
 {
-  comb_scrollarea = new QScrollArea(this);
-  comb_scrollarea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  comb_scrollarea->setFrameShape(QFrame::NoFrame);
-  comb_scrollarea->setWidgetResizable(true);
+//  this->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  this->setFrameShape(QFrame::NoFrame);
+  this->setWidgetResizable(true);
   comb_scroll_widget = new CombScrollWidget();
-  comb_scrollarea->setWidget(comb_scroll_widget);
-
-  main_layout = new QVBoxLayout(this);
-  main_layout->addWidget(comb_scrollarea);
-  main_layout->setContentsMargins(5,5,5,5);
+  this->setWidget(comb_scroll_widget);
 
   QPalette palette;
-  palette.setColor(QPalette::Window, Global::color_tab);
-
+  palette.setColor(QPalette::Window, Qt::transparent);
   this->setAutoFillBackground(true);
   this->setPalette(palette);
   this->setFixedWidth(250);
 }
 
-
-
-
 CombScrollWidget::CombScrollWidget(QWidget *parent)
   : QWidget(parent)
 {
   QPalette palette;
-  palette.setColor(QPalette::Window, Global::color_tab);
+  palette.setColor(QPalette::Window, Qt::transparent);
   this->setPalette(palette);
   this->setAutoFillBackground(true);
 
@@ -47,6 +38,7 @@ CombScrollWidget::CombScrollWidget(QWidget *parent)
 void CombScrollWidget::addComb(UsrProfile *p)
 {
   Log::gui(Log::Info, "GuiChatTab_comb_scroll_widget::addComb()", "Added a comb.");
+
   CombWidget *w = new CombWidget(p, this);
   comb_widget_hash.insert(p->key, w);
   main_layout->addWidget(w);
@@ -55,6 +47,12 @@ void CombScrollWidget::addComb(UsrProfile *p)
           [this](const QString &uuid){
             emit combWidgetClicked(uuid);
           });
+
+  for(int i = 0; i < 1000; ++ i)
+    {
+      CombWidget *c = new CombWidget(p, this);
+      main_layout->addWidget(c);
+    }
 }
 
 void CombScrollWidget::refreshBadgeNumber(const QString &uuid, const int &num)

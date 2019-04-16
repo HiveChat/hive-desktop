@@ -150,7 +150,8 @@ void AvatarComposer::render()
   else
     render_lock = true;
 
-  QPainter painter(&rendered_image);
+  QPainter painter;
+  painter.begin(&rendered_image);
   painter.setRenderHint(QPainter::Antialiasing, true);
   painter.setCompositionMode(QPainter::CompositionMode_Source);
   painter.fillRect(rendered_image.rect(), Qt::transparent);

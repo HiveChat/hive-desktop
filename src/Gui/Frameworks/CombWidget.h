@@ -30,7 +30,7 @@ protected:
   bool mousePressed = false;
   QMouseEvent *mouseEvent;
 
-  void paintEvent(QPaintEvent  *);
+//  void paintEvent(QPaintEvent  *);
   void mouseReleaseEvent(QMouseEvent *);
   void mousePressEvent(QMouseEvent *event);
   void enterEvent(QEvent *);
@@ -52,12 +52,9 @@ private:
   const QString unstable_dot = "<span style=\" color:#ffb500;\">●</span>";
 
   QPalette hover_palette;
-  QColor default_window_color = Global::color_tab;
-  QColor hovered_window_color = QColor(248,248,248);
+  QColor default_window_color = Qt::transparent;
+  QColor hovered_window_color = Global::color_comb_selection;
 
-  bool hovered  = false;
-
-  ///data
   UsrProfile usr_profile;
   QString getSubNetStr(const QString &ipAddr);
 

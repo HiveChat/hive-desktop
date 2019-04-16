@@ -47,7 +47,7 @@ public:
 
   static QColor color_window;
   static QColor color_alphaTab;
-  static QColor color_tab;
+  static QColor color_comb_selection;
 
   static QColor color_defaultChatBubbleI;
   static QColor color_defaultChatBubbleO;

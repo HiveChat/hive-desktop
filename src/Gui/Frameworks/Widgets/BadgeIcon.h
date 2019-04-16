@@ -18,6 +18,7 @@ protected:
 
 private:
   int number;
+  int c;
   int height;
   QRectF rectangle;
   QColor color = QColor(237,64,64);

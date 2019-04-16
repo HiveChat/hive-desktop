@@ -86,18 +86,16 @@ void CombWidget::setBadgeNumber(const int &num)
 }
 
 
-//////events
-
-void CombWidget::paintEvent(QPaintEvent *)
-{
-  QRectF rectangle(0, 0, this->width(), this->height());
-  QPainter painter;
-  painter.begin(this);
-  painter.setPen(QPen(Qt::NoPen));
-  painter.setBrush(QBrush(hovered ? hovered_window_color : default_window_color,Qt::SolidPattern));
-  painter.drawRoundedRect(rectangle,16,16);
-  painter.end();
-}
+//void CombWidget::paintEvent(QPaintEvent *)
+//{
+//  QRectF rectangle(0, 0, this->width(), this->height());
+//  QPainter painter;
+//  painter.begin(this);
+//  painter.setPen(QPen(Qt::NoPen));
+//  painter.setBrush(QBrush(hovered ? hovered_window_color : default_window_color, Qt::SolidPattern));
+//  painter.drawRoundedRect(rectangle,0,0);
+//  painter.end();
+//}
 
 void CombWidget::mouseReleaseEvent(QMouseEvent *)
 {
@@ -116,7 +114,6 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
       QTimer::singleShot(100, [this](){
           if(mousePressed)
             {
-              hovered = false;
               this->update();
               this->setHidden(true);
               QPixmap pixmap = grab(this->rect());//grab(this->rect());
@@ -148,14 +145,14 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
 
 void CombWidget::enterEvent(QEvent *)
 {
-  hovered = true;
-  this->update();
+  hover_palette.setColor(QPalette::Window, hovered_window_color);
+  this->setPalette(hover_palette);
 }
 
 void CombWidget::leaveEvent(QEvent *)
 {
-  hovered = false;
-  this->update();
+  hover_palette.setColor(QPalette::Window, default_window_color);
+  this->setPalette(hover_palette);
 }
 
 void CombWidget::dragMoveEvent(QDragMoveEvent *)
@@ -165,22 +162,22 @@ void CombWidget::dragMoveEvent(QDragMoveEvent *)
 
 QString CombWidget::getSubNetStr(const QString &ipAddr)
 {
-  int loop_num = 0;
-  QString sub_net_str;
+  int loopNum = 0;
+  QString subNetStr;
 
   for(int i = 0; i < ipAddr.size(); i++)
     {
       if(ipAddr.at(i) == '.')
-          loop_num ++;
+          loopNum ++;
 
-      if(loop_num == 3)
+      if(loopNum == 3)
           break;
 
-      if(loop_num == 2)
-          sub_net_str.append(ipAddr.at(i));
+      if(loopNum == 2)
+          subNetStr.append(ipAddr.at(i));
     }
 
-  return sub_net_str;
+  return subNetStr;
 }
 
 //void GuiCombWidget::dragMoveEvent(QEvent *)

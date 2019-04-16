@@ -24,7 +24,6 @@ void BadgeIcon::paintEvent(QPaintEvent *)
     }
 
   QPainter paint(this);
-  paint.begin(this);
   paint.setPen(color);
   paint.setBrush(QBrush(color, Qt::SolidPattern));
   paint.setRenderHint(QPainter::Antialiasing,true);

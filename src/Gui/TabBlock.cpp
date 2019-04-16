@@ -22,13 +22,14 @@ TabBlock::TabBlock(QWidget *parent)
   search_bar = new SearchBar(this);
   connect(search_bar, &SearchBar::settingsSelected, this, &TabBlock::displaySettings);
 
-  QVBoxLayout *main_layout = new QVBoxLayout(this);
-  main_layout->setSpacing(0);
-  main_layout->setMargin(0);
-  main_layout->setAlignment(Qt::AlignTop);
-  main_layout->addSpacing(5);
-  main_layout->addWidget(search_bar);
-  main_layout->addWidget(tab_stacked_widget);
+  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  mainLayout->setSpacing(0);
+  mainLayout->setMargin(0);
+  mainLayout->setAlignment(Qt::AlignTop);
+  mainLayout->addSpacing(5);
+  mainLayout->addWidget(search_bar);
+  mainLayout->addSpacing(5);
+  mainLayout->addWidget(tab_stacked_widget);
 
 }
 
