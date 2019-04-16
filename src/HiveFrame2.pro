@@ -59,7 +59,7 @@ SOURCES += \
     Subscription.cpp \
     Database.cpp \
     Gui/Frameworks/Widgets/Button.cpp \
-    gui/frameworks/widgets/SearchBar.cpp
+    Gui/Frameworks/Widgets/SearchBar.cpp
 \
 
 HEADERS  += \
@@ -105,7 +105,7 @@ HEADERS  += \
     Subscription.h \
     Database.h \
     Gui/Frameworks/Widgets/Button.h \
-    gui/frameworks/widgets/SearchBar.h
+    Gui/Frameworks/Widgets/SearchBar.h
 
 ICON = Src/hive.icns
 
