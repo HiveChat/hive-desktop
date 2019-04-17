@@ -594,9 +594,8 @@ void AppDataManager::loadUsrList()
     }
   else
     {
-      std::string data = "";
       file.truncate(0, Parsley::Sync);
-      file.write(data, Parsley::Sync);
+      file.write("", Parsley::Sync);
       Log::dat(Log::Critical
                , "AppDataManager::loadUsrList()"
                , "Contact list file broken, broken file is cleared");

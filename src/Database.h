@@ -5,8 +5,10 @@
 
 #include <string>
 
-namespace DB {
+#include <QJsonDocument>
 
+
+namespace DB {
 class Database;
 class Map;
 class Array;
@@ -22,6 +24,7 @@ public:
 protected:
   std::string path_;
   Parsley::File file_;
+  QJsonDocument json_;
   bool opened_ = false;
 };
 
