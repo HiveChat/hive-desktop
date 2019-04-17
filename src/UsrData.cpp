@@ -139,13 +139,13 @@ void UsrData::readHistoryBundle()
   current_history_bundle_index = latest_history_bundle_index;
 }
 
-QJsonObject UsrData::getMessageJsonObject(const Message::TextMessage &messageStruct)
+QJsonObject UsrData::getMessageJsonObject(const Message::TextMessage &msg)
 {
   QJsonObject json_object;
-  json_object.insert("fromMe", messageStruct.sender == *my_key);
-  json_object.insert("message", messageStruct.message);
-  json_object.insert("time", messageStruct.time);
-  json_object.insert("index", messageStruct.index);
+  json_object.insert("fromMe", msg.sender == *my_key);
+  json_object.insert("message", msg.message);
+  json_object.insert("time", msg.time);
+  json_object.insert("index", msg.index);
 
   return json_object;
 }
@@ -226,38 +226,38 @@ void UsrData::saveHistoryBundle()
 //  QtConcurrent::run(lambda);
 }
 
-void UsrData::recordMessage(const Message::TextMessage &messageStruct)
+void UsrData::recordMessage(const Message::TextMessage &msg)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {
       saveHistoryBundle();
     }
 
-  latest_history_json_array.append(getMessageJsonObject(messageStruct));
+  latest_history_json_array.append(getMessageJsonObject(msg));
 
   saveHistoryBundle();
 }
 
-void UsrData::recordMessage(const QJsonObject &messageJsonObject)
+void UsrData::recordMessage(const QJsonObject &msg)
 {
   if(latest_history_json_array.count() >= max_bundle_capacity)
     {
       saveHistoryBundle();
     }
-  latest_history_json_array.append(messageJsonObject);
+  latest_history_json_array.append(msg);
 
   saveHistoryBundle();
 }
 
-void UsrData::recordMessage(const QList<QJsonObject> &messageJsonObjectList)
+void UsrData::recordMessage(const QList<QJsonObject> &msgs)
 {
-  foreach (QJsonObject json_obj, messageJsonObjectList)
+  for(QJsonObject message : msgs)
     {
       if(latest_history_json_array.count() >= max_bundle_capacity)
         {
           saveHistoryBundle();
         }
-      latest_history_json_array.append(json_obj);
+      latest_history_json_array.append(message);
     }
   saveHistoryBundle();
 }

@@ -80,7 +80,6 @@ private:
   static DoubleBuffer<NetPacket*> net_buffer_in;
   static DoubleBuffer<NetPacket*> net_buffer_out;
 
-
   static std::map<QString, int*> settings_int_hash;
   static std::map<QString, QColor*> settings_qcolor_hash;
   static std::map<QString, QString*> settings_qstring_hash;

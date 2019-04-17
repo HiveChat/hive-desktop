@@ -48,7 +48,7 @@ void CombScrollWidget::addComb(UsrProfile *p)
             emit combWidgetClicked(uuid);
           });
 
-  for(int i = 0; i < 1000; ++ i)
+  for(int i = 0; i < 100; ++ i)
     {
       CombWidget *c = new CombWidget(p, this);
       main_layout->addWidget(c);
