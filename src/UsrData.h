@@ -68,14 +68,14 @@ private:
   QJsonArray latest_history_json_array;//A stack of patato chips
 
   inline bool checkDir(const QString &directory);
-  inline QJsonObject getMessageJsonObject(const Message::TextMessage &messageStruct);
+  inline QJsonObject getMessageJsonObject(const Message::TextMessage &msg);
 
   inline void readHistoryBundle();
   inline void makeHistoryBundle(const int &index);
   inline void saveHistoryBundle();
-  inline void recordMessage(const Message::TextMessage &messageStruct);
-  inline void recordMessage(const QJsonObject &messageJsonObject);
-  inline void recordMessage(const QList<QJsonObject> &messageJsonObjectList);
+  inline void recordMessage(const Message::TextMessage &msg);
+  inline void recordMessage(const QJsonObject &msg);
+  inline void recordMessage(const QList<QJsonObject> &msgs);
 
 };
 

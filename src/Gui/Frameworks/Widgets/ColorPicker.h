@@ -22,7 +22,7 @@ protected:
 
 private:
   QRect rectangle;
-  QColor *my_color;
+  QColor *result_color;
 };
 
 #endif // GUICOLORPICKER_H
