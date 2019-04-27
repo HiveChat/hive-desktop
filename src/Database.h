@@ -23,10 +23,12 @@ public:
   Database(const std::string& path);
   virtual ~Database();
   int open();
+  int write();
   int close();
 
 protected:
-  virtual void load() = 0;
+  virtual void importJson() = 0;
+  virtual void exportJson() = 0;
 
   bool opened_ = false;
   std::string path_;
@@ -42,8 +44,14 @@ public:
   Map(const std::string& path);
   virtual ~Map();
 
+  QJsonValue value(const QString& key);
+  void insert(const QString& key, const QJsonValue& val);
+  void remove(const QString& key);
+
+  void exportJson();
+
 protected:
-  virtual void load();
+  virtual void importJson();
 
 private:
   QHash<QString, QJsonValue> map_;
@@ -58,7 +66,7 @@ public:
   virtual ~Array();
 
 protected:
-  virtual void load();
+  virtual void importJson();
 
 private:
   std::vector<QJsonValue> vector_;
@@ -73,7 +81,7 @@ public:
   virtual ~ShardedArray();
 
 protected:
-  virtual void load();
+  virtual void importJson();
 
 };
 

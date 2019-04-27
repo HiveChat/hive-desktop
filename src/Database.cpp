@@ -17,7 +17,6 @@ Database::Database(const std::string &path)
 
 Database::~Database()
 {
-
 }
 
 int Database::open()
@@ -41,6 +40,16 @@ int Database::open()
   return r;
 }
 
+int Database::write()
+{
+  if(path_ == "")
+    return -1;
+  if(opened_)
+    return -1;
+  std::string data(json_.toJson(QJsonDocument::Indented).data());
+  return file_.write(data, Parsley::Sync);
+}
+
 int Database::close()
 {
   return file_.close(Parsley::Sync);
@@ -58,7 +67,7 @@ Map::Map(const std::string& path)
   : Database(path)
 {
   open();
-  load();
+  importJson();
 }
 
 Map::~Map()
@@ -66,7 +75,34 @@ Map::~Map()
 
 }
 
-void Map::load()
+QJsonValue Map::value(const QString& key)
+{
+  return map_.value(key);
+}
+
+void Map::insert(const QString& key, const QJsonValue& val)
+{
+  map_.insert(key, val);
+  exportJson();
+  write();
+}
+
+void Map::remove(const QString& key)
+{
+  map_.remove(key);
+  exportJson();
+  write();
+}
+
+void Map::exportJson()
+{
+  QJsonObject obj;
+  for(auto key : map_.keys())
+    obj.insert(key, map_.value(key));
+  json_.setObject(obj);
+}
+
+void Map::importJson()
 {
   QJsonObject obj = json_.object();
   for(auto key : obj.keys())
@@ -85,7 +121,7 @@ Array::Array(const std::string& path)
   : Database(path)
 {
   open();
-  load();
+  importJson();
 }
 
 Array::~Array()
@@ -93,7 +129,7 @@ Array::~Array()
 
 }
 
-void Array::load()
+void Array::importJson()
 {
   QJsonArray array = json_.array();
   for(auto val : array)
@@ -120,7 +156,7 @@ ShardedArray::~ShardedArray()
 
 }
 
-void ShardedArray::load()
+void ShardedArray::importJson()
 {
 
 }
