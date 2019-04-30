@@ -1,0 +1,32 @@
+{
+	"version" : [0, 0, 0],
+	"protocol" : {
+		"header" : 4,
+		"flags" : ["HeartBeat", "AuthReq", "AuthRes", "MsgTxt"]
+	},
+
+	"fields" : {
+		"HeartBeat" : [
+			["string", "sessionId"],
+			["string", "usrName"],
+			["string", "pubKey"],
+			["uint32", "timestamp"]
+		],
+	
+		"AuthReq" : [
+			["string", "pubKey"],
+		],
+		
+		"AuthRes" : [
+			["string", "sessionKey"],
+		],
+
+		
+		
+		"MsgTxt" : [
+			["string", "sessionId"],
+			["string", "msgId"],
+			["string", "msg"]
+		]
+	}
+}
