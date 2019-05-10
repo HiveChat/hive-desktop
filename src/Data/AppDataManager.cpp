@@ -338,7 +338,7 @@ void AppDataManager::run()
 
 void AppDataManager::readInboundNetBuffer()
 {
-  inboundNetBufferReading = true; // not 100% safe
+  inbound_net_buffer_reading = true; // not 100% safe
   NetPacket *packet = net_buffer_in.front();
   Log::net(Log::Info, "AppDataManager::readInboundNetBuffer()","Checking Package");
 
@@ -429,12 +429,12 @@ void AppDataManager::readInboundNetBuffer()
       //! Get a new p.
       packet = net_buffer_in.front();
     }
-  inboundNetBufferReading = false;
+  inbound_net_buffer_reading = false;
 }
 
 void AppDataManager::wakeLoop(DoubleBuffer<NetPacket *> *buf)
 {
-  if(!inboundNetBufferReading)
+  if(!inbound_net_buffer_reading)
     read_inbound_async->send();
 }
 

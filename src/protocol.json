@@ -2,30 +2,34 @@
 	"version" : [0, 0, 0],
 	"protocol" : {
 		"header" : 4,
-		"flags" : ["HeartBeat", "AuthReq", "AuthRes", "MsgTxt"]
+		"flags" : ["HeartBeat", "AuthReq", "AuthRes", "LoginReq", "LoginRes", "MsgTxt"]
 	},
 
 	"fields" : {
 		"HeartBeat" : [
-			["string", "sessionId"],
-			["string", "usrName"],
-			["string", "pubKey"],
-			["uint32", "timestamp"]
+			["int32", "timestamp"]
 		],
 	
 		"AuthReq" : [
-			["string", "pubKey"],
+			["string", "pubKey"]
 		],
 		
 		"AuthRes" : [
-			["string", "sessionKey"],
+			["string", "sessionKey@pubKey"]
 		],
 
+		"LoginReq" : [
+			["string", "pubKey@sessionKey"]
+		],
 		
+		"LoginRes" : [
+			["bool", "success"],
+			["string", "msg"]
+		],
 		
 		"MsgTxt" : [
-			["string", "sessionId"],
-			["string", "msgId"],
+			["string", "receiverPubKey"],
+			["int32", "timestamp"],
 			["string", "msg"]
 		]
 	}

@@ -2,6 +2,7 @@
 
 void Log::gui(const Level &level, const QString &function, const QString &str)
 {
+  return;
   switch (level) {
     case Level::Info:
       {
@@ -25,6 +26,7 @@ void Log::gui(const Level &level, const QString &function, const QString &str)
 
 void Log::net(const Log::Level &level, const QString &function, const QString &str)
 {
+  return;
   switch (level) {
     case Level::Info:
       {
@@ -48,6 +50,7 @@ void Log::net(const Log::Level &level, const QString &function, const QString &s
 
 void Log::dat(const Log::Level &level, const QString &function, const QString &str)
 {
+  return;
   switch (level) {
     case Level::Info:
       {

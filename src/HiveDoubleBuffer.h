@@ -63,7 +63,7 @@ void DoubleBuffer<T>::push(T item)
       writing = false;
       break;
     }
-  onPushed.call(this);
+  onPushed(this);
 }
 
 template<typename T>
