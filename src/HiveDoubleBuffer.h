@@ -1,7 +1,7 @@
 #ifndef HIVEDOUBLEBUFFER_H
 #define HIVEDOUBLEBUFFER_H
 
-#include <libparsley/udp_socket.h>
+#include <libagio/udp_socket.h>
 
 #include <QDebug>
 
@@ -15,7 +15,7 @@ public:
   DoubleBuffer();
   ~DoubleBuffer();
 
-  Parsley::CallbackHandler<void(DoubleBuffer<T>*)> onPushed;
+  Agio::CallbackHandler<void(DoubleBuffer<T>*)> onPushed;
 
   T front();
   void push(T item);

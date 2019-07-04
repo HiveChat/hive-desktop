@@ -1,8 +1,8 @@
 #include "HiveUdpServer.h"
 
 
-HiveUdpServer::HiveUdpServer(const char *ip, const int &port, Parsley::Loop *l)
-  : Parsley::UdpSocket(ip, port, l)
+HiveUdpServer::HiveUdpServer(const char *ip, const int &port, Agio::Loop *l)
+  : Agio::UdpSocket(ip, port, l)
 {
 }
 
@@ -12,12 +12,12 @@ HiveUdpServer::~HiveUdpServer()
 
 int HiveUdpServer::start()
 {
-  Parsley::UdpSocket::start();
+  Agio::UdpSocket::start();
 }
 
 void HiveUdpServer::stop()
 {
-  Parsley::UdpSocket::stop();
+  Agio::UdpSocket::stop();
 }
 
 

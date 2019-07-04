@@ -135,7 +135,7 @@ macx{
 unix{
     CONFIG += link_pkgconfig
     PKGCONFIG += \
-        libparsley
+	libagio
 }
 
 win32{

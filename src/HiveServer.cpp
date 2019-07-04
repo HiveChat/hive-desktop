@@ -50,28 +50,28 @@ HiveServer::run()
 {
   Log::net(Log::Info, "HiveServer::run()", "Thread Started");
 
-  loop = new Parsley::Loop();
+  loop = new Agio::Loop();
   udp_server = new HiveUdpServer("0.0.0.0", UDP_PORT, loop);
-  Parsley::on(&udp_server->onReadyRead, this, &HiveServer::udpPacketReady);
+  Agio::on(&udp_server->onReadyRead, this, &HiveServer::udpPacketReady);
   udp_server->start();
 
-  heartbeat_timer = new Parsley::Timer(1000, 1000, loop);
-  Parsley::on(&heartbeat_timer->onTimedOut, this, &HiveServer::onTimedOut);
+  heartbeat_timer = new Agio::Timer(1000, 1000, loop);
+  Agio::on(&heartbeat_timer->onTimedOut, this, &HiveServer::onTimedOut);
   heartbeat_timer->start();
 
 
-//  tcp_server = new Parsley::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
+//  tcp_server = new Agio::TcpServer("0.0.0.0", TCP_PORT, TCP_BACKLOG, loop);
 
   loop->run(UV_RUN_DEFAULT);
 }
 
-void HiveServer::udpPacketReady(std::string &data, Parsley::IPAddress &ip)
+void HiveServer::udpPacketReady(std::string &data, Agio::IPAddress &ip)
 {
   NetPacket *packet = new NetPacket(ip.toIPString(), data, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
 }
 
-void HiveServer::onTimedOut(Parsley::Timer *)
+void HiveServer::onTimedOut(Agio::Timer *)
 {
   QByteArray dat = HiveProtocol::encodeHeartBeat();
   udp_server->write("255.255.255.255", UDP_PORT, dat.data());

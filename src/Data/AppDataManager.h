@@ -5,9 +5,9 @@
 #include "UsrData.h"
 #include "HiveDoubleBuffer.h"
 
-#include <libparsley/file.h>
-#include <libparsley/timer.h>
-#include <libparsley/async_event.h>
+#include <libagio/file.h>
+#include <libagio/timer.h>
+#include <libagio/async_event.h>
 
 #include <unordered_map>
 #include <forward_list>
@@ -56,7 +56,7 @@ protected:
 private:
   void wakeLoop(DoubleBuffer<NetPacket *> *buf);
   void readInboundNetBuffer();
-  void checkSettings(Parsley::Timer *);
+  void checkSettings(Agio::Timer *);
 
   inline void initVariable();
   inline void loadSettings();
@@ -73,8 +73,8 @@ private:
   inline void deleteUsr(const QStringList usrInfoStrList);
   void writeSettings();
 
-  Parsley::Loop *loop;
-  Parsley::AsyncEvent *read_inbound_async;
+  Agio::Loop *loop;
+  Agio::AsyncEvent *read_inbound_async;
   bool inbound_net_buffer_reading = false;
 
   static DoubleBuffer<NetPacket*> net_buffer_in;

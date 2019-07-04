@@ -6,9 +6,9 @@
 #include "HiveUdpServer.h"
 #include "HiveProtocol.h"
 
-#include <libparsley/tcp_server.h>
-#include <libparsley/timer.h>
-#include <libparsley/parsley.h>
+#include <libagio/tcp_server.h>
+#include <libagio/timer.h>
+#include <libagio/agio.h>
 
 
 class HiveServer;
@@ -30,13 +30,13 @@ protected:
   void run();
 
 private:  
-  Parsley::Loop *loop;
-  Parsley::TcpServer *tcp_server;
+  Agio::Loop *loop;
+  Agio::TcpServer *tcp_server;
   HiveUdpServer *udp_server;
-  Parsley::Timer *heartbeat_timer;
+  Agio::Timer *heartbeat_timer;
 
-  void udpPacketReady(std::string &data, Parsley::IPAddress &ip);
-  void onTimedOut(Parsley::Timer *);
+  void udpPacketReady(std::string &data, Agio::IPAddress &ip);
+  void onTimedOut(Agio::Timer *);
 
 //  bool processUsrLeave(QString *usrKey); <<! to be moved to AppDataManager
 };

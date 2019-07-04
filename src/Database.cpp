@@ -26,7 +26,7 @@ int Database::open()
   if(opened_)
     return -1;
   file_.setPath(path_);
-  int r = file_.open(O_WRONLY | O_CREAT, 0664, Parsley::Sync);
+  int r = file_.open(O_WRONLY | O_CREAT, 0664, Agio::Sync);
   if(r == 0)
     opened_ = true;
   std::string data = file_.readAll();
@@ -34,8 +34,8 @@ int Database::open()
   json_ = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &err);
   if(err.error != QJsonParseError::NoError || json_.isNull())
     {
-      file_.truncate(0, Parsley::Sync);
-      file_.write("", Parsley::Sync);
+      file_.truncate(0, Agio::Sync);
+      file_.write("", Agio::Sync);
     }
   return r;
 }
@@ -47,12 +47,12 @@ int Database::write()
   if(opened_)
     return -1;
   std::string data(json_.toJson(QJsonDocument::Indented).data());
-  return file_.write(data, Parsley::Sync);
+  return file_.write(data, Agio::Sync);
 }
 
 int Database::close()
 {
-  return file_.close(Parsley::Sync);
+  return file_.close(Agio::Sync);
 }
 
 
