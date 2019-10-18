@@ -35,7 +35,7 @@ private:
   HiveUdpServer *udp_server;
   Agio::Timer *heartbeat_timer;
 
-  void udpPacketReady(std::string &data, Agio::IPAddress &ip);
+  void udpPacketReady(std::string &data, Agio::HostAddress &ip);
   void onTimedOut(Agio::Timer *);
 
 //  bool processUsrLeave(QString *usrKey); <<! to be moved to AppDataManager
