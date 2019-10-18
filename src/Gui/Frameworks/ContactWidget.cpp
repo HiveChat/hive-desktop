@@ -1,8 +1,8 @@
-#include "Gui/Frameworks/CombWidget.h"
+#include "Gui/Frameworks/ContactWidget.h"
 #include <QDebug>
 
 
-CombWidget::CombWidget(UsrProfile *p, QWidget *parent)
+ContactWidget::ContactWidget(UsrProfile *p, QWidget *parent)
   : QWidget(parent)
   , avatar(new AvatarButton(80,  this))
   , usr_name_label(new QLabel(this))
@@ -21,8 +21,8 @@ CombWidget::CombWidget(UsrProfile *p, QWidget *parent)
   usr_name_palette.setColor(QPalette::WindowText, QColor(64,64,64));
 
   usr_name_label->setPalette(usr_name_palette);
-  usr_name_label->setFont(Global::font_combWidgetUsrName);
-  ip_addr_label->setFont(Global::font_combWidgetIpAddr);
+  usr_name_label->setFont(Global::font_contactWidgetUsrName);
+  ip_addr_label->setFont(Global::font_contactWidgetIpAddr);
   status_label->setText(offline_dot);
 
   net_status_layout = new QHBoxLayout();
@@ -45,12 +45,12 @@ CombWidget::CombWidget(UsrProfile *p, QWidget *parent)
   main_layout->addLayout(usr_info_layout);
 }
 
-CombWidget::~CombWidget()
+ContactWidget::~ContactWidget()
 {
 
 }
 
-void CombWidget::setProfile(UsrProfile *usrProfile)
+void ContactWidget::setProfile(UsrProfile *usrProfile)
 {
   usr_profile = *usrProfile;
 
@@ -80,7 +80,7 @@ void CombWidget::setProfile(UsrProfile *usrProfile)
   return;
 }
 
-void CombWidget::setBadgeNumber(const int &num)
+void ContactWidget::setBadgeNumber(const int &num)
 {
   badge_icon->setNumber(num);
 }
@@ -97,14 +97,14 @@ void CombWidget::setBadgeNumber(const int &num)
 //  painter.end();
 //}
 
-void CombWidget::mouseReleaseEvent(QMouseEvent *)
+void ContactWidget::mouseReleaseEvent(QMouseEvent *)
 {
   mousePressed = false;
   this->setHidden(false);
   emit clicked(usr_profile.key);
 }
 
-void CombWidget::mousePressEvent(QMouseEvent *event)
+void ContactWidget::mousePressEvent(QMouseEvent *event)
 {
   mousePressed = true;
   mouseEvent = event;
@@ -143,24 +143,24 @@ void CombWidget::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void CombWidget::enterEvent(QEvent *)
+void ContactWidget::enterEvent(QEvent *)
 {
   hover_palette.setColor(QPalette::Window, hovered_window_color);
   this->setPalette(hover_palette);
 }
 
-void CombWidget::leaveEvent(QEvent *)
+void ContactWidget::leaveEvent(QEvent *)
 {
   hover_palette.setColor(QPalette::Window, default_window_color);
   this->setPalette(hover_palette);
 }
 
-void CombWidget::dragMoveEvent(QDragMoveEvent *)
+void ContactWidget::dragMoveEvent(QDragMoveEvent *)
 {
 
 }
 
-QString CombWidget::getSubNetStr(const QString &ipAddr)
+QString ContactWidget::getSubNetStr(const QString &ipAddr)
 {
   int loopNum = 0;
   QString subNetStr;

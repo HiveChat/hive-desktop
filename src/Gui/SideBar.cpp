@@ -5,7 +5,7 @@
 SideBar::SideBar(QWidget *parent)
   : QWidget(parent)
   , home_tab(new HomeTab(this))
-  , chat_tab(new ChatTab(this))
+  , contacts_tab(new ContactsTab(this))
   , settings_tab(new SettingsTab(this))
   , tab_stacked_widget(new QStackedWidget(this))
 {
@@ -15,7 +15,7 @@ SideBar::SideBar(QWidget *parent)
   this->setPalette(palette);
   this->setFixedWidth(250);
 
-  tab_stacked_widget->addWidget(chat_tab);
+  tab_stacked_widget->addWidget(contacts_tab);
   tab_stacked_widget->addWidget(home_tab);
   tab_stacked_widget->addWidget(settings_tab);
 
@@ -43,7 +43,7 @@ void SideBar::displaySettings(const bool& b)
   if(b)
     tab_stacked_widget->setCurrentWidget(settings_tab);
   else
-    tab_stacked_widget->setCurrentWidget(chat_tab);
+    tab_stacked_widget->setCurrentWidget(contacts_tab);
 }
 
 void SideBar::displayHome()
@@ -53,7 +53,7 @@ void SideBar::displayHome()
 
 void SideBar::displayChat()
 {
-  tab_stacked_widget->setCurrentWidget(chat_tab);
+  tab_stacked_widget->setCurrentWidget(contacts_tab);
 }
 
 

@@ -32,8 +32,8 @@ public:
   static QFont font_main;
   static QFont font_chatTextEditor;
   static QFont font_chatBubble;
-  static QFont font_combWidgetUsrName;
-  static QFont font_combWidgetIpAddr;
+  static QFont font_contactWidgetUsrName;
+  static QFont font_contactWidgetIpAddr;
   static QFont font_menuButton;
   static QFont font_scrollStackTitle;
   static QFont font_scrollStackSubtitle;
@@ -47,7 +47,7 @@ public:
 
   static QColor color_window;
   static QColor color_alphaTab;
-  static QColor color_comb_selection;
+  static QColor color_contact_selection;
 
   static QColor color_defaultChatBubbleI;
   static QColor color_defaultChatBubbleO;

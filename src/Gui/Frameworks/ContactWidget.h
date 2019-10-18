@@ -15,13 +15,13 @@
 #include "Gui/Frameworks/Widgets/AvatarWidgets.h"
 #include "Gui/Frameworks/Widgets/BadgeIcon.h"
 
-class CombWidget : public QWidget
+class ContactWidget : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit CombWidget(UsrProfile *p, QWidget *parent = nullptr);
-  ~CombWidget();
+  explicit ContactWidget(UsrProfile *p, QWidget *parent = nullptr);
+  ~ContactWidget();
 
   void setProfile(UsrProfile *usrProfile);
   void setBadgeNumber(const int &num);
@@ -53,7 +53,7 @@ private:
 
   QPalette hover_palette;
   QColor default_window_color = Qt::transparent;
-  QColor hovered_window_color = Global::color_comb_selection;
+  QColor hovered_window_color = Global::color_contact_selection;
 
   UsrProfile usr_profile;
   QString getSubNetStr(const QString &ipAddr);

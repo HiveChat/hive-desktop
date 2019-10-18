@@ -9,8 +9,8 @@ int Global::window_defaultHeight = 600;
 QFont Global::font_main;
 QFont Global::font_chatTextEditor;
 QFont Global::font_chatBubble;
-QFont Global::font_combWidgetUsrName;
-QFont Global::font_combWidgetIpAddr;
+QFont Global::font_contactWidgetUsrName;
+QFont Global::font_contactWidgetIpAddr;
 QFont Global::font_menuButton;
 QFont Global::font_scrollStackTitle;
 QFont Global::font_scrollStackSubtitle;
@@ -23,7 +23,7 @@ QColor Global::color_lightYellow = QColor(255,215,126);
 
 QColor Global::color_window = QColor(255,255,255);
 QColor Global::color_alphaTab = QColor(255,255,255,255);
-QColor Global::color_comb_selection = QColor(240,240,240,100);
+QColor Global::color_contact_selection = QColor(240,240,240,100);
 
 QColor Global::color_defaultChatBubbleI = Global::color_lightYellow;
 QColor Global::color_defaultChatBubbleO = Global::color_lightGrey;

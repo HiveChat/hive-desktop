@@ -29,8 +29,6 @@ public:
   MainBlock *main_block;
 
 private:
-  inline void loadFonts();
-
   QMenu *tray_icon_menu;
   QAction *hide_action;
   QAction *show_action;

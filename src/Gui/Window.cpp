@@ -3,9 +3,7 @@
 
 Window::Window(QWidget *parent)
   : QWidget(parent)
-{    
-  loadFonts();
-
+{
   this->setHidden(true);
   this->setMinimumHeight(600);
   this->setMinimumWidth(900);
@@ -16,13 +14,13 @@ Window::Window(QWidget *parent)
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
-  tab_block = new SideBar(this);
+  side_bar = new SideBar(this);
   main_block = new MainBlock(this);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
-  main_layout->addWidget(tab_block);
+  main_layout->addWidget(side_bar);
   main_layout->addWidget(main_block);
 
   hide_action = new QAction(tr("&Hide"), this);
@@ -57,22 +55,22 @@ Window::Window(QWidget *parent)
   timer->setSingleShot(false);
   timer->start(2000);
 
-  connect(tab_block->chat_tab->comb_scroll_widget, &CombScrollWidget::combWidgetClicked,
+  connect(side_bar->contacts_tab->contact_scroll_widget, &ContactsScrollWidget::contactWidgetClicked,
           this, &Window::onCombWidgetClicked);
 
-  connect(tab_block->home_tab->welcome_btn, &MenuButton::clicked,
+  connect(side_bar->home_tab->welcome_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
-  connect(tab_block->home_tab->list_btn, &MenuButton::clicked,
+  connect(side_bar->home_tab->list_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
-  connect(tab_block->home_tab->storage_btn, &MenuButton::clicked,
+  connect(side_bar->home_tab->storage_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
-  connect(tab_block->settings_tab->messaging_btn, &MenuButton::clicked,
+  connect(side_bar->settings_tab->messaging_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
-  connect(tab_block->settings_tab->profile_btn, &MenuButton::clicked,
+  connect(side_bar->settings_tab->profile_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
-  connect(tab_block->settings_tab->questions_btn, &MenuButton::clicked,
+  connect(side_bar->settings_tab->questions_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
-  connect(tab_block->settings_tab->update_btn, &MenuButton::clicked,
+  connect(side_bar->settings_tab->update_btn, &MenuButton::clicked,
           main_block, &MainBlock::displayStaticStack);
 
   connect(hide_action, &QAction::triggered, this, &QWidget::hide);
@@ -84,65 +82,6 @@ Window::Window(QWidget *parent)
 Window::~Window()
 {
   qDebug()<<"\n@Hive UI is destructed";
-}
-
-void Window::loadFonts()
-{
-#ifdef Q_OS_WIN
-      QString font_family = "Verdana";
-      GlobalData::font_chatTextEditor = QFont(font_family, 11);
-      GlobalData::font_main = QFont(font_family, 6);
-      GlobalData::font_chatBubble = GlobalData::font_main;
-      GlobalData::font_chatBubble.setPointSize(10);
-      GlobalData::font_combWidgetUsrName = GlobalData::font_main;
-      GlobalData::font_combWidgetUsrName.setPointSize(10);
-      GlobalData::font_combWidgetIpAddr = GlobalData::font_main;
-      GlobalData::font_combWidgetIpAddr.setPointSize(7);
-      GlobalData::font_menuButton = GlobalData::font_main;
-      GlobalData::font_menuButton.setPointSize(10);
-      GlobalData::font_scrollStackTitle = GlobalData::font_main;
-      GlobalData::font_scrollStackTitle.setPointSize(10);
-      GlobalData::font_scrollStackSubtitle = GlobalData::font_main;
-      GlobalData::font_scrollStackSubtitle.setPointSize(9);
-#endif //Q_OS_WIN
-
-
-#ifndef Q_OS_WIN ///windows can't load font from qrc, don't know why.
-    int fontId;
-    QString fontFamily;
-
-    fontId = QFontDatabase::addApplicationFont(":/font/font/GillSans.ttc");
-    if(fontId == -1)
-      {
-        return;
-      }
-
-    fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-
-    Global::font_chatTextEditor = QFont(fontFamily, 16);
-    if(fontId == -1)
-      {
-        return;
-      }
-
-    fontId = QFontDatabase::addApplicationFont(":/font/font/Futura.ttc");
-    fontFamily = QFontDatabase::applicationFontFamilies(fontId).at(0);
-    Global::font_main = QFont(fontFamily);
-    Global::font_chatBubble = Global::font_main;
-    Global::font_chatBubble.setPointSize(14);
-    Global::font_combWidgetUsrName = Global::font_main;
-    Global::font_combWidgetUsrName.setPointSize(15);
-    Global::font_combWidgetIpAddr = Global::font_main;
-    Global::font_combWidgetIpAddr.setPointSize(11);
-    Global::font_menuButton = Global::font_main;
-    Global::font_menuButton.setPointSize(14);
-    Global::font_scrollStackTitle = Global::font_main;
-    Global::font_scrollStackTitle.setPointSize(15);
-    Global::font_scrollStackSubtitle = Global::font_main;
-    Global::font_scrollStackSubtitle.setPointSize(13);
-
-#endif //Q_OS_WIN
-
 }
 
 void Window::onMessageReceived(const Message::TextMessage &messageStruct, const bool &fromMe)
@@ -157,7 +96,7 @@ void Window::onMessageReceived(const Message::TextMessage &messageStruct, const 
       if(!main_block->chat_stack->refreshMessage(messageStruct.sender))
         {
           UsrData *temp_usr_data = AppDataManager::usr_data_hash.value(messageStruct.sender);
-          tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
+          side_bar->contacts_tab->contact_scroll_widget->refreshBadgeNumber(messageStruct.sender, temp_usr_data->getUnreadMessageNumber());
           if(Global::settings.notification.message_notification
              && Global::settings.update.auto_check_update)
             {
@@ -177,17 +116,17 @@ void Window::onMessageReceived(const Message::TextMessage &messageStruct, const 
 void Window::onCombWidgetClicked(const QString &usrKey)
 {
   main_block->displayChatStack(usrKey);
-  tab_block->chat_tab->comb_scroll_widget->refreshBadgeNumber(usrKey, 0);
+  side_bar->contacts_tab->contact_scroll_widget->refreshBadgeNumber(usrKey, 0);
 }
 
 void Window::addUsr(UsrData *userData)
 {
-  if(tab_block->chat_tab->comb_scroll_widget->contains(userData->getKey()))
+  if(side_bar->contacts_tab->contact_scroll_widget->contains(userData->getKey()))
     {
       qDebug()<<"#GuiCentralWidget::addUsr(): Already exists.";
       return;
     }
-  tab_block->chat_tab->comb_scroll_widget->addComb(userData->getProfile());
+  side_bar->contacts_tab->contact_scroll_widget->addComb(userData->getProfile());
   main_block->home_stack_list->addUsr(userData->getProfile());
 }
 
@@ -199,7 +138,7 @@ void Window::delUsr(UsrData *userData)
 void Window::changeUsr(UsrData *userData)
 {
   qDebug()<<"Update user info";
-  tab_block->chat_tab->comb_scroll_widget->refreshComb(userData->getProfile());
+  side_bar->contacts_tab->contact_scroll_widget->refreshComb(userData->getProfile());
   if(main_block->chat_stack->isDisplaying(userData->getKey()))
     main_block->chat_stack->refreshProfile();
   main_block->home_stack_list->refreshUser(userData->getProfile());

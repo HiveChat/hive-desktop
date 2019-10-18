@@ -38,6 +38,10 @@ protected:
 
 private:
   void onTextMessageToSend(const QString &receiver, const QString &message);
+
+  // App initilizations
+  inline void loadFonts();
+
 };
 
 #endif // MAINWINDOW_H

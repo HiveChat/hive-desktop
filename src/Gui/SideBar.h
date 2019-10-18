@@ -4,7 +4,7 @@
 #include "Gui/Frameworks/Widgets/Button.h"
 #include "Gui/Frameworks/Widgets/SearchBar.h"
 
-#include "ChatTab.h"
+#include "ContactsTab.h"
 #include "HomeTab.h"
 #include "SettingsTab.h"
 
@@ -26,7 +26,7 @@ public:
   void displayChat();
 
   HomeTab *home_tab;
-  ChatTab *chat_tab;
+  ContactsTab *contacts_tab;
   SettingsTab *settings_tab;
 
 private:

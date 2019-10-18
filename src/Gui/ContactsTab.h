@@ -1,21 +1,21 @@
 #ifndef GUICHATTAB_H
 #define GUICHATTAB_H
 
-#include "Gui/Frameworks/CombWidget.h"
+#include "Gui/Frameworks/ContactWidget.h"
 #include "UsrData.h"
 
 #include <QScrollArea>
 #include <QDrag>
 
-class CombScrollWidget;
-class ChatTab;
+class ContactsScrollWidget;
+class ContactsTab;
 
-class CombScrollWidget : public QWidget
+class ContactsScrollWidget : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit CombScrollWidget(QWidget *parent = nullptr);
+  explicit ContactsScrollWidget(QWidget *parent = nullptr);
   void addComb(UsrProfile *p);
   void refreshComb(UsrProfile *p);
   void refreshBadgeNumber(const QString &uuid, const int &num);
@@ -25,18 +25,18 @@ public:
 
 private:
   QVBoxLayout *main_layout;
-  QHash<QString, CombWidget *> comb_widget_hash;
+  QHash<QString, ContactWidget *> contact_widget_hash;
 
 signals:
-  void combWidgetClicked(const QString &uuid);
+  void contactWidgetClicked(const QString &uuid);
 };
 
-class ChatTab : public QScrollArea
+class ContactsTab : public QScrollArea
 {
   Q_OBJECT
 public:
-  explicit ChatTab(QWidget *parent = nullptr);
-  CombScrollWidget *comb_scroll_widget;
+  explicit ContactsTab(QWidget *parent = nullptr);
+  ContactsScrollWidget *contact_scroll_widget;
 };
 
 #endif // GUICHATTAB_H

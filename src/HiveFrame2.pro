@@ -17,6 +17,8 @@ TARGET = Hive!
 TEMPLATE = app
 INCLUDEPATH += /usr/local/include
 SOURCES += \
+	Gui/ContactsTab.cpp \
+	Gui/Frameworks/ContactWidget.cpp \
 	Gui/SideBar.cpp \
     main.cpp \
     Hive.cpp \
@@ -25,7 +27,6 @@ SOURCES += \
 \
     Gui/HomeTab.cpp \
     Gui/MainBlock.cpp \
-    Gui/ChatTab.cpp \
     Gui/ChatStack.cpp \
     Gui/SettingsTab.cpp \
     Gui/SettingsStack_messaging.cpp \
@@ -37,7 +38,6 @@ SOURCES += \
     Gui/HomeStack_list.cpp \
     Gui/HomeStack_welcome.cpp \
 \
-    Gui/Frameworks/CombWidget.cpp \
     Gui/Frameworks/ScrollStack.cpp \
 \
     Gui/Frameworks/Widgets/TextBubble.cpp \
@@ -63,6 +63,8 @@ SOURCES += \
 \
 
 HEADERS  += \
+	Gui/ContactsTab.h \
+	Gui/Frameworks/ContactWidget.h \
 	Gui/SideBar.h \
     Hive.h \
     GlobalType.h \
@@ -70,7 +72,6 @@ HEADERS  += \
 \
     Gui/HomeTab.h \
     Gui/MainBlock.h \
-    Gui/ChatTab.h \
     Gui/ChatStack.h \
     Gui/SettingsTab.h \
     Gui/SettingsStack_messaging.h \
@@ -82,7 +83,6 @@ HEADERS  += \
     Gui/HomeStack_list.h \
     Gui/HomeStack_welcome.h \
 \
-    Gui/Frameworks/CombWidget.h \
     Gui/Frameworks/ScrollStack.h \
 \
     Gui/Frameworks/Widgets/TextBubble.h \
