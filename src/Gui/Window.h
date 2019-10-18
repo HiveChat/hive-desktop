@@ -1,7 +1,7 @@
 #ifndef GUICENTRALWIDGET_H
 #define GUICENTRALWIDGET_H
 
-#include "TabBlock.h"
+#include "SideBar.h"
 #include "MainBlock.h"
 
 #include <QSystemTrayIcon>
@@ -25,7 +25,7 @@ public:
   void changeUsr(UsrData *userData);
   void onUpdateAvailable();
 
-  TabBlock *tab_block;
+  SideBar *side_bar;
   MainBlock *main_block;
 
 private:

@@ -1,8 +1,8 @@
-#include "TabBlock.h"
+#include "SideBar.h"
 #include <QFileDialog>
 #include <QLabel>
 
-TabBlock::TabBlock(QWidget *parent)
+SideBar::SideBar(QWidget *parent)
   : QWidget(parent)
   , home_tab(new HomeTab(this))
   , chat_tab(new ChatTab(this))
@@ -20,7 +20,7 @@ TabBlock::TabBlock(QWidget *parent)
   tab_stacked_widget->addWidget(settings_tab);
 
   search_bar = new SearchBar(this);
-  connect(search_bar, &SearchBar::settingsSelected, this, &TabBlock::displaySettings);
+  connect(search_bar, &SearchBar::settingsSelected, this, &SideBar::displaySettings);
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setSpacing(0);
@@ -33,12 +33,12 @@ TabBlock::TabBlock(QWidget *parent)
 
 }
 
-TabBlock::~TabBlock()
+SideBar::~SideBar()
 {
 
 }
 
-void TabBlock::displaySettings(const bool& b)
+void SideBar::displaySettings(const bool& b)
 {
   if(b)
     tab_stacked_widget->setCurrentWidget(settings_tab);
@@ -46,12 +46,12 @@ void TabBlock::displaySettings(const bool& b)
     tab_stacked_widget->setCurrentWidget(chat_tab);
 }
 
-void TabBlock::displayHome()
+void SideBar::displayHome()
 {
   tab_stacked_widget->setCurrentWidget(home_tab);
 }
 
-void TabBlock::displayChat()
+void SideBar::displayChat()
 {
   tab_stacked_widget->setCurrentWidget(chat_tab);
 }

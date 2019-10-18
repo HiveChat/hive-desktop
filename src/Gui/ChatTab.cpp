@@ -47,12 +47,6 @@ void CombScrollWidget::addComb(UsrProfile *p)
           [this](const QString &uuid){
             emit combWidgetClicked(uuid);
           });
-
-  for(int i = 0; i < 100; ++ i)
-    {
-      CombWidget *c = new CombWidget(p, this);
-      main_layout->addWidget(c);
-    }
 }
 
 void CombScrollWidget::refreshBadgeNumber(const QString &uuid, const int &num)

@@ -13,13 +13,13 @@
 #include <QIcon>
 
 
-class TabBlock : public QWidget
+class SideBar : public QWidget
 {
   Q_OBJECT
 
 public:
-  explicit TabBlock(QWidget *parent = nullptr);
-  ~TabBlock();
+  explicit SideBar(QWidget *parent = nullptr);
+  ~SideBar();
 
   void displaySettings(const bool &b);
   void displayHome();

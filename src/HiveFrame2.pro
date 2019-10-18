@@ -17,12 +17,12 @@ TARGET = Hive!
 TEMPLATE = app
 INCLUDEPATH += /usr/local/include
 SOURCES += \
+	Gui/SideBar.cpp \
     main.cpp \
     Hive.cpp \
     GlobalType.cpp \
     UsrData.cpp \
 \
-    Gui/TabBlock.cpp \
     Gui/HomeTab.cpp \
     Gui/MainBlock.cpp \
     Gui/ChatTab.cpp \
@@ -63,11 +63,11 @@ SOURCES += \
 \
 
 HEADERS  += \
+	Gui/SideBar.h \
     Hive.h \
     GlobalType.h \
     UsrData.h \
 \
-    Gui/TabBlock.h \
     Gui/HomeTab.h \
     Gui/MainBlock.h \
     Gui/ChatTab.h \

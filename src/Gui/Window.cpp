@@ -16,7 +16,7 @@ Window::Window(QWidget *parent)
   this->setWindowIcon(QIcon(":/img/img/icon.png"));
 #endif
 
-  tab_block = new TabBlock(this);
+  tab_block = new SideBar(this);
   main_block = new MainBlock(this);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
