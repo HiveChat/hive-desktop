@@ -41,6 +41,7 @@
         <file>img/settings_1.png</file>
         <file>img/chat_0.png</file>
         <file>img/chat_1.png</file>
+        <file>img/chat_bkg_honey.png</file>
     </qresource>
     <qresource prefix="/avatar">
         <file>avatar/bee.png</file>

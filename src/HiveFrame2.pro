@@ -17,9 +17,9 @@ TARGET = Hive!
 TEMPLATE = app
 INCLUDEPATH += /usr/local/include
 SOURCES += \
-	Gui/ContactsTab.cpp \
-	Gui/Frameworks/ContactWidget.cpp \
-	Gui/SideBar.cpp \
+    Gui/ContactsTab.cpp \
+    Gui/Frameworks/ContactWidget.cpp \
+    Gui/SideBar.cpp \
     main.cpp \
     Hive.cpp \
     GlobalType.cpp \
@@ -127,8 +127,6 @@ macx{
 	Gui/macos/WindowOptions.h
     OBJECTIVE_SOURCES += \
 	Gui/macos/WindowOptions.mm
-
-
 }
 
 

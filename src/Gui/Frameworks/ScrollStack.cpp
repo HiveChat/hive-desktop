@@ -109,11 +109,12 @@ void ScrollStack::setUpUI(const LayoutStyle &style)
       top_frame_main_layout->addLayout(usr_info_layout);
     }
 
-  QFrame *topwidget_base_line = new QFrame(this);
-  topwidget_base_line->setFrameShape(QFrame::HLine);
-  topwidget_base_line->setFrameShadow(QFrame::Plain);
-  topwidget_base_line->setFixedHeight(2);
-  topwidget_base_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
+  //! To be deleted after issue #1
+//  QFrame *topwidget_base_line = new QFrame(this);
+//  topwidget_base_line->setFrameShape(QFrame::HLine);
+//  topwidget_base_line->setFrameShadow(QFrame::Plain);
+//  topwidget_base_line->setFixedHeight(2);
+//  topwidget_base_line->setStyleSheet ("QFrame{  background: #ffd77e; border: 0px transparent;  }");
 
   ///!top widget
 
@@ -161,7 +162,8 @@ void ScrollStack::setUpUI(const LayoutStyle &style)
   main_layout = new QVBoxLayout(this);
   main_layout->setAlignment(Qt::AlignTop);
   main_layout->addWidget(top_frame);
-  main_layout->addWidget(topwidget_base_line);
+  //! To be deleted after issue #1
+//  main_layout->addWidget(topwidget_base_line);
   main_layout->addWidget(scroll_area);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);

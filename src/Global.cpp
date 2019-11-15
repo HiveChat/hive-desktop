@@ -22,7 +22,7 @@ QColor Global::color_hiveYellow = QColor(255,181,0);
 QColor Global::color_lightYellow = QColor(255,215,126);
 
 QColor Global::color_window = QColor(255,255,255);
-QColor Global::color_alphaTab = QColor(255,255,255,255);
+QColor Global::color_alphaTab = QColor(250,250,250,255);
 QColor Global::color_contact_selection = QColor(240,240,240,100);
 
 QColor Global::color_defaultChatBubbleI = Global::color_lightYellow;

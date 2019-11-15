@@ -5,7 +5,7 @@
 MessageViewer::MessageViewer(QWidget *parent) : QWidget(parent)
 {
   QPalette palette = this->palette();
-  palette.setColor(QPalette::Window, Qt::white);
+  palette.setColor(QPalette::Window, Qt::transparent);
   this->setAutoFillBackground(true);
   this->setPalette(palette);
 
@@ -63,10 +63,19 @@ void MessageViewer::addChatBubble(const QString &message, const bool &fromMe)
 
 }
 
-//////////////////////////bottom//////////////////////////////////////
 
-MessageEditor::MessageEditor(QWidget *parent) : QWidget(parent)
+
+MessageEditor::MessageEditor(QWidget *parent)
+  : QWidget(parent)
 {
+//  this->setStyleSheet("MessageEditor { border-radius: 16px; "
+//                      "background-color: #ffffff; "
+//                      "margin-left: 100px;"
+//                      "margin-right: 10px;"
+//                      "padding-left: 10px;"
+//                      "padding-right: 10px;"
+//                      "outline: none; }");
+
   QPalette palette;
   palette.setColor(QPalette::Window, QColor(255,255,255));
   this->setPalette(palette);
@@ -283,15 +292,12 @@ ChatStack::ChatStack(QWidget *parent)
 
   user = new UsrData();
 
-  QFrame *bottom_line = new QFrame(this);
-  bottom_line->setFrameShape(QFrame::HLine);
-  bottom_line->setFrameShadow(QFrame::Plain);
-  bottom_line->setFixedHeight(2);
-  bottom_line->setStyleSheet ("QFrame{  background: #ffb500; border: 0px transparent;  }");
-
   chat_widget = new MessageViewer(this);
+  QPixmap bkgImg(":/img/img/chat_bkg_honey.png");
+  bkgImg.setDevicePixelRatio(2.0);
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
+  palette.setBrush(QPalette::Background, bkgImg);
   scroll_area->setPalette(palette);
   scroll_area->setWidgetResizable(true);
   scroll_area->setWidget(chat_widget);
@@ -302,7 +308,6 @@ ChatStack::ChatStack(QWidget *parent)
   main_layout->setAlignment(Qt::AlignBottom);
   main_layout->setMargin(0);
   main_layout->setSpacing(0);
-  main_layout->addWidget(bottom_line);
   main_layout->addWidget(message_editor);
 
   connect(message_editor, &MessageEditor::sendTriggered,
