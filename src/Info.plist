@@ -21,11 +21,14 @@
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyleft 2015-2017 hivechat.org</string>
+	<key>NSRequiresAquaSystemAppearance</key>
+	<string>True</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleVersion</key>
 	<string>0.0.8</string>
 	<key>CFBundleName</key>
+
 	<string>Hive!</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>

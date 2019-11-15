@@ -67,7 +67,7 @@ HiveServer::run()
 
 void HiveServer::udpPacketReady(std::string &data, Agio::HostAddress &ip)
 {
-  NetPacket *packet = new NetPacket(ip.toIPString(), data, BaseProtocol::Udp);
+  NetPacket *packet = new NetPacket(ip.toIpString(), data, BaseProtocol::Udp);
   AppDataManager::pushInboundBuffer(packet);
 }
 

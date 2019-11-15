@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
   hiveApp.window->show();
 
 #ifdef Q_OS_OSX
-  Cocoa::changeTitleBarColor(hiveApp.window->effectiveWinId(), 255./255., 255./255., 255./255., .95);
+//  Cocoa::changeTitleBarColor(hiveApp.window->effectiveWinId(), 255./255., 250./255., 285./255., 1);
 #endif
 
   return hiveApp.exec();
