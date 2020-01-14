@@ -210,7 +210,7 @@ FloatButton::FloatButton(const QString &txt, QWidget *parent, const QColor &colo
   font_.setPixelSize(13);
 
   QFontMetrics fm(font_);
-  width_ = static_cast<int>(fm.width(txt) + fm.height() * 2.5);
+  width_ = static_cast<int>(fm.horizontalAdvance(txt) + fm.height() * 2.5);
   height_ = static_cast<int>(fm.height() * 1.8);
   radius_ = height_ / 2;
 
