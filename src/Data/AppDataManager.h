@@ -55,7 +55,7 @@ protected:
 
 private:
   void wakeLoop(DoubleBuffer<NetPacket *> *buf);
-  void readInboundNetBuffer();
+  void readInboundNetBuffer(Agio::AsyncEvent*);
   void checkSettings(Agio::Timer *);
 
   inline void initVariable();

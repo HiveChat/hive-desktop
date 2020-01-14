@@ -336,7 +336,7 @@ void AppDataManager::run()
   loop->run(UV_RUN_DEFAULT);
 }
 
-void AppDataManager::readInboundNetBuffer()
+void AppDataManager::readInboundNetBuffer(Agio::AsyncEvent* )
 {
   inbound_net_buffer_reading = true; // not 100% safe
   NetPacket *packet = net_buffer_in.front();
