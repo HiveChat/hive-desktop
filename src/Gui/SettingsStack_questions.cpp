@@ -2,10 +2,8 @@
 
 
 SettingsStack_questions::SettingsStack_questions(QWidget *parent)
-  : ScrollStack(parent)
+  : ScrollStack(LayoutStyle::Linear, parent)
 {
-  this->setUpUI(LayoutStyle::Linear);
-
   setIcon(":/img/img/question.png");
   setTitle("Settings");
   setSubTitle("questions");

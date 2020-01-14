@@ -286,13 +286,10 @@ void TextEdit::dropEvent(QDropEvent *event)
 
 
 ChatStack::ChatStack(QWidget *parent)
-  : ScrollStack(parent)
+  : ScrollStack(LayoutStyle::Profile, parent)
+  , chat_widget(new MessageViewer(this))
+  , user(new UsrData())
 {
-  this->setUpUI(LayoutStyle::Profile);
-
-  user = new UsrData();
-
-  chat_widget = new MessageViewer(this);
   QPixmap bkgImg(":/img/img/chat_bkg_honey.png");
   bkgImg.setDevicePixelRatio(2.0);
   QPalette palette = scroll_area->palette();
@@ -320,7 +317,7 @@ ChatStack::~ChatStack()
 {
 }
 
-bool ChatStack::refreshProfile()
+void ChatStack::refreshProfile()
 {
   this->setIcon(user->getAvatar());
   this->setTitle(user->getName());

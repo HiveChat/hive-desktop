@@ -19,6 +19,7 @@ public:
   };
 
   explicit ScrollStack(QWidget *parent = nullptr);
+  explicit ScrollStack(const LayoutStyle& style, QWidget *parent = nullptr);
   ~ScrollStack();
 
 protected:

@@ -111,7 +111,7 @@ public:
   ~ChatStack();
 
   void display(const QString &usrKey);
-  bool refreshProfile();
+  void refreshProfile();
   bool refreshMessage(const QString &usrKey);
   bool isDisplaying(const QString &usrKey);
 

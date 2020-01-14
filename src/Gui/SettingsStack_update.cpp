@@ -1,10 +1,8 @@
 #include "SettingsStack_update.h"
 
 SettingsStack_update::SettingsStack_update(QWidget *parent)
-  : ScrollStack(parent)
+  : ScrollStack(LayoutStyle::Linear, parent)
 {
-  this->setUpUI(LayoutStyle::Linear);
-
   setIcon(":/img/img/update.png");
   setTitle("Settings");
   setSubTitle("update");
@@ -13,7 +11,7 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
   QCheckBox *auto_check_box = new QCheckBox(this);
   auto_check_box->setChecked(Global::settings.update.auto_check_update);
   connect(auto_check_box, &QCheckBox::toggled,
-          [this](bool toggled){
+          [](bool toggled){
             Global::settings.update.auto_check_update = toggled;
             Global::settings.modified = true;
           });
@@ -22,7 +20,7 @@ SettingsStack_update::SettingsStack_update(QWidget *parent)
   QCheckBox *show_notification_box = new QCheckBox(this);
   show_notification_box->setChecked(Global::settings.notification.update_notification);
   connect(show_notification_box, &QCheckBox::toggled,
-          [this](bool toggled){
+          [](bool toggled){
             Global::settings.notification.update_notification = toggled;
             Global::settings.modified = true;
           });

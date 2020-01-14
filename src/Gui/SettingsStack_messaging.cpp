@@ -1,10 +1,8 @@
 #include "SettingsStack_messaging.h"
 
 SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
-  : ScrollStack(parent)
+  : ScrollStack(LayoutStyle::Linear, parent)
 {
-  this->setUpUI(LayoutStyle::Linear);
-
   setIcon(":/img/img/messaging.png");
   setTitle("Settings");
   setSubTitle("messaging");

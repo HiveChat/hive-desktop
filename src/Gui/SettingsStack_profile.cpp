@@ -1,10 +1,8 @@
 #include "SettingsStack_profile.h"
 
 SettingsStack_profile::SettingsStack_profile(QWidget *parent)
-  : ScrollStack(parent)
+  : ScrollStack(LayoutStyle::Linear, parent)
 {
-  this->setUpUI(LayoutStyle::Linear);
-
   avatar_hash.insert("Flying Bee", ":/avatar/avatar/bee.png");
   avatar_hash.insert("Hive", ":/img/img/icon.png");
   avatar_hash.insert("Fat Bee", ":/avatar/avatar/fat.png");

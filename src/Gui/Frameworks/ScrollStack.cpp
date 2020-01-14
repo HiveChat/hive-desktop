@@ -6,6 +6,12 @@ ScrollStack::ScrollStack(QWidget *parent)
 {
 }
 
+ScrollStack::ScrollStack(const ScrollStack::LayoutStyle& style, QWidget* parent)
+  : QWidget(parent)
+{
+  setUpUI(style);
+}
+
 ScrollStack::~ScrollStack()
 {
 
