@@ -132,8 +132,16 @@ macx{
 
 unix{
     CONFIG += link_pkgconfig
-    PKGCONFIG += \
-	libagio
+
+    CONFIG(debug, debug|release) {
+	PKGCONFIG += \
+	    libagio-d
+    }
+
+    CONFIG(release, debug|release) {
+	PKGCONFIG += \
+	    libagio
+    }
 }
 
 win32{
