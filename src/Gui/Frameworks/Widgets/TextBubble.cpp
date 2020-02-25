@@ -1,4 +1,5 @@
 #include "TextBubble.h"
+#include <QMouseEvent>
 
 TextBubble::TextBubble(const QString &text, const bool alignLeft = true, QWidget *parent)
   : QLabel(parent)
@@ -46,6 +47,14 @@ void TextBubble::paintEvent(QPaintEvent *)
                           , 12
                           , 12);
   this->setFixedSize(width, height);
+}
+
+void TextBubble::mousePressEvent(QMouseEvent* e)
+{
+  if (e->button() == Qt::RightButton)
+    {
+
+    }
 }
 
 

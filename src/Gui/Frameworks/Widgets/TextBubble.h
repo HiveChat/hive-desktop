@@ -18,6 +18,7 @@ public:
 
 protected:
   void paintEvent(QPaintEvent *);
+  void mousePressEvent(QMouseEvent *e);
 
 private:
   QString message;

@@ -1,5 +1,7 @@
 #include "AppDataManager.h"
 
+#include <vector>
+
 DoubleBuffer<NetPacket*> AppDataManager::net_buffer_in;
 DoubleBuffer<NetPacket*> AppDataManager::net_buffer_out;
 QHash<QString, UsrData*> AppDataManager::usr_data_hash;
@@ -73,7 +75,7 @@ void AppDataManager::updateUsr(const UsrProfile &p)
     {
       return;
     }
-  std::string data = f.readAll();
+  std::vector<char> data = f.readAll();
   QJsonParseError jsonErr;
   QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError)
@@ -260,7 +262,7 @@ void AppDataManager::onUpdateAvailable()
     {
       return;
     }
-  std::string inData = file.readAll();
+  std::vector<char> inData = file.readAll();
   QJsonParseError jsonError;
   QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(inData.data(), inData.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
@@ -524,8 +526,8 @@ void AppDataManager::loadSettings()
     {
       return;
     }
-  std::string data = file.readAll();
-  qDebug()<< "settings from disk:"<<data.c_str();
+  std::vector<char> data = file.readAll();
+  qDebug()<< "settings from disk:"<< data.data();
   QJsonParseError jsonErr;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError
@@ -564,7 +566,7 @@ void AppDataManager::loadUsrList()
     {
       return;
     }
-  std::string data = file.readAll();
+  std::vector<char> data = file.readAll();
   QJsonParseError jsonErr;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError)
@@ -646,7 +648,7 @@ void AppDataManager::loadUpdates()
     {
       return;
     }
-  std::string data = file.readAll();
+  std::vector<char> data = file.readAll();
   QJsonParseError jsonError;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)

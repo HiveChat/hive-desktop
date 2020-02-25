@@ -15,7 +15,7 @@ public:
   DoubleBuffer();
   ~DoubleBuffer();
 
-  Agio::CallbackHandler<void(DoubleBuffer<T>*)> onPushed;
+  Agio::Callback<void(DoubleBuffer<T>*)> onPushed;
 
   T front();
   void push(T item);
