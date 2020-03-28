@@ -33,8 +33,10 @@ Window::Window(QWidget *parent)
   tray_icon_menu->addSeparator();
   tray_icon_menu->addAction(quit_action);
 
+  QIcon icon(":/img/img/tray_0.png");
+  icon.setIsMask(true);
   tray_icon = new QSystemTrayIcon(this);
-  tray_icon->setIcon(QIcon(":/img/img/tray_0.png"));
+  tray_icon->setIcon(icon);
   tray_icon->setToolTip("Hive!");
   tray_icon->setContextMenu(tray_icon_menu);
   tray_icon->setVisible(true);
