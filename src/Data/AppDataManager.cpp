@@ -1,6 +1,7 @@
 #include "AppDataManager.h"
 
 #include <vector>
+#include <libagio/file.h>
 
 DoubleBuffer<NetPacket*> AppDataManager::net_buffer_in;
 DoubleBuffer<NetPacket*> AppDataManager::net_buffer_out;
@@ -75,9 +76,11 @@ void AppDataManager::updateUsr(const UsrProfile &p)
     {
       return;
     }
-  std::vector<char> data = f.readAll();
+  Agio::Buffer* data = f.readAll();
+  if(!data) //! TODO: refactor
+    data = new Agio::Buffer("");
   QJsonParseError jsonErr;
-  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data->data(), data->size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError)
     {
       if(inJsonDoc.isObject())
@@ -262,9 +265,9 @@ void AppDataManager::onUpdateAvailable()
     {
       return;
     }
-  std::vector<char> inData = file.readAll();
+  Agio::Buffer* inData = file.readAll();
   QJsonParseError jsonError;
-  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(inData.data(), inData.size()), &jsonError);
+  QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(inData->data(), inData->size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
       if(inJsonDoc.isObject())
@@ -522,14 +525,16 @@ void AppDataManager::initVariable()
 void AppDataManager::loadSettings()
 {
   Agio::File file(Global::settings_file_dir, loop);
-  if(!file.open(O_RDWR | O_CREAT, 0755, Agio::Sync))
+  if(!file.open(O_RDWR, 0755, Agio::Sync))
     {
       return;
     }
-  std::vector<char> data = file.readAll();
-  qDebug()<< "settings from disk:"<< data.data();
+  Agio::Buffer* data = file.readAll();
+  if(!data) //! TODO: refactor
+    data = new Agio::Buffer("");
+  qDebug()<< "settings from disk:"<< data->toString().c_str();
   QJsonParseError jsonErr;
-  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data->data(), data->size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError
      && doc.isObject())
     {
@@ -566,9 +571,11 @@ void AppDataManager::loadUsrList()
     {
       return;
     }
-  std::vector<char> data = file.readAll();
+  Agio::Buffer* data = file.readAll();
+  if(!data) //! TODO: refactor
+    data = new Agio::Buffer("");
   QJsonParseError jsonErr;
-  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data->data(), data->size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError)
     {
       if(doc.isObject())
@@ -648,9 +655,9 @@ void AppDataManager::loadUpdates()
     {
       return;
     }
-  std::vector<char> data = file.readAll();
+  Agio::Buffer* data = file.readAll();
   QJsonParseError jsonError;
-  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
+  QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data->data(), data->size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
     {
       if(doc.isObject())
