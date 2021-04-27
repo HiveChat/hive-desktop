@@ -75,7 +75,7 @@ void AppDataManager::updateUsr(const UsrProfile &p)
     {
       return;
     }
-  std::vector<char> data = f.readAll();
+  std::string data = f.readAll()->toString();
   QJsonParseError jsonErr;
   QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError)
@@ -262,7 +262,7 @@ void AppDataManager::onUpdateAvailable()
     {
       return;
     }
-  std::vector<char> inData = file.readAll();
+  std::string inData = file.readAll()->toString();
   QJsonParseError jsonError;
   QJsonDocument inJsonDoc = QJsonDocument::fromJson(QByteArray(inData.data(), inData.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
@@ -526,7 +526,7 @@ void AppDataManager::loadSettings()
     {
       return;
     }
-  std::vector<char> data = file.readAll();
+  std::string data = file.readAll()->toString();
   qDebug()<< "settings from disk:"<< data.data();
   QJsonParseError jsonErr;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
@@ -566,7 +566,7 @@ void AppDataManager::loadUsrList()
     {
       return;
     }
-  std::vector<char> data = file.readAll();
+  std::string data = file.readAll()->toString();
   QJsonParseError jsonErr;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonErr);
   if(jsonErr.error == QJsonParseError::NoError)
@@ -648,7 +648,7 @@ void AppDataManager::loadUpdates()
     {
       return;
     }
-  std::vector<char> data = file.readAll();
+  std::string data = file.readAll()->toString();
   QJsonParseError jsonError;
   QJsonDocument doc = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &jsonError);
   if(jsonError.error == QJsonParseError::NoError)
