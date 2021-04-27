@@ -29,9 +29,10 @@ int Database::open()
   int r = file_.open(O_WRONLY | O_CREAT, 0664, Agio::Sync);
   if(r == 0)
     opened_ = true;
-  std::string data = file_.readAll()->toString();
+
+  Agio::Buffer* data = file_.readAll();
   QJsonParseError err;
-  json_ = QJsonDocument::fromJson(QByteArray(data.data(), data.size()), &err);
+  json_ = QJsonDocument::fromJson(QByteArray(data->data(), data->size()), &err);
   if(err.error != QJsonParseError::NoError || json_.isNull())
     {
       file_.truncate(0, Agio::Sync);
