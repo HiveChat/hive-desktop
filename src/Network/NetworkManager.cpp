@@ -59,7 +59,7 @@ void NetworkManager::onRedirectFinished()
 {
   if(http_update_reply->error() != QNetworkReply::NoError)
     {
-      Log::net(Log::Warning, "NetworkManager::onRedirectFinished()", QString(http_update_reply->error()));
+      Log::net(Log::Warning, "NetworkManager::onRedirectFinished()", "error!");
       return;
     }
   QUrl redirectUrl = QString(http_update_reply->rawHeader("Location"));

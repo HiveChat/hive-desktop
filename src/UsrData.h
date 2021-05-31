@@ -49,7 +49,7 @@ public:
 private:
 
 #ifndef Q_OS_WIN
-  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+  const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
   const QString app_data_local_path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif

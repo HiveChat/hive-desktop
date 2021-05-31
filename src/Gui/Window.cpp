@@ -18,7 +18,7 @@ Window::Window(QWidget *parent)
   main_block = new MainBlock(this);
 
   QHBoxLayout *main_layout = new QHBoxLayout(this);
-  main_layout->setMargin(0);
+  main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
   main_layout->addWidget(side_bar);
   main_layout->addWidget(main_block);

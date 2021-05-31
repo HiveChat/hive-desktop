@@ -68,7 +68,7 @@ SettingsStack_messaging::SettingsStack_messaging(QWidget *parent)
             if(make_sure == 2)
               {
 #ifndef Q_OS_WIN
-                const QString appDataLocalPath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+                const QString appDataLocalPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 #else
                 const QString appDataLocalPath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif

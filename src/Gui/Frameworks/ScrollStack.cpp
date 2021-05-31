@@ -171,7 +171,7 @@ void ScrollStack::setUpUI(const LayoutStyle &style)
   //! To be deleted after issue #1
 //  main_layout->addWidget(topwidget_base_line);
   main_layout->addWidget(scroll_area);
-  main_layout->setMargin(0);
+  main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
 
 }
@@ -284,7 +284,7 @@ void ScrollStack::addItem(QWidget *centralWidget)
 {
   central_layout->addWidget(centralWidget);
   central_layout->setAlignment(Qt::AlignCenter);
-  central_layout->setMargin(0);
+  central_layout->setContentsMargins(0,0,0,0);
   central_layout->setSpacing(0);
 }
 

@@ -115,7 +115,7 @@ RESOURCES += \
 #    Src/icon.qrc
 
 macx{
-    QT   += macextras
+#    QT   += macextras
     QMAKE_INFO_PLIST = ./Info.plist
     plist.path = "$$DESTDIR/$$join(TARGET,,,.app)/Contents"
     plist.files = ./Info.plist

@@ -57,7 +57,7 @@ public:
 protected:
   void mousePressEvent(QMouseEvent *);
   void mouseReleaseEvent(QMouseEvent *);
-  void enterEvent(QEvent *e);
+  void enterEvent(QEnterEvent* e);
   void leaveEvent(QEvent *e);
 
 private:

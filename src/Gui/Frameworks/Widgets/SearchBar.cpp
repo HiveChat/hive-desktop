@@ -139,7 +139,7 @@ void SearchBar::mouseReleaseEvent(QMouseEvent *)
 {
 }
 
-void SearchBar::enterEvent(QEvent *e)
+void SearchBar::enterEvent(QEnterEvent *e)
 {
   if(search_focus_lock || settings_toggled)
     return;

@@ -12,7 +12,7 @@
 
 #ifdef Q_OS_OSX
 #include <QFileOpenEvent>
-#include <QtMac>
+//#include <QtMac>
 #endif
 
 

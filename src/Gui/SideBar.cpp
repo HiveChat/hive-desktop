@@ -24,7 +24,7 @@ SideBar::SideBar(QWidget *parent)
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setSpacing(0);
-  mainLayout->setMargin(0);
+  mainLayout->setContentsMargins(0,0,0,0);
   mainLayout->setAlignment(Qt::AlignTop);
   mainLayout->addSpacing(5);
   mainLayout->addWidget(search_bar);

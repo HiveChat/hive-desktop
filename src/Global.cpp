@@ -47,7 +47,7 @@ QMultiHash<QString, QPair<int, int> > Global::file_tran_progress_hash;//used
 QList<QJsonObject> Global::message_queue;
 
 #ifndef Q_OS_WIN
-const std::string Global::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::DataLocation).toStdString() + "/Hive!";
+const std::string Global::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation).toStdString() + "/Hive!";
 #else
 const QString GlobalData::data_location_dir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
 #endif
@@ -70,11 +70,11 @@ QString Global::getCurrentTime()
 QString Global::getRandomString(const int &digit)
 {
   const char alphabet_char[64] = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_";
-  qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+  srand(QTime(0,0,0).secsTo(QTime::currentTime()));
   QString random_str;
   for(int i = 0; i < digit; i ++)
     {
-      random_str.append(alphabet_char[qrand()%63]);
+      random_str.append(alphabet_char[rand()%63]);
     }
 
   return random_str;
@@ -103,12 +103,12 @@ bool Global::versionCompare(const int (&fresh)[3], const int (&old)[3])
 
 void Global::TEST_printUsrProfile(const UsrProfile &p, const QString &str)
 {
-  qDebug()<<endl<<"Test by "<<str;
+  qDebug()<<'\n'<<"Test by "<<str;
   qDebug()<<p.key;
   qDebug()<<p.name;
   qDebug()<<p.ip;
   qDebug()<<p.online;
-  qDebug()<<p.avatar<<endl;
+  qDebug()<<p.avatar<<'\n';
 }
 
 

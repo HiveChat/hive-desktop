@@ -294,7 +294,7 @@ ChatStack::ChatStack(QWidget *parent)
   bkgImg.setDevicePixelRatio(2.0);
   QPalette palette = scroll_area->palette();
   palette.setColor(QPalette::Base, QColor(255,255,255,255));
-  palette.setBrush(QPalette::Background, bkgImg);
+//  palette.setBrush(QPalette::Background, bkgImg);
   scroll_area->setPalette(palette);
   scroll_area->setWidgetResizable(true);
   scroll_area->setWidget(chat_widget);
@@ -303,7 +303,7 @@ ChatStack::ChatStack(QWidget *parent)
   message_editor = new MessageEditor(this);
 
   main_layout->setAlignment(Qt::AlignBottom);
-  main_layout->setMargin(0);
+  main_layout->setContentsMargins(0,0,0,0);
   main_layout->setSpacing(0);
   main_layout->addWidget(message_editor);
 

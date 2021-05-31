@@ -6,7 +6,7 @@ Hive::Hive(int &argc, char **argv)
 {
 #ifdef Q_OS_OSX
   QApplication::setQuitOnLastWindowClosed(false);
-  QtMac::setBadgeLabelText("Hi");
+//  QtMac::setBadgeLabelText("Hi");
 #endif
 
   loadFonts();
@@ -45,17 +45,17 @@ Hive::Hive(int &argc, char **argv)
           window, &Window::onMessageReceived,
           Qt::AutoConnection);
 
-#ifdef Q_OS_OSX
-  QtMac::setBadgeLabelText("");
-#endif
+//#ifdef Q_OS_OSX
+//  QtMac::setBadgeLabelText("");
+//#endif
 }
 
 Hive::~Hive()
 {
   Log::gui(Log::Info, "Hive::~Hive()", "Destroying App");
-#ifdef Q_OS_OSX
-  QtMac::setBadgeLabelText("Bye");
-#endif
+//#ifdef Q_OS_OSX
+//  QtMac::setBadgeLabelText("Bye");
+//#endif
 
   window->close();
   window->deleteLater();
