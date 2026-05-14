@@ -46,7 +46,7 @@ fn main() {
         Box::new(move |cc| {
             // Hand the Context to the network thread before the first frame.
             let _ = ctx_tx.send(cc.egui_ctx.clone());
-            Ok(Box::new(HiveApp::new(settings, event_rx, cmd_tx)))
+            Ok(Box::new(HiveApp::new(cc, settings, event_rx, cmd_tx)))
         }),
     )
     .expect("eframe failed to start");
